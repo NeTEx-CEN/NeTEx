@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- ==== SImple Timetable  Example ====== 
+This example shows the encoding of a unit distance fare set for a simple bus timetable for a linear route in NeTex XML  
+ 
+Uses a fare based on the number of units between each point. There is a single FARE PRODUCT 
+
+It is based  on the same route used in other bus  examples  e.g. 
+		Bus_SimpleTimetable_WithTimings example to see LINKS & PATTERNs
+ 
+It is     extended in other examples with further details
+		Bus_SimpleTimetable_PointToPoint_MultipleProducts  to see added Fare Products 
+		Bus_SimpleTimetable_ZoneToZone_AdultChildProducts  to see   Zonal Products 
+		Bus_SimpleTimetable_ZoneToZone_OffPeakProduct  to see added Zonal Products 
+1. OVERVIEW
+============
+
+   This has just  four  stops         A- (1) - B  - (2) - C  - (1)  - D
+
+Fare Prices are defined in terms of   number of units  between  stops 
+
+Point to point  Fare matrix
+
+	AB = gi1  1 unit	 
+    BC = gi2  2 unit	 
+    CD = gi1  1 unit	 
+
+         A					B   		C  		 D
+    D  gi1			gi1+g12 	gi1 	 -
+    C  gi1+g2		gi2  			-
+    B  gi1	-
+    A   -    
+ 
+Price Per Unit  £1,50
+
+Thus standard fares woudl be calculated as 
+
+         A		B   	C  	 D
+    D  1.50	5.50 	1.50 	 -
+    C  5.50	3.00  	-
+    B  1.50	-
+    A   -    
+
+==================================
+2. DETAILS
+
+There is one Line :  LINE 24
+
+SCHEDULED STOP POINTs
+	    A)   mybus:ScheduledStopPoint:ssp_001  Alpha						 
+		B)  mybus:ScheduledStopPoint:ssp_002   Bravo							 
+		C)  mybus:ScheduledStopPoint:ssp_077	 Charley
+		D)  mybus:ScheduledStopPoint:ssp_078	 Delta
+
+There is a SINGLE FARE PRODUCT
+		FREQUENCY OF USE   one trip no transfer   myfares:FrequencyOfUse:noTransfer
+ 
+There are Two GEOGRAPHIC INTERVALS, each with a price
+	1 Step: GEOGRAPHICAL INTERVAL: myfares:GeographicalInterval:gi_1
+		GEOGRAPHICAL INTERVALPRICE:  myfares:GeographicalInterval:gip_1   1 Unite  1.00  EUR
+	2 Steps: GEOGRAPHICAL INTERVAL: myfares:GeographicalInterval:gi_2
+		GEOGRAPHICAL INTERVALPRICE:  myfares:GeographicalInterval:gip_2   2 Units  3,0 EUR 
+
+
+There are DISTANCE  MATRIX ELEMENTs for   point to point transition, each references a GEOGRAPHICAL INTERVAL
+	AB  DISTANCE  MATRIX ELEMENT: myfares:DistanceMatrixElement:SSP_001_to_SSP_002
+			GEOGRAPHICAL INTERVAL: myfares:GeographicalInterval:gi_1
+  
+	BC  DISTANCE  MATRIX ELEMENT: myfares:DistanceMatrixElement:SSP_002_to_SSP_077
+			GEOGRAPHICAL INTERVAL: myfares:GeographicalInterval:gi_2
+
+ 	CD  DISTANCE  MATRIX ELEMENT: myfares:DistanceMatrixElement:SSP_077_to_SSP_078 
+			GEOGRAPHICAL INTERVAL: myfares:GeographicalInterval:gi_1
+
+A COMPOSITE FRAME is used to group the component FRAMEs 
+
+		A SERVICE  FRAME is used to contain the STOP POINT  elements   LINE, etc
+		A FARE FRAME is used to contain  the FARE    elements 
+ 		A RESOURCE is used to contain the GEOGRAPHICAL UNITs, etc
+-->
+<PublicationDelivery xmlns="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://www.netex.org.uk/netex ../../../xsd/NeTEx_publication.xsd">
+	<PublicationTimestamp>2010-12-17T09:30:47.0Z</PublicationTimestamp>
+	<ParticipantRef>SYS001</ParticipantRef>
+	<!--- ======WHAT WAS REQUESTED ========== -->
+	<PublicationRequest version="1.0">
+		<RequestTimestamp>2010-12-17T09:30:47.0Z</RequestTimestamp>
+		<ParticipantRef>SYS002</ParticipantRef>
+		<topics>
+			<NetworkFrameTopic>
+				<selectionValidityConditions>
+					<AvailabilityCondition version="any" id="hde:AvailabilityCondition:CAL_02">
+						<FromDate>2011-01-01T00:00:00Z</FromDate>
+					</AvailabilityCondition>
+				</selectionValidityConditions>
+				<FareFrameRef ref="myfares:FareFrame:any">REQUEST</FareFrameRef>
+			</NetworkFrameTopic>
+		</topics>
+	</PublicationRequest>
+	<PublicationRefreshInterval>P1M</PublicationRefreshInterval>
+	<Description>Example  of simple point to point fares</Description>
+	<!--- =============== RESULTS =========== -->
+	<dataObjects>
+		<CompositeFrame version="1" id="myfares:CompositeFrame:CAL_02">
+			<validityConditions>
+				<ValidBetween>
+					<FromDate>2011-01-01T00:00:00Z</FromDate>
+					<ToDate>2011-07-01T00:00:00Z</ToDate>
+				</ValidBetween>
+			</validityConditions>
+			<!--- ======= CODESPACEs======== -->
+			<codespaces>
+				<Codespace id="mybus">
+					<Xmlns>mybus</Xmlns>
+					<XmlnsUrl>http://www.mybuses.eu/stuff</XmlnsUrl>
+					<Description>My buses</Description>
+				</Codespace>
+				<Codespace id="myfares">
+					<Xmlns>myfares</Xmlns>
+					<XmlnsUrl>http://www.myfares,com/fares</XmlnsUrl>
+					<Description>Fatre v data   </Description>
+				</Codespace>
+			</codespaces>
+			<!--- =======FRAME DEFAULTS======== -->
+			<FrameDefaults>
+				<DefaultCodespaceRef ref="myfares"/>
+			</FrameDefaults>
+			<frames>
+				<ServiceFrame version="1" id="mybus:ServiceFrame:svf_12">
+					<Name>Stops for Fare network </Name>
+					<!--- =========LINEs=========== -->
+					<!--- =========STOP POINTs============ -->
+					<scheduledStopPoints>
+						<ScheduledStopPoint version="any" id="mybus:ScheduledStopPoint:SSP_001">
+							<Name>Alpha &amp; Castle</Name>
+							<Location>
+								<Longitude>53.0000</Longitude>
+								<Latitude>0.1000</Latitude>
+							</Location>
+							<TimingPointStatus>timingPoint</TimingPointStatus>
+							<ShortName>Alpha</ShortName>
+							<PublicCode>ALPH</PublicCode>
+							<StopType>onstreetBus</StopType>
+							<VehicleModes>bus</VehicleModes>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="mybus:ScheduledStopPoint:SSP_002">
+							<Name>Bravo Street</Name>
+							<Location>
+								<Longitude>53.2000</Longitude>
+								<Latitude>0.2000</Latitude>
+							</Location>
+							<TimingPointStatus>timingPoint</TimingPointStatus>
+							<ShortName>Bravo</ShortName>
+							<PublicCode>BRAV</PublicCode>
+							<StopType>onstreetBus</StopType>
+							<VehicleModes>bus</VehicleModes>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="mybus:ScheduledStopPoint:SSP_077">
+							<Name>Charley Crescent</Name>
+							<Location>
+								<Longitude>53.3000</Longitude>
+								<Latitude>0.3000</Latitude>
+							</Location>
+							<TimingPointStatus>timingPoint</TimingPointStatus>
+							<ShortName>Charley</ShortName>
+							<PublicCode>CHAS</PublicCode>
+							<StopType>onstreetBus</StopType>
+							<VehicleModes>bus</VehicleModes>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="mybus:ScheduledStopPoint:SSP_078">
+							<Name>Delta </Name>
+							<Location>
+								<Longitude>53.3000</Longitude>
+								<Latitude>0.3000</Latitude>
+							</Location>
+							<TimingPointStatus>timingPoint</TimingPointStatus>
+							<ShortName>Delta</ShortName>
+							<PublicCode>DELTA</PublicCode>
+							<StopType>onstreetBus</StopType>
+							<VehicleModes>bus</VehicleModes>
+						</ScheduledStopPoint>
+					</scheduledStopPoints>
+				</ServiceFrame>
+				<!--- =============== FAREs =========== -->
+				<FareFrame version="any" id="myfares:FareFrame:FF01">
+					<FrameDefaults>
+						<DefaultCurrency>EUR</DefaultCurrency>
+					</FrameDefaults>
+					<!--- ====Fare Structure======= -->
+					<geographicalUnits>
+						<!--- ====GeographicalU nit======== -->
+						<GeographicalUnit version="any" id="myfares:GeographicalUnit:gu">
+							<Name>Arbitrary Quanitized Unit of Transport Usage</Name>
+						</GeographicalUnit>
+					</geographicalUnits>
+					<fareStructureElements>
+						<FareStructureElement version="any" id="myfares:FareStructureElement:routes">
+							<distanceMatrixElements>
+								<DistanceMatrixElementRef version="any" ref="myfares:DistanceMatrixElement:SSP_001_to_SSP_002"/>
+								<DistanceMatrixElementRef version="any" ref="myfares:DistanceMatrixElement:SSP_002_to_SSP_077"/>
+								<DistanceMatrixElementRef version="any" ref="myfares:DistanceMatrixElement:SSP_077_to_SSP_078"/>
+							</distanceMatrixElements>
+						</FareStructureElement>
+					</fareStructureElements>
+					<tariffs>
+						<Tariff version="any" id="myfares:Tariff:unitDistance">
+							<Name>Unit distance fare</Name>
+							<GeographicalUnitRef version="any" ref="myfares:GeographicalUnit:gu"/>
+							<geographicalIntervals>
+								<GeographicalInterval version="any" id="myfares:GeographicalInterval:gi_1">
+									<Name>One Click</Name>
+									<StartGeographicalValue>1</StartGeographicalValue>
+									<EndGeographicalValue>2</EndGeographicalValue>
+									<NumberOfUnits>1</NumberOfUnits>
+									<IntervalType>distance</IntervalType>
+								</GeographicalInterval>
+								<GeographicalInterval version="any" id="myfares:GeographicalInterval:gi_2">
+									<Name>Two Clicks</Name>
+									<StartGeographicalValue>1</StartGeographicalValue>
+									<EndGeographicalValue>3</EndGeographicalValue>
+									<NumberOfUnits>2</NumberOfUnits>
+									<IntervalType>distance</IntervalType>
+								</GeographicalInterval>
+							</geographicalIntervals>
+							<!--- ===GEOGRAPHICAL STRUCTURE FACTORS==== -->
+							<geographicalStructureFactors>
+								<GeographicalStructureFactor version="any" id="myfares:GeographicalStructureFactor:1click">
+									<GeographicalIntervalRef version="any" ref="myfares:GeographicalInterval:gi_1"/>
+									<GeographicalUnitRef version="any" ref="myfares:GeographicalUnit:gu"/>
+								</GeographicalStructureFactor>
+								<GeographicalStructureFactor version="any" id="myfares:GeographicalStructureFactor:2click">
+									<GeographicalIntervalRef version="any" ref="myfares:GeographicalInterval:gi_2"/>
+									<GeographicalUnitRef version="any" ref="myfares:GeographicalUnit:gu"/>
+								</GeographicalStructureFactor>
+							</geographicalStructureFactors>
+							<!--- ===DISTANCE MATRIX==== -->
+							<distanceMatrixElements>
+								<DistanceMatrixElement version="any" id="myfares:DistanceMatrixElement:SSP_001_to_SSP_002">
+									<Name>Alpha to Bravo</Name>
+									<StartStopPointRef version="any" ref="mybus:ScheduledStopPoint:SSP_001"/>
+									<EndStopPointRef version="any" ref="mybus:ScheduledStopPoint:SSP_002"/>
+									<structureFactors>
+										<GeographicalStructureFactorRef version="any" ref="myfares:GeographicalStructureFactor:1click"/>
+									</structureFactors>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="any" id="myfares:DistanceMatrixElement:SSP_002_to_SSP_077">
+									<Name>Bravo to Charley</Name>
+									<StartStopPointRef version="any" ref="mybus:ScheduledStopPoint:SSP_002"/>
+									<EndStopPointRef version="any" ref="mybus:ScheduledStopPoint:SSP_077"/>
+									<structureFactors>
+										<GeographicalStructureFactorRef version="any" ref="myfares:GeographicalStructureFactor:2click"/>
+									</structureFactors>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="any" id="myfares:DistanceMatrixElement:SSP_077_to_SSP_078">
+									<Name>Charley to Delta</Name>
+									<StartStopPointRef version="any" ref="mybus:ScheduledStopPoint:SSP_077"/>
+									<EndStopPointRef version="any" ref="mybus:ScheduledStopPoint:SSP_078"/>
+									<structureFactors>
+										<GeographicalStructureFactorRef version="any" ref="myfares:GeographicalStructureFactor:1click"/>
+									</structureFactors>
+								</DistanceMatrixElement>
+							</distanceMatrixElements>
+						</Tariff>
+					</tariffs>
+					<!--- ====Fare USAGE PARAMETERS======= -->
+					<usageParameters>
+						<FrequencyOfUse version="any" id="myfares:FrequencyOfUse:noTransfer">
+							<FrequencyOfUseType>none</FrequencyOfUseType>
+						</FrequencyOfUse>
+					</usageParameters>
+					<!--- ====Fare Product======= -->
+					<fareProducts>
+						<PreassignedFareProduct version="any" id="myfares:PreassignedFareProduct:unitDistance">
+							<Name>Point  to Point  fare</Name>
+							<validityParameterAssignments>
+								<GenericParameterAssignment version="any" order="1" id="myfares:GenericParameterAssignment:unitDistance@conditions">
+									<Name>No transfers</Name>
+									<limitations>
+										<FrequencyOfUseRef version="any" ref="myfares:FrequencyOfUse:noTransfer"/>
+									</limitations>
+								</GenericParameterAssignment>
+								<GenericParameterAssignment version="any" order="2" id="myfares:GenericParameterAssignment:unitDistanceconditions@routes">
+									<FareStructureElementRef version="any" ref="myfares:FareStructureElement:routes"/>
+								</GenericParameterAssignment>
+							</validityParameterAssignments>
+							<!--- ====VALIDABLE ELEMENTs====== -->
+							<validableElements>
+								<ValidableElement version="any" id="myfares:ValidableElement:singleRide">
+									<Name>Single  ride</Name>
+								</ValidableElement>
+							</validableElements>
+							<!--- ====ACCESS RIGHTs======= -->
+							<accessRightsInProduct>
+								<AccessRightInProduct version="any" id="myfares:AccessRightInProduct:unitDistance@elements" order="1">
+									<Name>First ride</Name>
+									<ValidableElementRef version="any" ref="myfares:ValidableElement:singleRide"/>
+								</AccessRightInProduct>
+							</accessRightsInProduct>
+						</PreassignedFareProduct>
+					</fareProducts>
+					<!--- ====Fare Prices======= -->
+					<priceGroups>
+						<PriceGroup version="any" id="myfares:Unit DIstance">
+							<Name>  Fare Prices  - Standard</Name>
+							<members>
+								<GeographicalIntervalPrice version="any" id="myfares:GeographicalIntervalPrice:gip_1">
+									<Amount>1.50</Amount>
+									<Units>1</Units>
+									<GeographicalIntervalRef version="any" ref="myfares:GeographicalInterval:gi_1"/>
+								</GeographicalIntervalPrice>
+								<GeographicalIntervalPrice version="any" id="myfares:GeographicalIntervalPrice:gip_2">
+									<Amount>3.00</Amount>
+									<Units>2</Units>
+									<GeographicalIntervalRef version="any" ref="myfares:GeographicalInterval:gi_2"/>
+								</GeographicalIntervalPrice>
+							</members>
+						</PriceGroup>
+					</priceGroups>
+				</FareFrame>
+			</frames>
+		</CompositeFrame>
+	</dataObjects>
+</PublicationDelivery>
