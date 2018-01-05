@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2013 (x64) (http://www.altova.com) by Nicholas JS Knowles (Trapeze Group Limited) -->
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_fareProduct_version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_fareProduct_version">
 	<xsd:include schemaLocation="../../netex_framework/netex_utility/netex_units-v1.0.xsd"/>
 	<xsd:include schemaLocation="netex_fareProduct_support-v1.0.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_otherOrganisation_support-v1.0.xsd"/>
@@ -24,6 +24,9 @@
 					<Modified>2011-02-05</Modified>
 					<!-- Name Space changes -->
 				</Date>
+				<Date><Modified>2011-11-11</Modified>Fix - Chaneg product inforUrl (Misspelt)  to be list of infolinks
+
+				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the FARE PRODUCT types.</p>
@@ -33,7 +36,7 @@
 					<Syntax>http://www.w3.org/2001/XMLSchema</Syntax>
 					<Description>XML schema, W3C Recommendation 2001</Description>
 				</Format>
-				<Identifier>{http://www.netex.org.uk/schemas/1.0/xsd/netex_part_3/part3_fares}netex_fareProduct_version-v1.0.xsd</Identifier>
+				<Identifier>{http://www.netex.org.uk/schemas/1.0/xsd/netex_part_3/part3_fares}netex_fareProduct_version-v1.1.xsd</Identifier>
 				<Language>[ISO 639-2/B] ENG</Language>
 				<Publisher>Kizoom, 109-123 Clifton Street, London EC4A 4LD </Publisher>
 				<Relation>
@@ -103,7 +106,7 @@ Rail transport, Roads and Road transport
 	<!-- ====FARE PRODUCT=================================================== -->
 	<xsd:element name="ServiceAccessRight_" type="DataManagedObjectStructure" abstract="false" substitutionGroup="PriceableObject_">
 		<xsd:annotation>
-			<xsd:documentation>An immaterial marketable element 
+			<xsd:documentation>An immaterial marketable element
 </xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
@@ -160,9 +163,14 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="PrivateCode" minOccurs="0"/>
-			<xsd:element name="InforUrl" type="xsd:anyURI" minOccurs="0">
+			<xsd:element name="InfoUrl" type="xsd:anyURI" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>URL for further information.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="documentLinks" type="infoLinks_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Timetable documents associated with the Product e.g pdf files</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -403,7 +411,7 @@ Rail transport, Roads and Road transport
 	<!-- ==== ENTITLEMENT PRODUCT.=============================================== -->
 	<xsd:element name="EntitlementProduct" abstract="false" substitutionGroup="ServiceAccessRight_">
 		<xsd:annotation>
-			<xsd:documentation>A precondition to access a service or to purchase a FARE PRODUCT issued by an organisation that may not be a PT operator (e.g. military card). 
+			<xsd:documentation>A precondition to access a service or to purchase a FARE PRODUCT issued by an organisation that may not be a PT operator (e.g. military card).
 
 </xsd:documentation>
 		</xsd:annotation>

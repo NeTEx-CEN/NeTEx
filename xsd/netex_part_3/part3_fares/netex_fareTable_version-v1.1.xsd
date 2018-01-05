@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_fareTable_version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_fareTable_version">
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_transportOrganisation_support-v1.0.xsd"/>
+	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_travelRights_support-v1.0.xsd"/>
+	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_facility_version-v1.0.xsd"/>
+	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_submode_version-v1.1.xsd"/>
+	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_mode_version-v1.0.xsd"/>
+	<xsd:include schemaLocation="../../netex_part_1/part1_networkDescription/netex_line_support-v1.1.xsd"/>
+	<xsd:include schemaLocation="../../netex_part_1/part1_ifopt/netex_ifopt_site_support-v1.0.xsd"/>
+	<xsd:include schemaLocation="../../netex_part_1/part1_tacticalPlanning/netex_fareZone_support-v1.1.xsd"/>
 	<xsd:include schemaLocation="../../netex_part_2/part2_journeyTimes/netex_serviceJourney_support-v1.0.xsd"/>
+	<xsd:include schemaLocation="../../netex_part_2/part2_journeyTimes/netex_vehicleJourney_support-v1.0.xsd"/>
 	<xsd:include schemaLocation="netex_fareTable_support-v1.0.xsd"/>
+	<xsd:include schemaLocation="netex_fareSeries_support-v1.0.xsd"/>
+	<xsd:include schemaLocation="netex_travelDocument_support-v1.1.xsd"/>
+	<xsd:include schemaLocation="netex_salesDistribution_support-v1.0.xsd"/>
+	<xsd:include schemaLocation="netex_fareStructureElement_support-v1.0.xsd"/>
 	<xsd:include schemaLocation="netex_distanceMatrixElement_support-v1.0.xsd"/>
 	<xsd:include schemaLocation="netex_salesPackage_support-v1.0.xsd"/>
 	<xsd:include schemaLocation="netex_fareSeries_support-v1.0.xsd"/>
 	<xsd:include schemaLocation="netex_usageParametersAll_support-v1.0.xsd"/>
-	<xsd:include schemaLocation="../../netex_part_1/part1_networkDescription/netex_line_support-v1.1.xsd"/>
-	<xsd:include schemaLocation="../../netex_part_1/part1_ifopt/netex_ifopt_site_support-v1.0.xsd"/>
-	<xsd:include schemaLocation="../../netex_part_1/part1_tacticalPlanning/netex_fareZone_support-v1.1.xsd"/>
-	<xsd:include schemaLocation="netex_fareSeries_support-v1.0.xsd"/>
-	<xsd:include schemaLocation="netex_salesDistribution_support-v1.0.xsd"/>
-	<xsd:include schemaLocation="netex_fareStructureElement_support-v1.0.xsd"/>
-	<xsd:include schemaLocation="../../netex_part_2/part2_journeyTimes/netex_vehicleJourney_support-v1.0.xsd"/>
 	<!-- ======================================================================= -->
-	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_facility_version-v1.0.xsd"/>
-	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_submode_version-v1.1.xsd"/>
-	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_mode_version-v1.0.xsd"/>
 	<xsd:include schemaLocation="netex_farePrice_version-v1.1.xsd"/>
 	<!-- ======================================================================= -->
 	<xsd:annotation>
@@ -36,6 +38,10 @@
 					<Modified>2011-02-05</Modified>
 					<!-- Name Space changes -->
 				</Date>
+				<Date><Modified>2017-10-10</Modified> Add TypeOfTravelDocument  and PaymentMethodto Fare Table Specifics  . Add Notice Assignments. to FareTable and Cell
+				</Date>
+				<Date><Modified>2017-11-08</Modified> Allow declaration of price in Cell
+				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the FARE TABLE types.</p>
@@ -45,7 +51,7 @@
 					<Syntax>http://www.w3.org/2001/XMLSchema</Syntax>
 					<Description>XML schema, W3C Recommendation 2001</Description>
 				</Format>
-				<Identifier>{http://www.netex.org.uk/schemas/1.0/xsd/netex_part_3/part3_fares}netex_fareTable_version-v1.0.xsd</Identifier>
+				<Identifier>{http://www.netex.org.uk/schemas/1.0/xsd/netex_part_3/part3_fares}netex_fareTable_version-v1.1.xsd</Identifier>
 				<Language>[ISO 639-2/B] ENG</Language>
 				<Publisher>Kizoom, 109-123 Clifton Street, London EC4A 4LD </Publisher>
 				<Relation>
@@ -179,6 +185,11 @@ Rail transport, Roads and Road transport
 			<xsd:element name="cells" type="cells_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Cells in the table.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="noticeAssignments" type="noticeAssignments_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>NOTICEs that apply to whole FARE TABLE</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -493,6 +504,7 @@ Rail transport, Roads and Road transport
 					</xsd:annotation>
 				</xsd:element>
 				<xsd:element ref="FarePriceRef"/>
+				<xsd:element ref="FarePrice_"/>
 				<xsd:element ref="PriceGroupRef"/>
 			</xsd:choice>
 			<xsd:group ref="CellReferencesGroup">
@@ -501,6 +513,11 @@ Rail transport, Roads and Road transport
 				</xsd:annotation>
 			</xsd:group>
 			<xsd:group ref="CellHeadingsGroup"/>
+			<xsd:element name="noticeAssignments" type="noticeAssignments_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>NOTICE relating to CElll</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:complexType name="CellPriceStructure">
@@ -606,6 +623,12 @@ Rail transport, Roads and Road transport
 				<xsd:element ref="DistributionChannelRef" minOccurs="0"/>
 				<xsd:element ref="GroupOfDistributionChannelsRef" minOccurs="0"/>
 			</xsd:choice>
+			<xsd:element name="PaymentMethod" type="PaymentMethodEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>PReferece to a ayment Method .</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="TypeOfTravelDocumentRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:group name="CellHeadingsGroup">
@@ -700,6 +723,11 @@ Rail transport, Roads and Road transport
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element ref="FareTableRef" minOccurs="0"/>
+			<xsd:element name="noticeAssignments" type="noticeAssignments_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>NOTICEs that apply to whole FARE TABLE COLUMN</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- === Row s============================================= -->
@@ -777,6 +805,11 @@ Rail transport, Roads and Road transport
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element ref="FareTableRef" minOccurs="0"/>
+			<xsd:element name="noticeAssignments" type="noticeAssignments_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>NOTICEs that apply to whole FARE TABLE ROW.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->

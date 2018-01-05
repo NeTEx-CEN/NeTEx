@@ -2,60 +2,60 @@
 <PublicationDelivery xmlns="http://www.netex.org.uk/netex" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:siri="http://www.siri.org.uk/siri" version="1.0" xsi:schemaLocation="http://www.netex.org.uk/netex ../../../xsd/NeTEx_publication.xsd">
 	<PublicationTimestamp>2001-12-17T09:30:47.0Z</PublicationTimestamp>
 	<ParticipantRef>SYS001</ParticipantRef>
-	<!--   
-UK NeTEx Profile: NPTG Data 
+	<!--
+UK NeTEx Profile: NPTG Data
 =============
-This Example shows an extract of  NaPTAN   data     encoded  in NeteX  format
+This Example shows an extract of  NaPTAN   data for two  NaPTAN STopAreas and three NaPTAN Stop Points   encoded  in NeteX  format
 (C) Crown Copyright 2017
 
 ==========================================
 1. Overview:
 
-Naptan  describes both an timebale and phusical   aspects of a Stop Point.  NeTEx represents these as separate concepts 
+Naptan  describes both an timetablee and physical   aspects of a Stop Point.  NeTEx represents these as separate concepts
 
-1.1 NaPTan STops A 
+1.1 NaPTan Stop  Areas
+
+Stop Areas.  Each NaPTAN StopArea can be represented by a  NeTEx STOP AREA.  In particular this is useful where StopAreas are used to group multimodal stops at an interchange,
+
+1.1 NaPTan Stop Points
+
 NeTEx separates  schedule stop aspects    (SCHEDULED STOP POINT )  from physical  locality  (STOP PLACE, QUAY, BOARDING POINT)
 these cna be tied tgether using a STOP ASSIGNMENT
 
-NeTEx separates  administrative roles and rights (RESPONSIBILITY SET, RESPONSIBILTY ROLE)    
- 
-
-1.2 NaPTAN Stoop Areas 
-
-NPTG Localities correspond straightforwardly to NeTEx  TOPOGRAPHIC PLACes
-
-1.2 NPTG Localities 
-
-NPTG Localities correspond straightforwardly to NeTEx  TOPOGRAPHIC PLACes
-
-1.3NPTG PlusBus Zones  
-
-NPTG Localities correspond straightforwardly to NeTEx  TARIFF ZONES 
-
-
+ 1.2 Elelemnts are groupe d in a SERVICE FRAME
 ================================
-2.  Summary 
+2.  Summary
 
-2.1 Each NaPTAN STop is represented as a 
-              SCHEDULED STOP POINT & a STOP PLACE
-       
-          
- 
-3. Further details
+2.1 Each NaPTAN stop area  is mapped to an element of a  NeTEx STOP PLACE, and identified with the same identifier i.e. AtcoCode.
+			-	NaPTAN  StopArea  => StopArea
+			-	NaPTAN ParentStopAreaRef =>ParentStopAreaRef.
+			-	NaPTAN StopArea members =>ScheduledStopPoint members.
+
+The Type of the StopAre can be re[presented with a TypeOfZone code
+
+2.2 Each NaPTAN point type is mapped to an element of a  NeTEx STOP PLACE, and identified with the same identifier i.e. AtcoCode.
+
+ The NaPTAN StopClassification and StopType can be used to determine how each type of stop is handled
+     Each NaPTAN StopPoint that is an interchange   (i.e. of NaPTAN ‘access area’ stop type RLY, MET, etc) can be represented by a NeTEx STOP PLACE.
+			-	NaPTAN StopPoint (AccessArea) => NeTEx StopPlace.
+  Each NaPTAN StopPoint that is a platform or other physical point of access (i.e. of NaPTAN stop type, BCS, PLT, etc ) can be represented by a NeTEx QUAY within a STOP PLACE given by the associated NaPTAN interchange.
+			-	NaPTAN StopPoint (Physical Stop) =>NeTEx StopPlace / Quay.
+ Each NaPTAN StopPoint that is an entrance to an interchange (.e. of NaPTAN stop type BSE, RSE, FER, etc ) can be represented by a NeTEx ENTRANCE within a STOP PLACE given by the associated NaPTAN interchange
+			-	NaPTAN StopPoint (Entrance) =>NeTEx  StopPlace / Entrance.
+ Each NaPTAN StopPoint that is not part of an interchange (mostly just on-street bus stops of type  BCT,) can be represented by a NeTEx QUAY; in this case an additional STOP PLACE will have to be created to contain it.  Pairs of on street stops (as indicated by a NaPTAN Stop Are of type GCLS) can be assigned to a single STOP
 
 
-Deatils of NPTG NaptAN Prefixes, SMS codes etc are specified as CODESPACE ASSIGNMENTs 
+Each NaPTAN StopPoint that is an interchange   (i.e. of NaPTAN ‘access area’ stop type RLY, MET, etc)  can be represented by a NeTEx SCHEDULED STOP POINT.
+			-	NaPTAN StopPoint (AccessArea) => NeTEx ScheduledStopPoint.
 
-Fixed NPTG codes that are UK specific are represented as  NeTEx TYPE OF XXX  references so they can be validated (if desired) .  This also allows The UK  specific categroreis to  be    stored for round trip processing
+A NeTEx STOP PLACE ASSIGNMENT can be created to explicitly link the Additional attributes that relate to the SCHEDULED STOP POINT rather than the physical  stop
 
 
+The Type of the StopPlace element  can be re[presented with a TypeOfPlace code
 
-Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
+		-	NaPTAN StopPoint (AccessArea) -> NeTEx ScheduledStopPoint.
 
           SourceLocalityType    ==>  TypeOfPlacE
-
-
-
 
 -->
 	<!--- ======WHAT WAS REQUESTED ========== -->
@@ -260,7 +260,7 @@ Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
 								<!--	<Street>Netherley Road</Street>  -->
 								<TopographicPlaceRef ref="nptg:TopographicPlace:E0000004"/>
 							</ScheduledStopPoint>
-							<StopPlace version="any" id="napt:StopPlace:260010966">
+							<StopPlace version="any" id="napt:StopPlace:260010966" responsibilitySetRef="nptg:ResponsibilitySet:060">
 								<Name>Netherley Road</Name>
 								<quays>
 									<Quay id="napt:StopPoint:26001096" version="1">
@@ -359,6 +359,27 @@ Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
 								</placeTypes>
 								<TopographicPlaceRef ref="E0054662"/>
 								<AtCentre>true</AtCentre>
+								<entrances>
+									<StopPlaceEntrance id="napt:StopPoint:9100ABDARE0A" version="1">
+										<Name>berdare Rail Station - Main Entrance</Name>
+										<Centroid>
+											<Location>
+												<Longitude>-3.4430991462</Longitude>
+												<Latitude>51.715057474</Latitude>
+												<gml:pos srsName="UKOS">300400  202800</gml:pos>
+											</Location>
+										</Centroid>
+										<placeTypes>
+											<TypeOfPlaceRef ref="napt:StopClassification:RSE"/>
+										</placeTypes>
+										<RoadAddress version="any" id="napt:StopPoint:9100ABDARE0A">
+											<RoadName>Station Road  Avenue</RoadName>
+											<!-- NAPT_<Street> -->
+											<BearingCompass>SE</BearingCompass>
+											<!-- NAPT_<CompassPoint> -->
+										</RoadAddress>
+									</StopPlaceEntrance>
+								</entrances>
 								<TransportMode>rail</TransportMode>
 								<StopPlaceType>railStation</StopPlaceType>
 								<mainTerminusForPlaces>
@@ -393,6 +414,36 @@ Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
 									<TopographicPlaceRef created="2004-11-23T00:00:00" changed="2004-11-23T00:00:00" versionRef="0" ref="N0075983"/>
 									<!--  NPTG_<NptgLocalityRef> -->
 								</mainTerminusForPlaces>
+								<quays>
+									<Quay id="napt:StopPoint:9100ABDARE01" version="1">
+										<Name>Platform 1</Name>
+										<Centroid>
+											<Location>
+												<Longitude>-3.4430991462</Longitude>
+												<Latitude>51.715057474</Latitude>
+												<gml:pos srsName="UKOS">300400  202800</gml:pos>
+											</Location>
+										</Centroid>
+										<placeTypes>
+											<TypeOfPlaceRef ref="napt:StopClassification:PLT"/>
+										</placeTypes>
+										<QuayType>railPlatform</QuayType>
+									</Quay>
+									<Quay id="napt:StopPoint:9100ABDARE02" version="1">
+										<Name>Platform 2</Name>
+										<Centroid>
+											<Location>
+												<Longitude>-3.4430991462</Longitude>
+												<Latitude>51.715057474</Latitude>
+												<gml:pos srsName="UKOS">300400  202800</gml:pos>
+											</Location>
+										</Centroid>
+										<placeTypes>
+											<TypeOfPlaceRef ref="napt:StopClassification:PLT"/>
+										</placeTypes>
+										<QuayType>railPlatform</QuayType>
+									</Quay>
+								</quays>
 							</StopPlace>
 						</PassengerStopAssignment>
 					</stopAssignments>

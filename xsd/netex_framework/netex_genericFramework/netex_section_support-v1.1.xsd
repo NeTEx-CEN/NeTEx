@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:core="http://www.govtalk.gov.uk/core" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_section_support">
-	<xsd:include schemaLocation="netex_grouping_support-v1.0.xsd"/>
+	<xsd:include schemaLocation="netex_pointAndLinkSequence_support-v1.1.xsd"/>
 	<xsd:annotation>
 		<xsd:appinfo>
 			<Metadata xmlns="http://www.govtalk.gov.uk/CM/gms-xs">
@@ -11,6 +11,8 @@
 				<Date><Created>2017-06-28</Created> Created from PointANd Link Package
 				</Date>
 				<Date><Modified>2017-06-28</Modified> Add PointOnLinkRef  add LinkOnSectionIdType,  rename  CommonSectionMember IdType to PointOnSectionIdType
+				</Date>
+				<Date><Modified>2017-11-08</Modified> Make Section a type of Link Sequence. Move Common Section to separate package.
 				</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines SECTION types.</p>
@@ -55,7 +57,7 @@ Rail transport, Roads and Road transport
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of a SECTION.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="GroupOfEntitiesIdType"/>
+		<xsd:restriction base="LinkSequenceIdType"/>
 	</xsd:simpleType>
 	<xsd:element name="SectionRef" type="SectionRefStructure" abstract="false" substitutionGroup="GroupOfEntitiesRef_">
 		<xsd:annotation>
@@ -67,7 +69,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Type for a reference to a SECTION.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:simpleContent>
-			<xsd:restriction base="GroupOfEntitiesRefStructure">
+			<xsd:restriction base="LinkSequenceRefStructure">
 				<xsd:attribute name="ref" type="SectionIdType" use="required">
 					<xsd:annotation>
 						<xsd:documentation>Identifier of referenced entity.</xsd:documentation>
@@ -81,38 +83,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Reference to a parent SECTION. May be omitted if given by context..</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<!-- ==Common Section=========================================================== -->
-	<xsd:simpleType name="CommonSectionIdType">
-		<xsd:annotation>
-			<xsd:documentation>Type for identifier of a COMMON SECTION.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="SectionIdType"/>
-	</xsd:simpleType>
-	<xsd:element name="CommonSectionRef" type="CommonSectionRefStructure" abstract="false" substitutionGroup="SectionRef">
-		<xsd:annotation>
-			<xsd:documentation>Reference to a COMMON SECTION.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:complexType name="CommonSectionRefStructure">
-		<xsd:annotation>
-			<xsd:documentation>Type for a reference to a COMMON SECTION.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:simpleContent>
-			<xsd:restriction base="SectionRefStructure">
-				<xsd:attribute name="ref" type="CommonSectionIdType" use="required">
-					<xsd:annotation>
-						<xsd:documentation>Identifier of referenced entity.</xsd:documentation>
-					</xsd:annotation>
-				</xsd:attribute>
-			</xsd:restriction>
-		</xsd:simpleContent>
-	</xsd:complexType>
-	<xsd:element name="ParentCommonSectionRef" type="CommonSectionRefStructure" abstract="false" substitutionGroup="SectionRef">
-		<xsd:annotation>
-			<xsd:documentation>Reference to a COMMON SECTION.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<!-- ==Common Section=========================================================== -->
+	<!-- GeneralSection=========================================================== -->
 	<xsd:simpleType name="GeneralSectionIdType">
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of a GENERAL SECTION.</xsd:documentation>
@@ -143,21 +114,21 @@ Rail transport, Roads and Road transport
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of a POINT ON A COMMON SECTION.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="GroupMemberIdType"/>
+		<xsd:restriction base="PointInSequenceIdType"/>
 	</xsd:simpleType>
 	<xsd:simpleType name="LinkOnSectionIdType">
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of a LINK ON A COMMON SECTION.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="GroupMemberIdType"/>
+		<xsd:restriction base="LinkInSequenceIdType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="SectionInSequenceIdType">
+		<xsd:annotation>
+			<xsd:documentation>Type for identifier of a  SECTION. Sequence </xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="LinkInSequenceIdType"/>
 	</xsd:simpleType>
 	<!-- ======================================================================= -->
-	<xsd:simpleType name="CommonSectionSequenceMemberIdType">
-		<xsd:annotation>
-			<xsd:documentation>Type for identifier of a member of a COMMON SECTION.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="GroupMemberIdType"/>
-	</xsd:simpleType>
 	<!-- ======================================================================= -->
 	<xsd:simpleType name="RelativeDirectionEnumeration">
 		<xsd:annotation>

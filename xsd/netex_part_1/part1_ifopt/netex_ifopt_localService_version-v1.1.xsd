@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_ifopt_localService_version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_ifopt_localService_version">
 	<xsd:include schemaLocation="../../netex_framework/netex_utility/netex_utility_types-v1.1.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_travelRights_support-v1.0.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_mode_support-v1.0.xsd"/>
@@ -22,6 +22,8 @@
 				<Date>
 					<Modified>2007-06-12</Modified>
 				</Date>
+				<Date><Modified>2017-10-10</Modified>CR051 Add Keep for period to lost property service and maximum Duration to LeftLuggage
+				</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines EQUIPMENT types for Place access.</p>
 				</Description>
@@ -30,11 +32,11 @@
 					<Syntax>http://www.w3.org/2001/XMLSchema</Syntax>
 					<Description>XML schema, W3C Recommendation 2001</Description>
 				</Format>
-				<Identifier>{http://www.netex.org.uk/schemas/1.0/xsd/netex_part_1/part1_ifopt}netex_ifopt_localService_version-v1.0.xsd</Identifier>
+				<Identifier>{http://www.netex.org.uk/schemas/1.0/xsd/netex_part_1/part1_ifopt}netex_ifopt_localService_version-v1.1.xsd</Identifier>
 				<Language>[ISO 639-2/B] ENG</Language>
 				<Publisher>Kizoom Software Ltd, 16 High Holborn, London WC1V 6BX</Publisher>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2014</Copyright>
+	 <Copyright>CEN, Crown Copyright 2009-2017</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -524,6 +526,11 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Depth of Locker.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="MaximumDuration" type="xsd:duration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Maximum time for which luggage can be left. +V1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->
@@ -547,6 +554,13 @@ Rail transport, Roads and Road transport
 						<xsd:sequence>
 							<xsd:group ref="LocalServiceGroup"/>
 						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:element name="PropertyKeptForDuration" type="xsd:duration" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Period for which lost property is kept - after this tiome it may be disposed of.  +v1.1</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+						</xsd:sequence>
 					</xsd:sequence>
 					<xsd:attribute name="id" type="LostPropertyServiceIdType" use="optional"/>
 				</xsd:restriction>
@@ -558,14 +572,22 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Type for a LOST PROPERTY SERVICE.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
-			<xsd:extension base="CustomerService_VersionStructure"/>
+			<xsd:extension base="CustomerService_VersionStructure">
+				<xsd:group ref="LostPropertyServiceGroup"/>
+			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
 	<xsd:group name="LostPropertyServiceGroup">
 		<xsd:annotation>
 			<xsd:documentation>Elements for a LOST PROPERTY SERVICE.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:sequence/>
+		<xsd:sequence>
+			<xsd:element name="PropertyKeptForDuration" type="xsd:duration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Period for which lost property is kept - after this time it may be disposed of. +V1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->
 	<xsd:element name="MeetingPointService" substitutionGroup="CustomerService">

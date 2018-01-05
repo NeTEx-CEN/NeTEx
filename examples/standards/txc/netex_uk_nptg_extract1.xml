@@ -2,8 +2,8 @@
 <PublicationDelivery xmlns="http://www.netex.org.uk/netex" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:siri="http://www.siri.org.uk/siri" version="1.0" xsi:schemaLocation="http://www.netex.org.uk/netex ../../../xsd/NeTEx_publication.xsd">
 	<PublicationTimestamp>2001-12-17T09:30:47.0Z</PublicationTimestamp>
 	<ParticipantRef>SYS001</ParticipantRef>
-	<!--   
-UK NeTEx Profile: NPTG Data 
+	<!--
+UK NeTEx Profile: NPTG Data
 =============
 This Example shows an extract of  NPTG  data     encoded  in NeteX  format
 (C) Crown Copyright 2017
@@ -11,37 +11,41 @@ This Example shows an extract of  NPTG  data     encoded  in NeteX  format
 ==========================================
 1. Overview:
 
-NPTG describes both an administrative context for manageong and aggregating data (Regions, Administrative Areas, Districts)  and an set of Topgraphical data for the UK (Localities)
+The UK National unic Transport Gazatteer schema (NPTG) describes  common reference data for organising and exchanging UK PT data
+
+It encompasses two different concepts
+(a) An administrative context for manageing and aggregating data (Regions, Administrative Areas, Districts)
+(b) A set of Topgraphical data for the UK (NPTG Localities)
 
 1.1 NPTG Administrative entities
- 
-NeTEx separates  organisational structure (ORGANISATION, ORGANISATION PART)  from topographical  locality  (TOPOGRAPHIC PLACE)
 
-NeTEx separates  administrative roles and rights (RESPONSIBILITY SET, RESPONSIBILTY ROLE) from 
+The NeTEx representation is more complex than the NOTG representation because it separates various concerts:
+NPTG in efefct ombines organisation, topographic,  jurisdictive and responsibilty aspects into   a single hierarchy (Regions, Administrative Area, Districts),    Thus to represent each NPTG
+administrative entity, severall different NeTEX entity are needed.
 
-NeTEx separates Jurisidictional area   (ADMINISTRATIVE ZONE) from  topographical locality (TOPOGRAPHIC PLACE)       
- 
-NPTG combines organisation, topographic,  jurisdictive and responsibilty aspects into   a single hierarchy (Regions, Administrative Area, Districts),    Thus to represent each NPTG  
-administrative entities seevarl different NeTEX entity are needed.
+NeTEx separates Administrative/ Jurisidictional area   (ADMINISTRATIVE ZONE) from  topographical locality (TOPOGRAPHIC PLACE)
 
-1.2 NPTG Localities 
-
-NPTG Localities correspond straightforwardly to NeTEx  TOPOGRAPHIC PLACes
+NeTEx allows the specification of   arbitrary administrative roles and rights (RESPONSIBILITY SET, RESPONSIBILTY ROLE)
 
 
-1.3NPTG PlusBus Zones  
+NeTEx separates  organisational structure (ORGANISATION, ORGANISATION PART)  from Administrative/ Jurisidictional area
 
-NPTG Localities correspond straightforwardly to NeTEx  TARIFF ZONES 
+
+
+1.2 NPTG Localities
+
+Each NPTG Locality correspond straightforwardly to a NeTEx  TOPOGRAPHIC PLACE
+
 
 
 ================================
-2.  Summary 
+2.  Summary
 
 2.1 The NPTG Administrative Oganisational  aspect is represented as  An ORGANISATION  with an ORGANISATION PART for each NPTG region and one for the DFT (administering national regions)
-       
-   
 
-2.2 The  NPTG Administrative Topographic aspect is represented    as several separate Entities 
+
+
+2.2 The  NPTG Administrative Topographic aspect is represented    as several separate Entities
 
 Each   NPTG Region is  also a  NeTEX  ADMINISTRATIVE ZONE with TypeofZone = "nptg:UkRegion"
 
@@ -57,16 +61,16 @@ Each   NPTG District  is a  NeTEX   ADMINISTRATIVE ZONE  with TypeofZone = "nptg
 Each   NPTG AdministrativeArea that has national scope (eg 910, )  is a  NeTEX  ADMINISTRATIVE ZONE with TypeofZone = "nptg:UkAdministrativeArea-National"
 
 
-2.3 The  NPTG Administrative administrative roles  and rights aspect is represented    a s a Responsibility Set 
+2.3 The  NPTG Administrative administrative roles  and rights aspect is represented    a s a Responsibility Set
 
 Each   NPTG AdministrativeArea is re[presented by a ResponsibiltySet - this is referenced on  STop Types.
-       
+
 Each   NPTG AdministrativeArea is re[presented by a ResponsibiltySet - this is referenced on  STop Types.
 =========================
 3. Further details
 
 
-Deatils of NPTG NaptAN Prefixes, SMS codes etc are specified as CODESPACE ASSIGNMENTs 
+Deatils of NPTG NaptAN Prefixes, SMS codes etc are specified as CODESPACE ASSIGNMENTs
 
 Fixed NPTG codes that are UK specific are represented as  NeTEx TYPE OF XXX  references so they can be validated (if desired) .  This also allows The UK  specific categroreis to  be    stored for round trip processing
 
@@ -74,7 +78,12 @@ Fixed NPTG codes that are UK specific are represented as  NeTEx TYPE OF XXX  ref
 
 Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
 
-          SourceLocalityType    ==>  TypeOfPlace
+         NPTG SourceLocalityType    ==> NeTEx   TypeOfPlace
+
+         NPTG LocalityType			 ==> NeTEx    TopographicalPlaceType
+				city, suburb, town, village, hamlet, urbanCentre, placeOfInterest, otehr, unrecorded
+
+
 
 -->
 	<!--- ======WHAT WAS REQUESTED ========== -->
@@ -112,7 +121,7 @@ Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
 							<LocatingSystemRef>WGS84</LocatingSystemRef>
 						</TypeOfFrame>
 						<!-- ==== Fixed values == -->
-						<ValueSet version="2.4" id="napt:NptgPlaceTypes">
+						<ValueSet version="2.4" id="nptg:NptgPlaceTypes">
 							<Name>NPTG Place Types   s</Name>
 							<values>
 								<TypeOfPlace version="any" id="nptg:SourceLocalityType:Lo">
@@ -132,7 +141,7 @@ Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
 								</TypeOfPlace>
 							</values>
 						</ValueSet>
-						<ValueSet version="2.4" id="napt:NptgOrganisationPartTypes">
+						<ValueSet version="2.4" id="nptg:NptgOrganisationPartTypes">
 							<Name>NPTG Organisation Part Types   s</Name>
 							<values>
 								<TypeOfZone version="any" id="nptg:UkRegion">
@@ -155,7 +164,7 @@ Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
 								</TypeOfZone>
 							</values>
 						</ValueSet>
-						<ValueSet version="2.4" id="napt:n">
+						<ValueSet version="2.4" id="nptg:NptgSmsCOdes">
 							<Name>NPTG Codespace Assignment Types</Name>
 							<values>
 								<TypeOfCodespaceAssignment version="any" id="nptg:naptan_sms">
@@ -5813,7 +5822,7 @@ Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
 					</organisations>
 				</ResourceFrame>
 				<!--   ======================================================================= -->
-				<!--   NPTG LOcalities  -->
+				<!--   NPTG Plus Bus Tariff Zones  -->
 				<SiteFrame id="nptg:Localities" version="any">
 					<topographicPlaces>
 						<!--- Sample localityies from area UkAdministrativeArea001  -->
@@ -5996,7 +6005,8 @@ Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
 							</Descriptor>
 						</TopographicPlace>
 						<!--- Sample localitys from area UkAdministrativeArea052  -->
-						<TopographicPlace responsibilitySetRef="nptg:UkAdministrativeArea:152" created="2005-10-05T11:33:14" changed="2013-02-20T12:38:01" modification="revise" version="3" id="nptg:UkLocality:N0076702">
+						<!--				<TopographicPlace responsibilitySetRef="nptg:UkAdministrativeArea:152" created="2005-10-05T11:33:14" changed="2013-02-20T12:38:01" modification="revise" version="3" id="nptg:UkLocality:N0076702"> -->
+						<TopographicPlace created="2005-10-05T11:33:14" changed="2013-02-20T12:38:01" modification="revise" version="3" id="nptg:UkLocality:N0076702">
 							<!--  responsibilitySetRef: NPTG_<AdministrativeAreaRef>  -->
 							<Centroid>
 								<Location id="nptg:NptgLocality.Translation:N0076702">
@@ -6023,7 +6033,8 @@ Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
 							<TopographicPlaceType>hamlet</TopographicPlaceType>
 							<!-- 	  NPTG_<LocalityClassification> -->
 						</TopographicPlace>
-						<TopographicPlace responsibilitySetRef="nptg:UkAdministrativeArea:152" created="2005-10-05T10:50:16" changed="2010-01-11T09:01:44" modification="revise" version="2" id="nptg:UkLocality:N0076746">
+						<!-- <TopographicPlace responsibilitySetRef="nptg:UkAdministrativeArea:152" created="2005-10-05T10:50:16" changed="2010-01-11T09:01:44" modification="revise" version="2" id="nptg:UkLocality:N0076746"> -->
+						<TopographicPlace created="2005-10-05T10:50:16" changed="2010-01-11T09:01:44" modification="revise" version="2" id="nptg:UkLocality:N0076746">
 							<!--  responsibilitySetRef: NPTG_<AdministrativeAreaRef>  -->
 							<Centroid>
 								<Location id="nptg:NptgLocality.Translation:N0076746">

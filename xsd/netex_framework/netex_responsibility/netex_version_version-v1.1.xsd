@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:core="http://www.govtalk.gov.uk/core" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_version_version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:core="http://www.govtalk.gov.uk/core" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_version_version">
 	<xsd:include schemaLocation="../netex_utility/netex_utility_contact-v1.0.xsd"/>
 	<xsd:include schemaLocation="netex_entity_version-v1.0.xsd"/>
 	<xsd:include schemaLocation="netex_responsibility_version-v1.1.xsd"/>
@@ -18,7 +18,7 @@
 					<Modified>2014-03-31</Modified>
 				</Date>
 				<Date>
-					<Modified>217-03-27   Change to use responsibility  1.1 with AlternativeText</Modified>
+					<Modified>2017-12-04   Change to use responsibility  1.1 with AlternativeText</Modified>
 				</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines VERSION types.</p>
@@ -28,7 +28,7 @@
 					<Syntax>http://www.w3.org/2001/XMLSchema</Syntax>
 					<Description>XML schema, W3C Recommendation 2001</Description>
 				</Format>
-				<Identifier>{http://www.netex.org.uk/schemas/1.0/xsd/netex_framework/netex_responsibility}netex_version_version-v1.0.xsd</Identifier>
+				<Identifier>{http://www.netex.org.uk/schemas/1.0/xsd/netex_framework/netex_responsibility}netex_version_version-v1.1.xsd</Identifier>
 				<Language>[ISO 639-2/B] ENG</Language>
 				<Publisher>Kizoom Software Ltd, 16 High Holborn, London WC1V 6BX</Publisher>
 				<Rights>Unclassified
@@ -111,14 +111,21 @@ Rail transport, Roads and Road transport
 		<xsd:annotation>
 			<xsd:documentation>Common Properties of an ENTITY IN VERSION.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:choice>
-			<xsd:element name="validityConditions" type="validityConditions_RelStructure">
+		<xsd:sequence>
+			<xsd:choice minOccurs="0">
+				<xsd:element name="validityConditions" type="validityConditions_RelStructure">
+					<xsd:annotation>
+						<xsd:documentation>VALIDITY CONDITIONs conditioning entity.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element ref="ValidBetween" maxOccurs="unbounded"/>
+			</xsd:choice>
+			<xsd:element name="alternativeTexts" type="alternativeTexts_RelStructure" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>VALIDITY CONDITIONs conditioning entity.</xsd:documentation>
+					<xsd:documentation>Additional Translations of text  elements.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element ref="ValidBetween" maxOccurs="unbounded"/>
-		</xsd:choice>
+		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->
 	<xsd:complexType name="versions_RelStructure">

@@ -14,14 +14,16 @@
 	<xsd:include schemaLocation="netex_validableElement_support-v1.0.xsd"/>
 	<xsd:include schemaLocation="netex_fareStructureElement_support-v1.0.xsd"/>
 	<xsd:include schemaLocation="netex_qualityStructureFactor_support-v1.0.xsd"/>
+	<xsd:include schemaLocation="netex_timeStructureFactor_support-v1.0.xsd"/>
 	<xsd:include schemaLocation="netex_distanceMatrixElement_support-v1.0.xsd"/>
 	<xsd:include schemaLocation="netex_usageParametersAll_support-v1.0.xsd"/>
 	<xsd:include schemaLocation="../../netex_part_2/part2_journeyTimes/netex_serviceJourney_support-v1.0.xsd"/>
 	<xsd:include schemaLocation="netex_fareProduct_support-v1.0.xsd"/>
-	<xsd:include schemaLocation="netex_fareSeries_support-v1.0.xsd"/>
 	<xsd:include schemaLocation="netex_salesDistribution_support-v1.0.xsd"/>
 	<xsd:include schemaLocation="netex_salesPackage_support-v1.0.xsd"/>
+	<xsd:include schemaLocation="netex_travelDocument_support-v1.1.xsd"/>
 	<!-- ======================================================================= -->
+	<xsd:include schemaLocation="netex_distanceMatrixElement_version-v1.1.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_submode_version-v1.1.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_mode_version-v1.0.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_travelRights_version-v1.1.xsd"/>
@@ -48,6 +50,14 @@
 				<Date>
 					<Modified>2017-03-28 CR019 Make ValidityParameter Assignment not abstract and fix ambiguity with Generic Parameter</Modified>
 				</Date>
+				<Date>
+					<Modified>2017-10-10 Fix Add TypeOfTravelDocument to ProductValidityParametersGroup.
+														Allow DistanceMatricElement view so that origin and Destination can be referenced</Modified>
+				</Date>
+				<Date>
+					<Modified>2017-10-10 Fix Add TimeIntervalRef TimeStructureFactorRef to GeographicalIntervalRef   GeographicalStructureFactorRef t be referenced
+													 </Modified>
+				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the FARE ACCESS RIGHTs types.</p>
@@ -57,7 +67,7 @@
 					<Syntax>http://www.w3.org/2001/XMLSchema</Syntax>
 					<Description>XML schema, W3C Recommendation 2001</Description>
 				</Format>
-				<Identifier>{http://www.netex.org.uk/schemas/1.0/xsd/netex_part_3/part3_fares}netex_accessRightParameter_versionv1.0.xsd</Identifier>
+				<Identifier>{http://www.netex.org.uk/schemas/1.0/xsd/netex_part_3/part3_fares}netex_accessRightParameter_version-v1.1.xsd</Identifier>
 				<Language>[ISO 639-2/B] ENG</Language>
 				<Publisher>Kizoom, 109-123 Clifton Street, London EC4A 4LD </Publisher>
 				<Relation>
@@ -206,6 +216,7 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="FareStructureElementRef" minOccurs="0"/>
 			<xsd:element ref="FareElementInSequenceRef" minOccurs="0"/>
 			<xsd:element ref="DistanceMatrixElementRef" minOccurs="0"/>
+			<xsd:element ref="DistanceMatrixElementView" minOccurs="0"/>
 			<xsd:element ref="SalesPackageRef" minOccurs="0"/>
 			<xsd:element ref="GroupOfDistanceMatrixElementsRef" minOccurs="0"/>
 			<xsd:element ref="GroupOfSalesPackagesRef" minOccurs="0"/>
@@ -421,6 +432,7 @@ Rail transport, Roads and Road transport
 				<xsd:element ref="GroupOfDistributionChannelsRef" minOccurs="0"/>
 			</xsd:choice>
 			<xsd:element ref="FulfilmentMethodRef" minOccurs="0"/>
+			<xsd:element ref="TypeOfTravelDocumentRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ====VALIDITY PARAMETER ASSIGNMENT=================================================== -->
@@ -484,6 +496,14 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Elements for VALIDITY PARAMETER ASSIGNMENT.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
+			<xsd:choice minOccurs="0">
+				<xsd:element ref="TimeIntervalRef"/>
+				<xsd:element ref="TimeStructureFactorRef"/>
+			</xsd:choice>
+			<xsd:choice minOccurs="0">
+				<xsd:element ref="GeographicalIntervalRef"/>
+				<xsd:element ref="GeographicalStructureFactorRef"/>
+			</xsd:choice>
 			<xsd:element ref="QualityStructureFactorRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>

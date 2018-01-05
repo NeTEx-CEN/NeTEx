@@ -30,6 +30,9 @@
 				<Date>
 					<Modified>2017-06-28  CR010 Journey Part - Add Journey Part Position  </Modified>
 				</Date>
+				<Date>
+					<Modified>2017-11-1  CR044 Journey Part - Add  day offset to Journey Part Couple  </Modified>
+				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the COUPLED JOURNEY types.</p>
@@ -212,7 +215,7 @@ of the corresponding VEHICLE TYPE. true for forward.
 			</xsd:element>
 			<xsd:element name="journeyPartPositions" type="journeyPartPositions_RelStructure" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Positions in Train of JOURNEY PART</xsd:documentation>
+					<xsd:documentation>Positions in Train of JOURNEY PART.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -456,9 +459,19 @@ of the corresponding VEHICLE TYPE. true for forward.
 					<xsd:documentation>Start time of JOURNEY PART.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="StartTimeDayOffset" type="DayOffsetType" default="0" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Number of days after journey start time that start time is.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element name="EndTime" type="xsd:time">
 				<xsd:annotation>
 					<xsd:documentation>End time of JOURNEY PART.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="EndTimeDayOffset" type="DayOffsetType" default="0" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Number of days after journey start time that end time is.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="FromStopPointRef" type="ScheduledStopPointRefStructure">
@@ -476,6 +489,7 @@ of the corresponding VEHICLE TYPE. true for forward.
 					<xsd:documentation>Main Journey JOURNEY PART of coupling.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element ref="BlockRef" minOccurs="0"/>
 			<xsd:element name="journeyParts" type="journeyPartRefs_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>JOURNEY PARTs in JOURNEY PART COUPLE.</xsd:documentation>

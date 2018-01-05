@@ -2,70 +2,70 @@
 <PublicationDelivery xmlns="http://www.netex.org.uk/netex" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:siri="http://www.siri.org.uk/siri" version="1.0" xsi:schemaLocation="http://www.netex.org.uk/netex ../../../xsd/NeTEx_publication.xsd">
 	<PublicationTimestamp>2001-12-17T09:30:47.0Z</PublicationTimestamp>
 	<ParticipantRef>SYS001</ParticipantRef>
-	<!--   
-UK NeTEx Profile: NPTG Data 
+	<!--
+UK NeTEx Profile: TXC data
 =============
-This Example shows an extract of  NaPTAN   data     encoded  in NeteX  format
-(C) Crown Copyright 2017
+This Example shows an extract of  TransXChaneg data          encoded  in NeteX  format so as to preserve the Section  structures
+for  round trip exchange. Note that a simpler encoding is possible if sections are not used.
+
+Sections are groups of links that can be reused in multiple SERVICE PATTERNS / JOURNEYPATTERNS, thereby reducing the size of a document.
+
+Also to facilitate round trip exchange:
+	The example also tags elements with their TXC categories  e
+    Seperate Frames are used to group different types of  txc data :
 
 ==========================================
 1. Overview:
 
-Naptan  describes both an timebale and phusical   aspects of a Stop Point.  NeTEx represents these as separate concepts 
-
-1.1 NaPTan STops A 
-NeTEx separates  schedule stop aspects    (SCHEDULED STOP POINT )  from physical  locality  (STOP PLACE, QUAY, BOARDING POINT)
-these cna be tied tgether using a STOP ASSIGNMENT
-
-NeTEx separates  administrative roles and rights (RESPONSIBILITY SET, RESPONSIBILTY ROLE)    
- 
-
-1.2 NaPTAN Stoop Areas 
-
-NPTG Localities correspond straightforwardly to NeTEx  TOPOGRAPHIC PLACes
-
-1.2 NPTG Localities 
-
-NPTG Localities correspond straightforwardly to NeTEx  TOPOGRAPHIC PLACes
-
-1.3NPTG PlusBus Zones  
-
-NPTG Localities correspond straightforwardly to NeTEx  TARIFF ZONES 
 
 
-================================
-2.  Summary 
+1.1 Fixed Codes are encoded as  NeTEx TYPES OF VALUE in a Resource Frame and used to valdiate  other TXC data
 
-2.1 Each NaPTAN STop is represented as a 
-              SCHEDULED STOP POINT & a STOP PLACE
-       
-             ONE STREET
+1.2 TXC Operator is encoded as an NeTEx OPERATOR
 
+1.3  TxC Line is encoded as NeTEx LINE
 
-              ENTRANCES are 
- 
-3. Further details
+1.3  TXC Stop poit is encoded as NeTEx SCHEDULED STOP POINT
 
+2. There are several different ways  that a TXC  timetable might be encoded in NeTEx
 
-Deatils of NPTG NaptAN Prefixes, SMS codes etc are specified as CODESPACE ASSIGNMENTs 
+This example  maps
+ 2.1         TXC RouteSection ==>NeTEx GENERAL SECTION (with PURPOSE  OF GROUPING = txc:RouteSection)
+          TXC   RouteLink   ==> NeTEx LINK IN SECTION +  SERVICE LINK
 
-Fixed NPTG codes that are UK specific are represented as  NeTEx TYPE OF XXX  references so they can be validated (if desired) .  This also allows The UK  specific categroreis to  be    stored for round trip processing
+          TXC Route ==> NeTEx SERVICE PATTERN
 
-
-
-Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
-
-          SourceLocalityType    ==>  TypeOfPlacE
+  2.2       JourneyPatternSection ===> NeTEx GENERAL SECTION (with PURPOSE  OF GROUPING = txc:JourneyPatternSection)
 
 
+         The VEHICLE JOURNEY  === SERVICE JOURNEY
+							BlockRef ==> BLOCK REF
+                           TicketMachineJourneyCode ==> PrivateCOde
 
+2.3   Temproral conditions   OperatonalProfile ==>  SERVCIE CALENDAR FRAME
+					 Netex
+
+
+                TXC has three bilt in conditions that ar enot explicitly stated
+                           MondayTo Friday
+                           Saturday
+                           Sunday
+
+
+2.4      TXC VehicleJourney ===>  NeTEx SERVICE JOURNEY
+
+					Txc Service   ==> NeTEx TIMETABLE FRAME
+                   Txc Service  ==> NeTEx Group of SERVICES outbound
+					 Txc Service  ==> NeTEx Group of SERVICES inboundbound
+
+2.3   Crew codes are mappe d to DUrtySchedules
 
 -->
 	<!--- ======WHAT WAS REQUESTED ========== -->
 	<PublicationRefreshInterval>P3M</PublicationRefreshInterval>
 	<!--- =============== RESULTS =========== -->
 	<dataObjects>
-		<CompositeFrame version="1" id="napt:SampleData_02">
+		<CompositeFrame version="1" id="napt:SampleTimetable_894416">
 			<Name>Sample extract of NaPTAn data encoded a in NeTEx</Name>
 			<TypeOfFrameRef ref="txc:transxchange" version="2.1"/>
 			<!-- ==== CODESPACES == -->
@@ -87,7 +87,7 @@ Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
 				</Codespace>
 			</codespaces>
 			<frames>
-				<ResourceFrame version="any" id="txc:UKProfile">
+				<ResourceFrame version="any" id="txc:UKProfile-Datavalues">
 					<Name>Static NPTG code values</Name>
 					<!-- ==== Fixed values == -->
 					<typesOfValue>
@@ -219,7 +219,7 @@ Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
 								</TypeOfZone>
 							</values>
 						</ValueSet>
-						<ValueSet version="2.4" id="txc:Operator_LIcence_Types" classOfValues="TypeOfOrganisation">
+						<ValueSet version="2.4" id="txc:Operator_Licence_Types" classOfValues="TypeOfOrganisation">
 							<Name>TXC licence types  s</Name>
 							<values>
 								<TypeOfOrganisation version="any" id="txc:LicenceClassification:standardNational">
@@ -227,9 +227,24 @@ Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
 								</TypeOfOrganisation>
 							</values>
 						</ValueSet>
+						<ValueSet version="2.4" id="txc:Routes" classOfValues="PurposeOfGrouping">
+							<Name>Purpose of Grouping e</Name>
+							<values>
+								<PurposeOfGrouping version="any" id="txc:RouteSection">
+								</PurposeOfGrouping>
+								<PurposeOfGrouping version="any" id="txc:JourneyPatternSection"/>
+							</values>
+						</ValueSet>
+						<ValueSet version="2.4" id="txc:TypesOfJourneyPattern" classOfValues="TypeOfJourneyPattern">
+							<Name>TXC Route</Name>
+							<values>
+								<TypeOfJourneyPattern version="any" id="txc:Route">
+								</TypeOfJourneyPattern>
+							</values>
+						</ValueSet>
 					</typesOfValue>
 				</ResourceFrame>
-				<ResourceFrame id="txc:Timetable_Example" version="any">
+				<ResourceFrame id="txc-example_Operator" version="any">
 					<!-- ==== operators -->
 					<organisations>
 						<Operator created="2003-06-09T14:20:00-05:00" changed="2004-05-09T14:20:00-05:00" modification="revise" version="2" id="txc:Operator:STA">
@@ -266,7 +281,7 @@ Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
 						</Operator>
 					</organisations>
 				</ResourceFrame>
-				<InfrastructureFrame version="any" id="napt:tx_data_example">
+				<InfrastructureFrame version="any" id="txc-example_GaragesAndVehicleTypes_89441">
 					<garages>
 						<Garage id="txc:Garage:BYDEPOT" version="0">
 							<Name>Banbury Depot</Name>
@@ -278,9 +293,9 @@ Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
 								<PostCode>OX16 5AX</PostCode>
 								<Province>Oxon</Province>
 							</PostalAddress>
-							<ContactNumber>
-								<TelNationalNumber>01738 629739</TelNationalNumber>
-							</ContactNumber>
+							<ContactDetails>
+								<Phone>01738 629739</Phone>
+							</ContactDetails>
 							<OperatorRef version="2" ref="txc:Operator:STA"/>
 						</Garage>
 						<Garage id="txc:Garage:LNDEPOT" version="0">
@@ -292,9 +307,9 @@ Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
 								<PostCode>CV31 3SA</PostCode>
 								<Province>Warks</Province>
 							</PostalAddress>
-							<ContactNumber>
-								<TelNationalNumber>01926 422462</TelNationalNumber>
-							</ContactNumber>
+							<ContactDetails>
+								<Phone>01926 422462</Phone>
+							</ContactDetails>
 							<OperatorRef version="2" ref="txc:Operator:STA"/>
 						</Garage>
 						<Garage id="txc:Garage:NNDEPOT" version="0">
@@ -306,9 +321,9 @@ Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
 								<PostCode>CV11 4HR</PostCode>
 								<Province>Warks</Province>
 							</PostalAddress>
-							<ContactNumber>
-								<TelNationalNumber>02476 382305</TelNationalNumber>
-							</ContactNumber>
+							<ContactDetails>
+								<Phone>02476 382305</Phone>
+							</ContactDetails>
 							<OperatorRef version="2" ref="txc:Operator:STA"/>
 						</Garage>
 						<Garage id="txc:Garage:RYDEPOT" version="0">
@@ -320,9 +335,9 @@ Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
 								<PostCode>CV21 3HS</PostCode>
 								<Province>Warks</Province>
 							</PostalAddress>
-							<ContactNumber>
-								<TelNationalNumber>01788 526036</TelNationalNumber>
-							</ContactNumber>
+							<ContactDetails>
+								<Phone>01788 526036</Phone>
+							</ContactDetails>
 							<OperatorRef version="2" ref="txc:Operator:STA"/>
 						</Garage>
 						<Garage id="txc:Garage:SDDEPOT" version="0">
@@ -334,14 +349,15 @@ Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
 								<PostCode>CV37 0HR</PostCode>
 								<Province>Warks</Province>
 							</PostalAddress>
-							<ContactNumber>
-								<TelNationalNumber>01789 412680</TelNationalNumber>
-							</ContactNumber>
+							<ContactDetails>
+								<Phone>01789 412680</Phone>
+							</ContactDetails>
 							<OperatorRef version="2" ref="txc:Operator:STA"/>
 						</Garage>
 					</garages>
 					<vehicleAndCrewPoints>
 						<ParkingPoint version="1" id="napt:LayoverPoint:4200F009301">
+							<Name>Rugby Clifton Road</Name>
 							<Location>
 								<gml:pos srsName="UKOS">450695  275145</gml:pos>
 							</Location>
@@ -372,7 +388,7 @@ Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
 						</VehicleType>
 					</vehicleTypes>
 				</InfrastructureFrame>
-				<ServiceFrame id="txc_sample data" version="any">
+				<ServiceFrame id="txc-example_LineAndStops_89441" version="any">
 					<!-- ====== LINES =======  -->
 					<lines>
 						<Line version="1" id="txc:Line:2">
@@ -1200,11 +1216,11 @@ Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
 						</ScheduledStopPoint>
 					</scheduledStopPoints>
 				</ServiceFrame>
-				<ServiceFrame id="txc_sample Route (ServicePattern)" version="any">
+				<ServiceFrame id="txc-example_Routes(asServicePatterns)_89441" version="any">
 					<Name>TXC Route ==&gt; NeTEX Service Pattern </Name>
 					<generalSections>
 						<GeneralSection nameOfLinkClass="ServiceLink" version="1" id="txc:RouteSection:11507">
-							<PurposeOfGroupingRef ref="txc:RouteSection"/>
+							<PurposeOfGroupingRef version="any" ref="txc:RouteSection"/>
 							<!-- ServiceLink definitions grouped by Section -->
 							<linksOnSection>
 								<LinkOnSection order="1" version="1" id="txc:RouteSection:11507">
@@ -1488,7 +1504,7 @@ Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
 							</linksOnSection>
 						</GeneralSection>
 						<GeneralSection nameOfLinkClass="ServiceLink" version="1" id="txc:RouteSection:11509">
-							<PurposeOfGroupingRef ref="txc:RouteSection"/>
+							<PurposeOfGroupingRef version="any" ref="txc:RouteSection"/>
 							<linksOnSection>
 								<LinkOnSection order="1" version="1" id="txc:ServiceLink:11509_1">
 									<ServiceLink version="1" id="txc:ServiceLink:11509_1">
@@ -1516,7 +1532,7 @@ Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
 							</linksOnSection>
 						</GeneralSection>
 						<GeneralSection nameOfLinkClass="ServiceLink" version="1" id="txc:RouteSection:11516">
-							<PurposeOfGroupingRef ref="txc:RouteSection"/>
+							<PurposeOfGroupingRef version="any" ref="txc:RouteSection"/>
 							<linksOnSection>
 								<LinkOnSection order="1" version="1" id="txc:ServiceLink:11516_1">
 									<ServiceLink version="1" id="txc:ServiceLink:11516_1">
@@ -1678,7 +1694,7 @@ Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
 							</linksOnSection>
 						</GeneralSection>
 						<GeneralSection nameOfLinkClass="ServiceLink" version="1" id="txc:RouteSection:11522">
-							<PurposeOfGroupingRef ref="txc:RouteSection"/>
+							<PurposeOfGroupingRef version="any" ref="txc:RouteSection"/>
 							<linksOnSection>
 								<LinkOnSection order="1" version="1" id="txc:ServiceLink:11522_1">
 									<ServiceLink version="1" id="txc:ServiceLink:11522_1">
@@ -1801,7 +1817,7 @@ Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
 							</linksOnSection>
 						</GeneralSection>
 						<GeneralSection nameOfLinkClass="ServiceLink" version="1" id="txc:RouteSection:11524">
-							<PurposeOfGroupingRef ref="txc:RouteSection"/>
+							<PurposeOfGroupingRef version="any" ref="txc:RouteSection"/>
 							<linksOnSection>
 								<LinkOnSection order="1" version="1" id="txc:ServiceLink:11524_1">
 									<ServiceLink version="1" id="txc:ServiceLink:11524_1">
@@ -1841,7 +1857,7 @@ Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
 							</linksOnSection>
 						</GeneralSection>
 						<GeneralSection nameOfLinkClass="ServiceLink" version="1" id="txc:RouteSection:11528">
-							<PurposeOfGroupingRef ref="txc:RouteSection"/>
+							<PurposeOfGroupingRef version="any" ref="txc:RouteSection"/>
 							<linksOnSection>
 								<LinkOnSection order="1" version="1" id="txc:ServiceLink:11528_1">
 									<ServiceLink version="1" id="txc:ServiceLink:11528_1">
@@ -1918,7 +1934,7 @@ Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
 							</linksOnSection>
 						</GeneralSection>
 						<GeneralSection nameOfLinkClass="ServiceLink" version="1" id="txc:RouteSection:11534">
-							<PurposeOfGroupingRef ref="txc:RouteSection"/>
+							<PurposeOfGroupingRef version="any" ref="txc:RouteSection"/>
 							<linksOnSection>
 								<LinkOnSection order="1" version="1" id="txc:ServiceLink:11534_1">
 									<ServiceLink version="1" id="txc:ServiceLink:11534_1">
@@ -2060,7 +2076,7 @@ Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
 							</linksOnSection>
 						</GeneralSection>
 						<GeneralSection nameOfLinkClass="ServiceLink" version="1" id="txc:RouteSection:11536">
-							<PurposeOfGroupingRef ref="txc:RouteSection"/>
+							<PurposeOfGroupingRef version="any" ref="txc:RouteSection"/>
 							<linksOnSection>
 								<LinkOnSection order="1" version="1" id="txc:ServiceLink:11536_1">
 									<ServiceLink version="1" id="txc:ServiceLink:11536_1">
@@ -2092,7 +2108,7 @@ Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
 							</linksOnSection>
 						</GeneralSection>
 						<GeneralSection nameOfLinkClass="ServiceLink" version="1" id="txc:RouteSection:11545">
-							<PurposeOfGroupingRef ref="txc:RouteSection"/>
+							<PurposeOfGroupingRef version="any" ref="txc:RouteSection"/>
 							<linksOnSection>
 								<LinkOnSection order="1" version="1" id="txc:ServiceLink:11545_1">
 									<ServiceLink version="1" id="txc:ServiceLink:11545_1">
@@ -2262,7 +2278,7 @@ Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
 							</linksOnSection>
 						</GeneralSection>
 						<GeneralSection nameOfLinkClass="ServiceLink" version="1" id="txc:RouteSection:11550">
-							<PurposeOfGroupingRef ref="txc:RouteSection"/>
+							<PurposeOfGroupingRef version="any" ref="txc:RouteSection"/>
 							<linksOnSection>
 								<LinkOnSection order="1" version="1" id="txc:ServiceLink:11550_1">
 									<ServiceLink version="1" id="txc:ServiceLink:11550_1">
@@ -2347,7 +2363,7 @@ Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
 							</linksOnSection>
 						</GeneralSection>
 						<GeneralSection nameOfLinkClass="ServiceLink" version="1" id="txc:RouteSection:11553">
-							<PurposeOfGroupingRef ref="txc:RouteSection"/>
+							<PurposeOfGroupingRef version="any" ref="txc:RouteSection"/>
 							<linksOnSection>
 								<LinkOnSection order="1" version="1" id="txc:ServiceLink:11553_1">
 									<ServiceLink version="1" id="txc:ServiceLink:11553_1">
@@ -2376,7 +2392,7 @@ Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
 							</linksOnSection>
 						</GeneralSection>
 						<GeneralSection nameOfLinkClass="ServiceLink" version="1" id="txc:RouteSection:11555">
-							<PurposeOfGroupingRef ref="txc:RouteSection"/>
+							<PurposeOfGroupingRef version="any" ref="txc:RouteSection"/>
 							<linksOnSection>
 								<LinkOnSection order="1" version="1" id="txc:ServiceLink:11555_1">
 									<ServiceLink version="1" id="txc:ServiceLink:11555_1">
@@ -2412,7 +2428,7 @@ Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
 							<PrivateCode>1</PrivateCode>
 							<Description>Rugby - Coventry</Description>
 		<DirectionType>outbound</DirectionType>
-					 
+
 							<RouteSectionRef>11507</RouteSectionRef>
 							<RouteSectionRef>11509</RouteSectionRef>
 							<RouteSectionRef>11516</RouteSectionRef>
@@ -2460,6 +2476,7 @@ Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
 								</SectionInSequence>
 							</sectionsInSequence>
 							<DirectionType>outbound</DirectionType>
+							<TypeOfJourneyPatternRef version="any" ref="txc:Route"/>
 							<!--  Alternatively spell out all the links -->
 							<linksInSequence>
 								<ServiceLinkInJourneyPattern version="1" id="txc:Route:11551" order="1">
@@ -2519,7 +2536,7 @@ Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
 							<RouteSectionRef>11550</RouteSectionRef>
 							<RouteSectionRef>11555</RouteSectionRef>
 						</Route>
-			
+
 					</Routes>  -->
 							<Name>Rugby - Coventry</Name>
 							<PrivateCode type="txc:Route.PrivateCode">2</PrivateCode>
@@ -2556,10 +2573,11 @@ Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
 								</SectionInSequence>
 							</sectionsInSequence>
 							<DirectionType>outbound</DirectionType>
+							<TypeOfJourneyPatternRef version="any" ref="txc:Route"/>
 						</ServicePattern>
 					</servicePatterns>
 				</ServiceFrame>
-				<ServiceFrame id="txc_sample TP" version="any">
+				<ServiceFrame id="txc-example_JourneyPatternTimingLinks_asTimingPatterns)_89441" version="any">
 					<Name>TXC JPTL ==&gt; NeTEX Timing Pattern </Name>
 					<generalSections>
 						<GeneralSection version="1" id="txc:JourneyPatternSection:3">
@@ -4067,9 +4085,9 @@ Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
 						<TimingPattern version="any" id="txc:ServiceJourneyPattern:1:TP">
 							<Name>Timing pattern part of TXC JourneyPattern</Name>
 							<PrivateCode>119993</PrivateCode>
-							<!-- 
+							<!--
 <JourneyPattern id="1">
-									<PrivateCode>119993</PrivateCode> 
+									<PrivateCode>119993</PrivateCode>
 									<RouteRef>11551</RouteRef>
 									<JourneyPatternSectionRefs>3</JourneyPatternSectionRefs>
 									<JourneyPatternSectionRefs>1358</JourneyPatternSectionRefs>
@@ -4135,7 +4153,7 @@ Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
 									<JourneyPatternSectionRefs>100</JourneyPatternSectionRefs>
 									<JourneyPatternSectionRefs>222</JourneyPatternSectionRefs>
 									<JourneyPatternSectionRefs>104</JourneyPatternSectionRefs>
-								</JourneyPattern>				
+								</JourneyPattern>
 -->
 							<sectionsInSequence>
 								<SectionInSequence version="1" id="txc:JourneyPattern:3" order="1">
@@ -4173,7 +4191,7 @@ Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
 					</timingPatterns>
 				</ServiceFrame>
 				<!--   JPS JOURNEY PATTERNS -->
-				<ServiceFrame id="txc_sample JP" version="any">
+				<ServiceFrame id="txc-example_JourneyPatterns(asServiceJourneyPattern_89441" version="any">
 					<Name>TXC JPTL ==&gt; NeTEX JourneyPattern Pattern </Name>
 					<journeyPatterns>
 						<ServiceJourneyPattern version="any" id="txc:ServiceJourneyPattern:1:JP">
@@ -4181,7 +4199,7 @@ Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
 							<!--
 
 <JourneyPattern id="1">
-									<PrivateCode>119993</PrivateCode> 
+									<PrivateCode>119993</PrivateCode>
 									<RouteRef>11551</RouteRef>
 									<JourneyPatternSectionRefs>3</JourneyPatternSectionRefs>
 									<JourneyPatternSectionRefs>1358</JourneyPatternSectionRefs>
@@ -4236,11 +4254,11 @@ Each   NPTG Locality  is a  NeTEX  with TypeofZone = "nptg:UkLocality"
 							<!--  NB TIMING PATTERN COULD BE ZAPPED  as links are same as SERVICE PATTERN  -->
 							<TimingPatternRef version="any" ref="txc:ServiceJourneyPattern:1:TP"/>
 							<!--
-						<JourneyPatternSectionRefs>js_1</JourneyPatternSectionRefs>	
+						<JourneyPatternSectionRefs>js_1</JourneyPatternSectionRefs>
 
 
 TXC									NETEX
-<JourneyPatternTimingLink><RunTime 			 <JourneyPatternRunTime version="any" id="xxxx"><RunTime>		
+<JourneyPatternTimingLink><RunTime 			 <JourneyPatternRunTime version="any" id="xxxx"><RunTime>
 			-->
 							<runTimes>
 								<JourneyPatternRunTime version="1" id="txc:RouteLinkRef:ServiceLink:111507_1">
@@ -4510,7 +4528,7 @@ TXC									NETEX
 						<ServiceJourneyPattern version="any" id="txc:Bogus:195">
 							<!--
 
- 
+
 								<JourneyPattern id="95">
 									<PrivateCode>119995</PrivateCode>
 									<DestinationDisplay>Rugby Town Centre</DestinationDisplay>
@@ -4527,10 +4545,10 @@ TXC									NETEX
 									<JourneyPatternSectionRefs>222</JourneyPatternSectionRefs>
 									<JourneyPatternSectionRefs>104</JourneyPatternSectionRefs>
 								</JourneyPattern>
-				
+
 -->
 						</ServiceJourneyPattern>
-						<!--  xxx =======================================================================  					
+						<!--  xxx =======================================================================
 
 
 
@@ -6557,7 +6575,7 @@ TXC									NETEX
 							</JourneyPatternTimingLink>
 						</JourneyPatternSection>
 					</JourneyPatternSections>
-		
+
 					<Services>
 						<Service>
 							<ServiceCode>R86</ServiceCode>
@@ -6621,7 +6639,7 @@ TXC									NETEX
 									<JourneyPatternSectionRefs>222</JourneyPatternSectionRefs>
 									<JourneyPatternSectionRefs>104</JourneyPatternSectionRefs>
 								</JourneyPattern>
-				
+
 							</StandardService>
 							<Direction>inboundAndOutbound</Direction>
 						</Service>
@@ -6629,7 +6647,7 @@ TXC									NETEX
 					</journeyPatterns>
 				</ServiceFrame>
 				<!-- ===DAYS================================================= -->
-				<ServiceCalendarFrame version="any" id="txc:SampleData:T01">
+				<ServiceCalendarFrame version="any" id="txc-example_profile_asDayTypes_89441">
 					<validityConditions>
 						<AvailabilityCondition version="any" id="txc:AvailabilityCondition:FULLW_001">
 							<FromDate>2004-03-04T00:00:00</FromDate>
@@ -6656,14 +6674,15 @@ TXC									NETEX
 				</ServiceCalendarFrame>
 				<!--   ========= SERVICES   -->
 				<!-- ===JOURNEYS====================================================== -->
-				<TimetableFrame version="any" id="txt:ExamplTIM">
+				<TimetableFrame version="any" id="txc-example_VehicleJourney_89441">
 					<DefaultMode>bus</DefaultMode>
 					<vehicleJourneys>
 						<ServiceJourney version="1" id="txc:VehicleJourney:894416">
+							<PrivateCode type="txc:TicketMachineJourneyCode">894416</PrivateCode>
 							<DepartureTime>07:32:00</DepartureTime>
 							<ServiceJourneyPatternRef ref="txc:JourneyPattern:1"/>
-							<!--  	
-							
+							<!--
+
 							<Operational>
 								<Block>
 									<Description>121</Description>
@@ -6675,7 +6694,7 @@ TXC									NETEX
 								</VehicleType>
 								<TicketMachine>
 									<JourneyCode>894416</JourneyCode>
-								</TicketMachine> 
+								</TicketMachine>
 							</Operational>  -->
 							<VehicleTypeRef version="1" ref="txc:VehicleType:B6"/>
 							<BlockRef versionRef="1" ref="121"/>
@@ -6742,7 +6761,7 @@ TXC									NETEX
 					<VehicleJourneys>
 						<VehicleJourney>
 							<PrivateCode>894416</PrivateCode>
-							 
+
 							<OperatingProfile>
 								<RegularDayType>
 									<DaysOfWeek>
@@ -7225,7 +7244,7 @@ TXC									NETEX
 							</SubsidyDetails>
 						</Registration>
 					</Registrations>
-					
+
 					-->
 			</frames>
 		</CompositeFrame>

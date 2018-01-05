@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_parkingTariff_version">
 	<xsd:include schemaLocation="netex_parkingTariff_support-v1.1.xsd"/>
-	<xsd:include schemaLocation="../../netex_part_1/part1_ifopt/netex_ifopt_parking_version-v1.0.xsd"/>
+	<xsd:include schemaLocation="../../netex_part_1/part1_ifopt/netex_ifopt_parking_version-v1.1.xsd"/>
+	<xsd:include schemaLocation="../part3_fares/netex_fareStructureElement_version-v1.1.xsd"/>
 	<xsd:include schemaLocation="../part3_fares/netex_timeStructureFactor_version-v1.0.xsd"/>
 	<!-- ======================================================================= -->
 	<xsd:annotation>
@@ -135,21 +136,20 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Elements of a PARKING TARIFF.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="Name" type="MultilingualString" minOccurs="0">
+			<xsd:group ref="TariffDescriptionGroup"/>
+			<xsd:group ref="TariffOrganisationGroup" minOccurs="0"/>
+			<xsd:group ref="TariffTimeGroup">
 				<xsd:annotation>
-					<xsd:documentation>Name of PARKING TARIFF.</xsd:documentation>
+					<xsd:documentation>Time Elements for TARIFF.</xsd:documentation>
 				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="Description" type="MultilingualString" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Description of PARKING TARIFF.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
+			</xsd:group>
+			<xsd:group ref="TariffQualityGroup"/>
 			<xsd:group ref="ParkingClassificationGroup">
 				<xsd:annotation>
 					<xsd:documentation>Classification elements of a PARKING TARIFF.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:group>
+			<xsd:element ref="TypeOfTariffRef" minOccurs="0"/>
 			<xsd:element name="AdditionalTax" type="xsd:boolean" default="false" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Whether additional tax is charged.</xsd:documentation>
@@ -160,6 +160,7 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Charge bands for parking.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:group ref="TariffPriceGroup"/>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:group name="ParkingClassificationGroup">
@@ -219,6 +220,13 @@ Rail transport, Roads and Road transport
 						</xsd:sequence>
 						<xsd:sequence>
 							<xsd:group ref="PriceableObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:element name="Factor" type="xsd:anyType" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Factor value assoictaed with init.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
 						</xsd:sequence>
 						<xsd:sequence>
 							<xsd:group ref="TimeStructureFactorGroup"/>

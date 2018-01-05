@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:core="http://www.govtalk.gov.uk/core" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_pointAndLinkSequence_version">
+	<xsd:include schemaLocation="netex_pointAndLinkSequence_support-v1.1.xsd"/>
 	<xsd:include schemaLocation="netex_section_version-v1.1.xsd"/>
+	<xsd:include schemaLocation="netex_grouping_version-v1.1.xsd"/>
 	<xsd:annotation>
 		<xsd:appinfo>
 			<Metadata xmlns="http://www.govtalk.gov.uk/CM/gms-xs">
@@ -16,6 +18,8 @@
 				</Date>
 				<Date>
 					<Modified>2010-11-05</Modified>
+				</Date>
+				<Date><Modified>2010-11-30</Modified> Add projections, revise for revised Section Mode
 				</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines POINT AND LINK SEQUENCE types.</p>
@@ -87,12 +91,32 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Short Name of LINK SEQUENCE.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="Description" type="MultilingualString" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Further Description of a LINKSEQUENCE.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element name="Distance" type="DistanceType" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Overall distance of LINK SEQUENCE. Can be derived from component LINKs.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element ref="PrivateCode" minOccurs="0"/>
+			<xsd:element name="projections" type="projections_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>PROJECTIONs of LINK SEQUENCE onto another ENTITY or layer.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="infoLinks" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Hyperlinks associated with JOURNEY.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="infoLinks_RelStructure"/>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
 			<xsd:element name="sectionsInSequence" type="sectionsInSequence_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>SECTIONS that make up route.  Can be used as an alternative to  points in Seqnece. POINTS and LINKS must be of same type as sequence, eg ROUTE, ROUTE POINT, ROUTE LINK</xsd:documentation>
@@ -134,6 +158,11 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>PROJECTIONs of POINT.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="Description" type="MultilingualString" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Further Description of a POINT IN LINK SEQUENCE</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->
@@ -168,6 +197,11 @@ Rail transport, Roads and Road transport
 			<xsd:element name="projections" type="projections_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>PROJECTIONs of POINT.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Description" type="MultilingualString" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Further Description of a POINT IN LINK SEQUENCE</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -267,84 +301,6 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>LINK SEQUENCEs in GROUP OF LINK SEQUENCEs.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-		</xsd:sequence>
-	</xsd:group>
-	<!-- ======================================================================= -->
-	<xsd:complexType name="sectionsInSequence_RelStructure">
-		<xsd:annotation>
-			<xsd:documentation>Type for a list of  SECTIONS in sequence</xsd:documentation>
-		</xsd:annotation>
-		<xsd:complexContent>
-			<xsd:extension base="strictContainmentAggregationStructure">
-				<xsd:sequence>
-					<xsd:element ref="SectionInSequence" maxOccurs="unbounded">
-						<xsd:annotation>
-							<xsd:documentation>A SECTION in SEQUENCE.</xsd:documentation>
-						</xsd:annotation>
-					</xsd:element>
-				</xsd:sequence>
-			</xsd:extension>
-		</xsd:complexContent>
-	</xsd:complexType>
-	<xsd:element name="SectionInSequence" abstract="false" substitutionGroup="VersionedChild">
-		<xsd:annotation>
-			<xsd:documentation>A SECTION in Sequence</xsd:documentation>
-		</xsd:annotation>
-		<xsd:complexType>
-			<xsd:complexContent>
-				<xsd:restriction base="SectionInSequence_VersionedChildStructure">
-					<xsd:sequence>
-						<xsd:sequence>
-							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
-						</xsd:sequence>
-						<xsd:sequence>
-							<xsd:group ref="VersionedChildGroup"/>
-						</xsd:sequence>
-						<xsd:sequence>
-							<xsd:element name="Description" type="MultilingualString" minOccurs="0"/>
-						</xsd:sequence>
-						<xsd:sequence>
-							<xsd:element ref="LinkSequenceRef" minOccurs="0"/>
-							<xsd:choice>
-								<xsd:element ref="SectionRef">
-									<xsd:annotation>
-										<xsd:documentation>Reference to a LINK SEQUENCE.</xsd:documentation>
-									</xsd:annotation>
-								</xsd:element>
-								<xsd:element ref="Section_"/>
-							</xsd:choice>
-						</xsd:sequence>
-					</xsd:sequence>
-				</xsd:restriction>
-			</xsd:complexContent>
-		</xsd:complexType>
-	</xsd:element>
-	<xsd:complexType name="SectionInSequence_VersionedChildStructure">
-		<xsd:annotation>
-			<xsd:documentation>Type for a SECTION IN SEQUENCE </xsd:documentation>
-		</xsd:annotation>
-		<xsd:complexContent>
-			<xsd:extension base="AbstractGroupMember_VersionedChildStructure">
-				<xsd:sequence>
-					<xsd:group ref="SectionInSequenceGroup"/>
-				</xsd:sequence>
-			</xsd:extension>
-		</xsd:complexContent>
-	</xsd:complexType>
-	<xsd:group name="SectionInSequenceGroup">
-		<xsd:annotation>
-			<xsd:documentation>Elements for a  SECTION IN SEQUENCE </xsd:documentation>
-		</xsd:annotation>
-		<xsd:sequence>
-			<xsd:element ref="LinkSequenceRef" minOccurs="0"/>
-			<xsd:choice>
-				<xsd:element ref="SectionRef">
-					<xsd:annotation>
-						<xsd:documentation>Reference to a LINK SEQUENCE.</xsd:documentation>
-					</xsd:annotation>
-				</xsd:element>
-				<xsd:element ref="Section_"/>
-			</xsd:choice>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ====CommonSectionSequenceMember=================================================================== -->

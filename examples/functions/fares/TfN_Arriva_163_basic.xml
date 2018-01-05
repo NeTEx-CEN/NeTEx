@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- ==== SImple Timetable  Example ====== 
+This example shows the encoding of a point to point fare set for a simple bus timetable for a linear route in NeTex XML  
+   
+It is   is similar to the basic example except the prices are held separately in a PRICE GROUP (rather than inline)  to make it easy to change them  
+
+Also it has three  separate fare PRODUCTs that use the same TARIFF
+ 		Adult: There are Standard adult fares   (separate price table)
+		First Class: There are  First Class fares  (separate price table)
+		Child: There is a discount for children 16 or under  (discount of Standard)
+  
+The network is based  on the same route used in other bus  examples  e.g. 
+		Bus_SimpleTimetable_WithTimings example to see LINKS & PATTERNs
+		Bus_SimpleTimetable_PointToPoint_SingleProduct
+ 
+1. OVERVIEW
+============
+
+   This has just  three stops         A - B  - C   
+ 
+Point to point  Fare matrix
+
+From To	Adult Price    
+						A	    B 				C
+    A   		 -			A_B	      	 A_C
+    B		 	-			-			     B_C
+	C			 -			-					-
+
+			From To	Adult Price   Child price     1st Class
+DME1:   	A  B		1.00 EUR		50%				1.50 EUR	
+DME2   	A  C		3.00 EUR		50%				5.00 EUR	
+DME3:		B  C		2.00 EUR		50%				3.00 EUR	
+
+	
+==================================
+2. DETAILS
+
+There is one LINE :  mybus:Line:LN_24 on which the fare is valid   this is assigned  to a GROUP OF LINES 
+
+SCHEDULED STOP POINTs
+	    A)   mybus:ScheduledStopPoint:ssp_001  Alpha						 
+		B)  mybus:ScheduledStopPoint:ssp_002   Bravo							 
+		C)  mybus:ScheduledStopPoint:ssp_077	 Charley
+
+There is are three FARE PRODUCT
+  Adult  FARE PRODUCT  myfares:PreassignedFareProduct:pointToPoint_adult
+		VALIDITY PARAMETER ASSIGNMENTs
+			 CLASS OF USE myfares:ClassOfUse:standard 
+			GROUP OF LINES mybus:GroupOfLines:mylines 
+		FARE USAGE PARAMETERs 
+		FREQUENCY OF USE   one trip unlimited   myfares:FrequencyOfUse:oneTrip
+			USER PROFLE - Adults 17 or over myfares:UserProfile:adult
+
+
+  First (adult)   FARE PRODUCT  myfares:PreassignedFareProduct:pointToPoint_first
+	VALIDITY PARAMETERS
+		 CLASS OF USE myfares:ClassOfUse:first 
+		GROUP OF LINES mybus:GroupOfLines:mylines 
+	FARE USAGE PARAMETERS 
+		FREQUENCY OF USE   one trip unlimited   myfares:FrequencyOfUse:oneTrip
+			USER PROFLE - Adults 17 or over myfares:UserProfile:adult
+
+
+  Child FARE PRODUCT  myfares:PreassignedFareProduct:pointToPoint_child
+		VALIDITY PARAMETER ASSIGNMENTs
+			 CLASS OF USE myfares:ClassOfUse:standard 
+			GROUP OF LINES mybus:GroupOfLines:mylines 
+		FARE USAGE PARAMETERs
+			FREQUENCY OF USE   one trip unlimited   myfares:FrequencyOfUse:oneTrip
+			USER PROFLE - Under 17    myfares:UserProfile:child
+
+There are DISTANCE  MATRIX ELEMENTs for each point to  fare
+	A_B:	  DISTANCE  MATRIX ELEMENT: myfares:DistanceMatrixElement:SSP_001_to_SSP_002
+				FARE STRUCTUR ELEMENT PRICE:  myfares:FareStructureElementPrice:SSP_001_to_SSP_002   1.00 EUR
+
+ 	A_C:   DISTANCE  MATRIX ELEMENT: myfares:DistanceMatrixElement:SSP_001_to_SSP_077
+				FARE STRUCTUR EELEMENT PRICE:  myfares:FareStructureElementPrice:SSP_001_to_SSP_077   3.00 EUR
+
+	B_C:   DISTANCE  MATRIX ELEMENT: myfares:DistanceMatrixElement:SSP_002_to_SSP_077
+				FARE STRUCTUR EELEMENT PRICE:  myfares:FareStructureElementPrice:SSP_002_to_SSP_077   2.00 EUR
+     
+
+A COMPOSITE FRAME is used to group the component FRAMEs
+ 
+   - It has a VALIDITY CONDITION  that specifies it is valid from Jab to June
+
+		A SERVICE  FRAME is used to contain the STOP POINT  elements   LINE, etc
+		A FARE FRAME is used to contain  the FARE    elements 
+ 
+-->
+<PublicationDelivery xmlns="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://www.netex.org.uk/netex ../../../xsd/NeTEx_publication.xsd">
+	<PublicationTimestamp>2010-12-17T09:30:47.0Z</PublicationTimestamp>
+	<ParticipantRef>SYS001</ParticipantRef>
+	<!--- ======WHAT WAS REQUESTED ========== -->
+	<PublicationRequest version="1.0">
+		<RequestTimestamp>2010-12-17T09:30:47.0Z</RequestTimestamp>
+		<ParticipantRef>SYS002</ParticipantRef>
+		<topics>
+			<NetworkFrameTopic>
+				<selectionValidityConditions>
+					<AvailabilityCondition version="any" id="hde:AvailabilityCondition:CAL_02">
+						<FromDate>2011-01-01T00:00:00Z</FromDate>
+					</AvailabilityCondition>
+				</selectionValidityConditions>
+				<FareFrameRef ref="myfares:FareFrame:FF01">REQUEST</FareFrameRef>
+			</NetworkFrameTopic>
+		</topics>
+	</PublicationRequest>
+	<PublicationRefreshInterval>P1M</PublicationRefreshInterval>
+	<Description>Example  of simple point to point fares</Description>
+	<!--- =============== RESULTS =========== -->
+	<dataObjects>
+		<CompositeFrame version="1" id="myfares:CompositeFrame:CAL_02">
+			<validityConditions>
+				<ValidBetween>
+					<FromDate>2011-01-01T00:00:00Z</FromDate>
+					<ToDate>2011-07-01T00:00:00Z</ToDate>
+				</ValidBetween>
+			</validityConditions>
+			<!--- ======= CODESPACEs======== -->
+			<codespaces>
+				<Codespace id="naptan">
+					<Xmlns>mybus</Xmlns>
+					<XmlnsUrl>http://www.naptan.org.uk/f</XmlnsUrl>
+					<Description>My buses</Description>
+				</Codespace>
+				<Codespace id="myfares">
+					<Xmlns>myfares</Xmlns>
+					<XmlnsUrl>http://www.myfares,com/fares</XmlnsUrl>
+					<Description>Fatre v data   </Description>
+				</Codespace>
+			</codespaces>
+			<!--- =======FRAME DEFAULTS======== -->
+			<FrameDefaults>
+				<DefaultCodespaceRef ref="myfares"/>
+			</FrameDefaults>
+			<frames>
+				<ServiceFrame version="1" id="txc::163">
+					<Name>Stops for Winter timetable for route 24 </Name>
+					<!--- =========LINEs=========== -->
+					<lines>
+						<Line version="any" id="mybus:Line:LN_24">
+							<Name>LEEDS-GARFORTH-KIPPAX-CASTLEFORD</Name>
+							<PublicCode>163</PublicCode>
+							<OperatorRef ref="Arriva" versionRef="any"/>
+						</Line>
+					</lines>
+					<!--- =========STOP POINTs============ -->
+					<scheduledStopPoints>
+						<ScheduledStopPoint version="any" id="mybus:ScheduledStopPoint:SSP_001">
+							<Name>Alpha &amp; Castle</Name>
+							<Location>
+								<Longitude>53.0000</Longitude>
+								<Latitude>0.1000</Latitude>
+							</Location>
+							<ShortName>Alpha</ShortName>
+							<PublicCode>ALPH</PublicCode>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="mybus:ScheduledStopPoint:SSP_002">
+							<Name>Bravo Street</Name>
+							<Location>
+								<Longitude>53.2000</Longitude>
+								<Latitude>0.2000</Latitude>
+							</Location>
+							<ShortName>Bravo</ShortName>
+							<PublicCode>BRAV</PublicCode>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="mybus:ScheduledStopPoint:SSP_077">
+							<Name>Charley Crescent</Name>
+							<Location>
+								<Longitude>53.3000</Longitude>
+								<Latitude>0.3000</Latitude>
+							</Location>
+							<ShortName>Charley</ShortName>
+							<PublicCode>CHAS</PublicCode>
+						</ScheduledStopPoint>
+					</scheduledStopPoints>
+				</ServiceFrame>
+				<!--- =============== FAREs =========== -->
+				<FareFrame version="any" id="myfares:FareFrame:FF01">
+					<FrameDefaults>
+						<DefaultCurrency>EUR</DefaultCurrency>
+					</FrameDefaults>
+					<!--- ====Pricing Parmaters======= -->
+					<PricingParameterSet version="any" id="myfares:PricingParameterSet:myfares">
+						<pricingRules>
+							<DiscountingRule version="any" id="myfares:DiscountingRule:0%">
+								<DiscountAsPercentage>0</DiscountAsPercentage>
+							</DiscountingRule>
+							<DiscountingRule version="any" id="myfares:DiscountingRule:50%">
+								<DiscountAsPercentage>50</DiscountAsPercentage>
+							</DiscountingRule>
+						</pricingRules>
+					</PricingParameterSet>
+					<!--- ====Fare Structure======= -->
+					<fareStructureElements>
+						<FareStructureElement version="any" id="myfares:FareStructureElement:routes">
+							<distanceMatrixElements>
+								<DistanceMatrixElementRef version="any" ref="myfares:DistanceMatrixElement:SSP_001_to_SSP_002"/>
+								<DistanceMatrixElementRef version="any" ref="myfares:DistanceMatrixElement:SSP_001_to_SSP_077"/>
+								<DistanceMatrixElementRef version="any" ref="myfares:DistanceMatrixElement:SSP_002_to_SSP_077"/>
+							</distanceMatrixElements>
+						</FareStructureElement>
+					</fareStructureElements>
+					<tariffs>
+						<Tariff version="any" id="myfares:Tariff:F01">
+							<Name/>
+							<distanceMatrixElements>
+								<DistanceMatrixElement version="any" id="myfares:DistanceMatrixElement:SSP_001_to_SSP_002">
+									<Name>A to B</Name>
+									<StartStopPointRef version="any" ref="mybus:ScheduledStopPoint:SSP_001"/>
+									<EndStopPointRef version="any" ref="mybus:ScheduledStopPoint:SSP_002"/>
+									<prices>
+										<DistanceMatrixElementPriceRef version="any" ref="myfares:DistanceMatrixElementPrice:SSP_001_to_SSP_002_standard"/>
+										<DistanceMatrixElementPriceRef version="any" ref="myfares:DistanceMatrixElementPrice:SSP_001_to_SSP_002_first"/>
+									</prices>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="any" id="myfares:DistanceMatrixElement:SSP_001_to_SSP_077">
+									<Name>A to C</Name>
+									<StartStopPointRef version="any" ref="mybus:ScheduledStopPoint:SSP_001"/>
+									<EndStopPointRef version="any" ref="mybus:ScheduledStopPoint:SSP_077"/>
+									<prices>
+										<DistanceMatrixElementPriceRef version="any" ref="myfares:DistanceMatrixElementPrice:SSP_001_to_SSP_077_standard"/>
+										<DistanceMatrixElementPriceRef version="any" ref="myfares:DistanceMatrixElementPrice:SSP_001_to_SSP_077_first"/>
+									</prices>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="any" id="myfares:DistanceMatrixElement:SSP_002_to_SSP_077">
+									<Name>B to C</Name>
+									<StartStopPointRef version="any" ref="mybus:ScheduledStopPoint:SSP_002"/>
+									<EndStopPointRef version="any" ref="mybus:ScheduledStopPoint:SSP_077"/>
+									<prices>
+										<DistanceMatrixElementPriceRef version="any" ref="myfares:DistanceMatrixElementPrice:SSP_002_to_SSP_077_standard"/>
+										<DistanceMatrixElementPriceRef version="any" ref="myfares:DistanceMatrixElementPrice:SSP_002_to_SSP_077_first"/>
+									</prices>
+								</DistanceMatrixElement>
+							</distanceMatrixElements>
+						</Tariff>
+					</tariffs>
+					<!--- ====Fare Usage Parameters======= -->
+					<usageParameters>
+						<FrequencyOfUse version="any" id="myfares:FrequencyOfUse:oneTrip">
+							<Name>One trip no transfers</Name>
+							<FrequencyOfUseType>none</FrequencyOfUseType>
+							<MaximalFrequency>1</MaximalFrequency>
+						</FrequencyOfUse>
+						<UserProfile version="any" id="myfares:UserProfile:adult">
+							<Name>Adult Fare</Name>
+							<prices>
+								<UsageParameterPriceRef version="any" ref="myfares:UsageParameterPrice:adult"/>
+							</prices>
+							<TypeOfConcessionRef version="any" ref="myfares:TypeOfConcession:adult"/>
+							<MaximumAge>16</MaximumAge>
+						</UserProfile>
+						<UserProfile version="any" id="myfares:UserProfile:child">
+							<Name>Child Fare</Name>
+							<prices>
+								<UsageParameterPriceRef version="any" ref="myfares:UsageParameterPrice:child"/>
+							</prices>
+							<TypeOfConcessionRef version="any" ref="myfares:TypeOfConcession:child"/>
+							<MaximumAge>16</MaximumAge>
+						</UserProfile>
+						<Interchanging version="any" id="myfares:Interchanging:NoTransfers">
+							<MaximumNumberOfInterchanges>0</MaximumNumberOfInterchanges>
+						</Interchanging>
+					</usageParameters>
+					<!--- ====Fare Product======= -->
+					<fareProducts>
+						<PreassignedFareProduct version="any" id="myfares:PreassignedFareProduct:pointToPoint">
+							<Name>Adult  Standard Point To Point  fare   </Name>
+							<validityParameterAssignments>
+								<GenericParameterAssignment version="any" order="1" id="myfares:GenericParameterAssignment:pointToPoint@FrequencyOfUse">
+									<Name>One trip no transfers</Name>
+									<limitations>
+										<FrequencyOfUseRef version="any" ref="myfares:FrequencyOfUse:oneTrip"/>
+										<InterchangingRef version="any" ref="myfares:Interchanging:NoTransfers"/>
+									</limitations>
+								</GenericParameterAssignment>
+								<GenericParameterAssignment version="any" order="2" id="myfares:GenericParameterAssignment:pointToPoint@ClassOfUse">
+									<ValidityParameterGroupingType>XOR</ValidityParameterGroupingType>
+									<validityParameters>
+										<ClassOfUseRef version="any" ref="myfares:ClassOfUse:standard"/>
+										<ClassOfUseRef version="any" ref="myfares:ClassOfUse:first"/>
+									</validityParameters>
+								</GenericParameterAssignment>
+								<GenericParameterAssignment version="any" order="3" id="myfares:GenericParameterAssignment:pointToPoint@UserProfile">
+									<limitations>
+										<UserProfileRef version="any" ref="myfares:UserProfile:child"/>
+										<UserProfileRef version="any" ref="myfares:UserProfile:adult"/>
+									</limitations>
+									<ValidityParameterGroupingType>XOR</ValidityParameterGroupingType>
+								</GenericParameterAssignment>
+								<GenericParameterAssignment version="any" order="4" id="myfares:GenericParameterAssignment:pointToPoint@routes">
+									<FareStructureElementRef version="any" ref="myfares:FareStructureElement:routes"/>
+								</GenericParameterAssignment>
+							</validityParameterAssignments>
+							<!--- ====VALIDABLE ELEMENTs====== -->
+							<validableElements>
+								<ValidableElement version="any" id="myfares:ValidableElement:singleRide">
+									<Name>Single  ride</Name>
+									<validityParameterAssignments>
+										<GenericParameterAssignment version="any" order="1" id="myfares:GenericParameterAssignment:GroupOfLines">
+											<validityParameters>
+												<GroupOfLinesRef version="any" ref="mybus:GroupOfLines:mylines"/>
+											</validityParameters>
+										</GenericParameterAssignment>
+									</validityParameterAssignments>
+								</ValidableElement>
+							</validableElements>
+							<!--- ====ACCESS RIGHTs======= -->
+							<accessRightsInProduct>
+								<AccessRightInProduct version="any" id="myfares:AccessRightInProduct:singleRide" order="1">
+									<Name>First ride</Name>
+									<IsFirstInSequence>true</IsFirstInSequence>
+									<IsLastInSequence>true</IsLastInSequence>
+									<ValidableElementRef version="any" ref="myfares:ValidableElement:singleRide"/>
+								</AccessRightInProduct>
+							</accessRightsInProduct>
+						</PreassignedFareProduct>
+					</fareProducts>
+					<!--- ====Fare Prices======= -->
+					<fareTables>
+						<FareTable version="any" id="myfares:FareTable:Standard">
+							<Name>Prices for Point to Point Fare Product  - Standard</Name>
+							<pricesFor>
+								<PreassignedFareProductRef version="any" ref="myfares:PreassignedFareProduct:pointToPoint"/>
+							</pricesFor>
+							<cells>
+								<UsageParameterPrice version="any" id="myfares:UsageParameterPrice:adult">
+									<Name>Adult price</Name>
+									<DiscountingRuleRef version="any" ref="myfares:DiscountingRule:0%"/>
+									<UserProfileRef version="any" ref="myfares:UserProfile:adult"/>
+								</UsageParameterPrice>
+								<UsageParameterPrice version="any" id="myfares:UsageParameterPrice:child">
+									<Name>Child discount - all fares</Name>
+									<DiscountingRuleRef version="any" ref="myfares:DiscountingRule:50%"/>
+									<UserProfileRef version="any" ref="myfares:UserProfile:child"/>
+								</UsageParameterPrice>
+								<DistanceMatrixElementPrice version="any" id="myfares:DistanceMatrixElementPrice:SSP_001_to_SSP_002_standard">
+									<Name>Alpha to Beta - Price</Name>
+									<Amount>1.00</Amount>
+									<DistanceMatrixElementRef version="any" ref="myfares:DistanceMatrixElement:SSP_001_to_SSP_002"/>
+								</DistanceMatrixElementPrice>
+								<DistanceMatrixElementPrice version="any" id="myfares:DistanceMatrixElementPrice:SSP_001_to_SSP_077_standard">
+									<Name>Alpha  to Charley - Price</Name>
+									<Amount>3.00</Amount>
+									<DistanceMatrixElementRef version="any" ref="myfares:DistanceMatrixElement:SSP_001_to_SSP_077"/>
+								</DistanceMatrixElementPrice>
+								<DistanceMatrixElementPrice version="any" id="myfares:DistanceMatrixElementPrice:SSP_002_to_SSP_077_standard">
+									<Name>Beta  to Charley - Price</Name>
+									<Amount>2.00</Amount>
+									<DistanceMatrixElementRef version="any" ref="myfares:DistanceMatrixElement:SSP_002_to_SSP_077"/>
+								</DistanceMatrixElementPrice>
+							</cells>
+						</FareTable>
+						<FareTable version="any" id="myfares:FareTable:First">
+							<Name>Prices for  Point to Point Fare Product  - First Class</Name>
+							<pricesFor>
+								<PreassignedFareProductRef version="any" ref="myfares:PreassignedFareProduct:pointToPoint"/>
+							</pricesFor>
+							<cells>
+								<DistanceMatrixElementPrice version="any" id="myfares:DistanceMatrixElementPrice:SSP_001_to_SSP_002_first">
+									<Name> Alpha to Beta - Price</Name>
+									<Amount>1.50</Amount>
+									<DistanceMatrixElementRef version="any" ref="myfares:DistanceMatrixElement:SSP_001_to_SSP_002"/>
+								</DistanceMatrixElementPrice>
+								<DistanceMatrixElementPrice version="any" id="myfares:DistanceMatrixElementPrice:SSP_001_to_SSP_077_first">
+									<Name> Alpha  to Charley - Price</Name>
+									<Amount>5.00</Amount>
+									<DistanceMatrixElementRef version="any" ref="myfares:DistanceMatrixElement:SSP_001_to_SSP_077"/>
+								</DistanceMatrixElementPrice>
+								<DistanceMatrixElementPrice version="any" id="myfares:DistanceMatrixElementPrice:SSP_002_to_SSP_077_first">
+									<Name> Beta  to Charley - Price</Name>
+									<Amount>3.00</Amount>
+									<DistanceMatrixElementRef version="any" ref="myfares:DistanceMatrixElement:SSP_002_to_SSP_077"/>
+								</DistanceMatrixElementPrice>
+							</cells>
+						</FareTable>
+					</fareTables>
+				</FareFrame>
+				<ResourceFrame version="any" id="myfares:ResourceFrame:Fares">
+					<typesOfValue>
+						<ValueSet version="any" id="myfares:ValueSet:ClassOfUse">
+							<values>
+								<!--- ==== ClassOfUse========= -->
+								<ClassOfUse version="any" id="myfares:ClassOfUse:first">
+									<Name>First</Name>
+								</ClassOfUse>
+								<ClassOfUse version="any" id="myfares:ClassOfUse:standard">
+									<Name>Standard</Name>
+								</ClassOfUse>
+							</values>
+						</ValueSet>
+						<ValueSet version="any" id="myfares:ValueSet:TypeOfConcession">
+							<Name>Types of concession</Name>
+							<values>
+								<!--- ====TypeOfConcession method========= -->
+								<TypeOfConcession version="any" id="myfares:TypeOfConcession:adult">
+									<Name>Adult</Name>
+								</TypeOfConcession>
+								<TypeOfConcession version="any" id="myfares:TypeOfConcession:child">
+									<Name>Student</Name>
+								</TypeOfConcession>
+							</values>
+						</ValueSet>
+					</typesOfValue>
+				</ResourceFrame>
+			</frames>
+		</CompositeFrame>
+	</dataObjects>
+</PublicationDelivery>
