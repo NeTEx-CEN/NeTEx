@@ -1,0 +1,703 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- ==== Metrobus Line 1 ==== -->
+<PublicationDelivery xmlns="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://www.netex.org.uk/netex ../../../xsd/NeTEx_publication.xsd">
+	<!--   Metrobus Line 1  Example
+
+This example shows the encoding of a point to point fare set for a simple bus timetable for a linear route in NeTex XML  (V1.07)
+   
+Leeds TravelHack  2017.10.10 
+
+Data is (C) Metrobus 
+
+(C) NJSK 
+Free to use under  a Creative Commons license.
+ 
+==================================
+Metrobus Line 1 
+
+https://assets.goaheadbus.com/media/cms_page_media/2017/1/15/route%201%20farechart%20240117.pdf
+
+  Bewbush West - Crawley - Broadfield/Pease Pottage
+
+Adult Single Fares
+
+Bewbush West (loop)
+160 Bewbush Neighbourhood Centre
+240 160 Gossops Green Shops
+240 240 160 West Green Crawley Hospital/Apple Tree
+240 240 240 160 Crawley Town Centre
+240 240 240 240 160 Southgate Avenue North
+240 240 240 240 240 160 Southgate Wensleydale
+240 240 240 240 240 240 160 Broadfield (all stops)
+240 240 240 240 240 240 240 160 Pease Pottage Black Swan
+
+Fares are shown in pence. Eg. 170 = £1.70
+To calculate your fare, find your location, and your destination, where the row and the column cross is your fare.
+
+Return Fares
+Not available on this service.
+
+Child Fares
+Child Fares are available on this route at half the adult fare on single journeys.
+
+Accepted throughout.
+	Crawley Area Metrorider
+	Metrovoyager
+	Discovery Ticket
+	Gatwick Travelcard
+
+PlusBus
+Crawley, Three Bridges, Gatwick Airport, Ifield and Horley PlusBus tickets are valid throughout. Please see www.plusbus.info for further information.
+
+Concessionary Passes
+Concessionary passes are valid throughout from 0930-2300 Mon-Fri, and anytime at weekends and public holidays.
+
+24.01.17 Metrobus Ltd, Wheatstone Close, Crawley, West Sussex, RH10 9UA. Tel: 01293 449191
+==================================
+-->
+	<PublicationTimestamp>2017-12-17T09:30:47.0Z</PublicationTimestamp>
+	<ParticipantRef>SYS001</ParticipantRef>
+	<!-- ======WHAT WAS REQUESTED ========== -->
+	<PublicationRequest version="1.0">
+		<RequestTimestamp>2017-12-17T09:30:46.0Z</RequestTimestamp>
+		<ParticipantRef>SYS002</ParticipantRef>
+		<Description>Request for Metrobus 1 </Description>
+		<topics>
+			<NetworkFrameTopic>
+				<selectionValidityConditions>
+					<AvailabilityCondition version="any" id="r1">
+						<FromDate>2017-01-01T00:00:00Z</FromDate>
+					</AvailabilityCondition>
+				</selectionValidityConditions>
+				<NetworkFilterByValue>
+					<objectReferences>
+						<TariffRef ref="mb:1"/>
+					</objectReferences>
+				</NetworkFilterByValue>
+			</NetworkFrameTopic>
+		</topics>
+	</PublicationRequest>
+	<PublicationRefreshInterval>P1M</PublicationRefreshInterval>
+	<Description>Example  of simple point to point fares</Description>
+	<!-- =============== RESULTS =========== -->
+	<dataObjects>
+		<CompositeFrame version="1" id="TfN_Metrobus_1_Example">
+			<Name>MetroBus 1 0 - Fares Example</Name>
+			<Description>This is an example showing how one might encode the Metrbus 1 fare table tin NeTEx.  It includes some   </Description>
+			<!--==== CODESPACEs ==== -->
+			<codespaces>
+				<Codespace id="naptan">
+					<Xmlns>naptan</Xmlns>
+					<XmlnsUrl>http://www.naptan.org.uk/f</XmlnsUrl>
+					<Description>NaPTAN Stops</Description>
+				</Codespace>
+				<Codespace id="noc">
+					<Xmlns>noc</Xmlns>
+					<XmlnsUrl>http://www.traveline.co.uk/noc</XmlnsUrl>
+					<Description>UKnational operator codes</Description>
+				</Codespace>
+				<Codespace id="mt">
+					<Xmlns>mt</Xmlns>
+					<XmlnsUrl>http://www.metrobus.co.uk/</XmlnsUrl>
+					<Description>Metrobus data </Description>
+				</Codespace>
+			</codespaces>
+			<!--==== FRAME DEFAULTS ==== -->
+			<FrameDefaults>
+				<!---  The default means that actually we could leave off all id s that beong to the mb: namespace. -->
+				<DefaultCodespaceRef ref="mb"/>
+			</FrameDefaults>
+			<frames>
+				<ServiceFrame version="1" id="mb:1">
+					<Name>Stops for Metrobus 1</Name>
+					<Description>This frame contains the stop and line definitions for the service. It could also be exchanged separately.</Description>
+					<!--==== LINEs ==== -->
+					<lines>
+						<Line version="any" id="mb:1">
+							<Name>Metrobus 1 </Name>
+							<Description>Bewbush West - Crawley - Broadfield/Pease Pottage</Description>
+							<PublicCode>1</PublicCode>
+							<OperatorRef ref="noc:METR" version="any"/>
+						</Line>
+					</lines>
+				</ServiceFrame>
+				<!--==== FAREs ==== -->
+				<FareFrame version="any" id="mb:1">
+					<FrameDefaults>
+						<!-- Fares are shown in pence. -->
+						<DefaultCurrency>GBP</DefaultCurrency>
+					</FrameDefaults>
+					<!--==== Pricing Parameters ====-->
+					<PricingParameterSet version="any" id="mb:Metrobus">
+						<pricingRules>
+							<DiscountingRule version="any" id="mb:half_price">
+								<Name>Discount for child fares&gt;</Name>
+								<DiscountAsPercentage>50</DiscountAsPercentage>
+							</DiscountingRule>
+						</pricingRules>
+					</PricingParameterSet>
+					<!--==== Fare Structure ==== -->
+					<tariffs>
+						<Tariff version="any" id="mb:1">
+							<validityConditions>
+								<ValidBetween>
+									<FromDate>2017-01-01T00:00:00Z</FromDate>
+									<ToDate>2018-01-01T00:00:00Z</ToDate>
+								</ValidBetween>
+							</validityConditions>
+							<Name>Metrobus 1 -  Fares</Name>
+							<Description>Bewbush West - Crawley - Broadfield/Pease Pottage</Description>
+							<!--Here we encode the actual table
+
+							Bewbush West (loop)
+							160 Bewbush Neighbourhood Centre
+							240 160 Gossops Green Shops
+							240 240 160 West Green Crawley Hospital/Apple Tree
+							240 240 240 160 Crawley Town Centre
+							240 240 240 240 160 Southgate Avenue North
+							240 240 240 240 240 160 Southgate Wensleydale
+							240 240 240 240 240 240 160 Broadfield (all stops)
+							240 240 240 240 240 240 240 160 Pease Pottage Black Swan
+-->
+							<fareStructureElements>
+								<FareStructureElement version="any" id="mb:1">
+									<Name>Zone to Zone Fare    </Name>
+									<distanceMatrixElements>
+										<!--== COLUMN 1  : Bewbush_Wes t== -->
+										<DistanceMatrixElement version="1" id="mb:Bewbush_West:Bewbush">
+											<Name>Bewbush West / Bewbush </Name>
+											<StartTariffZoneRef versionRef="1" ref="mb:Bewbush_West"/>
+											<EndTariffZoneRef versionRef="1" ref="mb:Bewbush"/>
+											<prices>
+												<DistanceMatrixElementPrice version="1" id="mb:Bewbush_West:Bewbush">
+													<Amount>1.60</Amount>
+												</DistanceMatrixElementPrice>
+											</prices>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1" id="mb:Bewbush_West:Gossops_Green">
+											<StartTariffZoneRef versionRef="1" ref="mb:Bewbush_West"/>
+											<EndTariffZoneRef versionRef="1" ref="mb:Gossops_Green"/>
+											<prices>
+												<DistanceMatrixElementPriceRef version="1" ref="mb:price2@adult"/>
+											</prices>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1" id="mb:Bewbush_West:West_Green">
+											<StartTariffZoneRef versionRef="1" ref="mb:Bewbush_West"/>
+											<EndTariffZoneRef versionRef="1" ref="mb:West_Green"/>
+											<prices>
+												<DistanceMatrixElementPriceRef version="1" ref="mb:price2@adult"/>
+											</prices>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1" id="mb:Bewbush_West:Crawley">
+											<StartTariffZoneRef versionRef="1" ref="mb:Bewbush_West"/>
+											<EndTariffZoneRef versionRef="1" ref="mb:Crawley"/>
+											<prices>
+												<DistanceMatrixElementPriceRef version="1" ref="mb:price2@adult"/>
+											</prices>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1" id="mb:Bewbush_West:Southgate Avenue">
+											<StartTariffZoneRef versionRef="1" ref="mb:Bewbush_West"/>
+											<EndTariffZoneRef versionRef="1" ref="mb:Southgate_Avenue"/>
+											<prices>
+												<DistanceMatrixElementPriceRef version="1" ref="mb:price2@adult"/>
+											</prices>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1" id="mb:Bewbush_West:Southgate">
+											<StartTariffZoneRef versionRef="1" ref="mb:Bewbush_West"/>
+											<EndTariffZoneRef versionRef="1" ref="mb:Southgate"/>
+											<prices>
+												<DistanceMatrixElementPriceRef version="1" ref="mb:price2@adult"/>
+											</prices>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1" id="mb:Bewbush_West:Broadfield">
+											<StartTariffZoneRef versionRef="1" ref="mb:Bewbush_West"/>
+											<EndTariffZoneRef versionRef="1" ref="mb:Broadfield"/>
+											<prices>
+												<DistanceMatrixElementPriceRef version="1" ref="mb:price2@adult"/>
+											</prices>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1" id="mb:Bewbush_West:Pease_Pottage">
+											<StartTariffZoneRef versionRef="1" ref="mb:Bewbush_West"/>
+											<EndTariffZoneRef versionRef="1" ref="mb:Pease_Pottage"/>
+											<prices>
+												<DistanceMatrixElementPriceRef version="1" ref="mb:price2@adult"/>
+											</prices>
+										</DistanceMatrixElement>
+										<!--== COLUMN 2: Bewbush  == -->
+										<DistanceMatrixElement version="1" id="mb:Bewbush:Gossops_Green">
+											<StartTariffZoneRef versionRef="1" ref="mb:Bewbush"/>
+											<EndTariffZoneRef versionRef="1" ref="mb:Gossops_Green"/>
+											<prices>
+												<DistanceMatrixElementPriceRef version="1" ref="mb:price1@adult"/>
+											</prices>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1" id="mb:Bewbush:West_Green">
+											<StartTariffZoneRef versionRef="1" ref="mb:Bewbush"/>
+											<EndTariffZoneRef versionRef="1" ref="mb:West_Green"/>
+											<prices>
+												<DistanceMatrixElementPriceRef version="1" ref="mb:price1@adult"/>
+											</prices>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1" id="mb:Bewbush:Crawley">
+											<StartTariffZoneRef versionRef="1" ref="mb:Bewbush"/>
+											<EndTariffZoneRef versionRef="1" ref="mb:Crawley"/>
+											<prices>
+												<DistanceMatrixElementPriceRef version="1" ref="mb:price2@adult"/>
+											</prices>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1" id="mb:Bewbush:Southgate Avenue">
+											<StartTariffZoneRef versionRef="1" ref="mb:Bewbush"/>
+											<EndTariffZoneRef versionRef="1" ref="mb:Southgate_Avenue"/>
+											<prices>
+												<DistanceMatrixElementPriceRef version="1" ref="mb:price2@adult"/>
+											</prices>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1" id="mb:Bewbush:Southgate">
+											<StartTariffZoneRef versionRef="1" ref="mb:Bewbush"/>
+											<EndTariffZoneRef versionRef="1" ref="mb:Southgate"/>
+											<prices>
+												<DistanceMatrixElementPriceRef version="1" ref="mb:price2@adult"/>
+											</prices>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1" id="mb:Bewbush:Broadfield">
+											<StartTariffZoneRef versionRef="1" ref="mb:Bewbush"/>
+											<EndTariffZoneRef versionRef="1" ref="mb:Broadfield"/>
+											<prices>
+												<DistanceMatrixElementPriceRef version="1" ref="mb:price2@adult"/>
+											</prices>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1" id="mb:Bewbush:Pease_Pottage">
+											<StartTariffZoneRef versionRef="1" ref="mb:Bewbush"/>
+											<EndTariffZoneRef versionRef="1" ref="mb:Pease_Pottage"/>
+											<prices>
+												<DistanceMatrixElementPriceRef version="1" ref="mb:price2@adult"/>
+											</prices>
+										</DistanceMatrixElement>
+										<!--== COLUMN 3 : Gossops_Green == -->
+										<DistanceMatrixElement version="1" id="mb:Gossops_Green:West_Green">
+											<StartTariffZoneRef versionRef="1" ref="mb:Gossops_Green"/>
+											<EndTariffZoneRef versionRef="1" ref="mb:West_Green"/>
+											<prices>
+												<DistanceMatrixElementPriceRef version="1" ref="mb:price1@adult"/>
+											</prices>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1" id="mb:Gossops_Green:Crawley">
+											<StartTariffZoneRef versionRef="1" ref="mb:Gossops_Green"/>
+											<EndTariffZoneRef versionRef="1" ref="mb:Crawley"/>
+											<prices>
+												<DistanceMatrixElementPriceRef version="1" ref="mb:price2@adult"/>
+											</prices>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1" id="mb:Gossops_Green:Southgate Avenue">
+											<StartTariffZoneRef versionRef="1" ref="mb:Gossops_Green"/>
+											<EndTariffZoneRef versionRef="1" ref="mb:Southgate_Avenue"/>
+											<prices>
+												<DistanceMatrixElementPriceRef version="1" ref="mb:price2@adult"/>
+											</prices>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1" id="mb:Gossops_Green:Southgate">
+											<StartTariffZoneRef versionRef="1" ref="mb:Gossops_Green"/>
+											<EndTariffZoneRef versionRef="1" ref="mb:Southgate"/>
+											<prices>
+												<DistanceMatrixElementPriceRef version="1" ref="mb:price2@adult"/>
+											</prices>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1" id="mb:Gossops_Green:Broadfield">
+											<StartTariffZoneRef versionRef="1" ref="mb:Gossops_Green"/>
+											<EndTariffZoneRef versionRef="1" ref="mb:Broadfield"/>
+											<prices>
+												<DistanceMatrixElementPriceRef version="1" ref="mb:price2@adult"/>
+											</prices>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1" id="mb:Gossops_Green:Pease_Pottage">
+											<StartTariffZoneRef versionRef="1" ref="mb:Gossops_Green"/>
+											<EndTariffZoneRef versionRef="1" ref="mb:Pease_Pottage"/>
+											<prices>
+												<DistanceMatrixElementPriceRef version="1" ref="mb:price2@adult"/>
+											</prices>
+										</DistanceMatrixElement>
+										<!--== COLUMN 4 : West_Green == -->
+										<DistanceMatrixElement version="1" id="mb:West_Green:Crawley">
+											<StartTariffZoneRef versionRef="1" ref="mb:West_Green"/>
+											<EndTariffZoneRef versionRef="1" ref="mb:Crawley"/>
+											<prices>
+												<DistanceMatrixElementPriceRef version="1" ref="mb:price1@adult"/>
+											</prices>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1" id="mb:West_Green:Southgate Avenue">
+											<StartTariffZoneRef versionRef="1" ref="mb:West_Green"/>
+											<EndTariffZoneRef versionRef="1" ref="mb:Southgate_Avenue"/>
+											<prices>
+												<DistanceMatrixElementPriceRef version="1" ref="mb:price2@adult"/>
+											</prices>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1" id="mb:West_Green:Southgate">
+											<StartTariffZoneRef versionRef="1" ref="mb:West_Green"/>
+											<EndTariffZoneRef versionRef="1" ref="mb:Southgate"/>
+											<prices>
+												<DistanceMatrixElementPriceRef version="1" ref="mb:price2@adult"/>
+											</prices>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1" id="mb:West_Green:Broadfield">
+											<StartTariffZoneRef versionRef="1" ref="mb:West_Green"/>
+											<EndTariffZoneRef versionRef="1" ref="mb:Broadfield"/>
+											<prices>
+												<DistanceMatrixElementPriceRef version="1" ref="mb:price2@adult"/>
+											</prices>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1" id="mb:West_Green:Pease_Pottage">
+											<StartTariffZoneRef versionRef="1" ref="mb:West_Green"/>
+											<EndTariffZoneRef versionRef="1" ref="mb:Pease_Pottage"/>
+											<prices>
+												<DistanceMatrixElementPriceRef version="1" ref="mb:price2@adult"/>
+											</prices>
+										</DistanceMatrixElement>
+										<!--== COLUMN 5  : Crawley == -->
+										<DistanceMatrixElement version="1" id="mb:Crawley:Southgate Avenue">
+											<StartTariffZoneRef versionRef="1" ref="mb:Crawley"/>
+											<EndTariffZoneRef versionRef="1" ref="mb:Southgate_Avenue"/>
+											<prices>
+												<DistanceMatrixElementPriceRef version="1" ref="mb:price1@adult"/>
+											</prices>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1" id="mb:Crawley:Southgate">
+											<StartTariffZoneRef versionRef="1" ref="mb:Crawley"/>
+											<EndTariffZoneRef versionRef="1" ref="mb:Southgate"/>
+											<prices>
+												<DistanceMatrixElementPriceRef version="1" ref="mb:price2@adult"/>
+											</prices>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1" id="mb:Crawley:Broadfield">
+											<StartTariffZoneRef versionRef="1" ref="mb:Crawley"/>
+											<EndTariffZoneRef versionRef="1" ref="mb:Broadfield"/>
+											<prices>
+												<DistanceMatrixElementPriceRef version="1" ref="mb:price2@adult"/>
+											</prices>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1" id="mb:Crawley:Pease_Pottage">
+											<StartTariffZoneRef versionRef="1" ref="mb:Crawley"/>
+											<EndTariffZoneRef versionRef="1" ref="mb:Pease_Pottage"/>
+											<prices>
+												<DistanceMatrixElementPriceRef version="1" ref="mb:price2@adult"/>
+											</prices>
+										</DistanceMatrixElement>
+										<!-- == COLUMN 6 : Southgate_Avenue == -->
+										<DistanceMatrixElement version="1" id="mb:Southgate_Avenue:Southgate">
+											<StartTariffZoneRef versionRef="1" ref="mb:Southgate_Avenue"/>
+											<EndTariffZoneRef versionRef="1" ref="mb:Southgate"/>
+											<prices>
+												<DistanceMatrixElementPriceRef version="1" ref="mb:price1@adult"/>
+											</prices>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1" id="mb:Southgate_Avenue:Broadfield">
+											<StartTariffZoneRef versionRef="1" ref="mb:Southgate_Avenue"/>
+											<EndTariffZoneRef versionRef="1" ref="mb:Broadfield"/>
+											<prices>
+												<DistanceMatrixElementPriceRef version="1" ref="mb:price2@adult"/>
+											</prices>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1" id="mb:Southgate_Avenue:Pease_Pottage">
+											<StartTariffZoneRef versionRef="1" ref="mb:Southgate_Avenue"/>
+											<EndTariffZoneRef versionRef="1" ref="mb:Pease_Pottage"/>
+											<prices>
+												<DistanceMatrixElementPriceRef version="1" ref="mb:price2@adult"/>
+											</prices>
+										</DistanceMatrixElement>
+										<!-- == COLUMN 7 : Southgate== -->
+										<DistanceMatrixElement version="1" id="mb:Southgate:Broadfield">
+											<StartTariffZoneRef versionRef="1" ref="mb:Southgate"/>
+											<EndTariffZoneRef versionRef="1" ref="mb:Broadfield"/>
+											<prices>
+												<DistanceMatrixElementPriceRef version="1" ref="mb:price1@adult"/>
+											</prices>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1" id="mb:Southgate:Pease_Pottage">
+											<StartTariffZoneRef versionRef="1" ref="mb:Southgate"/>
+											<EndTariffZoneRef versionRef="1" ref="mb:Pease_Pottage"/>
+											<prices>
+												<DistanceMatrixElementPriceRef version="1" ref="mb:price2@adult"/>
+											</prices>
+										</DistanceMatrixElement>
+										<!-- == COLUMN 8 : Pease_Pottage == -->
+										<DistanceMatrixElement version="1" id="mb:Broadfield:Pease_Pottage">
+											<StartTariffZoneRef versionRef="1" ref="mb:Broadfield"/>
+											<EndTariffZoneRef versionRef="1" ref="mb:Pease_Pottage"/>
+											<prices>
+												<DistanceMatrixElementPriceRef version="1" ref="mb:price1@adult"/>
+											</prices>
+										</DistanceMatrixElement>
+									</distanceMatrixElements>
+								</FareStructureElement>
+							</fareStructureElements>
+							<priceGroups>
+								<!--  === PRICES  === -->
+								<PriceGroup version="any" id="mb:1@adult">
+									<members>
+										<DistanceMatrixElementPrice version="1" id="mb:price1@adult">
+											<Amount>1.60</Amount>
+										</DistanceMatrixElementPrice>
+										<DistanceMatrixElementPrice version="1" id="mb:price2@adult">
+											<Amount>2.40</Amount>
+										</DistanceMatrixElementPrice>
+									</members>
+								</PriceGroup>
+								<PriceGroup version="any" id="mb:1@child">
+									<members>
+										<DistanceMatrixElementPrice version="1" id="mb:price1@child">
+											<Name>Child price -  derived from the adult</Name>
+											<Amount>0.80</Amount>
+											<DistanceMatrixElementPriceRef version="1" ref="mb:price1@adult"/>
+											<DiscountingRuleRef version="any" ref="mb:half_price"/>
+										</DistanceMatrixElementPrice>
+										<DistanceMatrixElementPrice version="1" id="mb:price2@child">
+											<Name>Child price -  derived from the adult</Name>
+											<Amount>1.60</Amount>
+											<DistanceMatrixElementPriceRef version="1" ref="mb:price2@adult"/>
+											<DiscountingRuleRef version="any" ref="mb:half_price"/>
+										</DistanceMatrixElementPrice>
+									</members>
+								</PriceGroup>
+							</priceGroups>
+						</Tariff>
+					</tariffs>
+					<!--==== Fare Usage Parameters ==== -->
+					<!--==== Fare Product ==== -->
+					<fareProducts>
+						<PreassignedFareProduct version="1" id="mb:singleRide">
+							<Name>Single Ride</Name>
+							<validityParameterAssignments>
+								<GenericParameterAssignment version="1" order="1" id="mb:single@FrequencyOfUse">
+									<Name>One trip no transfers</Name>
+									<limitations>
+										<FrequencyOfUse version="1" id="mb:oneTrip">
+											<Name>One trip no transfers</Name>
+											<FrequencyOfUseType>none</FrequencyOfUseType>
+											<MaximalFrequency>1</MaximalFrequency>
+										</FrequencyOfUse>
+										<Interchanging version="1" id="myfares:NoTransfers">
+											<MaximumNumberOfInterchanges>0</MaximumNumberOfInterchanges>
+										</Interchanging>
+									</limitations>
+								</GenericParameterAssignment>
+								<GenericParameterAssignment version="1" order="3" id="mb:single@UserProfile">
+									<Name>Different fares for  adult, child or  infant</Name>
+									<limitations>
+										<UserProfile version="1" id="mb:adult">
+											<Name>Adult</Name>
+											<prices>
+												<UsageParameterPrice version="1" id="mb:adult">
+												</UsageParameterPrice>
+											</prices>
+										</UserProfile>
+										<UserProfile version="1" id="mb:child">
+											<Name>Child</Name>
+											<Description>5-13 year olds are normally charged half adult fare on singles and returns. Discounts are available on Metrorider and Metrovoyager ticktes. 14 &amp;  15 year olds may travel at child rate on any Metrobus service, if one of the advertised proofs of age is supplied.</Description>
+											<prices>
+												<UsageParameterPrice version="any" id="mb:child">
+													<UsageParameterPriceRef version="1" ref="mb:adult"/>
+													<DiscountingRuleRef version="any" ref="mb:half_price"/>
+												</UsageParameterPrice>
+											</prices>
+											<MinimumAge>6</MinimumAge>
+											<MaximumAge>15</MaximumAge>
+										</UserProfile>
+										<UserProfile version="any" id="mb:infant">
+											<Name>Infant  </Name>
+											<Description>Up to three children under 5 years of age, accompanied by a fare paying adult or child passenger, and not occupying a seat, may travel free of charge on the Company&#8217;s services.</Description>
+											<prices>
+												<UsageParameterPrice version="any" id="mb:infant">
+													<Amount>0</Amount>
+												</UsageParameterPrice>
+											</prices>
+											<MinimumAge>0</MinimumAge>
+											<MaximumAge>5</MaximumAge>
+										</UserProfile>
+									</limitations>
+									<ValidityParameterGroupingType>XOR</ValidityParameterGroupingType>
+								</GenericParameterAssignment>
+							</validityParameterAssignments>
+							<!--==== VALIDABLE ELEMENTs ==== -->
+							<validableElements>
+								<ValidableElement version="any" id="mb:1@ride">
+									<Name>Single  ride</Name>
+									<fareStructureElements>
+										<FareStructureElementRef version="any" ref="mb:1"/>
+									</fareStructureElements>
+									<validityParameterAssignments>
+										<GenericParameterAssignment version="any" order="1" id="mb:1">
+											<validityParameters>
+												<LineRef version="any" ref="mb:1"/>
+											</validityParameters>
+										</GenericParameterAssignment>
+									</validityParameterAssignments>
+								</ValidableElement>
+							</validableElements>
+							<!--==== ACCESS RIGHTs ===== -->
+							<accessRightsInProduct>
+								<AccessRightInProduct version="any" id="mb:1@ride" order="1">
+									<ValidableElementRef version="any" ref="mb:1@ride"/>
+								</AccessRightInProduct>
+							</accessRightsInProduct>
+						</PreassignedFareProduct>
+					</fareProducts>
+					<distributionChannels>
+						<DistributionChannel version="any" id="mb:selfService">
+							<Name>Self service</Name>
+							<DistributionChannelType>atStop</DistributionChannelType>
+							<PaymentMethods>cashAndCard</PaymentMethods>
+						</DistributionChannel>
+						<DistributionChannel version="any" id="mb:onBoard">
+							<Name>OnBoard</Name>
+							<DistributionChannelType>onBoard</DistributionChannelType>
+							<PaymentMethods>cash</PaymentMethods>
+						</DistributionChannel>
+					</distributionChannels>
+					<salesPackages>
+						<SalesPackage version="1" id="mb:singleRide@cash">
+							<Name>Adult  Single Ticket, Cash purchase  </Name>
+							<distributionAssignments>
+								<DistributionAssignment version="1" id="mb:singleRide@cash@selfService" order="1">
+									<DistributionChannelRef version="any" ref="mb:selfService"/>
+								</DistributionAssignment>
+								<DistributionAssignment version="1" id="mb:singleRide@cash@onBoard" order="2">
+									<DistributionChannelRef version="any" ref="mb:onBoard"/>
+								</DistributionAssignment>
+							</distributionAssignments>
+							<salesPackageElements>
+								<SalesPackageElement version="1" id="mb:singleRide@cash" order="1">
+									<TypeOfTravelDocumentRef version="any" ref="mb:paperTicket"/>
+									<PreassignedFareProductRef version="1" ref="mb:singleRide"/>
+								</SalesPackageElement>
+							</salesPackageElements>
+						</SalesPackage>
+					</salesPackages>
+					<!--==== Fare Prices ==== -->
+				</FareFrame>
+				<!--  ===============
+This Shows a Sample Purchases 
+
+   Sales Transactions would normally be exchnaged seperately from the reference data
+-->
+				<SalesTransactionFrame version="any" id="mb:SampleTransactions">
+					<Name> Sample Transactions</Name>
+					<passengerContracts>
+						<!--  Example Simple Paper Ticket -->
+						<PassengerContract version="any" id="mbt:Anon001@trans001">
+							<Name> Zone 1 Paper ticket for Cash </Name>
+							<passengerContractEntries>
+								<SalesTransaction version="any" id="mbt:Anon001@trans001@purchaseTicket@Ticket">
+									<Name>Buy SIngle Cash ticket  for  zone  1  </Name>
+									<Description>ewbush_West:Bewbush £1.60 cash    </Description>
+									<Date>2013-07-08T01:07:00</Date>
+									<Amount>1.60</Amount>
+									<PriceUnitRef version="any" ref="iso:GBP"/>
+								</SalesTransaction>
+								<TravelSpecification version="any" id="mbt:Anon001@trans001@purchaseTicket@Ticket">
+									<Name>Single fare zone 1 </Name>
+									<Date>2013-07-08T01:07:00</Date>
+									<TypeOfPassengerContractEntryRef version="any" ref="mb:cashPurchase"/>
+									<SalesTransactionRef version="any" ref="mbt:Anon001@trans001@purchaseTicket@Ticket"/>
+									<Amount>1.60</Amount>
+									<StartOfValidity>2013-07-08T01:07:00</StartOfValidity>
+									<specificParameterAssignments>
+										<SpecificParameterAssignment version="any" order="1" id="mbt:Anon001@trans001@purchaseTicket@Ticket@Zone_1_only">
+											<Name>Single ride West Bewbush to Bewbush</Name>
+											<Description> Single ride </Description>
+											<ValidableElementRef version="any" ref="mb:1@ride"/>
+											<PreassignedFareProductRef version="1" ref="mb:singleRide"/>
+											<FareStructureElementRef version="any" ref="mb:1"/>
+											<DistanceMatrixElementRef version="1" ref="mb:Bewbush_West:Bewbush"/>
+											<DistanceMatrixElementView id="mb:Bewbush_West:Bewbush">
+												<StartStopPointRef versionRef="1" ref="Bewbush_West"/>
+												<StartName>Bewbush West</StartName>
+												<EndStopPointRef versionRef="1" ref="mb:Bewbush"/>
+												<EndName>Bewbush</EndName>
+											</DistanceMatrixElementView>
+											<SalesPackageRef version="1" ref="mb:singleRide@cash"/>
+											<limitations>
+												<FrequencyOfUseRef version="1" ref="mb:oneTrip"/>
+												<UserProfileRef version="1" ref="mb:adult"/>
+											</limitations>
+											<validityParameters>
+												<LineRef version="any" ref="mb:1"/>
+												<DistributionChannelRef version="any" ref="mb:selfService"/>
+												<TypeOfTravelDocumentRef version="any" ref="mb:paperTicket"/>
+											</validityParameters>
+											<CollectionPointRef versionRef="1" ref="Bewbush_West"/>
+										</SpecificParameterAssignment>
+									</specificParameterAssignments>
+								</TravelSpecification>
+							</passengerContractEntries>
+						</PassengerContract>
+					</passengerContracts>
+				</SalesTransactionFrame>
+				<!--   Resources -->
+				<ResourceFrame version="any" id="mb:Metrobus">
+					<typesOfValue>
+						<ValueSet version="any" id="iso:Currencies" classOfValues="PriceUnit">
+							<values>
+								<PriceUnit version="any" id="iso:GBP">
+									<Name>British Pounds</Name>
+								</PriceUnit>
+							</values>
+						</ValueSet>
+						<ValueSet version="any" id="mb:accountTypes" classOfValues="TypeOfCustomerAccount">
+							<values>
+								<TypeOfCustomerAccount version="any" id="mb:m-ticket">
+									<Name>m-ticket</Name>
+								</TypeOfCustomerAccount>
+							</values>
+						</ValueSet>
+						<ValueSet version="any" id="mb:transactionTypes" classOfValues="TypeOfPassengerContractEntry">
+							<values>
+								<TypeOfPassengerContractEntry version="any" id="mb:cashPurchase">
+									<Name>Cash Purchase</Name>
+								</TypeOfPassengerContractEntry>
+							</values>
+						</ValueSet>
+						<ValueSet version="any" id="mb:travelDocumentst" classOfValues="TypeOfTravelDocument">
+							<values>
+								<TypeOfTravelDocument version="any" id="mb:paperTicket">
+									<Name>Paper Ticket</Name>
+									<MediaType>paperTicket</MediaType>
+								</TypeOfTravelDocument>
+								<TypeOfTravelDocument version="any" id="mb:m-ticket">
+									<Name>m-ticket</Name>
+									<Description>Mobile App</Description>
+									<MediaType>mobileApp</MediaType>
+									<MachineReadable>nfc</MachineReadable>
+								</TypeOfTravelDocument>
+								<TypeOfTravelDocument version="any" id="mb:the-key">
+									<Name>The Key</Name>
+									<Description>Smart Card</Description>
+									<MediaType>smartCard</MediaType>
+									<MachineReadable>nfc</MachineReadable>
+								</TypeOfTravelDocument>
+							</values>
+						</ValueSet>
+					</typesOfValue>
+					<organisations>
+						<!--==== Operators ==== -->
+						<Operator version="any" id="noc:METR">
+							<PublicCode>METR</PublicCode>
+							<Name>Metrobus</Name>
+							<ShortName>Metrobus</ShortName>
+							<TradingName>Metrobus Ltd</TradingName>
+							<ContactDetails>
+								<Phone>01293 449191</Phone>
+							</ContactDetails>
+							<OrganisationType>operator</OrganisationType>
+							<Address>
+								<Street>Wheatstone Close</Street>
+								<Town>Crawley</Town>
+								<PostCode>RH10 9UA</PostCode>
+								<PostalRegion>West Sussex</PostalRegion>
+							</Address>
+							<PrimaryMode>bus</PrimaryMode>
+						</Operator>
+					</organisations>
+				</ResourceFrame>
+			</frames>
+		</CompositeFrame>
+	</dataObjects>
+</PublicationDelivery>

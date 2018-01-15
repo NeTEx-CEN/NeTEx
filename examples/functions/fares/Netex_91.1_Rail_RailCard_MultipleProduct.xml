@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- ==== SImple Timetable  Example ====== 
+This example shows the encoding of a rail card with  discount rights  on purchase  of rail tickets in NeTex XML  
+ 
+ There  are two types of rail card  , standard and student  
+ These  allow a discount on ticket  purchases
+ 
+  
+1. OVERVIEW
+============
+ 
+	Standard FARE PRODUCT has 5% discount 
+	Student FARE PRODUCT has 10% discount 
+
+Q. When to USE FarePRoductPrice and When to use UsageParameterPrice?
+==================================
+2. DETAILS
+
+There is one Operator  :  DTA
+ 
+There are Two  FARE PRODUCTs
+
+	 Standard: PREASSIGNED FARE PRODUCT myfares:PreassignedFareProduct:railcard@standard  
+		VALIDITY PARAMETER ASSIGNMENTs
+			OPERATOR hde:Operator:DTA
+		FARE USAGE PARAMETERs 
+			USER PROFILE - 1 myfares:UserProfile:standard
+
+	Student PREASSIGNED FARE PRODUCT myfares:PreassignedFareProduct:railcard@student
+		VALIDITY PARAMETER ASSIGNMENTs
+			OPERATOR hde:Operator:DTA
+		FARE USAGE PARAMETERs 
+			USER PROFILE -   myfares:UserProfile:student
+ 
+	PRices 
+		FARE PRODUCT   PRICE :myfares:FareProductPrice:railcard@standard   5%
+								 
+		FARE PRODUCT   PRICE :myfares:FareProductPrice:railcard@student  > 10%
+									 
+
+A COMPOSITE FRAME is used to student the component FRAMEs
+ 
+		A FARE FRAME is used to contain  the FARE    elements 
+ 		A RESOURCE is used to contain the TIME UNITs, etc
+-->
+<PublicationDelivery xmlns="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://www.netex.org.uk/netex ../../../xsd/NeTEx_publication.xsd">
+	<PublicationTimestamp>2010-12-17T09:30:47.0Z</PublicationTimestamp>
+	<ParticipantRef>SYS001</ParticipantRef>
+	<!--- ======WHAT WAS REQUESTED ========== -->
+	<PublicationRequest version="1.0">
+		<RequestTimestamp>2010-12-17T09:30:47.0Z</RequestTimestamp>
+		<ParticipantRef>SYS002</ParticipantRef>
+		<topics>
+			<NetworkFrameTopic>
+				<selectionValidityConditions>
+					<AvailabilityCondition version="any" id="hde:AvailabilityCondition:CAL_02">
+						<FromDate>2011-01-01T00:00:00Z</FromDate>
+					</AvailabilityCondition>
+				</selectionValidityConditions>
+				<FareFrameRef ref="myfares:FareFrame:any">REQUEST</FareFrameRef>
+			</NetworkFrameTopic>
+		</topics>
+	</PublicationRequest>
+	<PublicationRefreshInterval>P1M</PublicationRefreshInterval>
+	<Description>Example  of simple point to point fares</Description>
+	<!--- =============== RESULTS =========== -->
+	<dataObjects>
+		<CompositeFrame version="1" id="myfares:CompositeFrame:DTA">
+			<validityConditions>
+				<ValidBetween>
+					<FromDate>2011-01-01T00:00:00Z</FromDate>
+					<ToDate>2011-07-01T00:00:00Z</ToDate>
+				</ValidBetween>
+			</validityConditions>
+			<!--- ======= CODESPACEs======== -->
+			<codespaces>
+				<Codespace id="mybus">
+					<Xmlns>mybus</Xmlns>
+					<XmlnsUrl>http://www.mybuses.eu/stuff</XmlnsUrl>
+					<Description>My buses</Description>
+				</Codespace>
+				<Codespace id="hde">
+					<Xmlns>hde</Xmlns>
+					<XmlnsUrl>http://www.halt.de/</XmlnsUrl>
+					<Description>Stop data  data</Description>
+				</Codespace>
+				<Codespace id="myfares">
+					<Xmlns>myfares</Xmlns>
+					<XmlnsUrl>http://www.mybuses.eu/fares</XmlnsUrl>
+					<Description>Fare     data</Description>
+				</Codespace>
+			</codespaces>
+			<frames>
+				<!--- ===========RESOURCEs========== -->
+				<ResourceFrame version="any" id="myfares:ResourceFrame:DTA">
+					<typesOfValue>
+						<ValueSet version="any" id="myfares:ValueSet:TypeOfConcession">
+							<Name>Types of concession</Name>
+							<values>
+								<!--- ====TypeOfConcession method========= -->
+								<TypeOfConcession version="any" id="myfares:TypeOfConcession:standard">
+									<Name>Adult</Name>
+								</TypeOfConcession>
+								<TypeOfConcession version="any" id="myfares:TypeOfConcession:student">
+									<Name>Student</Name>
+								</TypeOfConcession>
+							</values>
+						</ValueSet>
+					</typesOfValue>
+					<organisations>
+						<!--- =====Agency========= -->
+						<Operator version="any" id="hde:Operator:DTA">
+							<Name>Demo Transit Authority</Name>
+						</Operator>
+					</organisations>
+				</ResourceFrame>
+				<!--- =============== FAREs =========== -->
+				<FareFrame version="any" id="myfares:FareFrame:DTA">
+					<FrameDefaults>
+						<DefaultCurrency>EUR</DefaultCurrency>
+					</FrameDefaults>
+					<!--- ====Pricing Parmaters======= -->
+					<PricingParameterSet version="any" id="myfares:PricingParameterSet:tap">
+						<pricingRules>
+							<DiscountingRule version="any" id="myfares:DiscountingRule:5%">
+								<DiscountAsPercentage>5</DiscountAsPercentage>
+							</DiscountingRule>
+							<DiscountingRule version="any" id="myfares:DiscountingRule:10%">
+								<DiscountAsPercentage>10</DiscountAsPercentage>
+							</DiscountingRule>
+						</pricingRules>
+					</PricingParameterSet>
+					<!--- ====Fare Usage Parameters======= -->
+					<usageParameters>
+						<UserProfile version="any" id="myfares:UserProfile:standard">
+							<Name>Normal Fare</Name>
+							<TypeOfConcessionRef version="any" ref="myfares:TypeOfConcession:standard"/>
+						</UserProfile>
+						<UserProfile version="any" id="myfares:UserProfile:student">
+							<Name>Student Fare</Name>
+							<TypeOfConcessionRef version="any" ref="myfares:TypeOfConcession:student"/>
+						</UserProfile>
+					</usageParameters>
+					<!--- ====Fare Product======= -->
+					<fareProducts>
+						<SaleDiscountRight version="any" id="myfares:SaleDiscountRight:railcard@standard">
+							<Name>Adult  Standard Flat  fare   </Name>
+							<validityParameterAssignments>
+								<GenericParameterAssignment version="any" order="1" id="myfares:GenericParameterAssignment:railcard@standard@Operator">
+									<validityParameters>
+										<VehicleModes>rail</VehicleModes>
+										<OperatorRef version="any" ref="hde:Operator:DTA"/>
+									</validityParameters>
+								</GenericParameterAssignment>
+								<GenericParameterAssignment version="any" order="2" id="myfares:GenericParameterAssignment:railcard@standard@UserProfile">
+									<Name>Students are ELigible</Name>
+									<limitations>
+										<UserProfileRef version="any" ref="myfares:UserProfile:standard"/>
+									</limitations>
+								</GenericParameterAssignment>
+							</validityParameterAssignments>
+						</SaleDiscountRight>
+						<SaleDiscountRight version="any" id="myfares:SaleDiscountRight:railcard@student">
+							<Name>student Fare ,  </Name>
+							<validityParameterAssignments>
+								<GenericParameterAssignment version="any" order="1" id="myfares:GenericParameterAssignment:railcard@student@Operator">
+									<validityParameters>
+										<VehicleModes>rail</VehicleModes>
+										<OperatorRef version="any" ref="hde:Operator:DTA"/>
+									</validityParameters>
+								</GenericParameterAssignment>
+								<GenericParameterAssignment version="any" order="2" id="myfares:GenericParameterAssignment:railcard@student@UserProfile">
+									<Name>Students are ELigible</Name>
+									<limitations>
+										<UserProfileRef version="any" ref="myfares:UserProfile:student"/>
+									</limitations>
+								</GenericParameterAssignment>
+							</validityParameterAssignments>
+						</SaleDiscountRight>
+					</fareProducts>
+					<!--- ====Fare Prices======= -->
+					<priceGroups>
+						<PriceGroup version="any" id="myfares:PriceGroup:DTA">
+							<Name>Discounts for Rail Cards</Name>
+							<members>
+								<FareProductPrice version="any" id="myfares:FareProductPrice:railcard@standard">
+									<Name>Standard discount - all fares</Name>
+									<DiscountingRuleRef version="any" ref="myfares:DiscountingRule:5%"/>
+									<SaleDiscountRightRef version="any" ref="myfares:SaleDiscountRight:railcard@standard"/>
+								</FareProductPrice>
+								<FareProductPrice version="any" id="myfares:FareProductPrice:railcard@student">
+									<Name>Student  discount - all fares</Name>
+									<DiscountingRuleRef version="any" ref="myfares:DiscountingRule:10%"/>
+									<SaleDiscountRightRef version="any" ref="myfares:SaleDiscountRight:railcard@student"/>
+								</FareProductPrice>
+							</members>
+						</PriceGroup>
+					</priceGroups>
+				</FareFrame>
+			</frames>
+		</CompositeFrame>
+	</dataObjects>
+</PublicationDelivery>

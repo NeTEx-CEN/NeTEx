@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- ==== SImple Network Example ====== 
+This Example provides an example of mapping of a GTFS FareRule.txt file to NeTEx 
+http://code.google.com/p/googletransitdatafeed/wiki/FareExamples
+
+September 2011  
+================
+
+Example 7: Fare depends on zones 
+
+Suppose Demo Transit Agency has a concentric three-zone system, where fares depend on which zones a rider passes through during an itinerary. 
+
+To define this fare structure for the feed, fare_attributes.txt and fare_rules.txt must contain a line for each possible combination of zones. For very complex cross-zone fare structures, it may be simpler to programmatically output fare_rules.txt using origin and destination to define fares. 
+
+fare_attributes.txt 
+fare_id  price  currency_type  payment_method  transfers  
+F1  4.15  USD  0   
+F2  2.20  USD  0   
+F3  2.20  USD  0   
+F4  2.95  USD  0   
+F5  1.25  USD  0   
+F6  1.95  USD  0   
+F7  1.95  USD  0   
+
+fare_rules.txt¶
+fare_id  contains_id  
+F1  1  
+F1  2  
+F1  3  
+F2  1  
+F2  2  
+F3  1  
+F3  3  
+F4  2  
+F4  3  
+F5  1  
+F6  2  
+F7  3  
+
+Calculating an adult fare 
+
+Let's look more closely at the definitions in fare_rules.txt. 
+  * F1 applies to any trip that passes through zones (1,2,3). 
+  * F2 applies to any trip that passes through zones (1,2). 
+  * F3 applies to any trip that passes through zones (1,3). 
+  * F4 applies to any trip that passes through zones (2,3). 
+  * F5 applies to any trip that passes through zone 1 only. 
+  * F6 applies to any trip that passes through zone 2 only. 
+  * F7 applies to any trip that passes through zone 3 only. 
+
+The trip planner calculates an itinerary, and then looks up the fare rules to determine the fares that apply based on zone. Since F1 also includes travel in zone 1, only F4 ($2.95) applies to a trip from zone 2 to zone 3. 
+A fare rule only applies when the set of zones passed through in an itinerary exactly matches the set specified by the fare rule. For a trip between zones 2 and 3, the trip planner reports $2.95 as the adult fare. 
+The public feed from Portland TriMet provides a real-world illustration of this type of fare structure. 
+
+MAPPING
+Mapping is complex depending on fare structure.   
+
+We also include further detail about the nature of the access rights  and validation.
+In this example
+
+A GTFS FareRule maps to a NeTEx FARE PRODUCT + VALIDITY PARAMETER  ASSIGNMENT 
+		using a TARIFF ZONEs   
+
+Where FARE PRODUCT may be
+			PREASSIGNED FARE PRODUCT or 
+  
+
+2.1  For a Zone Sequence Fare   (as in this file)
+ 
+GTFS					NeTEx
+fare_id,					<PreassignedFareProduct> @id  
+route_id,				<PreassignedFareProduct> <validityParameterAssignments>
+									<ValidityParameterAssignment> <GroupOfLinesRef >
+origin_id,				<DistanceMatrixElement> <StartTariffZoneRef>
+destination_id,		<DistanceMatrixElement> <EndTariffZoneRef>
+contains_id	,		<Tariff><fareStructureElements>
+								<FareStructureElement><fareStructureElementsInSequence>
+									<FareStructureElementInSequence><ValidityParameterAssignment> <TariffZoneRef > 
+
+
+2.2 Fare Attributes
+
+GTFS						NeTEx
+fare_id,						<PreassignedFareProduct> @id  
+price,						<Tariff ><fareStructureElements>
+									 <FareStructureElement > <prices> <FareStructureElementPrice><Amount>
+currency_type,			<Tariff ><fareStructureElements> 
+										<FareStructureElement > 	<prices><FareStructureElementPrice><Currency>
+payment_method,		<PreassignedFareProduct> <ChargingMoment> 
+					0 =Pay on Boarding </Name> 
+					1 = Fare must be paid before boarding 
+transfers,					<PreassignedFareProduct> <ValidityParameterAssignment>
+										<UsageValidityPeriod><MaximumNumberOfChanges>
+										<FrequencyOfUse><FrequencyOfUseType>unlimited | none | single
+										<ValidityParameterAssignment><UsageValidityPeriod>endofDay | endOfRide |etc
+transfer_duration		<PreassignedFareProduct> <ValidityParameterAssignment><MaximumTransferTime>
+
+ 
+
+GTFS Data copyright Google Inc
+
+ NeTEx (C) CEN Copyright 2010, 2011
+-->
+<PublicationDelivery xmlns="http://www.netex.org.uk/netex" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://www.netex.org.uk/netex ../../../xsd/NeTEx_publication.xsd">
+	<PublicationTimestamp>2001-12-17T09:30:47.0Z</PublicationTimestamp>
+	<ParticipantRef>SYS001</ParticipantRef>
+	<!--- ======WHAT WAS REQUESTED ========== -->
+	<PublicationRefreshInterval>P3M</PublicationRefreshInterval>
+	<Description>Example 7 of GTFS Agency Fare  data</Description>
+	<!--- =============== RESULTS =========== -->
+	<dataObjects>
+		<CompositeFrame version="1" id="mygtfsxm:CompositeFrame:DTA">
+			<TypeOfFrameRef ref="gtfs:TypeOFrame:GTFS"/>
+			<!--- ======= CODESPACEs======== -->
+			<codespaces>
+				<Codespace id="mygtfsxm">
+					<Xmlns>mygtfsxm</Xmlns>
+					<XmlnsUrl>http://www.demoagency.com/</XmlnsUrl>
+					<Description>Demo AGency</Description>
+				</Codespace>
+			</codespaces>
+			<!--- =======FRAME DEFAULTS======== -->
+			<FrameDefaults>
+				<DefaultCodespaceRef ref="mygtfsxm"/>
+				<DefaultCurrency>USD</DefaultCurrency>
+			</FrameDefaults>
+			<frames>
+				<!--  CUSTOMER RESOURCES -->
+				<ResourceFrame version="any" id="mygtfsxm:ResourceFrame:DTA">
+					<organisations>
+						<!--- =====Agency========= -->
+						<Authority version="any" id="mygtfsxm:Authority:DTA">
+							<Name>Demo Transit Authority</Name>
+							<ContactDetails>
+								<Url>http://code.google.com/p/googletransitdatafeed/wiki/FareExamples</Url>
+							</ContactDetails>
+						</Authority>
+					</organisations>
+				</ResourceFrame>
+				<!--- ==============SERVICE FRAME =========== -->
+				<ServiceFrame version="any" id="mygtfsxm:ServiceFrame:DTA">
+					<tariffZones>
+						<!--- ====TARIFF ZONEs ======== -->
+						<TariffZone version="any" id="mygtfsxm:TariffZone:1">
+							<Name>Zone 1</Name>
+						</TariffZone>
+						<TariffZone version="any" id="mygtfsxm:TariffZone:2">
+							<Name>Zone 2</Name>
+						</TariffZone>
+						<TariffZone version="any" id="mygtfsxm:TariffZone:3">
+							<Name>Zone 3</Name>
+						</TariffZone>
+					</tariffZones>
+				</ServiceFrame>
+				<!--- =============== FAREs =========== -->
+				<FareFrame version="any" id="mygtfsxm:FareFrame:DTA">
+					<AuthorityRef version="any" ref="mygtfsxm:Authority:DTA"/>
+					<!--- ====Fare Usage Parameters======= -->
+					<!--- ====Fare Structure======= -->
+					<tariffs>
+						<Tariff version="any" id="mygtfsxm:Tariff:DTA">
+							<Name>GTFS Example 7 : Zonal  fare  structure</Name>
+							<fareStructureElements>
+								<!-- ===    sequences of use    ===   -->
+								<FareStructureElement version="any" id="mygtfsxm:FareStructureElement:F1">
+									<Name>F1 = Sequence 1 2 3</Name>
+									<fareStructureElementsInSequence>
+										<FareStructureElementInSequence version="any" id="mygtfsxm:FareStructureElementInSequence:F1_01" order="1">
+											<IsFirstInSequence>true</IsFirstInSequence>
+											<FareStructureElementRef version="any" ref="mygtfsxm:FareStructureElement:1"/>
+										</FareStructureElementInSequence>
+										<FareStructureElementInSequence version="any" id="mygtfsxm:FareStructureElementInSequence:F1_02" order="2">
+											<FareStructureElementRef version="any" ref="mygtfsxm:FareStructureElement:2"/>
+										</FareStructureElementInSequence>
+										<FareStructureElementInSequence version="any" id="mygtfsxm:FareStructureElementInSequence:F1_03" order="3">
+											<IsLastInSequence>true</IsLastInSequence>
+											<FareStructureElementRef version="any" ref="mygtfsxm:FareStructureElement:3"/>
+										</FareStructureElementInSequence>
+									</fareStructureElementsInSequence>
+									<prices>
+										<FareStructureElementPrice version="any" id="mygtfsxm:FareStructureElementPrice:F1">
+											<Amount>4.15</Amount>
+											<Currency>USD</Currency>
+										</FareStructureElementPrice>
+									</prices>
+								</FareStructureElement>
+								<FareStructureElement version="any" id="mygtfsxm:FareStructureElement:F2">
+									<Name>F2 = Sequence 1 2 </Name>
+									<fareStructureElementsInSequence>
+										<FareStructureElementInSequence version="any" id="mygtfsxm:FareStructureElementInSequence:F2" order="1">
+											<IsFirstInSequence>true</IsFirstInSequence>
+											<FareStructureElementRef version="any" ref="mygtfsxm:FareStructureElement:1"/>
+											<ValidableElementRef ref="mygtfsxm:ValidableElement:1"/>
+										</FareStructureElementInSequence>
+										<FareStructureElementInSequence version="any" id="mygtfsxm:FareStructureElementInSequence:F2" order="2">
+											<IsLastInSequence>true</IsLastInSequence>
+											<FareStructureElementRef version="any" ref="mygtfsxm:FareStructureElement:2"/>
+											<ValidableElementRef ref="mygtfsxm:ValidableElement:2"/>
+										</FareStructureElementInSequence>
+									</fareStructureElementsInSequence>
+									<prices>
+										<FareStructureElementPrice version="any" id="mygtfsxm:FareStructureElementPrice:F2">
+											<Amount>2.20</Amount>
+											<Currency>USD</Currency>
+										</FareStructureElementPrice>
+									</prices>
+								</FareStructureElement>
+								<FareStructureElement version="any" id="mygtfsxm:FareStructureElement:F3">
+									<Name>F3 = Sequence 1 3 </Name>
+									<fareStructureElementsInSequence>
+										<FareStructureElementInSequence version="any" id="mygtfsxm:FareStructureElementInSequence:F3" order="1">
+											<IsFirstInSequence>true</IsFirstInSequence>
+											<FareStructureElementRef version="any" ref="mygtfsxm:FareStructureElement:1"/>
+										</FareStructureElementInSequence>
+										<FareStructureElementInSequence version="any" id="mygtfsxm:FareStructureElementInSequence:F3" order="2">
+											<IsLastInSequence>true</IsLastInSequence>
+											<FareStructureElementRef version="any" ref="mygtfsxm:FareStructureElement:3"/>
+										</FareStructureElementInSequence>
+									</fareStructureElementsInSequence>
+									<prices>
+										<FareStructureElementPrice version="any" id="mygtfsxm:FareStructureElementPrice:F3">
+											<Amount>2.20</Amount>
+											<Currency>USD</Currency>
+										</FareStructureElementPrice>
+									</prices>
+								</FareStructureElement>
+								<FareStructureElement version="any" id="mygtfsxm:FareStructureElement:F4">
+									<Name>F4 = Sequence 2 3 </Name>
+									<fareStructureElementsInSequence>
+										<FareStructureElementInSequence version="any" id="mygtfsxm:FareStructureElementInSequence:F4" order="1">
+											<IsFirstInSequence>true</IsFirstInSequence>
+											<FareStructureElementRef version="any" ref="mygtfsxm:FareStructureElement:1"/>
+										</FareStructureElementInSequence>
+										<FareStructureElementInSequence version="any" id="mygtfsxm:FareStructureElementInSequence:F4" order="2">
+											<IsLastInSequence>true</IsLastInSequence>
+											<FareStructureElementRef version="any" ref="mygtfsxm:FareStructureElement:3"/>
+										</FareStructureElementInSequence>
+									</fareStructureElementsInSequence>
+									<prices>
+										<FareStructureElementPrice version="any" id="mygtfsxm:FareStructureElementPrice:F4">
+											<Amount>2.95</Amount>
+											<Currency>USD</Currency>
+										</FareStructureElementPrice>
+									</prices>
+								</FareStructureElement>
+								<FareStructureElement version="any" id="mygtfsxm:FareStructureElement:F5">
+									<Name>F5 = Zone 1  only </Name>
+									<fareStructureElementsInSequence>
+										<FareStructureElementInSequence version="any" id="mygtfsxm:FareStructureElementInSequence:F5" order="1">
+											<IsFirstInSequence>true</IsFirstInSequence>
+											<IsLastInSequence>true</IsLastInSequence>
+											<FareStructureElementRef version="any" ref="mygtfsxm:FareStructureElement:1"/>
+										</FareStructureElementInSequence>
+									</fareStructureElementsInSequence>
+									<prices>
+										<FareStructureElementPrice version="any" id="mygtfsxm:FareStructureElementPrice:F5">
+											<Amount>1.25</Amount>
+											<Currency>USD</Currency>
+										</FareStructureElementPrice>
+									</prices>
+								</FareStructureElement>
+								<FareStructureElement version="any" id="mygtfsxm:FareStructureElement:F6">
+									<Name>F6 =   Zone 2  only </Name>
+									<fareStructureElementsInSequence>
+										<FareStructureElementInSequence version="any" id="mygtfsxm:FareStructureElementInSequence:F6" order="1">
+											<IsFirstInSequence>true</IsFirstInSequence>
+											<IsLastInSequence>true</IsLastInSequence>
+											<FareStructureElementRef version="any" ref="mygtfsxm:FareStructureElement:2"/>
+										</FareStructureElementInSequence>
+									</fareStructureElementsInSequence>
+									<prices>
+										<FareStructureElementPrice version="any" id="mygtfsxm:FareStructureElementPrice:F6">
+											<Amount>1.95</Amount>
+											<Currency>USD</Currency>
+										</FareStructureElementPrice>
+									</prices>
+								</FareStructureElement>
+								<FareStructureElement version="any" id="mygtfsxm:FareStructureElement:F7">
+									<Name>F7 =     Zone 3  only </Name>
+									<fareStructureElementsInSequence>
+										<FareStructureElementInSequence version="any" id="mygtfsxm:FareStructureElementInSequence:F7" order="1">
+											<IsFirstInSequence>true</IsFirstInSequence>
+											<IsLastInSequence>true</IsLastInSequence>
+											<FareStructureElementRef version="any" ref="mygtfsxm:FareStructureElement:3"/>
+										</FareStructureElementInSequence>
+									</fareStructureElementsInSequence>
+									<prices>
+										<FareStructureElementPrice version="any" id="mygtfsxm:FareStructureElementPrice:F7">
+											<Amount>1.95</Amount>
+											<Currency>USD</Currency>
+										</FareStructureElementPrice>
+									</prices>
+								</FareStructureElement>
+								<!-- ===    zones   ===   -->
+								<FareStructureElement version="any" id="mygtfsxm:FareStructureElement:1">
+									<Name>Zone 1</Name>
+									<validityParameterAssignments>
+										<GenericParameterAssignment version="any" order="1" id="mygtfsxm:GenericParameterAssignment:1">
+											<Name>Use of Zone 1</Name>
+											<validityParameters>
+												<TariffZoneRef version="any" ref="mygtfsxm:TariffZone:1"/>
+											</validityParameters>
+										</GenericParameterAssignment>
+									</validityParameterAssignments>
+								</FareStructureElement>
+								<FareStructureElement version="any" id="mygtfsxm:FareStructureElement:2">
+									<Name>Zone 2</Name>
+									<validityParameterAssignments>
+										<GenericParameterAssignment version="any" order="1" id="mygtfsxm:GenericParameterAssignment:2">
+											<Name>Use of Zone 2</Name>
+											<validityParameters>
+												<TariffZoneRef version="any" ref="mygtfsxm:TariffZone:2"/>
+											</validityParameters>
+										</GenericParameterAssignment>
+									</validityParameterAssignments>
+								</FareStructureElement>
+								<FareStructureElement version="any" id="mygtfsxm:FareStructureElement:3">
+									<Name>Zone 3</Name>
+									<validityParameterAssignments>
+										<GenericParameterAssignment version="any" order="1" id="mygtfsxm:GenericParameterAssignment:3">
+											<Name>Use of Zone 3</Name>
+											<validityParameters>
+												<TariffZoneRef version="any" ref="mygtfsxm:TariffZone:3"/>
+											</validityParameters>
+										</GenericParameterAssignment>
+									</validityParameterAssignments>
+								</FareStructureElement>
+							</fareStructureElements>
+						</Tariff>
+					</tariffs>
+					<usageParameters>
+						<FrequencyOfUse version="any" id="mygtfsxm:FrequencyOfUse:unlimited">
+							<Name>Unlimted transfers</Name>
+							<FrequencyOfUseType>unlimited</FrequencyOfUseType>
+						</FrequencyOfUse>
+					</usageParameters>
+					<!--- ====Fare Product======= -->
+					<fareProducts>
+						<PreassignedFareProduct version="any" id="mygtfsxm:PreassignedFareProduct:DtaZonal">
+							<Name>Zone 1 2 3 ride on the DTA,   </Name>
+							<ChargingMomentRef version="any" ref="gtfs:ChargingMoment:0"/>
+							<validityParameterAssignments>
+								<GenericParameterAssignment version="any" order="1" id="mygtfsxm:GenericParameterAssignment:DtaZonal@ZoneSequences">
+									<IncludesGroupingType>XOR</IncludesGroupingType>
+									<includes>
+										<GenericParameterAssignment version="any" order="1" id="mygtfsxm:GenericParameterAssignment:DtaZonal@Sequence">
+											<FareStructureElementRef version="any" ref="mygtfsxm:FareStructureElement:F1"/>
+										</GenericParameterAssignment>
+										<GenericParameterAssignment version="any" order="2" id="mygtfsxm:GenericParameterAssignment:DtaZonal@Sequence">
+											<FareStructureElementRef version="any" ref="mygtfsxm:FareStructureElement:F2"/>
+										</GenericParameterAssignment>
+										<GenericParameterAssignment version="any" order="3" id="mygtfsxm:GenericParameterAssignment:DtaZonal@Sequence">
+											<FareStructureElementRef version="any" ref="mygtfsxm:FareStructureElement:F3"/>
+										</GenericParameterAssignment>
+										<GenericParameterAssignment version="any" order="4" id="mygtfsxm:GenericParameterAssignment:DtaZonal@Sequence">
+											<FareStructureElementRef version="any" ref="mygtfsxm:FareStructureElement:F4"/>
+										</GenericParameterAssignment>
+										<GenericParameterAssignment version="any" order="5" id="mygtfsxm:GenericParameterAssignment:DtaZonal@Sequence">
+											<FareStructureElementRef version="any" ref="mygtfsxm:FareStructureElement:F5"/>
+										</GenericParameterAssignment>
+										<GenericParameterAssignment version="any" order="6" id="mygtfsxm:GenericParameterAssignment:DtaZonal@Sequence">
+											<FareStructureElementRef version="any" ref="mygtfsxm:FareStructureElement:F6"/>
+										</GenericParameterAssignment>
+										<GenericParameterAssignment version="any" order="7" id="mygtfsxm:GenericParameterAssignment:DtaZonal@Sequence">
+											<FareStructureElementRef version="any" ref="mygtfsxm:FareStructureElement:F7"/>
+										</GenericParameterAssignment>
+									</includes>
+								</GenericParameterAssignment>
+							</validityParameterAssignments>
+							<!--- ====VALIDABLE ELEMENTs====== -->
+							<validableElements>
+								<ValidableElement version="any" id="mygtfsxm:ValidableElement:trip">
+									<Name>first ride</Name>
+									<validityParameterAssignments>
+										<GenericParameterAssignment version="any" order="1" id="myfares:GenericParameterAssignment:busRide">
+											<Name>One trip  only - not explciit in GTFS</Name>
+											<validityParameters>
+												<VehicleModes>bus</VehicleModes>
+												<AuthorityRef ref="mygtfsxm:Authority:DTA"/>
+											</validityParameters>
+										</GenericParameterAssignment>
+									</validityParameterAssignments>
+								</ValidableElement>
+							</validableElements>
+						</PreassignedFareProduct>
+					</fareProducts>
+				</FareFrame>
+			</frames>
+		</CompositeFrame>
+		<!--- =====DEFIN|TIONS OF BUILT IN GTFS VALUES RESOURCEs======== -->
+		<ResourceFrame version="any" id="gtfs:ResourceFrame:GTFS">
+			<Name>Built-in GTFS Code Values</Name>
+			<!--- ======= CODESPACEs======== -->
+			<codespaces>
+				<Codespace id="gtfs">
+					<Xmlns>gtfs</Xmlns>
+					<XmlnsUrl>http://www.google.com/transit/gtfs</XmlnsUrl>
+					<Description>GTFS code values</Description>
+				</Codespace>
+			</codespaces>
+			<!--- =======FRAME DEFAULTS======== -->
+			<FrameDefaults>
+				<DefaultCodespaceRef ref="gtfs"/>
+			</FrameDefaults>
+			<typesOfValue>
+				<ValueSet version="1.5" id="gtfs:ValueSet:ChargingMoment">
+					<Name>GTFS Built in  Charging Methods: FareAttribute@payment_method</Name>
+					<values>
+						<!--- ====Charging method========= -->
+						<ChargingMoment version="any" id="gtfs:ChargingMoment:0">
+							<Name>Pay on Boarding</Name>
+						</ChargingMoment>
+						<ChargingMoment version="any" id="gtfs:ChargingMoment:1">
+							<Name>Fare must be paid before boarding</Name>
+						</ChargingMoment>
+					</values>
+				</ValueSet>
+			</typesOfValue>
+		</ResourceFrame>
+	</dataObjects>
+</PublicationDelivery>

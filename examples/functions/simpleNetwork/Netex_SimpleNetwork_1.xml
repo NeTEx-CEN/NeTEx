@@ -1,0 +1,1486 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- ==== SImple Network Example ====== 
+This example shows the encoding of a simple bus infrastructure network in NeTEx XML  
+
+Line 66 : has two branches comprising five STOP PLACEs
+                                  -   D
+               A - B  - C  <
+                                  - E
+  
+Stops A, D, E use the same  QUAY  in both directions
+        Stop  B  has QUAYs Ba, Bb  for the two different directions  
+		Stop C has QUAYs Ca, Cb for the two different directions
+ 
+There are SCHEDULED STOP POINTs   Aa  Ba, Bb, Ca, Cb,  D, E
+		Aa SCHEDULED STOP POINT hde:ScheduledStopPoint:SSP0001A 
+		Ba SCHEDULED STOP POINT hde:ScheduledStopPoint:SSP0002B_a
+		Bb SCHEDULED STOP POINT hde:ScheduledStopPoint:SSP0002B_b
+		Ca SCHEDULED STOP POINT hde:ScheduledStopPoint:SSP0003C_a
+		Cb SCHEDULED STOP POINT hde:ScheduledStopPoint:SSP0003C_b
+		D SCHEDULED STOP POINT hde:ScheduledStopPoint:SSP0004D
+		E SCHEDULED STOP POINT hde:ScheduledStopPoint:SSP0005E
+
+STOP PLACEs    A, B, C ,D, E
+	A STOP PLACE mybus:StopPlace:SP001A
+		QUAY    mybus:Quay:Q_SP001A_1
+	B STOP PLACE mybus:StopPlace:SP002B
+		QUAY    mybus:Quay:Q_SP002B_1
+		QUAY    mybus:Quay:Q_SP002B_2
+	C STOP PLACE mybus:StopPlace:SP003C
+		QUAY    mybus:Quay:Q_SP003C_1
+		QUAY   mybus:Quay:Q_SP003C_2
+	D STOP PLACE mybus:StopPlace:SP004D
+		QUAY    mybus:Quay:Q_SP003D_1
+ 	E STOP PLACE mybus:StopPlace:SP005E
+		QUAY    mybus:Quay:Q_SP003E_1
+ 
+
+ROUTEs in each DIRECTION: : Additional ROUTE POINTs are centreline of Road so are use din both directions . 
+    A - B - C - D
+		 RT001o    seven  points   A - [rp21 -  Ba - rp22 -rp2 5 - Ca  -  D
+		 RT001i    seven  points    D -   Cb - rp25 - rp22  Bb - rp21 -  A
+    A - B - C - E    
+		 RT001o    seven  points   A - rp21 -  Ba - rp22 -rp2 5 -  Ca  -  E
+		 RT001i    seven  points    E -   Cb -  25 - rp22 - Bb - rp21 -  A
+
+SERVICE PATTERNs in each direction:  
+    A - B - C - D
+	     SvP001o:   A - Ba - Ca - D    
+			Points A, Ba, C, D	      
+			Links A-Ba,  Ba-Ca,  Ca-D 
+	    SvP001i:    D - Cb - Bb  -A :    Ba,   	                      
+			Links D -Cb, Cb-Bb,  Bb -  A
+    A - B - C - E    
+	    SvP002o:   A - Ba - Ca - E    
+			Points A, Ba, C, D	      
+			Links A-Ba,  Ba-Ca,  Ca-E 
+	    SvP002i:    E - Cb - Bb  -A :    Ba,   	                       
+			Links E -Cb, Cb-Bb,  Bb -  A
+TIMING PATTERNs in each direction 
+    A - B - C - D
+        TP001o   A -Ba - TP51 -Ca - D
+         TP001i    D -Cb -Bb -A
+    A - B - C - E    
+        TP002o   A -Ba - TP51 -Ca - E
+         TP002i    E -Cb -Bb -A
+
+JOURNEY PATTERNs in each direction
+    A - B - C - D 
+        JP001o   A -Ba   -C -D;  
+        JP001i    D C -Bb -A
+    A - B - C - E   
+        JP002o   A -Ba   - C -E;  
+        JP002i    E- C -Bb -A
+
+TIME DEMAND TYPEs  TP001 peak
+
+Two different RESPONSIBILITY SETs
+    mybus:ResponsibilitySet:RS_10,     hde:ResponsibilitySet:RS_22
+
+INFRASTRUCTURE elements
+
+Road  1   FooSt   2 BarLane     3  FumAv  4
+                A        ..20mB..          ..30mC
+Infrastucture restrictions
+
+Network Elements
+
+A RESOURCE FRAME is used to contain the fixed code elements and RESPONSIBILITY SETs
+An INFRASTRUCTURE FRAME is used to group the Road ELEMENTs.
+A SITE FRAME is used to contain the STOP PLACE elements
+A SERVICE FRAME is used to contain the route network elements
+A COMPOSITE FRAME Is used to group the above frames as a cohernet version.
+
+-->
+<PublicationDelivery xmlns="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gml="http://www.opengis.net/gml/3.2" version="1.0" xsi:schemaLocation="http://www.netex.org.uk/netex ../../../xsd/NeTEx_publication.xsd">
+	<PublicationTimestamp>2010-12-17T09:30:47.0Z</PublicationTimestamp>
+	<ParticipantRef>SYS001</ParticipantRef>
+	<!--- ======WHAT WAS REQUESTED ========== -->
+	<PublicationRequest version="1.0">
+		<RequestTimestamp>2010-12-17T09:30:47.0Z</RequestTimestamp>
+		<ParticipantRef>SYS002</ParticipantRef>
+		<topics>
+			<NetworkFrameTopic>
+				<Current/>
+				<InfrastructureFrameRef ref="mybus:ifwkf001">REQUEST</InfrastructureFrameRef>
+				<ServiceFrameRef ref="mybus:ntwkf001">REQUEST</ServiceFrameRef>
+			</NetworkFrameTopic>
+		</topics>
+	</PublicationRequest>
+	<PublicationRefreshInterval>P7D</PublicationRefreshInterval>
+	<Description>Netex basic Versioning Example Step 05</Description>
+	<!--- =============== RESULTS =========== -->
+	<dataObjects>
+		<CompositeFrame version="1" id="mybus:CompositeFrame:infraf002">
+			<!--- ======= CODESPACEs======== -->
+			<codespaces>
+				<Codespace id="mybus">
+					<Xmlns>mybus</Xmlns>
+					<XmlnsUrl>http://www.mybuses.eu/stuff</XmlnsUrl>
+					<Description>My buses</Description>
+				</Codespace>
+				<Codespace id="hde">
+					<Xmlns>hde</Xmlns>
+					<XmlnsUrl>http://www.halt.de/</XmlnsUrl>
+					<Description>Stop data  data</Description>
+				</Codespace>
+				<Codespace id="gis">
+					<Xmlns>gis</Xmlns>
+					<XmlnsUrl>http://www.gisdata.com/data</XmlnsUrl>
+					<Description>GIS   data</Description>
+				</Codespace>
+			</codespaces>
+			<!--- =======FRAME DEFAULTS======== -->
+			<FrameDefaults>
+				<DefaultCodespaceRef ref="mybus"/>
+			</FrameDefaults>
+			<frames>
+				<!-- === SITE : STOP PLACEs & QUAYs======= -->
+				<SiteFrame version="024" created="2010-05-17T09:30:47.0Z" changed="2010-05-22T10:30:51.0Z" modification="revise" derivedFromVersionRef="0023" id="mybus:SiteFrame:infraf002">
+					<FrameDefaults>
+						<DefaultResponsibilitySetRef ref="mybus:ResponsibilitySet:RS_10"/>
+					</FrameDefaults>
+					<stopPlaces>
+						<StopPlace version="any" created="2006-09-11T15:42:00" id="mybus:StopPlace:SP001A">
+							<Name>St George's Road (SW19)</Name>
+							<ShortName>Place A </ShortName>
+							<Centroid>
+								<Location>
+									<gml:pos srsName="UKOS">524811 	 170666 </gml:pos>
+								</Location>
+							</Centroid>
+							<RoadAddress version="any" id="mybus:RoadAddress:RAd_SP001A_01">
+								<RoadName>Alexandra Road</RoadName>
+							</RoadAddress>
+							<TransportMode>bus</TransportMode>
+							<StopPlaceType>onstreetBus</StopPlaceType>
+							<quays>
+								<Quay version="any" created="2010-04-17T09:30:47Z" id="mybus:Quay:Q_SP001A_1">
+									<Name>PlaceA</Name>
+									<Description>Stop A is termiuis serves both directions</Description>
+									<Centroid>
+										<Location>
+											<Longitude>-0.2071397147</Longitude>
+											<Latitude>51.4217482061</Latitude>
+										</Location>
+									</Centroid>
+									<Covered>indoors</Covered>
+									<Label>Stop A</Label>
+									<PublicCode>1-3454 </PublicCode>
+									<CompassOctant>S</CompassOctant>
+									<QuayType>busStop</QuayType>
+								</Quay>
+							</quays>
+						</StopPlace>
+						<StopPlace version="any" created="2006-09-11T15:42:00" id="mybus:StopPlace:SP002B">
+							<Name>St George's Road (SW19)</Name>
+							<ShortName>Place B</ShortName>
+							<Centroid>
+								<Location>
+									<gml:pos srsName="UKOS">524811 	 170666 </gml:pos>
+								</Location>
+							</Centroid>
+							<RoadAddress version="any" id="mybus:RoadAddress:RAd_SP002B_01">
+								<RoadName>Alexandra Road</RoadName>
+							</RoadAddress>
+							<StopPlaceType>onstreetBus</StopPlaceType>
+							<quays>
+								<Quay version="any" id="mybus:Quay:Q_SP002B_1">
+									<Name>Place B, Northbound</Name>
+									<Description>Stop Ba  is paired with Stop Bb  </Description>
+									<Centroid>
+										<Location>
+											<Longitude>-0.2071397147</Longitude>
+											<Latitude>51.4217482061</Latitude>
+										</Location>
+									</Centroid>
+									<Covered>outdoors</Covered>
+									<Label>Stop Ba</Label>
+									<PublicCode>1-3456 </PublicCode>
+									<CompassOctant>S</CompassOctant>
+									<QuayType>busStop</QuayType>
+								</Quay>
+								<Quay version="any" created="2010-04-17T09:30:47Z" id="mybus:Quay:Q_SP002B_2">
+									<Name>Place B,  SOuthbound</Name>
+									<Description>Stop Ba  is paired with Stop Bb  </Description>
+									<Centroid>
+										<Location>
+											<Longitude>-0.2071397147</Longitude>
+											<Latitude>51.4217482061</Latitude>
+										</Location>
+									</Centroid>
+									<Covered>outdoors</Covered>
+									<Label>Stop Bb</Label>
+									<PublicCode>1-3457 </PublicCode>
+									<CompassOctant>N</CompassOctant>
+									<QuayType>busStop</QuayType>
+								</Quay>
+							</quays>
+						</StopPlace>
+						<StopPlace version="any" created="2006-09-11T15:42:00" id="mybus:StopPlace:SP003C">
+							<Name>Place C</Name>
+							<ShortName>Place C</ShortName>
+							<Centroid>
+								<Location>
+									<gml:pos srsName="UKOS">524811 	 170666 </gml:pos>
+								</Location>
+							</Centroid>
+							<RoadAddress version="any" id="mybus:RoadAddress:RAd_SP003C_01">
+								<RoadName>Foo Road</RoadName>
+							</RoadAddress>
+							<TransportMode>bus</TransportMode>
+							<StopPlaceType>onstreetBus</StopPlaceType>
+							<quays>
+								<Quay version="any" created="2010-04-17T09:30:47Z" id="mybus:Quay:Q_SP003C_1">
+									<Name>Place C</Name>
+									<Description>StopCa  is paired with Stop Cb  </Description>
+									<Centroid>
+										<Location>
+											<Longitude>-0.2071397147</Longitude>
+											<Latitude>51.4217482061</Latitude>
+										</Location>
+									</Centroid>
+									<Covered>outdoors</Covered>
+									<Label>Stop Ca</Label>
+									<PublicCode>1-3454 </PublicCode>
+									<CompassOctant>NE</CompassOctant>
+									<QuayType>busStop</QuayType>
+								</Quay>
+								<Quay version="any" created="2010-04-17T09:30:47Z" id="mybus:Quay:Q_SP003C_2">
+									<Name>Place C</Name>
+									<Description>Stop Cb  is paired with Stop Ca </Description>
+									<Centroid>
+										<Location>
+											<Longitude>-0.2071397147</Longitude>
+											<Latitude>51.4217482061</Latitude>
+										</Location>
+									</Centroid>
+									<Covered>outdoors</Covered>
+									<Label>Stop Cb</Label>
+									<PublicCode>1-3454 </PublicCode>
+									<CompassOctant>SE</CompassOctant>
+									<QuayType>busStop</QuayType>
+								</Quay>
+							</quays>
+						</StopPlace>
+						<StopPlace version="any" created="2006-09-11T15:42:00" id="mybus:StopPlace:SP004D">
+							<Name>Place D</Name>
+							<ShortName>Place D</ShortName>
+							<Centroid>
+								<Location>
+									<gml:pos srsName="UKOS">524811 	 170666 </gml:pos>
+								</Location>
+							</Centroid>
+							<RoadAddress version="any" id="mybus:RoadAddress:RAd_SP004D_01">
+								<RoadName>Bar Road</RoadName>
+							</RoadAddress>
+							<TransportMode>bus</TransportMode>
+							<StopPlaceType>onstreetBus</StopPlaceType>
+							<quays>
+								<Quay version="any" created="2010-04-17T09:30:47Z" id="mybus:Quay:Q_SP004D_1">
+									<Name>PlaceD</Name>
+									<Description>Stop D is termiuis serves both directions</Description>
+									<Centroid>
+										<Location>
+											<Longitude>-0.2071397147</Longitude>
+											<Latitude>51.4217482061</Latitude>
+										</Location>
+									</Centroid>
+									<Covered>outdoors</Covered>
+									<Label>Stop D</Label>
+									<PublicCode>1-3454 </PublicCode>
+									<CompassOctant>W</CompassOctant>
+									<QuayType>busStop</QuayType>
+								</Quay>
+							</quays>
+						</StopPlace>
+						<StopPlace version="any" created="2006-09-11T15:42:00" id="mybus:StopPlace:SP005E">
+							<Name>Place E</Name>
+							<ShortName>Place E</ShortName>
+							<Centroid>
+								<Location>
+									<gml:pos srsName="UKOS">524811 	 170666 </gml:pos>
+								</Location>
+							</Centroid>
+							<RoadAddress version="any" id="mybus:RoadAddress:RAd_SP005E_01">
+								<RoadName>Bar Road</RoadName>
+							</RoadAddress>
+							<TransportMode>bus</TransportMode>
+							<StopPlaceType>onstreetBus</StopPlaceType>
+							<quays>
+								<Quay version="any" created="2010-04-17T09:30:47Z" id="mybus:Quay:Q_SP005E_1">
+									<Name>PlaceE</Name>
+									<Description>Stop Es termiuis serves both directions</Description>
+									<Centroid>
+										<Location>
+											<Longitude>-0.2071397147</Longitude>
+											<Latitude>51.4217482061</Latitude>
+										</Location>
+									</Centroid>
+									<Covered>outdoors</Covered>
+									<Label>Stop E</Label>
+									<PublicCode>1-3454 </PublicCode>
+									<CompassOctant>W</CompassOctant>
+									<QuayType>busStop</QuayType>
+								</Quay>
+							</quays>
+						</StopPlace>
+					</stopPlaces>
+				</SiteFrame>
+				<!--- ======INFRASTRUCTURE LINKs ========== -->
+				<InfrastructureFrame version="B005" created="2010-05-17T09:30:47.0Z" changed="2010-05-22T10:30:51.0Z" modification="revise" derivedFromVersionRef="004" responsibilitySetRef="mybus:ResponsibilitySet:RS_10" id="mybus:InfrastructureFrame:ifwkf001">
+					<Name>My Infrastructure   Version 5 with three stops in it </Name>
+					<!--- ============ ============= -->
+					<junctions>
+						<!--- ===SOME TOKEN INFRASTRUCTURE ========== -->
+						<RoadJunction version="002" created="2010-12-17T09:30:47.0Z" responsibilitySetRef="gis:ResponsibilitySet:RS_31" id="gis:RoadJunction:rdJ001">
+							<Name>Junc 1</Name>
+							<Location>
+								<Longitude>-0.2071397147</Longitude>
+								<Latitude>51.4217482061</Latitude>
+							</Location>
+						</RoadJunction>
+						<RoadJunction version="002" created="2010-12-17T09:30:47.0Z" responsibilitySetRef="gis:ResponsibilitySet:RS_31" id="gis:RoadJunction:rdJ002">
+							<Name>Junc 2</Name>
+							<Location>
+								<Longitude>-0.2071397147</Longitude>
+								<Latitude>51.4217482061</Latitude>
+							</Location>
+						</RoadJunction>
+						<RoadJunction version="002" created="2010-12-17T09:30:47.0Z" responsibilitySetRef="gis:ResponsibilitySet:RS_31" id="gis:RoadJunction:rdJ003">
+							<Name>Junc 3</Name>
+							<Location>
+								<Longitude>-0.2071397147</Longitude>
+								<Latitude>51.4217482061</Latitude>
+							</Location>
+						</RoadJunction>
+						<RoadJunction version="002" created="2010-12-17T09:30:47.0Z" responsibilitySetRef="gis:ResponsibilitySet:RS_31" id="gis:RoadJunction:rdJ004">
+							<Name>Junc 4</Name>
+							<Location>
+								<Longitude>-0.2071397147</Longitude>
+								<Latitude>51.4217482061</Latitude>
+							</Location>
+						</RoadJunction>
+						<RoadJunction version="002" created="2010-12-17T09:30:47.0Z" id="gis:RoadJunction:rdJ0021">
+							<Name>Vehicle of type VT001 Cannot pass  here</Name>
+							<Location>
+								<Longitude>-0.2071397147</Longitude>
+								<Latitude>51.4217482061</Latitude>
+							</Location>
+						</RoadJunction>
+					</junctions>
+					<elements>
+						<RoadElement version="002" created="2010-12-17T09:30:47.0Z" responsibilitySetRef="gis:ResponsibilitySet:RS_31" id="gis:RoadElement:rdE001_1to2">
+							<Name>Junc 1 -2</Name>
+							<FromPointRef version="002" ref="gis:RoadJunction:rdJ001"/>
+							<ToPointRef version="002" ref="gis:RoadJunction:rdJ002"/>
+						</RoadElement>
+						<RoadElement version="002" created="2010-12-17T09:30:47.0Z" responsibilitySetRef="gis:ResponsibilitySet:RS_31" id="gis:RoadElement:rdE002_2to3">
+							<Name>Road between Junc 2 -3</Name>
+							<FromPointRef version="002" ref="gis:RoadJunction:rdJ002"/>
+							<ToPointRef version="002" ref="gis:RoadJunction:rdJ003"/>
+						</RoadElement>
+						<RoadElement version="002" created="2010-12-17T09:30:47.0Z" responsibilitySetRef="gis:ResponsibilitySet:RS_31" id="gis:RoadElement:rdE003_3to4">
+							<Name>Junc 3 -4</Name>
+							<FromPointRef version="002" ref="gis:RoadJunction:rdJ003"/>
+							<ToPointRef version="002" ref="gis:RoadJunction:rdJ004"/>
+						</RoadElement>
+					</elements>
+					<restrictions>
+						<!--- ===SOME TOKEN RESTRICTIONS========== -->
+						<RestrictedManoeuvre order="1" version="002" created="2010-12-17T09:30:47.0Z" id="hde:RestrictedManoeuvre:RM_01">
+							<Restricted>false</Restricted>
+							<FromLinkRef ref="gis:RoadElement:rdE001">EXTERNAL</FromLinkRef>
+							<ToLinkRef ref="gis:RoadElement:rdE002">EXTERNAL</ToLinkRef>
+							<VehicleTypeRef version="002" ref="hde:VehicleType:VT001"/>
+						</RestrictedManoeuvre>
+						<MeetingRestriction order="1" version="002" created="2010-12-17T09:30:47.0Z" id="hde:MeetingRestriction:RMT_02">
+							<Restricted>true</Restricted>
+							<FromLinkRef ref="gis:RoadElement:rdE001">EXTERNAL</FromLinkRef>
+							<ToLinkRef ref="gis:RoadElement:rdE002">EXTERNAL</ToLinkRef>
+							<ForVehicleTypeRef version="002" ref="hde:VehicleType:VT001"/>
+							<AgainstVehicleTypeRef version="002" ref="hde:VehicleType:VT001"/>
+						</MeetingRestriction>
+						<OvertakingPossibility order="1" version="002" created="2010-12-17T09:30:47.0Z" id="hde:OvertakingPossibility:ROP_03">
+							<Restricted>false</Restricted>
+							<OvertakingOnLinkRef ref="gis:RoadElement:rdE002">EXTERNAL</OvertakingOnLinkRef>
+							<OvertakingAtPointRef ref="gis:pt0021">EXTERNAL</OvertakingAtPointRef>
+							<OvertakingVehicleTypeRef version="002" ref="hde:VehicleType:VT001"/>
+							<OvertakenVehicleTypeRef version="002" ref="hde:VehicleType:VT001"/>
+						</OvertakingPossibility>
+					</restrictions>
+					<!-- ====   -->
+					<!--- ============ ============= -->
+					<vehicleTypes>
+						<VehicleType version="002" created="2010-12-17T09:30:47.0Z" id="hde:VehicleType:VT001">
+							<Name>Big red bus</Name>
+							<PassengerCapacity>
+								<SeatingCapacity>50</SeatingCapacity>
+								<StandingCapacity>20</StandingCapacity>
+								<WheelchairPlaceCapacity>2</WheelchairPlaceCapacity>
+							</PassengerCapacity>
+							<Length>20</Length>
+						</VehicleType>
+					</vehicleTypes>
+				</InfrastructureFrame>
+				<!--- =====FRAME WITH ROUTEs========= -->
+				<ServiceFrame version="any" id="sV01">
+					<FrameDefaults>
+						<DefaultResponsibilitySetRef version="3.0" ref="hde:ResponsibilitySet:RS_22"/>
+					</FrameDefaults>
+					<!--- s ===declaration o f ROUTE POINT ========= -->
+					<!-- /points  fr ROute R1001oo  -->
+					<routePoints>
+						<!-- points used in Route Rt001o -->
+						<RoutePoint version="any" id="hde:RoutePoint:RteP021">
+							<Name>Point 21</Name>
+						</RoutePoint>
+						<RoutePoint version="any" id="hde:RoutePoint:RteP022">
+							<Name>Point 22</Name>
+						</RoutePoint>
+						<RoutePoint version="any" id="hde:RoutePoint:RteP025">
+							<Name>Point 25</Name>
+						</RoutePoint>
+					</routePoints>
+					<!-- links for route R1001oo  -->
+					<routeLinks>
+						<RouteLink version="any" id="hde:RouteLink:RL_001o_01">
+							<Distance>110</Distance>
+							<FromPointRef version="032" ref="hde:ScheduledStopPoint:SSP0001A"/>
+							<ToPointRef version="any" ref="hde:RoutePoint:RteP021"/>
+						</RouteLink>
+						<RouteLink version="any" id="hde:RouteLink:RL_001o_02">
+							<Distance>120</Distance>
+							<FromPointRef version="any" ref="hde:RoutePoint:RteP021"/>
+							<ToPointRef version="032" ref="hde:ScheduledStopPoint:SSP0002B_a"/>
+						</RouteLink>
+						<RouteLink version="any" id="hde:RouteLink:RL_001o_03">
+							<Distance>130</Distance>
+							<FromPointRef version="032" ref="hde:ScheduledStopPoint:SSP0002B_a"/>
+							<ToPointRef version="any" ref="hde:RoutePoint:RteP022"/>
+						</RouteLink>
+						<RouteLink version="any" id="hde:RouteLink:RL_001o_04">
+							<Distance>140</Distance>
+							<FromPointRef version="any" ref="hde:RoutePoint:RteP022"/>
+							<ToPointRef version="any" ref="hde:RoutePoint:RteP025"/>
+						</RouteLink>
+						<RouteLink version="any" id="hde:RouteLink:RL_001o_05">
+							<Distance>150</Distance>
+							<FromPointRef version="any" ref="hde:RoutePoint:RteP025"/>
+							<ToPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_a"/>
+						</RouteLink>
+						<RouteLink version="any" id="hde:RouteLink:RL_001o_06">
+							<Distance>160</Distance>
+							<FromPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_a"/>
+							<ToPointRef version="015" ref="hde:ScheduledStopPoint:SSP0004D"/>
+						</RouteLink>
+						<!-- / links for Rt001o -->
+						<RouteLink version="any" id="hde:RouteLink:RL_001i_01">
+							<Distance>161</Distance>
+							<FromPointRef version="015" ref="hde:ScheduledStopPoint:SSP0004D"/>
+							<ToPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_b"/>
+						</RouteLink>
+						<RouteLink version="any" id="hde:RouteLink:RL_001i_02">
+							<Distance>151</Distance>
+							<FromPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_b"/>
+							<ToPointRef version="any" ref="hde:RoutePoint:RteP025"/>
+						</RouteLink>
+						<RouteLink version="any" id="hde:RouteLink:RL_001i_03">
+							<Distance>141</Distance>
+							<FromPointRef version="any" ref="hde:RoutePoint:RteP025"/>
+							<ToPointRef version="any" ref="hde:RoutePoint:RteP022"/>
+						</RouteLink>
+						<RouteLink version="any" id="hde:RouteLink:RL_001i_04">
+							<Distance>131</Distance>
+							<FromPointRef version="any" ref="hde:RoutePoint:RteP022"/>
+							<ToPointRef version="032" ref="hde:ScheduledStopPoint:SSP0002B_b"/>
+						</RouteLink>
+						<RouteLink version="any" id="hde:RouteLink:RL_001i_05">
+							<Distance>121</Distance>
+							<FromPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_b"/>
+							<ToPointRef version="any" ref="hde:RoutePoint:RteP021"/>
+						</RouteLink>
+						<RouteLink version="any" id="hde:RouteLink:RL_001i_06">
+							<Distance>111</Distance>
+							<FromPointRef version="any" ref="hde:RoutePoint:RteP021"/>
+							<ToPointRef version="032" ref="hde:ScheduledStopPoint:SSP0001A"/>
+						</RouteLink>
+						<!-- /links for route Rt001i-->
+						<!-- links -->
+						<RouteLink version="any" id="hde:RouteLink:RL_002o_06">
+							<Distance>170</Distance>
+							<FromPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_a"/>
+							<ToPointRef version="015" ref="hde:ScheduledStopPoint:SSP0005E"/>
+						</RouteLink>
+						<!--- /links -->
+						<!-- links  -->
+						<RouteLink version="any" id="hde:RouteLink:RL_002i_01">
+							<Distance>171</Distance>
+							<FromPointRef version="015" ref="hde:ScheduledStopPoint:SSP0005E"/>
+							<ToPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_b"/>
+						</RouteLink>
+						<!-- /links -->
+					</routeLinks>
+					<routes>
+						<!--- ===Routes ========= -->
+						<Route version="any" created="2010-12-17T09:30:47.0Z" changed="2002-12-17T09:30:47.0Z" responsibilitySetRef="hde:ResponsibilitySet:RS_22" id="hde:Route:RT001o">
+							<Name>Route 66b outbound
+			</Name>
+							<LineRef version="any" ref="mybus:Line:0066"/>
+							<DirectionType>outbound</DirectionType>
+							<pointsInSequence>
+								<PointOnRoute version="any" id="mybus:PointOnRoute:RPIS_001o_001" order="0001">
+									<ScheduledStopPointRef version="032" ref="hde:ScheduledStopPoint:SSP0001A"/>
+									<OnwardRouteLinkRef version="any" ref="hde:RouteLink:RL_001o_01"/>
+								</PointOnRoute>
+								<PointOnRoute version="any" id="mybus:PointOnRoute:RPIS_001o_002" order="0002">
+									<RoutePointRef version="any" ref="hde:RoutePoint:RteP021"/>
+									<OnwardRouteLinkRef version="any" ref="hde:RouteLink:RL_001o_02"/>
+								</PointOnRoute>
+								<PointOnRoute version="any" id="mybus:PointOnRoute:RPIS_001o_003" order="0003">
+									<ScheduledStopPointRef version="032" ref="hde:ScheduledStopPoint:SSP0002B_a"/>
+									<OnwardRouteLinkRef version="any" ref="hde:RouteLink:RL_001o_03"/>
+								</PointOnRoute>
+								<PointOnRoute version="any" id="mybus:PointOnRoute:RPIS_001o_004" order="0004">
+									<RoutePointRef version="any" ref="hde:RoutePoint:RteP022"/>
+									<OnwardRouteLinkRef version="any" ref="hde:RouteLink:RL_001o_04"/>
+								</PointOnRoute>
+								<PointOnRoute version="any" id="mybus:PointOnRoute:RPIS_001o_005" order="0005">
+									<RoutePointRef version="any" ref="hde:RoutePoint:RteP025"/>
+									<OnwardRouteLinkRef version="any" ref="hde:RouteLink:RL_001o_05"/>
+								</PointOnRoute>
+								<PointOnRoute version="any" id="mybus:PointOnRoute:RPIS_001o_006" order="0006">
+									<ScheduledStopPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_a"/>
+									<OnwardRouteLinkRef version="any" ref="hde:RouteLink:RL_001o_06"/>
+								</PointOnRoute>
+								<PointOnRoute version="any" id="mybus:PointOnRoute:RPIS_001o_007" order="0007">
+									<ScheduledStopPointRef version="015" ref="hde:ScheduledStopPoint:SSP0004D"/>
+								</PointOnRoute>
+							</pointsInSequence>
+						</Route>
+						<!-- links for route Rt001i -->
+						<Route version="any" created="2010-12-17T09:30:47.0Z" changed="2002-12-17T09:30:47.0Z" responsibilitySetRef="hde:ResponsibilitySet:RS_22" id="hde:Route:RT001i">
+							<Name>Route 66b inbound
+			</Name>
+							<LineRef version="any" ref="mybus:Line:0066"/>
+							<DirectionType>inbound</DirectionType>
+							<pointsInSequence>
+								<PointOnRoute version="any" id="mybus:PointOnRoute:RPIS_001i_001" order="0001">
+									<ScheduledStopPointRef version="015" ref="hde:ScheduledStopPoint:SSP0004D"/>
+									<OnwardRouteLinkRef version="any" ref="hde:RouteLink:RL_001i_01"/>
+								</PointOnRoute>
+								<PointOnRoute version="any" id="mybus:PointOnRoute:RPIS_001i_002" order="0002">
+									<ScheduledStopPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_b"/>
+									<OnwardRouteLinkRef version="any" ref="hde:RouteLink:RL_001i_02"/>
+								</PointOnRoute>
+								<PointOnRoute version="any" id="mybus:PointOnRoute:RPIS_001i_003" order="0003">
+									<RoutePointRef version="any" ref="hde:RoutePoint:RteP025"/>
+									<OnwardRouteLinkRef version="any" ref="hde:RouteLink:RL_001i_03"/>
+								</PointOnRoute>
+								<PointOnRoute version="any" id="mybus:PointOnRoute:RPIS_001i_004" order="0004">
+									<RoutePointRef version="any" ref="hde:RoutePoint:RteP022"/>
+									<OnwardRouteLinkRef version="any" ref="hde:RouteLink:RL_001i_04"/>
+								</PointOnRoute>
+								<PointOnRoute version="any" id="mybus:PointOnRoute:RPIS_001i_005" order="0005">
+									<ScheduledStopPointRef version="032" ref="hde:ScheduledStopPoint:SSP0002B_b"/>
+									<OnwardRouteLinkRef version="any" ref="hde:RouteLink:RL_001i_05"/>
+								</PointOnRoute>
+								<PointOnRoute version="any" id="mybus:PointOnRoute:RPIS_001i_006" order="0006">
+									<RoutePointRef version="any" ref="hde:RoutePoint:RteP021"/>
+									<OnwardRouteLinkRef version="any" ref="hde:RouteLink:RL_001i_06"/>
+								</PointOnRoute>
+								<PointOnRoute version="any" id="mybus:PointOnRoute:RPIS_001i_007" order="0007">
+									<ScheduledStopPointRef version="032" ref="hde:ScheduledStopPoint:SSP0001A"/>
+								</PointOnRoute>
+							</pointsInSequence>
+						</Route>
+						<Route version="any" created="2010-12-17T09:30:47.0Z" changed="2002-12-17T09:30:47.0Z" responsibilitySetRef="hde:ResponsibilitySet:RS_22" id="hde:Route:RT002o">
+							<Name>Route 66b outbound
+			</Name>
+							<LineRef version="any" ref="mybus:Line:0066"/>
+							<DirectionType>outbound</DirectionType>
+							<pointsInSequence>
+								<PointOnRoute version="any" id="mybus:PointOnRoute:RPIS_002o_001" order="0001">
+									<ScheduledStopPointRef version="032" ref="hde:ScheduledStopPoint:SSP0001A"/>
+									<OnwardRouteLinkRef version="any" ref="hde:RouteLink:RL_001o_01"/>
+								</PointOnRoute>
+								<PointOnRoute version="any" id="mybus:PointOnRoute:RPIS_002o_002" order="0002">
+									<RoutePointRef version="any" ref="hde:RoutePoint:RteP021"/>
+									<OnwardRouteLinkRef version="any" ref="hde:RouteLink:RL_001o_02"/>
+								</PointOnRoute>
+								<PointOnRoute version="any" id="mybus:PointOnRoute:RPIS_002o_003" order="0003">
+									<ScheduledStopPointRef version="032" ref="hde:ScheduledStopPoint:SSP0002B_a"/>
+									<OnwardRouteLinkRef version="any" ref="hde:RouteLink:RL_001o_03"/>
+								</PointOnRoute>
+								<PointOnRoute version="any" id="mybus:PointOnRoute:RPIS_002o_004" order="0004">
+									<RoutePointRef version="any" ref="hde:RoutePoint:RteP022"/>
+									<OnwardRouteLinkRef version="any" ref="hde:RouteLink:RL_001o_04"/>
+								</PointOnRoute>
+								<PointOnRoute version="any" id="mybus:PointOnRoute:RPIS_002o_005" order="0005">
+									<RoutePointRef version="any" ref="hde:RoutePoint:RteP025"/>
+									<OnwardRouteLinkRef version="any" ref="hde:RouteLink:RL_001o_05"/>
+								</PointOnRoute>
+								<PointOnRoute version="any" id="mybus:PointOnRoute:RPIS_002o_006" order="0006">
+									<ScheduledStopPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_a"/>
+									<OnwardRouteLinkRef version="any" ref="hde:RouteLink:RL_002o_06"/>
+								</PointOnRoute>
+								<PointOnRoute version="any" id="mybus:PointOnRoute:RPIS_002o_007" order="0007">
+									<ScheduledStopPointRef version="015" ref="hde:ScheduledStopPoint:SSP0005E"/>
+								</PointOnRoute>
+							</pointsInSequence>
+						</Route>
+						<Route version="any" created="2010-12-17T09:30:47.0Z" changed="2002-12-17T09:30:47.0Z" responsibilitySetRef="hde:ResponsibilitySet:RS_22" id="hde:Route:RT002i">
+							<Name>Route 66b inbound
+			</Name>
+							<LineRef version="any" ref="mybus:Line:0066"/>
+							<DirectionType>inbound</DirectionType>
+							<pointsInSequence>
+								<PointOnRoute version="any" id="mybus:PointOnRoute:RPIS_002i_001" order="0001">
+									<ScheduledStopPointRef version="015" ref="hde:ScheduledStopPoint:SSP0005E"/>
+									<OnwardRouteLinkRef version="any" ref="hde:RouteLink:RL_002i_01"/>
+								</PointOnRoute>
+								<PointOnRoute version="any" id="mybus:PointOnRoute:RPIS_002i_002" order="0002">
+									<ScheduledStopPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_b"/>
+									<OnwardRouteLinkRef version="any" ref="hde:RouteLink:RL_001i_02"/>
+								</PointOnRoute>
+								<PointOnRoute version="any" id="mybus:PointOnRoute:RPIS_002i_003" order="0003">
+									<RoutePointRef version="any" ref="hde:RoutePoint:RteP025"/>
+									<OnwardRouteLinkRef version="any" ref="hde:RouteLink:RL_001i_03"/>
+								</PointOnRoute>
+								<PointOnRoute version="any" id="mybus:PointOnRoute:RPIS_002i_004" order="0004">
+									<RoutePointRef version="any" ref="hde:RoutePoint:RteP022"/>
+									<OnwardRouteLinkRef version="any" ref="hde:RouteLink:RL_001i_04"/>
+								</PointOnRoute>
+								<PointOnRoute version="any" id="mybus:PointOnRoute:RPIS_002i_005" order="0005">
+									<ScheduledStopPointRef version="032" ref="hde:ScheduledStopPoint:SSP0002B_b"/>
+									<OnwardRouteLinkRef version="any" ref="hde:RouteLink:RL_001i_05"/>
+								</PointOnRoute>
+								<PointOnRoute version="any" id="mybus:PointOnRoute:RPIS_002i_006" order="0006">
+									<RoutePointRef version="any" ref="hde:RoutePoint:RteP021"/>
+									<OnwardRouteLinkRef version="any" ref="hde:RouteLink:RL_001i_06"/>
+								</PointOnRoute>
+								<PointOnRoute version="any" id="mybus:PointOnRoute:RPIS_002i_007" order="0007">
+									<ScheduledStopPointRef version="032" ref="hde:ScheduledStopPoint:SSP0001A"/>
+								</PointOnRoute>
+							</pointsInSequence>
+						</Route>
+					</routes>
+					<commonSections>
+						<!--- ===SCommon Section ========= -->
+						<CommonSection version="any" id="hde:CommonSection:CSc001o_JP">
+							<Name>A - B -C Common Section: Journey {atterb</Name>
+							<usedIn>
+								<LinkSequenceRef version="any" xsi:type="JourneyPatternRefStructure" ref="hde:ServiceJourneyPattern:JP001o"/>
+							</usedIn>
+							<pointsOnSection>
+								<PointOnSection version="1" id="hde:CommonSectionPointMember:CSc001o_JP" order="1">
+									<ScheduledStopPointRef version="032" ref="hde:ScheduledStopPoint:SSP0001A"/>
+									<ServiceLinkRef version="001" ref="hde:ServiceLink:SL_SSP0001A-SSP0002B_a"/>
+								</PointOnSection>
+								<PointOnSection version="1" id="hde:CommonSectionPointMember:CSc001o_JP" order="2">
+									<ScheduledStopPointRef version="032" ref="hde:ScheduledStopPoint:SSP0002B_a"/>
+									<ServiceLinkRef version="001" ref="hde:ServiceLink:SL_SSP0002B_a-SSP0003C_a"/>
+								</PointOnSection>
+								<PointOnSection version="1" id="hde:CommonSectionPointMember:CSc001o_JP" order="3">
+									<ScheduledStopPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_a"/>
+								</PointOnSection>
+							</pointsOnSection>
+						</CommonSection>
+						<CommonSection version="any" responsibilitySetRef="hde:ResponsibilitySet:RS_22" id="hde:CommonSectionPointMember:CSc001i_JP">
+							<Name>C - B -A Common Section: Journey {atterb</Name>
+							<usedIn>
+								<LinkSequenceRef version="any" xsi:type="JourneyPatternRefStructure" ref="hde:ServiceJourneyPattern:JP001i"/>
+								<LinkSequenceRef xsi:type="JourneyPatternRefStructure" ref="hde:ServiceJourneyPattern:JP002i"/>
+							</usedIn>
+							<pointsOnSection>
+								<PointOnSection version="1" id="hde:CommonSectionPointMember:CSc001i_JP" order="1">
+									<ScheduledStopPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_a"/>
+									<ServiceLinkRef version="001" ref="hde:ServiceLink:SL_SSP0003C_b-SSP0002B_b"/>
+								</PointOnSection>
+								<PointOnSection version="1" id="hde:CommonSectionPointMember:CSc001i_JP" order="2">
+									<ScheduledStopPointRef version="032" ref="hde:ScheduledStopPoint:SSP0002B_a"/>
+									<ServiceLinkRef version="001" ref="hde:ServiceLink:SL_SSP0002B_b-SSP0001A"/>
+								</PointOnSection>
+								<PointOnSection version="1" id="hde:CommonSectionPointMember:CSc001i_JP" order="3">
+									<ScheduledStopPointRef version="032" ref="hde:ScheduledStopPoint:SSP0001A"/>
+								</PointOnSection>
+							</pointsOnSection>
+						</CommonSection>
+						<!--- ===SCommon Section ========= -->
+						<CommonSection version="any" responsibilitySetRef="hde:ResponsibilitySet:RS_22" id="hde:CommonSectionPointMember:CSc001o_Rt">
+							<Name>A - B -C Common Section: Rt</Name>
+							<usedIn>
+								<RouteRef version="any" ref="hde:Route:RT001o"/>
+								<RouteRef version="any" ref="hde:Route:RT002o"/>
+							</usedIn>
+							<pointsOnSection>
+								<PointOnSection version="1" id="hde:CommonSectionPointMember:CSc001o_Rt" order="1">
+									<ScheduledStopPointRef version="032" ref="hde:ScheduledStopPoint:SSP0001A"/>
+									<RouteLinkRef version="any" ref="hde:RouteLink:RL_001o_01"/>
+								</PointOnSection>
+								<PointOnSection version="1" id="hde:CommonSectionPointMember:CSc001o_Rt" order="2">
+									<RoutePointRef version="any" ref="hde:RoutePoint:RteP021"/>
+									<RouteLinkRef version="any" ref="hde:RouteLink:RL_001o_02"/>
+								</PointOnSection>
+								<PointOnSection version="1" id="hde:CommonSectionPointMember:CSc001o_Rt" order="3">
+									<ScheduledStopPointRef version="032" ref="hde:ScheduledStopPoint:SSP0002B_a"/>
+									<RouteLinkRef version="any" ref="hde:RouteLink:RL_001o_03"/>
+								</PointOnSection>
+								<PointOnSection version="1" id="hde:CommonSectionPointMember:CSc001o_Rt" order="4">
+									<RoutePointRef version="any" ref="hde:RoutePoint:RteP022"/>
+									<RouteLinkRef version="any" ref="hde:RouteLink:RL_001o_04"/>
+								</PointOnSection>
+								<PointOnSection version="1" id="hde:CommonSectionPointMember:CSc001o_Rt" order="5">
+									<RoutePointRef version="any" ref="hde:RoutePoint:RteP025"/>
+									<RouteLinkRef version="any" ref="hde:RouteLink:RL_001o_05"/>
+								</PointOnSection>
+								<PointOnSection version="1" id="hde:CommonSectionPointMember:CSc001o_Rt" order="6">
+									<ScheduledStopPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_a"/>
+								</PointOnSection>
+							</pointsOnSection>
+						</CommonSection>
+						<CommonSection version="any" responsibilitySetRef="hde:ResponsibilitySet:RS_22" id="hde:CommonSectionPointMember:CSc001i_Rt">
+							<Name>C - B - A Common Section: Rt</Name>
+							<usedIn>
+								<RouteRef version="any" ref="hde:Route:RT001i"/>
+								<RouteRef version="any" ref="hde:Route:RT002i"/>
+							</usedIn>
+							<pointsOnSection>
+								<PointOnSection version="1" id="hde:CommonSectionPointMember:CSc001i_Rt" order="1">
+									<ScheduledStopPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_b"/>
+									<RouteLinkRef version="any" ref="hde:RouteLink:RL_001i_02"/>
+								</PointOnSection>
+								<PointOnSection version="1" id="hde:CommonSectionPointMember:CSc001i_Rt" order="2">
+									<RoutePointRef version="any" ref="hde:RoutePoint:RteP025"/>
+									<RouteLinkRef version="any" ref="hde:RouteLink:RL_001i_03"/>
+								</PointOnSection>
+								<PointOnSection version="1" id="hde:CommonSectionPointMember:CSc001i_Rt" order="3">
+									<RoutePointRef version="any" ref="hde:RoutePoint:RteP022"/>
+									<RouteLinkRef version="any" ref="hde:RouteLink:RL_001i_04"/>
+								</PointOnSection>
+								<PointOnSection version="1" id="hde:CommonSectionPointMember:CSc001i_Rt" order="4">
+									<ScheduledStopPointRef version="032" ref="hde:ScheduledStopPoint:SSP0002B_b"/>
+									<RouteLinkRef version="any" ref="hde:RouteLink:RL_001i_05"/>
+								</PointOnSection>
+								<PointOnSection version="1" id="hde:CommonSectionPointMember:CSc001i_Rt" order="5">
+									<RoutePointRef version="any" ref="hde:RoutePoint:RteP021"/>
+									<RouteLinkRef version="any" ref="hde:RouteLink:RL_001i_06"/>
+								</PointOnSection>
+								<PointOnSection version="1" id="hde:CommonSectionPointMember:CSc001i_Rt" order="6">
+									<ScheduledStopPointRef version="032" ref="hde:ScheduledStopPoint:SSP0001A"/>
+								</PointOnSection>
+							</pointsOnSection>
+						</CommonSection>
+					</commonSections>
+					<!--- ============ ============= -->
+					<lines>
+						<Line version="any" created="2010-12-17T09:30:47.0Z" changed="2002-12-17T09:30:47.0Z" responsibilitySetRef="mybus:ResponsibilitySet:RS_10" id="mybus:Line:0066">
+							<Name>Line 66</Name>
+							<Presentation>
+								<ColourName>yellow</ColourName>
+							</Presentation>
+						</Line>
+					</lines>
+				</ServiceFrame>
+				<!--- =====FRAME WITH SCHEDULED STOP POINTs========= -->
+				<ServiceFrame version="any" responsibilitySetRef="mybus:ResponsibilitySet:RS_10" id="mybus:ntwkf001">
+					<Name>My Network  Version 5 with three stops in it </Name>
+					<FrameDefaults>
+						<DefaultResponsibilitySetRef version="2.0" ref="mybus:ResponsibilitySet:RS_10"/>
+					</FrameDefaults>
+					<!--- ============ ============= -->
+					<scheduledStopPoints>
+						<!--- === SCHEDULED STOP POINTs Point============ -->
+						<ScheduledStopPoint version="032" created="2000-12-17T09:30:47.0Z" changed="2002-12-17T09:30:47.0Z" id="hde:ScheduledStopPoint:SSP0001A">
+							<Name>Haltstelle A</Name>
+							<Location>
+								<Longitude>-180</Longitude>
+								<Latitude>+53</Latitude>
+							</Location>
+							<Label>Towards C</Label>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="032" created="2010-12-17T09:30:47.0Z" id="hde:ScheduledStopPoint:SSP0002B_a">
+							<Name>Haltstelle Ba</Name>
+							<Location>
+								<Longitude>-180</Longitude>
+								<Latitude>+53</Latitude>
+							</Location>
+							<Label>Towards C</Label>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="032" created="2010-12-17T09:30:47.0Z" id="hde:ScheduledStopPoint:SSP0002B_b">
+							<Name>Haltstelle Bb</Name>
+							<Location>
+								<Longitude>-180</Longitude>
+								<Latitude>+53</Latitude>
+							</Location>
+							<Label>TowardsA</Label>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="015" created="2001-06-17T09:30:47.0Z" changed="2002-12-17T09:30:47.0Z" id="hde:ScheduledStopPoint:SSP0003C_a">
+							<Name>Haltstelle Ca</Name>
+							<Location>
+								<Longitude>-180</Longitude>
+								<Latitude>+53</Latitude>
+							</Location>
+							<Label>Towards D</Label>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="015" created="2001-06-17T09:30:47.0Z" changed="2002-12-17T09:30:47.0Z" id="hde:ScheduledStopPoint:SSP0004D">
+							<Name>Haltstelle D</Name>
+							<Location>
+								<Longitude>-180</Longitude>
+								<Latitude>+53</Latitude>
+							</Location>
+						</ScheduledStopPoint>
+						<!--- === Point============ -->
+						<ScheduledStopPoint version="015" created="2010-12-17T09:30:47.0Z" id="hde:ScheduledStopPoint:SSP0003C_b">
+							<Name>Haltstelle Cb</Name>
+							<Location>
+								<Longitude>-180</Longitude>
+								<Latitude>+53</Latitude>
+							</Location>
+							<Label>Towards A</Label>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="015" created="2001-06-17T09:30:47.0Z" changed="2002-12-17T09:30:47.0Z" id="hde:ScheduledStopPoint:SSP0005E">
+							<Name>Haltstelle D</Name>
+							<Location>
+								<Longitude>-180</Longitude>
+								<Latitude>+53</Latitude>
+							</Location>
+						</ScheduledStopPoint>
+					</scheduledStopPoints>
+					<serviceLinks>
+						<!-- ============SERVICE LINKs ==vP001o=========-->
+						<ServiceLink version="001" created="2010-12-17T09:30:47.0Z" id="hde:ServiceLink:SL_SSP0001A-SSP0002B_a">
+							<Name>A to B </Name>
+							<FromPointRef version="032" ref="hde:ScheduledStopPoint:SSP0001A"/>
+							<ToPointRef version="032" ref="hde:ScheduledStopPoint:SSP0002B_a"/>
+						</ServiceLink>
+						<ServiceLink version="001" created="2010-12-17T09:30:47.0Z" id="hde:ServiceLink:SL_SSP0002B_a-SSP0003C_a">
+							<Name>B to C </Name>
+							<FromPointRef version="032" ref="hde:ScheduledStopPoint:SSP0002B_a"/>
+							<ToPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_a"/>
+						</ServiceLink>
+						<ServiceLink version="001" created="2010-12-17T09:30:47.0Z" id="hde:ServiceLink:SL_SSP0003C_a-SSP0004D">
+							<Name>C to D</Name>
+							<FromPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_a"/>
+							<ToPointRef version="015" ref="hde:ScheduledStopPoint:SSP0004D"/>
+						</ServiceLink>
+						<!-- ============SERVICE LINKs ==vP001i========-->
+						<ServiceLink version="001" created="2010-12-17T09:30:47.0Z" id="hde:ServiceLink:SL_SSP0004D-SSP0003C_b">
+							<Name>D to C</Name>
+							<FromPointRef version="015" ref="hde:ScheduledStopPoint:SSP0004D"/>
+							<ToPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_b"/>
+						</ServiceLink>
+						<ServiceLink version="001" created="2010-12-17T09:30:47.0Z" id="hde:ServiceLink:SL_SSP0003C_b-SSP0002B_b">
+							<Name>C to B</Name>
+							<FromPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_b"/>
+							<ToPointRef version="032" ref="hde:ScheduledStopPoint:SSP0002B_b"/>
+						</ServiceLink>
+						<ServiceLink version="001" created="2010-12-17T09:30:47.0Z" id="hde:ServiceLink:SL_SSP0002B_b-SSP0001A">
+							<Name>B to A</Name>
+							<FromPointRef version="032" ref="hde:ScheduledStopPoint:SSP0002B_b"/>
+							<ToPointRef version="032" ref="hde:ScheduledStopPoint:SSP0001A"/>
+						</ServiceLink>
+						<ServiceLink version="001" created="2010-12-17T09:30:47.0Z" id="hde:ServiceLink:SL_SSP0003C_a-SSP0005E">
+							<Name>C to E</Name>
+							<FromPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_a"/>
+							<ToPointRef version="015" ref="hde:ScheduledStopPoint:SSP0005E"/>
+						</ServiceLink>
+						<ServiceLink version="001" created="2010-12-17T09:30:47.0Z" id="hde:ServiceLink:SL_SSP0005E-SSP0003C_b">
+							<Name>E to C</Name>
+							<FromPointRef version="015" ref="hde:ScheduledStopPoint:SSP0005E"/>
+							<ToPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_b"/>
+						</ServiceLink>
+					</serviceLinks>
+					<!--- ====SERVICE PATTERN======== -->
+					<servicePatterns>
+						<!--  ===/links    -->
+						<!--- ============ ============= -->
+						<ServicePattern version="003" created="2010-12-17T09:30:47.0Z" changed="2002-12-17T09:30:47.0Z" id="hde:ServicePattern:SvP001o">
+							<Name>Aa - Ba - Ca - D</Name>
+							<RouteRef version="any" ref="hde:Route:RT001o"/>
+							<pointsInSequence>
+								<StopPointInJourneyPattern version="003" id="hde:StopPointInJourneyPattern:SvPip_001o_01" order="1">
+									<ScheduledStopPointRef version="032" ref="hde:ScheduledStopPoint:SSP0001A"/>
+									<ForAlighting>false</ForAlighting>
+									<ForBoarding>true</ForBoarding>
+								</StopPointInJourneyPattern>
+								<StopPointInJourneyPattern version="003" id="hde:StopPointInJourneyPattern:SvPip_001o_02" order="2">
+									<ScheduledStopPointRef version="032" ref="hde:ScheduledStopPoint:SSP0002B_a"/>
+									<ForAlighting>true</ForAlighting>
+									<ForBoarding>true</ForBoarding>
+								</StopPointInJourneyPattern>
+								<StopPointInJourneyPattern version="003" id="hde:StopPointInJourneyPattern:SvPip_001o_03" order="3">
+									<ScheduledStopPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_a"/>
+									<ForAlighting>true</ForAlighting>
+									<ForBoarding>true</ForBoarding>
+								</StopPointInJourneyPattern>
+								<StopPointInJourneyPattern version="003" id="hde:StopPointInJourneyPattern:SvPip_001o_04" order="4">
+									<ScheduledStopPointRef version="015" ref="hde:ScheduledStopPoint:SSP0004D"/>
+									<ForAlighting>true</ForAlighting>
+									<ForBoarding>false</ForBoarding>
+								</StopPointInJourneyPattern>
+							</pointsInSequence>
+							<linksInSequence>
+								<ServiceLinkInJourneyPattern version="any" id="hde:ServiceLinkInJourneyPattern:SvlLip_001o_01" order="1">
+									<ServiceLinkRef version="001" ref="hde:ServiceLink:SL_SSP0001A-SSP0002B_a"/>
+								</ServiceLinkInJourneyPattern>
+								<ServiceLinkInJourneyPattern version="any" id="hde:ServiceLinkInJourneyPattern:SvlLip_001o_02" order="2">
+									<ServiceLinkRef version="001" ref="hde:ServiceLink:SL_SSP0002B_a-SSP0003C_a"/>
+								</ServiceLinkInJourneyPattern>
+								<ServiceLinkInJourneyPattern version="any" id="hde:ServiceLinkInJourneyPattern:SvlLip_001o_03" order="3">
+									<ServiceLinkRef version="001" ref="hde:ServiceLink:SL_SSP0003C_a-SSP0004D"/>
+								</ServiceLinkInJourneyPattern>
+							</linksInSequence>
+						</ServicePattern>
+						<ServicePattern version="003" created="2010-12-17T09:30:47.0Z" changed="2002-12-17T09:30:47.0Z" id="hde:ServicePattern:SvP001i">
+							<Name>D - Cb - Bb - A</Name>
+							<RouteRef version="any" ref="hde:Route:RT001i"/>
+							<pointsInSequence>
+								<StopPointInJourneyPattern version="003" id="hde:StopPointInJourneyPattern:SvPip_001i_01" order="1">
+									<ScheduledStopPointRef version="015" ref="hde:ScheduledStopPoint:SSP0004D"/>
+									<ForAlighting>false</ForAlighting>
+									<ForBoarding>true</ForBoarding>
+								</StopPointInJourneyPattern>
+								<StopPointInJourneyPattern version="003" id="hde:StopPointInJourneyPattern:SvPip_001i_02" order="2">
+									<ScheduledStopPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_b"/>
+									<ForAlighting>true</ForAlighting>
+									<ForBoarding>true</ForBoarding>
+								</StopPointInJourneyPattern>
+								<StopPointInJourneyPattern version="003" id="hde:StopPointInJourneyPattern:SvPip_001i_03" order="3">
+									<ScheduledStopPointRef version="032" ref="hde:ScheduledStopPoint:SSP0002B_b"/>
+									<ForAlighting>true</ForAlighting>
+									<ForBoarding>true</ForBoarding>
+								</StopPointInJourneyPattern>
+								<StopPointInJourneyPattern version="003" id="hde:StopPointInJourneyPattern:SvPip_001i_04" order="4">
+									<ScheduledStopPointRef version="032" ref="hde:ScheduledStopPoint:SSP0001A"/>
+									<ForAlighting>true</ForAlighting>
+									<ForBoarding>false</ForBoarding>
+								</StopPointInJourneyPattern>
+							</pointsInSequence>
+							<linksInSequence>
+								<ServiceLinkInJourneyPattern version="any" id="hde:ServiceLinkInJourneyPattern:SvlLip_001i_01" order="1">
+									<ServiceLinkRef version="001" ref="hde:ServiceLink:SL_SSP0004D-SSP0003C_b"/>
+								</ServiceLinkInJourneyPattern>
+								<ServiceLinkInJourneyPattern version="any" id="hde:ServiceLinkInJourneyPattern:SvlLip_001i_02" order="2">
+									<ServiceLinkRef version="001" ref="hde:ServiceLink:SL_SSP0003C_b-SSP0002B_b"/>
+								</ServiceLinkInJourneyPattern>
+								<ServiceLinkInJourneyPattern version="any" id="hde:ServiceLinkInJourneyPattern:SvlLip_001i_03" order="3">
+									<ServiceLinkRef version="001" ref="hde:ServiceLink:SL_SSP0002B_b-SSP0001A"/>
+								</ServiceLinkInJourneyPattern>
+							</linksInSequence>
+						</ServicePattern>
+						<ServicePattern version="003" created="2010-12-17T09:30:47.0Z" changed="2002-12-17T09:30:47.0Z" id="hde:ServicePattern:SvP002o">
+							<Name>A - Ba - Ca - E</Name>
+							<RouteRef version="any" ref="hde:Route:RT002o"/>
+							<pointsInSequence>
+								<StopPointInJourneyPattern version="003" id="hde:StopPointInJourneyPattern:SvPip_002o_01" order="1">
+									<ScheduledStopPointRef version="032" ref="hde:ScheduledStopPoint:SSP0001A"/>
+									<ForAlighting>false</ForAlighting>
+									<ForBoarding>true</ForBoarding>
+								</StopPointInJourneyPattern>
+								<StopPointInJourneyPattern version="003" id="hde:StopPointInJourneyPattern:SvPip_002o_02" order="2">
+									<ScheduledStopPointRef version="032" ref="hde:ScheduledStopPoint:SSP0002B_a"/>
+									<ForAlighting>true</ForAlighting>
+									<ForBoarding>true</ForBoarding>
+								</StopPointInJourneyPattern>
+								<StopPointInJourneyPattern version="003" id="hde:StopPointInJourneyPattern:SvPip_002o_03" order="3">
+									<ScheduledStopPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_a"/>
+									<ForAlighting>true</ForAlighting>
+									<ForBoarding>true</ForBoarding>
+								</StopPointInJourneyPattern>
+								<StopPointInJourneyPattern version="003" id="hde:StopPointInJourneyPattern:SvPip_002o_04" order="4">
+									<ScheduledStopPointRef version="015" ref="hde:ScheduledStopPoint:SSP0005E"/>
+									<ForAlighting>true</ForAlighting>
+									<ForBoarding>false</ForBoarding>
+								</StopPointInJourneyPattern>
+							</pointsInSequence>
+							<linksInSequence>
+								<ServiceLinkInJourneyPattern version="any" id="hde:ServiceLinkInJourneyPattern:SvlLip_002o" order="1">
+									<ServiceLinkRef version="001" ref="hde:ServiceLink:SL_SSP0001A-SSP0002B_a"/>
+								</ServiceLinkInJourneyPattern>
+								<ServiceLinkInJourneyPattern version="any" id="hde:ServiceLinkInJourneyPattern:SvlLip_002o" order="2">
+									<ServiceLinkRef version="001" ref="hde:ServiceLink:SL_SSP0002B_a-SSP0003C_a"/>
+								</ServiceLinkInJourneyPattern>
+								<ServiceLinkInJourneyPattern version="any" id="hde:ServiceLinkInJourneyPattern:SvlLip_002o" order="3">
+									<ServiceLinkRef version="001" ref="hde:ServiceLink:SL_SSP0003C_a-SSP0005E"/>
+								</ServiceLinkInJourneyPattern>
+							</linksInSequence>
+						</ServicePattern>
+						<ServicePattern version="003" created="2010-12-17T09:30:47.0Z" changed="2002-12-17T09:30:47.0Z" id="hde:ServicePattern:SvP002i">
+							<Name>E - Cb - Bb - A</Name>
+							<RouteRef version="any" ref="hde:Route:RT002i"/>
+							<pointsInSequence>
+								<StopPointInJourneyPattern version="003" id="hde:StopPointInJourneyPattern:SvPip_002i_01" order="1">
+									<ScheduledStopPointRef version="015" ref="hde:ScheduledStopPoint:SSP0005E"/>
+									<ForAlighting>false</ForAlighting>
+									<ForBoarding>true</ForBoarding>
+								</StopPointInJourneyPattern>
+								<StopPointInJourneyPattern version="003" id="hde:StopPointInJourneyPattern:SvPip_002i_02" order="2">
+									<ScheduledStopPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_b"/>
+									<ForAlighting>true</ForAlighting>
+									<ForBoarding>true</ForBoarding>
+								</StopPointInJourneyPattern>
+								<StopPointInJourneyPattern version="003" id="hde:StopPointInJourneyPattern:SvPip_002i_03" order="3">
+									<ScheduledStopPointRef version="032" ref="hde:ScheduledStopPoint:SSP0002B_b"/>
+									<ForAlighting>true</ForAlighting>
+									<ForBoarding>true</ForBoarding>
+								</StopPointInJourneyPattern>
+								<StopPointInJourneyPattern version="003" id="hde:StopPointInJourneyPattern:SvPip_002i_04" order="4">
+									<ScheduledStopPointRef version="032" ref="hde:ScheduledStopPoint:SSP0001A"/>
+									<ForAlighting>true</ForAlighting>
+									<ForBoarding>false</ForBoarding>
+								</StopPointInJourneyPattern>
+							</pointsInSequence>
+							<linksInSequence>
+								<ServiceLinkInJourneyPattern version="any" id="hde:ServiceLinkInJourneyPattern:SvlLip_002i_01" order="1">
+									<ServiceLinkRef version="001" ref="hde:ServiceLink:SL_SSP0005E-SSP0003C_b"/>
+								</ServiceLinkInJourneyPattern>
+								<ServiceLinkInJourneyPattern version="any" id="hde:ServiceLinkInJourneyPattern:SvlLip_002i_02" order="2">
+									<ServiceLinkRef version="001" ref="hde:ServiceLink:SL_SSP0003C_b-SSP0002B_b"/>
+								</ServiceLinkInJourneyPattern>
+								<ServiceLinkInJourneyPattern version="any" id="hde:ServiceLinkInJourneyPattern:SvlLip_002i_03" order="3">
+									<ServiceLinkRef version="001" ref="hde:ServiceLink:SL_SSP0002B_b-SSP0001A"/>
+								</ServiceLinkInJourneyPattern>
+							</linksInSequence>
+						</ServicePattern>
+					</servicePatterns>
+					<stopAssignments>
+						<PassengerStopAssignment order="1" version="any" id="hde:PassengerStopAssignment:PSA_01">
+							<Description>Bus Assignment A</Description>
+							<ScheduledStopPointRef version="032" ref="hde:ScheduledStopPoint:SSP0001A"/>
+							<StopPlaceRef version="any" ref="mybus:StopPlace:SP001A"/>
+							<QuayRef version="any" ref="mybus:Quay:Q_SP001A_1"/>
+						</PassengerStopAssignment>
+						<PassengerStopAssignment order="1" version="any" id="hde:PassengerStopAssignment:PSA_02">
+							<Description>Bus Assignment B</Description>
+							<ScheduledStopPointRef version="032" ref="hde:ScheduledStopPoint:SSP0002B_a"/>
+							<StopPlaceRef version="any" ref="mybus:StopPlace:SP002B"/>
+							<QuayRef version="any" ref="mybus:Quay:Q_SP002B_1"/>
+						</PassengerStopAssignment>
+						<PassengerStopAssignment order="2" version="any" id="hde:PassengerStopAssignment:PSA_03">
+							<Description>Bus Assignment B</Description>
+							<ScheduledStopPointRef version="032" ref="hde:ScheduledStopPoint:SSP0002B_b"/>
+							<StopPlaceRef version="any" ref="mybus:StopPlace:SP002B"/>
+							<QuayRef version="any" ref="mybus:Quay:Q_SP002B_2"/>
+						</PassengerStopAssignment>
+						<PassengerStopAssignment order="1" version="any" id="hde:PassengerStopAssignment:PSA_04">
+							<Description>Bus Assignment B</Description>
+							<ScheduledStopPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_a"/>
+							<StopPlaceRef version="any" ref="mybus:StopPlace:SP003C"/>
+							<QuayRef version="any" ref="mybus:Quay:Q_SP003C_1"/>
+						</PassengerStopAssignment>
+						<PassengerStopAssignment order="2" version="any" id="hde:PassengerStopAssignment:PSA_05">
+							<Description>Bus Assignment B</Description>
+							<ScheduledStopPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_b"/>
+							<StopPlaceRef version="any" ref="mybus:StopPlace:SP003C"/>
+							<QuayRef version="any" ref="mybus:Quay:Q_SP003C_2"/>
+						</PassengerStopAssignment>
+						<PassengerStopAssignment order="1" version="any" id="hde:PassengerStopAssignment:PSA_06">
+							<Description>Bus Assignment D</Description>
+							<ScheduledStopPointRef version="015" ref="hde:ScheduledStopPoint:SSP0004D"/>
+							<StopPlaceRef version="any" ref="mybus:StopPlace:SP004D"/>
+							<QuayRef version="any" ref="mybus:Quay:Q_SP004D_1"/>
+						</PassengerStopAssignment>
+						<PassengerStopAssignment order="1" version="any" id="hde:PassengerStopAssignment:PSA_07">
+							<Description>Bus Assignment E</Description>
+							<ScheduledStopPointRef version="015" ref="hde:ScheduledStopPoint:SSP0005E"/>
+							<StopPlaceRef version="any" ref="mybus:StopPlace:SP005E"/>
+							<QuayRef version="any" ref="mybus:Quay:Q_SP005E_1"/>
+						</PassengerStopAssignment>
+					</stopAssignments>
+					<!--- ============ ============= -->
+					<timingPoints>
+						<!--- TIMING POINTs======== -->
+						<TimingPoint version="015" id="hde:TimingPoint:TPT0051">
+						</TimingPoint>
+					</timingPoints>
+					<timingPatterns>
+						<!--- TIMING PATTERN======== -->
+						<TimingPattern version="any" id="hde:TimingPattern:TP001o">
+							<RouteRef version="any" ref="hde:Route:RT001o"/>
+							<DirectionType>outbound</DirectionType>
+							<TimeDemandTypeRef version="any" ref="hde:TimeDemandType:TDT0001"/>
+							<pointsInSequence>
+								<TimingPointInJourneyPattern version="any" id="TPIJP_TP001o_01" order="1">
+									<TimingPointRef version="032" ref="hde:ScheduledStopPoint:SSP0001A"/>
+								</TimingPointInJourneyPattern>
+								<TimingPointInJourneyPattern version="any" id="TPIJP_TP001o_02" order="2">
+									<TimingPointRef version="032" ref="hde:ScheduledStopPoint:SSP0002B_a"/>
+								</TimingPointInJourneyPattern>
+								<TimingPointInJourneyPattern version="any" id="TPIJP_TP001o_03" order="3">
+									<TimingPointRef version="015" ref="hde:TimingPoint:TPT0051"/>
+								</TimingPointInJourneyPattern>
+								<TimingPointInJourneyPattern version="any" id="TPIJP_TP001o_04" order="4">
+									<TimingPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_a"/>
+								</TimingPointInJourneyPattern>
+								<TimingPointInJourneyPattern version="any" id="TPIJP_TP001o_05" order="5">
+									<TimingPointRef version="015" ref="hde:ScheduledStopPoint:SSP0004D"/>
+								</TimingPointInJourneyPattern>
+							</pointsInSequence>
+							<links>
+								<TimingLink version="any" id="hde:TimingLink:TL_TP001o_01">
+									<Name>A to B</Name>
+									<FromPointRef version="032" ref="hde:ScheduledStopPoint:SSP0001A"/>
+									<ToPointRef version="032" ref="hde:ScheduledStopPoint:SSP0002B_a"/>
+								</TimingLink>
+								<TimingLink version="any" id="hde:TimingLink:TL_TP001o_02">
+									<Name>B to point 51</Name>
+									<FromPointRef version="032" ref="hde:ScheduledStopPoint:SSP0002B_a"/>
+									<ToPointRef version="015" ref="hde:TimingPoint:TPT0051"/>
+								</TimingLink>
+								<TimingLink version="any" id="hde:TimingLink:TL_TP001o_03">
+									<Name>point 51 to C</Name>
+									<FromPointRef version="015" ref="hde:TimingPoint:TPT0051"/>
+									<ToPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_a"/>
+								</TimingLink>
+								<TimingLink version="any" id="hde:TimingLink:TL_TP001o_04">
+									<Name>C to D</Name>
+									<FromPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_a"/>
+									<ToPointRef version="015" ref="hde:ScheduledStopPoint:SSP0004D"/>
+								</TimingLink>
+							</links>
+						</TimingPattern>
+						<TimingPattern version="any" id="hde:TimingPattern:TP001i">
+							<RouteRef version="any" ref="hde:Route:RT001i"/>
+							<DirectionType>outbound</DirectionType>
+							<TimeDemandTypeRef version="any" ref="hde:TimeDemandType:TDT0002"/>
+							<pointsInSequence>
+								<TimingPointInJourneyPattern version="any" id="TPIJP_TP001i_01" order="1">
+									<TimingPointRef version="015" ref="hde:ScheduledStopPoint:SSP0004D"/>
+								</TimingPointInJourneyPattern>
+								<TimingPointInJourneyPattern version="any" id="TPIJP_TP001i_02" order="2">
+									<TimingPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_b"/>
+								</TimingPointInJourneyPattern>
+								<TimingPointInJourneyPattern version="any" id="TPIJP_TP001i_03" order="3">
+									<TimingPointRef version="032" ref="hde:ScheduledStopPoint:SSP0002B_b"/>
+								</TimingPointInJourneyPattern>
+								<TimingPointInJourneyPattern version="any" id="TPIJP_TP001i_04" order="4">
+									<TimingPointRef version="032" ref="hde:ScheduledStopPoint:SSP0001A"/>
+								</TimingPointInJourneyPattern>
+							</pointsInSequence>
+							<links>
+								<TimingLink version="any" id="hde:TimingLink:TL_TP001i_01">
+									<Name>D to C</Name>
+									<FromPointRef version="015" ref="hde:ScheduledStopPoint:SSP0004D"/>
+									<ToPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_b"/>
+								</TimingLink>
+								<TimingLink version="any" id="hde:TimingLink:TL_TP001i_02">
+									<Name>C to B</Name>
+									<FromPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_b"/>
+									<ToPointRef version="032" ref="hde:ScheduledStopPoint:SSP0002B_b"/>
+								</TimingLink>
+								<TimingLink version="any" id="hde:TimingLink:TL_TP001i_03">
+									<Name>B to A</Name>
+									<FromPointRef version="032" ref="hde:ScheduledStopPoint:SSP0002B_b"/>
+									<ToPointRef version="032" ref="hde:ScheduledStopPoint:SSP0001A"/>
+								</TimingLink>
+							</links>
+						</TimingPattern>
+						<TimingPattern version="any" id="hde:TimingPattern:TP002o">
+							<RouteRef version="any" ref="hde:Route:RT002o"/>
+							<DirectionType>outbound</DirectionType>
+							<TimeDemandTypeRef version="any" ref="hde:TimeDemandType:TDT0001"/>
+							<pointsInSequence>
+								<TimingPointInJourneyPattern version="any" id="TPIJP_TP002o_01" order="1">
+									<TimingPointRef version="032" ref="hde:ScheduledStopPoint:SSP0001A"/>
+								</TimingPointInJourneyPattern>
+								<TimingPointInJourneyPattern version="any" id="TPIJP_TP002o_02" order="2">
+									<TimingPointRef version="032" ref="hde:ScheduledStopPoint:SSP0002B_a"/>
+								</TimingPointInJourneyPattern>
+								<TimingPointInJourneyPattern version="any" id="TPIJP_TP002o_03" order="3">
+									<TimingPointRef version="015" ref="hde:TimingPoint:TPT0051"/>
+								</TimingPointInJourneyPattern>
+								<TimingPointInJourneyPattern version="any" id="TPIJP_TP002o_04" order="4">
+									<TimingPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_a"/>
+								</TimingPointInJourneyPattern>
+								<TimingPointInJourneyPattern version="any" id="TPIJP_TP02o_05" order="5">
+									<TimingPointRef version="015" ref="hde:ScheduledStopPoint:SSP0005E"/>
+								</TimingPointInJourneyPattern>
+							</pointsInSequence>
+							<links>
+								<TimingLink version="any" id="hde:TimingLink:TL_TP002o_01">
+									<Name>A to B</Name>
+									<FromPointRef version="032" ref="hde:ScheduledStopPoint:SSP0001A"/>
+									<ToPointRef version="032" ref="hde:ScheduledStopPoint:SSP0002B_a"/>
+								</TimingLink>
+								<TimingLink version="any" id="hde:TimingLink:TL_TP002o_02">
+									<Name>B to point 51</Name>
+									<FromPointRef version="032" ref="hde:ScheduledStopPoint:SSP0002B_a"/>
+									<ToPointRef version="015" ref="hde:TimingPoint:TPT0051"/>
+								</TimingLink>
+								<TimingLink version="any" id="hde:TimingLink:TL_TP002o_03">
+									<Name>point 51 to C</Name>
+									<FromPointRef version="015" ref="hde:TimingPoint:TPT0051"/>
+									<ToPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_a"/>
+								</TimingLink>
+								<TimingLink version="any" id="hde:TimingLink:TL_TP002o_04">
+									<Name>C to D</Name>
+									<FromPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_a"/>
+									<ToPointRef version="015" ref="hde:ScheduledStopPoint:SSP0004D"/>
+								</TimingLink>
+							</links>
+						</TimingPattern>
+						<TimingPattern version="any" id="hde:TimingPattern:TP002i">
+							<RouteRef version="any" ref="hde:Route:RT002i"/>
+							<DirectionType>outbound</DirectionType>
+							<TimeDemandTypeRef version="any" ref="hde:TimeDemandType:TDT0002"/>
+							<pointsInSequence>
+								<TimingPointInJourneyPattern version="any" id="TPIJP_TP002i_01" order="1">
+									<TimingPointRef version="015" ref="hde:ScheduledStopPoint:SSP0005E"/>
+								</TimingPointInJourneyPattern>
+								<TimingPointInJourneyPattern version="any" id="TPIJP_TP002i_02" order="2">
+									<TimingPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_b"/>
+								</TimingPointInJourneyPattern>
+								<TimingPointInJourneyPattern version="any" id="TPIJP_TP002i_03" order="3">
+									<TimingPointRef version="032" ref="hde:ScheduledStopPoint:SSP0002B_b"/>
+								</TimingPointInJourneyPattern>
+								<TimingPointInJourneyPattern version="any" id="TPIJP_TP002i_04" order="4">
+									<TimingPointRef version="032" ref="hde:ScheduledStopPoint:SSP0001A"/>
+								</TimingPointInJourneyPattern>
+							</pointsInSequence>
+							<links>
+								<TimingLink version="any" id="hde:TimingLink:TL_TP002i_01">
+									<Name>Eto C</Name>
+									<FromPointRef version="015" ref="hde:ScheduledStopPoint:SSP0005E"/>
+									<ToPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_b"/>
+								</TimingLink>
+								<TimingLink version="any" id="hde:TimingLink:TL_TP002i_02">
+									<Name>C to B</Name>
+									<FromPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_b"/>
+									<ToPointRef version="032" ref="hde:ScheduledStopPoint:SSP0002B_b"/>
+								</TimingLink>
+								<TimingLink version="any" id="hde:TimingLink:TL_TP002i_03">
+									<Name>B to A</Name>
+									<FromPointRef version="032" ref="hde:ScheduledStopPoint:SSP0002B_b"/>
+									<ToPointRef version="032" ref="hde:ScheduledStopPoint:SSP0001A"/>
+								</TimingLink>
+							</links>
+						</TimingPattern>
+					</timingPatterns>
+					<!--- ======JOURNEY PATTERN ========== -->
+					<journeyPatterns>
+						<ServiceJourneyPattern version="any" id="hde:ServiceJourneyPattern:JP001o">
+							<RouteRef version="any" ref="hde:Route:RT001o"/>
+							<TimingPatternRef version="any" ref="hde:TimingPattern:TP001o"/>
+							<pointsInSequence>
+								<StopPointInJourneyPattern version="any" id="hde:StopPointInJourneyPattern:PIP_JP001o_0001" order="001">
+									<ScheduledStopPointRef version="032" ref="hde:ScheduledStopPoint:SSP0001A"/>
+									<IsWaitPoint>true</IsWaitPoint>
+									<waitTimes>
+										<JourneyPatternWaitTime version="any" id="hde:JourneyPatternWaitTime:PIP_JP001o_0001_TDT0001">
+											<TimeDemandTypeRef version="any" ref="hde:TimeDemandType:TDT0001"/>
+											<WaitTime>PT5M</WaitTime>
+										</JourneyPatternWaitTime>
+										<JourneyPatternWaitTime version="any" id="hde:JourneyPatternWaitTime:PIP_JP001o_0001_TDT0002">
+											<TimeDemandTypeRef version="any" ref="hde:TimeDemandType:TDT0002"/>
+											<WaitTime>PT10M</WaitTime>
+										</JourneyPatternWaitTime>
+									</waitTimes>
+								</StopPointInJourneyPattern>
+								<StopPointInJourneyPattern version="any" id="hde:StopPointInJourneyPattern:PIP_JP001o_0002" order="002">
+									<ScheduledStopPointRef version="032" ref="hde:ScheduledStopPoint:SSP0002B_a"/>
+									<IsWaitPoint>false</IsWaitPoint>
+								</StopPointInJourneyPattern>
+								<TimingPointInJourneyPattern version="any" id="hde:TimingPointInJourneyPattern:PIP_JP001o_0003" order="003">
+									<!-- extra TIMING POINT -->
+									<TimingPointRef version="015" ref="hde:TimingPoint:TPT0051"/>
+									<IsWaitPoint>false</IsWaitPoint>
+								</TimingPointInJourneyPattern>
+								<StopPointInJourneyPattern version="any" id="hde:StopPointInJourneyPattern:PIP_JP001o_0004_01" order="004">
+									<ScheduledStopPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_a"/>
+									<IsWaitPoint>true</IsWaitPoint>
+									<waitTimes>
+										<JourneyPatternWaitTime version="any" id="hde:JourneyPatternWaitTime:PIP_JP001o_0004-01">
+											<TimeDemandTypeRef version="any" ref="hde:TimeDemandType:TDT0001"/>
+											<WaitTime>PT10M</WaitTime>
+										</JourneyPatternWaitTime>
+										<JourneyPatternWaitTime version="any" id="hde:JourneyPatternWaitTime:PIP_JP001o_0004-02">
+											<TimeDemandTypeRef version="any" ref="hde:TimeDemandType:TDT0002"/>
+											<WaitTime>PT12M</WaitTime>
+										</JourneyPatternWaitTime>
+									</waitTimes>
+								</StopPointInJourneyPattern>
+								<StopPointInJourneyPattern version="any" id="hde:StopPointInJourneyPattern:PIP_JP001o_0004_02" order="004">
+									<ScheduledStopPointRef version="015" ref="hde:ScheduledStopPoint:SSP0004D"/>
+									<IsWaitPoint>true</IsWaitPoint>
+								</StopPointInJourneyPattern>
+							</pointsInSequence>
+						</ServiceJourneyPattern>
+						<ServiceJourneyPattern version="any" id="hde:ServiceJourneyPattern:JP001i">
+							<RouteRef version="any" ref="hde:Route:RT001i"/>
+							<TimingPatternRef version="any" ref="hde:TimingPattern:TP001i"/>
+							<pointsInSequence>
+								<StopPointInJourneyPattern version="any" id="hde:StopPointInJourneyPattern:PIP_JP001i_0001" order="001">
+									<ScheduledStopPointRef version="015" ref="hde:ScheduledStopPoint:SSP0004D"/>
+									<IsWaitPoint>true</IsWaitPoint>
+									<waitTimes>
+										<JourneyPatternWaitTime version="any" id="hde:JourneyPatternWaitTime:JP001i_01">
+											<TimeDemandTypeRef version="any" ref="hde:TimeDemandType:TDT0001"/>
+											<WaitTime>PT5M</WaitTime>
+										</JourneyPatternWaitTime>
+										<JourneyPatternWaitTime version="any" id="hde:JourneyPatternWaitTime:JP001i_02">
+											<TimeDemandTypeRef version="any" ref="hde:TimeDemandType:TDT0002"/>
+											<WaitTime>PT10M</WaitTime>
+										</JourneyPatternWaitTime>
+									</waitTimes>
+								</StopPointInJourneyPattern>
+								<StopPointInJourneyPattern version="any" id="hde:StopPointInJourneyPattern:PIP_JP001i_0002" order="002">
+									<ScheduledStopPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_b"/>
+									<IsWaitPoint>false</IsWaitPoint>
+									<waitTimes>
+										<JourneyPatternWaitTime version="any" id="hde:JourneyPatternWaitTime:JP001i_03">
+											<TimeDemandTypeRef version="any" ref="hde:TimeDemandType:TDT0001"/>
+											<WaitTime>PT10M</WaitTime>
+										</JourneyPatternWaitTime>
+									</waitTimes>
+								</StopPointInJourneyPattern>
+								<StopPointInJourneyPattern version="any" id="hde:StopPointInJourneyPattern:PIP_JP001i_0003" order="003">
+									<ScheduledStopPointRef version="032" ref="hde:ScheduledStopPoint:SSP0002B_b"/>
+									<IsWaitPoint>true</IsWaitPoint>
+								</StopPointInJourneyPattern>
+								<StopPointInJourneyPattern version="any" id="hde:StopPointInJourneyPattern:PIP_JP001i_0004" order="004">
+									<ScheduledStopPointRef version="032" ref="hde:ScheduledStopPoint:SSP0001A"/>
+									<IsWaitPoint>true</IsWaitPoint>
+								</StopPointInJourneyPattern>
+							</pointsInSequence>
+						</ServiceJourneyPattern>
+						<ServiceJourneyPattern version="any" id="hde:ServiceJourneyPattern:JP002o">
+							<RouteRef version="any" ref="hde:Route:RT001o"/>
+							<TimingPatternRef version="any" ref="hde:TimingPattern:TP002o"/>
+							<pointsInSequence>
+								<StopPointInJourneyPattern version="any" id="hde:StopPointInJourneyPattern:PIP_JP002o_0001" order="001">
+									<ScheduledStopPointRef version="032" ref="hde:ScheduledStopPoint:SSP0001A"/>
+									<IsWaitPoint>true</IsWaitPoint>
+									<waitTimes>
+										<JourneyPatternWaitTime version="any" id="hde:JourneyPatternWaitTime:JP002o_01">
+											<TimeDemandTypeRef version="any" ref="hde:TimeDemandType:TDT0001"/>
+											<WaitTime>PT5M</WaitTime>
+										</JourneyPatternWaitTime>
+										<JourneyPatternWaitTime version="any" id="hde:JourneyPatternWaitTime:JP002o_02">
+											<TimeDemandTypeRef version="any" ref="hde:TimeDemandType:TDT0002"/>
+											<WaitTime>PT10M</WaitTime>
+										</JourneyPatternWaitTime>
+									</waitTimes>
+								</StopPointInJourneyPattern>
+								<StopPointInJourneyPattern version="any" id="hde:StopPointInJourneyPattern:PIP_JP002o_0002" order="002">
+									<ScheduledStopPointRef version="032" ref="hde:ScheduledStopPoint:SSP0002B_a"/>
+									<IsWaitPoint>false</IsWaitPoint>
+									<waitTimes>
+										<JourneyPatternWaitTime version="any" id="hde:JourneyPatternWaitTime:JP002o_03">
+											<TimeDemandTypeRef version="any" ref="hde:TimeDemandType:TDT0001"/>
+											<WaitTime>PT10M</WaitTime>
+										</JourneyPatternWaitTime>
+									</waitTimes>
+								</StopPointInJourneyPattern>
+								<TimingPointInJourneyPattern version="any" id="hde:TimingPointInJourneyPattern:PIP_JP002o_0003" order="003">
+									<!-- extra TIMING POINT -->
+									<TimingPointRef version="015" ref="hde:TimingPoint:TPT0051"/>
+									<IsWaitPoint>false</IsWaitPoint>
+								</TimingPointInJourneyPattern>
+								<StopPointInJourneyPattern version="any" id="hde:StopPointInJourneyPattern:PIP_JP002o_0004" order="004">
+									<ScheduledStopPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_a"/>
+									<IsWaitPoint>true</IsWaitPoint>
+								</StopPointInJourneyPattern>
+								<StopPointInJourneyPattern version="any" id="hde:StopPointInJourneyPattern:PIP_JP002o_0005" order="004">
+									<ScheduledStopPointRef version="015" ref="hde:ScheduledStopPoint:SSP0005E"/>
+									<IsWaitPoint>true</IsWaitPoint>
+								</StopPointInJourneyPattern>
+							</pointsInSequence>
+						</ServiceJourneyPattern>
+						<ServiceJourneyPattern version="any" id="hde:ServiceJourneyPattern:JP002i">
+							<RouteRef version="any" ref="hde:Route:RT001i"/>
+							<TimingPatternRef version="any" ref="hde:TimingPattern:TP002i"/>
+							<pointsInSequence>
+								<StopPointInJourneyPattern version="any" id="hde:StopPointInJourneyPattern:PIP_JP002i_0001" order="001">
+									<ScheduledStopPointRef version="015" ref="hde:ScheduledStopPoint:SSP0004D"/>
+									<IsWaitPoint>true</IsWaitPoint>
+									<waitTimes>
+										<JourneyPatternWaitTime version="any" id="hde:JourneyPatternWaitTime:JP002i_01">
+											<TimeDemandTypeRef version="any" ref="hde:TimeDemandType:TDT0001"/>
+											<WaitTime>PT5M</WaitTime>
+										</JourneyPatternWaitTime>
+										<JourneyPatternWaitTime version="any" id="hde:JourneyPatternWaitTime:JP002i_02">
+											<TimeDemandTypeRef version="any" ref="hde:TimeDemandType:TDT0002"/>
+											<WaitTime>PT10M</WaitTime>
+										</JourneyPatternWaitTime>
+									</waitTimes>
+								</StopPointInJourneyPattern>
+								<StopPointInJourneyPattern version="any" id="hde:StopPointInJourneyPattern:PIP_JP002i_0002" order="002">
+									<ScheduledStopPointRef version="015" ref="hde:ScheduledStopPoint:SSP0003C_b"/>
+									<IsWaitPoint>false</IsWaitPoint>
+									<waitTimes>
+										<JourneyPatternWaitTime version="any" id="hde:JourneyPatternWaitTime:JP002i_03">
+											<TimeDemandTypeRef version="any" ref="hde:TimeDemandType:TDT0001"/>
+											<WaitTime>PT10M</WaitTime>
+										</JourneyPatternWaitTime>
+									</waitTimes>
+								</StopPointInJourneyPattern>
+								<StopPointInJourneyPattern version="any" id="hde:StopPointInJourneyPattern:PIP_JP002i_0003" order="003">
+									<ScheduledStopPointRef version="032" ref="hde:ScheduledStopPoint:SSP0002B_b"/>
+									<IsWaitPoint>true</IsWaitPoint>
+								</StopPointInJourneyPattern>
+								<StopPointInJourneyPattern version="any" id="hde:StopPointInJourneyPattern:PIP_JP002i_0004" order="004">
+									<ScheduledStopPointRef version="032" ref="hde:ScheduledStopPoint:SSP0001A"/>
+									<IsWaitPoint>true</IsWaitPoint>
+								</StopPointInJourneyPattern>
+							</pointsInSequence>
+						</ServiceJourneyPattern>
+					</journeyPatterns>
+					<timeDemandTypes>
+						<TimeDemandType version="any" id="hde:TimeDemandType:TDT0001">
+							<Name>Peak Time demand </Name>
+						</TimeDemandType>
+						<TimeDemandType version="any" id="hde:TimeDemandType:TDT0002">
+							<Name>Time demand  off Peak</Name>
+						</TimeDemandType>
+					</timeDemandTypes>
+				</ServiceFrame>
+				<!--- ======JOURNEY PATTERN ========== -->
+				<ResourceFrame version="005" created="2010-05-17T09:30:47.0Z" changed="2010-05-22T10:30:51.0Z" modification="revise" derivedFromVersionRef="004" responsibilitySetRef="mybus:ResponsibilitySet:RS_10" id="mybus:ResourceFrame:infraf002">
+					<Name>Common resources </Name>
+					<responsibilitySets>
+						<ResponsibilitySet created="2010-05-17T09:30:47Z" modification="revise" changed="2010-05-17T09:30:47Z" version="2.0" id="mybus:ResponsibilitySet:RS_10">
+							<roles>
+								<ResponsibilityRoleAssignment created="2010-05-17T09:30:47Z" id="mybus:ResponsibilitySet:RS_10_01" version="any">
+									<DataRoleType>collects</DataRoleType>
+									<ResponsibleOrganisationRef version="any" ref="mybus:Operator:Org_TL001"/>
+								</ResponsibilityRoleAssignment>
+							</roles>
+						</ResponsibilitySet>
+						<ResponsibilitySet created="2010-05-17T09:30:47Z" modification="revise" changed="2010-05-17T09:30:47Z" version="3.0" id="hde:ResponsibilitySet:RS_22">
+							<roles>
+								<ResponsibilityRoleAssignment created="2010-05-17T09:30:47Z" id="mybus:ResponsibilitySet:RS_22_02" version="any">
+									<DataRoleType>collects</DataRoleType>
+									<ResponsibleOrganisationRef version="any" ref="hde:Authority:Org_Hd001"/>
+								</ResponsibilityRoleAssignment>
+							</roles>
+						</ResponsibilitySet>
+						<ResponsibilitySet created="2010-05-17T09:30:47Z" modification="revise" changed="2010-05-17T09:30:47Z" version="1.1" id="gis:ResponsibilitySet:RS_31">
+							<roles>
+								<ResponsibilityRoleAssignment created="2010-05-17T09:30:47Z" id="mybus:ResponsibilitySet:RS_22_31" version="any">
+									<DataRoleType>collects</DataRoleType>
+									<ResponsibleOrganisationRef ref="gis:Org_Gis003">EXTERNAL</ResponsibleOrganisationRef>
+								</ResponsibilityRoleAssignment>
+							</roles>
+						</ResponsibilitySet>
+					</responsibilitySets>
+					<organisations>
+						<!--- =====Data owners ========= -->
+						<Operator version="any" id="mybus:Operator:Org_TL001">
+							<Name>Big red Bus Co</Name>
+							<Description>Responsibe just for for STOP PLACEs</Description>
+						</Operator>
+						<Authority version="any" id="hde:Authority:Org_Hd001">
+							<Name>Town Authority </Name>
+							<Description>Responsbile for networks schedules</Description>
+						</Authority>
+						<GeneralOrganisation version="any" id="gis:GeneralOrganisation:Org_G001">
+							<Name>Infrastucture  data Co </Name>
+							<Description>Responsible for Infrastcructure elements</Description>
+						</GeneralOrganisation>
+					</organisations>
+				</ResourceFrame>
+			</frames>
+		</CompositeFrame>
+	</dataObjects>
+</PublicationDelivery>

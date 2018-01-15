@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- ==== SImple Network Example ====== 
+This Example provides an example of mapping of a GTFS FareRule.txt file to NeTEx 
+http://code.google.com/p/googletransitdatafeed/wiki/FareExamples
+
+September 2011  
+================
+
+Example 7: Fare depends on station pairs, how you get there doesn't matter
+
+In this example only the entry and exit points from the system matter. 
+To define this fare structure for the feed, each station must have its own unique zone ID defined in stops.txt. Each station is considered a single zone. 
+  
+* The fare_attributes.txt and fare_rules.txt files define one row for each pair of stations. 
+
+ * In fare_attributes.txt, the origin_id and destination_id fields identify station pairs by zone 
+fare_attributes.txt.
+
+fare_id  price  currency_type  payment_method  transfers  
+!S1_to_S2  1.75  USD  0   
+!S1_to_S3  3.25  USD  0   
+!S1_to_S4  4.55  USD  0   
+...      
+!S10_to_S1  5.65  USD  0   
+
+fare_rules.txt.
+fare_id  origin_id  destination_id  
+!S1_to_S2  S1  S2  
+!S1_to_S3  S1  S3  
+!S1_to_S4  S1  S4  
+...    
+!S10_to_S1  S10  S1  
+
+
+Calculating an adult fare 
+
+The trip planner calculates an itinerary, and then looks up the fare rules until it finds a matching origin/destination station pair. 
+The public feed from SF Bay Area BART provides a real-world illustration of this type of fare structure. 
+
+
+2. MAPPING
+Mapping is complex depending on fare structure.   
+We also include further detail about the nature of the access rights  and validation.
+In this example
+
+A GTFS FareRule maps to a NeTEx FARE PRODUCT + VALIDITY PARAMETER  ASSIGNMENT 
+		using a GROUP OF LINEs or 
+
+Where FARE PRODUCT may be
+			PREASSIGNED FARE PRODUCT or 
+  
+
+2.1 For a Point to Point  Fare   (as in this file)
+
+GTFS					NeTEx
+fare_id,					<FareProduct> @id  
+route_id,				<FareProduct> <validityParameterAssignments>
+									<ValidityParameterAssignment> <GroupOfLinesRef >
+origin_id,				<Tariff> <distanceMatrixElements><DistanceMatrixElement> <StartScheduledStopPointRef>
+destination_id,		<Tariff> <distanceMatrixElements><DistanceMatrixElement> <EndScheduledStopPointRef>
+contains_id	,		 
+  
+2.2 Fare Attributes
+
+GTFS						NeTEx
+fare_id,						<PreassignedFareProduct> @id  
+price,						<PreassignedFareProduct>	<prices> <DistanceMatrixElementPrice><Amount>
+currency_type,			<PreassignedFareProduct> 	<prices><DistanceMatrixElementPrice><Currency>
+payment_method,		<PreassignedFareProduct> <ChargingMoment> 
+					0 =Pay on Boarding </Name> 
+					1 = Fare must be paid before boarding 
+transfers,					<PreassignedFareProduct> <ValidityParameterAssignment>
+										<UsageValidityPeriod><MaximumNumberOfChanges>
+										<FrequencyOfUse><FrequencyOfUseType>unlimited | none | single
+										<ValidityParameterAssignment><UsageValidityPeriod>endofDay | endOfRide |etc
+transfer_duration		<PreassignedFareProduct> <ValidityParameterAssignment><UsageValidityPeriod><StandardDuration>
+
+
+NB Prices can eb inline or in a separate group
+
+GTFS Data copyright Google Inc
+
+ NeTEx (C) CEN Copyright 2010, 2011
+-->
+<PublicationDelivery xmlns="http://www.netex.org.uk/netex" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://www.netex.org.uk/netex ../../../xsd/NeTEx_publication.xsd">
+	<PublicationTimestamp>2001-12-17T09:30:47.0Z</PublicationTimestamp>
+	<ParticipantRef>SYS001</ParticipantRef>
+	<!--- ======WHAT WAS REQUESTED ========== -->
+	<PublicationRefreshInterval>P3M</PublicationRefreshInterval>
+	<Description>Example6  of GTFS Agency Fare  data</Description>
+	<!--- =============== RESULTS =========== -->
+	<dataObjects>
+		<CompositeFrame version="1" id="mygtfsxm:CompositeFrame:DTA">
+			<TypeOfFrameRef ref="gtfs:TypeOFrame:GTFS"/>
+			<!--- ======= CODESPACEs======== -->
+			<codespaces>
+				<Codespace id="mygtfsxm">
+					<Xmlns>mygtfsxm</Xmlns>
+					<XmlnsUrl>http://www.demoagency.com/</XmlnsUrl>
+					<Description>Demo AGency</Description>
+				</Codespace>
+			</codespaces>
+			<!--- =======FRAME DEFAULTS======== -->
+			<FrameDefaults>
+				<DefaultCodespaceRef ref="mygtfsxm"/>
+				<DefaultCurrency>USD</DefaultCurrency>
+			</FrameDefaults>
+			<frames>
+				<ResourceFrame version="any" id="mygtfsxm:ResourceFrame:DTA">
+					<organisations>
+						<!--- =====Agency========= -->
+						<Authority version="any" id="mygtfsxm:Authority:DTA">
+							<Name>Demo Transit Authority</Name>
+							<ContactDetails>
+								<Url>http://code.google.com/p/googletransitdatafeed/wiki/FareExamples</Url>
+							</ContactDetails>
+						</Authority>
+					</organisations>
+				</ResourceFrame>
+				<!--- ==============SERVICE FRAME =========== -->
+				<ServiceFrame version="any" id="mygtfsxm:ServiceFrame:DTA">
+					<scheduledStopPoints>
+						<!--- ====TARIFF ZONEs ======== -->
+						<ScheduledStopPoint version="any" id="mygtfsxm:ScheduledStopPoint:S1">
+							<Name>Stop S1</Name>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="mygtfsxm:ScheduledStopPoint:S2">
+							<Name>Stop S2</Name>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="mygtfsxm:ScheduledStopPoint:S3">
+							<Name>Stop S3</Name>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="mygtfsxm:ScheduledStopPoint:S4">
+							<Name>Stop S4</Name>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="mygtfsxm:ScheduledStopPoint:S5">
+							<Name>Stop S5</Name>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="mygtfsxm:ScheduledStopPoint:S6">
+							<Name>Stop S6</Name>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="mygtfsxm:ScheduledStopPoint:S7">
+							<Name>Stop S7</Name>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="mygtfsxm:ScheduledStopPoint:S8">
+							<Name>Stop S8</Name>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="mygtfsxm:ScheduledStopPoint:S9">
+							<Name>Stop S9</Name>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="mygtfsxm:ScheduledStopPoint:S10">
+							<Name>Stop S10</Name>
+						</ScheduledStopPoint>
+					</scheduledStopPoints>
+				</ServiceFrame>
+				<!--- =============== FAREs =========== -->
+				<FareFrame version="any" id="mygtfsxm:FareFrame:DTA">
+					<validityConditions>
+						<ValidBetween>
+							<FromDate>2011-12-30T00:00:00Z</FromDate>
+						</ValidBetween>
+					</validityConditions>
+					<!--- ====Fare USAGE PARAMETERS======= -->
+					<!--- ====Fare Structure======= -->
+					<tariffs>
+						<Tariff version="any" id="mygtfsxm:Tariff:F01">
+							<Name/>
+							<distanceMatrixElements>
+								<DistanceMatrixElement version="any" id="mygtfsxm:DistanceMatrixElement:!S1_to_S2">
+									<StartStopPointRef version="any" ref="mygtfsxm:ScheduledStopPoint:S1"/>
+									<EndStopPointRef version="any" ref="mygtfsxm:ScheduledStopPoint:S2"/>
+									<prices>
+										<DistanceMatrixElementPrice version="any" id="mygtfsxm:DistanceMatrixElementPrice:!S1_to_S2">
+											<Amount>1.75</Amount>
+											<Currency>USD</Currency>
+										</DistanceMatrixElementPrice>
+									</prices>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="any" id="mygtfsxm:DistanceMatrixElement:!S1_to_S3">
+									<StartStopPointRef version="any" ref="mygtfsxm:ScheduledStopPoint:S1"/>
+									<EndStopPointRef version="any" ref="mygtfsxm:ScheduledStopPoint:S3"/>
+									<prices>
+										<DistanceMatrixElementPrice version="any" id="mygtfsxm:DistanceMatrixElementPrice:!S1_to_S3">
+											<Amount>3.25</Amount>
+											<Currency>USD</Currency>
+										</DistanceMatrixElementPrice>
+									</prices>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="any" id="mygtfsxm:DistanceMatrixElement:!S1_to_S4">
+									<StartStopPointRef version="any" ref="mygtfsxm:ScheduledStopPoint:S1"/>
+									<EndStopPointRef version="any" ref="mygtfsxm:ScheduledStopPoint:S4"/>
+									<prices>
+										<DistanceMatrixElementPrice version="any" id="mygtfsxm:DistanceMatrixElementPrice:!S1_to_S4">
+											<Amount>5.65</Amount>
+											<Currency>USD</Currency>
+										</DistanceMatrixElementPrice>
+									</prices>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="any" id="mygtfsxm:DistanceMatrixElement:!S1_to_S10">
+									<StartStopPointRef version="any" ref="mygtfsxm:ScheduledStopPoint:S1"/>
+									<EndStopPointRef version="any" ref="mygtfsxm:ScheduledStopPoint:S10"/>
+									<prices>
+										<DistanceMatrixElementPrice version="any" id="mygtfsxm:DistanceMatrixElementPrice:!S1_to_S10">
+											<Amount>4.55</Amount>
+											<Currency>USD</Currency>
+										</DistanceMatrixElementPrice>
+									</prices>
+								</DistanceMatrixElement>
+							</distanceMatrixElements>
+						</Tariff>
+					</tariffs>
+					<usageParameters>
+						<FrequencyOfUse version="any" id="mygtfsxm:FrequencyOfUse:oneTrip">
+							<MaximalFrequency>1</MaximalFrequency>
+						</FrequencyOfUse>
+					</usageParameters>
+					<!--- ====Fare Product======= -->
+					<fareProducts>
+						<PreassignedFareProduct version="any" id="mygtfsxm:PreassignedFareProduct:zonal">
+							<Name>Zonal fares to ride on the DTA,  </Name>
+							<ChargingMomentRef version="any" ref="gtfs:ChargingMoment:0"/>
+							<!--- ====VALIDABLE ELEMENTs====== -->
+							<validableElements>
+								<ValidableElement version="any" id="mygtfsxm:ValidableElement:trip">
+									<validityParameterAssignments>
+										<GenericParameterAssignment version="any" order="1" id="myfares:GenericParameterAssignment:zonal@FrequencyOfUse">
+											<Name>One trip  only - not explciit in GTFS</Name>
+											<limitations>
+												<FrequencyOfUseRef version="any" ref="mygtfsxm:FrequencyOfUse:oneTrip"/>
+											</limitations>
+											<validityParameters>
+												<VehicleModes>bus</VehicleModes>
+												<AuthorityRef ref="mygtfsxm:Authority:DTA"/>
+											</validityParameters>
+										</GenericParameterAssignment>
+									</validityParameterAssignments>
+								</ValidableElement>
+							</validableElements>
+							<!--- ====ACCESS RIGHTS======= -->
+							<accessRightsInProduct>
+								<AccessRightInProduct order="1" version="any" id="mygtfsxm:AccessRightInProduct:singleRide">
+									<Name>A trip on the network</Name>
+									<ValidableElementRef version="any" ref="mygtfsxm:ValidableElement:trip"/>
+								</AccessRightInProduct>
+							</accessRightsInProduct>
+						</PreassignedFareProduct>
+					</fareProducts>
+				</FareFrame>
+			</frames>
+		</CompositeFrame>
+		<!--- =====RESOURCEs======== -->
+		<ResourceFrame version="any" id="gtfs:ResourceFrame:GTFS">
+			<Name>Built-in GTFS Code Values</Name>
+			<!--- ======= CODESPACEs======== -->
+			<codespaces>
+				<Codespace id="gtfs">
+					<Xmlns>gtfs</Xmlns>
+					<XmlnsUrl>http://www.google.com/transit/gtfs</XmlnsUrl>
+					<Description>GTFS code values</Description>
+				</Codespace>
+			</codespaces>
+			<!--- =======FRAME DEFAULTS======== -->
+			<FrameDefaults>
+				<DefaultCodespaceRef ref="gtfs"/>
+			</FrameDefaults>
+			<typesOfValue>
+				<ValueSet version="1.5" id="gtfs:ValueSet:ChargingMoment">
+					<Name>GTFS Built in  Charging Methods: FareAttribute@payment_method</Name>
+					<values>
+						<!--- ====Charging method========= -->
+						<ChargingMoment version="any" id="gtfs:ChargingMoment:0">
+							<Name>Pay on Boarding</Name>
+						</ChargingMoment>
+						<ChargingMoment version="any" id="gtfs:ChargingMoment:1">
+							<Name>Fare must be paid before boarding</Name>
+						</ChargingMoment>
+					</values>
+				</ValueSet>
+			</typesOfValue>
+		</ResourceFrame>
+	</dataObjects>
+</PublicationDelivery>
