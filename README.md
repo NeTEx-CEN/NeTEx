@@ -1,7 +1,7 @@
 NeTEX XML schema
 (C) 2009-2018  NeTEX, CEN, Crown Copyright
 
-# NeTwork EXchange
+# Network Timetable EXchange
 ## Core, Part 1 (Network),  Part 2 (Timetables), Part3 (Fares) Schemas
 
 Version 1.08 - Base version plus minor fixes comprising Norway contributions, plus  the approved 1.1 CRs 1-50
