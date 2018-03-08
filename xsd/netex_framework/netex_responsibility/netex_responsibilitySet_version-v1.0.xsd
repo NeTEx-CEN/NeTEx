@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_responsibilitySet">
-	<xsd:include schemaLocation="netex_responsibility_version-v1.1.xsd"/>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_responsibilitySet">
+	<xsd:include schemaLocation="netex_typeOfValue_version-v1.0.xsd"/>
 	<xsd:annotation>
 		<xsd:appinfo>
 			<Metadata xmlns="http://www.govtalk.gov.uk/CM/gms-xs">
@@ -12,10 +12,15 @@
 					<Created>2010-09-04</Created>
 				</Date>
 				<Date>
-					<Modified>2010-11-05 CR0038 Correct  ResponsibiltySet to be a substitutiongroup for DataManagedObject so it can appear in a General Frame.</Modified>
+					<Modified>2017-03-27  CR0038 Correct ResponsibiltySet to be a substitutiongroup for DataManagedObject so it can appear in a General Frame.
+					
+					</Modified>
 				</Date>
 				<Date>
-					<Modified>217-03-27   Change to use responsibility  1.1 with AlternativeText</Modified>
+					<Modified>2017-03-27   Change to use responsibility  1.1 with AlternativeText</Modified>
+					<Modified>2017-04-27   CR0038 Add missing TypeOfREsponsibilityRole as Type of Value</Modified>
+					<Modified>2017-04-27   CR0038 Add  REsponsibilityRole as Abstract entity , add general Role </Modified>
+					<Modified>2017-04-27   CR0038 Add  PrivateCOde to ResponsibilitySet </Modified>
 				</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines data administration base types.</p>
@@ -25,11 +30,11 @@
 					<Syntax>http://www.w3.org/2001/XMLSchema</Syntax>
 					<Description>XML schema, W3C Recommendation 2001</Description>
 				</Format>
-				<Identifier>{http://www.netex.org.uk/schemas/1.0/xsd/netex_framework/netex_responsibility}netex_responsibilitySet_version-v1.0.xsd</Identifier>
+				<Identifier>{http://www.netex.org.uk/schemas/1.0/xsd/netex_framework/netex_responsibility}netex_responsibilitySet_version-v1.1.xsd</Identifier>
 				<Language>[ISO 639-2/B] ENG</Language>
 				<Publisher>Kizoom Software Ltd, 16 High Holborn, London WC1V 6BX</Publisher>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2014</Copyright>
+ <Copyright>CEN, Crown Copyright 2009-2017</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -135,11 +140,76 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Explanation of RESPONSIBILITY SET.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element ref="PrivateCode" minOccurs="0"/>
 			<xsd:element name="roles" type="responsibilityRoleAssignments_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Roles defined by this RESPONSIBILITY SET.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- =====Responsibility Role============================================ -->
+	<xsd:complexType name="ResponsibilityRoles_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of RESPONSIBILITY ROLEs</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element ref="ResponsibilityRoleRef"/>
+					<xsd:element ref="ResponsibilityRole"/>
+				</xsd:choice>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="ResponsibilityRole" abstract="true" substitutionGroup="DataManagedObject">
+		<xsd:annotation>
+			<xsd:documentation>A particular role an ORGANISATION or an ORGANISATION PART is playing.  +v1.1</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="ResponsibilityRole_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:group ref="ResponsibilityRoleGroup"/>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="ResponsibilityRoleIdType" use="optional">
+						<xsd:annotation>
+							<xsd:documentation>Identifier of RESPONSIBILITY SET.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="ResponsibilityRole_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation> Type for a  RESPONSIBILITY ROLE  that can be associated with a DATA MANAGED OBJECT. A Child ENTITY has the same responsibilities as its parent.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="DataManagedObjectStructure">
+				<xsd:group ref="ResponsibilityRoleGroup"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="ResponsibilityRoleGroup">
+		<xsd:sequence>
+			<xsd:element name="Name" type="MultilingualString" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Explanation of RESPONSIBILITY ROLE.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Description" type="MultilingualString" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Explanation of REsponsibility RoleSET.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="TypeOfResponsibilityRoleRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- =====Assignments of Roles============================================================= -->
@@ -186,7 +256,10 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Stakeholder roles which this assignment assigns.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element ref="TypeOfResponsibilityRoleRef" minOccurs="0"/>
+			<xsd:choice>
+				<xsd:element ref="TypeOfResponsibilityRoleRef" minOccurs="0"/>
+				<xsd:element ref="ResponsibilityRoleRef" minOccurs="0"/>
+			</xsd:choice>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:group name="ResponsiblePartiesGroup">
@@ -221,6 +294,42 @@ Rail transport, Roads and Road transport
 					<xsd:element ref="ResponsibilityRoleAssignment" maxOccurs="unbounded"/>
 				</xsd:sequence>
 			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ======================================================================= -->
+	<xsd:element name="TypeOfResponsibilityRole" abstract="false" substitutionGroup="TypeOfEntity">
+		<xsd:annotation>
+			<xsd:documentation>Classification of a RESPONSIBILITY ROLE</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="TypeOfResponsibilityRole_ValueStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="TypeOfValueGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="ResponsibilityRoleIdType" use="optional">
+						<xsd:annotation>
+							<xsd:documentation>Identifier of ENTITY.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="TypeOfResponsibilityRole_ValueStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a TYPE OF RESPONSIBILITY ROLE</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="TypeOfEntity_VersionStructure"/>
 		</xsd:complexContent>
 	</xsd:complexType>
 	<!-- ======================================================================= -->
