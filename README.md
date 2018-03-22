@@ -1,10 +1,23 @@
 NeTEX XML schema
 (C) 2009-2018  NeTEX, CEN, Crown Copyright
 
-# NeTwork EXchange
+# Network Timetable EXchange
 ## Core, Part 1 (Network),  Part 2 (Timetables), Part3 (Fares) Schemas
+<<<<<<< HEAD
 Version 1.08 - Base version plus minor fixes comprising Norway contributions, plus  the approved 1.1 CRs 1-50
 See the NeTEx UML Physical and Conceptual models for an UML view
+=======
+<<<<<<< HEAD
+Version 1.08 - Base version plus minor fixes comprising Norway contributions, plus  the approved 1.1 CRs 1-50
+See the NeTEx UML Physical and Conceptual models for an UML view
+=======
+
+Version 1.08 - Base version plus minor fixes comprising Norway contributions, plus  the approved 1.1 CRs 1-50
+
+See the NeTEx UML Physical and Conceptual models for an UML view
+
+>>>>>>> f5a5ff0de310736223ba302f0ff70d990ee69dd7
+>>>>>>> master
 The Part 1, Part 2 & Part3 Schemas include minor  corrections since the issue of the Version 1.0 documents. The Version 1.1 documents cover the changes
 ----
 ## Getting Started
@@ -17,6 +30,13 @@ In addition:
   - **nx.xsd** : Embeds NeTeX XML model elements within a simple thematic organisation to facilitate browsing and inspection of NeTEx.   The NX schema is not intended for actual use.
 
 There are **XML examples** of the use of both protocols, see */examples* subdirectory.
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+
+>>>>>>> f5a5ff0de310736223ba302f0ff70d990ee69dd7
+>>>>>>> master
 ### Support for XML editors
 There is an XMLSpy project file in the root directory  that provides an organised view  of the schema and examples
   - netex-v1.08.spp
@@ -191,4 +211,12 @@ There is also an Oxygen project file
    * netex_parkingTariff_support-v1.1.xsd  
    * netex_parkingTariff_version-v1.1.xsd  
 ----
+<<<<<<< HEAD
 1.07  2017.06.11 
+=======
+<<<<<<< HEAD
+1.07  2017.06.11 
+=======
+1.07  2017.06.11 
+>>>>>>> f5a5ff0de310736223ba302f0ff70d990ee69dd7
+>>>>>>> master
