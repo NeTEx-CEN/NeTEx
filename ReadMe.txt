@@ -2,13 +2,9 @@ NeTEX XMl schema
 (C) 2009-2017  NeTEX, CEN, Crown Copyright
         
 NeTwork EXchange : Core, Part 1 (Network),  Part 2 (Timetables , Part3 (Fares)   Schemas
-================================================
-version 1.09
 
-
-
-Sybtypes of travel sepc
-Version 1.08 - Base version plus minor fixes comprising Norway contributions
+ 
+Version 1.09 - Base version plus minor fixes comprising Norway contributions
 Plus most  of the 1.1 CRs
  
 See the NeTEx UML Physical and Conceptual models for an UML view
@@ -17,11 +13,11 @@ The Part 1, Part 2 & Part3 Schemas include minor  corrections since the issue of
 
 There is an XMLSpy project file in the root directory  that provides an organised view  of the schema and examples
     
-  - netex-v1.08.spp
+  - netex.spp
   
 There is also an Oxygen project file
 
-   - netex-v1.08.xpr
+   - netex.xpr
 
 ====================
 
@@ -41,34 +37,49 @@ In addition
 There are XML examples  of the use of both protocols. see examples subdirectory.
    
 =====================================================================================================================
- 
-=====================================
-TODO
-   CheckNameconstraints on Place & Subtypes - e.g. Address & Garage cannot have same id
-     
+      
 =====================
-
-Generic
-      remove LIFECYLE EVENt - to do
-      shcmeatic map  diag uml todo
+   Diagram  updates to do
+      schematic map  diag uml todo
       Add rel to Assignment diag uml doctodo
-      Revsie fleixble line / booking arrangements / contact uml diagram to refkec 
+      Revise flexible line / booking arrangements / contact uml diagram to reflect  
       redraw stop place quay
-      redraw check constraint, point of interest, topograhic place  TM2 trav sepc mod
+      redraw check constraint, point of interest, topographic place  TM2 trav mod
 
-
-
-      2017.12.20Renamed
+================================================
+     
+version 1.09
+     2018.03.20  Rename  to align with Transmodel   xsd uml
+           PassengerContract ==> FareContract
+           PassengerContractEntry ==> FareContractEntry
+           PassengerContractSecurityListing ==> FareContractSecurityListing  
+           TypeOfPassengerContract ==> TypeOfFareContract 
+	    TypeOfPassengerContractEntry ==> TypeOfFareContractEntry
+    	 netex_fareContract_support-v1.1.xsd  
+	 netex_fareContract_version-v1.1.xsd 
+	  netex_salesTransaction_support-v1.1.xsd  
+	 netex_salesTransaction_version-v1.1.xsd  
+	  netex_salesTransactionFrame_version-v1.1.xsd  
+	  netex_publication.xsd  
+	 netex_publication_timetable.xsd  
+     2017.12.20 Rename  to align with Transmodel
           SalesPackage ==> SalesOfferPackage
           SalesPackageElement ==> SalesOfferPackageElement
            SalesPackageSubstitition ==> SalesOfferPackageSubstitition
            TypeOfSalesPackage ==> TypeOfSalesOfferPackage
               SalesPackageSubstitition ==> SalesOfferPackageSubstitition
-           GroupOfSalesPackages ==> GroupOfSalesOfferPackage
+           GroupOfSalesPackages ==> GroupOfSalesOfferPackages
+
+          
+         netex_salesPackage_support-v1.1.xsd ==>   netex_aalesOfferPackage_support--v1.1.xsd 
+	 netex_salesPackage_version-v1.1.xsd ==>   netex_aalesOfferPackage_version-v1.1.xsd 
+	     
+	     
+       2017.12.20  Fix up fare examples
 
 ===================================
 
-1.08
+Version 1.08
 
 2017-12.01  Further revisions & Fixes
         Fix add notice assignments to GroupOfDIstanceMatrixElements
@@ -83,8 +94,7 @@ Generic
            netex_line_version-v1.1.xsd
            
          FIX update uml diagram for PropertyOfDay, Line
-         
-         
+                  
          FIX cd  - Place should be type Place_VersionStructure 
          		  netex_placee_version-v1.1.xsd
 
@@ -248,11 +258,9 @@ Generic
                   (iv) Add CustomerEligibility DOCTODO3
                     ++   netex_customerEligibility_support-v1.1.xsd umlp
           	   ++    netex_customerEligibility_version-v1.1.xsd umlp  
-            
-            
+                        
               CRxx   Add Presentation inc graphics to Allowed Line Direction umlp docdone
                 netex_line_version-v1.1.xsd umlp
-
 
                CR40  Revise Section: Add GENERAL SECTION distinct from COMMON SECTION  umldone docdone
                   Separate out from point and link package UMLcp
@@ -268,30 +276,25 @@ Generic
 
 		CR0010 QuayType Add BusPlatform Enum    umldone docdone
 			netex_ifopt_stopPlace_support-v1.1.xsd  UMLp
-			
-			
+						
 		CR0030	Add Day Offsets DocDOne
 		netex_coupledJourney_version-v1.1.xsd UMLp
 		netex_datedPassingTime_version-v1.1.xsd Umlp
 		netex_monitoredPassingTime_version-v1.1.xsd UMLP
 		netex_passingTimes_version-v1.1.xsd UMLP
 		
-		CR0010 Add JpOURNEY PART POSITION to JOURNEY PART DocDOne
+		CR0010 Add JOOURNEY PART POSITION to JOURNEY PART DocDOne
 			netex_coupledJourney_support-v1.1.xsd umlp
 			netex_coupledJourney_version-v1.1.xsd umlp
-			
-			
+						
 		CR014 Add GroupOfLinesType enum uml DOCDONE
 			netex_line_support-v1.1.xsd   umlp
 			netex_line_version-v1.1.xsd  umlp
 		
-
-
 		CR0047  Add Support for tax: self ref on priceRule & stepResult umlDone DOC DONE
 			netex_farePrice_version-v1.1.xsd   umlp
 			netex_parkingTariff_support-v1.1.xsd umlp
 			netex_parkingTariff_version-v1.1.xsd umlp
-
 1.07  2017.06.11 
 
 		CR0042  StopPointInJourneyPattern add StopRequestMethod   umlDone DOCDOne
