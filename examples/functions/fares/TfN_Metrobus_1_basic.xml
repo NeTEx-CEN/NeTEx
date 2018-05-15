@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <!-- ==== Metrobus Line 1 ==== -->
-<PublicationDelivery xmlns="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://www.netex.org.uk/netex ../../../xsd/NeTEx_publication.xsd">
+<PublicationDelivery version="1.0" xsi:schemaLocation="http://www.netex.org.uk/netex ../../../xsd/NeTEx_publication.xsd" xmlns="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<!--   Metrobus Line 1  Example
 
 This example shows the encoding of a point to point fare set for a simple bus timetable for a linear route in NeTex XML  (V1.07)
@@ -131,7 +131,7 @@ Concessionary passes are valid throughout from 0930-2300 Mon-Fri, and anytime at
 					<PricingParameterSet version="any" id="mb:Metrobus">
 						<pricingRules>
 							<DiscountingRule version="any" id="mb:half_price">
-								<Name>Discount for child fares&gt;</Name>
+								<Name>Discount for child fares></Name>
 								<DiscountAsPercentage>50</DiscountAsPercentage>
 							</DiscountingRule>
 						</pricingRules>
@@ -485,7 +485,7 @@ Concessionary passes are valid throughout from 0930-2300 Mon-Fri, and anytime at
 										<UserProfile version="1" id="mb:adult">
 											<Name>Adult</Name>
 											<prices>
-												<UsageParameterPrice version="1" id="mb:adult">
+												<UsageParameterPrice version="1" id="mb:adult"> 
 												</UsageParameterPrice>
 											</prices>
 										</UserProfile>
@@ -503,7 +503,7 @@ Concessionary passes are valid throughout from 0930-2300 Mon-Fri, and anytime at
 										</UserProfile>
 										<UserProfile version="any" id="mb:infant">
 											<Name>Infant  </Name>
-											<Description>Up to three children under 5 years of age, accompanied by a fare paying adult or child passenger, and not occupying a seat, may travel free of charge on the Company&#8217;s services.</Description>
+											<Description>Up to three children under 5 years of age, accompanied by a fare paying adult or child passenger, and not occupying a seat, may travel free of charge on the Company&#x2019;s services.</Description>
 											<prices>
 												<UsageParameterPrice version="any" id="mb:infant">
 													<Amount>0</Amount>
@@ -552,8 +552,8 @@ Concessionary passes are valid throughout from 0930-2300 Mon-Fri, and anytime at
 							<PaymentMethods>cash</PaymentMethods>
 						</DistributionChannel>
 					</distributionChannels>
-					<salesPackages>
-						<SalesPackage version="1" id="mb:singleRide@cash">
+					<SalesOfferPackages>
+						<SalesOfferPackage version="1" id="mb:singleRide@cash">
 							<Name>Adult  Single Ticket, Cash purchase  </Name>
 							<distributionAssignments>
 								<DistributionAssignment version="1" id="mb:singleRide@cash@selfService" order="1">
@@ -563,28 +563,32 @@ Concessionary passes are valid throughout from 0930-2300 Mon-Fri, and anytime at
 									<DistributionChannelRef version="any" ref="mb:onBoard"/>
 								</DistributionAssignment>
 							</distributionAssignments>
-							<salesPackageElements>
-								<SalesPackageElement version="1" id="mb:singleRide@cash" order="1">
+							<SalesOfferPackageElements>
+								<SalesOfferPackageElement version="1" id="mb:singleRide@cash" order="1">
 									<TypeOfTravelDocumentRef version="any" ref="mb:paperTicket"/>
 									<PreassignedFareProductRef version="1" ref="mb:singleRide"/>
-								</SalesPackageElement>
-							</salesPackageElements>
-						</SalesPackage>
-					</salesPackages>
+								</SalesOfferPackageElement>
+							</SalesOfferPackageElements>
+						</SalesOfferPackage>
+					</SalesOfferPackages>
 					<!--==== Fare Prices ==== -->
 				</FareFrame>
-				<!--  ===============
+				
+				
+				
+								<!--  ===============
 This Shows a Sample Purchases 
 
    Sales Transactions would normally be exchnaged seperately from the reference data
 -->
+
 				<SalesTransactionFrame version="any" id="mb:SampleTransactions">
 					<Name> Sample Transactions</Name>
-					<passengerContracts>
+ 					<FareContracts>
 						<!--  Example Simple Paper Ticket -->
-						<PassengerContract version="any" id="mbt:Anon001@trans001">
+						<FareContract version="any" id="mbt:Anon001@trans001">
 							<Name> Zone 1 Paper ticket for Cash </Name>
-							<passengerContractEntries>
+							<FareContractEntries>
 								<SalesTransaction version="any" id="mbt:Anon001@trans001@purchaseTicket@Ticket">
 									<Name>Buy SIngle Cash ticket  for  zone  1  </Name>
 									<Description>ewbush_West:Bewbush £1.60 cash    </Description>
@@ -595,7 +599,7 @@ This Shows a Sample Purchases
 								<TravelSpecification version="any" id="mbt:Anon001@trans001@purchaseTicket@Ticket">
 									<Name>Single fare zone 1 </Name>
 									<Date>2013-07-08T01:07:00</Date>
-									<TypeOfPassengerContractEntryRef version="any" ref="mb:cashPurchase"/>
+									<TypeOfFareContractEntryRef version="any" ref="mb:cashPurchase"/>
 									<SalesTransactionRef version="any" ref="mbt:Anon001@trans001@purchaseTicket@Ticket"/>
 									<Amount>1.60</Amount>
 									<StartOfValidity>2013-07-08T01:07:00</StartOfValidity>
@@ -613,13 +617,13 @@ This Shows a Sample Purchases
 												<EndStopPointRef versionRef="1" ref="mb:Bewbush"/>
 												<EndName>Bewbush</EndName>
 											</DistanceMatrixElementView>
-											<SalesPackageRef version="1" ref="mb:singleRide@cash"/>
+											<SalesOfferPackageRef version="1" ref="mb:singleRide@cash"/>
 											<limitations>
 												<FrequencyOfUseRef version="1" ref="mb:oneTrip"/>
 												<UserProfileRef version="1" ref="mb:adult"/>
 											</limitations>
 											<validityParameters>
-												<LineRef version="any" ref="mb:1"/>
+											<LineRef  version="any" ref="mb:1"/>
 												<DistributionChannelRef version="any" ref="mb:selfService"/>
 												<TypeOfTravelDocumentRef version="any" ref="mb:paperTicket"/>
 											</validityParameters>
@@ -627,9 +631,9 @@ This Shows a Sample Purchases
 										</SpecificParameterAssignment>
 									</specificParameterAssignments>
 								</TravelSpecification>
-							</passengerContractEntries>
-						</PassengerContract>
-					</passengerContracts>
+							</FareContractEntries>
+						</FareContract>
+					</FareContracts>
 				</SalesTransactionFrame>
 				<!--   Resources -->
 				<ResourceFrame version="any" id="mb:Metrobus">
@@ -648,11 +652,11 @@ This Shows a Sample Purchases
 								</TypeOfCustomerAccount>
 							</values>
 						</ValueSet>
-						<ValueSet version="any" id="mb:transactionTypes" classOfValues="TypeOfPassengerContractEntry">
+						<ValueSet version="any" id="mb:transactionTypes" classOfValues="TypeOfFareContractEntry">
 							<values>
-								<TypeOfPassengerContractEntry version="any" id="mb:cashPurchase">
+								<TypeOfFareContractEntry version="any" id="mb:cashPurchase">
 									<Name>Cash Purchase</Name>
-								</TypeOfPassengerContractEntry>
+								</TypeOfFareContractEntry>
 							</values>
 						</ValueSet>
 						<ValueSet version="any" id="mb:travelDocumentst" classOfValues="TypeOfTravelDocument">
