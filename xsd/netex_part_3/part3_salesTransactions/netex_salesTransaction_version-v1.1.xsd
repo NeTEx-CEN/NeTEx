@@ -3,7 +3,7 @@
 	<xsd:include schemaLocation="netex_salesTransaction_support-v1.0.xsd"/>
 	<xsd:include schemaLocation="../part3_PiQuery/netex_piRequest_support-v1.1.xsd"/>
 	<xsd:include schemaLocation="netex_salesContract_version-v1.1.xsd"/>
-	<xsd:include schemaLocation="../part3_fares/netex_salesPackage_version-v1.0.xsd"/>
+	<xsd:include schemaLocation="../part3_fares/netex_salesOfferPackage_version-v1.1.xsd"/>
 	<xsd:include schemaLocation="netex_customerPurchasePackage_support-v1.1.xsd"/>
 	<!-- ======================================================================= -->
 	<xsd:annotation>
@@ -22,7 +22,16 @@
 					<Modified>2011-02-05</Modified>
 					<!-- Name Space changes -->
 				</Date>
-				<Date><Modified>2017-11-08</Modified>Revise so  FareRef is more general PassengerInformationRequestRef
+				<Date>
+					<Modified>2017-11-08</Modified>Revise so  FareRef is more general PassengerInformationRequestRef
+				</Date>
+				<Date>
+					<Modified>2017-08-10</Modified> Align with TM6 
+					  Rename Passenger Contract   to FareContract. 
+					  Rename Passenger Contract Event to FareContractEntry. 	
+					  Rename Type of Passenger Contract  to TypeOfFareContract. 	
+					  Adjust References in Dependent packages.	
+					  Add links to CustomerPurchasePackage(s) and TravelSpecifcation(s)			   
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -121,7 +130,7 @@ Rail transport, Roads and Road transport
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:element name="SalesTransaction" abstract="false" substitutionGroup="PassengerContractEntry_">
+	<xsd:element name="SalesTransaction" abstract="false" substitutionGroup="FareContractEntry_">
 		<xsd:annotation>
 			<xsd:documentation>A SALE OF a FIXED PACKAGE or a SALE OF a RELOADABLE PACKAGE.
 </xsd:documentation>
@@ -137,7 +146,7 @@ Rail transport, Roads and Road transport
 							<xsd:group ref="LogEntryGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
-							<xsd:group ref="PassengerContractEntryGroup"/>
+							<xsd:group ref="FareContractEntryGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
 							<xsd:group ref="SalesTransactionGroup"/>
@@ -153,7 +162,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Type for SALES TRANSACTION.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
-			<xsd:extension base="PassengerContractEntry_VersionStructure">
+			<xsd:extension base="FareContractEntry_VersionStructure">
 				<xsd:sequence>
 					<xsd:group ref="SalesTransactionGroup"/>
 				</xsd:sequence>
@@ -198,7 +207,16 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Elements for SALES TRANSACTION.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element ref="CustomerPurchasePackageRef" minOccurs="0"/>
+			<xsd:element name="travelSpecifications" type="travelSpecifications_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Travel Specifcations bought  by Salles Transaction</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="customerPurchasePackages" type="CustomerPurchasePackageRefs_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Customer Pucrhase PAckages ought by Salles Transaction</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:group name="SalesTransactionFulfilmentGroup">
@@ -214,7 +232,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element name="CollectionNote" type="MultilingualString" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Note on how to colelct.</xsd:documentation>
+					<xsd:documentation>Note on how to collect.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -328,7 +346,7 @@ Rail transport, Roads and Road transport
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:element name="TravelSpecification" abstract="false" substitutionGroup="PassengerContractEntry_">
+	<xsd:element name="TravelSpecification" abstract="false" substitutionGroup="FareContractEntry_">
 		<xsd:annotation>
 			<xsd:documentation>The recording of a specification by a customer of parameters giving details of an intended consumption (e.g. origin and destination of a travel).
 </xsd:documentation>
@@ -338,13 +356,16 @@ Rail transport, Roads and Road transport
 				<xsd:restriction base="TravelSpecification_VersionStructure">
 					<xsd:sequence>
 						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
 							<xsd:group ref="DataManagedObjectGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
 							<xsd:group ref="LogEntryGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
-							<xsd:group ref="PassengerContractEntryGroup"/>
+							<xsd:group ref="FareContractEntryGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
 							<xsd:group ref="TravelSpecificationGroup"/>
@@ -360,7 +381,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Type for TRAVEL SPECIFICATION.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
-			<xsd:extension base="PassengerContractEntry_VersionStructure">
+			<xsd:extension base="FareContractEntry_VersionStructure">
 				<xsd:sequence>
 					<xsd:group ref="TravelSpecificationGroup"/>
 				</xsd:sequence>

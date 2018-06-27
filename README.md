@@ -3,11 +3,21 @@ NeTEX XML schema
 
 # Network Timetable EXchange
 ## Core, Part 1 (Network),  Part 2 (Timetables), Part3 (Fares) Schemas
+<<<<<<< HEAD
+Version 1.09 - Base version plus minor fixes comprising Norway contributions, plus  the approved 1.1 CRs 1-50, and renaming of some part 3.0 entities to align with TM v6.0
+See the NeTEx UML Physical and Conceptual models for an UML view
+=======
+<<<<<<< HEAD
+Version 1.09 - Base version plus minor fixes comprising Norway contributions, plus  the approved 1.1 CRs 1-50
+See the NeTEx UML Physical and Conceptual models for an UML view
+=======
 
 Version 1.08 - Base version plus minor fixes comprising Norway contributions, plus  the approved 1.1 CRs 1-50
 
 See the NeTEx UML Physical and Conceptual models for an UML view
 
+>>>>>>> f5a5ff0de310736223ba302f0ff70d990ee69dd7
+>>>>>>> master
 The Part 1, Part 2 & Part3 Schemas include minor  corrections since the issue of the Version 1.0 documents. The Version 1.1 documents cover the changes
 ----
 ## Getting Started
@@ -20,14 +30,51 @@ In addition:
   - **nx.xsd** : Embeds NeTeX XML model elements within a simple thematic organisation to facilitate browsing and inspection of NeTEx.   The NX schema is not intended for actual use.
 
 There are **XML examples** of the use of both protocols, see */examples* subdirectory.
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
 
+>>>>>>> f5a5ff0de310736223ba302f0ff70d990ee69dd7
+>>>>>>> master
 ### Support for XML editors
 There is an XMLSpy project file in the root directory  that provides an organised view  of the schema and examples
-  - netex-v1.08.spp
+  - NeTEx.spp
  
 There is also an Oxygen project file
-  - netex-v1.08.xpr
+  - NeTEx.xpr
 
+----
+# 1.09 Summary of Changes since v1.08
+version 1.09
+### 2018-03-20  
+  * CR: Rename  to align with Transmodel   xsd uml
+    * Rename: PassengerContract to FareContract
+    * Rename: PassengerContractEntry to FareContractEntry
+    * Rename: PassengerContractSecurityListing to FareContractSecurityListing  
+    * Rename: TypeOfPassengerContract to TypeOfFareContract 
+    * Rename: TypeOfPassengerContractEntry to TypeOfFareContractEntry
+      * netex_fareContract_support-v1.1.xsd  
+      * netex_fareContract_version-v1.1.xsd 
+      * netex_salesTransaction_support-v1.1.xsd  
+      * netex_salesTransaction_version-v1.1.xsd  
+      * netex_salesTransactionFrame_version-v1.1.xsd  
+      * netex_publication.xsd  
+      * netex_publication_timetable.xsd  
+	 
+### 2017.12.20 
+  * CR: Rename: Rename  to align with Transmodel
+    * Rename: SalesPackage to SalesOfferPackage
+    * Rename: SalesPackageElement to SalesOfferPackageElement
+    * Rename: SalesPackageSubstitition to SalesOfferPackageSubstitition
+    * Rename: TypeOfSalesPackage to TypeOfSalesOfferPackage
+    * Rename: SalesPackageSubstitition to SalesOfferPackageSubstitition
+    * Rename: GroupOfSalesPackages to GroupOfSalesOfferPackages
+      * netex_salesPackage_support-v1.1.xsd to   netex_aalesOfferPackage_support--v1.1.xsd 
+      * netex_salesPackage_version-v1.1.xsd to   netex_aalesOfferPackage_version-v1.1.xsd   
+	     
+### 2017.12.20 
+     * Fix: up fare examples for renames and other errors.
 ----
 # 1.08 Summary of Changes since v1.07
 
@@ -195,4 +242,12 @@ There is also an Oxygen project file
    * netex_parkingTariff_support-v1.1.xsd  
    * netex_parkingTariff_version-v1.1.xsd  
 ----
+<<<<<<< HEAD
 1.07  2017.06.11 
+=======
+<<<<<<< HEAD
+1.07  2017.06.11 
+=======
+1.07  2017.06.11 
+>>>>>>> f5a5ff0de310736223ba302f0ff70d990ee69dd7
+>>>>>>> master
