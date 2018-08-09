@@ -1,7 +1,7 @@
-NeTEX XMl schema
-(C) 2009-2017  NeTEX, CEN, Crown Copyright
+NeTEx XML schema
+(C) 2009-2017  NeTEx, CEN, Crown Copyright
         
-NeTwork EXchange : Core, Part 1 (Network),  Part 2 (Timetables , Part3 (Fares)   Schemas
+NeTwork Exchange : Core, Part 1 (Network), Part 2 (Timetables), Part3 (Fares) Schemas
 
  
 Version 1.09 - Base version plus minor fixes comprising Norway contributions
@@ -9,7 +9,7 @@ Plus most  of the 1.1 CRs
  
 See the NeTEx UML Physical and Conceptual models for an UML view
 
-The Part 1, Part 2 & Part3 Schemas include minor  corrections since the issue of the documents, 
+The Part 1, Part 2 & Part3 Schemas include minor corrections since the issue of the documents.
 
 There is an XMLSpy project file in the root directory  that provides an organised view  of the schema and examples
     
@@ -31,7 +31,7 @@ There are two main root schemas
 
 In addition
 
-  - nx.xsd : Embeds NeTeX XML model elements within a simple thematic organisation to facilitate browsing and inspection of NeTEx. 
+  - nx.xsd : Embeds NeTEx XML model elements within a simple thematic organisation to facilitate browsing and inspection of NeTEx. 
     The NX schema is not intended for actual use. 
 
 There are XML examples  of the use of both protocols. see examples subdirectory.
@@ -657,7 +657,7 @@ xxx
 			DisplayAssignment: NumberOfJourneysToShow, DisplayAssignmentType
 			RoutePoint: Viaflag, borderpoint
 			Route: DirectionType
-			SiteElement: NameSuffix, CrossRoad, LandMArk, PublicUse, COvered, Gated, Lighting
+			SiteElement: NameSuffix, CrossRoad, LandMArk, PublicUse, Covered, Gated, Lighting
 			EquipmentPosition: Description, PointProjection
 			Entrance: IsExternal, IsENtry, IsExit, DroppedKerbOutside, DropOffPointClose
 			Accomodation: Gender, Berthtype
@@ -667,7 +667,7 @@ xxx
 			StopPlaceSpace: BoardingUse, ALightingUSe
 			PointOfInterestSpace: AcessSpaceType, PointOfInterestSpaceType
 			NavigationPath: AccessFeatureType, NavigationType
-			PathJunction Label, COvered, gated, Lighting
+			PathJunction Label, Covered, gated, Lighting
 			FlexibleSTopPlace: VehicleMode
 			CheckCOnstraint: Period, MaxiumPassengers, Average Passengers, WheelchairPassengers 
 			Parking: CardsAcceptes, NumberOfParkingLevels, BookingUrl
