@@ -54,184 +54,184 @@ A COMPOSITE FRAME is used to group the component FRAMEs
  		A RESOURCE is used to contain the OPERATORs, etc
 -->
 <PublicationDelivery xmlns="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://www.netex.org.uk/netex ../../../xsd/NeTEx_publication.xsd">
-	<PublicationTimestamp>2010-12-17T09:30:47.0Z</PublicationTimestamp>
-	<ParticipantRef>SYS001</ParticipantRef>
-	<!--- ======WHAT WAS REQUESTED ========== -->
-	<PublicationRequest version="1.0">
-		<RequestTimestamp>2010-12-17T09:30:47.0Z</RequestTimestamp>
-		<ParticipantRef>SYS002</ParticipantRef>
-		<topics>
-			<NetworkFrameTopic>
-				<selectionValidityConditions>
-					<AvailabilityCondition version="any" id="mybus:AvailabilityCondition:CAL_02">
-						<FromDate>2011-01-01T00:00:00Z</FromDate>
-					</AvailabilityCondition>
-				</selectionValidityConditions>
-				<FareFrameRef ref="myfares:FareFrame:any">REQUEST</FareFrameRef>
-			</NetworkFrameTopic>
-		</topics>
-	</PublicationRequest>
-	<PublicationRefreshInterval>P1M</PublicationRefreshInterval>
-	<Description>Example  of simple point to point fares</Description>
-	<!--- =============== RESULTS =========== -->
-	<dataObjects>
-		<CompositeFrame version="1" id="myfares:CompositeFrame:CAL_02">
-			<validityConditions>
-				<ValidBetween>
-					<FromDate>2011-01-01T00:00:00Z</FromDate>
-					<ToDate>2011-07-01T00:00:00Z</ToDate>
-				</ValidBetween>
-			</validityConditions>
-			<!--- ======= CODESPACEs======== -->
-			<codespaces>
-				<Codespace id="mybus">
-					<Xmlns>mybus</Xmlns>
-					<XmlnsUrl>http://www.mybuses.eu/stuff</XmlnsUrl>
-					<Description>My buses</Description>
-				</Codespace>
-				<Codespace id="myfares">
-					<Xmlns>myfares</Xmlns>
-					<XmlnsUrl>http://www.myfares,com/fares</XmlnsUrl>
-					<Description>Fatre v data   </Description>
-				</Codespace>
-			</codespaces>
-			<!--- =======FRAME DEFAULTS======== -->
-			<FrameDefaults>
-				<DefaultCodespaceRef ref="myfares"/>
-			</FrameDefaults>
-			<frames>
-				<!--- ===========RESOURCEs========== -->
-				<ResourceFrame version="any" id="mybus:ResourceFrame:DTA">
-					<organisations>
-						<!--- =====Agency========= -->
-						<Operator version="any" id="mybus:Operator:DTA">
-							<Name>Demo Transit Authority</Name>
-						</Operator>
-					</organisations>
-				</ResourceFrame>
-				<!--- =============== FAREs =========== -->
-				<FareFrame version="any" id="myfares:FareFrame:FF01">
-					<FrameDefaults>
-						<DefaultCurrency>EUR</DefaultCurrency>
-					</FrameDefaults>
-					<!--- ====Fare Usage Parameters======= -->
-					<usageParameters>
-						<RoundTrip version="any" id="myfares:RoundTrip:single">
-							<Name>Single  </Name>
-							<TripType>single</TripType>
-						</RoundTrip>
-						<RoundTrip version="any" id="myfares:RoundTrip:return">
-							<Name>Return  </Name>
-							<TripType>return</TripType>
-						</RoundTrip>
-						<FrequencyOfUse version="any" id="myfares:FrequencyOfUse:once">
-							<Name>Return  </Name>
-							<MaximalFrequency>1</MaximalFrequency>
-						</FrequencyOfUse>
-						<GroupTicket version="any" id="myfares:GroupTicket:group">
-							<Name>Group Fare - 10 or more people</Name>
-							<prices>
-								<UsageParameterPriceRef version="any" ref="myfares:UsageParameterPrice:group"/>
-							</prices>
-							<MinimumNumberOfPersons>10</MinimumNumberOfPersons>
-						</GroupTicket>
-					</usageParameters>
-					<!--- ====Fare Product======= -->
-					<fareProducts>
-						<PreassignedFareProduct version="any" id="myfares:PreassignedFareProduct:flat">
-							<Name>Adult  Standard Flat  fare  - One way </Name>
-							<validityParameterAssignments>
-								<GenericParameterAssignment version="any" order="1" id="myfares:GenericParameterAssignment:flat@RoundTrip">
-									<LimitationGroupingType>OR</LimitationGroupingType>
-									<limitations>
-										<RoundTripRef version="any" ref="myfares:RoundTrip:single"/>
-										<RoundTripRef version="any" ref="myfares:RoundTrip:return"/>
-									</limitations>
-								</GenericParameterAssignment>
-								<GenericParameterAssignment version="any" order="2" id="myfares:GenericParameterAssignment:flat@FrequencyOfUse">
-									<limitations>
-										<FrequencyOfUseRef version="any" ref="myfares:FrequencyOfUse:once"/>
-									</limitations>
-								</GenericParameterAssignment>
-							</validityParameterAssignments>
-							<!--- ====VALIDABLE ELEMENTs====== -->
-							<validableElements>
-								<ValidableElement version="any" id="myfares:ValidableElement:metroTrip">
-									<Name>A metro Trip</Name>
-									<validityParameterAssignments>
-										<GenericParameterAssignment version="any" order="1" id="myfares:GenericParameterAssignment:metroTrip">
-											<validityParameters>
-												<VehicleModes>metro</VehicleModes>
-												<OperatorRef version="any" ref="mybus:Operator:DTA"/>
-											</validityParameters>
-										</GenericParameterAssignment>
-									</validityParameterAssignments>
-								</ValidableElement>
-							</validableElements>
-							<!--- ====ACCESS RIGHTs======= -->
-							<accessRightsInProduct>
-								<AccessRightInProduct version="any" id="myfares:AccessRightInProduct:flat" order="1">
-									<Name>First ride</Name>
-									<IsFirstInSequence>true</IsFirstInSequence>
-									<IsLastInSequence>true</IsLastInSequence>
-									<ValidableElementRef version="any" ref="myfares:ValidableElement:metroTrip"/>
-								</AccessRightInProduct>
-							</accessRightsInProduct>
-						</PreassignedFareProduct>
-						<PreassignedFareProduct version="any" id="myfares:PreassignedFareProduct:group">
-							<Name>Group Fare ,  </Name>
-							<validityParameterAssignments>
-								<GenericParameterAssignment version="any" order="1" id="myfares:GenericParameterAssignment:group@RoundTrip">
-									<LimitationGroupingType>OR</LimitationGroupingType>
-									<limitations>
-										<RoundTripRef version="any" ref="myfares:RoundTrip:single"/>
-										<RoundTripRef version="any" ref="myfares:RoundTrip:return"/>
-									</limitations>
-								</GenericParameterAssignment>
-								<GenericParameterAssignment version="any" order="2" id="myfares:GenericParameterAssignment:group@FrequencyOfUse">
-									<limitations>
-										<FrequencyOfUseRef version="any" ref="myfares:FrequencyOfUse:once"/>
-									</limitations>
-								</GenericParameterAssignment>
-								<GenericParameterAssignment version="any" order="3" id="myfares:GenericParameterAssignment:group@GroupTicket">
-									<Name>75% discount for group</Name>
-									<limitations>
-										<GroupTicketRef version="any" ref="myfares:GroupTicket:group"/>
-									</limitations>
-								</GenericParameterAssignment>
-							</validityParameterAssignments>
-						</PreassignedFareProduct>
-					</fareProducts>
-					<!--- ====Fare Prices======= -->
-					<priceGroups>
-						<PriceGroup version="any" id="myfares:PriceGroup:PG01">
-							<Name>Prices for Point to Point Fare Products  - Standard</Name>
-							<members>
-								<FareProductPrice version="any" id="myfares:FareProductPrice:standard">
-									<Name>Single fare</Name>
-									<Amount>1.00</Amount>
-									<Currency>EUR</Currency>
-									<PreassignedFareProductRef version="any" ref="myfares:PreassignedFareProduct:flat"/>
-								</FareProductPrice>
-								<UsageParameterPrice version="any" id="myfares:FareProductPrice:return">
-									<Name>Return fare</Name>
-									<Amount>1.75</Amount>
-									<Currency>EUR</Currency>
-									<RoundTripRef version="any" ref="myfares:RoundTrip:return"/>
-								</UsageParameterPrice>
-								<UsageParameterPrice version="any" id="myfares:UsageParameterPrice:group">
-									<Name>Group discount - all fares</Name>
-									<FareProductPriceRef version="any" ref="myfares:FareProductPrice:standard"/>
-									<DiscountingRule version="any" id="myfares:DiscountRule:group">
-										<DiscountAsPercentage>75</DiscountAsPercentage>
-									</DiscountingRule>
-									<GroupTicketRef version="any" ref="myfares:GroupTicket:group"/>
-								</UsageParameterPrice>
-							</members>
-						</PriceGroup>
-					</priceGroups>
-				</FareFrame>
-			</frames>
-		</CompositeFrame>
-	</dataObjects>
+  <PublicationTimestamp>2010-12-17T09:30:47.0Z</PublicationTimestamp>
+  <ParticipantRef>SYS001</ParticipantRef>
+  <!--- ======WHAT WAS REQUESTED ========== -->
+  <PublicationRequest version="1.0">
+    <RequestTimestamp>2010-12-17T09:30:47.0Z</RequestTimestamp>
+    <ParticipantRef>SYS002</ParticipantRef>
+    <topics>
+      <NetworkFrameTopic>
+        <selectionValidityConditions>
+          <AvailabilityCondition version="any" id="mybus:AvailabilityCondition:CAL_02">
+            <FromDate>2011-01-01T00:00:00Z</FromDate>
+          </AvailabilityCondition>
+        </selectionValidityConditions>
+        <FareFrameRef ref="myfares:FareFrame:any">REQUEST</FareFrameRef>
+      </NetworkFrameTopic>
+    </topics>
+  </PublicationRequest>
+  <PublicationRefreshInterval>P1M</PublicationRefreshInterval>
+  <Description>Example  of simple point to point fares</Description>
+  <!--- =============== RESULTS =========== -->
+  <dataObjects>
+    <CompositeFrame version="1" id="myfares:CompositeFrame:CAL_02">
+      <validityConditions>
+        <ValidBetween>
+          <FromDate>2011-01-01T00:00:00Z</FromDate>
+          <ToDate>2011-07-01T00:00:00Z</ToDate>
+        </ValidBetween>
+      </validityConditions>
+      <!--- ======= CODESPACEs======== -->
+      <codespaces>
+        <Codespace id="mybus">
+          <Xmlns>mybus</Xmlns>
+          <XmlnsUrl>http://www.mybuses.eu/stuff</XmlnsUrl>
+          <Description>My buses</Description>
+        </Codespace>
+        <Codespace id="myfares">
+          <Xmlns>myfares</Xmlns>
+          <XmlnsUrl>http://www.myfares,com/fares</XmlnsUrl>
+          <Description>Fatre v data   </Description>
+        </Codespace>
+      </codespaces>
+      <!--- =======FRAME DEFAULTS======== -->
+      <FrameDefaults>
+        <DefaultCodespaceRef ref="myfares"/>
+      </FrameDefaults>
+      <frames>
+        <!--- ===========RESOURCEs========== -->
+        <ResourceFrame version="any" id="mybus:ResourceFrame:DTA">
+          <organisations>
+            <!--- =====Agency========= -->
+            <Operator version="any" id="mybus:Operator:DTA">
+              <Name>Demo Transit Authority</Name>
+            </Operator>
+          </organisations>
+        </ResourceFrame>
+        <!--- =============== FAREs =========== -->
+        <FareFrame version="any" id="myfares:FareFrame:FF01">
+          <FrameDefaults>
+            <DefaultCurrency>EUR</DefaultCurrency>
+          </FrameDefaults>
+          <!--- ====Fare Usage Parameters======= -->
+          <usageParameters>
+            <RoundTrip version="any" id="myfares:RoundTrip:single">
+              <Name>Single  </Name>
+              <TripType>single</TripType>
+            </RoundTrip>
+            <RoundTrip version="any" id="myfares:RoundTrip:return">
+              <Name>Return  </Name>
+              <TripType>return</TripType>
+            </RoundTrip>
+            <FrequencyOfUse version="any" id="myfares:FrequencyOfUse:once">
+              <Name>Return  </Name>
+              <MaximalFrequency>1</MaximalFrequency>
+            </FrequencyOfUse>
+            <GroupTicket version="any" id="myfares:GroupTicket:group">
+              <Name>Group Fare - 10 or more people</Name>
+              <prices>
+                <UsageParameterPriceRef version="any" ref="myfares:UsageParameterPrice:group"/>
+              </prices>
+              <MinimumNumberOfPersons>10</MinimumNumberOfPersons>
+            </GroupTicket>
+          </usageParameters>
+          <!--- ====Fare Product======= -->
+          <fareProducts>
+            <PreassignedFareProduct version="any" id="myfares:PreassignedFareProduct:flat">
+              <Name>Adult  Standard Flat  fare  - One way </Name>
+              <validityParameterAssignments>
+                <GenericParameterAssignment version="any" order="1" id="myfares:GenericParameterAssignment:flat@RoundTrip">
+                  <LimitationGroupingType>OR</LimitationGroupingType>
+                  <limitations>
+                    <RoundTripRef version="any" ref="myfares:RoundTrip:single"/>
+                    <RoundTripRef version="any" ref="myfares:RoundTrip:return"/>
+                  </limitations>
+                </GenericParameterAssignment>
+                <GenericParameterAssignment version="any" order="2" id="myfares:GenericParameterAssignment:flat@FrequencyOfUse">
+                  <limitations>
+                    <FrequencyOfUseRef version="any" ref="myfares:FrequencyOfUse:once"/>
+                  </limitations>
+                </GenericParameterAssignment>
+              </validityParameterAssignments>
+              <!--- ====VALIDABLE ELEMENTs====== -->
+              <validableElements>
+                <ValidableElement version="any" id="myfares:ValidableElement:metroTrip">
+                  <Name>A metro Trip</Name>
+                  <validityParameterAssignments>
+                    <GenericParameterAssignment version="any" order="1" id="myfares:GenericParameterAssignment:metroTrip">
+                      <validityParameters>
+                        <VehicleModes>metro</VehicleModes>
+                        <OperatorRef version="any" ref="mybus:Operator:DTA"/>
+                      </validityParameters>
+                    </GenericParameterAssignment>
+                  </validityParameterAssignments>
+                </ValidableElement>
+              </validableElements>
+              <!--- ====ACCESS RIGHTs======= -->
+              <accessRightsInProduct>
+                <AccessRightInProduct version="any" id="myfares:AccessRightInProduct:flat" order="1">
+                  <Name>First ride</Name>
+                  <IsFirstInSequence>true</IsFirstInSequence>
+                  <IsLastInSequence>true</IsLastInSequence>
+                  <ValidableElementRef version="any" ref="myfares:ValidableElement:metroTrip"/>
+                </AccessRightInProduct>
+              </accessRightsInProduct>
+            </PreassignedFareProduct>
+            <PreassignedFareProduct version="any" id="myfares:PreassignedFareProduct:group">
+              <Name>Group Fare ,  </Name>
+              <validityParameterAssignments>
+                <GenericParameterAssignment version="any" order="1" id="myfares:GenericParameterAssignment:group@RoundTrip">
+                  <LimitationGroupingType>OR</LimitationGroupingType>
+                  <limitations>
+                    <RoundTripRef version="any" ref="myfares:RoundTrip:single"/>
+                    <RoundTripRef version="any" ref="myfares:RoundTrip:return"/>
+                  </limitations>
+                </GenericParameterAssignment>
+                <GenericParameterAssignment version="any" order="2" id="myfares:GenericParameterAssignment:group@FrequencyOfUse">
+                  <limitations>
+                    <FrequencyOfUseRef version="any" ref="myfares:FrequencyOfUse:once"/>
+                  </limitations>
+                </GenericParameterAssignment>
+                <GenericParameterAssignment version="any" order="3" id="myfares:GenericParameterAssignment:group@GroupTicket">
+                  <Name>75% discount for group</Name>
+                  <limitations>
+                    <GroupTicketRef version="any" ref="myfares:GroupTicket:group"/>
+                  </limitations>
+                </GenericParameterAssignment>
+              </validityParameterAssignments>
+            </PreassignedFareProduct>
+          </fareProducts>
+          <!--- ====Fare Prices======= -->
+          <priceGroups>
+            <PriceGroup version="any" id="myfares:PriceGroup:PG01">
+              <Name>Prices for Point to Point Fare Products  - Standard</Name>
+              <members>
+                <FareProductPrice version="any" id="myfares:FareProductPrice:standard">
+                  <Name>Single fare</Name>
+                  <Amount>1.00</Amount>
+                  <Currency>EUR</Currency>
+                  <PreassignedFareProductRef version="any" ref="myfares:PreassignedFareProduct:flat"/>
+                </FareProductPrice>
+                <UsageParameterPrice version="any" id="myfares:FareProductPrice:return">
+                  <Name>Return fare</Name>
+                  <Amount>1.75</Amount>
+                  <Currency>EUR</Currency>
+                  <RoundTripRef version="any" ref="myfares:RoundTrip:return"/>
+                </UsageParameterPrice>
+                <UsageParameterPrice version="any" id="myfares:UsageParameterPrice:group">
+                  <Name>Group discount - all fares</Name>
+                  <FareProductPriceRef version="any" ref="myfares:FareProductPrice:standard"/>
+                  <DiscountingRule version="any" id="myfares:DiscountRule:group">
+                    <DiscountAsPercentage>75</DiscountAsPercentage>
+                  </DiscountingRule>
+                  <GroupTicketRef version="any" ref="myfares:GroupTicket:group"/>
+                </UsageParameterPrice>
+              </members>
+            </PriceGroup>
+          </priceGroups>
+        </FareFrame>
+      </frames>
+    </CompositeFrame>
+  </dataObjects>
 </PublicationDelivery>

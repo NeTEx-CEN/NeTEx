@@ -73,138 +73,138 @@ GTFS Data copyright Google Inc
  NeTEx (C) CEN Copyright 2010, 2011
 -->
 <PublicationDelivery xmlns="http://www.netex.org.uk/netex" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://www.netex.org.uk/netex ../../../xsd/NeTEx_publication.xsd">
-	<PublicationTimestamp>2001-12-17T09:30:47.0Z</PublicationTimestamp>
-	<ParticipantRef>SYS001</ParticipantRef>
-	<!--- ======WHAT WAS REQUESTED ========== -->
-	<PublicationRefreshInterval>P3M</PublicationRefreshInterval>
-	<Description>Example 2 of GTFS Agency  data</Description>
-	<!--- =============== RESULTS =========== -->
-	<dataObjects>
-		<CompositeFrame version="1" id="mygtfsxm:CompositeFrame:DTA">
-			<TypeOfFrameRef ref="gtfs:TypeOFrame:GTFS"/>
-			<!--- ======= CODESPACEs======== -->
-			<codespaces>
-				<Codespace id="mygtfsxm">
-					<Xmlns>mygtfsxm</Xmlns>
-					<XmlnsUrl>http://www.demoagency.com/</XmlnsUrl>
-					<Description>Demo AGency</Description>
-				</Codespace>
-			</codespaces>
-			<!--- =======FRAME DEFAULTS======== -->
-			<FrameDefaults>
-				<DefaultCodespaceRef ref="mygtfsxm"/>
-				<DefaultCurrency>USD</DefaultCurrency>
-			</FrameDefaults>
-			<frames>
-				<ResourceFrame version="any" id="mygtfsxm:ResourceFrame:DTA">
-					<organisations>
-						<!--- =====Agency========= -->
-						<Authority version="any" id="mygtfsxm:Authority:DTA">
-							<Name>Demo Transit Authority</Name>
-							<ContactDetails>
-								<Url>http://code.google.com/p/googletransitdatafeed/wiki/FareExamples</Url>
-							</ContactDetails>
-						</Authority>
-					</organisations>
-				</ResourceFrame>
-				<!--- =============== FAREs =========== -->
-				<FareFrame version="any" id="mygtfsxm:FareFrame:DTA">
-					<validityConditions>
-						<ValidBetween>
-							<FromDate>2011-12-30T00:00:00Z</FromDate>
-						</ValidBetween>
-					</validityConditions>
-					<!--- ====Fare USAGE PARAMETERS======= -->
-					<usageParameters>
-						<FrequencyOfUse version="any" id="mygtfsxm:FrequencyOfUse:singleRide">
-							<FrequencyOfUseType>single</FrequencyOfUseType>
-							<MinimalFrequency>1</MinimalFrequency>
-							<MaximalFrequency>1</MaximalFrequency>
-						</FrequencyOfUse>
-						<Interchanging version="any" id="mygtfsxm:Interchanging:noChanges">
-							<FromMode>bus</FromMode>
-							<ToMode>bus</ToMode>
-							<MaximumNumberOfInterchanges>0</MaximumNumberOfInterchanges>
-						</Interchanging>
-						<UsageValidityPeriod version="any" id="mygtfsxm:UsageValidityPeriod:endOfRide">
-							<UsageEnd>endOfRide</UsageEnd>
-						</UsageValidityPeriod>
-					</usageParameters>
-					<!--- ====Fare Product======= -->
-					<fareProducts>
-						<PreassignedFareProduct version="any" id="mygtfsxm:PreassignedFareProduct:only_fare">
-							<Name>Single flat fare to ride on the DTA no transfers</Name>
-							<ChargingMomentRef version="any" ref="gtfs:ChargingMoment:0"/>
-							<!--- ====VALIDABLE ELEMENTS====== -->
-							<validableElements>
-								<ValidableElement version="any" id="mygtfsxm:ValidableElement:singleRide">
-									<Name>first ride</Name>
-									<validityParameterAssignments>
-										<GenericParameterAssignment version="any" order="1" id="mygtfsxm:GenericParameterAssignment:DTA_bus">
-											<Name>No  transfers </Name>
-											<limitations>
-												<FrequencyOfUseRef version="any" ref="mygtfsxm:FrequencyOfUse:singleRide"/>
-												<InterchangingRef version="any" ref="mygtfsxm:Interchanging:noChanges"/>
-												<UsageValidityPeriodRef version="any" ref="mygtfsxm:UsageValidityPeriod:endOfRide"/>
-											</limitations>
-											<validityParameters>
-												<VehicleModes>bus</VehicleModes>
-												<AuthorityRef version="any" ref="mygtfsxm:Authority:DTA"/>
-											</validityParameters>
-										</GenericParameterAssignment>
-									</validityParameterAssignments>
-								</ValidableElement>
-							</validableElements>
-							<!--- ====PRICES======= -->
-							<!--- ====ACCESS RIGHTS======= -->
-							<accessRightsInProduct>
-								<AccessRightInProduct version="any" id="mygtfsxm:AccessRightInProduct:singleRide" order="1">
-									<Name>First ride</Name>
-									<IsFirstInSequence>true</IsFirstInSequence>
-									<IsLastInSequence>true</IsLastInSequence>
-									<ValidableElementRef version="any" ref="mygtfsxm:ValidableElement:singleRide"/>
-								</AccessRightInProduct>
-							</accessRightsInProduct>
-							<prices>
-								<FareProductPrice version="any" id="mygtfsxm:UsageParameterPrice:only_fare">
-									<Amount>1.00</Amount>
-									<Currency>USD</Currency>
-								</FareProductPrice>
-							</prices>
-						</PreassignedFareProduct>
-					</fareProducts>
-				</FareFrame>
-			</frames>
-		</CompositeFrame>
-		<!--- =====RESOURCEs======== -->
-		<ResourceFrame version="any" id="gtfs:ResourceFrame:GTFS">
-			<Name>Built-in GTFS Code Values</Name>
-			<!--- ======= CODESPACEs======== -->
-			<codespaces>
-				<Codespace id="gtfs">
-					<Xmlns>gtfs</Xmlns>
-					<XmlnsUrl>http://www.google.com/transit/gtfs</XmlnsUrl>
-					<Description>GTFS code values</Description>
-				</Codespace>
-			</codespaces>
-			<!--- =======FRAME DEFAULTS======== -->
-			<FrameDefaults>
-				<DefaultCodespaceRef ref="gtfs"/>
-			</FrameDefaults>
-			<typesOfValue>
-				<ValueSet id="gtfs:ValueSet:ChargingMoment" version="any">
-					<Name>GTFS Built in  Charging Methods: FareAttribute@payment_method</Name>
-					<values>
-						<!--- ====Charging method========= -->
-						<ChargingMoment version="any" id="gtfs:ChargingMoment:0">
-							<Name>Pay on Boarding</Name>
-						</ChargingMoment>
-						<ChargingMoment version="any" id="gtfs:ChargingMoment:1">
-							<Name>Fare must be paid before boarding</Name>
-						</ChargingMoment>
-					</values>
-				</ValueSet>
-			</typesOfValue>
-		</ResourceFrame>
-	</dataObjects>
+  <PublicationTimestamp>2001-12-17T09:30:47.0Z</PublicationTimestamp>
+  <ParticipantRef>SYS001</ParticipantRef>
+  <!--- ======WHAT WAS REQUESTED ========== -->
+  <PublicationRefreshInterval>P3M</PublicationRefreshInterval>
+  <Description>Example 2 of GTFS Agency  data</Description>
+  <!--- =============== RESULTS =========== -->
+  <dataObjects>
+    <CompositeFrame version="1" id="mygtfsxm:CompositeFrame:DTA">
+      <TypeOfFrameRef ref="gtfs:TypeOFrame:GTFS"/>
+      <!--- ======= CODESPACEs======== -->
+      <codespaces>
+        <Codespace id="mygtfsxm">
+          <Xmlns>mygtfsxm</Xmlns>
+          <XmlnsUrl>http://www.demoagency.com/</XmlnsUrl>
+          <Description>Demo AGency</Description>
+        </Codespace>
+      </codespaces>
+      <!--- =======FRAME DEFAULTS======== -->
+      <FrameDefaults>
+        <DefaultCodespaceRef ref="mygtfsxm"/>
+        <DefaultCurrency>USD</DefaultCurrency>
+      </FrameDefaults>
+      <frames>
+        <ResourceFrame version="any" id="mygtfsxm:ResourceFrame:DTA">
+          <organisations>
+            <!--- =====Agency========= -->
+            <Authority version="any" id="mygtfsxm:Authority:DTA">
+              <Name>Demo Transit Authority</Name>
+              <ContactDetails>
+                <Url>http://code.google.com/p/googletransitdatafeed/wiki/FareExamples</Url>
+              </ContactDetails>
+            </Authority>
+          </organisations>
+        </ResourceFrame>
+        <!--- =============== FAREs =========== -->
+        <FareFrame version="any" id="mygtfsxm:FareFrame:DTA">
+          <validityConditions>
+            <ValidBetween>
+              <FromDate>2011-12-30T00:00:00Z</FromDate>
+            </ValidBetween>
+          </validityConditions>
+          <!--- ====Fare USAGE PARAMETERS======= -->
+          <usageParameters>
+            <FrequencyOfUse version="any" id="mygtfsxm:FrequencyOfUse:singleRide">
+              <FrequencyOfUseType>single</FrequencyOfUseType>
+              <MinimalFrequency>1</MinimalFrequency>
+              <MaximalFrequency>1</MaximalFrequency>
+            </FrequencyOfUse>
+            <Interchanging version="any" id="mygtfsxm:Interchanging:noChanges">
+              <FromMode>bus</FromMode>
+              <ToMode>bus</ToMode>
+              <MaximumNumberOfInterchanges>0</MaximumNumberOfInterchanges>
+            </Interchanging>
+            <UsageValidityPeriod version="any" id="mygtfsxm:UsageValidityPeriod:endOfRide">
+              <UsageEnd>endOfRide</UsageEnd>
+            </UsageValidityPeriod>
+          </usageParameters>
+          <!--- ====Fare Product======= -->
+          <fareProducts>
+            <PreassignedFareProduct version="any" id="mygtfsxm:PreassignedFareProduct:only_fare">
+              <Name>Single flat fare to ride on the DTA no transfers</Name>
+              <ChargingMomentRef version="any" ref="gtfs:ChargingMoment:0"/>
+              <!--- ====VALIDABLE ELEMENTS====== -->
+              <validableElements>
+                <ValidableElement version="any" id="mygtfsxm:ValidableElement:singleRide">
+                  <Name>first ride</Name>
+                  <validityParameterAssignments>
+                    <GenericParameterAssignment version="any" order="1" id="mygtfsxm:GenericParameterAssignment:DTA_bus">
+                      <Name>No  transfers </Name>
+                      <limitations>
+                        <FrequencyOfUseRef version="any" ref="mygtfsxm:FrequencyOfUse:singleRide"/>
+                        <InterchangingRef version="any" ref="mygtfsxm:Interchanging:noChanges"/>
+                        <UsageValidityPeriodRef version="any" ref="mygtfsxm:UsageValidityPeriod:endOfRide"/>
+                      </limitations>
+                      <validityParameters>
+                        <VehicleModes>bus</VehicleModes>
+                        <AuthorityRef version="any" ref="mygtfsxm:Authority:DTA"/>
+                      </validityParameters>
+                    </GenericParameterAssignment>
+                  </validityParameterAssignments>
+                </ValidableElement>
+              </validableElements>
+              <!--- ====PRICES======= -->
+              <!--- ====ACCESS RIGHTS======= -->
+              <accessRightsInProduct>
+                <AccessRightInProduct version="any" id="mygtfsxm:AccessRightInProduct:singleRide" order="1">
+                  <Name>First ride</Name>
+                  <IsFirstInSequence>true</IsFirstInSequence>
+                  <IsLastInSequence>true</IsLastInSequence>
+                  <ValidableElementRef version="any" ref="mygtfsxm:ValidableElement:singleRide"/>
+                </AccessRightInProduct>
+              </accessRightsInProduct>
+              <prices>
+                <FareProductPrice version="any" id="mygtfsxm:UsageParameterPrice:only_fare">
+                  <Amount>1.00</Amount>
+                  <Currency>USD</Currency>
+                </FareProductPrice>
+              </prices>
+            </PreassignedFareProduct>
+          </fareProducts>
+        </FareFrame>
+      </frames>
+    </CompositeFrame>
+    <!--- =====RESOURCEs======== -->
+    <ResourceFrame version="any" id="gtfs:ResourceFrame:GTFS">
+      <Name>Built-in GTFS Code Values</Name>
+      <!--- ======= CODESPACEs======== -->
+      <codespaces>
+        <Codespace id="gtfs">
+          <Xmlns>gtfs</Xmlns>
+          <XmlnsUrl>http://www.google.com/transit/gtfs</XmlnsUrl>
+          <Description>GTFS code values</Description>
+        </Codespace>
+      </codespaces>
+      <!--- =======FRAME DEFAULTS======== -->
+      <FrameDefaults>
+        <DefaultCodespaceRef ref="gtfs"/>
+      </FrameDefaults>
+      <typesOfValue>
+        <ValueSet id="gtfs:ValueSet:ChargingMoment" version="any">
+          <Name>GTFS Built in  Charging Methods: FareAttribute@payment_method</Name>
+          <values>
+            <!--- ====Charging method========= -->
+            <ChargingMoment version="any" id="gtfs:ChargingMoment:0">
+              <Name>Pay on Boarding</Name>
+            </ChargingMoment>
+            <ChargingMoment version="any" id="gtfs:ChargingMoment:1">
+              <Name>Fare must be paid before boarding</Name>
+            </ChargingMoment>
+          </values>
+        </ValueSet>
+      </typesOfValue>
+    </ResourceFrame>
+  </dataObjects>
 </PublicationDelivery>
