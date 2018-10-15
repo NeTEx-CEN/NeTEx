@@ -2,7 +2,7 @@ version: 2
 aliases:
 
 jobs:
-  validate:
+  build:
     docker:
     - image: eu.gcr.io/carbon-1287/circleci-toolbox-image
       auth:
@@ -10,12 +10,6 @@ jobs:
         password: $GCLOUD_SERVICE_KEY
     steps:
     - checkout
-    - run:
-        - name: Validate Schema
-        - command: xmllint --noout --schema xsd/NeTEx_publication.xsd examples/functions/stopPlace/Netex_01_StopPoints_NoFrills_1.xml
-workflows:
-  version: 2
-  validate:
-    jobs:
-    - validate:
-        context: org-carbon
+    - run: echo "Running xmllint to validate schema"
+    - run: xmllint --noout --schema xsd/NeTEx_publication.xsd examples/functions/stopPlace/Netex_01_StopPoints_NoFrills_1.xml
+    - run: echo "Finished running xmllint"
