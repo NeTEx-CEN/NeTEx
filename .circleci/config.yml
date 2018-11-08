@@ -1,6 +1,12 @@
 version: 2
 aliases:
-
+- &post_build
+  name: Trigger downstream builds
+  command: |
+    echo 'export CIRCLE_SHA1="$CIRCLE_SHA1"' >> $BASH_ENV
+    echo 'export CIRCLE_PROJECT_REPONAME="$CIRCLE_PROJECT_REPONAME"' >> $BASH_ENV
+    echo 'export GITHUB_TOKEN="$GITHUB_TOKEN"' >> $BASH_ENV
+    /tools/trigger_build.sh "entur/netex-java-model.git" "master" "$(git log -1 --pretty=%B)"
 jobs:
   build:
     docker:
@@ -20,11 +26,7 @@ jobs:
           username: _json_key
           password: $GCLOUD_SERVICE_KEY
     steps:
-      - run:
-          name: Trigger dependant builds
-          command: |
-            echo 'export CIRCLE_API_TOKEN="$CIRCLE_API_TOKEN"' >> $BASH_ENV
-            /tools/downstream_single_trigger.sh "github/entur/netex-java-model" "master"
+      - run: *post_build
 workflows:
   version: 2
   install-validate:
