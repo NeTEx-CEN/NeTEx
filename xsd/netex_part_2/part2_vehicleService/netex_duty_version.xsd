@@ -335,14 +335,19 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Start time.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="StartDayOffset" type="DayOffsetType" default="0" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Day offset for start time. Number of days after the starting departure time of the journey if not same calendar day. Default is 0 for same day.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element name="EndTime" type="xsd:time" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>End time.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="DayOffset" type="DayOffsetType" default="0" minOccurs="0">
+			<xsd:element name="EndDayOffset" type="DayOffsetType" default="0" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Day offset for end time. Number of days after the starting departure time of the journey if  not same calendar day. Default is 0 for same day.</xsd:documentation>
+					<xsd:documentation>Day offset for end time. Number of days after the starting departure time of the journey if not same calendar day. Default is 0 for same day.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="StartPointRef" type="TimingPointRefStructure" minOccurs="0">
@@ -355,8 +360,33 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>TIMING POINT at which DUTY PART starts.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="dutyActivities" type="dutyActivities_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>DUTY ACTIVITIES for DUTY PART.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
+	<!-- ======================================================================= -->
+	<xsd:complexType name="dutyActivities_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of DUTY ACTIVITIEs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element ref="DriverTripRef"/>
+					<xsd:element ref="DriverTrip"/>
+					<xsd:element ref="StretchRef"/>
+					<xsd:element ref="Stretch"/>
+					<!--
+					<xsd:element ref="BreakRef"/>
+					<xsd:element ref="Break"/>
+					-->
+				</xsd:choice>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 	<!-- ======================================================================= -->
 	<xsd:element name="DriverTrip" abstract="false" substitutionGroup="DataManagedObject">
 		<xsd:annotation>
@@ -507,4 +537,268 @@ Rail transport, Roads and Road transport
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->
+	<xsd:element name="Stretch" abstract="false" substitutionGroup="DataManagedObject">
+		<xsd:annotation>
+			<xsd:documentation></xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="Stretch_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="AccountableElementGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="StretchGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="StretchIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="Stretch_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for STRETCH.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="DataManagedObjectStructure">
+				<xsd:sequence>
+					<xsd:group ref="StretchGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="StretchGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a STRETCH.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="DutyPartRef" minOccurs="0"/>
+			<xsd:element name="StartTime" type="xsd:time" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Start time.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="StartDayOffset" type="DayOffsetType" default="0" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Day offset for start time. Number of days after the starting departure time of the journey if  not same calendar day. Default is 0 for same day.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="EndTime" type="xsd:time" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>End time.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="EndDayOffset" type="DayOffsetType" default="0" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Day offset for end time. Number of days after the starting departure time of the journey if  not same calendar day. Default is 0 for same day.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="StartPointRef" type="TimingPointRefStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>TIMING POINT at which STRETCH starts.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="EndPointRef" type="TimingPointRefStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>TIMING POINT at which STRETCH starts.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="spells" type="stretchSpells_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>SPELLs for STRETCH.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ======================================================================= -->
+	<xsd:complexType name="stretchSpells_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of SPELLs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element ref="DrivingSpell"/>
+					<xsd:element ref="StandBy"/>
+					<xsd:element ref="Task"/>
+				</xsd:choice>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="DrivingSpell" abstract="false" substitutionGroup="DataManagedObject">
+		<xsd:annotation>
+			<xsd:documentation></xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="DrivingSpell_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="AccountableElementGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DrivingSpellGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="DrivingSpellIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="DrivingSpell_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for DRIVING SPELL.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="DataManagedObjectStructure">
+				<xsd:sequence>
+					<xsd:group ref="DrivingSpellGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="DrivingSpellGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a DRIVING SPELL.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="StretchRef" minOccurs="0"/>
+			<xsd:element name="StartReliefOpportunityRef" type="ReliefOpportunityRefStructure" minOccurs="0"/>
+			<xsd:element name="EndReliefOpportunityRef" type="ReliefOpportunityRefStructure" minOccurs="0"/>
+			<xsd:element ref="BlockRef" minOccurs="0"/>
+			<xsd:element ref="LineRef" minOccurs="0"/>
+			<xsd:element ref="VehicleJourneyRef" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ======================================================================= -->
+	<xsd:group name="NonDrivingSpellGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a NON DRIVING SPELL.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="StartTime" type="xsd:time" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Start time.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="StartDayOffset" type="DayOffsetType" default="0" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Day offset for start time. Number of days after the starting departure time of the journey if not same calendar day. Default is 0 for same day.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="EndTime" type="xsd:time" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>End time.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="EndDayOffset" type="DayOffsetType" default="0" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Day offset for end time. Number of days after the starting departure time of the journey if not same calendar day. Default is 0 for same day.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:element name="StandBy" abstract="false" substitutionGroup="DataManagedObject">
+		<xsd:annotation>
+			<xsd:documentation></xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="StandBy_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="AccountableElementGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="NonDrivingSpellGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="StandByIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="StandBy_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for STANDBY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="DataManagedObjectStructure">
+				<xsd:sequence>
+					<xsd:group ref="NonDrivingSpellGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="Task" abstract="false" substitutionGroup="DataManagedObject">
+		<xsd:annotation>
+			<xsd:documentation></xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="Task_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="AccountableElementGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="NonDrivingSpellGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="TaskGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="TaskIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="Task_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for TASK.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="DataManagedObjectStructure">
+				<xsd:sequence>
+					<xsd:group ref="TaskGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="TaskGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a TASK.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<!-- <xsd:element ref="TypeOfTaskRef" minOccurs="0"/> -->
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ======================================================================= -->
+
 </xsd:schema>
