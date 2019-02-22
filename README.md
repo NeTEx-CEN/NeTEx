@@ -39,6 +39,33 @@ There is also an Oxygen project file
 ## 1.10 Summary of Changes since v1.09
 
 
+### 2019.03.121 Fix: Reapply 1.09 Mace Validity Coditions etc visible   [xsd only] 
+ * _Updates to xml schema_:
+		* netex_travelRights.xsd
+        * netex_trainElement.xsd
+
+
+### 2019.03.121 Fix: Reapply 1.09 Constraint changes and further clean up constranints  [xsd only] 
+					   (a) Fix keyref constraint on  TimingLinkInJourneyPattern_AnyVersionedKey,   (Drop DropFarePointInPattern. TimingTimingLinkInJournePattern, STopTimingLinkInJourneyPattern)
+					   (b) Fix keyref constraint on   ServiceLinkInJourneyPattern_AnyVersionedKey (Drop points)
+					   (c) Fix keyref constraint on    FarePointInPattern_AnyVersionedKey - Add Points 
+					   (d) Fix keyref constraint on   LinkInJourneyPattern_AnyVersionedKey - drop Points
+					   (e) Fix constraint ServiceLinkInJourneyPattern_AnyVersionedKey drop bogus ServiceService selector
+					   (f) Fix Fare Point In Pattern Key
+					   (g) Fix keyref constraint on StopPointInJourneyPattern - remove bogus DeadRunInPattern and ServiceStopPointInPattern selectors 
+					   (h) Fix keyref constraint on TimingPointInPattern - remove bogus DeadRunInPattern and ServiceStopPointInPattern selectors 
+					   (i) Fix uniqueness constraint on  HeadwayJourneyGroup - drop RhythmicalJourneyGroup
+					   (j) Fix (again) Constraints on SalesOfferPackage and SalesOfferPackagePrice
+					   (k) Fix keyref  LinkInJourneyPattern_AnyVersionedKey  correct  LinkInPattern to ServiceLinkInPattern 
+					   (l) Fix remove obsolete ParkingTaxRate constraint
+					   (m) Fix Reinstate Constraints on StopPointInJourneyPattern, etc  {NB THIS MAY CATCHE EXISTING ERRORS IN EXAMPLES]
+					   (n) Fix Add Constraints on SectionInSequence  {NB THIS MAY CATCHE EXISTING ERRORS IN EXAMPLES]
+					   (o) Revise key names to emphasise when key is ordered
+
+
+* _Updates to xml schema_:
+      * netex_publication.xsd
+
 ### 2019.02.18 Fix Correct data type of ___LayerRef___ and SubstitutionGroup on ___Layer___  [xsd only] 
    * _Updates to files_: 
         * netex_layer_support.xml 
@@ -70,7 +97,7 @@ There is also an Oxygen project file
 
 ### 2019.02.18 UK-006 - Add missing FARE TABLE  price references  [DOCTODO]
    * Fix: Add ___CellSpecificNetworkGroup___   to Fare Table Specifics, 
-   * Fix: Add ___TariffZoneRef , LineRef,, FareZoneRef,  TariffRef,  LineRef, ScheduledStopPointRef___ and   ___FareStructureElementInSequenceRef___. to  ___CellSpecificNetworkGroup___
+   * Fix: Add ___TariffZoneRef , LineRef,, FareZoneRef,  TariffRef,  LineRef, ScheduledStopPointRef___ and   ___FareStructureElementInSequenceRef___. ___SectionRef__ to  ___CellSpecificNetworkGroup___
    * _Updates to xml schema_: 
         * netex_fareTable_version.xsd 
 
@@ -85,10 +112,18 @@ There is also an Oxygen project file
         
 * _Updates to xml schema_:
       * netex_publication.xsd
+
+
+   
+   
  
- ### 2019.01.10  Migrate to Github Rename all  schema files to remove version numbers 
+### 2019.01.10  Migrate to Github Rename all  schema files to remove version numbers 
 * _Updates to xml schema_: 
                 * All NeTEx files changed.
+                
+### 2018.06.02   GITHUBBER Add Centroid to GroupOfSTopPlaces  [DOCTODO]
+   * _Updates to xml schema_: netex_fsyopPlace_version.xsd
+   
 ----
 # 1.09 Summary of Changes since v1.08
 
@@ -100,9 +135,12 @@ There is also an Oxygen project file
 
 ### 2018.06.02 ServiceDesignator & JourneyDesignator - Make fromPoint value optional  [DOCTODO]
    * _Updates to xml schema_: netex_vehicleJourney_Support-v1.1.xsd  
+   
+### 2018.06.02  1.10 BUG Fix Substitution group  ___PointInJourneyPattern___  -  [xsd only]
+   * _Updates to xml schema_: netex_journeyPattern-v1.1.xsd  
 
 ### 2018.06.02 Add ServiceDesignator to GroupOfServices Member [DOCTODO]
-   * _Updates to_:netex_ServiceVehicle_Version-v1.1.xsd  
+   * _Updates to_:netex_serviceJourney_Version-v1.1.xsd  
 
 ### 2018.06.01 CR049 Rename  to align with Transmodel  Fix case  [xsd only]
    * TM Alignment: Rename Sales Package to SALES OFFER PACKAGE 
@@ -123,8 +161,9 @@ There is also an Oxygen project file
         * Netex_tap_tsi_B3.xml
         * Netex_tap_trainhotel_SalesPackage_2.xml
         * Netex_101.21_TflGeographicFares_UnitZone_MultipleProducts
+         
  			
-### 2018.03.20 1.09  CR047 Fix SupplementToFareProductRef [xsd only]
+### 2018.03.20 1.09  CR047 Fix SupplementToFareProductRef .  Fix ResultStepIdType[xsd only]
    * _Updates to xml schema_: 
         * netex_farePrice_version & netex_FarePrice_support   
 
@@ -150,7 +189,6 @@ There is also an Oxygen project file
    * Fix;  restricted alternate Names on some elements
         * _Updates to xml schema_: 
             * netex_trainElement_version.xsd
-     
  
 ### 2018.03.20  CR049 Rename  to align with Transmodel    [*uml:v96-nk4; doc:v39*]
 * TM Alignment: Rename ___PassengerContract___ ==> ___FareContract___
@@ -158,7 +196,6 @@ There is also an Oxygen project file
 * TM Alignment: Rename ___PassengerContractSecurityListing___ ==> ___FareContractSecurityListing___
 * TM Alignment: Rename ___TypeOfPassengerContract___ ==> ___TypeOfFareContract___
 * TM Alignment: Rename ___TypeOfPassengerContractEntry___ ==> ___TypeOfFareContractEntry___
-
 
 * _Updates to xml schema_: 
     * netex_fareContract_support-v1.1.xsd  
