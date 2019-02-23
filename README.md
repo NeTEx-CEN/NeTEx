@@ -38,14 +38,20 @@ There is also an Oxygen project file
 # Change Log
 ## 1.10 Summary of Changes since v1.09
 
+### 2019.03.21 Fix:   Reapply 1.09  Fix up examples
+ * _Updates to xml examples_:  fare eamples, norway examples
 
-### 2019.03.121 Fix: Reapply 1.09 Mace Validity Coditions etc visible   [xsd only] 
+### 2019.03.21 Fix:  Make dummy types abstract transportOrganisation_s
+ * _Updates to xml schema_:
+		* netex_transportOrganisation_version.xsd
+
+### 2019.03.21 Fix: Reapply 1.09 Make Validity Comditions etc visible   [xsd only] 
  * _Updates to xml schema_:
 		* netex_travelRights.xsd
         * netex_trainElement.xsd
 
 
-### 2019.03.121 Fix: Reapply 1.09 Constraint changes and further clean up constranints  [xsd only] 
+### 2019.03.21 Fix: Reapply 1.09 Constraint changes and further clean up constranints  [xsd only] 
 					   (a) Fix keyref constraint on  TimingLinkInJourneyPattern_AnyVersionedKey,   (Drop DropFarePointInPattern. TimingTimingLinkInJournePattern, STopTimingLinkInJourneyPattern)
 					   (b) Fix keyref constraint on   ServiceLinkInJourneyPattern_AnyVersionedKey (Drop points)
 					   (c) Fix keyref constraint on    FarePointInPattern_AnyVersionedKey - Add Points 
@@ -66,7 +72,7 @@ There is also an Oxygen project file
 * _Updates to xml schema_:
       * netex_publication.xsd
 
-### 2019.02.18 Fix Correct data type of ___LayerRef___ and SubstitutionGroup on ___Layer___  [xsd only] 
+### 2019.02.18 Fix Correct data type of ___LayerRef___ and SubstitutionGroup on ___Layer___  and __Cell_Ref [xsd only] 
    * _Updates to files_: 
         * netex_layer_support.xml 
         * netex_layer_vesrion.xml 
@@ -113,9 +119,7 @@ There is also an Oxygen project file
 * _Updates to xml schema_:
       * netex_publication.xsd
 
-
-   
-   
+  
  
 ### 2019.01.10  Migrate to Github Rename all  schema files to remove version numbers 
 * _Updates to xml schema_: 
