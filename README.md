@@ -40,12 +40,11 @@ There is also an Oxygen project file
 
 ## 1.10 Summary of Changes since v1.11  
 ### 2019.02.21 UK-34   TRAVEL DOCUMENT  should not be in FARE FRAME  - remove  
-
  * _Updates to xml schema_:
- 	* netex_travelDOcument.xsd
+ 	* netex_travelDocument.xsd
 	* netex_fareFame.xsd
 		 
-### 2019.02.21 UK-07   FareTable - Allow direct containment of FarePRiceRef, 
+### 2019.02.21 UK-07   FareTable - Allow direct containment of FarePriceRef, 
 		
 * _Updates to xml schema_:
 	* netex_fareTable.xsd
