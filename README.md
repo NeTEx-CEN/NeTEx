@@ -1,24 +1,21 @@
-NeTEx XML schema
+# NeTEx (Network Timetable EXchange) XML schema
 (C) 2009-2018  NeTEx, CEN, Crown Copyright
 
-# Network Timetable EXchange
-<<<<<<< HEAD
 ## Core, Part 1 (Network),  Part 2 (Timetables), Part3 (Fares) Schemas
-<<<<<<< HEAD
-Version 1.08 - Base version plus minor fixes comprising Norway contributions, plus  the approved 1.1 CRs 1-50
-See the NeTEx UML Physical and Conceptual models for an UML view
-=======
-=======
-## Core, Part 1 (Network), Part 2 (Timetables), Part3 (Fares) Schemas
->>>>>>> c2651736b895a8c248140a36ddccb227e3a13402
 
-Version 1.09 - Base version plus minor fixes comprising Norway contributions
-Plus most  of the 1.1 CRs
+Version 1.10 - Base version plus minor fixes comprising 
+   * Norway contributions,  
+   * The approved 1.1 CRs 1-50
+   * Rollup of fixes
+   * Further CRs from country comments
 
-See the NeTEx UML Physical and Conceptual models for an UML view
+The scema is broken down systematically into small modualr files; generally for each functional package in the design model there are two xml schema files
+                    netex_xxxx_suppport.xsd   - containing data type  and ref definitions
+                    netex_xxxx_version.xsd    - containg the element definitions
+See the NeTEx UML Physical and Conceptual models for an UML view 
 
->>>>>>> f5a5ff0de310736223ba302f0ff70d990ee69dd7
-The Part 1, Part 2 & Part3 Schemas include minor  corrections since the issue of the Version 1.0 documents. The Version 1.1 documents cover the changes
+The Part 1, Part 2 & Part3 Schemas include minor  corrections since the issue of the Version 1.0 documents. 
+The Version 1.1 documents cover the changes
 ----
 ## Getting Started
 There are two main root schemas:
@@ -30,45 +27,212 @@ In addition:
   - **nx.xsd** : Embeds NeTeX XML model elements within a simple thematic organisation to facilitate browsing and inspection of NeTEx.   The NX schema is not intended for actual use.
 
 There are **XML examples** of the use of both protocols, see */examples* subdirectory.
-<<<<<<< HEAD
-=======
-
->>>>>>> f5a5ff0de310736223ba302f0ff70d990ee69dd7
+ 
 ### Support for XML editors
 There is an XMLSpy project file in the root directory  that provides an organised view  of the schema and examples
   - NeTEx.spp
 
 There is also an Oxygen project file
   - NeTEx.xpr
+----
+# Change Log
+## 1.10 Summary of Changes since v1.09
 
+
+### 2019.03.21 Fix:   Reapply 1.05  Fix Merge in correction  to spelling of AccountingTime. NB THis will break any existing documents that use AccountingTime.
+ * _Updates to xml schema_:
+		* netex_duty_version.xsd
+
+### 2019.03.21 Fix:   Reapply 1.09  Fix up examples
+ * _Updates to xml examples_:  fare eamples, norway examples
+
+### 2019.03.21 Fix:  Make dummy types abstract transportOrganisation_s
+ * _Updates to xml schema_:
+		* netex_transportOrganisation_version.xsd
+
+### 2019.03.21 Fix: Reapply 1.09 Make Validity Comditions etc visible   [xsd only] 
+ * _Updates to xml schema_:
+		* netex_travelRights.xsd
+        * netex_trainElement.xsd
+
+
+### 2019.03.21 Fix: Reapply 1.09 Constraint changes and further clean up constranints  [xsd only] 
+					   (a) Fix keyref constraint on  TimingLinkInJourneyPattern_AnyVersionedKey,   (Drop DropFarePointInPattern. TimingTimingLinkInJournePattern, STopTimingLinkInJourneyPattern)
+					   (b) Fix keyref constraint on   ServiceLinkInJourneyPattern_AnyVersionedKey (Drop points)
+					   (c) Fix keyref constraint on    FarePointInPattern_AnyVersionedKey - Add Points 
+					   (d) Fix keyref constraint on   LinkInJourneyPattern_AnyVersionedKey - drop Points
+					   (e) Fix constraint ServiceLinkInJourneyPattern_AnyVersionedKey drop bogus ServiceService selector
+					   (f) Fix Fare Point In Pattern Key
+					   (g) Fix keyref constraint on StopPointInJourneyPattern - remove bogus DeadRunInPattern and ServiceStopPointInPattern selectors 
+					   (h) Fix keyref constraint on TimingPointInPattern - remove bogus DeadRunInPattern and ServiceStopPointInPattern selectors 
+					   (i) Fix uniqueness constraint on  HeadwayJourneyGroup - drop RhythmicalJourneyGroup
+					   (j) Fix (again) Constraints on SalesOfferPackage and SalesOfferPackagePrice
+					   (k) Fix keyref  LinkInJourneyPattern_AnyVersionedKey  correct  LinkInPattern to ServiceLinkInPattern 
+					   (l) Fix remove obsolete ParkingTaxRate constraint
+					   (m) Fix Reinstate Constraints on StopPointInJourneyPattern, etc  {NB THIS MAY CATCHE EXISTING ERRORS IN EXAMPLES]
+					   (n) Fix Add Constraints on SectionInSequence  {NB THIS MAY CATCHE EXISTING ERRORS IN EXAMPLES]
+					   (o) Revise key names to emphasise when key is ordered
+
+
+* _Updates to xml schema_:
+      * netex_publication.xsd
+
+### 2019.02.18 Fix Correct data type of ___LayerRef___ and SubstitutionGroup on ___Layer___  and __Cell_Ref [xsd only] 
+   * _Updates to files_: 
+        * netex_layer_support.xml 
+        * netex_layer_vesrion.xml 
+
+### 2019.02.18 Fix update XML SPy & Oxygen project files [xsd only]
+   * _Updates to files_: 
+        * netex.spp 
+        * netex.spr 
+
+### 2019.02.18 Examples- Add new  Fare examples [xsd only]
+#### Rail fares
+
+* Example: Distance rail tariff:  
+    * Netex_era_distance_ro.xml
+* Example: Point to Point Multi-operator National tariff and  single operator regional products: 
+    * Netex_era_toc_uk.xml
+* Example: Cross-border National tariff : 
+    * Netex_crossborder_de.xml
+#### Bus fares
+* Example: Zone-to-zone bus fares:  
+    * uk_fxc_trip_Metrobus_1.xml.xml
+* Example: Zonal day & season pass fares:  
+    * uk_fxc_pass_Metrobus_metrorider.xml
+* Example: Stage trip fares:  
+    * uk_fxc_trip_First_WoE_stage-distance_minimal1.xml
+
+### 2019.02.18 UK   - Add new  FARE TABLE  price references  [DOCTODO]
+
+### 2019.02.18 UK-006 - Add missing FARE TABLE  price references  [DOCTODO]
+   * Fix: Add ___CellSpecificNetworkGroup___   to Fare Table Specifics, 
+   * Fix: Add ___TariffZoneRef , LineRef,, FareZoneRef,  TariffRef,  LineRef, ScheduledStopPointRef___ and   ___FareStructureElementInSequenceRef___. ___SectionRef__ to  ___CellSpecificNetworkGroup___
+   * _Updates to xml schema_: 
+        * netex_fareTable_version.xsd 
+
+### 2019.01.11 1.09  UK Fix Constraints  [xsd only] x
+ * Fix: Correction to constraints
+     1. Fix keyref constraint on ___TimingLinkInJourneyPattern_KeyRef___ - drop points.
+     2. Fix keyref constraint on ___ServiceLinkInJourneyPattern_AnyVersionedKey___ -d rop points.
+     3. Fix keyref constraint on ___FarePointInPattern_AnyVersionedKey___ - add Points
+     4. Fix keyref constraint on ___LinkInJourneyPattern_AnyVersionedKey___ - drop ___FarePointInPattern___
+     5. Fix constraint ___ServiceLinkInJourneyPattern_UniqueBy_Id_Version_Order___ drop ___ServiceServiceLinkInJourneyPattern___
+     6. Fix ___FarePointInPattern___ Key constraint
+        
+* _Updates to xml schema_:
+      * netex_publication.xsd
+
+ 
+ 
+### 2019.01.10  Migrate to Github Rename all  schema files to remove version numbers 
+* _Updates to xml schema_: 
+                * All NeTEx files changed.
+                
+### 2018.06.02   GITHUBBER Add Centroid to GroupOfSTopPlaces  [uml_diagram, doctodo]
+   * _Updates to xml schema_: 
+	   * netex_stopPlace_version.xsd
+   
 ----
 # 1.09 Summary of Changes since v1.08
 
-### 2018-03-20  Rename  to align with Transmodel xsd UML
-  * PassengerContract ==> FareContract
-  * PassengerContractEntry ==> FareContractEntry
-  * PassengerContractSecurityListing ==> FareContractSecurityListing  
-  * TypeOfPassengerContract ==> TypeOfFareContract 
-  * TypeOfPassengerContractEntry ==> TypeOfFareContractEntry
-  * Updates:
+### 2018.06.06  CR057 NJSK add URL to Priceable object [DOCTODO]
+   * _Updates to xml schema_: netex_farePrice_version-v1.1.xsd
+			
+### 2018.06.02  1.09 BUG Fix ___UsageParameterRef___  - should be abstract to prevent use  [xsd only]
+   * _Updates to xml schema_: netex_usageParameter_Support-v1.1.xsd  
+
+### 2018.06.02 ServiceDesignator & JourneyDesignator - Make fromPoint value optional  [DOCTODO]
+   * _Updates to xml schema_: netex_vehicleJourney_Support-v1.1.xsd  
+   
+### 2018.06.02  1.10 BUG Fix Substitution group  ___PointInJourneyPattern___  -  [xsd only]
+   * _Updates to xml schema_: netex_journeyPattern-v1.1.xsd  
+
+### 2018.06.02 Add ServiceDesignator to GroupOfServices Member [DOCTODO]
+   * _Updates to_:netex_serviceJourney_Version-v1.1.xsd  
+
+### 2018.06.01 CR049 Rename  to align with Transmodel  Fix case  [xsd only]
+   * TM Alignment: Rename Sales Package to SALES OFFER PACKAGE 
+   * Fix: Correct the camel casing of  groupsOfsaleOfffPackages ==>  groupsOfSaleOfferPackages 
+   * Fix: Correct constraint names
+   * _Updates to xml schema_: 
+        * netex_SalesOfferPackage_version-v1.1.xsd 
+        * NeTEx_publication.xsd
+        * NeTEx_publication_timetable.xsd	*
+        * Nx.xsd
+    * _Updates to examples_: 
+        * Netex_tap_tsi_B3+more.xml
+        * Netex_tap_tsi_B2.xml
+        * Netex_tap_tsi_B2-71.xml
+        * Netex_tap_tsi_B2-1181.xml
+        * Netex_tap_tsi_B2-1180.xml
+        * Netex_tap_tsi_tcvs_irt_1.xml
+        * Netex_tap_tsi_B3.xml
+        * Netex_tap_trainhotel_SalesPackage_2.xml
+        * Netex_101.21_TflGeographicFares_UnitZone_MultipleProducts
+         
+ 			
+### 2018.03.20 1.09  CR047 Fix SupplementToFareProductRef .  Fix ResultStepIdType[xsd only]
+   * _Updates to xml schema_: 
+        * netex_farePrice_version & netex_FarePrice_support   
+
+### 2018.03.20 1.09  Fix Inheritance Companion ProfileRef a type of UserProfileRef  [xsd only]
+   * _Updates to xml schema_: 
+        * netex_usageParameterEligibility_support-v1.0 make Companion ''
+
+### 2018.03.20  CR049 Rename  to align with Transmodel - Fix Capitalisation  [xsd only] x
+   * Fix Capitalisation of wrapper tags 
+        * TM Alignment: ___salesOfferPackages___  should be lower ca.mel case.
+        * TM Alignment: ___salesOfferPackageElements___  should be lower camel case.
+        * TM Alignment: ___saleslesOfferPackageSubstitutions___ should be lower camel case.
+        * TM Alignment: ___salesOfferPackagePrices___ should be lower camel case
+        * TM Alignment: ___salesOfferPackageRefs___ should be lower camel case.
+     * _Updates to xml schema_: 
+        * netex_SalesOfferPackage_support-v1.1.xsd 
+        * netex_SalesOfferPackage_version-v1.1.xsd 
+        * netex_FareTable_version-v1.1.xsd 
+        * nete_AccessRight_Parameters_version-v1.1.xsd 
+        * netex_FareProduct_version-v1.1.xsd 
+     * _Updates to multiple Examples_.
+     	                
+   * Fix;  restricted alternate Names on some elements
+        * _Updates to xml schema_: 
+            * netex_trainElement_version.xsd
+ 
+### 2018.03.20  CR049 Rename  to align with Transmodel    [*uml:v96-nk4; doc:v39*]
+* TM Alignment: Rename ___PassengerContract___ ==> ___FareContract___
+* TM Alignment: Rename ___PassengerContractEntry___ ==> ___FareContractEntry___
+* TM Alignment: Rename ___PassengerContractSecurityListing___ ==> ___FareContractSecurityListing___
+* TM Alignment: Rename ___TypeOfPassengerContract___ ==> ___TypeOfFareContract___
+* TM Alignment: Rename ___TypeOfPassengerContractEntry___ ==> ___TypeOfFareContractEntry___
+
+* _Updates to xml schema_: 
     * netex_fareContract_support-v1.1.xsd  
     * netex_fareContract_version-v1.1.xsd 
     * netex_salesTransaction_support-v1.1.xsd  
     * netex_salesTransaction_version-v1.1.xsd  
     * netex_salesTransactionFrame_version-v1.1.xsd  
     * netex_publication.xsd  
-    * netex_publication_timetable.xsd  
-### 2017-12-20 Rename to align with Transmodel and fix up fare examples
-  * SalesPackage ==> SalesOfferPackage
-  * SalesPackageElement ==> SalesOfferPackageElement
-  * SalesPackageSubstitition ==> SalesOfferPackageSubstitition
-  * TypeOfSalesPackage ==> TypeOfSalesOfferPackage
-  * SalesPackageSubstitition ==> SalesOfferPackageSubstitition
-  * GroupOfSalesPackages ==> GroupOfSalesOfferPackages          
-  * netex_salesPackage_support-v1.1.xsd ==> netex_aalesOfferPackage_support--v1.1.xsd 
-  * netex_salesPackage_version-v1.1.xsd ==> netex_aalesOfferPackage_version-v1.1.xsd 
+    * netex_publication_timetable.xsd   
 
-# 1.08 Summary of Changes since v1.07
+### 2017.12.20 CR049 Rename  to align with Transmodel [*uml:v96-nk4; doc:v39*]
+* TM Alignment: Rename ___SalesPackage___ ==> ___SalesOfferPackage___
+* TM Alignment: Rename ___SalesPackageElement___ ==> ___SalesOfferPackageElement___
+* TM Alignment: Rename ___SalesPackageSubstitition___ ==> ___SalesOfferPackageSubstitition___
+* TM Alignment: Rename ___TypeOfSalesPackage___ ==> ___TypeOfSalesOfferPackage___
+* TM Alignment: Rename ___SalesPackageSubstitition___ ==> ___SalesOfferPackageSubstitition___
+* TM Alignment: Rename ___GroupOfSalesPackages___ ==> ___GroupOfSalesOfferPackages___
+
+
+* _Updates to xml schema_: 
+  * netex_salesPackage_support-v1.1.xsd ==>   netex_aalesOfferPackage_support--v1.1.xsd 
+  * netex_salesPackage_version-v1.1.xsd ==>   netex_aalesOfferPackage_version-v1.1.xsd 
+	     
+### 2017.12.20  Fix up fare examples
+
+
+## 1.08 Summary of Changes since v1.07
 
 ### 2017-12-01  Further revisions & Fixes for v1.1
   * Fix: Add notice assignments to **GroupOfDistanceMatrixElements** [*uml:v96-nk3; doc:v38.04*]
