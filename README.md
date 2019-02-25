@@ -39,7 +39,7 @@ There is also an Oxygen project file
 ## 1.10 Summary of Changes since v1.09
 
 
-### 2019.03.21 Fix:   Reapply 1.05  Fix Merge in correctio  to spelling of AccountingTime
+### 2019.03.21 Fix:   Reapply 1.05  Fix Merge in correction  to spelling of AccountingTime. NB THis will break any existing documents that use AccountingTime.
  * _Updates to xml schema_:
 		* netex_duty_version.xsd
 
