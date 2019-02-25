@@ -125,7 +125,7 @@ There is also an Oxygen project file
 * _Updates to xml schema_: 
                 * All NeTEx files changed.
                 
-### 2018.06.02   GITHUBBER Add Centroid to GroupOfSTopPlaces  [DOCTODO]
+### 2018.06.02   GITHUBBER Add Centroid to GroupOfSTopPlaces  [uml_diagram, doctodo]
    * _Updates to xml schema_: netex_fsyopPlace_version.xsd
    
 ----
