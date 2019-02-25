@@ -1,13 +1,13 @@
 # NeTEx (Network Timetable EXchange) XML schema
-(C) 2009-2018  NeTEx, CEN, Crown Copyright
+(C) 2009-2019  NeTEx, CEN, Crown Copyright
 
 ## Core, Part 1 (Network),  Part 2 (Timetables), Part3 (Fares) Schemas
 
 Version 1.10 - Base version plus minor fixes comprising 
    * Norway contributions,  
    * The approved 1.1 CRs 1-50
-   * Rollup of fixes
-   * Further CRs from country comments
+   * Rollup of fixes  and additional documentation on other fixes. 
+   * Corrections to  integration of NK  1.09.
 
 The scema is broken down systematically into small modualr files; generally for each functional package in the design model there are two xml schema files
                     netex_xxxx_suppport.xsd   - containing data type  and ref definitions
@@ -39,24 +39,24 @@ There is also an Oxygen project file
 ## 1.10 Summary of Changes since v1.09
 
 
-### 2019.03.21 Fix:   Reapply 1.05  Fix Merge in correction  to spelling of AccountingTime. NB THis will break any existing documents that use AccountingTime.
+### 2019.02.21 Fix:   Reapply 1.05  Fix Merge in correction  to spelling of AccountingTime. NB THis will break any existing documents that use AccountingTime.
  * _Updates to xml schema_:
 		* netex_duty_version.xsd
 
-### 2019.03.21 Fix:   Reapply 1.09  Fix up examples
+### 2019.02.21 Fix:   Reapply 1.09  Fix up examples
  * _Updates to xml examples_:  fare eamples, norway examples
 
-### 2019.03.21 Fix:  Make dummy types abstract transportOrganisation_s
+### 2019.02.21 Fix:  Make dummy types abstract transportOrganisation_s
  * _Updates to xml schema_:
 		* netex_transportOrganisation_version.xsd
 
-### 2019.03.21 Fix: Reapply 1.09 Make Validity Comditions etc visible   [xsd only] 
+### 2019.02.21 Fix: Reapply 1.09 Make Validity Comditions etc visible   [xsd only] 
  * _Updates to xml schema_:
 		* netex_travelRights.xsd
         * netex_trainElement.xsd
 
 
-### 2019.03.21 Fix: Reapply 1.09 Constraint changes and further clean up constranints  [xsd only] 
+### 2019.02.21 Fix: Reapply 1.09 Constraint changes and further clean up constranints  [xsd only] 
 					   (a) Fix keyref constraint on  TimingLinkInJourneyPattern_AnyVersionedKey,   (Drop DropFarePointInPattern. TimingTimingLinkInJournePattern, STopTimingLinkInJourneyPattern)
 					   (b) Fix keyref constraint on   ServiceLinkInJourneyPattern_AnyVersionedKey (Drop points)
 					   (c) Fix keyref constraint on    FarePointInPattern_AnyVersionedKey - Add Points 
