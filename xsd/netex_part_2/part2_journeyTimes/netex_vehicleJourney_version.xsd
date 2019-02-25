@@ -5,6 +5,7 @@
 	<xsd:include schemaLocation="../../netex_part_1/part1_networkDescription/netex_line_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_part_1/part1_ifopt/netex_ifopt_vehicleStopping_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_trainElement_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_part_1/part1_tacticalPlanning/netex_stopAssignment_version.xsd"/>
 	<xsd:include schemaLocation="netex_journey_version.xsd"/>
 	<xsd:include schemaLocation="netex_vehicleJourneyFrequency_version.xsd"/>
 	<xsd:include schemaLocation="netex_vehicleJourneyTimes_version.xsd"/>
@@ -549,5 +550,65 @@ Rail transport, Roads and Road transport
 			<xsd:extension base="TypeOfValue_VersionStructure"/>
 		</xsd:complexContent>
 	</xsd:complexType>
+	<!-- ======================================================================= -->
+	<xsd:element name="VehicleJourneyStopAssignment" abstract="false" substitutionGroup="StopAssignment">
+		<xsd:annotation>
+			<xsd:documentation>Change to a PASSENGER STOP ASSIGNMENT for a specific VEHICLE JOURNEY +v1.1</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="VehicleJourneyStopAssignment_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:sequence>
+								<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+							</xsd:sequence>
+							<xsd:sequence>
+								<xsd:group ref="DataManagedObjectGroup"/>
+							</xsd:sequence>
+							<xsd:sequence>
+								<xsd:group ref="AssignmentGroup"/>
+							</xsd:sequence>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="StopAssignmentGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="PassengerStopAssignmentGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="VehicleJourneyStopAssignmentGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="VehicleJourneyStopAssignmentIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="VehicleJourneyStopAssignment_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for DYNAMIC PASSENGER STOP ASSIGNMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="PassengerStopAssignment_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="VehicleJourneyStopAssignmentGroup">
+						<xsd:annotation>
+							<xsd:documentation>Elements for a VEHICLE JOURNEY STOP ASSIGNMENT.  Original Passenger STop Assignment for which this is a change.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:group>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="VehicleJourneyStopAssignmentGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a VEHICLE JOURNEY STOP ASSIGNMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="VehicleJourneyRef" minOccurs="0"/>
+			<xsd:element ref="PassengerStopAssignmentRef" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
 	<!-- ======================================================================= -->
 </xsd:schema>
