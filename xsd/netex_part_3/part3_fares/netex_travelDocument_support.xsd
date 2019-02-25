@@ -15,11 +15,14 @@
 				<Date>
 					<Created>2010-09-04</Created>
 				</Date>
-				<Date><Modified>2017-06-28</Modified>CR048 Add Travel Document  SEcurty Listing
-
+				<Date>
+					<Modified>2017-06-28</Modified>CR048 Add Travel Document  SEcurty Listing.
 				</Date>
-				<Date><Modified>2017-11-16</Modified>Fix Add MobileApp  to MediaType enumeration
-
+				<Date>
+					<Modified>2017-11-16</Modified>Fix Add MobileApp  to MediaType enumeration
+				</Date>
+				<Date>
+					<Modified>2019-02-25</Modified>UK-57 On TYPE OF TRAVEL DOCUMENT, allow list of MachineReadable  enumerations; Also add open ended TYPE OF MACHINE READABILITY.
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -37,7 +40,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2017</Copyright>
+ <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -164,6 +167,45 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
+	<!-- ====TYPE OF TRAVEL DOCUMENT.================================================== -->
+	<xsd:complexType name="TypeOfMachineReadabilityRefs_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of TYPEs OF MACHINE READABILITY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="oneToManyRelationshipStructure">
+				<xsd:sequence>
+					<xsd:element ref="TypeOfMachineReadabilityRef" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:simpleType name="TypeOfMachineReadabilityIdType">
+		<xsd:annotation>
+			<xsd:documentation>Type for identifier of a TYPE OF MACHINE READABILITY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="TypeOfValueIdType"/>
+	</xsd:simpleType>
+	<xsd:element name="TypeOfMachineReadabilityRef" type="TypeOfMachineReadabilityRefStructure" substitutionGroup="TypeOfEntityRef">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a TYPE OF MACHINE READABILITY.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="TypeOfMachineReadabilityRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for Reference to a TYPE OF MACHINE READABILITY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="TypeOfValueRefStructure">
+				<xsd:attribute name="ref" type="TypeOfMachineReadabilityIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Identifier of a TYPE OF MACHINE READABILITY.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!-- ====Enums  DOCUMENT.================================================== -->
 	<xsd:simpleType name="MediaTypeEnumeration">
 		<xsd:annotation>
 			<xsd:documentation>Allowed values for ResellType.</xsd:documentation>
@@ -192,8 +234,15 @@ Rail transport, Roads and Road transport
 			<xsd:enumeration value="chip"/>
 			<xsd:enumeration value="ocr"/>
 			<xsd:enumeration value="barCode"/>
+			<xsd:enumeration value="shotCode"/>
 			<xsd:enumeration value="nfc"/>
 			<xsd:enumeration value="other"/>
 		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MachineReadableListOfEnumerations">
+		<xsd:annotation>
+			<xsd:documentation>List of Machine readable Types.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:list itemType="MachineReadableEnumeration"/>
 	</xsd:simpleType>
 </xsd:schema>

@@ -38,17 +38,24 @@ There is also an Oxygen project file
 # Change Log
 
 
-## 1.10 Summary of Changes since v1.11  
+## 1.10 Summary of Changes since v1.11 
+
+### 2019.02.21 UK-57 Add Allow list of MachineReadable  enumerations, add open ended TYPE OF MACHINE  READABILITY
+UK-57 Add Allow list of MachineReadable  enumerations, add open ended TYPE OF MACHINE  READABILITY
+ * _Updates to xml schema_:
+ 	* netex_travelDocument_support.xsd
+	* netex_travelDocument_version.xsd
+
 ### 2019.02.21 UK-34   TRAVEL DOCUMENT  should not be in FARE FRAME  - remove  
  * _Updates to xml schema_:
- 	* netex_travelDocument.xsd
-	* netex_fareFame.xsd
+ 	* netex_travelDocument_version.xsd
+	* netex_fareFame_version.xsd
 		 
 ### 2019.02.21 UK-07   FareTable - Allow direct containment of FarePriceRef, 
 		
-* _Updates to xml schema_:
-	* netex_fareTable.xsd
-* _Updates to xml examples_:Various to drop unecessary cel wrappers	
+ * _Updates to xml schema_:
+	* netex_fareTable_version.xsd
+ * _Updates to xml examples_:Various to drop unecessary cel wrappers	
 
 ### 2019.02.21 Fix:   Reapply 1.05  Fix Merge in correction  to spelling of AccountingTime. NB THis will break any existing documents that use AccountingTime.
  * _Updates to xml schema_:

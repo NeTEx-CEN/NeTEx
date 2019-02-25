@@ -24,8 +24,11 @@
 					<Modified>2017-10-10</Modified>FIX add Type Of TravelDOcument  to frame 
 				</Date>
 				<Date>
-					<Modified>2018-02-25</Modified>UK-34 Remove TravelDOcument from Fareframe: Asd sepaaret TypeOfTravelDocumentInFrame for use in FareFrame.
+					<Modified>2018-02-25</Modified>UK-34 Remove TravelDocument from Fareframe: Asd sepaaret TypeOfTravelDocumentInFrame for use in FareFrame.
 					    ALso correct name of TypeOfTravelDocumentGroup 
+				</Date>
+				<Date>
+					<Modified>2019-02-25</Modified>UK-57 Add Allow list of MachineReadable  enumerations, add open ended TYPE OF MACHINE  READABILITY
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -246,7 +249,7 @@ Rail transport, Roads and Road transport
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ====TYPE OF TRAVEL DOCUMENT======================================== -->
-	<xsd:complexType name="TypeOfTravelDocuments_RelStructure">
+	<xsd:complexType name="typesOfTravelDocuments_RelStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for a list of TYPE OF TRAVEL DOCUMENTs.</xsd:documentation>
 		</xsd:annotation>
@@ -303,7 +306,7 @@ Rail transport, Roads and Road transport
 									<xsd:documentation>Classification of the TRAVEL DOCUMENT by Media Type.</xsd:documentation>
 								</xsd:annotation>
 							</xsd:element>
-							<xsd:element name="MachineReadable" type="MachineReadableEnumeration" minOccurs="0">
+							<xsd:element name="MachineReadable" type="MachineReadableListOfEnumerations" minOccurs="0">
 								<xsd:annotation>
 									<xsd:documentation>Classification of the TRAVEL DOCUMENT by Machine Readable mechanism.</xsd:documentation>
 								</xsd:annotation>
@@ -332,40 +335,90 @@ Rail transport, Roads and Road transport
 	</xsd:complexType>
 	<xsd:group name="TypeOfTravelDocumentGroup">
 		<xsd:annotation>
-			<xsd:documentation>Elements for TYPE OF RAVEL DOCUMENT.</xsd:documentation>
+			<xsd:documentation>Elements for TYPE OF TRAVEL DOCUMENT.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element name="IsCard" type="xsd:boolean" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Whether  the  TRAVEL DOCUMENT is a card.</xsd:documentation>
+					<xsd:documentation>Whether  the  MACHINE READABILITY is a card.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="IsSmartCard" type="xsd:boolean" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Whether  the  TRAVEL DOCUMENT can contain applications and or stored value.</xsd:documentation>
+					<xsd:documentation>Whether  the  MACHINE READABILITY can contain applications and or stored value.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="HasPhoto" type="xsd:boolean" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Whether the  TRAVEL DOCUMENT has a photo.</xsd:documentation>
+					<xsd:documentation>Whether the  MACHINE READABILITY has a photo.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="MediaType" type="MediaTypeEnumeration" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Classification of the TRAVEL DOCUMENT by Media Type.</xsd:documentation>
+					<xsd:documentation>Classification of the MACHINE READABILITY by Media Type.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="MachineReadable" type="MachineReadableEnumeration" minOccurs="0">
+			<xsd:element name="MachineReadable" type="MachineReadableListOfEnumerations" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Classification of the TRAVEL DOCUMENT by Machine Readable mechanism.</xsd:documentation>
+					<xsd:documentation>Classification of the MACHINE READABILITY by Machine Readable mechanism.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="typesOfMachineReadabilities" type="typesOfMachineReadabilities_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Openended classiifcation of  machine readable capabilties compatible with TRAVEL DOCUMENT.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="alternativeNames" type="alternativeNames_RelStructure" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>ALTERNATIVE NAMES for TRAVEL DOCUMENT.</xsd:documentation>
+					<xsd:documentation>ALTERNATIVE NAMES for MACHINE READABILITY.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
+	<!-- ====TYPE OF TRAVEL DOCUMENT======================================== -->
+	<xsd:complexType name="typesOfMachineReadabilities_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of TYPE OF MACHINE READABILITies</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="TypeOfMachineReadabilityRef" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="TypeOfMachineReadability" abstract="false" substitutionGroup="TypeOfValue">
+		<xsd:annotation>
+			<xsd:documentation>A classification of MACHINE REDABILITY capabailities, used for example to indicate how a TRAVEL DOCUMENT may be read. 
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="TypeOfMachineReadability_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="TypeOfValueGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="TypeOfMachineReadabilityIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="TypeOfMachineReadability_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for TYPE OF MACHINE READABILITY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="TypeOfValue_VersionStructure"/>
+		</xsd:complexContent>
+	</xsd:complexType>
 	<!-- ======================================================================= -->
 </xsd:schema>
