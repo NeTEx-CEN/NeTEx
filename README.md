@@ -36,10 +36,29 @@ There is also an Oxygen project file
   - NeTEx.xpr
 ----
 # Change Log
+
+
+## 1.10 Summary of Changes since v1.11  
+### 2019.02.21 UK-34   TRAVEL DOCUMENT  should not be in FARE FRAME  - remove  
+
+ * _Updates to xml schema_:
+ 	* netex_travelDOcument.xsd
+	* netex_fareFame.xsd
+		 
+### 2019.02.21 UK-07   FareTable - Allow direct containment of FarePRiceRef, 
+		
+* _Updates to xml schema_:
+	* netex_fareTable.xsd
+* _Updates to xml examples_:Various to drop unecessary cel wrappers	
+
+### 2019.02.21 Fix:   Reapply 1.05  Fix Merge in correction  to spelling of AccountingTime. NB THis will break any existing documents that use AccountingTime.
+ * _Updates to xml schema_:
+		* netex_duty_version.xsd
+
 ## 1.10 Summary of Changes since v1.09
 
 
-### 2019.02.21 Fix:   Reapply 1.05  Fix Merge in correction  to spelling of AccountingTime. NB THis will break any existing documents that use AccountingTime.
+### 2019.02.21 Fix:   Reapply 1.09  Fix Merge in correction  to spelling of AccountingTime. NB THis will break any existing documents that use AccountingTime.
  * _Updates to xml schema_:
 		* netex_duty_version.xsd
 
