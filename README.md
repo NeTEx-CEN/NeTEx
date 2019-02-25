@@ -38,6 +38,11 @@ There is also an Oxygen project file
 # Change Log
 ## 1.10 Summary of Changes since v1.09
 
+
+### 2019.03.21 Fix:   Reapply 1.05  Fix Merge in correctio  to spelling of AccountingTime
+ * _Updates to xml schema_:
+		* netex_duty_version.xsd
+
 ### 2019.03.21 Fix:   Reapply 1.09  Fix up examples
  * _Updates to xml examples_:  fare eamples, norway examples
 
@@ -119,14 +124,15 @@ There is also an Oxygen project file
 * _Updates to xml schema_:
       * netex_publication.xsd
 
-  
+ 
  
 ### 2019.01.10  Migrate to Github Rename all  schema files to remove version numbers 
 * _Updates to xml schema_: 
                 * All NeTEx files changed.
                 
 ### 2018.06.02   GITHUBBER Add Centroid to GroupOfSTopPlaces  [uml_diagram, doctodo]
-   * _Updates to xml schema_: netex_fsyopPlace_version.xsd
+   * _Updates to xml schema_: 
+	   * netex_stopPlace_version.xsd
    
 ----
 # 1.09 Summary of Changes since v1.08
