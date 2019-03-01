@@ -114,6 +114,16 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>DESTINATION DISPLAYs in frame.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			
+			<xsd:element name="typesOfServices" type="typesOfServiceInFrame_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>TYPE OF SERVICEs in frame.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+
+			
+			
+			
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:complexType name="groupsOfLinesInFrame_RelStructure">
@@ -160,6 +170,18 @@ Rail transport, Roads and Road transport
 			<xsd:extension base="containmentAggregationStructure">
 				<xsd:sequence>
 					<xsd:element ref="DestinationDisplay" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="typesOfServiceInFrame_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for containment in frame of TYPE OF SERVICE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="TypeOfService" maxOccurs="unbounded"/>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -405,6 +427,8 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Additional transport MODEs for LINE.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element ref="TypeOfProductCategoryRef" minOccurs="0"/>
+			<xsd:element ref="TypeOfServiceRef" minOccurs="0"/>
 			<xsd:element ref="OperationalContextRef" minOccurs="0"/>
 			<xsd:group ref="LineClassificationGroup">
 				<xsd:annotation>
@@ -1091,6 +1115,91 @@ Rail transport, Roads and Road transport
 	<xsd:complexType name="TypeOfLine_ValueStructure" abstract="false">
 		<xsd:annotation>
 			<xsd:documentation>Type for a TYPE OF LINE. +v1.1</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="TypeOfEntity_VersionStructure"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ======================================================================= -->
+	<xsd:element name="TypeOfProductCategory" abstract="false" substitutionGroup="TypeOfValue">
+		<xsd:annotation>
+			<xsd:documentation>Classification of a PRODUCT CATEGORY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="TypeOfProductCategoryStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="TypeOfValueGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="TypeOfProductCategoryGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="TypeOfProductCategoryIdType">
+						<xsd:annotation>
+							<xsd:documentation>Reference to a TYPE OF PRODUCT CATEGORY.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="TypeOfProductCategoryStructure" abstract="false">
+		<xsd:annotation>
+			<xsd:documentation>Type for a TYPE OF PRODUCT CATEGORY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="TypeOfEntity_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="TypeOfProductCategoryGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="TypeOfProductCategoryGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a  TYPE OF PRODUCT CATEGORY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ExternalProductCategoryRef" type="ExternalObjectRefStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>An alternative code that uniquely identifies the PRODUCT CATEGORY. Specifically for use in AVMS systems that require an alias, if code is different from main identifier. For VDV compatibility.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ======================================================================= -->
+	<xsd:element name="TypeOfService" abstract="false" substitutionGroup="TypeOfEntity">
+		<xsd:annotation>
+			<xsd:documentation>Classification of a Service.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="TypeOfServiceStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="TypeOfValueGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="TypeOfServiceIdType">
+						<xsd:annotation>
+							<xsd:documentation>Reference to a TYPE OF SERVICE.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="TypeOfServiceStructure" abstract="false">
+		<xsd:annotation>
+			<xsd:documentation>Type for a TYPE OF SERVICE.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="TypeOfEntity_VersionStructure"/>
