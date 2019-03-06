@@ -40,6 +40,47 @@ There is also an Oxygen project file
 
 ## 1.10 Summary of Changes since v1.11 
 
+### 2019.03.05 Fix make alternative name and dat visible on Direction 
+ * _Updates to xml schema_: 
+ 	* netex_route_version.xsd 
+
+### 2019.03.05 UK-41 Revise Userprofile to allow multiple prrof of  documents
+Also correct documentation on relational operators
+ * _Updates to xml schema_: 
+ 	* netex_usageParameterEligibility_support.xsd 
+ 	* netex_usageParameterEligibility_version.xsd 
+
+### 2019.03.02 UK-41 Revise stage fare   
+Also correct documentation on relational operators
+ * _Updates to xml schema_: 
+ 	* netex_geographicalStructureFactor_support.xsd 
+
+### 2019.03.02 UK-41 Add an additional functional operator to GenericParameterAssignment  to clarify use of groups :  oneOf /  someOf/  allOf
+	Also correct documentation on relational operators
+ * _Updates to xml schema_: 
+ 	* netex_validityCondition_support.xsd
+ 	* netex_accessRightParameter_version.xsd
+
+### 2019.03.01 EURA-(nk) Add __DistanceMatrixInverseRef__ for backwards direction of reference. Revise constraints  
+ * _Updates to xml schema_: 
+ 	* netex_distanceMatriElement_support.xsd
+ 	* netex_distanceMatriElement_version.xsd
+ 	* netex_publication.xsd
+ 
+### 2019.02.28 EURA-10 Improve __CustomePurchasePackage__
+ * Fix correct case on customerPurchasePackageRefs
+ * Allow  inlining of CustomerPurchasePackages in a FareCOntract
+ * _Updates to xml schema_:
+  	* netex_customerPurchasePackage_support.xsd
+ 	* netex_customerPurchasePackage_version.xsd
+ 	* netex_salesTransaction_version.xsd
+
+### 2019.02.21 UK-20 Add contains relationship to __FareZone__
+ * _Updates to xml schema_:
+ 	* netex_fareZone_version.xsd
+ * _Updates to xml examples_:
+  	* uk_fxc_trip_First_WoE_Line48_stage+Passses.xsd
+
 ### 2019.02.21 UK-57 Add Allow list of MachineReadable  enumerations, add open ended TYPE OF MACHINE  READABILITY
 UK-57 Add Allow list of MachineReadable  enumerations, add open ended TYPE OF MACHINE  READABILITY
  * _Updates to xml schema_:
