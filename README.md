@@ -40,22 +40,31 @@ There is also an Oxygen project file
 
 ## 1.10 Summary of Changes since v1.11 
 
-### 2019.03.05 Fix make alternative name and dat visible on Direction 
+### 2019.03.05 UK-19 Fix __PriceGroup__ should be abstract
+  * _Updates to xml schema_:  
+ 	* netex_farePrice_version.xsd 
+
+### 2019.03.05 Fix make alternative name and date visible on __Direction__.  
  * _Updates to xml schema_: 
  	* netex_route_version.xsd 
 
-### 2019.03.05 UK-41 Revise Userprofile to allow multiple prrof of  documents
-Also correct documentation on relational operators
- * _Updates to xml schema_: 
+### 2019.03.05 UK-41 Revise __UserProfile_ to allow more than one enum values for __ProofOfEligibilty__
+  * _Updates to xml schema_: 
  	* netex_usageParameterEligibility_support.xsd 
  	* netex_usageParameterEligibility_version.xsd 
 
-### 2019.03.02 UK-41 Revise stage fare   
-Also correct documentation on relational operators
+### 2019.03.02 UK-18 Add values for __TypeOfInterval__ 
  * _Updates to xml schema_: 
  	* netex_geographicalStructureFactor_support.xsd 
 
-### 2019.03.02 UK-41 Add an additional functional operator to GenericParameterAssignment  to clarify use of groups :  oneOf /  someOf/  allOf
+### 2019.03.02 UK-00 Add  furter values to __GenericParameterAssignment__
+__TypeOfConcessionRef__, __TypeOfUsageParameterRef__,  __VehicleType Ref__, __TypeOfLineRef__  
+ * _Updates to xml schema_: 
+ 	* netex_validityCondition_support.xsd
+ 	* netex_accessRightParameter_version.xsd
+
+### 2019.03.02 UK-41 Add an additional functional operator to __GenericParameterAssignment__ to clarify use of groups :  
+_oneOf_ /  _someOf_/  _allOf_
 	Also correct documentation on relational operators
  * _Updates to xml schema_: 
  	* netex_validityCondition_support.xsd
@@ -110,13 +119,12 @@ UK-57 Add Allow list of MachineReadable  enumerations, add open ended TYPE OF MA
 		* netex_duty_version.xsd
 
 ### 2019.02.21 Fix:   Reapply 1.09  Fix up examples
- * _Updates to xml examples_:  fare eamples, norway examples
+ * _Updates to xml examples_:  fare examples, Norway examples
 
-### 2019.02.21 Fix:  Make dummy types abstract transportOrganisation_s
- * _Updates to xml schema_:
+### 2019.02.21 Fix:  Make dummy types abstract _TransportOrganisation_ 
 		* netex_transportOrganisation_version.xsd
 
-### 2019.02.21 Fix: Reapply 1.09 Make Validity Comditions etc visible   [xsd only] 
+### 2019.02.21 Fix: Reapply 1.09 Make Validity Conditions etc visible   [xsd only] 
  * _Updates to xml schema_:
 		* netex_travelRights.xsd
         * netex_trainElement.xsd
