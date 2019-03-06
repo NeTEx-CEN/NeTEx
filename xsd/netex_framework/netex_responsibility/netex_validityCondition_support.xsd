@@ -15,6 +15,10 @@
 				<Date>
 					<Modified>2011-02-05</Modified>
 				</Date>
+				<Date>
+					<Modified>2019-03-01</Modified>UK-41 Add an additional functional operator to GenericParameterAssignment  to clarify use of groups :  oneOf /  someOf/  allOf
+							Also correct documentation on relational operator
+				</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines Time base types.</p>
 				</Description>
@@ -98,12 +102,64 @@ Rail transport, Roads and Road transport
 		<xsd:restriction base="xsd:NMTOKEN">
 			<xsd:enumeration value="AND">
 				<xsd:annotation>
-					<xsd:documentation>This is a definition of a new entity.</xsd:documentation>
+					<xsd:documentation>Successive elements are logically ANDed together; comparison must satisfy all specified values.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
-			<xsd:enumeration value="OR"/>
-			<xsd:enumeration value="NOT"/>
-			<xsd:enumeration value="XOR"/>
+			<xsd:enumeration value="OR">
+				<xsd:annotation>
+					<xsd:documentation>Successive elements are logically ORed together; comparison must satisfy at least one  specified value.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="NOT">
+				<xsd:annotation>
+					<xsd:documentation>Specified elements  must be different from the given value.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="XOR">
+				<xsd:annotation>
+					<xsd:documentation>Successive elements are logically ORed together; comparison must satisfy only one  specified value.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SetOperatorEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for set operations.where there are one or more GROUPs OF ENTITTies of a given type - used to distinguish between selection of a whole group or o an item in the group).  Used  in a  product description  to indicate the range from which a choice may be made and in a sales transaction to record the nature of a choice that has been made.
+			              member                                              Set
+           AND         AllMembersAllSets                             AllMembersAllSets
+           OR           OneItem 											AllMembers Of OnSet
+           XOR         OnlyOneItem from AnyGroup               	AllMembers Of OnlySet      - AllOfOneSet
+            NOT			None
+			m01,m11, m0*, m1*,m**   01x:1x
+			0
+						</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="oneOfAllSets">
+				<xsd:annotation>
+					<xsd:documentation>Only one item from all  referenced GROUPs OF ENTITTies of a given type may be selected/has been selected.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="oneOfEachSet">
+				<xsd:annotation>
+					<xsd:documentation>One item from each specified   referenced GROUP OF ENTITTies of a given type must be selected/has been selected..</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="someOfAnySet">
+				<xsd:annotation>
+					<xsd:documentation>Multiple  items from any referenced GROUP OF ENTITTies of a given type  may be selected/have been selected.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="allOfOneSet">
+				<xsd:annotation>
+					<xsd:documentation>All  items from one specified  referenced GROUP OF ENTITTies of a given type  may be selected/have been selected.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="allOfAllSets">
+				<xsd:annotation>
+					<xsd:documentation>All  items from all  referenced GROUPs OF ENTITTies of a given type   may be selected/have been selected.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="RelativeOperatorEnumeration">
@@ -113,20 +169,32 @@ Rail transport, Roads and Road transport
 		<xsd:restriction base="xsd:NMTOKEN">
 			<xsd:enumeration value="EQ">
 				<xsd:annotation>
-					<xsd:documentation>This is a definition of a new entity.</xsd:documentation>
+					<xsd:documentation>Parameter value must have same identity, or have value equal  to a quantitative value associated with specified item.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
-			<xsd:enumeration value="NE"/>
-			<xsd:enumeration value="GE"/>
+			<xsd:enumeration value="NE">
+				<xsd:annotation>
+					<xsd:documentation>Parameter value must not have same identity, or have value different from  a quantitative value associated with specified item.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="GE">
+				<xsd:annotation>
+					<xsd:documentation>Parameter value must be greater  than  or equal to a quantitative value associated with specified item.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
 			<xsd:enumeration value="GT">
 				<xsd:annotation>
-					<xsd:documentation>This is a deletion of an existing entity.</xsd:documentation>
+					<xsd:documentation>Parameter value must be greater than a quantitative value associated with specified item.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
-			<xsd:enumeration value="LE"/>
+			<xsd:enumeration value="LE">
+				<xsd:annotation>
+					<xsd:documentation>Parameter value must be less  than  or equal to a quantitative value associated with specified item.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
 			<xsd:enumeration value="LT">
 				<xsd:annotation>
-					<xsd:documentation>This is a revision to an existing entity. All values are replaced.</xsd:documentation>
+					<xsd:documentation>Parameter value must be less  than a quantitative value associated with specified item.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 		</xsd:restriction>

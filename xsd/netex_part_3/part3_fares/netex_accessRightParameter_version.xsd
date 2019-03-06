@@ -56,6 +56,20 @@
 				<Date>
 					<Modified>2017-10-10</Modified> Fix Add TimeIntervalRef TimeStructureFactorRef to GeographicalIntervalRef   GeographicalStructureFactorRef to be referenced 
 				</Date>
+				<Date>
+					<Modified>2019-03-01</Modified>EURA-(nk) Add DistanceMatrixInverseRef for backwards direction of reference to a DIstance Matrix Element
+				</Date>
+				<Date>
+					<Modified>2019-03-01</Modified>Add missing elements to GenericParameterAssignment 
+					    *	UK-33 Add TariffRef	as a GenericParameterAssignment parameter	
+					   *	UK80 TypeOfConcession, TypeOfUsageParameter,  VehicleType   TypeOfLineRef as GenericParameterAssignment parameters					 
+				</Date>
+				<Date>
+					<Modified>2019-03-01</Modified>EURA-88 Add ServiceMatch Attributes : Exact | next | previous | timebands  to GenericParameterAssignmen
+				</Date>
+				<Date>
+					<Modified>2019-03-01</Modified>UK-41 Add an additional functional operator to GenericParameterAssignment  to clarify use of groups :  oneOf /  someOf/  allOf
+				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the FARE ACCESS RIGHTs types.</p>
@@ -72,7 +86,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -97,7 +111,7 @@ Rail transport, Roads and Road transport
 		</xsd:appinfo>
 		<xsd:documentation>NeTEx  ACCESS RIGHT ASSIGNMENT  types.</xsd:documentation>
 	</xsd:annotation>
-	<!-- ======================================================================= --> 
+	<!-- ======================================================================= -->
 	<!-- ===ENTIITY IN VERSION IN FRAME====Used in SERVICE FRAME)=================================================== -->
 	<xsd:complexType name="accessRightParameterAssignmentsInFrame_RelStructure">
 		<xsd:annotation>
@@ -212,9 +226,11 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="ValidableElementRef" minOccurs="0"/>
 			<xsd:element ref="ControllableElementRef" minOccurs="0"/>
 			<xsd:group ref="FareProductRefGroup" minOccurs="0"/>
+			<xsd:element ref="TariffRef" minOccurs="0"/>
 			<xsd:element ref="FareStructureElementRef" minOccurs="0"/>
 			<xsd:element ref="FareElementInSequenceRef" minOccurs="0"/>
 			<xsd:element ref="DistanceMatrixElementRef" minOccurs="0"/>
+			<xsd:element ref="DistanceMatrixElementInverseRef" minOccurs="0"/>
 			<xsd:element ref="DistanceMatrixElementView" minOccurs="0"/>
 			<xsd:element ref="SalesOfferPackageRef" minOccurs="0"/>
 			<xsd:element ref="GroupOfDistanceMatrixElementsRef" minOccurs="0"/>
@@ -249,6 +265,11 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Operator for Grouping Scope Elements: logical OR, AND, NOT. Default is AND.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="ValidityParameterSetOperator" type="SetOperatorEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Operator for distinguishing between whole set and item interpretation of elements which are sets of elements (GROUP OF xxx)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element name="temporalValidityParameters" type="temporalValidityParameters_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Temporal Validity parameters for the assignment.</xsd:documentation>
@@ -264,7 +285,7 @@ Rail transport, Roads and Road transport
 	<!-- ====VALIDITY PARAMETER ASSIGNMENT=================================================== -->
 	<xsd:complexType name="temporalValidityParameters_RelStructure">
 		<xsd:annotation>
-			<xsd:documentation>One to many Relationship for temporalvalidity parameters.</xsd:documentation>
+			<xsd:documentation>One to many Relationship for temporal validity parameters.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="oneToManyRelationshipStructure">
@@ -287,7 +308,7 @@ Rail transport, Roads and Road transport
 	</xsd:group>
 	<xsd:complexType name="validityParameters_RelStructure">
 		<xsd:annotation>
-			<xsd:documentation>One to many Relationship for scoping  validity parameters.</xsd:documentation>
+			<xsd:documentation>One to many Relationship for scoping validity parameters.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="oneToManyRelationshipStructure">
@@ -310,7 +331,7 @@ Rail transport, Roads and Road transport
 			</xsd:group>
 			<xsd:group ref="RouteValidityParametersGroup">
 				<xsd:annotation>
-					<xsd:documentation>Route validty parameters for ACCESS RIGHT PARAMETER ASSIGNMENT.</xsd:documentation>
+					<xsd:documentation>Route validity parameters for ACCESS RIGHT PARAMETER ASSIGNMENT.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:group>
 			<xsd:group ref="ServiceValidityParametersGroup">
@@ -344,6 +365,7 @@ Rail transport, Roads and Road transport
 		<xsd:sequence>
 			<xsd:element ref="GroupOfLinesRef" minOccurs="0"/>
 			<xsd:element ref="LineRef" minOccurs="0"/>
+			<xsd:element ref="TypeOfLineRef" minOccurs="0"/>
 			<xsd:element ref="TariffZoneRef" minOccurs="0"/>
 			<xsd:element ref="FareZoneRef" minOccurs="0"/>
 			<xsd:element ref="FareSectionRef" minOccurs="0"/>
@@ -400,6 +422,7 @@ Rail transport, Roads and Road transport
 				<xsd:element ref="TrainNumberRef"/>
 				<xsd:element ref="GroupOfServicesRef"/>
 			</xsd:choice>
+			<xsd:element ref="VehicleTypeRef" minOccurs="0"/>
 			<xsd:element ref="TypeOfServiceRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
@@ -426,6 +449,8 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="TypeOfFareProductRef" minOccurs="0"/>
+			<xsd:element ref="TypeOfUsageParameterRef" minOccurs="0"/>
+			<xsd:element ref="TypeOfConcessionRef" minOccurs="0"/>
 			<xsd:choice>
 				<xsd:element ref="DistributionChannelRef" minOccurs="0"/>
 				<xsd:element ref="GroupOfDistributionChannelsRef" minOccurs="0"/>
