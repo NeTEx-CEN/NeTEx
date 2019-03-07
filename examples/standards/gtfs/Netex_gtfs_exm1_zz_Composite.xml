@@ -28,23 +28,29 @@ Summary of Mapping
 	Gtfs: FareRule		= Nx: PREASSIGNED FARE PRODUCT  + VALIDABLE ELEMENT + 
 										+ TARIFF   +  FARE STRUCTURE ELEMENTs   (@access &  @conditions_ofUs)
 
-								(a) Flat fare: FARE STRUCTURE ELEMENT (@access) ==> LINE REF
+								(a) Flat tariff: FARE STRUCTURE ELEMENT (@access) ==> LINE REF
 			
-								(b) Point to point fares FARE STRUCTURE ELEMENT (@access) ==> +  DISTANCE MATRIX ELEMENT  
+								(b) Point to point tariff: FARE STRUCTURE ELEMENT (@access) ==> +  DISTANCE MATRIX ELEMENT  
 
-								(c) Zone sequence fares  FARE STRUCTURE ELEMENT (@access) ==> +  FARE STRUCTURE ELEMENT + FARE STRUCTURE ELEMENTs in SEQIENCE
+								(c) Zone sequence tariff:  FARE STRUCTURE ELEMENT (@access) ==> +  FARE STRUCTURE ELEMENT + FARE STRUCTURE ELEMENTs in SEQIENCE
 
  
-	Gtfs: FareAttribute	=  PRICE GROUP + FARE   PRICW
-								(a) Flat fare: FARE   PRICE  : (FARE PRODUCT PRICE  
+	Gtfs: FareAttribute	=  PRICE GROUP + FARE   PRICE
+								(a) Flat tariff: FARE   PRICE  : (FARE PRODUCT PRICE  
 
-								(b) Point to point fares DISTANCE MATRIX ELEMENT PRICE 
+								(b) Point to point tariff: DISTANCE MATRIX ELEMENT PRICE 
 
-								(b) Zone sequence fares  FARE STRUCTURE ELEMENT PRICE
+								(b) Zone sequence tariff:  FARE STRUCTURE ELEMENT PRICE
  
 										also
 								PREASSIGNED FARE PRODUCT  + VALIDABLE ELEMENT + 
 										+ TARIFF   +  FARE STRUCTURE ELEMENTs    @conditions_ofUse) frequency
+
+Note:  For a Flat tariff, the   fare_id can be used for FARE PRICE id and for the id used for the id of the  TARIFF and the   FARE PRODUCT
+
+		 For a Point to point  tariff's,  the fare_id is ussd for the  fare structure element - ie DISTANCE MATRIX ELEMNT , a d a dummy  BOILERPLATE_P2P is used for  the id of the  TARIFF   and the  FARE PRODUCT
+
+	    For a Zone sequence tariff's,  the fare_id is ussd for the  fare structure element - ie DISTANCE MATRIX ELEMNT , a d a dummy  BOILERPLATE_P2P is used for  the id of the  TARIFF   and the  FARE PRODUCT
 
  1.1 Example data
  
@@ -193,7 +199,7 @@ version 1.1 with revised ids
 				<DefaultCurrency>USD</DefaultCurrency>
 			</FrameDefaults>
 			<frames>
-				<ResourceFrame version="1.0" id="mygtfsxm:DTA@common_resources">
+				<ResourceFrame version="1.0" id="mygtfsxm:DTA@agency">
 					<TypeOfFrameRef version="gtfs:1.5" ref="gtfs:GTFS_Profile@Resource"/>
 					<organisations>
 						<!--- =====Agency========= -->
@@ -216,6 +222,9 @@ version 1.1 with revised ids
 				</ResourceFrame>
 				<SiteFrame version="1.0" id="mygtfsxm:DTA@stops">
 					<TypeOfFrameRef version="gtfs:1.5" ref="gtfs:GTFS_Profile@Site"/>
+					<prerequisites>
+						<ResourceFrameRef version="gtfs:1.5" ref="gtfs:GTFS_BuiltIn_Codes"/>
+					</prerequisites>
 					<stopPlaces>
 						<!--- =====STOP PLACEs ========= -->
 						<StopPlace version="any" id="mygtfsxm:FUR_CREEK_RES">
@@ -359,6 +368,9 @@ version 1.1 with revised ids
 				<!--- ==============SERVICE FRAME =========== -->
 				<ServiceFrame version="1.0" id="mygtfsxm:DTA@network">
 					<TypeOfFrameRef version="gtfs:1.5" ref="gtfs:GTFS_Profile@Service"/>
+					<prerequisites>
+						<ResourceFrameRef version="gtfs:1.5" ref="gtfs:GTFS_BuiltIn_Codes"/>
+					</prerequisites>
 					<!-- Routes.txt data -->
 					<lines>
 						<Line version="any" id="mygtfsxm:AB">
@@ -592,7 +604,7 @@ version 1.1 with revised ids
 					<!--- ===Transfers.txt==CONNECTION ======== -->
 					<connections>
 						<Connection version="any" id="mygtfsexm:NADAV+BOONDOCK">
-							<TypeOfTransferRef version="gtfs:1.5"  ref="gtfs:0"/>
+							<TypeOfTransferRef version="gtfs:1.5" ref="gtfs:0"/>
 							<!--  NADAV,BOONDOCK,0,360   -->
 							<TransferDuration>
 								<DefaultDuration>PT6M</DefaultDuration>
@@ -673,7 +685,7 @@ version 1.1 with revised ids
 					<transferRestrictions>
 						<TransferRestriction order="1" version="any" id="mygtfsexm:NADAV+BOONDOCK">
 							<Name>No Transfer</Name>
-							<TypeOfTransferRef version="gtfs:1.5"  ref="gtfs:0"/>
+							<TypeOfTransferRef version="gtfs:1.5" ref="gtfs:0"/>
 							<RestrictionType>cannotTransfer</RestrictionType>
 							<FromPointRef ref="mygtfsexm:NADAV"/>
 							<ToPointRef ref="mygtfsexm:BOONDOCK"/>
@@ -688,7 +700,7 @@ version 1.1 with revised ids
 					</transferRestrictions>
 				</ServiceFrame>
 				<!-- Calendar and Calendar date merged -->
-				<ServiceCalendarFrame version="any" id="mygtfsxm:FULLW">
+				<ServiceCalendarFrame version="1.0" id="mygtfsxm:FULLW">
 					<TypeOfFrameRef version="gtfs:1.5" ref="gtfs:GTFS_Profile@ServiceCalendar"/>
 					<!--Calendar Dates Use validity condition -->
 					<contentValidityConditions>
@@ -718,8 +730,8 @@ version 1.1 with revised ids
 						</DayType>
 					</dayTypes>
 				</ServiceCalendarFrame>
-				<ServiceCalendarFrame version="any" id="mygtfsxm:WE">
-					<ServiceCalendar version="any" id="mygtfsxm:WE">
+				<ServiceCalendarFrame version="1.0" id="mygtfsxm:WE">
+					<ServiceCalendar version="1.0" id="mygtfsxm:WE">
 						<FromDate>2007-01-01</FromDate>
 						<ToDate>2010-12-31</ToDate>
 					</ServiceCalendar>
@@ -739,6 +751,12 @@ version 1.1 with revised ids
 				<!--- Frequency.txt -->
 				<TimetableFrame version="1.0" id="mygtfsxm:DTA">
 					<TypeOfFrameRef version="gtfs:1.5" ref="gtfs:GTFS_Profile@Timetable"/>
+					<prerequisites>
+						<ServiceFrameRef version="1.0" ref="mygtfsxm:DTA@network"/>
+						<ServiceCalendarFrameRef version="1.0" ref="mygtfsxm:FULLW"/>
+						<ServiceCalendarFrameRef version="1.0" ref="mygtfsxm:WE"/>
+						<VehicleScheduleFrameRef versionRef="EXTERNAL" ref="mygtfsxm:DTA@Blocks"/>
+					</prerequisites>
 					<vehicleJourneys>
 						<ServiceJourney version="any" id="mygtfsxm:AB1">
 							<validityConditions>
@@ -1356,6 +1374,9 @@ version 1.1 with revised ids
 				<!--- =============== FAREs =========== -->
 				<FareFrame version="any" id="mygtfsxm:p">
 					<TypeOfFrameRef version="gtfs:1.5" ref="gtfs:GTFS_Profile@Fare"/>
+					<prerequisites>
+						<ServiceFrameRef version="1.0" ref="mygtfsxm:DTA@network"/>
+					</prerequisites>
 					<!--- ====Fare USAGE PARAMETERS======= -->
 					<tariffs>
 						<Tariff version="any" id="mygtfsxm:p">
@@ -1397,6 +1418,9 @@ version 1.1 with revised ids
 												<CanInterchange>true</CanInterchange>
 												<MaximumNumberOfInterchanges>1</MaximumNumberOfInterchanges>
 											</Interchanging>
+											<PurchaseWindow version="any" id="mygtfsxm:p@purchase">
+												<PurchaseMoment>beforeBoarding</PurchaseMoment>
+											</PurchaseWindow>
 										</limitations>
 									</GenericParameterAssignment>
 								</FareStructureElement>
@@ -1410,7 +1434,6 @@ version 1.1 with revised ids
 					<fareProducts>
 						<PreassignedFareProduct version="any" id="mygtfsxm:p">
 							<Name>Single flat fare to ride as long as you like on the DTA</Name>
-							<ChargingMomentRef version="gtfs:1.5" ref="gtfs:0"/>
 							<!--- ====VALIDABLE ELEMENTs====== -->
 							<validableElements>
 								<ValidableElement version="any" id="mygtfsxm:p">
@@ -1444,6 +1467,9 @@ version 1.1 with revised ids
 				<!--- =============== FAREs =========== -->
 				<FareFrame version="any" id="mygtfsxm:a">
 					<TypeOfFrameRef version="gtfs:1.5" ref="gtfs:GTFS_Profile@Fare"/>
+					<prerequisites>
+						<ServiceFrameRef version="1.0" ref="mygtfsxm:DTA@network"/>
+					</prerequisites>
 					<!--- ====Fare USAGE PARAMETERS======= -->
 					<tariffs>
 						<Tariff version="any" id="mygtfsxm:a">
@@ -1482,6 +1508,9 @@ version 1.1 with revised ids
 												<CanInterchange>false</CanInterchange>
 												<MaximumNumberOfInterchanges>0</MaximumNumberOfInterchanges>
 											</Interchanging>
+											<PurchaseWindow version="any" id="mygtfsxm:a@purchase">
+												<PurchaseMoment>beforeBoarding</PurchaseMoment>
+											</PurchaseWindow>
 										</limitations>
 									</GenericParameterAssignment>
 								</FareStructureElement>
@@ -1495,7 +1524,6 @@ version 1.1 with revised ids
 					<fareProducts>
 						<PreassignedFareProduct version="any" id="mygtfsxm:a">
 							<Name>Single flat fare to ride as long as you like on the DTA</Name>
-							<ChargingMomentRef version="gtfs:1.5" ref="gtfs:0"/>
 							<!--- ====VALIDABLE ELEMENTs====== -->
 							<validableElements>
 								<ValidableElement version="any" id="mygtfsxm:a">
@@ -1529,7 +1557,7 @@ version 1.1 with revised ids
 			</frames>
 		</CompositeFrame>
 		<!--   this additional frame show show GTFS metadata can be  described in NeTEx -->
-		<CompositeFrame version="gtfs:1.5" id="gtfs:GTFS_Metadata">		
+		<CompositeFrame version="gtfs:1.5" id="gtfs:GTFS_Metadata">
 			<Name>Built in GTFS code values</Name>
 			<TypeOfFrameRef version="gtfs:1.5" ref="gtfs:GTFS_Profile@Metadata"/>
 			<!--- ======= CODESPACEs======== -->
@@ -1676,7 +1704,7 @@ version 1.1 with revised ids
 												</ClassInFrame>
 											</classes>
 										</TypeOfFrame>
-										<TypeOfFrame version="gtfs:1.5"  id="gtfs:GTFS_Profile@Fare">
+										<TypeOfFrame version="gtfs:1.5" id="gtfs:GTFS_Profile@Fare">
 											<Name>GTFS Built in Types of Frame -   fare structure</Name>
 											<FrameClassRef nameOfClass="FareFrame"/>
 											<classes>
@@ -1728,7 +1756,7 @@ version 1.1 with revised ids
 										</TypeOfFrame>
 									</includes>
 								</TypeOfFrame>
-								<TypeOfFrame version="gtfs:1.5"   id="gtfs:GTFS_Profile@Metadata">
+								<TypeOfFrame version="gtfs:1.5" id="gtfs:GTFS_Profile@Metadata">
 									<Name>GTFS Metadata</Name>
 									<FrameClassRef nameOfClass="CompositeFrame"/>
 								</TypeOfFrame>

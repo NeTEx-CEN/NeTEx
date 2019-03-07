@@ -205,7 +205,17 @@ For the  student product
 				<!--- ========SERVICE FRAME  ========== -->
 				<ServiceFrame version="1.0" id="cdla:CDLA@Multiple_packages@network">
 					<Name>Farezones  for 2012 fares </Name>
-					<!--- =========STOP POINTs============ -->
+					<prerequisites>
+						<ResourceFrameRef version="1.0" ref="cdla:CDLA@Common_resources"/>
+					</prerequisites>
+					<!--- =========NETWORKS============ -->
+					<Network version="1.0" id="cdla:Northern_England">
+						<OperatorRef version="any" ref="mybus:CDLA"/>
+						<tariffZones>
+							<TariffZoneRef version="any" ref="cdla:Midlands_Area"/>
+							<TariffZoneRef version="any" ref="cdla:North_East_Area"/>
+						</tariffZones>
+					</Network>
 					<tariffZones>
 						<!--- ====TARIFF ZONEs ======== -->
 						<!--- ====Midlands=== -->
@@ -330,11 +340,15 @@ For the  student product
 				</ServiceFrame>
 				<!--- =============== FAREs =========== -->
 				<FareFrame version="1.0" id="cdla:CDLA@Multiple_packages@products@standard">
+					<prerequisites>
+						<ServiceFrameRef version="1.0" ref="cdla:CDLA@Multiple_packages@network"/>
+					</prerequisites>
 					<!--- ====Fare Structure======= -->
 					<tariffs>
 						<Tariff version="1.0" id="cdla:Time_interval@standard">
 							<Name>Time interval tariff</Name>
 							<OperatorRef version="any" ref="mybus:CDLA"/>
+							<TypeOfTariffRef version="ntx:v1.0" ref="ntx:zonal"/>
 							<timeIntervals>
 								<TimeInterval version="1.0" id="cdla:1day">
 									<Name>All Day Use on day of purchase</Name>
@@ -446,8 +460,6 @@ For the  student product
 									</GenericParameterAssignment>
 								</FareStructureElement>
 							</fareStructureElements>
-							
-					
 						</Tariff>
 					</tariffs>
 					<!--- ====Fare Product======= -->
@@ -538,11 +550,15 @@ For the  student product
 					</salesOfferPackages>
 				</FareFrame>
 				<FareFrame version="1.0" id="cdla:CDLA@Multiple_packages@products@family">
+					<prerequisites>
+						<ServiceFrameRef version="1.0" ref="cdla:CDLA@Multiple_packages@network"/>
+					</prerequisites>
 					<!--- ====Fare Structure======= -->
 					<tariffs>
 						<Tariff version="1.0" id="cdla:Time_interval@family">
 							<Name>Day pass  fares - Family group ticket</Name>
 							<OperatorRef version="any" ref="mybus:CDLA"/>
+							<TypeOfTariffRef version="ntx:v1.0" ref="ntx:zonal"/>
 							<timeIntervals>
 								<TimeIntervalRef version="1.0" ref="cdla:1day"/>
 							</timeIntervals>
@@ -625,6 +641,9 @@ For the  student product
 					</salesOfferPackages>
 				</FareFrame>
 				<FareFrame version="1.0" id="cdla:CDLA@Multiple_packages@products@student">
+					<prerequisites>
+						<ServiceFrameRef version="1.0" ref="cdla:CDLA@Multiple_packages@network"/>
+					</prerequisites>
 					<contentValidityConditions>
 						<!--  Could move these to a separate calendar frame  to make definition time indepenednant -->
 						<AvailabilityCondition version="1.0" id="cdla:academic_year">
@@ -653,6 +672,7 @@ For the  student product
 						<Tariff version="1.0" id="cdla:Time_interval@student">
 							<Name>Student zonal pass fares</Name>
 							<OperatorRef version="any" ref="mybus:CDLA"/>
+							<TypeOfTariffRef version="ntx:v1.0" ref="ntx:zonal"/>
 							<timeIntervals>
 								<TimeIntervalRef version="1.0" ref="cdla:1day"/>
 								<TimeIntervalRef version="1.0" ref="cdla:1week"/>
@@ -851,7 +871,7 @@ For the  student product
 					<fareProducts>
 						<PreassignedFareProduct version="1.0" id="cdla:Period_pass@student">
 							<Name>Adult Day Zonal  fare    </Name>
-								<OperatorRef version="any" ref="mybus:CDLA"/>
+							<OperatorRef version="any" ref="mybus:CDLA"/>
 							<validableElements>
 								<ValidableElement version="1.0" id="cdla:Period_pass@student@travel">
 									<Name>Single  ride</Name>
@@ -1064,10 +1084,15 @@ For the  student product
 					</salesOfferPackages>
 				</FareFrame>
 				<!-- prices -->
-				<FareFrame version="any" id="cdla:CDLA@Multiple_packages@prices">
+				<FareFrame version="1.0" id="cdla:CDLA@Multiple_packages@prices">
 					<FrameDefaults>
 						<DefaultCurrency>GBP</DefaultCurrency>
 					</FrameDefaults>
+					<prerequisites>
+						<FareFrameRef version="1.0" ref="cdla:CDLA@Multiple_packages@products@standard"/>
+						<FareFrameRef version="1.0" ref="cdla:CDLA@Multiple_packages@products@family"/>
+						<FareFrameRef version="1.0" ref="cdla:CDLA@Multiple_packages@products@student"/>
+					</prerequisites>
 					<!--- ====Pricing Parmaters======= -->
 					<PricingParameterSet version="1.0" id="cdla:Multiple_packages:pp">
 						<pricingRules>
@@ -2386,7 +2411,14 @@ TopologicalPlace>North East</TopologicalPlace>
 					</fareTables>
 				</FareFrame>
 				<!--- ====RESOURCES==== -->
-				<ResourceFrame version="any" id="cdla:CDLA@ResourceFrame">
+				<ResourceFrame version="1.0" id="cdla:CDLA@Common_resources">
+					<codespaces>
+						<Codespace id="ntx">
+							<Xmlns>ntx</Xmlns>
+							<XmlnsUrl>http://netex.org.uk/</XmlnsUrl>
+							<Description>Netex built in value</Description>
+						</Codespace>
+					</codespaces>
 					<typesOfValue>
 						<ValueSet version="any" id="cdla:Types_of_Concession" classOfValues="TypeOfConcession">
 							<Name>Types of concession</Name>
@@ -2402,6 +2434,70 @@ TopologicalPlace>North East</TopologicalPlace>
 								</TypeOfConcession>
 							</values>
 						</ValueSet>
+						<ValueSet version="ntx:v1.0" id="ntx:Types_of_Tariff" classOfValues="TypeOfTariff">
+							<Name>Types of Tariff</Name>
+							<values>
+								<!--- ====Types OfTariff ========= -->
+								<TypeOfTariff version="ntx:v1.0" id="ntx:Distance_kilometers">
+									<Name>Kilometer Distance Kilometers</Name>
+								</TypeOfTariff>
+								<TypeOfTariff version="ntx:v1.0" id="ntx:flat">
+									<Name>Flat</Name>
+								</TypeOfTariff>
+								<TypeOfTariff version="ntx:v1.0" id="ntx:point_to_point">
+									<Name>Point to point</Name>
+								</TypeOfTariff>
+								<TypeOfTariff version="ntx:v1.0" id="ntx:zone_to_zone">
+									<Name>Zone to Zone</Name>
+								</TypeOfTariff>
+								<TypeOfTariff version="ntx:v1.0" id="ntx:zonal">
+									<Name>Zonal</Name>
+								</TypeOfTariff>
+										<TypeOfTariff version="ntx:v1.0" id="ntx:unit_distance">
+									<Name>Unit distance (count of stops, sections, zones)</Name>
+								</TypeOfTariff>
+								<TypeOfTariff version="ntx:v1.0" id="ntx:section">
+									<Name>Section</Name>
+								</TypeOfTariff>
+								
+								<TypeOfTariff version="ntx:v1.0" id="ntx:banded">
+									<Name>Section</Name>
+								</TypeOfTariff>
+								<TypeOfTariff version="ntx:v1.0" id="ntx:stored_value">
+									<Name>Stored value</Name>
+								</TypeOfTariff>
+								<TypeOfTariff version="ntx:v1.0" id="ntx:discount">
+									<Name>Discount value</Name>
+								</TypeOfTariff>
+								<TypeOfTariff version="ntx:v1.0" id="ntx:multitrip">
+									<Name>Multitrip carnet</Name>
+								</TypeOfTariff>
+								<TypeOfTariff version="ntx:v1.0" id="ntx:identity_card">
+									<Name>SIdentity</Name>
+								</TypeOfTariff>
+							</values>
+						</ValueSet>
+						<ValueSet version="ntx:v1.0" id="ntx:Types_of_FareProduct" classOfValues="TypeOfFareProduct">
+							<Name>Types of Fare Product</Name>
+							<values> 
+								<TypeOfFareProduct version="ntx:v1.0" id="ntx:trip">
+									<Name>Trip product</Name>
+								</TypeOfFareProduct>
+														<TypeOfFareProduct version="ntx:v1.0" id="ntx:multi_trip">
+									<Name>Multitrip / carnet  product</Name>
+								</TypeOfFareProduct>
+									<TypeOfFareProduct version="ntx:v1.0" id="ntx:period_pass">
+									<Name>Peroid pass product</Name>
+								</TypeOfFareProduct>
+										<TypeOfFareProduct version="ntx:v1.0" id="ntx:day_pass">
+									<Name>Day pass product</Name>
+								</TypeOfFareProduct>
+																	<TypeOfFareProduct version="ntx:v1.0" id="ntx:discount_card">
+									<Name>Discount  product</Name>
+								</TypeOfFareProduct>
+								 
+							</values>
+						</ValueSet>				
 						<ValueSet version="any" id="cdla:Types_of_TravelDocument" classOfValues="TypeOfTravelDocument">
 							<Name>Types of Travel document</Name>
 							<values>

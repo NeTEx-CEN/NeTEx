@@ -47,7 +47,7 @@ NeTEx may be augmented with further distinctions not covered by GTFS
 
 A GTFS Fare_Attribute  maps to a NeTEx FARE  PRICE of some specific sort (FARE PRODUCT PRICE,  TIME INTERVAL PRICE, DISTANCE MATRIX ELEMENT PRICE, etc)
 
-A GTFS FareRule maps to a NeTEx  FARE PRODUCT + VALIDABLE ELEMENT + TARIFF + FARE STRUCTURE   ELEMENT + DISTAMCE MATRIX ELEMENT
+A GTFS FareRule maps to a NeTEx  TARIFF + FARE STRUCTURE   ELEMENT + DISTANCE MATRIX ELEMENT   + FARE PRODUCT + VALIDABLE ELEMENT + 
 
                        For a Point to Pont fare we use the gtfs fare_id for the DISTANCE MATRIX ELEMENT between each origon /destination  and introduce a  BOILERPLATE_P2P id for the single  FARE PRDUCT
   
@@ -69,9 +69,9 @@ GTFS						NeTEx
 fare_id,						<PriceGroup><members><FarePrice  #fare_id>
 price,						<FarePrice #BOILERPLATE_P2P_id><Amount>
 currency_type,			<FarePrice #BOILERPLATE_P2P_id><Currency>
-payment_method,		<PreassignedFareProduct #BOILERPLATE_P2P_id> <ChargingMoment> 
-		0 =Pay on Boarding </Name> 
-		1 = Fare must be paid before boarding 
+payment_method,		<Tariff><FareStructureElement id="#fare_id@conditions_of_travel"> <GenericParameterAssignment  #fare_id@conditions_of_travel>	<limitations>   
+		0 =Pay on Boarding                                       <PurchaseWindow  #fare_id><PurchaseMoment> (#onBoarding)
+		1 = Fare must be paid before boarding 			<PurchaseWindow  #fare_id><PurchaseMoment> (#beforeBoarding)
 transfers,					<PreassignedFareProduct #BOILERPLATE_P2P_id> <accessRightsInProduct> <AcccessRightInProduct #BOILERPLATE_P2P_id> <ValidibleElement #BOILERPLATE_P2P_id>
 									==> 	<PreassignedFareProduct #BOILERPLATE_P2P_id><validableElements><ValidityParameter #BOILERPLATE_P2P_id> <fareStructureElements>
 									==><Tariff><FareStructureElement id="#BOILERPLATE_P2P_id@conditions_of_travel"> <GenericParameterAssignment  #BOILERPLATE_P2P_id@conditions_of_travel>	<limitations>  
@@ -113,7 +113,7 @@ v1.1 Revised to use Tariff
 				<DefaultCurrency>USD</DefaultCurrency>
 			</FrameDefaults>
 			<frames>
-				<ResourceFrame version="any" id="mygtfsxm:DTA">
+				<ResourceFrame version="1.0" id="mygtfsxm:DTA@agency">
 					<organisations>
 						<!--- =====Agency========= -->
 						<Authority version="any" id="mygtfsxm:DTA">
@@ -125,8 +125,11 @@ v1.1 Revised to use Tariff
 					</organisations>
 				</ResourceFrame>
 				<!--- ==============SERVICE FRAME =========== -->
-				<ServiceFrame version="any" id="mygtfsxm:DTA">
+				<ServiceFrame version="1.0" id="mygtfsxm:DTA@network">
 					<Name>Stop points - these could be external references but are declared explicitly here for  clarity </Name>
+					<prerequisites>
+						<ResourceFrameRef version="1.0" ref="mygtfsxm:DTA@agency"/>
+					</prerequisites>
 					<scheduledStopPoints>
 						<!--- ====TARIFF ZONEs ======== -->
 						<ScheduledStopPoint version="any" id="mygtfsxm:S1">
@@ -162,12 +165,15 @@ v1.1 Revised to use Tariff
 					</scheduledStopPoints>
 				</ServiceFrame>
 				<!--- =============== FAREs =========== -->
-				<FareFrame version="any" id="mygtfsxm:DTA">
+				<FareFrame version="1.0" id="mygtfsxm:DTA">
 					<validityConditions>
 						<ValidBetween>
 							<FromDate>2011-12-30T00:00:00Z</FromDate>
 						</ValidBetween>
 					</validityConditions>
+					<prerequisites>
+						<ServiceFrameRef version="1.0" ref="mygtfsxm:DTA@network"/>
+					</prerequisites>
 					<AuthorityRef ref="mygtfsxm:Authority:DTA"/>
 					<!--- ====Fare USAGE PARAMETERS======= -->
 					<!--- ====Fare Structure======= -->
@@ -198,13 +204,16 @@ v1.1 Revised to use Tariff
 										<TypeOfAccessRightAssignmentRef versionRef="fxc:v1.0" ref="fxc:condition_of_use"/>
 										<LimitationGroupingType>AND</LimitationGroupingType>
 										<limitations>
-											<FrequencyOfUse version="any" id="mygtfsxm:oneTrip">
+											<FrequencyOfUse version="any" id="mygtfsxm:BOILERPLATE_P2P@oneTrip">
 												<FrequencyOfUseType>single</FrequencyOfUseType>
 												<MaximalFrequency>1</MaximalFrequency>
 											</FrequencyOfUse>
-											<Interchanging version="any" id="mygtfsxm:p@interchanging">
+											<Interchanging version="any" id="mygtfsxm:BOILERPLATE_P2P@interchanging">
 												<CanInterchange>true</CanInterchange>
 											</Interchanging>
+														<PurchaseWindow version="any" id="mygtfsxm:BOILERPLATE_P2P@purchase">
+												<PurchaseMoment>beforeBoarding</PurchaseMoment>
+											</PurchaseWindow>
 										</limitations>
 									</GenericParameterAssignment>
 								</FareStructureElement>
@@ -234,8 +243,7 @@ v1.1 Revised to use Tariff
 					</tariffs>
 					<!--- ====Fare Product======= -->
 					<fareProducts>
-						<PreassignedFareProduct version="any" id="mygtfsxm:BOILERPLATE_P2P">
-							<ChargingMomentRef version="gtfs:1.5" ref="gtfs:0"/>
+						<PreassignedFareProduct version="any" id="mygtfsxm:BOILERPLATE_P2P"> 
 							<!--- ====VALIDABLE ELEMENTs====== -->
 							<validableElements>
 								<ValidableElement version="any" id="mygtfsxm:trip">

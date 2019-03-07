@@ -59,9 +59,9 @@ GTFS						NeTEx
 fare_id,						<PriceGroup><members><FarePrice  #fare_id >
 price,						<FarePrice #fare_id><Amount>
 currency_type,			<FarePrice #fare_id><Currency>
-payment_method,		<PreassignedFareProduct #fare_id> <ChargingMoment> 
-		0 =Pay on Boarding </Name> 
-		1 = Fare must be paid before boarding 
+payment_method,		<Tariff><FareStructureElement id="#fare_id@conditions_of_travel"> <GenericParameterAssignment  #fare_id@conditions_of_travel>	<limitations>   
+		0 =Pay on Boarding                                       <PurchaseWindow  #fare_id><PurchaseMoment> (#onBoarding)
+		1 = Fare must be paid before boarding 			<PurchaseWindow  #fare_id><PurchaseMoment> (#beforeBoarding)
 transfers,					<PreassignedFareProduct #fare_id> <accessRightsInProduct> <AcccessRightInProduct #fare_id> <ValidibleElement #fare_id>
 									==> 	<PreassignedFareProduct #fare_id><validableElements><ValidityParameter #fare_id> <fareStructureElements>
 									==><Tariff><FareStructureElement id="#fare_id@conditions_of_travel"> <GenericParameterAssignment  #fare_id@conditions_of_travel>	<limitations>  
@@ -86,9 +86,8 @@ GTFS Data copyright Google Inc
 	<!--- =============== RESULTS =========== -->
 	<dataObjects>
 		<CompositeFrame version="1" id="mygtfsxm:DTA">
-		
-					<Name>GTFS Example 5: Flat Fare, fee to transfer</Name>
-			<TypeOfFrameRef version="gtfs:1.5"  ref="gtfs:GTFS_profile@composite"/>
+			<Name>GTFS Example 5: Flat Fare, fee to transfer</Name>
+			<TypeOfFrameRef version="gtfs:1.5" ref="gtfs:GTFS_profile@composite"/>
 			<!--- ======= CODESPACEs======== -->
 			<codespaces>
 				<Codespace id="mygtfsxm">
@@ -108,7 +107,7 @@ GTFS Data copyright Google Inc
 					<!--- ====Fare USAGE PARAMETERS======= -->
 					<tariffs>
 						<Tariff version="any" id="mygtfsxm:simple_fare">
-									<TypeOfTariffRef version="gtfs:1.5" ref="gtfs:flat"/>
+							<TypeOfTariffRef version="gtfs:1.5" ref="gtfs:flat"/>
 							<fareStructureElements>
 								<FareStructureElement version="any" id="mygtfsxm:simple_fare@access">
 									<GenericParameterAssignment order="1" id="mygtfsxm:simple_fare@access" version="any">
@@ -142,6 +141,9 @@ GTFS Data copyright Google Inc
 												<ToMode>bus</ToMode>
 												<MaximumNumberOfInterchanges>0</MaximumNumberOfInterchanges>
 											</Interchanging>
+											<PurchaseWindow version="any" id="mygtfsxm:simple_fare@purchase">
+												<PurchaseMoment>beforeBoarding</PurchaseMoment>
+											</PurchaseWindow>
 										</limitations>
 									</GenericParameterAssignment>
 								</FareStructureElement>
@@ -155,7 +157,6 @@ GTFS Data copyright Google Inc
 					<fareProducts>
 						<PreassignedFareProduct version="any" id="mygtfsxm:simple_fare">
 							<Name>Single flat fare to ride as long as you like on the DTA</Name>
-							<ChargingMomentRef version="gtfs:1.5" ref="gtfs:0"/>
 							<!--- ====VALIDABLE ELEMENTs====== -->
 							<validableElements>
 								<ValidableElement version="any" id="mygtfsxm:simple_fare">
@@ -189,7 +190,7 @@ GTFS Data copyright Google Inc
 				<FareFrame version="any" id="mygtfsxm:plus_transfer_fare">
 					<tariffs>
 						<Tariff version="any" id="mygtfsxm:plus_transfer_fare">
-									<TypeOfTariffRef version="gtfs:1.5" ref="gtfs:flat"/>
+							<TypeOfTariffRef version="gtfs:1.5" ref="gtfs:flat"/>
 							<fareStructureElements>
 								<FareStructureElement version="any" id="mygtfsxm:plus_transfer_fare@access">
 									<GenericParameterAssignment order="1" id="mygtfsxm:plus_transfer_fare@access" version="any">
@@ -222,6 +223,9 @@ GTFS Data copyright Google Inc
 												<MaximumNumberOfInterchanges>1</MaximumNumberOfInterchanges>
 												<MaximumTimeToMakeATransfer>PT90M</MaximumTimeToMakeATransfer>
 											</Interchanging>
+											<PurchaseWindow version="any" id="mygtfsxm:plus_transfer_fare@purchase">
+												<PurchaseMoment>beforeBoarding</PurchaseMoment>
+											</PurchaseWindow>
 										</limitations>
 									</GenericParameterAssignment>
 								</FareStructureElement>
@@ -235,7 +239,6 @@ GTFS Data copyright Google Inc
 					<fareProducts>
 						<PreassignedFareProduct version="any" id="mygtfsxm:plus_transfer_fare">
 							<Name>With righto make transfers</Name>
-							<ChargingMomentRef version="gtfs:1.5" ref="gtfs:0"/>
 							<!--- ====VALIDABLE ELEMENTs====== -->
 							<validableElements>
 								<ValidableElement version="any" id="mygtfsxm:plus_transfer_fare">
@@ -269,7 +272,7 @@ GTFS Data copyright Google Inc
 						</PriceGroup>
 					</priceGroups>
 				</FareFrame>
-				<ResourceFrame version="any" id="mygtfsxm:DTA">
+				<ResourceFrame version="any" id="mygtfsxm:DTA@agency">
 					<organisations>
 						<!--- =====Agency========= -->
 						<Authority version="any" id="mygtfsxm:DTA">
@@ -281,7 +284,7 @@ GTFS Data copyright Google Inc
 					</organisations>
 				</ResourceFrame>
 				<!--- =====RESOURCEs======== -->
-				<ResourceFrame version="any" id="gtfs:ResourceFrame:GTFS">
+				<ResourceFrame version="gtfs:1.5" id="gtfs:ResourceFrame:GTFS">
 					<Name>Built-in GTFS Code Values</Name>
 					<!--- ======= CODESPACEs======== -->
 					<codespaces>
@@ -308,7 +311,7 @@ GTFS Data copyright Google Inc
 								</ChargingMoment>
 							</values>
 						</ValueSet>
-								<ValueSet version="gtfs:1.5" id="gtfs:GTFS_Types_of_Frame" classOfValues="TypeOfFrame">
+						<ValueSet version="gtfs:1.5" id="gtfs:GTFS_Types_of_Frame" classOfValues="TypeOfFrame">
 							<Name>GTFS Built in Types of Frame</Name>
 							<values>
 								<TypeOfFrame version="gtfs:1.5" changed="2011-01-20T00:00:00" id="gtfs:GTFS_profile@composite">
@@ -322,7 +325,7 @@ GTFS Data copyright Google Inc
 								<TypeOfTariff version="gtfs:1.5" changed="2011-01-20T00:00:00" id="gtfs:flat">
 									<Name>GTFS Built in Types of Tariff - flat fare  </Name>
 								</TypeOfTariff>
-								<TypeOfTariff version="gtfs:1.5" changed="2011-01-20T00:00:00" id="gtfs:point_to _point">
+								<TypeOfTariff version="gtfs:1.5" changed="2011-01-20T00:00:00" id="gtfs:point_to_point">
 									<Name>GTFS Built in Types of Tariff - fpoint to point</Name>
 								</TypeOfTariff>
 								<TypeOfTariff version="gtfs:1.5" changed="2011-01-20T00:00:00" id="gtfs:zone_sequence">

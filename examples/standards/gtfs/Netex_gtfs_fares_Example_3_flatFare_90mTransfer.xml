@@ -56,9 +56,9 @@ GTFS						NeTEx
 fare_id,						<PriceGroup><members><FarePrice  #fare_id >
 price,						<FarePrice #fare_id><Amount>
 currency_type,			<FarePrice #fare_id><Currency>
-payment_method,		<PreassignedFareProduct #fare_id> <ChargingMoment> 
-		0 =Pay on Boarding </Name> 
-		1 = Fare must be paid before boarding 
+payment_method,		<Tariff><FareStructureElement id="#fare_id@conditions_of_travel"> <GenericParameterAssignment  #fare_id@conditions_of_travel>	<limitations>   
+		0 =Pay on Boarding                                       <PurchaseWindow  #fare_id><PurchaseMoment> (#onBoarding)
+		1 = Fare must be paid before boarding 			<PurchaseWindow  #fare_id><PurchaseMoment> (#beforeBoarding)
 transfers,					<PreassignedFareProduct #fare_id> <accessRightsInProduct> <AcccessRightInProduct #fare_id> <ValidibleElement #fare_id>
 									==> 	<PreassignedFareProduct #fare_id><validableElements><ValidityParameter #fare_id> <fareStructureElements>
 									==><Tariff><FareStructureElement id="#fare_id@conditions_of_travel"> <GenericParameterAssignment  #fare_id@conditions_of_travel>	<limitations>  
@@ -107,10 +107,10 @@ v1.1 Revised to use Tarifff
 			<frames>
 				<!--- =============== FAREs =========== -->
 				<FareFrame version="any" id="mygtfsxm:only_fare">
-					<AuthorityRef version="any" ref="mygtfsxm:DTA"/>		
+					<AuthorityRef version="any" ref="mygtfsxm:DTA"/>
 					<!--- ====Fare USAGE PARAMETERS======= -->
 					<tariffs>
-						<Tariff version="any" id="mygtfsxm:only_fare">									
+						<Tariff version="any" id="mygtfsxm:only_fare">
 							<TypeOfTariffRef version="gtfs:1.5" ref="gtfs:flat"/>
 							<fareStructureElements>
 								<FareStructureElement version="any" id="mygtfsxm:only_fare@access">
@@ -141,6 +141,9 @@ v1.1 Revised to use Tarifff
 												<CanInterchange>true</CanInterchange>
 												<MaximumTimeToMakeATransfer>PT90M</MaximumTimeToMakeATransfer>
 											</Interchanging>
+											<PurchaseWindow version="any" id="mygtfsxm:only_fare@purchase">
+												<PurchaseMoment>beforeBoarding</PurchaseMoment>
+											</PurchaseWindow>
 										</limitations>
 									</GenericParameterAssignment>
 								</FareStructureElement>
@@ -237,7 +240,7 @@ v1.1 Revised to use Tarifff
 								<TypeOfTariff version="gtfs:1.5" changed="2011-01-20T00:00:00" id="gtfs:flat">
 									<Name>GTFS Built in Types of Tariff - flat fare  </Name>
 								</TypeOfTariff>
-								<TypeOfTariff version="gtfs:1.5" changed="2011-01-20T00:00:00" id="gtfs:point_to _point">
+								<TypeOfTariff version="gtfs:1.5" changed="2011-01-20T00:00:00" id="gtfs:point_to_point">
 									<Name>GTFS Built in Types of Tariff - fpoint to point</Name>
 								</TypeOfTariff>
 								<TypeOfTariff version="gtfs:1.5" changed="2011-01-20T00:00:00" id="gtfs:zone_sequence">

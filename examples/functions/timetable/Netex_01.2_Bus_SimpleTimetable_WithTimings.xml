@@ -30,7 +30,7 @@ See <PublicationDescription> below  for details
 		<topics>
 			<NetworkFrameTopic>
 				<selectionValidityConditions>
-					<AvailabilityCondition version="any" id="hde:AvailabilityCondition:CAL_02">
+					<AvailabilityCondition version="any" id="request">
 						<FromDate>2010-11-01T00:00:00Z</FromDate>
 					</AvailabilityCondition>
 				</selectionValidityConditions>
@@ -275,7 +275,7 @@ The Calendar is shown coded as
 	</Description>
 	<!--- =============== RESULTS =========== -->
 	<dataObjects>
-		<CompositeFrame version="1" id="hde:CompositeFrame:CAL_02">
+		<CompositeFrame version="1.0" id="hde:ACS@Line_24">
 			<!--- ======= CODESPACEs======== -->
 			<codespaces>
 				<Codespace id="mybus">
@@ -283,19 +283,24 @@ The Calendar is shown coded as
 					<XmlnsUrl>http://www.mybuses.eu/stuff</XmlnsUrl>
 					<Description>My buses</Description>
 				</Codespace>
-				<Codespace id="hde">
-					<Xmlns>hde</Xmlns>
-					<XmlnsUrl>http://www.halt.de/</XmlnsUrl>
-					<Description>Stop data  data</Description>
-				</Codespace>
 			</codespaces>
 			<!--- =======FRAME DEFAULTS======== -->
 			<FrameDefaults>
 				<DefaultCodespaceRef ref="mybus"/>
 			</FrameDefaults>
 			<frames>
-				<ServiceFrame version="1" id="mybus:ServiceFrame:svf_12">
+				<ServiceFrame version="1.0" id="mybus:ACS@Line_24@network">
 					<Name>Stops for Winter timetable for route 24 </Name>
+					<codespaces>
+						<Codespace id="hde">
+							<Xmlns>hde</Xmlns>
+							<XmlnsUrl>http://www.halt.de/</XmlnsUrl>
+							<Description>Stop data  data</Description>
+						</Codespace>
+					</codespaces>
+					<prerequisites>
+						<ResourceFrameRef version="1.0" ref="acs:ACS@Common_resources"/>
+					</prerequisites>
 					<!--- =========DIRECTIONs=========== -->
 					<directions>
 						<Direction version="any" id="mybus:Direction:DR_Westbound">
@@ -320,6 +325,7 @@ The Calendar is shown coded as
 							<ShortName>Line 24</ShortName>
 							<TransportMode>bus</TransportMode>
 							<PublicCode>24</PublicCode>
+							<OperatorRef version="1.0" ref="acs:ACS"/>
 							<routes>
 								<RouteRef ref="mybus:Route:RT_24o"/>
 							</routes>
@@ -715,7 +721,7 @@ The Calendar is shown coded as
 					</notices>
 				</ServiceFrame>
 				<!-- ======TIMETABLE ======= -->
-				<TimetableFrame version="1" id="hde:TimetableFrame:TIM_23_O">
+				<TimetableFrame version="1.0" id="hde:LN_24">
 					<validityConditions>
 						<AvailabilityCondition version="any" id="hde:AvailabilityCondition:Cnd001">
 							<Description>Sept  to April</Description>
@@ -724,6 +730,10 @@ The Calendar is shown coded as
 						</AvailabilityCondition>
 					</validityConditions>
 					<Name>Winter timetable for route 23 outbound</Name>
+					<prerequisites>
+						<ServiceFrameRef version="1.0" ref="mybus:ACS@Line_24@network"/>
+						<ServiceCalendarFrameRef version="1.0" ref="hde:Calendar@2010"/>
+					</prerequisites>
 					<VehicleModes>bus</VehicleModes>
 					<vehicleJourneys>
 						<ServiceJourney version="any" id="hde:ServiceJourney:sj_24o_01">
@@ -973,9 +983,9 @@ The Calendar is shown coded as
 					</serviceFacilitySets>
 				</TimetableFrame>
 				<!--  Service Calendar Nov 2010   COMPACT Coding  === -->
-				<ServiceCalendarFrame version="1" id="hde:ServiceCalendarFrame:CAL_02">
+				<ServiceCalendarFrame version="1.0" id="hde:Calendar@2010">
 					<Name>Service Calendar Nov to April 2010  (Compact Coding) </Name>
-					<ServiceCalendar version="any" id="hde:ServiceCalendar:CAL_02">
+					<ServiceCalendar version="any" id="hde:Calendar@2010">
 						<FromDate>2010-11-01</FromDate>
 						<ToDate>2010-11-14</ToDate>
 					</ServiceCalendar>
@@ -1268,6 +1278,32 @@ The Calendar is shown coded as
 						</DayTypeAssignment>
 					</dayTypeAssignments>
 				</ServiceCalendarFrame>
+				<ResourceFrame version="1.0" id="acs:ACS@Common_resources">
+					<!--- ======= CODESPACEs======== -->
+					<codespaces>
+						<Codespace id="acs">
+							<Xmlns>acs</Xmlns>
+							<XmlnsUrl>http://autocarssuperbe.fr</XmlnsUrl>
+							<Description>Service data </Description>
+						</Codespace>
+					</codespaces>
+					<!--- =======FRAME DEFAULTS======== -->
+					<FrameDefaults>
+						<DefaultCodespaceRef ref="acs"/>
+					</FrameDefaults>
+					<organisations>
+						<Operator version="1.0" id="acs:ACS">
+							<Name>Autocars superbe</Name>
+							<Locale>
+								<DefaultLanguage>fr</DefaultLanguage>
+							</Locale>
+							<ContactDetails>
+								<Phone>+33-1-675-9876</Phone>
+								<Url>http://autocarssuperbe.fr</Url>
+							</ContactDetails>
+						</Operator>
+					</organisations>
+				</ResourceFrame>
 			</frames>
 		</CompositeFrame>
 	</dataObjects>

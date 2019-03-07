@@ -16,12 +16,21 @@ a,5.25,USD,0,0,
 
 2. MAPPING TO NETEX
  
-Mapping is complex depending on fare structure. (E.g. different for flat fare, point-to-point fare, etc
+The GTFS representation is heavily overloaded, so NeTEx mapping is complex depending on fare structure. (E.g. different for flat fare, point-to-point fare, etc)
+
 NeTEx may be augmented with further distinctions not covered by GTFS
 
-A GTFS Fare_Attribute  maps to a NeTEx FARE  PRICE of some specific sort (FARE PRODUCT PRICE,  TIME INTERVAL PRICE, DISTANCE MATRIX ELEMENT PRICE, etc)
+ 
+	Gtfs: FareAttribute	=  PRICE GROUP + FARE   PRICE,  where 
+								(a) Flat tariff: FARE   PRICE  : (FARE PRODUCT PRICE  
 
-A GTFS FareRule maps to a NeTEx  FARE PRODUCT + VALIDABLE ELEMENT + TARIFF + FARE STRUCTURE   ELEMENTs
+								(b) Point to point tariff: DISTANCE MATRIX ELEMENT PRICE 
+
+								(b) Zone sequence :tariff  FARE STRUCTURE ELEMENT PRICE
+ 
+										also
+								PREASSIGNED FARE PRODUCT  + VALIDABLE ELEMENT + 
+										+ TARIFF   +  FARE STRUCTURE ELEMENTs    @conditions_ofUse) frequency
   
 2.1 Fare Attributes
 
@@ -29,9 +38,9 @@ GTFS						NeTEx
 fare_id,						<PriceGroup><members><FarePrice  #fare_id >
 price,						<FarePrice #fare_id><Amount> #price
 currency_type,			<FarePrice #fare_id><Currency> #currency_type
-payment_method,		<PreassignedFareProduct #fare_id> <ChargingMoment #payment_method>  @ref: tfs
-		0 =Pay on Boarding                                       <ChargingMoment #payment_method>  gtfs code value 
-		1 = Fare must be paid before boarding 			<ChargingMoment #payment_method>  gtfs code value 
+payment_method,		<Tariff><FareStructureElement id="#fare_id@conditions_of_travel"> <GenericParameterAssignment  #fare_id@conditions_of_travel>	<limitations>   
+		0 =Pay on Boarding                                       <PurchaseWindow  #fare_id><PurchaseMoment> (#onBoarding)
+		1 = Fare must be paid before boarding 			<PurchaseWindow  #fare_id><PurchaseMoment> (#beforeBoarding)
 transfers,					<PreassignedFareProduct #fare_id> <accessRightsInProduct> <AcccessRightInProduct #fare_id> <ValidibleElement #fare_id>
 									==> 	<PreassignedFareProduct #fare_id><validableElements><ValidityParameter #fare_id> <fareStructureElements>
 									==><Tariff  #fare_id><FareStructureElement id="#fare_id@conditions_of_travel"> <GenericParameterAssignment  #fare_id@conditions_of_travel>	<limitations>  
@@ -105,7 +114,6 @@ v1.1 Revised to use Tarifff
 					<fareProducts>
 						<PreassignedFareProduct version="any" id="mygtfsxm:p">
 							<Name>Single flat fare to ride as long as you like on the DTA</Name>
-							<ChargingMomentRef version="gtfs:1.5" ref="gtfs:0"/>
 							<!--- ====VALIDABLE ELEMENTs====== -->
 							<validableElements>
 								<ValidableElement version="any" id="mygtfsxm:p">
@@ -168,6 +176,9 @@ v1.1 Revised to use Tarifff
 												<CanInterchange>false</CanInterchange>
 												<MaximumNumberOfInterchanges>0</MaximumNumberOfInterchanges>
 											</Interchanging>
+											<PurchaseWindow version="any" id="mygtfsxm:a@purchasing">
+												<PurchaseMoment>beforeBoarding</PurchaseMoment>
+											 </PurchaseWindow>
 										</limitations>
 									</GenericParameterAssignment>
 								</FareStructureElement>
@@ -181,7 +192,7 @@ v1.1 Revised to use Tarifff
 					<fareProducts>
 						<PreassignedFareProduct version="any" id="mygtfsxm:a">
 							<Name>Single flat fare to ride as long as you like on the DTA</Name>
-							<ChargingMomentRef version="gtfs:1.5" ref="gtfs:0"/>
+		 
 							<!--- ====VALIDABLE ELEMENTs====== -->
 							<validableElements>
 								<ValidableElement version="any" id="mygtfsxm:a">
@@ -223,7 +234,7 @@ v1.1 Revised to use Tarifff
 						</Authority>
 					</organisations>
 				</ResourceFrame>
-				<ResourceFrame version="gtfs:1.5" id="gtfs:GTFS">
+				<ResourceFrame version="gtfs:1.5" id="gtfs:GTFS_Common_Resources">
 					<Name>Built-in GTFS Code Values</Name>
 					<!--- ======= CODESPACEs======== -->
 					<codespaces>
@@ -238,18 +249,7 @@ v1.1 Revised to use Tarifff
 						<DefaultCodespaceRef ref="gtfs"/>
 					</FrameDefaults>
 					<typesOfValue>
-						<ValueSet version="gtfs:1.5" id="gtfs:Charging_Moments" classOfValues="ChargingMoment">
-							<Name>GTFS Built in  Charging Methods: FareAttribute@payment_method</Name>
-							<values>
-								<!--- ====Charging method========= -->
-								<ChargingMoment version="gtfs:1.5" id="gtfs:0">
-									<Name>Pay on Boarding</Name>
-								</ChargingMoment>
-								<ChargingMoment version="gtfs:1.5" id="gtfs:1">
-									<Name>Fare must be paid before boarding</Name>
-								</ChargingMoment>
-							</values>
-						</ValueSet>
+						 
 						<ValueSet version="gtfs:1.5" id="gtfs:GTFS_Types_of_Frame" classOfValues="TypeOfFrame">
 							<Name>GTFS Built in Types of Frame</Name>
 							<values>

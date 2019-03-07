@@ -197,7 +197,11 @@ A COMPOSITE FRAME is used to group the component FRAMEs
 			<frames>
 				<ServiceFrame version="1.0" id="mybus:DTA@Unit_zone@network">
 					<Name>Zones for Fare network </Name>
+					<prerequisites>
+						<ResourceFrameRef version="1.0" ref="mybus:DTA@Common_Resources"/>
+					</prerequisites>
 					<Network version="any" id="mybus:DTA">
+						<OperatorRef version="1.0" ref="mybus:DTA"/>
 						<tariffZones>
 							<TariffZoneRef version="any" ref="mybus:A"/>
 							<TariffZoneRef version="any" ref="mybus:B"/>
@@ -245,16 +249,21 @@ A COMPOSITE FRAME is used to group the component FRAMEs
 				</ServiceFrame>
 				<!--- =============== FAREs =========== -->
 				<FareFrame version="1.0" id="myfares:DTA@Unit_zone@products">
+					<prerequisites>
+						<ServiceFrameRef version="1.0" ref="mybus:DTA@Unit_zone@network"/>
+					</prerequisites>
 					<!--- ====GeographicalU nit======== -->
 					<geographicalUnits>
 						<GeographicalUnit version="1.0" id="myfares:1Zone">
-							<Name>Arbitrary Quanitized Unit of Transport Usage - One zone to zone hop</Name>
+							<Name>Arbitrary Quantized Unit of Transport Usage - One zone to zone hop</Name>
 						</GeographicalUnit>
 					</geographicalUnits>
 					<tariffs>
 						<Tariff version="1.0" id="myfares:Unit_zone">
 							<Name>Unit fare zones</Name>
-							<OperatorRef version="any" ref="mybus:DTA"/>
+							
+							<OperatorRef version="1.0" ref="mybus:DTA"/>
+							<TypeOfTariffRef version="ntx:v1.0" ref="ntx:unit_distance"/>
 							<GeographicalUnitRef version="1.0" ref="myfares:1Zone"/>
 							<!--- ====Intervals======= -->
 							<geographicalIntervals>
@@ -323,7 +332,7 @@ A COMPOSITE FRAME is used to group the component FRAMEs
 										<TypeOfAccessRightAssignmentRef version="ntx:v1.0" ref="ntx:can_access"/>
 										<ValidityParameterGroupingType>XOR</ValidityParameterGroupingType>
 										<validityParameters>
-											<OperatorRef version="any" ref="mybus:DTA"/>
+											<OperatorRef version="1.0" ref="mybus:DTA"/>
 											<NetworkRef version="any" ref="mybus:DTA"/>
 										</validityParameters>
 									</GenericParameterAssignment>
@@ -709,12 +718,13 @@ A COMPOSITE FRAME is used to group the component FRAMEs
 					<!--- ====Fare Product======= -->
 					<fareProducts>
 						<!--- ====ADULT fares==== -->
-						<PreassignedFareProduct version="1.0" id="myfares:Unit_zone">
+						<PreassignedFareProduct version="1.0" id="myfares:Trip">
 							<Name>  Zone Unit Trip  </Name>
-							<OperatorRef version="any" ref="mybus:DTA"/>
+							<TypeOfFareProductRef version="ntx:v1.0" ref="ntx:trip"/>
+							<OperatorRef version="1.0" ref="mybus:DTA"/>
 							<!--- ====VALIDABLE ELEMENTs====== -->
 							<validableElements>
-								<ValidableElement version="1.0" id="myfares:Unit_zone@travel">
+								<ValidableElement version="1.0" id="myfares:Trip@travel">
 									<Name>Single  ride</Name>
 									<fareStructureElements>
 										<FareStructureElementRef version="1.0" ref="myfares:Unit_zone@access"/>
@@ -725,9 +735,9 @@ A COMPOSITE FRAME is used to group the component FRAMEs
 							</validableElements>
 							<!--- ====ACCESS RIGHTs======= -->
 							<accessRightsInProduct>
-								<AccessRightInProduct version="1.0" id="myfares:Unit_zone@travel" order="1">
+								<AccessRightInProduct version="1.0" id="myfares:Trip@travel" order="1">
 									<Name>Travel in zones</Name>
-									<ValidableElementRef version="1.0" ref="myfares:Unit_zone@travel"/>
+									<ValidableElementRef version="1.0" ref="myfares:Trip@travel"/>
 								</AccessRightInProduct>
 							</accessRightsInProduct>
 						</PreassignedFareProduct>
@@ -735,6 +745,9 @@ A COMPOSITE FRAME is used to group the component FRAMEs
 				</FareFrame>
 				<FareFrame version="1.0" id="myfares:DTA@Unit_zone@prices">
 					<Name>Prices for unit zone </Name>
+					<prerequisites>
+						<FareFrameRef version="1.0" ref="myfares:DTA@Unit_zone@products"/>
+					</prerequisites>
 					<!--- ====Pricing Parameters======= -->
 					<PricingParameterSet version="1.0" id="myfares:Unit_zone@pp">
 						<PriceUnitRef version="any" ref="myfares:pu"/>
@@ -782,8 +795,77 @@ A COMPOSITE FRAME is used to group the component FRAMEs
 					</priceGroups>
 				</FareFrame>
 				<!--- ====RESOURCE FRAME===== -->
-				<ResourceFrame version="any" id="myfares:DTA@Common_Resources">
+				<ResourceFrame version="1.0" id="mybus:DTA@Common_Resources">
+					<codespaces>
+						<Codespace id="ntx">
+							<Xmlns>ntx</Xmlns>
+							<XmlnsUrl>http://netex.org.uk/</XmlnsUrl>
+							<Description>Netex built in value</Description>
+						</Codespace>
+					</codespaces>
 					<typesOfValue>
+						<ValueSet version="ntx:v1.0" id="ntx:Types_of_Tariff" classOfValues="TypeOfTariff">
+							<Name>Types of Tariff</Name>
+							<values>
+								<!--- ====Types OfTariff ========= -->
+								<TypeOfTariff version="ntx:v1.0" id="ntx:Distance_kilometers">
+									<Name>Kilometer Distance Kilometers</Name>
+								</TypeOfTariff>
+								<TypeOfTariff version="ntx:v1.0" id="ntx:flat">
+									<Name>Flat</Name>
+								</TypeOfTariff>
+								<TypeOfTariff version="ntx:v1.0" id="ntx:point_to_point">
+									<Name>Point to point</Name>
+								</TypeOfTariff>
+								<TypeOfTariff version="ntx:v1.0" id="ntx:zone_to_zone">
+									<Name>Zone to Zone</Name>
+								</TypeOfTariff>
+								<TypeOfTariff version="ntx:v1.0" id="ntx:zonal">
+									<Name>Zonal</Name>
+								</TypeOfTariff>
+								<TypeOfTariff version="ntx:v1.0" id="ntx:unit_distance">
+									<Name>Unit distance (count of stops, sections, zones)</Name>
+								</TypeOfTariff>
+								<TypeOfTariff version="ntx:v1.0" id="ntx:section">
+									<Name>Section</Name>
+								</TypeOfTariff>
+								<TypeOfTariff version="ntx:v1.0" id="ntx:banded">
+									<Name>Section</Name>
+								</TypeOfTariff>
+								<TypeOfTariff version="ntx:v1.0" id="ntx:stored_value">
+									<Name>Stored value</Name>
+								</TypeOfTariff>
+								<TypeOfTariff version="ntx:v1.0" id="ntx:discount">
+									<Name>Discount value</Name>
+								</TypeOfTariff>
+								<TypeOfTariff version="ntx:v1.0" id="ntx:multitrip">
+									<Name>Multitrip carnet</Name>
+								</TypeOfTariff>
+								<TypeOfTariff version="ntx:v1.0" id="ntx:identity_card">
+									<Name>SIdentity</Name>
+								</TypeOfTariff>
+							</values>
+						</ValueSet>
+						<ValueSet version="ntx:v1.0" id="ntx:Types_of_FareProduct" classOfValues="TypeOfFareProduct">
+							<Name>Types of Fare Product</Name>
+							<values>
+								<TypeOfFareProduct version="ntx:v1.0" id="ntx:trip">
+									<Name>Trip product</Name>
+								</TypeOfFareProduct>
+								<TypeOfFareProduct version="ntx:v1.0" id="ntx:multi_trip">
+									<Name>Multitrip / carnet  product</Name>
+								</TypeOfFareProduct>
+								<TypeOfFareProduct version="ntx:v1.0" id="ntx:period_pass">
+									<Name>Peroid pass product</Name>
+								</TypeOfFareProduct>
+								<TypeOfFareProduct version="ntx:v1.0" id="ntx:day_pass">
+									<Name>Day pass product</Name>
+								</TypeOfFareProduct>
+								<TypeOfFareProduct version="ntx:v1.0" id="ntx:discount_card">
+									<Name>Discount  product</Name>
+								</TypeOfFareProduct>
+							</values>
+						</ValueSet>
 						<ValueSet version="any" id="myfares:Types_of_Concession" classOfValues="TypeOfConcession">
 							<Name>Types of concession</Name>
 							<values>
@@ -813,7 +895,7 @@ A COMPOSITE FRAME is used to group the component FRAMEs
 					</typesOfValue>
 					<organisations>
 						<!--- =====Agency========= -->
-						<Operator version="any" id="mybus:DTA">
+						<Operator version="1.0" id="mybus:DTA">
 							<Name>Demo Transit Authority</Name>
 						</Operator>
 					</organisations>

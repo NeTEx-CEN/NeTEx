@@ -102,12 +102,16 @@ A COMPOSITE FRAME is used to group the component FRAMEs
 			</FrameDefaults>
 			<frames>
 				<!--- =============== FAREs =========== -->
-				<FareFrame version="any" id="myfares:DTA@Flat@products">
+				<FareFrame version="1.0" id="myfares:DTA@Flat@products">
+					<prerequisites>
+						<ResourceFrameRef version="1.0" ref="mybus:DTA@Common_Resources"/>
+					</prerequisites>
 					<!--- ====Fare Structure======= -->
 					<tariffs>
 						<Tariff version="1.0" id="myfares:Flat">
 							<Name>Flat  tariff</Name>
 							<OperatorRef version="any" ref="mybus:DTA"/>
+							<TypeOfTariffRef version="ntx:v1.0"  ref="ntx:flat"/>
 							<fareStructureElements>
 								<FareStructureElement version="1.0" id="myfares:Flat@access">
 									<GenericParameterAssignment order="1" id="myfares:Flat@access" version="1.0">
@@ -220,6 +224,7 @@ A COMPOSITE FRAME is used to group the component FRAMEs
 					<fareProducts>
 						<PreassignedFareProduct version="1.0" id="myfares:Single_trip">
 							<Name>Adult  Standard Flat  fare  - One way </Name>
+							<TypeOfFareProductRef version="ntx:v1.0"  ref="ntx:trip"/>
 							<OperatorRef version="any" ref="mybus:DTA"/>
 							<!--- ====VALIDABLE ELEMENTs====== -->
 							<validableElements>
@@ -244,6 +249,7 @@ A COMPOSITE FRAME is used to group the component FRAMEs
 						</PreassignedFareProduct>
 						<PreassignedFareProduct version="1.0" id="myfares:Return_trip">
 							<Name>Adult  Standard Flat  fare  - One way </Name>
+										<TypeOfFareProductRef version="ntx:v1.0" ref="ntx:trip"/>
 							<OperatorRef version="any" ref="mybus:DTA"/>
 							<!--- ====VALIDABLE ELEMENTs====== -->
 							<validableElements>
@@ -365,6 +371,9 @@ A COMPOSITE FRAME is used to group the component FRAMEs
 				</FareFrame>
 				<!--- ====Fare Prices======= -->
 				<FareFrame version="1.0" id="myfares:DTA@Flat@prices">
+					<prerequisites>
+						<FareFrameRef version="1.0" ref="myfares:DTA@Flat@products"/>
+					</prerequisites>
 					<!--- ====Pricing Parmaters======= -->
 					<PricingParameterSet version="1.0" id="myfares:Flat@prices">
 						<pricingRules>
@@ -406,9 +415,79 @@ A COMPOSITE FRAME is used to group the component FRAMEs
 					</priceGroups>
 				</FareFrame>
 				<!--- ===========RESOURCEs========== -->
-				<ResourceFrame version="any" id="mybus:DTA@Common_Resources">
+				<ResourceFrame version="1.0" id="mybus:DTA@Common_Resources">
 					<Name>Common Resources</Name>
+					<codespaces>
+						<Codespace id="ntx">
+							<Xmlns>ntx</Xmlns>
+							<XmlnsUrl>http://netex.org.uk/</XmlnsUrl>
+							<Description>Netex built in value</Description>
+						</Codespace>
+					</codespaces>
 					<typesOfValue>
+						<ValueSet version="ntx:v1.0" id="ntx:Types_of_Tariff" classOfValues="TypeOfTariff">
+							<Name>Types of Tariff</Name>
+							<values>
+								<!--- ====Types OfTariff ========= -->
+								<TypeOfTariff version="ntx:v1.0" id="ntx:Distance_kilometers">
+									<Name>Kilometer Distance Kilometers</Name>
+								</TypeOfTariff>
+								<TypeOfTariff version="ntx:v1.0" id="ntx:flat">
+									<Name>Flat</Name>
+								</TypeOfTariff>
+								<TypeOfTariff version="ntx:v1.0" id="ntx:point_to_point">
+									<Name>Point to point</Name>
+								</TypeOfTariff>
+								<TypeOfTariff version="ntx:v1.0" id="ntx:zone_to_zone">
+									<Name>Zone to Zone</Name>
+								</TypeOfTariff>
+								<TypeOfTariff version="ntx:v1.0" id="ntx:zonal">
+									<Name>Zonal</Name>
+								</TypeOfTariff>
+										<TypeOfTariff version="ntx:v1.0" id="ntx:unit_distance">
+									<Name>Unit distance (count of stops, sections, zones)</Name>
+								</TypeOfTariff>
+								<TypeOfTariff version="ntx:v1.0" id="ntx:section">
+									<Name>Section</Name>
+								</TypeOfTariff>
+								<TypeOfTariff version="ntx:v1.0" id="ntx:banded">
+									<Name>Section</Name>
+								</TypeOfTariff>
+								<TypeOfTariff version="ntx:v1.0" id="ntx:stored_value">
+									<Name>Stored value</Name>
+								</TypeOfTariff>
+								<TypeOfTariff version="ntx:v1.0" id="ntx:discount">
+									<Name>Discount value</Name>
+								</TypeOfTariff>
+								<TypeOfTariff version="ntx:v1.0" id="ntx:multitrip">
+									<Name>Multitrip carnet</Name>
+								</TypeOfTariff>
+								<TypeOfTariff version="ntx:v1.0" id="ntx:identity_card">
+									<Name>SIdentity</Name>
+								</TypeOfTariff>
+							</values>
+						</ValueSet>
+						<ValueSet version="ntx:v1.0" id="ntx:Types_of_FareProduct" classOfValues="TypeOfFareProduct">
+							<Name>Types of Fare Product</Name>
+							<values> 
+								<TypeOfFareProduct version="ntx:v1.0" id="ntx:trip">
+									<Name>Trip product</Name>
+								</TypeOfFareProduct>
+														<TypeOfFareProduct version="ntx:v1.0" id="ntx:multi_trip">
+									<Name>Multitrip / carnet  product</Name>
+								</TypeOfFareProduct>
+									<TypeOfFareProduct version="ntx:v1.0" id="ntx:period_pass">
+									<Name>Peroid pass product</Name>
+								</TypeOfFareProduct>
+										<TypeOfFareProduct version="ntx:v1.0" id="ntx:day_pass">
+									<Name>Day pass product</Name>
+								</TypeOfFareProduct>
+																	<TypeOfFareProduct version="ntx:v1.0" id="ntx:discount_card">
+									<Name>Discount  product</Name>
+								</TypeOfFareProduct>
+								 
+							</values>
+						</ValueSet>				
 						<ValueSet version="any" id="myfares:Types_of_TravelDocument" classOfValues="TypeOfTravelDocument">
 							<Name>Types of Travel document</Name>
 							<values>

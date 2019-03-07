@@ -86,9 +86,9 @@ GTFS						NeTEx
 fare_id,						<PriceGroup><members><FarePrice  #fare_id>
 price,						<FarePrice #BOILERPLATE_ZSEQ_id><Amount>
 currency_type,			<FarePrice #BOILERPLATE_ZSEQ_id><Currency>
-payment_method,		<PreassignedFareProduct #BOILERPLATE_ZSEQ_id> <ChargingMoment> 
-		0 =Pay on Boarding </Name> 
-		1 = Fare must be paid before boarding 
+payment_method,		<Tariff><FareStructureElement id="#fare_id@conditions_of_travel"> <GenericParameterAssignment  #fare_id@conditions_of_travel>	<limitations>   
+		0 =Pay on Boarding                                       <PurchaseWindow  #fare_id><PurchaseMoment> (#onBoarding)
+		1 = Fare must be paid before boarding 			<PurchaseWindow  #fare_id><PurchaseMoment> (#beforeBoarding)
 transfers,					<PreassignedFareProduct #BOILERPLATE_ZSEQ_id> <accessRightsInProduct> <AcccessRightInProduct #BOILERPLATE_ZSEQ_id> <ValidibleElement #BOILERPLATE_ZSEQ_id>
 									==> 	<PreassignedFareProduct #BOILERPLATE_ZSEQ_id><validableElements><ValidityParameter #BOILERPLATE_ZSEQ_id> <fareStructureElements>
 									==><Tariff><FareStructureElement id="#BOILERPLATE_ZSEQ_id@conditions_of_travel"> <GenericParameterAssignment  #BOILERPLATE_ZSEQ_id@conditions_of_travel>	<limitations>  
@@ -131,7 +131,7 @@ v1.1 Revised to use Tarifff
 			</FrameDefaults>
 			<frames>
 				<!--  CUSTOMER RESOURCES -->
-				<ResourceFrame version="any" id="mygtfsxm:DTA">
+				<ResourceFrame version="1.0" id="mygtfsxm:DTA@agency">
 					<organisations>
 						<!--- =====Agency========= -->
 						<Authority version="any" id="mygtfsxm:DTA">
@@ -143,7 +143,7 @@ v1.1 Revised to use Tarifff
 					</organisations>
 				</ResourceFrame>
 				<!--- ==============SERVICE FRAME =========== -->
-				<ServiceFrame version="any" id="mygtfsxm:ServiceFrame:DTA">
+				<ServiceFrame version="1.0" id="mygtfsxm:DTA@network">
 					<Name>TARIFF ZONEs - these could be external references but are declared explicitly here for  clarity </Name>
 					<tariffZones>
 						<!--- ====TARIFF ZONEs ======== -->
@@ -159,12 +159,17 @@ v1.1 Revised to use Tarifff
 					</tariffZones>
 				</ServiceFrame>
 				<!--- =============== FAREs =========== -->
-				<FareFrame version="any" id="mygtfsxm:DTA">
+				<FareFrame version="1.0" id="mygtfsxm:DTA">
+			
 					<validityConditions>
 						<ValidBetween>
 							<FromDate>2011-12-30T00:00:00Z</FromDate>
 						</ValidBetween>
 					</validityConditions>
+							<prerequisites>
+						<ResourceFrameRef version="1.0" ref="mygtfsxm:DTA@agency"/>
+						<ServiceFrameRef version="1.0" ref="mygtfsxm:DTA@network"/>
+					</prerequisites>
 					<AuthorityRef ref="mygtfsxm:Authority:DTA"/>
 					<!--- ====Fare USAGE PARAMETERS======= -->
 					<!--- ====Fare Structure======= -->
@@ -213,13 +218,16 @@ v1.1 Revised to use Tarifff
 										<TypeOfAccessRightAssignmentRef versionRef="fxc:v1.0" ref="fxc:condition_of_use"/>
 										<LimitationGroupingType>AND</LimitationGroupingType>
 										<limitations>
-											<FrequencyOfUse version="any" id="mygtfsxm:frequency">
+											<FrequencyOfUse version="any" id="mygtfsxm:BOILERPLATE_ZS@frequency">
 												<Name>Unlimited transfers</Name>
 												<FrequencyOfUseType>unlimited</FrequencyOfUseType>
 											</FrequencyOfUse>
-											<Interchanging version="any" id="mygtfsxm:p@interchanging">
+											<Interchanging version="any" id="mygtfsxm:BOILERPLATE_ZS@interchanging">
 												<CanInterchange>true</CanInterchange>
 											</Interchanging>
+											<PurchaseWindow version="any" id="mygtfsxm:BOILERPLATE_ZS@purchase">
+												<PurchaseMoment>beforeBoarding</PurchaseMoment>
+											</PurchaseWindow>
 										</limitations>
 									</GenericParameterAssignment>
 								</FareStructureElement>
@@ -352,7 +360,6 @@ v1.1 Revised to use Tarifff
 					<!--- ====Fare Product======= -->
 					<fareProducts>
 						<PreassignedFareProduct version="any" id="mygtfsxm:BOILERPLATE_ZS">
-							<ChargingMomentRef version="gtfs:1.5" ref="gtfs:0"/>
 							<!--- ====VALIDABLE ELEMENTs====== -->
 							<validableElements>
 								<ValidableElement version="any" id="mygtfsxm:trip">

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- ==== SImple Network Example ====== 
+<!-- ==== Gtfs to NeTEx Example: Flat Fare, No Transfers ====== 
 This Example provides an example of mapping of a GTFS FareRule.txt file to NeTEx 
 http://code.google.com/p/googletransitdatafeed/wiki/FareExamples
-
 
 This example  does not include validation of common external codes 
 
@@ -62,9 +61,9 @@ GTFS						NeTEx
 fare_id,						<PriceGroup><members><FarePrice  #fare_id >
 price,						<FarePrice #fare_id><Amount>
 currency_type,			<FarePrice #fare_id><Currency>
-payment_method,		<PreassignedFareProduct #fare_id> <ChargingMoment> 
-		0 =Pay on Boarding </Name> 
-		1 = Fare must be paid before boarding 
+payment_method,		<Tariff><FareStructureElement id="#fare_id@conditions_of_travel"> <GenericParameterAssignment  #fare_id@conditions_of_travel>	<limitations>   
+		0 =Pay on Boarding                                       <PurchaseWindow  #fare_id><PurchaseMoment> (#onBoarding)
+		1 = Fare must be paid before boarding 			<PurchaseWindow  #fare_id><PurchaseMoment> (#beforeBoarding)
 transfers,					<PreassignedFareProduct #fare_id> <accessRightsInProduct> <AcccessRightInProduct #fare_id> <ValidibleElement #fare_id>
 									==> 	<PreassignedFareProduct #fare_id><validableElements><ValidityParameter #fare_id> <fareStructureElements>
 									==><Tariff><FareStructureElement id="#fare_id@conditions_of_travel"> <GenericParameterAssignment  #fare_id@conditions_of_travel>	<limitations>  
@@ -95,7 +94,8 @@ v1.1 Revised to use Tarifff
 					<FromDate>2011-12-30T00:00:00Z</FromDate>
 				</ValidBetween>
 			</validityConditions>
-			<TypeOfFrameRef ref="gtfs:GTFS"/>
+			<Name>GTFS Example 2 : Flat Fare, No Transfers</Name>
+			<TypeOfFrameRef versionRef="gtfs:1.5" ref="gtfs:GTFS_profile@composite"/>
 			<!--- ======= CODESPACEs======== -->
 			<codespaces>
 				<Codespace id="mygtfsxm">
@@ -115,6 +115,7 @@ v1.1 Revised to use Tarifff
 					<!--- ====Fare USAGE PARAMETERS======= -->
 					<tariffs>
 						<Tariff version="any" id="mygtfsxm:only_fare">
+							<TypeOfTariffRef versionRef="gtfs:1.5" ref="gtfs:flat"/>
 							<fareStructureElements>
 								<FareStructureElement version="any" id="mygtfsxm:only_fare@access">
 									<GenericParameterAssignment order="1" id="mygtfsxm:only_fare@access" version="any">
@@ -141,6 +142,9 @@ v1.1 Revised to use Tarifff
 												<CanInterchange>false</CanInterchange>
 												<MaximumNumberOfInterchanges>0</MaximumNumberOfInterchanges>
 											</Interchanging>
+											<PurchaseWindow version="any" id="mygtfsxm:only_fare@purchase">
+												<PurchaseMoment>beforeBoarding</PurchaseMoment>
+											</PurchaseWindow>
 										</limitations>
 									</GenericParameterAssignment>
 								</FareStructureElement>
@@ -153,7 +157,6 @@ v1.1 Revised to use Tarifff
 					<!--- ====Fare Product======= -->
 					<fareProducts>
 						<PreassignedFareProduct version="any" id="mygtfsxm:only_fare">
-							<ChargingMomentRef versionRef="GTFS_Code" ref="gtfs:0"/>
 							<!--- ====VALIDABLE ELEMENTs====== -->
 							<validableElements>
 								<ValidableElement version="any" id="mygtfsxm:only_fare">

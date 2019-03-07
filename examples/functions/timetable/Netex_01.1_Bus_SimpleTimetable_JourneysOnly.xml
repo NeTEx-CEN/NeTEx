@@ -20,8 +20,8 @@ The example is extended in other examples with further details
  
 	There are just two  SERVICE JOURNEYs   in a single DIRECTION 
 
-    hde:ServiceJourney:sj_24o_01   at 14:20   outbound
-    hde:ServiceJourney:sj_24o_02   at 15:20   outbound
+    acs:sj_24o_01   at 14:20   outbound
+    acs:sj_24o_02   at 15:20   outbound
  
 And the timetable is thus
 
@@ -42,28 +42,28 @@ And the timetable is thus
 There is one Line :  LINE 24
 
 SCHEDULED STOP POINTs
-	    A)   mybus:ScheduledStopPoint:ssp_001  Alpha						 
-		B)  mybus:ScheduledStopPoint:ssp_002   Bravo							 
-		C)  mybus:ScheduledStopPoint:ssp_077	 Charley
+	    A)   mybus:ssp_001  Alpha						 
+		B)  mybus:ssp_002   Bravo							 
+		C)  mybus:ssp_077	 Charley
 
 There are just two SERVICE JOURNEYs in the timetable  for LINE  24
 
-     (i)  SERVICE JOURNEY hde:ServiceJourney:sj_24o_01         
+     (i)  SERVICE JOURNEY acs:sj_24o_01         
              Departs 14:20   on         DAY TYPE      DayType DT01   (MTWTF)
 		 Follows JOURNEY PATTERN:  JourneyPattern:jp_24o (EXTERNAL)
 
-     (ii)  SERVICE JOURNEY hde:ServiceJourney:sj_24o_02     
+     (ii)  SERVICE JOURNEY acs:sj_24o_02     
              Departs 15:20   on         DAY TYPE      DayType DT02   (MTWTFSS)
              Connects with LINE 4 at stop B 
 			 Follows JOURNEY PATTERN:  JourneyPattern:jp_24o (EXTERNAL)
  
 The Each SERVICE JOURNEY  has  thus three CALLSs, one for each SCHEDULED STOP POINT 
   
-	1.	A  CALL :  SCHEDULED STOP POINT    mybus:ScheduledStopPoint:SSP_001
+	1.	A  CALL :  SCHEDULED STOP POINT    mybus:SSP_001
  
-	2.  B CALL  SCHEDULED STOP POINT   mybus:ScheduledStopPoint:SSP_002
+	2.  B CALL  SCHEDULED STOP POINT   mybus:SSP_002
  
-	3. C  CALL   SCHEDULED STOP POINT   mybus:ScheduledStopPoint:SSP_077
+	3. C  CALL   SCHEDULED STOP POINT   mybus:SSP_077
 
 Theer is a link for  the  whole route as well
 	0 TIMING LINK :	A		 - 	C    	mybus:TimingLink:SSP_001_to_SSP_077
@@ -74,10 +74,10 @@ Theer is a link for  the  whole route as well
    A Destination DESTINATION DISPLAY to be shown on the bus changes as follows:
 
    at A : Charley Via Bravo
-		DESTINATION DISPLAY 	mybus:DestinationDisplay:DST_Charley
-		viias  DESTINATION DISPLAY 	mybus:DestinationDisplay:DST_Bravo
+		DESTINATION DISPLAY 	mybus:Charley
+		viias  DESTINATION DISPLAY 	mybus:Bravo
    at B:  Charley  (no vias)
-		DESTINATION DISPLAY 	mybus:DestinationDisplay:DST_Charley 
+		DESTINATION DISPLAY 	mybus:Charley 
      
 
   The buses's facilities are described witha FACILITY SET
@@ -104,11 +104,11 @@ The Calendar is shown coded as
 		<topics>
 			<NetworkFrameTopic>
 				<selectionValidityConditions>
-					<AvailabilityCondition version="any" id="hde:AvailabilityCondition:CAL_02">
+					<AvailabilityCondition version="any" id="acs:AvailabilityCondition:CAL_02">
 						<FromDate>2010-11-01T00:00:00Z</FromDate>
 					</AvailabilityCondition>
 				</selectionValidityConditions>
-				<TimetableFrameRef ref="hde:TimetableFrameTIM_23_O">REQUEST</TimetableFrameRef>
+				<TimetableFrameRef ref="acs:TimetableFrameTIM_23_O">REQUEST</TimetableFrameRef>
 			</NetworkFrameTopic>
 		</topics>
 	</PublicationRequest>
@@ -116,39 +116,38 @@ The Calendar is shown coded as
 	<Description>Example  of simple timetable frame with two journeys and service calendar</Description>
 	<!--- =============== RESULTS =========== -->
 	<dataObjects>
-		<CompositeFrame version="1" id="hde:CompositeFrame:CAL_02">
+		<CompositeFrame version="1.0" id="acs:ACS@Line_24">
 			<!--- ======= CODESPACEs======== -->
-			<codespaces>
-				<Codespace id="mybus">
-					<Xmlns>mybus</Xmlns>
-					<XmlnsUrl>http://www.mybuses.eu/stuff</XmlnsUrl>
-					<Description>My buses</Description>
-				</Codespace>
-				<Codespace id="hde">
-					<Xmlns>hde</Xmlns>
-					<XmlnsUrl>http://www.halt.de/</XmlnsUrl>
-					<Description>Stop data  data</Description>
-				</Codespace>
-			</codespaces>
 			<!--- =======FRAME DEFAULTS======== -->
 			<FrameDefaults>
 				<DefaultCodespaceRef ref="mybus"/>
 			</FrameDefaults>
 			<frames>
-				<ServiceFrame version="1" id="mybus:ServiceFrame:svf_12">
+				<ServiceFrame version="1.0" id="mybus:ACS@Line_24@Network">
 					<Name>Stops for Winter timetable for route 24 </Name>
+					<codespaces>
+						<Codespace id="mybus">
+							<Xmlns>mybus</Xmlns>
+							<XmlnsUrl>http://www.mybuses.eu/stuff</XmlnsUrl>
+							<Description>My buses</Description>
+						</Codespace>
+					</codespaces>
+					<prerequisites>
+						<ResourceFrameRef version="1.0" ref="acs:ACS@Common_Resources"/>
+					</prerequisites>
 					<!--- =========LINEs=========== -->
 					<lines>
-						<Line version="any" id="mybus:Line:LN_24">
+						<Line version="any" id="mybus:LN_24">
 							<Name>Line 24 Alpha to Charley</Name>
 							<ShortName>Line 24</ShortName>
 							<TransportMode>bus</TransportMode>
 							<PublicCode>24</PublicCode>
+							<OperatorRef version="1.0" ref="acs:ACS"/>
 						</Line>
 					</lines>
 					<!--- =========DESTINATION DISPLAYs============ -->
 					<destinationDisplays>
-						<DestinationDisplay version="any" id="mybus:DestinationDisplay:DST_Bravo">
+						<DestinationDisplay version="any" id="mybus:Bravo">
 							<Name>Bravo Road</Name>
 							<ShortName>Bravo Rd</ShortName>
 							<PublicCode>BRAV</PublicCode>
@@ -164,15 +163,15 @@ The Calendar is shown coded as
 								</DestinationDisplayVariant>
 							</variants>
 						</DestinationDisplay>
-						<DestinationDisplay version="any" id="mybus:DestinationDisplay:DST_Charley">
-							<Name>Charley Cresecnt</Name>
+						<DestinationDisplay version="any" id="mybus:Charley">
+							<Name>Charley Crescent</Name>
 							<ShortName>Charley C</ShortName>
 							<PublicCode>CHAS</PublicCode>
 						</DestinationDisplay>
 					</destinationDisplays>
 					<!--- =========STOP POINTs============ -->
 					<scheduledStopPoints>
-						<ScheduledStopPoint version="any" id="mybus:ScheduledStopPoint:SSP_001">
+						<ScheduledStopPoint version="any" id="mybus:SSP_001">
 							<Name>Alpha &amp; Castle</Name>
 							<Location>
 								<Longitude>53.0000</Longitude>
@@ -184,7 +183,7 @@ The Calendar is shown coded as
 							<StopType>onstreetBus</StopType>
 							<VehicleModes>bus</VehicleModes>
 						</ScheduledStopPoint>
-						<ScheduledStopPoint version="any" id="mybus:ScheduledStopPoint:SSP_002">
+						<ScheduledStopPoint version="any" id="mybus:SSP_002">
 							<Name>Bravo Street</Name>
 							<Location>
 								<Longitude>53.2000</Longitude>
@@ -196,7 +195,7 @@ The Calendar is shown coded as
 							<StopType>onstreetBus</StopType>
 							<VehicleModes>bus</VehicleModes>
 						</ScheduledStopPoint>
-						<ScheduledStopPoint version="any" id="mybus:ScheduledStopPoint:SSP_077">
+						<ScheduledStopPoint version="any" id="mybus:SSP_077">
 							<Name>Charley Crescent</Name>
 							<Location>
 								<Longitude>53.3000</Longitude>
@@ -208,7 +207,7 @@ The Calendar is shown coded as
 							<StopType>onstreetBus</StopType>
 							<VehicleModes>bus</VehicleModes>
 						</ScheduledStopPoint>
-						<ScheduledStopPoint version="any" id="mybus:ScheduledStopPoint:SSP_015">
+						<ScheduledStopPoint version="any" id="mybus:SSP_015">
 							<Name>Park Lane</Name>
 							<Location>
 								<Longitude>53.34000</Longitude>
@@ -223,38 +222,44 @@ The Calendar is shown coded as
 					</scheduledStopPoints>
 				</ServiceFrame>
 				<!-- ======Timetable ======= -->
-				<TimetableFrame version="1" id="hde:TimetableFrame:TIM_23_O">
+				<TimetableFrame version="1.0" id="acs:ACS@Line_24@Timetable">
 					<validityConditions>
-						<AvailabilityCondition version="any" id="hde:AvailabilityCondition:Cnd001">
+						<AvailabilityCondition version="any" id="acs:AvailabilityCondition:Cnd001">
 							<Description>Sept  to March</Description>
 							<FromDate>2010-11-01T00:00:00Z</FromDate>
 							<ToDate>2011-03-31T00:00:00Z</ToDate>
 							<dayTypes>
-								<DayTypeRef version="any" ref="hde:DayType:DT_01-MF-NH"/>
-								<DayTypeRef version="any" ref="hde:DayType:DT_03-WE-NH"/>
+								<DayTypeRef version="any" ref="acs:DT_01-MF-NH"/>
+								<DayTypeRef version="any" ref="acs:DT_03-WE-NH"/>
 							</dayTypes>
 						</AvailabilityCondition>
 					</validityConditions>
-					<Name>Winter timetable for route 23 outbound</Name>
+					<Name>Winter timetable for route 24 outbound</Name>
+					<prerequisites>
+						<ServiceFrameRef version="1.0" ref="mybus:ACS@Line_24@Network"/>
+						<ServiceFrameRef versionRef="EXTERNAL" ref="mybus:ACS@Line_24@Routes_and_JourneyPatterns"/>
+						<ServiceCalendarFrameRef version="1.0" ref="acs:ACS@Winter_2010"/>
+						<VehicleScheduleFrameRef versionRef="EXTERNAL" ref="mybus:ACS@Line_24@Schedule"/>
+					</prerequisites>
 					<VehicleModes>bus</VehicleModes>
 					<vehicleJourneys>
-						<ServiceJourney version="any" id="hde:ServiceJourney:sj_24o_01">
+						<ServiceJourney version="any" id="acs:sj_24o_01">
 							<DepartureTime>14:20:00.0Z</DepartureTime>
 							<dayTypes>
-								<DayTypeRef version="any" ref="hde:DayType:DT_01-MF-NH"/>
+								<DayTypeRef version="any" ref="acs:DT_01-MF-NH"/>
 							</dayTypes>
-							<ServiceJourneyPatternRef ref="hde:ServiceJourneyPattern:jp_24o">EXTERNAL</ServiceJourneyPatternRef>
-							<TimeDemandTypeRef ref="mybus:TimeDemandType:td_01">EXTERNAL</TimeDemandTypeRef>
-							<BlockRef ref="mybus:Block:BLK_24o5">EXTERNAL</BlockRef>
-							<LineRef version="any" ref="mybus:Line:LN_24"/>
+							<ServiceJourneyPatternRef versionRef="EXTERNAL" ref="acs:jp_24o">EXTERNAL</ServiceJourneyPatternRef>
+							<TimeDemandTypeRef versionRef="EXTERNAL" ref="mybus:td_01">EXTERNAL</TimeDemandTypeRef>
+							<BlockRef versionRef="EXTERNAL" ref="mybus:Block:BLK_24o5">EXTERNAL</BlockRef>
+							<LineRef version="any" ref="mybus:LN_24"/>
 							<JourneyPatternView>
-								<RouteRef ref="mybus:Route:RT_24o">EXTERNAL</RouteRef>
+								<RouteRef ref="mybus:RT_24o">EXTERNAL</RouteRef>
 								<DirectionType>outbound</DirectionType>
-								<DestinationDisplayRef version="any" ref="mybus:DestinationDisplay:DST_Charley"/>
+								<DestinationDisplayRef version="any" ref="mybus:Charley"/>
 							</JourneyPatternView>
 							<calls>
-								<Call version="any" id="hde:Call:sj_24o_01_001" order="1">
-									<ScheduledStopPointRef version="any" ref="mybus:ScheduledStopPoint:SSP_001"/>
+								<Call version="any" id="acs:sj_24o_01_001" order="1">
+									<ScheduledStopPointRef version="any" ref="mybus:SSP_001"/>
 									<Arrival>
 										<ForAlighting>false</ForAlighting>
 									</Arrival>
@@ -262,8 +267,8 @@ The Calendar is shown coded as
 										<Time>14:20:00.0Z</Time>
 									</Departure>
 								</Call>
-								<Call version="any" id="hde:Call:sj_24o_01_002" order="2">
-									<ScheduledStopPointRef version="any" ref="mybus:ScheduledStopPoint:SSP_002"/>
+								<Call version="any" id="acs:sj_24o_01_002" order="2">
+									<ScheduledStopPointRef version="any" ref="mybus:SSP_002"/>
 									<Arrival>
 										<Time>14:30:00.0Z</Time>
 									</Arrival>
@@ -273,8 +278,8 @@ The Calendar is shown coded as
 									</Departure>
 									<Note>Arrival at Terminus</Note>
 								</Call>
-								<Call version="any" id="hde:Call:sj_24o_01_003" order="3">
-									<ScheduledStopPointRef version="any" ref="mybus:ScheduledStopPoint:SSP_077"/>
+								<Call version="any" id="acs:sj_24o_01_003" order="3">
+									<ScheduledStopPointRef version="any" ref="mybus:SSP_077"/>
 									<Arrival>
 										<Time>15:10:00.0Z</Time>
 									</Arrival>
@@ -284,26 +289,26 @@ The Calendar is shown coded as
 								</Call>
 							</calls>
 							<facilities>
-								<ServiceFacilitySetRef version="any" ref="hde:ServiceFacilitySet:sfs_24o_01"/>
+								<ServiceFacilitySetRef version="any" ref="acs:sfs_24o_01"/>
 							</facilities>
 						</ServiceJourney>
-						<ServiceJourney version="any" id="hde:ServiceJourney:sj_24o_02">
+						<ServiceJourney version="any" id="acs:sj_24o_02">
 							<DepartureTime>15:20:00.0Z</DepartureTime>
 							<dayTypes>
-								<DayTypeRef version="any" ref="hde:DayType:DT_01-MF-NH"/>
+								<DayTypeRef version="any" ref="acs:DT_01-MF-NH"/>
 							</dayTypes>
-							<ServiceJourneyPatternRef ref="hde:ServiceJourneyPattern:jp_24o">EXTERNAL</ServiceJourneyPatternRef>
-							<TimeDemandTypeRef ref="mybus:TimeDemandType:td_01">EXTERNAL</TimeDemandTypeRef>
+							<ServiceJourneyPatternRef ref="acs:jp_24o">EXTERNAL</ServiceJourneyPatternRef>
+							<TimeDemandTypeRef ref="mybus:td_01">EXTERNAL</TimeDemandTypeRef>
 							<BlockRef ref="mybus:Block:BLK_24o5">EXTERNAL</BlockRef>
-							<LineRef version="any" ref="mybus:Line:LN_24"/>
+							<LineRef version="any" ref="mybus:LN_24"/>
 							<JourneyPatternView>
-								<RouteRef ref="mybus:Route:RT_24o">EXTERNAL</RouteRef>
+								<RouteRef ref="mybus:RT_24o">EXTERNAL</RouteRef>
 								<DirectionType>outbound</DirectionType>
-								<DestinationDisplayRef version="any" ref="mybus:DestinationDisplay:DST_Charley"/>
+								<DestinationDisplayRef version="any" ref="mybus:Charley"/>
 							</JourneyPatternView>
 							<calls>
-								<Call version="any" id="hde:Call:sj_24o_02_001" order="1">
-									<ScheduledStopPointRef version="any" ref="mybus:ScheduledStopPoint:SSP_001"/>
+								<Call version="any" id="acs:sj_24o_02_001" order="1">
+									<ScheduledStopPointRef version="any" ref="mybus:SSP_001"/>
 									<Arrival>
 										<ForAlighting>false</ForAlighting>
 									</Arrival>
@@ -312,13 +317,13 @@ The Calendar is shown coded as
 									</Departure>
 									<vias>
 										<Via>
-											<DestinationDisplayRef version="any" ref="mybus:DestinationDisplay:DST_Bravo"/>
+											<DestinationDisplayRef version="any" ref="mybus:Bravo"/>
 										</Via>
 									</vias>
 									<ChangeOfDestinationDisplay>true</ChangeOfDestinationDisplay>
 								</Call>
-								<Call version="any" id="hde:Call:sj_24o_02_002" order="2">
-									<ScheduledStopPointRef version="any" ref="mybus:ScheduledStopPoint:SSP_002"/>
+								<Call version="any" id="acs:sj_24o_02_002" order="2">
+									<ScheduledStopPointRef version="any" ref="mybus:SSP_002"/>
 									<Arrival>
 										<Time>15:30:00.0Z</Time>
 									</Arrival>
@@ -331,8 +336,8 @@ The Calendar is shown coded as
 									</vias>
 									<ChangeOfDestinationDisplay>true</ChangeOfDestinationDisplay>
 								</Call>
-								<Call version="any" id="hde:Call:sj_24o_02_003" order="3">
-									<ScheduledStopPointRef version="any" ref="mybus:ScheduledStopPoint:SSP_077"/>
+								<Call version="any" id="acs:sj_24o_02_003" order="3">
+									<ScheduledStopPointRef version="any" ref="mybus:SSP_077"/>
 									<Arrival>
 										<Time>16:10:00.0Z</Time>
 									</Arrival>
@@ -342,12 +347,12 @@ The Calendar is shown coded as
 								</Call>
 							</calls>
 							<facilities>
-								<ServiceFacilitySetRef version="any" ref="hde:ServiceFacilitySet:sfs_24o_01"/>
+								<ServiceFacilitySetRef version="any" ref="acs:sfs_24o_01"/>
 							</facilities>
 						</ServiceJourney>
 					</vehicleJourneys>
 					<serviceFacilitySets>
-						<ServiceFacilitySet version="any" id="hde:ServiceFacilitySet:sfs_24o_01">
+						<ServiceFacilitySet version="any" id="acs:sfs_24o_01">
 							<ProvidedByRef ref="xyz:Operator:4567">EXTERNAL</ProvidedByRef>
 							<AssistanceFacilityList>boardingAssistance conductor wheechairAssistance</AssistanceFacilityList>
 							<FareClasses>standardClass</FareClasses>
@@ -359,15 +364,15 @@ The Calendar is shown coded as
 						</ServiceFacilitySet>
 					</serviceFacilitySets>
 				</TimetableFrame>
-				<!--  Service Calendar Nov 2010   COMPACT Coding  === -->
-				<ServiceCalendarFrame version="1" id="hde:ServiceCalendarFrame:CAL_02">
+				<!--  Service Calendar Nov 2010     Coding  === -->
+				<ServiceCalendarFrame version="1.0" id="acs:ACS@Winter_2010">
 					<Name>Service Calendar Nov 2010 ALTERNATE MORE COMPACT Coding  </Name>
-					<ServiceCalendar version="any" id="hde:ServiceCalendar:CAL_02">
+					<ServiceCalendar version="any" id="acs:ACS@Winter_2010">
 						<FromDate>2010-11-01</FromDate>
 						<ToDate>2010-11-14</ToDate>
 					</ServiceCalendar>
 					<dayTypes>
-						<DayType version="any" id="hde:DayType:DT_01-MF-NH">
+						<DayType version="any" id="acs:DT_01-MF-NH">
 							<Name>Weekdays unless a holiday</Name>
 							<properties>
 								<PropertyOfDay>
@@ -376,7 +381,7 @@ The Calendar is shown coded as
 								</PropertyOfDay>
 							</properties>
 						</DayType>
-						<DayType version="any" id="hde:DayType:DT_02-AA-NH">
+						<DayType version="any" id="acs:DT_02-AA-NH">
 							<Name>Everyday unless a holiday</Name>
 							<properties>
 								<PropertyOfDay>
@@ -385,7 +390,7 @@ The Calendar is shown coded as
 								</PropertyOfDay>
 							</properties>
 						</DayType>
-						<DayType version="any" id="hde:DayType:DT_03-WE-NH">
+						<DayType version="any" id="acs:DT_03-WE-NH">
 							<Name>Weekends unless a holiday</Name>
 							<properties>
 								<PropertyOfDay>
@@ -394,7 +399,7 @@ The Calendar is shown coded as
 								</PropertyOfDay>
 							</properties>
 						</DayType>
-						<DayType version="any" id="hde:DayType:DT_04-AA-NH">
+						<DayType version="any" id="acs:DT_04-AA-NH">
 							<Name>Holidays</Name>
 							<properties>
 								<PropertyOfDay>
@@ -405,79 +410,105 @@ The Calendar is shown coded as
 						</DayType>
 					</dayTypes>
 					<dayTypeAssignments>
-						<DayTypeAssignment version="any" order="1" id="hde:DayTypeAssignment:DayAsgn_2010-11-01">
+						<DayTypeAssignment version="any" order="1" id="acs:2010-11-01">
 							<Description>Monday 2010-11-01</Description>
 							<Date>2010-11-01</Date>
-							<DayTypeRef version="any" ref="hde:DayType:DT_01-MF-NH"/>
+							<DayTypeRef version="any" ref="acs:DT_01-MF-NH"/>
 						</DayTypeAssignment>
-						<DayTypeAssignment version="any" order="1" id="hde:DayTypeAssignment:DayAsgn_2010-11-02">
+						<DayTypeAssignment version="any" order="1" id="acs:2010-11-02">
 							<Description>Tuesday 2010-11-02</Description>
 							<Date>2010-11-02</Date>
-							<DayTypeRef version="any" ref="hde:DayType:DT_01-MF-NH"/>
+							<DayTypeRef version="any" ref="acs:DT_01-MF-NH"/>
 						</DayTypeAssignment>
-						<DayTypeAssignment version="any" order="1" id="hde:DayTypeAssignment:DayAsgn_2010-11-03">
+						<DayTypeAssignment version="any" order="1" id="acs:2010-11-03">
 							<Description>Wednesday 2010-11-03</Description>
 							<Date>2010-11-03</Date>
-							<DayTypeRef version="any" ref="hde:DayType:DT_01-MF-NH"/>
+							<DayTypeRef version="any" ref="acs:DT_01-MF-NH"/>
 						</DayTypeAssignment>
-						<DayTypeAssignment version="any" order="1" id="hde:DayTypeAssignment:DayAsgn_2010-11-04">
+						<DayTypeAssignment version="any" order="1" id="acs:2010-11-04">
 							<Description>Thusday 2010-11-04</Description>
 							<Date>2010-11-04</Date>
-							<DayTypeRef version="any" ref="hde:DayType:DT_01-MF-NH"/>
+							<DayTypeRef version="any" ref="acs:DT_01-MF-NH"/>
 						</DayTypeAssignment>
-						<DayTypeAssignment version="any" order="1" id="hde:DayTypeAssignment:DayAsgn_2010-11-05">
+						<DayTypeAssignment version="any" order="1" id="acs:2010-11-05">
 							<Description>MFriday 2010-11-05</Description>
 							<Date>2010-11-05</Date>
-							<DayTypeRef version="any" ref="hde:DayType:DT_01-MF-NH"/>
+							<DayTypeRef version="any" ref="acs:DT_01-MF-NH"/>
 						</DayTypeAssignment>
-						<DayTypeAssignment version="any" order="1" id="hde:DayTypeAssignment:DayAsgn_2010-11-06">
+						<DayTypeAssignment version="any" order="1" id="acs:2010-11-06">
 							<Description>Saturday 2010-11-06</Description>
 							<Date>2010-11-06</Date>
-							<DayTypeRef version="any" ref="hde:DayType:DT_03-WE-NH"/>
+							<DayTypeRef version="any" ref="acs:DT_03-WE-NH"/>
 						</DayTypeAssignment>
-						<DayTypeAssignment version="any" order="1" id="hde:DayTypeAssignment:DayAsgn_2010-11-07">
+						<DayTypeAssignment version="any" order="1" id="acs:2010-11-07">
 							<Description>Sunday 2010-11-07</Description>
 							<Date>2010-11-07</Date>
-							<DayTypeRef version="any" ref="hde:DayType:DT_03-WE-NH"/>
+							<DayTypeRef version="any" ref="acs:DT_03-WE-NH"/>
 						</DayTypeAssignment>
 						<!-- Week 2 -->
-						<DayTypeAssignment version="any" order="1" id="hde:DayTypeAssignment:DayAsgn_2010-11-08">
+						<DayTypeAssignment version="any" order="1" id="acs:2010-11-08">
 							<Description>Monday 2010-11-08</Description>
 							<Date>2010-11-08</Date>
-							<DayTypeRef version="any" ref="hde:DayType:DT_01-MF-NH"/>
+							<DayTypeRef version="any" ref="acs:DT_01-MF-NH"/>
 						</DayTypeAssignment>
-						<DayTypeAssignment version="any" order="1" id="hde:DayTypeAssignment:DayAsgn_2010-11-09">
+						<DayTypeAssignment version="any" order="1" id="acs:2010-11-09">
 							<Description>Tuesday 2010-11-09</Description>
 							<Date>2010-11-09</Date>
-							<DayTypeRef version="any" ref="hde:DayType:DT_01-MF-NH"/>
+							<DayTypeRef version="any" ref="acs:DT_01-MF-NH"/>
 						</DayTypeAssignment>
-						<DayTypeAssignment version="any" order="1" id="hde:DayTypeAssignment:DayAsgn_2010-11-10">
+						<DayTypeAssignment version="any" order="1" id="acs:2010-11-10">
 							<Description>Wednesday 2010-11-10</Description>
 							<Date>2010-11-10</Date>
-							<DayTypeRef version="any" ref="hde:DayType:DT_01-MF-NH"/>
+							<DayTypeRef version="any" ref="acs:DT_01-MF-NH"/>
 						</DayTypeAssignment>
-						<DayTypeAssignment version="any" order="1" id="hde:DayTypeAssignment:DayAsgn_2010-11-11">
+						<DayTypeAssignment version="any" order="1" id="acs:2010-11-11">
 							<Description>Thusday 2010-11-11</Description>
 							<Date>2010-11-11</Date>
-							<DayTypeRef version="any" ref="hde:DayType:DT_01-MF-NH"/>
+							<DayTypeRef version="any" ref="acs:DT_01-MF-NH"/>
 						</DayTypeAssignment>
-						<DayTypeAssignment version="any" order="1" id="hde:DayTypeAssignment:DayAsgn_2010-11-12">
+						<DayTypeAssignment version="any" order="1" id="acs:2010-11-12">
 							<Description>MFriday 2010-11-12</Description>
 							<Date>2010-11-12</Date>
-							<DayTypeRef version="any" ref="hde:DayType:DT_01-MF-NH"/>
+							<DayTypeRef version="any" ref="acs:DT_01-MF-NH"/>
 						</DayTypeAssignment>
-						<DayTypeAssignment version="any" order="1" id="hde:DayTypeAssignment:DayAsgn_2010-11-113">
+						<DayTypeAssignment version="any" order="1" id="acs:2010-11-113">
 							<Description>Saturday 2010-11-13</Description>
 							<Date>2010-11-13</Date>
-							<DayTypeRef version="any" ref="hde:DayType:DT_03-WE-NH"/>
+							<DayTypeRef version="any" ref="acs:DT_03-WE-NH"/>
 						</DayTypeAssignment>
-						<DayTypeAssignment version="any" order="1" id="hde:DayTypeAssignment:DayAsgn_2010-11-14">
+						<DayTypeAssignment version="any" order="1" id="acs:2010-11-14">
 							<Description>Sunday 2010-11-14</Description>
 							<Date>2010-11-14</Date>
-							<DayTypeRef version="any" ref="hde:DayType:DT_03-WE-NH"/>
+							<DayTypeRef version="any" ref="acs:DT_03-WE-NH"/>
 						</DayTypeAssignment>
 					</dayTypeAssignments>
 				</ServiceCalendarFrame>
+				<ResourceFrame version="1.0" id="acs:ACS@Common_Resources">
+					<!--- ======= CODESPACEs======== -->
+					<codespaces>
+						<Codespace id="acs">
+							<Xmlns>acs</Xmlns> 
+							<XmlnsUrl>http://autocarssuperbe.fr</XmlnsUrl>
+							<Description>Service data </Description>
+						</Codespace>
+					</codespaces>
+					<!--- =======FRAME DEFAULTS======== -->
+					<FrameDefaults>
+						<DefaultCodespaceRef ref="acs"/>
+					</FrameDefaults>
+					<organisations>
+						<Operator version="1.0" id="acs:ACS">
+							<Name>Autocars superbe</Name>
+							<Locale>
+								<DefaultLanguage>fr</DefaultLanguage>
+							</Locale>
+							<ContactDetails>
+								<Phone>+33-1-675-9876</Phone>
+								<Url>http://autocarssuperbe.fr</Url>
+							</ContactDetails>
+						</Operator>
+					</organisations>
+				</ResourceFrame>
 			</frames>
 		</CompositeFrame>
 	</dataObjects>
