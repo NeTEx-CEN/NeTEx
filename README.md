@@ -9,7 +9,7 @@ Version 1.10 - Base version plus minor fixes comprising
    * Rollup of fixes  and additional documentation on other fixes. 
    * Corrections to  integration of NK  1.09.
 
-The scema is broken down systematically into small modualr files; generally for each functional package in the design model there are two xml schema files
+The scema is broken down systematically into small modular files; generally for each functional package in the design model there are two xml schema files
                     netex_xxxx_suppport.xsd   - containing data type  and ref definitions
                     netex_xxxx_version.xsd    - containg the element definitions
 See the NeTEx UML Physical and Conceptual models for an UML view 
@@ -40,11 +40,16 @@ There is also an Oxygen project file
 
 ## 1.10 Summary of Changes since v1.11 
 
-### 2019.03.07 NJSK-Fix Other  Delete spuriors refernces in .ssp  file
+
+### 2019.03.07 MSK Fix Make __InfrastructurePointRef__ and __InfrastructureLinkRef__ abstract
+ * _Updates to xml schema_:  
+ 	* netex_networkInfrastructure_support.xsd 
+
+### 2019.03.07 NJSK-Fix Other  Delete spurious refernces in .ssp  file
   * _Updates to xml schema_:  
  	* netex_resourceFrame_version.xsd 
 
-### 2019.03.07  NJSK-Fix FRAMEWORK - Correct Type of __VersionFrameRef__ to be _VersionFrameRefStructure_ , correct substitution group on __ResoucreFrameRef__ to be __VersionFrameRef__
+### 2019.03.07  NJSK-Fix FRAMEWORK - Correct Type of __VersionFrameRef__ to be _VersionFrameRefStructure_ , correct substitution group on __ResourceFrameRef__ to be __VersionFrameRef__
   * _Updates to xml schema_:  
  	* netex_resourceFrame_version.xsd 
 
@@ -272,7 +277,7 @@ UK-57 Add Allow list of MachineReadable  enumerations, add open ended TYPE OF MA
         * Netex_tap_tsi_B2-1180.xml
         * Netex_tap_tsi_tcvs_irt_1.xml
         * Netex_tap_tsi_B3.xml
-        * Netex_tap_trainhotel_SalesPackage_2.xml
+        * Netex_tap_Train_Hotel_SalesPackage_2.xml
         * Netex_101.21_TflGeographicFares_UnitZone_MultipleProducts
          
  			
