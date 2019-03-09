@@ -26,10 +26,13 @@
 				</Date>
 				<Date>
 					<Modified>2018-04-04</Modified>Fix:  SalesOfferPackageXXXXXs  shouls be salesOfferPackageXXXXXs   
-				</Date> 
-					<Date>
+				</Date>
+				<Date>
 					<Modified>2018-06-024</Modified>Fix:  GroupOfsalesOfferPackages  shouls be GroupOSalesOfferPackages   
-				</Date>			 
+				</Date>
+				<Date>
+					<Modified>2018-06-024</Modified>EURA-78 Allow more than one refernece a  GroupsOfSalesOfferPackageRef  from  SalesOfferPackage (ie make relationship many to many)
+				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the SALES OFFER PACKAGE types.</p>
@@ -46,7 +49,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
+				 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -71,7 +74,7 @@ Rail transport, Roads and Road transport
 		</xsd:appinfo>
 		<xsd:documentation>NeTEx: SALES OFFER PACKAGE  types.</xsd:documentation>
 	</xsd:annotation>
-	<!-- ===ENTIITY IN VERSION IN FRAME====Used in SERVICE FRAME)=================================================== --> 
+	<!-- ===ENTIITY IN VERSION IN FRAME====Used in SERVICE FRAME)=================================================== -->
 	<xsd:group name="SalesOfferPackageInFrameGroup">
 		<xsd:annotation>
 			<xsd:documentation>SALES OFFER PACKAGEs of a FARE FRAME.</xsd:documentation>
@@ -211,7 +214,14 @@ Rail transport, Roads and Road transport
 		<xsd:sequence>
 			<xsd:element ref="PrivateCode" minOccurs="0"/>
 			<xsd:group ref="SalesOfferPackageCommonGroup"/>
-			<xsd:element ref="GroupOfSalesOfferPackagesRef" minOccurs="0"/>
+			<xsd:choice minOccurs="0">
+				<xsd:element ref="GroupOfSalesOfferPackagesRef"/>
+				<xsd:element name="groupsOfSaleOfferPackages" type="groupOfSalesOfferPackageRefs_RelStructure">
+					<xsd:annotation>
+						<xsd:documentation>Reference to multiple GROUP of SALES OFFER PACKAGEs with whicj this SALES OFFER PACKAGE shares properties. </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:choice>
 			<xsd:element name="salesOfferPackageSubstitutions" type="salesOfferPackageSubstitutions_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>SALES TRANSACTIONs in SALES OFFER PACKAGE.</xsd:documentation>

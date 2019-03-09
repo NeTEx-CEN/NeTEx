@@ -40,6 +40,18 @@ There is also an Oxygen project file
 
 ## 1.10 Summary of Changes since v1.11 
 
+### 2019.03.08 EURA-78 FARES Allow more than one reference a  GroupsOfSalesOfferPackageRef  from  SalesOfferPackage (ie make relationship many to many)
+  * _Updates to xml schema_:   
+  	* netex_salesOfferPackage_version.xsd
+
+### 2019.03.08 EURA-54 FARES Add a SeatRef  Add a __PassengerSeatRef__  to __ServiceValidtyParametersGroup__ of  __accesssRighTparamaterAssignment__
+  	* Add   TravelDocumentRef and  RetailDeviceRef parameter to SalesTeanaction
+	* Fix make RetailingOrgaisationRef an OrganisationOperatorRefStructure and not an OperatorRefStructure
+  * _Updates to xml schema_:   
+  	* netex_vehicleSeating_support.xsd
+ 	* netex_accessRightParameter_version.xsd
+ 	* netex_salesTransaction_version.xsd
+	 
 ### 2019.03.08 EURA-43 FARES Add extra relationships to __FareZone__ to indicate who who manages it: __AuthorityRef__ / __OperatorRef__,   __GroupOfOperatorsRef__, 
   * _Updates to xml schema_:   
  	* netex_fareZone_version.xsd
