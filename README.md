@@ -40,6 +40,10 @@ There is also an Oxygen project file
 
 ## 1.10 Summary of Changes since v1.11 
 
+### 2019.03.08  EURA 51 Add  enumeration values to __RoundTripType__ ; _returnOut_, _returnBack_  so as to dinstingusih legs 
+  * _Updates to xml schema_:  
+ 	* netex_usageParameterTravel_support.xsd 
+
 ### 2019.03.08  UK-14 PART2 UK-44 Improve sopport for defining large tariffs in  modular fashion
 	* Add additional  __groupsOfOperators__  to __Network__. 
 	* Also __UseToExclude__ flag to __GroupOfOperators__'
@@ -55,6 +59,8 @@ There is also an Oxygen project file
 
 ### 2019.03.08  UK-14 FARES Add extra __ScopingMethod__  attribute to __FareZone__ with enum values  _explicitStops_,   _IimplicitSpatialProjection_, _ImplicitSpatialProjection
 		UK-13 FARES  Add extra  ZoneTopologyEnumeration   attribute  enum values   annular,   sequence, overlappingSequence		 
+  		UK-18  Specify  fare stages  on a   pattern: Add extra attributes to __FarePointInPattern__     _IsFareStage_  
+		EURA  Allow stops to be excluded from a routing    Add extra attributes to __FarePointInPattern__  _IsForbidden_ 
   * _Updates to xml schema_:  
  	* netex_fareZone_support.xsd 
  	* netex_fareZone_version.xsd 
