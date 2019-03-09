@@ -40,14 +40,45 @@ There is also an Oxygen project file
 
 ## 1.10 Summary of Changes since v1.11 
 
+### 2019.03.08  UK-14 PART2 UK-44 Improve sopport for defining large tariffs in  modular fashion
+	* Add additional  __groupsOfOperators__  to __Network__. 
+	* Also __UseToExclude__ flag to __GroupOfOperators__'
+	* Also add _flexible_ and _urban_ to _TypeOfLine_ enumeration'	 
+	* Add __UseToExclude__ flag to __GroupOfLines__
+	* Add __UseToExclude__ flag to __GroupOfDistanceMatrixElements__
+  * _Updates to xml schema_:  
+ 	* netex_line_support.xsd 
+ 	* netex_line_version.xsd 
+ 	* netex_transportOrganisation_support.xsd 
+	* netex_transportOrganisation_version.xsd 
+	* netex_distanceMatrixElementVersion_version.xsd 
 
-### 2019.03.07 MSK Fix Make __InfrastructurePointRef__ and __InfrastructureLinkRef__ abstract
+### 2019.03.08  UK-14 FARES Add extra __ScopingMethod__  attribute to __FareZone__ with enum values  _explicitStops_,   _IimplicitSpatialProjection_, _ImplicitSpatialProjection
+		UK-13 FARES  Add extra  ZoneTopologyEnumeration   attribute  enum values   annular,   sequence, overlappingSequence		 
+  * _Updates to xml schema_:  
+ 	* netex_fareZone_support.xsd 
+ 	* netex_fareZone_version.xsd 
+
+### 2019.03.07 UK-46 FRAMEWORK & FARES Add open   __PaymentMethod__ as first class object  so that user defined methods can be added.
+		Add _ePayDevice, ePayAccount and _mileagePoints_ to __PaymentMethod__ enum
+		
+  * _Updates to xml schema_:  
+ 	* netex_travelRights_support.xsd 
+ 	* netex_travelRights_version.xsd 
+ 	* netex_salesDistribution_support.xsd 
+
+
+### 2019.03.07 NJSK FARES UK-74 Add enumerations to __TariffBasis__;  _zoneToZone_, _pointToPoint_, _discount_. Also add documentation annotations   to existing annotations
+ * _Updates to xml schema_:  
+ 	* netex_fareStructureElement_support.xsd 
+
+### 2019.03.07 NJSK Fix Make __InfrastructurePointRef__ and __InfrastructureLinkRef__ abstract
  * _Updates to xml schema_:  
  	* netex_networkInfrastructure_support.xsd 
 
-### 2019.03.07 NJSK-Fix Other  Delete spurious refernces in .ssp  file
-  * _Updates to xml schema_:  
- 	* netex_resourceFrame_version.xsd 
+### 2019.03.07 NJSK-Fix Other  Delete spurious references in xmplspy  netext.ssp  file
+  * _Updates to other files_:  
+ 	* netex.spp 
 
 ### 2019.03.07  NJSK-Fix FRAMEWORK - Correct Type of __VersionFrameRef__ to be _VersionFrameRefStructure_ , correct substitution group on __ResourceFrameRef__ to be __VersionFrameRef__
   * _Updates to xml schema_:  
@@ -72,6 +103,9 @@ There is also an Oxygen project file
 ### 2019.03.05 UK-96 FRAMEWORK Add   prerequisites relationship to __VersionFrame__
   * _Updates to xml schema_:  
  	* netex_versionFrame_version.xsd 
+ 	
+   * _Updates to examples_:  
+     * Many fares exampels updated to indicate prerequisites. 
 
 ### 2019.03.05 UK-09 FARES Add TypeOfTariffRef  and FareElementInSequenceRef to TravelSpecification  so that cann correlty specify choices
   * _Updates to xml schema_:  
