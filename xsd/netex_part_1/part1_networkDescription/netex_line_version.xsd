@@ -39,6 +39,12 @@
 				<Date>
 					<Modified>2017-04-22 CR16 Timetable pdf links to Line</Modified>
 				</Date>
+				<Date>
+					<Modified>2019-03-08</Modified>UK-44 Add additional  groupsOfOperators  to Network.   
+											 Also add flexible and urban to LineType enumeration	. 
+											 Also add tariff and scheduling to GroupOfLinesType enumeration	
+											Add UseToExclude flag to GroupOfLines
+				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the LINE types.</p>
@@ -208,6 +214,11 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Elements for GROUP OF LINES.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
+			<xsd:element name="UseToExclude" type="xsd:boolean" default="false" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether contents of Group should be used to exclude (true) from a large list . The default is include  (i.e.false) </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element name="members" type="lineRefs_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>LINEs in GROUP OF LINEs.</xsd:documentation>
@@ -542,6 +553,11 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="TransportOrganisationRef" minOccurs="0"/>
+			<xsd:element name="groupsOfOperators" type="groupsOfTransportOrganisationsRefs_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Groups of OPERATORs  AUTHORTies or OPERATORS) (in NETWORK.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element name="groupsOfLines" type="groupsOfLinesInFrame_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Groups of LINEs in NETWORK.</xsd:documentation>
@@ -549,7 +565,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element name="tariffZones" type="tariffZoneRefs_RelStructure" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>TariffZOnes in NETWORK.</xsd:documentation>
+					<xsd:documentation>TARIFF ZONEs in NETWORK.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
