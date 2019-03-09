@@ -27,9 +27,15 @@
 				<Date>
 					<Modified>2018-10-01</Modified>NK: Correct  substitution group on FarePointInPattern  to PointInLinkSequence
 				</Date>
-			<Date>
-					<Modified>20109-02-25</Modified>UK-05 Fix: Introduce a dummy TariffZoneRref_ so that FareZone can be a specialisation of TariffZone. Workaround to XMLSPY sg  issue.
-				</Date>		
+				<Date>
+					<Modified>20109-02-25</Modified>UK-05 Fix: Introduce a dummy TariffZoneRef_ so that FareZone can be a specialisation of TariffZone. Workaround to XMLSPY sg  issue.
+				</Date>
+						<Date>
+					<Modified>20109-02-25</Modified>UK-14  Add extra  ScopingMethod  attribute to FareZone with enum values   explicitStops,   implicitSpatialProjection, implicitSpatialProjection
+						</Date> 
+				<Date>
+					<Modified>20109-02-25</Modified>UK-13  Add extra  ZoneTopologyEnumeration   attribute  enum values   annular,   sequence, overlappingSequence
+						</Date>	 
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines FARE ZONE types.</p>
 				</Description>
@@ -219,17 +225,54 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Allowed values for Fare Zone Topology.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:normalizedString">
-			<xsd:enumeration value="overlapping"/>
-			<xsd:enumeration value="honeycomb"/>
-			<xsd:enumeration value="ring"/>
-			<xsd:enumeration value="nested"/>
-			<xsd:enumeration value="tiled"/>
+			<xsd:enumeration value="overlapping">
+				<xsd:annotation>
+					<xsd:documentation>Zones are are of  arbitrary shapes and may overlap.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="honeycomb">
+				<xsd:annotation>
+					<xsd:documentation>Zones arearranged as a tiled honeycomb of regular polygons (e.g. Hexagons, squares etc. The zones do not overlap.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="ring">
+				<xsd:annotation>
+					<xsd:documentation>Zones arearranged in rings . The nested inner zones are included in any containing  outer zones.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			
+			<xsd:enumeration value="annular">
+				<xsd:annotation>
+					<xsd:documentation>Zones are arranged in tiled hollow rings. The area of any  immediately nested zone  is excluded from the  containing  outer zone.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="nested">
+				<xsd:annotation>
+					<xsd:documentation>Zones are nested, that is some zones are fully contained within other zones and are automatically included if the outer zone is selected. They may also overlap their neighbours .</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="tiled">
+				<xsd:annotation>
+					<xsd:documentation>Zones are arranged as adjacent tiles or arbitrary shapes that do not overlap.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="sequence">
+				<xsd:annotation>
+					<xsd:documentation>Zones are arranged as adjacent tiles in sequence that touch at either or both ends. They do not overlap.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			
+			<xsd:enumeration value="sequence">
+				<xsd:annotation>
+					<xsd:documentation>Zones are arranged as adjacent tiles in sequence that touch at either or both ends. They may partially overlap such that some stops are in both zones.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
 			<xsd:enumeration value="other"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:complexType name="fareZoneRefs_RelStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for a list of FARE Zones.</xsd:documentation>
+			<xsd:documentation>Type for a list of FARE ZONEs</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="oneToManyRelationshipStructure">
@@ -239,4 +282,27 @@ Rail transport, Roads and Road transport
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
+	<!-- ====FARE ZONE .======================================================== -->
+	<xsd:simpleType name="ScopingMethodEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for FARE ZONE Scoping Method</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="explicitStops">
+				<xsd:annotation>
+					<xsd:documentation>Stops that are members of the zone are explicitly listed.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="implicitSpatialProjection" >
+				<xsd:annotation>
+					<xsd:documentation>Any stop that is spatially contained within the zone is assumed to be a  member.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="explicitPeripheryStops">
+				<xsd:annotation>
+					<xsd:documentation>The extent of the zone is indicated by a set of Stops marking the border points on the periphery of teh ZOne. Any stop that is spatially contained within the indicated zone is assumed to be a  member.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
 </xsd:schema>

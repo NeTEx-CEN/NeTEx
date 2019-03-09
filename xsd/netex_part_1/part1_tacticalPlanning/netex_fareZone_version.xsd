@@ -26,8 +26,13 @@
 					<Modified>2019-10-01</Modified>UK-20 Add contains relationship
 				</Date>
 				<Date>
-					<Modified>20109-02-25</Modified>UK-05 Fix: Introduce a dummy Tariffzone  so that Fare zone can be a specialisation of TariffZone. Workaround to XMLSPY issue.
-				</Date>		
+					<Modified>2019-02-25</Modified>UK-05 Fix: Introduce a dummy Tariffzone  so that Fare zone can be a specialisation of TariffZone. Workaround to XMLSPY issue.
+				</Date>
+				<Date>
+					<Modified>20109-02-25</Modified>UK-14  Add extra  ScopingMethod  attribute to FareZone with enum values   explicitStops,   implicitSpatialProjection, implicitSpatialProjection
+							UK-18  Specify  fare stages  ona   pattern: Add extra attributes to FarePointInPattern     IsFareStage   
+							EURA  Allow stops to be excluded from a routing    Add extra attributes to FarePointInPattern      _IsForbidden_ 
+						</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. FARE ZONE types.</p>
 				</Description>
@@ -369,13 +374,23 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element name="PresentationPosition" type="SeriesPresentationEnumeration" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Relative positiion to be b given to name of point when presenting it in a list of stops (Left, right etc)</xsd:documentation>
+					<xsd:documentation>Relative positiion to be given to name of point when presenting it in a list of stops (Left, right etc). Allows TAP itinerary to be constructed. </xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="InterchangeAllowed" type="xsd:boolean" minOccurs="0">
+			<xsd:element name="isForbidden" type="xsd:boolean" default="false" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether use of  fare point is forbidden- can be used to  explicitly exclude certain routings  Default is false.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="InterchangeAllowed" type="xsd:boolean" default="true" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Whether interchange to another service is allowed at this point.
-</xsd:documentation>
+ Default is true.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="isFareStage" type="xsd:boolean" default="true" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether stop is considered to be a fare stage</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -542,6 +557,11 @@ Rail transport, Roads and Road transport
 			<xsd:element name="ZoneTopology" type="ZoneTopologyEnumeration" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Classification of zone topology.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ScopingMethod" type="ScopingMethodEnumeration" default="explicitStops" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indication of how member stops of a FARE ZONE are specified (ExplicitStops, ImplicitSpatialProjection etc) .  Default is ExplicitStops</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="fareSections" type="fareSections_RelStructure" minOccurs="0">
