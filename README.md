@@ -40,11 +40,15 @@ There is also an Oxygen project file
 
 ## 1.10 Summary of Changes since v1.11 
 
-### 2019.03.08  EURA 51 Add  enumeration values to __RoundTripType__ ; _returnOut_, _returnBack_  so as to dinstingusih legs 
+### 2019.03.08 EURA-43 FARES Add extra relationships to __FareZone__ to indicate who who manages it: __AuthorityRef__ / __OperatorRef__,   __GroupOfOperatorsRef__, 
+  * _Updates to xml schema_:   
+ 	* netex_fareZone_version.xsd
+ 	
+### 2019.03.08 EURA 51 FARESAdd  enumeration values to __RoundTripType__ ; _returnOut_, _returnBack_  so as to dinstingusih legs 
   * _Updates to xml schema_:  
  	* netex_usageParameterTravel_support.xsd 
 
-### 2019.03.08  UK-14 PART2 UK-44 Improve sopport for defining large tariffs in  modular fashion
+### 2019.03.08 UK-14 PART2 UK-44 Improve sopport for defining large tariffs in  modular fashion
 	* Add additional  __groupsOfOperators__  to __Network__. 
 	* Also __UseToExclude__ flag to __GroupOfOperators__'
 	* Also add _flexible_ and _urban_ to _TypeOfLine_ enumeration'	 
