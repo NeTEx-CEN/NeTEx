@@ -42,6 +42,26 @@ There is also an Oxygen project file:
 
 ## 1.10 Summary of Changes since v1.11 
 __
+
+
+
+### 2019.03.10 EURA-91 *FARES*   Add _sameProductLongerJourney_ and _sameProductShorterJourney_ to enumerated values for ___TypeOfExchange___ attribute on   ___Exchanging___ usage parameter. 
+
+  * _Updates to xml schema_:     	  
+ 	* netex_usagwParameterAfterSales_support.xsd
+ 	
+### 2019.03.10  EURA-87 *FARES* EURA-87 Specify if start  of validity is variable or fixed
+  * Add a ___StartConstraint___ attribute to ___UsageValidityPeriod___  to  specify if startday  is variable or fixed. 
+  * Add  ___UsageStartConstraintTypeEnumeration___ : _variable_ /  _fixed_. 
+  * Add  ___FixedStartDayTypes___  day type so that any required day of week, day of month, month of year can be indicated.
+  * Also add _enrolment_ and  _reservation_ enum value to ___UsageTriggerEnumeration___.
+  * Also add _eligibilityExpiry_  enum value to ___UsageEndEnumeration___.
+  * EURA-94  Add _networks_, _operators_ and c_ountries_ to enum values for ___StepLimit___.
+ 
+  * _Updates to xml schema_:   
+   	* netex_usagwParameterTravel_support.xsd
+ 	* netex_usageParameterTravel_version.xsd
+
 ### 2019.03.10  UK-38 *FARES*  Add ___MinimumAccess___ and ___MaximumAccess___ to __FareStructureElementinSequence___.
 
   * _Updates to xml schema_:     	  
