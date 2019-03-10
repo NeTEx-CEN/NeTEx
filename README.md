@@ -8,14 +8,16 @@ Version 1.10 - Base version plus minor fixes comprising
    * The approved 1.1 CRs 1-50
    * Rollup of fixes  and additional documentation on other fixes. 
    * Corrections to  integration of NK  1.09.
+   * 1.10 CRS from Meeting Feb 2019 
 
-The scema is broken down systematically into small modular files; generally for each functional package in the design model there are two xml schema files
-                    netex_xxxx_suppport.xsd   - containing data type  and ref definitions
-                    netex_xxxx_version.xsd    - containg the element definitions
+### Note on the schema
+The schema is broken down systematically into small modular files; generally for each functional package in the design model  (See UML Model) there are two xml schema files
+   * netex_xxxx_suppport.xsd   - containing data type  and ref definitions
+   * netex_xxxx_version.xsd    - containing the element definitions
 See the NeTEx UML Physical and Conceptual models for an UML view 
 
-The Part 1, Part 2 & Part3 Schemas include minor  corrections since the issue of the Version 1.0 documents. 
-The Version 1.1 documents cover the changes
+The Part 1, Part 2. & Part 3 Schemas include minor  corrections and enhancements since the issue of the Version 1.0 documents. 
+The Version 1.1 documents cover the changes.
 ----
 ## Getting Started
 There are two main root schemas:
@@ -29,10 +31,10 @@ In addition:
 There are **XML examples** of the use of both protocols, see */examples* subdirectory.
  
 ### Support for XML editors
-There is an XMLSpy project file in the root directory  that provides an organised view  of the schema and examples
+There is an XMLSpy project file in the root directory  that provides an organised view  of the schema and examples:
   - NeTEx.spp
 
-There is also an Oxygen project file
+There is also an Oxygen project file:
   - NeTEx.xpr
 ----
 # Change Log
@@ -40,32 +42,56 @@ There is also an Oxygen project file
 
 ## 1.10 Summary of Changes since v1.11 
 
-### 2019.03.08 EURA-78 FARES Allow more than one reference a  GroupsOfSalesOfferPackageRef  from  SalesOfferPackage (ie make relationship many to many)
+### 2019.03.10 EURA-81 *FARES*  Make relationshiop with TypeOfFareProduct many-to-many.
+
+  * _Updates to xml schema_:     	  
+ 	* netex_fareProduct_version.xsd
+
+### 2019.03.10 UK-8 *FRAMEWORK* Add ___LayerRef___ to ___VersionFrame__ and to ___TypeOfFrame___.
+
+  * _Updates to xml schema_:     	 
+ 	* netex_layer_support.xsd
+ 	* netex_versionFrame_version.xsd				 
+
+### 2019.03.10 UK-28 *FARES* Add a ___CustomerAccountRef___ to  ___FareContract___.
+
+  * _Updates to xml schema_:     	 
+ 	* netex_salesContract_version.xsd
+ 	* netex_salesTransaction_version.xsd
+
+### 2019.03.09 UK-12 *FARES* Add ___GroupOfOperatorRef___  to ___Tariff___ (ie make relationship many to many)
+  * _Updates to xml schema_:   
+  	* netex_fareStructureElement_version.xsd
+	
+### 2019.03.09 EURA-78 *FARES* Allow more than one reference to a ___GroupsOfSalesOfferPackageRef___  from a ___SalesOfferPackage___ (i.e. make relationship many-to-many.)
   * _Updates to xml schema_:   
   	* netex_salesOfferPackage_version.xsd
 
-### 2019.03.08 EURA-54 FARES Add a SeatRef  Add a __PassengerSeatRef__  to __ServiceValidtyParametersGroup__ of  __accesssRighTparamaterAssignment__
-  	* Add   TravelDocumentRef and  RetailDeviceRef parameter to SalesTeanaction
-	* Fix make RetailingOrgaisationRef an OrganisationOperatorRefStructure and not an OperatorRefStructure
+### 2019.03.08 EURA-54 *FARES* Add a Seat reference
+  * Add a ___PassengerSeatRef___  to ___ServiceValidityParameterGroup___ of  ___accessRightParamaterAssignment___.
+  	* Also Add  ___TravelDocumentRef___ and  ___RetailDeviceRef___ parameter to ___SalesTransaction____.
+	* Also Fix: make ___RetailingOrgahisationRef___ an ___OrganisationOperatorRefStructure___ and not an ___OperatorRefStructure____.
   * _Updates to xml schema_:   
-  	* netex_vehicleSeating_support.xsd
+  	* netex_vehicleSeating_support.xsd (New)
+  	* netex_all_objects_reusable_components.xsd
+  	* netex.spp
  	* netex_accessRightParameter_version.xsd
  	* netex_salesTransaction_version.xsd
 	 
-### 2019.03.08 EURA-43 FARES Add extra relationships to __FareZone__ to indicate who who manages it: __AuthorityRef__ / __OperatorRef__,   __GroupOfOperatorsRef__, 
+### 2019.03.08 EURA-43 *FARES* Add new relationship to ___FareZone___ to indicate who who manages it: ___AuthorityRef___ / ___OperatorRef___,   ___GroupOfOperatorsRef___.
   * _Updates to xml schema_:   
  	* netex_fareZone_version.xsd
  	
-### 2019.03.08 EURA 51 FARESAdd  enumeration values to __RoundTripType__ ; _returnOut_, _returnBack_  so as to dinstingusih legs 
+### 2019.03.08 EURA 51 *FARES* Add  enumeration values to ___RoundTripType___ ; _returnOut_, _returnBack_  so as to distinguish legs.
   * _Updates to xml schema_:  
  	* netex_usageParameterTravel_support.xsd 
 
-### 2019.03.08 UK-14 PART2 UK-44 Improve sopport for defining large tariffs in  modular fashion
-	* Add additional  __groupsOfOperators__  to __Network__. 
-	* Also __UseToExclude__ flag to __GroupOfOperators__'
-	* Also add _flexible_ and _urban_ to _TypeOfLine_ enumeration'	 
-	* Add __UseToExclude__ flag to __GroupOfLines__
-	* Add __UseToExclude__ flag to __GroupOfDistanceMatrixElements__
+### 2019.03.08 PART2 UK-44, UK-69 *FARES* Improve support for defining large tariffs in  modular fashion
+  * Add additional  ___groupsOfOperators___  to ___Network___. 
+	* Also ___UseToExclude___   attribute to ___GroupOfOperators___.
+	* Also add _flexible_ and _urban_ to ___TypeOfLine___ enumeration.	 
+	* Add ___UseToExclude___ flag to ___GroupOfLines___.
+	* Add ___UseToExclude___ flag to ___GroupOfDistanceMatrixElements___.
   * _Updates to xml schema_:  
  	* netex_line_support.xsd 
  	* netex_line_version.xsd 
@@ -73,180 +99,181 @@ There is also an Oxygen project file
 	* netex_transportOrganisation_version.xsd 
 	* netex_distanceMatrixElementVersion_version.xsd 
 
-### 2019.03.08  UK-14 FARES Add extra __ScopingMethod__  attribute to __FareZone__ with enum values  _explicitStops_,   _IimplicitSpatialProjection_, _ImplicitSpatialProjection
-		UK-13 FARES  Add extra  ZoneTopologyEnumeration   attribute  enum values   annular,   sequence, overlappingSequence		 
-  		UK-18  Specify  fare stages  on a   pattern: Add extra attributes to __FarePointInPattern__     _IsFareStage_  
-		EURA  Allow stops to be excluded from a routing    Add extra attributes to __FarePointInPattern__  _IsForbidden_ 
+### 2019.03.08  UK-14 *FARES* Improvements to ___FareZone___:
+ * Add new ___ScopingMethod___  attribute to ___FareZone___ with   values  _explicitStops_,   _implicitSpatialProjection_, _implicitSpatialProjection.
+ * UK-13 *FARES*  Add extra  ___ZoneTopology___ enumeration  values   _annular_,   _sequence_, _overlappingSequence_.		 
+ * UK-18  Specify  fare stages  on a   pattern: Add new ___IsFareStage___ attribute to ___FarePointInPattern___.
+ *EURA  Allow stops to be excluded from a routing.    Add new  ___IsForbidden___ attribute  to ___FarePointInPattern___.
   * _Updates to xml schema_:  
  	* netex_fareZone_support.xsd 
  	* netex_fareZone_version.xsd 
 
-### 2019.03.07 UK-46 FRAMEWORK & FARES Add open   __PaymentMethod__ as first class object  so that user defined methods can be added.
-		Add _ePayDevice, ePayAccount and _mileagePoints_ to __PaymentMethod__ enum
+### 2019.03.07 UK-46 *FRAMEWORK* & *FARES* Add open   ___PaymentMethod___ as first class object  so that user defined methods can be added. 
 		
   * _Updates to xml schema_:  
  	* netex_travelRights_support.xsd 
  	* netex_travelRights_version.xsd 
  	* netex_salesDistribution_support.xsd 
 
-
-### 2019.03.07 NJSK FARES UK-74 Add enumerations to __TariffBasis__;  _zoneToZone_, _pointToPoint_, _discount_. Also add documentation annotations   to existing annotations
+### 2019.03.07 NJSK *FARES* UK-74 Add enumerations to ___TariffBasis__;  _zoneToZone_, _pointToPoint_, _discount_. 
+ * Also add documentation annotations   to existing annotations.
  * _Updates to xml schema_:  
  	* netex_fareStructureElement_support.xsd 
 
-### 2019.03.07 NJSK Fix Make __InfrastructurePointRef__ and __InfrastructureLinkRef__ abstract
+### 2019.03.07 NJSK Fix *FRAMEWORK* Make ___InfrastructurePointRef___ and ___InfrastructureLinkRef___ abstract.
  * _Updates to xml schema_:  
  	* netex_networkInfrastructure_support.xsd 
 
-### 2019.03.07 NJSK-Fix Other  Delete spurious references in xmplspy  netext.ssp  file
+### 2019.03.07 NJSK-Fix *HOUSEKEEPING*  Delete spurious references in xmplspy  netext.ssp  file.
   * _Updates to other files_:  
  	* netex.spp 
 
-### 2019.03.07  NJSK-Fix FRAMEWORK - Correct Type of __VersionFrameRef__ to be _VersionFrameRefStructure_ , correct substitution group on __ResourceFrameRef__ to be __VersionFrameRef__
+### 2019.03.07  NJSK-Fix *FRAMEWORK* - Correct Type of ___VersionFrameRef___ to be _VersionFrameRefStructure_ , correct substitution group on ___ResourceFrameRef___ to be ___VersionFrameRef___.
   * _Updates to xml schema_:  
  	* netex_resourceFrame_version.xsd 
 
-### 2019.03.07 EURA-40 FARES Add support for  Subscriptions
-	Subscriptions Add onlineAccount to enumerations  of DistributionChannelType
-	Add _subscriptionOnly_, also _onCheckIn_, _inAdvanceOnly_, _beforeBoardingOnly_ , _onBoardingOnly_  to  __PaymentMoment__ enum.  
-	Fix: add __PaymentMoment__ to __PurchaseWindow__
+### 2019.03.07 EURA-40 *FARES* Add support for  Subscriptions
+ * Basic steps
+	* Subscriptions Add _onlineAccount_ to enumerations  of ___DistributionChannelType___
+ 	* Add _subscriptionOnly_, also _onCheckIn_, _inAdvanceOnly_, _beforeBoardingOnly_ , _onBoardingOnly_  to  ___PaymentMoment___ enum.  
+ 	* Fix: add ___PaymentMoment___ to ___PurchaseWindow___
   * _Updates to xml schema_:  
  	* netex_salesDistribution_support.xsd 
  	* netex_travelRights_support.xsd 
 
-### 2019.03.05 UK-24 FRAMEWORK & FARES Add open   __PaymentMethod__ as first class object  so that user defined methods can be added.
-		Add _ePayDevice, ePayAccount and _mileagePoints_ to __PaymentMethod__ enum
+### 2019.03.05 UK-24 *FRAMEWORK* & *FARES* Add open   ___PaymentMethod___ as first class object  so that user defined methods can be added.
+  * Add _ePayDevice_, _ePayAccount_ and _mileagePoints_ to ___PaymentMethod___ enum
 		
   * _Updates to xml schema_:  
  	* netex_travelRights_support.xsd 
  	* netex_travelRights_version.xsd 
  	* netex_salesDistribution_version.xsd 
  	
-### 2019.03.05 UK-96 FRAMEWORK Add   prerequisites relationship to __VersionFrame__
+### 2019.03.05 UK-96 *FRAMEWORK* Add   ___prerequisites___ relationship to ___VersionFrame___.
   * _Updates to xml schema_:  
  	* netex_versionFrame_version.xsd 
  	
    * _Updates to examples_:  
      * Many fares exampels updated to indicate prerequisites. 
 
-### 2019.03.05 UK-09 FARES Add TypeOfTariffRef  and FareElementInSequenceRef to TravelSpecification  so that cann correlty specify choices
+### 2019.03.05 UK-09 *FARES* Add ___TypeOfTariffRef___  and ___FareElementInSequenceRef___ to ___TravelSpecification___  so that can  correctly specify choices.
   * _Updates to xml schema_:  
  	* netex_salesTransaction_version.xsd 
 
-### 2019.03.05 UK-19 FARES Fix __PriceGroup__ should be abstract
+### 2019.03.05 UK-19 *FARES* Fix ___PriceGroup___ should be abstract.
   * _Updates to xml schema_:  
  	* netex_farePrice_version.xsd 
 
-### 2019.03.05 NJSK-Fix PART1 Make alternative name and date visible on __Direction__.  
+### 2019.03.05 NJSK-Fix *PART1* Make alternative name and date visible on ___Direction___.  
  * _Updates to xml schema_: 
  	* netex_route_version.xsd 
 
-### 2019.03.05 UK-41 FARES Revise __UserProfile_ to allow more than one enum values for __ProofOfEligibilty__
-  * _Updates to xml schema_: 
+### 2019.03.05 UK-41 *FARES* Revise ___UserProfile___ to allow more than one enum values for ___ProofOfEligibilty____.
+  * _Updates to xml schema_: ____
  	* netex_usageParameterEligibility_support.xsd 
  	* netex_usageParameterEligibility_version.xsd 
 
-### 2019.03.02 UK-18 FARES Add values for __TypeOfInterval__ 
+### 2019.03.02 UK-18 *FARES* Add values for ___TypeOfInterval___ 
  * _Updates to xml schema_: 
  	* netex_geographicalStructureFactor_support.xsd 
 
-### 2019.03.02 UK-00 FARES Add  further values to __GenericParameterAssignment__
-__TypeOfConcessionRef__, __TypeOfUsageParameterRef__,  __VehicleType Ref__, __TypeOfLineRef__  
+### 2019.03.02 UK-80 *FARES* Add  further values to ___GenericParameterAssignment____, 
+__TypeOfConcessionRef___, ___TypeOfUsageParameterRef___,  ___VehicleType Ref___, ___TypeOfLineRef___.
  * _Updates to xml schema_: 
  	* netex_validityCondition_support.xsd
  	* netex_accessRightParameter_version.xsd
 
-### 2019.03.02 UK-41 FARES Add an additional functional operator to __GenericParameterAssignment__ to clarify use of groups :  
+### 2019.03.02 UK-41 *FARES* Add an additional functional operator to ___GenericParameterAssignment___ to clarify use of groups :  
 _oneOf_ /  _someOf_/  _allOf_
-	Also correct documentation on relational operators
+ * Also correct documentation on relational operators.
  * _Updates to xml schema_: 
  	* netex_validityCondition_support.xsd
  	* netex_accessRightParameter_version.xsd
 
-### 2019.03.01 EURA-(nk) FARES Add __DistanceMatrixInverseRef__ for backwards direction of reference. Revise constraints  
+### 2019.03.01 EURA-(nk) *FARES* Add ___DistanceMatrixInverseRef___ for backwards direction of reference. Revise constraints.  
  * _Updates to xml schema_: 
  	* netex_distanceMatriElement_support.xsd
  	* netex_distanceMatriElement_version.xsd
  	* netex_publication.xsd
  
-### 2019.02.28 EURA-10 FARES Improve __CustomePurchasePackage__
- * Fix correct case on customerPurchasePackageRefs
- * Allow  inlining of CustomerPurchasePackages in a FareCOntract
+### 2019.02.28 EURA-10 *FARES* Improve ___CustomerPurchasePackage___.
+ * Fix correct case on ___customerPurchasePackageRefs____.
+ * Allow  inlining of ___CustomerPurchasePackages___ in a ___FareContract____.
  * _Updates to xml schema_:
   	* netex_customerPurchasePackage_support.xsd
  	* netex_customerPurchasePackage_version.xsd
  	* netex_salesTransaction_version.xsd
 
-### 2019.02.21 UK-20 FARES Add contains relationship to __FareZone__
+### 2019.02.21 UK-20 *FARES* Add contains relationship to ___FareZone___.
  * _Updates to xml schema_:
  	* netex_fareZone_version.xsd
  * _Updates to xml examples_:
   	* uk_fxc_trip_First_WoE_Line48_stage+Passses.xsd
 
-### 2019.02.21 UK-57 FARES Add Allow list of __MachineReadable__  enumerations, add open ended TYPE OF MACHINE  READABILITY
-UK-57 Add Allow list of MachineReadable  enumerations, add open ended TYPE OF MACHINE  READABILITY
+### 2019.02.21 UK-57 *FARES* Add Allow list of ___MachineReadable___  enumerations, 
+ * ALso add open ended ___TypeOfMachineRedability___. 
  * _Updates to xml schema_:
  	* netex_travelDocument_support.xsd
 	* netex_travelDocument_version.xsd
 
-### 2019.02.21 UK-34 FARES TRAVEL DOCUMENT  should not be in FARE FRAME  - remove  
+### 2019.02.21 UK-34 *FARES* TRAVEL DOCUMENT  should not be in FARE FRAME  - remove.
  * _Updates to xml schema_:
  	* netex_travelDocument_version.xsd
 	* netex_fareFame_version.xsd
 		 
-### 2019.02.21 UK-07 FARES __FareTable__ - Allow direct containment of __FarePriceRef__ 
+### 2019.02.21 UK-07 *FARES* ___FareTable___ - Allow direct containment of ___FarePriceRef___.
 		
  * _Updates to xml schema_:
 	* netex_fareTable_version.xsd
- * _Updates to xml examples_:Various to drop unecessary cel wrappers	
+ * _Updates to xml examples_:Various to drop unecessary ___cells__ wrapper tags	
 
-### 2019.02.21 .No-Fix: PART2 Reapply 1.05  Fix Merge in correction  to spelling of AccountingTime. NB THis will break any existing documents that use AccountingTime.
- * _Updates to xml schema_:
-		* netex_duty_version.xsd
-
+ 
 ## 1.10 Summary of Changes since v1.09
 
 
-### 2019.02.21 .No-Fix PART2 Reapply 1.09  Fix Merge in correction  to spelling of AccountingTime. NB THis will break any existing documents that use AccountingTime.
+### 2019.02.21 .No-Fix *PART2* Reapply 1.09  Fix Merge in correction  to spelling of ___AccountingTime___. NB THis will break any existing documents that use ___AccountingTime___.
  * _Updates to xml schema_:
 		* netex_duty_version.xsd
 
-### 2019.02.21 .No-Fix FARES  Reapply 1.09  Fix up examples
+### 2019.02.21 .No-Fix *FARES*  Reapply 1.09  Fix up examples
  * _Updates to xml examples_:  fare examples, Norway examples
 
-### 2019.02.21 NJSK-Fix FRAMEWORK  Make dummy types abstract _TransportOrganisation_ 
+### 2019.02.21 NJSK-Fix *FRAMEWORK*  Make dummy types abstract ___TransportOrganisation___ .
+  * _Updates to xml schema_:
 		* netex_transportOrganisation_version.xsd
 
-### 2019.02.21 NJSK-Fix FRAMEWORK Reapply 1.09 Make Validity Conditions etc visible   [xsd only] 
+### 2019.02.21 NJSK-Fix *FRAMEWORK* Reapply 1.09 Make ___ValidityCondition___ etc visible   [xsd only] 
  * _Updates to xml schema_:
 		* netex_travelRights.xsd
         * netex_trainElement.xsd
 
-### 2019.02.21 NJSK-Fix: FRAMEWORK Reapply 1.09 Constraint changes and further clean up constraints  [xsd only] 
-					   (a) Fix keyref constraint on  TimingLinkInJourneyPattern_AnyVersionedKey,   (Drop DropFarePointInPattern. TimingTimingLinkInJournePattern, STopTimingLinkInJourneyPattern)
-					   (b) Fix keyref constraint on   ServiceLinkInJourneyPattern_AnyVersionedKey (Drop points)
-					   (c) Fix keyref constraint on    FarePointInPattern_AnyVersionedKey - Add Points 
-					   (d) Fix keyref constraint on   LinkInJourneyPattern_AnyVersionedKey - drop Points
-					   (e) Fix constraint ServiceLinkInJourneyPattern_AnyVersionedKey drop bogus ServiceService selector
-					   (f) Fix Fare Point In Pattern Key
-					   (g) Fix keyref constraint on StopPointInJourneyPattern - remove bogus DeadRunInPattern and ServiceStopPointInPattern selectors 
-					   (h) Fix keyref constraint on TimingPointInPattern - remove bogus DeadRunInPattern and ServiceStopPointInPattern selectors 
-					   (i) Fix uniqueness constraint on  HeadwayJourneyGroup - drop RhythmicalJourneyGroup
-					   (j) Fix (again) Constraints on SalesOfferPackage and SalesOfferPackagePrice
-					   (k) Fix keyref  LinkInJourneyPattern_AnyVersionedKey  correct  LinkInPattern to ServiceLinkInPattern 
-					   (l) Fix remove obsolete ParkingTaxRate constraint
-					   (m) Fix Reinstate Constraints on StopPointInJourneyPattern, etc  {NB THIS MAY CATCHE EXISTING ERRORS IN EXAMPLES]
-					   (n) Fix Add Constraints on SectionInSequence  {NB THIS MAY CATCHE EXISTING ERRORS IN EXAMPLES]
-					   (o) Revise key names to emphasise when key is ordered
+### 2019.02.21 NJSK-Fix: *FRAMEWORK* Reapply 1.09 Constraint changes and further clean up constraints  [xsd only] 
+    *Changes includee
+	* (a) Fix keyref constraint on ___TimingLinkInJourneyPattern_AnyVersionedKey___,   (Drop ___DropFarePointInPattern___. ___TimingTimingLinkInJournePattern___, ___StopTimingLinkInJourneyPattern___).
+	* (b) Fix keyref constraint on ___ServiceLinkInJourneyPattern_AnyVersionedKey___ (Drop ___xxxPoints___).
+	* (c) Fix keyref constraint on ___FarePointInPattern_AnyVersionedKey___ - Add ___xxxPoints___.
+	* (d) Fix keyref constraint on ___LinkInJourneyPattern_AnyVersionedKey___ - Ddrop ___xxxPoints____.
+	* (e) Fix constraint ___ServiceLinkInJourneyPattern_AnyVersionedKey___ drop bogus ___ServiceService___ selector.
+	* (f) Fix ___FarePointInPattern___ Key
+	* (g) Fix keyref constraint on StopPointInJourneyPattern - remove bogus ___DeadRunInPattern___ and ___ServiceStopPointInPattern___ selectors.
+	* (h) Fix keyref constraint on TimingPointInPattern - remove bogus ___DeadRunInPattern___ and ___ServiceStopPointInPattern___ selectors.
+	* (i) Fix uniqueness constraint on  ___HeadwayJourneyGroup___ - drop ___RhythmicalJourneyGroup____.
+	* (j) Fix (again) ___Constraints on SalesOfferPackage___ and ___SalesOfferPackagePrice____.
+	* (k) Fix keyref  ___LinkInJourneyPattern_AnyVersionedKey___  correct  ___LinkInPattern___ to ___ServiceLinkInPattern___.
+	* (l) Fix remove obsolete ___ParkingTaxRate___ constraint
+	* (m) Fix Reinstate Constraints on StopPointInJourneyPattern, etc  {NB THIS MAY CATCHE EXISTING ERRORS IN EXAMPLES].
+	* (n) Fix Add Constraints on ___SectionInSequence ___. {NB THIS MAY CATCHE EXISTING ERRORS IN EXAMPLES].
+	* (o) Revise key names to emphasise when key is ordered separate.
+	* (b) Fix Make uniqueness of ___PriceGroup___ and  ___FareTable___.
 
 
 * _Updates to xml schema_:
       * netex_publication.xsd
 
-### 2019.02.18 NJSK-Fix FRAMEWORK Correct data type of ___LayerRef___ and SubstitutionGroup on ___Layer___  and __Cell_Ref [xsd only] 
+### 2019.02.18 NJSK-Fix *FRAMEWORK* Correct data type of ___LayerRef___ and substitution group on ___Layer___  and ___CellRef___ [xsd only] 
    * _Updates to files_: 
         * netex_layer_support.xml 
-        * netex_layer_vesrion.xml 
+        * netex_layer_vesrion.xml g
 
 ### 2019.02.18 NJSK-Fix OTHER  update XML SPy & Oxygen project files [xsd only]
    * _Updates to files_: 
@@ -271,30 +298,30 @@ UK-57 Add Allow list of MachineReadable  enumerations, add open ended TYPE OF MA
     * uk_fxc_trip_First_WoE_stage-distance_minimal1.xml
  
 
-### 2019.02.18 UK-006 FARES - Add missing FARE TABLE  price references  [DOCTODO]
+### 2019.02.18 UK-006 *FARES* - Add missing FARE TABLE  price references  [DOCTODO]
    * Fix: Add ___CellSpecificNetworkGroup___   to Fare Table Specifics, 
-   * Fix: Add ___TariffZoneRef , LineRef,, FareZoneRef,  TariffRef,  LineRef, ScheduledStopPointRef___ and   ___FareStructureElementInSequenceRef___. ___SectionRef__ to  ___CellSpecificNetworkGroup___
+   * Fix: Add ___TariffZoneRef , LineRef,, FareZoneRef,  TariffRef,  LineRef, ScheduledStopPointRef___ and   ___FareStructureElementInSequenceRef___. ___SectionRef__ to  ___CellSpecificNetworkGroup____
    * _Updates to xml schema_: 
         * netex_fareTable_version.xsd 
 
-### 2019.01.11 1.09  NJSK-Fix FARES Constraints  [xsd only] x
+### 2019.01.11 1.09  NJSK-Fix *FARES* Constraints  [xsd only] x
  * Fix: Correction to constraints
-     1. Fix keyref constraint on ___TimingLinkInJourneyPattern_KeyRef___ - drop points.
-     2. Fix keyref constraint on ___ServiceLinkInJourneyPattern_AnyVersionedKey___ -d rop points.
-     3. Fix keyref constraint on ___FarePointInPattern_AnyVersionedKey___ - add Points
-     4. Fix keyref constraint on ___LinkInJourneyPattern_AnyVersionedKey___ - drop ___FarePointInPattern___
-     5. Fix constraint ___ServiceLinkInJourneyPattern_UniqueBy_Id_Version_Order___ drop ___ServiceServiceLinkInJourneyPattern___
+     1. Fix keyref constraint on ___TimingLinkInJourneyPattern_KeyRef___ - drop ___xxxPoints___.
+     2. Fix keyref constraint on ___ServiceLinkInJourneyPattern_AnyVersionedKey___ - drop ___xxxPoints___.
+     3. Fix keyref constraint on ___FarePointInPattern_AnyVersionedKey___ - add ___xxxPoints____
+     4. Fix keyref constraint on ___LinkInJourneyPattern_AnyVersionedKey___ - drop ___FarePointInPattern____
+     5. Fix constraint ___ServiceLinkInJourneyPattern_UniqueBy_Id_Version_Order___ drop ___ServiceServiceLinkInJourneyPattern____
      6. Fix ___FarePointInPattern___ Key constraint
         
 * _Updates to xml schema_:
       * netex_publication.xsd
  
  
-### 2019.01.10 OTHER Migrate to Github Rename all  schema files to remove version numbers 
+### 2019.01.10 HOUSEKEEPING  Migrate to Github. Rename all  schema files to remove version numbers 
 * _Updates to xml schema_: 
                 * All NeTEx files changed.
                 
-### 2018.06.02  GITHUBBER  FRAMEWORK Add Centroid to GroupOfSTopPlaces  [uml_diagram, doctodo]
+### 2018.06.02  GITHUBBER  FRAMEWORK Add ___Centroid___ to ___GroupOfStopPlaces___  [uml_diagram, doctodo]
    * _Updates to xml schema_: 
 	   * netex_stopPlace_version.xsd
    
@@ -304,19 +331,19 @@ UK-57 Add Allow list of MachineReadable  enumerations, add open ended TYPE OF MA
 ### 2018.06.06  CR057 NJSK add URL to Priceable object [DOCTODO]
    * _Updates to xml schema_: netex_farePrice_version-v1.1.xsd
 			
-### 2018.06.02  1.09 BUG Fix ___UsageParameterRef___  - should be abstract to prevent use  [xsd only]
+### 2018.06.02  1.09 *BUG* Fix ___UsageParameterRef___  - should be abstract to prevent use  [xsd only]
    * _Updates to xml schema_: netex_usageParameter_Support-v1.1.xsd  
 
-### 2018.06.02 ServiceDesignator & JourneyDesignator - Make fromPoint value optional  [DOCTODO]
+### 2018.06.02 *BUG* Fix ___ServiceDesignator___ & ___JourneyDesignator___ - Make fromPoint value optional  [DOCTODO]
    * _Updates to xml schema_: netex_vehicleJourney_Support-v1.1.xsd  
    
-### 2018.06.02  1.10 BUG Fix Substitution group  ___PointInJourneyPattern___  -  [xsd only]
+### 2018.06.02  1.10 *BUG* Fix Substitution group  ___PointInJourneyPattern___  -  [xsd only]
    * _Updates to xml schema_: netex_journeyPattern-v1.1.xsd  
 
 ### 2018.06.02 Add ServiceDesignator to GroupOfServices Member [DOCTODO]
    * _Updates to_:netex_serviceJourney_Version-v1.1.xsd  
 
-### 2018.06.01 CR049 Rename  to align with Transmodel  Fix case  [xsd only]
+### 2018.06.01 CR049 Rename  to align with Transmodel.  Fix case of names  [xsd only]
    * TM Alignment: Rename Sales Package to SALES OFFER PACKAGE 
    * Fix: Correct the camel casing of  groupsOfsaleOfffPackages ==>  groupsOfSaleOfferPackages 
    * Fix: Correct constraint names
@@ -365,11 +392,11 @@ UK-57 Add Allow list of MachineReadable  enumerations, add open ended TYPE OF MA
             * netex_trainElement_version.xsd
  
 ### 2018.03.20  CR049 Rename  to align with Transmodel    [*uml:v96-nk4; doc:v39*]
-* TM Alignment: Rename ___PassengerContract___ ==> ___FareContract___
-* TM Alignment: Rename ___PassengerContractEntry___ ==> ___FareContractEntry___
-* TM Alignment: Rename ___PassengerContractSecurityListing___ ==> ___FareContractSecurityListing___
-* TM Alignment: Rename ___TypeOfPassengerContract___ ==> ___TypeOfFareContract___
-* TM Alignment: Rename ___TypeOfPassengerContractEntry___ ==> ___TypeOfFareContractEntry___
+* TM Alignment: Rename ___PassengerContract___ ==> ___FareContract____
+* TM Alignment: Rename ___PassengerContractEntry___ ==> ___FareContractEntry____
+* TM Alignment: Rename ___PassengerContractSecurityListing___ ==> ___FareContractSecurityListing____
+* TM Alignment: Rename ___TypeOfPassengerContract___ ==> ___TypeOfFareContract____
+* TM Alignment: Rename ___TypeOfPassengerContractEntry___ ==> ___TypeOfFareContractEntry____
 
 * _Updates to xml schema_: 
     * netex_fareContract_support-v1.1.xsd  
@@ -381,12 +408,12 @@ UK-57 Add Allow list of MachineReadable  enumerations, add open ended TYPE OF MA
     * netex_publication_timetable.xsd   
 
 ### 2017.12.20 CR049 Rename  to align with Transmodel [*uml:v96-nk4; doc:v39*]
-* TM Alignment: Rename ___SalesPackage___ ==> ___SalesOfferPackage___
-* TM Alignment: Rename ___SalesPackageElement___ ==> ___SalesOfferPackageElement___
-* TM Alignment: Rename ___SalesPackageSubstitition___ ==> ___SalesOfferPackageSubstitition___
-* TM Alignment: Rename ___TypeOfSalesPackage___ ==> ___TypeOfSalesOfferPackage___
-* TM Alignment: Rename ___SalesPackageSubstitition___ ==> ___SalesOfferPackageSubstitition___
-* TM Alignment: Rename ___GroupOfSalesPackages___ ==> ___GroupOfSalesOfferPackages___
+* TM Alignment: Rename ___SalesPackage___ ==> ___SalesOfferPackage____
+* TM Alignment: Rename ___SalesPackageElement___ ==> ___SalesOfferPackageElement____
+* TM Alignment: Rename ___SalesPackageSubstitition___ ==> ___SalesOfferPackageSubstitition____
+* TM Alignment: Rename ___TypeOfSalesPackage___ ==> ___TypeOfSalesOfferPackage____
+* TM Alignment: Rename ___SalesPackageSubstitition___ ==> ___SalesOfferPackageSubstitition____
+* TM Alignment: Rename ___GroupOfSalesPackages___ ==> ___GroupOfSalesOfferPackages____
 
 
 * _Updates to xml schema_: 

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2013 (x64) (http://www.altova.com) by Nicholas JS Knowles (Trapeze Group Limited) -->
+<?xml version="1.0" encoding="UTF-8"?> 
 <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_fareProduct_version">
 	<xsd:include schemaLocation="../../netex_framework/netex_utility/netex_units.xsd"/>
 	<xsd:include schemaLocation="netex_fareProduct_support.xsd"/>
@@ -21,14 +20,16 @@
 					<Created>2010-09-04</Created>
 				</Date>
 				<Date>
-					<Modified>2011-02-05</Modified>
-					<!-- Name Space changes -->
+					<Modified>2011-02-05</Modified>Name Space changes  
 				</Date>
 				<Date>
 					<Modified>2011-11-11</Modified>Fix - Change product infoUrl (Misspelt)  to be list of infolinks
 				</Date>
 				<Date>
 					<Modified>2018-01-18</Modified>Fix - Correct type on SupplementToFareProduct Ref
+				</Date>
+				<Date>
+					<Modified>2019-03-10</Modified>EURA-81 Make relationshiop with TypeOfFareProduct many-to-many.
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -46,7 +47,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
-					<Copyright>CEN, Crown Copyright 2009-2014</Copyright>
+					<Copyright>CEN, Crown Copyright 2009-2019</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -249,7 +250,14 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="ChargingMomentRef" minOccurs="0"/>
-			<xsd:element ref="TypeOfFareProductRef" minOccurs="0"/>
+			<xsd:choice minOccurs="0">
+				<xsd:element ref="TypeOfFareProductRef"/>
+				<xsd:element name="typesOfFareProduct" type="typeOfFareProductRefs_RelStructure">
+					<xsd:annotation>
+						<xsd:documentation>Classifications of FARE PROFUDCT .</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:choice>
 			<xsd:element ref="ConditionSummary" minOccurs="0"/>
 			<xsd:element ref="OperatorRef" minOccurs="0"/>
 		</xsd:sequence>
@@ -1097,4 +1105,3 @@ Rail transport, Roads and Road transport
 	</xsd:group>
 	<!-- ======================================================================= -->
 </xsd:schema>
-
