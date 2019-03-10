@@ -43,11 +43,18 @@ There is also an Oxygen project file:
 ## 1.10 Summary of Changes since v1.11 
 __
 
+### 2019.03.10 EURA-42 *FARES* Add currency to PricingRule (NB thi sdoes not solve other aspects of CR)
+ * _Updates to xml schema_:     	   
+ 	* netex_calculationParameters_version.xsd
+
+### 2019.03.10 EURA-65  *FARES*  Add a new __SharedUsage___ attribute to ___Transferability___  to specify whether multiple users may use a product at the same time.
+  * Add enum  with values _oneAtATime_, _ severalAtATime_, _severalSpecifiedCompanionsAtATime 
+  * _Updates to xml schema_:     	  
+ 	* netex_usageParameterAfterSales_support.xsd
+ 	* netex_usageParameterAfterSales_version.xsd
 
 ### 2019.03.10 EURA-75  *FARES* Add new ___Add TravelBillingPolicy___ attribute to ___ChargingPolicy___ with enumerated values;  _billAsYouGo_ , _billOnThreshold_, _billAtFareDayEnd_, _billAtPeriodEnd_ 
-  * Also EURA -62:  Add a ___CompanionRelationshipType___ attribute to ___CompanionProfile___ with enumerated values _anyone, grandparent, parent, child, grandchild, colleague, family, legalRelative,   spouse, partner, colleague, teacher, pupil_.
-  * Also EURA-89 add _birthCertificate_ to   list of ___ProofOfIdentity___
-  
+   
   * _Updates to xml schema_:     	  
 	* netex_usageParameterCharging_support.xsd
 	* netex_usageParameterCharging_version.xsd
@@ -60,26 +67,26 @@ __
 	* netex_usageParameterEligibility_support.xsd
 	* netex_usageParameterEligibility_version.xsd
 
-### 2019.03.10 EURA-53 *FARES*   Add ___CappingRuleStartCOnstraintType___ attribute to ___CappedFareProduct___ ___CappingRule___ to if state  if _ixed_ or _variable_ -  and if _fixed_, specify a ___startOnlyOn___ ___DayType__ s, e.g. for  of week. 
+### 2019.03.10 EURA-53 *FARES*   Add new ___CappingRuleStartConstraintType___ attribute to ___CappedFareProduct___ ___CappingRule___ to if state  if _ixed_ or _variable_ -  and if _fixed_, specify a ___startOnlyOn___ ___DayType__ s, e.g. for  of week. 
 
   * _Updates to xml schema_:     	  
  	* netex_fareProduct_support.xsd
 	* netex_fareProduct_version.xsd
 
-### 2019.03.10 EURA-67 *FARES*    Add _courier_ value to ___FulfilmentMethodType___  enumerations.
+### 2019.03.10 EURA-67 *FARES*    Add new _courier_ value to ___FulfilmentMethodType___  enumerations.
 
   * _Updates to xml schema_:     	  
  	* netex_salesDistribution_support.xsd
 
-### 2019.03.10 EURA-91 *FARES*   Add _sameProductLongerJourney_ and _sameProductShorterJourney_ to enumerated values for ___TypeOfExchange___ attribute on   ___Exchanging___ usage parameter. 
+### 2019.03.10 EURA-91 *FARES*   Add new _sameProductLongerJourney_ and _sameProductShorterJourney_ to enumerated values for ___TypeOfExchange___ attribute on   ___Exchanging___ usage parameter. 
 
   * _Updates to xml schema_:     	  
  	* netex_usageParameterAfterSales_support.xsd
  	
-### 2019.03.10  EURA-87 *FARES* EURA-87 Specify if start  of validity is variable or fixed.  
-  * Add a ___StartConstraint___ attribute to ___UsageValidityPeriod___  to  specify if start day  is variable or fixed. 
+### 2019.03.10  EURA-87 *FARES* EURA-87 Specify if start  of validity is _variable_ or _fixed_.  
+  * Add a ___StartConstraint___ attribute to ___UsageValidityPeriod___  to  specify if start day  is _variable_ or _fixed_.
   * Add  ___UsageStartConstraintTypeEnumeration___ : _variable_ /  _fixed_. 
-  * Add  ___FixedStartDayTypes___  day type so that any required day of week, day of month, month of year can be indicated.
+  * Add  ___FixedStartDayTypes___  /  ___DayType___ so that any required day of week, day of month, month of year can be indicated.
   * Add two grousp to organise absolute and variable attributes. 
   * Also add _enrolment_ and  _reservation_ enum value to ___UsageTriggerEnumeration___.
   * Also add _eligibilityExpiry_  enum value to ___UsageEndEnumeration___.
