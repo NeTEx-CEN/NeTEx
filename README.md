@@ -43,6 +43,23 @@ There is also an Oxygen project file:
 ## 1.10 Summary of Changes since v1.11 
 __
 
+
+### 2019.03.10 EURA-75  *FARES* Add new ___Add TravelBillingPolicy___ attribute to ___ChargingPolicy___ with enumerated values;  _billAsYouGo_ , _billOnThreshold_, _billAtFareDayEnd_, _billAtPeriodEnd_ 
+  * Also EURA -62:  Add a ___CompanionRelationshipType___ attribute to ___CompanionProfile___ with enumerated values _anyone, grandparent, parent, child, grandchild, colleague, family, legalRelative,   spouse, partner, colleague, teacher, pupil_.
+  * Also EURA-89 add _birthCertificate_ to   list of ___ProofOfIdentity___
+  
+  * _Updates to xml schema_:     	  
+	* netex_usageParameterCharging_support.xsd
+	* netex_usageParameterCharging_version.xsd
+
+### 2019.03.10 UK-32 *FARES* Add new ___ResidenceType___ attribute to ___ResidenceQualification___ with enumerated values;  _live_ , _work_, _study, _born_ 
+  * Also EURA -62:  Add a ___CompanionRelationshipType___ attribute to ___CompanionProfile___ with enumerated values _anyone, grandparent, parent, child, grandchild, colleague, family, legalRelative,   spouse, partner, colleague, teacher, pupil_.
+  * Also EURA-89 add _birthCertificate_ to   list of ___ProofOfIdentity___
+  
+  * _Updates to xml schema_:     	  
+	* netex_usageParameterEligibility_support.xsd
+	* netex_usageParameterEligibility_version.xsd
+
 ### 2019.03.10 EURA-53 *FARES*   Add ___CappingRuleStartCOnstraintType___ attribute to ___CappedFareProduct___ ___CappingRule___ to if state  if _ixed_ or _variable_ -  and if _fixed_, specify a ___startOnlyOn___ ___DayType__ s, e.g. for  of week. 
 
   * _Updates to xml schema_:     	  
@@ -239,6 +256,11 @@ _oneOf_ /  _someOf_/  _allOf_
  	* netex_customerPurchasePackage_version.xsd
  	* netex_salesTransaction_version.xsd
 
+### 2019.02.21 UK-07  *FARES* Allow __xxPriceRefs__ directly in  ___FareTable___ / ___cells___. 
+ * Also allow ___VersionOfObjectRef___ on  ___FareTable___ ___Row___ and ___Column___.
+ * _Updates to xml schema_:
+ 	* netex_fareZone_version.xsd
+  
 ### 2019.02.21 UK-20 *FARES* Add contains relationship to ___FareZone___.
  * _Updates to xml schema_:
  	* netex_fareZone_version.xsd

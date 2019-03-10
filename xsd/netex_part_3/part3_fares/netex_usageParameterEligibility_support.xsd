@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_usageParameterEligibility_support">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_usageParameterEligibility_support">
 	<!-- ======================================================================= -->
 	<xsd:annotation>
 		<xsd:appinfo>
@@ -20,8 +20,14 @@
 				<Date>
 					<Modified>2018-04-20</Modified> FIX: make CompanionProfileRef a type of UserProfileRef.
 				</Date>
-								<Date>
-					<Modified>2019-05-03</Modified> FIX: allow a list of prrof of identities
+				<Date>
+					<Modified>2019-05-03</Modified> EURA-89: allow a list of proof of identities, 
+						   Also add birthCertifiate to  proof of identitie  enum values
+				</Date>
+				<Date>
+					<Modified>2019-03-20</Modified> UK-32: Add new ResidenceType attribute to ResidenceQualification with enumerated values;  live , work, stuudy, born 
+						Also EURA -62:  Add a CompanionRelationshipType attribute to CompanionProfile with enumerated values anyone, grandparent, parent, child, grandchild, colleague, family, legalRelative,   spouse, partner, colleague, teacher, pupil
+						Also EURA-89 add birthCertifcate, emailAccount to PrrofOfIdentity enumeration 
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -39,7 +45,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/xsd/netex_part_3/fares/netex_usageParameterProduct_support</Requires>
 				</Relation>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
+					<Copyright>CEN, Crown Copyright 2009-2019</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -252,6 +258,25 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
+	<xsd:simpleType name="CompanionRelationshipTypeEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for COMPANION RELATIONSHIP TYPE Type.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="anyone"/>
+			<xsd:enumeration value="parent"/>
+			<xsd:enumeration value="grandparent"/>
+			<xsd:enumeration value="child"/>
+			<xsd:enumeration value="grandchild"/>
+			<xsd:enumeration value="family"/>
+			<xsd:enumeration value="spouse"/>
+			<xsd:enumeration value="partner"/>
+			<xsd:enumeration value="legalRelative"/>
+			<xsd:enumeration value="colleague"/>
+			<xsd:enumeration value="pupil"/>
+			<xsd:enumeration value="teacher"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<xsd:simpleType name="GroupDiscountBasisEnumeration">
 		<xsd:annotation>
 			<xsd:documentation>Allowed values for GROUP DISCOUNT BASIS.</xsd:documentation>
@@ -274,11 +299,13 @@ Rail transport, Roads and Road transport
 			<xsd:enumeration value="creditCard"/>
 			<xsd:enumeration value="passport"/>
 			<xsd:enumeration value="drivingLicence"/>
+			<xsd:enumeration value="birthCertificate"/>
 			<xsd:enumeration value="membershipCard"/>
 			<xsd:enumeration value="identityDocument"/>
 			<xsd:enumeration value="medicalDocument"/>
 			<xsd:enumeration value="studentCard"/>
 			<xsd:enumeration value="letterWIthAddress"/>
+					<xsd:enumeration value="emailAccount"/>
 			<xsd:enumeration value="measurement"/>
 			<xsd:enumeration value="other"/>
 		</xsd:restriction>
@@ -301,6 +328,18 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Reference to a RESIDENTIAL QUALIFICATION PARAMETER.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
+	<xsd:simpleType name="ResidenceTypeEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for RESIDENCE TYPE</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="live"/>
+			<xsd:enumeration value="work"/>
+			<xsd:enumeration value="study"/>
+			<xsd:enumeration value="exchange"/>
+			<xsd:enumeration value="born"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<xsd:complexType name="ResidentialQualificationRefStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for Reference to a RESIDENTIAL QUALIFICATION PARAMETER.</xsd:documentation>

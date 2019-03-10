@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?> 
+<?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_usageParameterTravel_support">
 	<xsd:include schemaLocation="netex_usageParameter_support.xsd"/>
 	<!-- ======================================================================= -->
@@ -21,8 +21,16 @@
 				<Date>
 					<Modified>2011-02-05</Modified> Name Space changes 
 				</Date>
-						<Date>
-					<Modified>2019-03-9</Modified> EURA 51 Add  enumeration values to RoundTripType  returnOut returnBack  so as to disstingusih legs . ALso add documentation  annotations
+				<Date>
+					<Modified>2019-03-9</Modified> EURA 51 Add  enumeration values to RoundTripType  returnOut returnBack  so as to disstinguish legs . ALso add documentation  annotations
+				</Date>
+				<Date>
+					<Modified>2019-03-10</Modified>EURA-73 Add an UsageStartConstraintTypeEnumeration for UsageStartConstraintType attribute for  UsageValidityPeriod  to specify  if start is floating or fixed. 
+							  * Also add enrolment and  reservation enum value to UsageTriggerEnumeration
+							  * Also add eligibilityExpiry  enum value to UsageEndEnumeration
+				</Date>
+				<Date>
+					 <Modified>2019-03-10</Modified>EURA-94   * Add networks, operators and countries to enum values for StepLimit 
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -128,12 +136,32 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Allowed values for ROUND TRIP Type.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:normalizedString">
-			<xsd:enumeration value="single"><xsd:annotation> 						<xsd:documentation>Single trip</xsd:documentation>					</xsd:annotation></xsd:enumeration>
-			<xsd:enumeration value="return"><xsd:annotation> 						<xsd:documentation>Return trip between the same origin and destination </xsd:documentation>					</xsd:annotation></xsd:enumeration>
-			<xsd:enumeration value="returnOut"><xsd:annotation> 						<xsd:documentation>Outward part of a return trip.</xsd:documentation>					</xsd:annotation></xsd:enumeration>
-			<xsd:enumeration value="returnBack"><xsd:annotation> 						<xsd:documentation>Return part of a return trip.</xsd:documentation>					</xsd:annotation></xsd:enumeration>
+			<xsd:enumeration value="single">
+				<xsd:annotation>
+					<xsd:documentation>Single trip</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="return">
+				<xsd:annotation>
+					<xsd:documentation>Return trip between the same origin and destination </xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="returnOut">
+				<xsd:annotation>
+					<xsd:documentation>Outward part of a return trip.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="returnBack">
+				<xsd:annotation>
+					<xsd:documentation>Return part of a return trip.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
 			<xsd:enumeration value="returnOnly"/>
-			<xsd:enumeration value="multiple"><xsd:annotation> 						<xsd:documentation>Multtrip carnet.</xsd:documentation>					</xsd:annotation></xsd:enumeration>
+			<xsd:enumeration value="multiple">
+				<xsd:annotation>
+					<xsd:documentation>Multtrip carnet.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<!-- === ROUTING PARAMETER====================================================== -->
@@ -191,6 +219,9 @@ Rail transport, Roads and Road transport
 			<xsd:enumeration value="stopsIncludingPassThroughStops"/>
 			<xsd:enumeration value="sections"/>
 			<xsd:enumeration value="zones"/>
+				<xsd:enumeration value="networks"/>
+						<xsd:enumeration value="operators"/>
+							<xsd:enumeration value="countries"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<!-- === USAGE VALIDITY PERIOD  PARAMETER====================================================== -->
@@ -254,6 +285,8 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Allowed values for Usage Trigger.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="enrolment"/>
+			<xsd:enumeration value="reservation"/>
 			<xsd:enumeration value="purchase"/>
 			<xsd:enumeration value="fulfilment"/>
 			<xsd:enumeration value="specifiedStartDate"/>
@@ -277,7 +310,25 @@ Rail transport, Roads and Road transport
 			<xsd:enumeration value="endOfFarePeriod"/>
 			<xsd:enumeration value="productExpiry"/>
 			<xsd:enumeration value="profileExpiry"/>
+			<xsd:enumeration value="eligibilityExpiry"/>
 			<xsd:enumeration value="other"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="UsageStartConstraintTypeEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for Usage Validity Period Start constraint.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="variable">
+				<xsd:annotation>
+					<xsd:documentation>Validty start date can be chosen by user.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="fixed">
+				<xsd:annotation>
+					<xsd:documentation>Validity start dtae is constrained to certain days of week, month or year.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<!-- === FREQUENCY OF USE PARAMETER====================================================== -->
@@ -286,11 +337,31 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Allowed values for FREQUENCY OF USE Type.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:normalizedString">
-			<xsd:enumeration value="none"/>
-			<xsd:enumeration value="unlimited"/>
-			<xsd:enumeration value="limited"/>
-			<xsd:enumeration value="twiceADay"/>
-			<xsd:enumeration value="single"/>
+			<xsd:enumeration value="none">
+				<xsd:annotation>
+					<xsd:documentation>Product may not be used within allowed period.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="unlimited">
+				<xsd:annotation>
+					<xsd:documentation>Unlimted use may be made of the product within allowed period.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="limited">
+				<xsd:annotation>
+					<xsd:documentation>Product may be used up to  a limited amount within allowed period.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="twiceADay">
+				<xsd:annotation>
+					<xsd:documentation>Product may be used twice a day within allowed period.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="single">
+				<xsd:annotation>
+					<xsd:documentation>Product may  be used once within allowed period.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="FrequencyOfUseIdType">

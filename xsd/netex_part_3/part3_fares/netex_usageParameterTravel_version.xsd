@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_usageParameterTravel_version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_usageParameterTravel_version">
 	<xsd:include schemaLocation="netex_usageParameterTravel_support.xsd"/>
 	<xsd:include schemaLocation="netex_timeStructureFactor_support.xsd"/>
 	<!-- ======================================================================= -->
@@ -20,8 +20,12 @@
 					<Created>2013-04-14</Created>
 				</Date>
 				<Date>
-					<Modified>2011-02-05</Modified>
-					<!-- Name Space changes -->
+					<Modified>2011-02-05</Modified>Name Space changes 
+				</Date>
+				<Date>
+					<Modified>2019-03-10</Modified>EURA-73 Add an StartConstraintType attribute to UsageValidityPeriod  to specify  if start is floating or fixed. 
+					Also add startOnlyOn  DayTypes  so that any required day of week, day of month, month of year can be indicated.,  eg specifc days at start of each month or each quarter .
+											
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -39,7 +43,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_usageParameterTravel_support.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2014</Copyright>
+				 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -418,6 +422,28 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Duration of  USAGE VALIDITY PERIOD.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:group ref="UsageValidityExplicitPeriodGroup">
+				<xsd:annotation>
+					<xsd:documentation>Elements defining a validtiy period in terms of an absolute calendar date </xsd:documentation>
+				</xsd:annotation>
+			</xsd:group>
+			<xsd:group ref="UsageValidityStartConstraintGroup">
+				<xsd:annotation>
+					<xsd:documentation>Elements defining a permitted  validitiy period in terms of an calendar date </xsd:documentation>
+				</xsd:annotation>
+			</xsd:group>
+			<xsd:element name="BlackoutUse" type="BlackoutStartEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Interaction with blackout periods.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="UsageValidityExplicitPeriodGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for USAGE VALIDITY EXPLICIT PERIOD Group.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
 			<xsd:element name="StartDate" type="xsd:date" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Start date of  USAGE VALIDITY PERIOD.</xsd:documentation>
@@ -438,10 +464,40 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>End time of  USAGE VALIDITY PERIOD.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="BlackoutUse" type="BlackoutStartEnumeration" minOccurs="0">
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="UsageValidityStartConstraintGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for Elements specify constraints on start of  USAGE VALIDITY PERIOD.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="UsageStartConstraintType" type="UsageStartConstraintTypeEnumeration" default="variable" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Interaction with blackout periods.</xsd:documentation>
+					<xsd:documentation>Indicates if start  is  variable or fixed.</xsd:documentation>
 				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="startOnlyOn" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>If StartConstraintType is Fixed, then allowed days to start on can be indicated by a DAY TYPE, for example Monday, 1st of Month, Start of Quarter, etc</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="dayTypes_RelStructure">
+							<xsd:sequence>
+								<xsd:element name="StartMonth" type="xsd:gMonth" minOccurs="0">
+									<xsd:annotation>
+										<xsd:documentation>Start date of  USAGE VALIDITY PERIOD.</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+								<xsd:element name="StartDay" type="xsd:gDay" minOccurs="0">
+									<xsd:annotation>
+										<xsd:documentation>Start time of  USAGE VALIDITY PERIOD.</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+							</xsd:sequence>
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
