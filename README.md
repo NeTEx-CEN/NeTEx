@@ -43,12 +43,15 @@ There is also an Oxygen project file:
 ## 1.10 Summary of Changes since v1.11 
 __
 
+### 2019.03.10 EURA-67 *FARES*    Add _courier_ value to ___FulfilmentMethodType___  enumerations.
 
+  * _Updates to xml schema_:     	  
+ 	* netex_salesDistribution_support.xsd
 
 ### 2019.03.10 EURA-91 *FARES*   Add _sameProductLongerJourney_ and _sameProductShorterJourney_ to enumerated values for ___TypeOfExchange___ attribute on   ___Exchanging___ usage parameter. 
 
   * _Updates to xml schema_:     	  
- 	* netex_usagwParameterAfterSales_support.xsd
+ 	* netex_usageParameterAfterSales_support.xsd
  	
 ### 2019.03.10  EURA-87 *FARES* EURA-87 Specify if start  of validity is variable or fixed
   * Add a ___StartConstraint___ attribute to ___UsageValidityPeriod___  to  specify if startday  is variable or fixed. 
