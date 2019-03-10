@@ -115,6 +115,11 @@ Concessionary passes are valid throughout from 0930-2300 Mon-Fri, and anytime at
 				<FareFrame version="1.0" id="mb:Metrobus@Products@Trip@Line_1" dataSourceRef="mb:metrobus" responsibilitySetRef="mb:tariffs">
 					<Name>Metrobus 1</Name>
 					<TypeOfFrameRef ref="fxc:UK_Bus_tariff_profile@products@by_Line" versionRef="fxc:v1.0"/>
+					<prerequisites>
+						<ServiceFrameRef version="1.0" ref="mb:Metrobus@Network@Line_1"/>
+						<FareFrameRef version="1.0" ref="mb:Metrobus@Network@Line_1"/>
+						<SiteFrameRef version="nptg:v1.0" ref="nptg:NPTG@Locations"/>
+					</prerequisites>
 					<!--==== Pricing Parameters ====-->
 					<PricingParameterSet version="1.0" id="mb:Metrobus">
 						<pricingRules>
@@ -162,7 +167,6 @@ Concessionary passes are valid throughout from 0930-2300 Mon-Fri, and anytime at
 							240 240 240 240 240 240 240 160 Pease Pottage Black Swan
 -->
 									<distanceMatrixElements>
-						 
 										<!--== COLUMN 1  : Bewbush_Wes t== -->
 										<DistanceMatrixElement version="1.0" id="mb:Bewbush_West+Bewbush">
 											<priceGroups>
@@ -581,6 +585,9 @@ Concessionary passes are valid throughout from 0930-2300 Mon-Fri, and anytime at
 						<!-- Fares are shown in pence. -->
 						<DefaultCurrency>GBP</DefaultCurrency>
 					</FrameDefaults>
+					<prerequisites>
+						<FareFrameRef version="1.0" ref="mb:Metrobus@Products@Trip@Line_1"/>
+					</prerequisites>
 					<!--==== Notices ==== -->
 					<noticeAssignments>
 						<NoticeAssignment version="1.0" id="mb:Metrobus@Products@Trip@prices@Line_1@Footnote" order="1">
@@ -1220,10 +1227,150 @@ Bewbush West (loop)
 					</groupsOfSalesOfferPackages>
 				</FareFrame>
 				<!--==== NETWORK ==== -->
+				<FareFrame version="1.0" id="mb:Metrobus@Network@Line_1" dataSourceRef="mb:metrobus" responsibilitySetRef="mb:network_data">
+					<Name>Metrobus 1</Name>
+					<TypeOfFrameRef ref="fxc:UK_Bus_tariff_profile@fare_network" version="fxc:v1.0"/>
+					<prerequisites>
+						<SiteFrameRef version="nptg:v1.0" ref="nptg:NPTG@Locations"/>
+						<ServiceFrameRef version="1.0" ref="mb:Metrobus@Network@Line_1"/>
+					</prerequisites>
+					<!--==== Fare zones ===     NB These are just a guess from the map  and may be bogus.in places -->
+					<fareZones>
+						<FareZone version="1.0" id="mb:fs@Bewbush_West">
+							<Name>Bewbush West (loop)</Name>
+							<members>
+								<ScheduledStopPointRef ref="naptan:4400CY0037" version="any">Brettingham Close, Bewbush</ScheduledStopPointRef>
+								<ScheduledStopPointRef ref="naptan:4400CY0038" version="any">Neptune Close, Bewbush</ScheduledStopPointRef>
+								<ScheduledStopPointRef ref="naptan:4400CY0039" version="any">Mercury Close, Bewbush</ScheduledStopPointRef>
+								<ScheduledStopPointRef ref="naptan:4400CY0040" version="any">Sullivan Drive, Bewbush</ScheduledStopPointRef>
+								<ScheduledStopPointRef ref="naptan:4400CY0042" version="any">Bewbush Roundabout, Bewbush</ScheduledStopPointRef>
+							</members>
+							<types>
+								<TypeOfZoneRef ref="fxc:fare_zone@operator" version="fxc:v1.0"/>
+							</types>
+							<ZoneTopology>sequence</ZoneTopology>
+						</FareZone>
+						<FareZone version="1.0" id="mb:fs@Bewbush">
+							<Name>Neighboughood Centre</Name>
+							<members>
+								<ScheduledStopPointRef ref="naptan:4400CY0073" versionRef="EXTERNAL">Dorsten Square</ScheduledStopPointRef>
+								<ScheduledStopPointRef ref="naptan:4400CY0023" versionRef="EXTERNAL">Colwyn Close, Bewbush</ScheduledStopPointRef>
+								<ScheduledStopPointRef ref="naptan:4400CY0025" versionRef="EXTERNAL">Ellman Road, Bewbush</ScheduledStopPointRef>
+								<ScheduledStopPointRef ref="naptan:4400CY0047" versionRef="EXTERNAL">Henshaw Close, Bewbush</ScheduledStopPointRef>
+							</members>
+							<types>
+								<TypeOfZoneRef ref="fxc:fare_zone@operator" version="fxc:v1.0"/>
+							</types>
+							<ZoneTopology>sequence</ZoneTopology>
+						</FareZone>
+						<FareZone version="1.0" id="mb:fs@Gossops_Green">
+							<Name>Gossops Green Shops</Name>
+							<members>
+								<ScheduledStopPointRef ref="naptan:4400CY0037" versionRef="EXTERNAL">Brettingham Close, Bewbush</ScheduledStopPointRef>
+								<ScheduledStopPointRef ref="naptan:4400CY0038" versionRef="EXTERNAL">Neptune Close, Bewbush</ScheduledStopPointRef>
+								<ScheduledStopPointRef ref="naptan:4400CY0039" versionRef="EXTERNAL">Mercury Close, Bewbush</ScheduledStopPointRef>
+								<ScheduledStopPointRef ref="naptan:4400CY0040" versionRef="EXTERNAL">Sullivan Drive, Bewbush</ScheduledStopPointRef>
+								<ScheduledStopPointRef ref="naptan:4400CY0042" versionRef="EXTERNAL">Bewbush Roundabout, Bewbush</ScheduledStopPointRef>
+							</members>
+							<types>
+								<TypeOfZoneRef ref="fxc:fare_zone@operator" version="fxc:v1.0"/>
+							</types>
+							<ZoneTopology>sequence</ZoneTopology>
+						</FareZone>
+						<FareZone version="1.0" id="mb:fs@West_Green">
+							<Name>West Green Crawley Hospital/Apple Tree</Name>
+							<members>
+								<ScheduledStopPointRef ref="naptan:4400CY0050" versionRef="EXTERNAL">Gossops Green Shops, Gossops Green</ScheduledStopPointRef>
+								<ScheduledStopPointRef ref="naptan:4400CY0053" versionRef="EXTERNAL">Craigans, Gossops Green</ScheduledStopPointRef>
+								<ScheduledStopPointRef ref="naptan:4400CY0054" versionRef="EXTERNAL">Overdene Drive, Gossops Green</ScheduledStopPointRef>
+								<ScheduledStopPointRef ref="naptan:4400CY0119" versionRef="EXTERNAL">The Mardens, Ifield</ScheduledStopPointRef>
+							</members>
+							<types>
+								<TypeOfZoneRef ref="fxc:fare_zone@operator" version="fxc:v1.0"/>
+							</types>
+							<ZoneTopology>sequence</ZoneTopology>
+						</FareZone>
+						<FareZone version="1.0" id="mb:fs@Crawley">
+							<Name>Crawley Town Centre</Name>
+							<members>
+								<ScheduledStopPointRef ref="naptan:4400CY0330" versionRef="EXTERNAL">Ambulance Station, West Green (WSusx)</ScheduledStopPointRef>
+								<ScheduledStopPointRef ref="naptan:4400CY0334" versionRef="EXTERNAL">The Apple Tree, West Green (WSusx)</ScheduledStopPointRef>
+								<ScheduledStopPointRef ref="naptan:4400CY0336" versionRef="EXTERNAL">Crawley Hospital, West Green (WSusx)</ScheduledStopPointRef>
+								<ScheduledStopPointRef ref="naptan:4400CY0338" versionRef="EXTERNAL">Smalls Lane, Crawley (WSusx)</ScheduledStopPointRef>
+								<ScheduledStopPointRef ref="naptan:4400CY0339" versionRef="EXTERNAL">Orchard Street, Crawley (WSusx)</ScheduledStopPointRef>
+								<ScheduledStopPointRef ref="naptan:4400CY0305" versionRef="EXTERNAL">Broadway,Crawley (WSusx)</ScheduledStopPointRef>
+								<ScheduledStopPointRef ref="naptan:4400CY0292" versionRef="EXTERNAL">Bus Station, rawley (WSusx)</ScheduledStopPointRef>
+							</members>
+							<types>
+								<TypeOfZoneRef ref="fxc:fare_zone@operator" version="fxc:v1.0"/>
+							</types>
+							<ZoneTopology>sequence</ZoneTopology>
+						</FareZone>
+						<FareZone version="1.0" id="mb:fs@Southgate_Avenue">
+							<Name>Southgate Avenue North</Name>
+							<members>
+								<ScheduledStopPointRef ref="naptan:4400CY0514" versionRef="EXTERNAL">Arora Hotel, Southgate (WSusx)</ScheduledStopPointRef>
+								<ScheduledStopPointRef ref="naptan:4400CY0127" versionRef="EXTERNAL">Southgate Avenue, Southgate (WSusx)</ScheduledStopPointRef>
+								<ScheduledStopPointRef ref="naptan:4400CY0083" versionRef="EXTERNAL">Southgate Parade, Southgate (WSusx)</ScheduledStopPointRef>
+								<ScheduledStopPointRef ref="naptan:4400CY0081" versionRef="EXTERNAL">Barrington Road, Southgate (WSusx)</ScheduledStopPointRef>
+							</members>
+							<types>
+								<TypeOfZoneRef ref="fxc:fare_zone@operator" version="fxc:v1.0"/>
+							</types>
+							<ZoneTopology>sequence</ZoneTopology>
+						</FareZone>
+						<FareZone version="1.0" id="mb:fs@Southgate">
+							<Name>Southgate Wensleydale</Name>
+							<members>
+								<ScheduledStopPointRef ref="naptan:4400CY0032" versionRef="EXTERNAL">Wensleydale, Southgate (WSusx)</ScheduledStopPointRef>
+								<ScheduledStopPointRef ref="naptan:4400CY0034" versionRef="EXTERNAL">Downland Place, Southgate (WSusx)</ScheduledStopPointRef>
+								<ScheduledStopPointRef ref="naptan:4400CY0036" versionRef="EXTERNAL">Clayton Hill, Southgate (WSusx)</ScheduledStopPointRef>
+								<ScheduledStopPointRef ref="naptan:4400CY0077" versionRef="EXTERNAL">Cheals Roundabout, Gossops Green</ScheduledStopPointRef>
+							</members>
+							<types>
+								<TypeOfZoneRef ref="fxc:fare_zone@operator" version="fxc:v1.0"/>
+							</types>
+							<ZoneTopology>sequence</ZoneTopology>
+						</FareZone>
+						<FareZone version="1.0" id="mb:fs@Broadfield">
+							<Name>Broadfield (all stops)</Name>
+							<members>
+								<ScheduledStopPointRef ref="naptan:4400CY0124" versionRef="EXTERNAL">Broadfield Drive, Broadfield (WSusx)</ScheduledStopPointRef>
+								<ScheduledStopPointRef ref="naptan:4400CY0109" versionRef="EXTERNAL">Sandringham Road, Broadfield (WSusx)</ScheduledStopPointRef>
+								<ScheduledStopPointRef ref="naptan:4400CY0110" versionRef="EXTERNAL">Seymour Schools, Broadfield (WSusx)</ScheduledStopPointRef>
+								<ScheduledStopPointRef ref="naptan:4400CY0113" versionRef="EXTERNAL">Trefoil Crescent, Broadfield (WSusx)</ScheduledStopPointRef>
+								<ScheduledStopPointRef ref="naptan:4400CY0090" versionRef="EXTERNAL">Pelham Drive, Broadfield (WSusx)</ScheduledStopPointRef>
+								<ScheduledStopPointRef ref="naptan:4400CY0092" versionRef="EXTERNAL">Creasys Drive North, Broadfield (WSusx)</ScheduledStopPointRef>
+								<ScheduledStopPointRef ref="naptan:4400CY0277" versionRef="EXTERNAL">Creasys Drive West, Broadfield (WSusx)</ScheduledStopPointRef>
+								<ScheduledStopPointRef ref="naptan:4400CY0275" versionRef="EXTERNAL">Creasys Drive South, Broadfield (WSusx)</ScheduledStopPointRef>
+								<ScheduledStopPointRef ref="naptan:4400CY0448" versionRef="EXTERNAL">Creasys Drive East,Broadfield (WSusx)</ScheduledStopPointRef>
+								<ScheduledStopPointRef ref="naptan:4400CY0099" versionRef="EXTERNAL">Bishopstone Walk, Broadfield (WSusx)</ScheduledStopPointRef>
+								<ScheduledStopPointRef ref="naptan:4400CY0102" versionRef="EXTERNAL">William Morris Way, Broadfield (WSusx)</ScheduledStopPointRef>
+							</members>
+							<types>
+								<TypeOfZoneRef ref="fxc:fare_zone@operator" version="fxc:v1.0"/>
+							</types>
+							<ZoneTopology>sequence</ZoneTopology>
+						</FareZone>
+						<FareZone version="1.0" id="mb:fs@Pease_Pottage">
+							<Name>Pease Pottage Black Swan</Name>
+							<members>
+								<ScheduledStopPointRef ref="naptan:4400HR0501" versionRef="EXTERNAL">Parish Lane, Pease Pottage</ScheduledStopPointRef>
+								<ScheduledStopPointRef ref="naptan:4400HR0500" versionRef="EXTERNAL">The Black Swan, Pease Pottage</ScheduledStopPointRef>
+							</members>
+							<types>
+								<TypeOfZoneRef ref="fxc:fare_zone@operator" version="fxc:v1.0"/>
+							</types>
+						</FareZone>
+					</fareZones>
+				</FareFrame>
 				<SiteFrame version="nptg:v1.0" id="nptg:NPTG@Locations" responsibilitySetRef="nptg:data" dataSourceRef="nptg:dft">
 					<Name>NPTG localities used by Metrobus 1</Name>
 					<Description>This frame contains the NPTG locality definitions used by the stops  the service. It could also be exchanged separately.</Description>
 					<TypeOfFrameRef ref="nptg:UK_general_profile@locations" version="fxc:v1.0"/>
+					<prerequisites>
+						<FareFrameRef version="fxc:v1.0" ref="fxc:UK_Common_Fare_Components"/>
+					</prerequisites>
 					<topographicPlaces>
 						<TopographicPlace responsibilitySetRef="nptgUkAdministrativeArea:106" created="2005-10-05T10:45:19Z" changed="2005-10-05T10:45:19Z" version="0" id="nptgUkLocality:E0026633">
 							<!--  responsibilitySetRef: NPTG_<AdministrativeAreaRef>  -->
@@ -1358,6 +1505,11 @@ Bewbush West (loop)
 					<Name>Stops for Metrobus 1</Name>
 					<Description>This frame contains the stop and line definitions for the service. It could also be exchanged separately.</Description>
 					<TypeOfFrameRef ref="fxc:UK_Bus_tariff_profile@service_network@line" version="fxc:v1.0"/>
+					<prerequisites>
+						<FareFrameRef version="fxc:v1.0" ref="fxc:UK_Common_Fare_Components"/>
+						<ServiceFrameRef versionRef="EXTERNAL" ref="mb:Naptan@Stops@AdminArea@440"/>
+						<ResourceFrameRef version="1.0" ref="mb:Metrobus@Common_resources"/>
+					</prerequisites>
 					<!--==== LINEs ==== -->
 					<lines>
 						<Line version="1.0" id="mb:Line_1">
@@ -1398,133 +1550,8 @@ Bewbush West (loop)
 						<!-- === OTHER STOPS OMITTED -->
 					</scheduledStopPoints>
 				</ServiceFrame>
-				<FareFrame version="1.0" id="mb:Metrobus@Network@Line_1" dataSourceRef="mb:metrobus" responsibilitySetRef="mb:network_data">
-					<Name>Metrobus 1</Name>
-					<TypeOfFrameRef ref="fxc:UK_Bus_tariff_profile@fare_network" version="fxc:v1.0"/>
-					<!--==== Fare zones ===     NB These are just a guess from the map  and may be bogus.in places -->
-					<fareZones>
-						<FareZone version="1.0" id="mb:fs@Bewbush_West">
-							<Name>Bewbush West (loop)</Name>
-							<members>
-								<ScheduledStopPointRef ref="naptan:4400CY0037" version="any">Brettingham Close, Bewbush</ScheduledStopPointRef>
-								<ScheduledStopPointRef ref="naptan:4400CY0038" version="any">Neptune Close, Bewbush</ScheduledStopPointRef>
-								<ScheduledStopPointRef ref="naptan:4400CY0039" version="any">Mercury Close, Bewbush</ScheduledStopPointRef>
-								<ScheduledStopPointRef ref="naptan:4400CY0040" version="any">Sullivan Drive, Bewbush</ScheduledStopPointRef>
-								<ScheduledStopPointRef ref="naptan:4400CY0042" version="any">Bewbush Roundabout, Bewbush</ScheduledStopPointRef>
-							</members>
-							<types>
-								<TypeOfZoneRef ref="fxc:fare_zone@operator" version="fxc:v1.0"/>
-							</types>
-						</FareZone>
-						<FareZone version="1.0" id="mb:fs@Bewbush">
-							<Name>Neighboughood Centre</Name>
-							<members>
-								<ScheduledStopPointRef ref="naptan:4400CY0073">Dorsten Square</ScheduledStopPointRef>
-								<ScheduledStopPointRef ref="naptan:4400CY0023">Colwyn Close, Bewbush</ScheduledStopPointRef>
-								<ScheduledStopPointRef ref="naptan:4400CY0025">Ellman Road, Bewbush</ScheduledStopPointRef>
-								<ScheduledStopPointRef ref="naptan:4400CY0047">Henshaw Close, Bewbush</ScheduledStopPointRef>
-							</members>
-							<types>
-								<TypeOfZoneRef ref="fxc:fare_zone@operator" version="fxc:v1.0"/>
-							</types>
-						</FareZone>
-						<FareZone version="1.0" id="mb:fs@Gossops_Green">
-							<Name>Gossops Green Shops</Name>
-							<members>
-								<ScheduledStopPointRef ref="naptan:4400CY0037">Brettingham Close, Bewbush</ScheduledStopPointRef>
-								<ScheduledStopPointRef ref="naptan:4400CY0038">Neptune Close, Bewbush</ScheduledStopPointRef>
-								<ScheduledStopPointRef ref="naptan:4400CY0039">Mercury Close, Bewbush</ScheduledStopPointRef>
-								<ScheduledStopPointRef ref="naptan:4400CY0040">Sullivan Drive, Bewbush</ScheduledStopPointRef>
-								<ScheduledStopPointRef ref="naptan:4400CY0042">Bewbush Roundabout, Bewbush</ScheduledStopPointRef>
-							</members>
-							<types>
-								<TypeOfZoneRef ref="fxc:fare_zone@operator" version="fxc:v1.0"/>
-							</types>
-						</FareZone>
-						<FareZone version="1.0" id="mb:fs@West_Green">
-							<Name>West Green Crawley Hospital/Apple Tree</Name>
-							<members>
-								<ScheduledStopPointRef ref="naptan:4400CY0050">Gossops Green Shops, Gossops Green</ScheduledStopPointRef>
-								<ScheduledStopPointRef ref="naptan:4400CY0053">Craigans, Gossops Green</ScheduledStopPointRef>
-								<ScheduledStopPointRef ref="naptan:4400CY0054">Overdene Drive, Gossops Green</ScheduledStopPointRef>
-								<ScheduledStopPointRef ref="naptan:4400CY0119">The Mardens, Ifield</ScheduledStopPointRef>
-							</members>
-							<types>
-								<TypeOfZoneRef ref="fxc:fare_zone@operator" version="fxc:v1.0"/>
-							</types>
-						</FareZone>
-						<FareZone version="1.0" id="mb:fs@Crawley">
-							<Name>Crawley Town Centre</Name>
-							<members>
-								<ScheduledStopPointRef ref="naptan:4400CY0330">Ambulance Station, West Green (WSusx)</ScheduledStopPointRef>
-								<ScheduledStopPointRef ref="naptan:4400CY0334">The Apple Tree, West Green (WSusx)</ScheduledStopPointRef>
-								<ScheduledStopPointRef ref="naptan:4400CY0336">Crawley Hospital, West Green (WSusx)</ScheduledStopPointRef>
-								<ScheduledStopPointRef ref="naptan:4400CY0338">Smalls Lane, Crawley (WSusx)</ScheduledStopPointRef>
-								<ScheduledStopPointRef ref="naptan:4400CY0339">Orchard Street, Crawley (WSusx)</ScheduledStopPointRef>
-								<ScheduledStopPointRef ref="naptan:4400CY0305">Broadway,Crawley (WSusx)</ScheduledStopPointRef>
-								<ScheduledStopPointRef ref="naptan:4400CY0292">Bus Station, rawley (WSusx)</ScheduledStopPointRef>
-							</members>
-							<types>
-								<TypeOfZoneRef ref="fxc:fare_zone@operator" version="fxc:v1.0"/>
-							</types>
-						</FareZone>
-						<FareZone version="1.0" id="mb:fs@Southgate_Avenue">
-							<Name>Southgate Avenue North</Name>
-							<members>
-								<ScheduledStopPointRef ref="naptan:4400CY0514">Arora Hotel, Southgate (WSusx)</ScheduledStopPointRef>
-								<ScheduledStopPointRef ref="naptan:4400CY0127">Southgate Avenue, Southgate (WSusx)</ScheduledStopPointRef>
-								<ScheduledStopPointRef ref="naptan:4400CY0083">Southgate Parade, Southgate (WSusx)</ScheduledStopPointRef>
-								<ScheduledStopPointRef ref="naptan:4400CY0081">Barrington Road, Southgate (WSusx)</ScheduledStopPointRef>
-							</members>
-							<types>
-								<TypeOfZoneRef ref="fxc:fare_zone@operator" version="fxc:v1.0"/>
-							</types>
-						</FareZone>
-						<FareZone version="1.0" id="mb:fs@Southgate">
-							<Name>Southgate Wensleydale</Name>
-							<members>
-								<ScheduledStopPointRef ref="naptan:4400CY0032">Wensleydale, Southgate (WSusx)</ScheduledStopPointRef>
-								<ScheduledStopPointRef ref="naptan:4400CY0034">Downland Place, Southgate (WSusx)</ScheduledStopPointRef>
-								<ScheduledStopPointRef ref="naptan:4400CY0036">Clayton Hill, Southgate (WSusx)</ScheduledStopPointRef>
-								<ScheduledStopPointRef ref="naptan:4400CY0077">Cheals Roundabout, Gossops Green</ScheduledStopPointRef>
-							</members>
-							<types>
-								<TypeOfZoneRef ref="fxc:fare_zone@operator" version="fxc:v1.0"/>
-							</types>
-						</FareZone>
-						<FareZone version="1.0" id="mb:fs@Broadfield">
-							<Name>Broadfield (all stops)</Name>
-							<members>
-								<ScheduledStopPointRef ref="naptan:4400CY0124">Broadfield Drive, Broadfield (WSusx)</ScheduledStopPointRef>
-								<ScheduledStopPointRef ref="naptan:4400CY0109">Sandringham Road, Broadfield (WSusx)</ScheduledStopPointRef>
-								<ScheduledStopPointRef ref="naptan:4400CY0110">Seymour Schools, Broadfield (WSusx)</ScheduledStopPointRef>
-								<ScheduledStopPointRef ref="naptan:4400CY0113">Trefoil Crescent, Broadfield (WSusx)</ScheduledStopPointRef>
-								<ScheduledStopPointRef ref="naptan:4400CY0090">Pelham Drive, Broadfield (WSusx)</ScheduledStopPointRef>
-								<ScheduledStopPointRef ref="naptan:4400CY0092">Creasys Drive North, Broadfield (WSusx)</ScheduledStopPointRef>
-								<ScheduledStopPointRef ref="naptan:4400CY0277">Creasys Drive West, Broadfield (WSusx)</ScheduledStopPointRef>
-								<ScheduledStopPointRef ref="naptan:4400CY0275">Creasys Drive South, Broadfield (WSusx)</ScheduledStopPointRef>
-								<ScheduledStopPointRef ref="naptan:4400CY0448">Creasys Drive East,Broadfield (WSusx)</ScheduledStopPointRef>
-								<ScheduledStopPointRef ref="naptan:4400CY0099">Bishopstone Walk, Broadfield (WSusx)</ScheduledStopPointRef>
-								<ScheduledStopPointRef ref="naptan:4400CY0102">William Morris Way, Broadfield (WSusx)</ScheduledStopPointRef>
-							</members>
-							<types>
-								<TypeOfZoneRef ref="fxc:fare_zone@operator" version="fxc:v1.0"/>
-							</types>
-						</FareZone>
-						<FareZone version="1.0" id="mb:fs@Pease_Pottage">
-							<Name>Pease Pottage Black Swan</Name>
-							<members>
-								<ScheduledStopPointRef ref="naptan:4400HR0501">Parish Lane, Pease Pottage</ScheduledStopPointRef>
-								<ScheduledStopPointRef ref="naptan:4400HR0500">The Black Swan, Pease Pottage</ScheduledStopPointRef>
-							</members>
-							<types>
-								<TypeOfZoneRef ref="fxc:fare_zone@operator" version="fxc:v1.0"/>
-							</types>
-						</FareZone>
-					</fareZones>
-				</FareFrame>
 				<!--==== OPERATOR COMMON RESOURCES==== -->
-				<ResourceFrame version="1.0" id="mb:Metrobus" dataSourceRef="mb:metrobus" responsibilitySetRef="mb:network_data">
+				<ResourceFrame version="1.0" id="mb:Metrobus@Common_resources" dataSourceRef="mb:metrobus" responsibilitySetRef="mb:network_data">
 					<Name>Opeartor specific  common resources</Name>
 					<TypeOfFrameRef ref="fxc:UK_Bus_tariff_profile@operator_resources" version="fxc:v1.0"/>
 					<codespaces>
@@ -1542,7 +1569,7 @@ Bewbush West (loop)
 					<!-- ========Responsibility Sets========== -->
 					<responsibilitySets>
 						<ResponsibilitySet version="1.0" id="mb:tariffs">
-							<Name>Opeartor Tariffs</Name>
+							<Name>Operator Tariffs</Name>
 							<roles>
 								<ResponsibilityRoleAssignment version="1.0" id="mb:tariff_data@creates">
 									<DataRoleType>creates</DataRoleType>
@@ -1606,6 +1633,9 @@ This Shows  sample Purchases
 -->
 			<Name>Sample Transactions for Metrobus trips </Name>
 			<TypeOfFrameRef ref="fxc:UK_Bus_tariff_profile@transactions_composite" version="fxc:v1.0"/>
+			<prerequisites>
+				<CompositeFrameRef version="1.0" ref="mb:Metrobus@Products@Trip@Line_1"/>
+			</prerequisites>
 			<frames>
 				<SalesTransactionFrame version="1.2" id="mbt:SampleTransactions">
 					<Name> Sample Transactions</Name>
@@ -1716,14 +1746,17 @@ This Shows  sample Purchases
 			<frames>
 				<!-- ==== NPTG Data for COMMON UK Bus Fare RESOURCEs======== -->
 				<!-- ====COMMON UK Bus Fare RESOURCEs======== -->
-				<FareFrame id="fxc:Common_UK_Fare_Components" version="fxc:v1.0" responsibilitySetRef="fxc:FXC_metadata">
+				<FareFrame id="fxc:UK_Common_Fare_Components" version="fxc:v1.0" responsibilitySetRef="fxc:FXC_metadata">
 					<Name>Common Country independent fare component</Name>
 					<FrameDefaults>
 						<DefaultCodespaceRef ref="fxc"/>
 						<DefaultDataSourceRef ref="fxc:common" version="fxc:v1.0"/>
 						<DefaultResponsibilitySetRef ref="fxc:FXC_metadata" version="fxc:v1.0"/>
 					</FrameDefaults>
-					<PricingParameterSet id="fxc:Common_Resources" version="fxc:v1.0">
+					<prerequisites>
+						<ResourceFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_Tariffs@Common_Resources"/>
+					</prerequisites>
+					<PricingParameterSet id="fxc:UK_Common_Fare_Components" version="fxc:v1.0">
 						<priceUnits>
 							<PriceUnit id="fxc:GBP" version="fxc:v1.0">
 								<Name>Pound Sterling</Name>

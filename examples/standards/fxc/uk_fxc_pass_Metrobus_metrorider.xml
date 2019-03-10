@@ -232,7 +232,7 @@ At the end are shown some sample transactions showing the parameters that define
 	<Description>Example of simple point to point fares.</Description>
 	<!-- =============== RESULTS =========== -->
 	<dataObjects>
-		<CompositeFrame version="1.0" id="mb:Metrobus@Products@Pass@Metrorider+Metrovoyager+Gatwick_card" dataSourceRef="mb:metrobus" responsibilitySetRef="mb:tariffs">
+		<CompositeFrame version="1.0" id="mb:Metrobus@Pass@composite@Metrorider+Metrovoyager+Gatwick_card" dataSourceRef="mb:metrobus" responsibilitySetRef="mb:tariffs">
 			<ValidBetween>
 				<FromDate>2017-01-01T00:00:00</FromDate>
 				<ToDate>2020-12-31T12:00:00</ToDate>
@@ -251,22 +251,24 @@ At the end are shown some sample transactions showing the parameters that define
 			<FrameDefaults>
 				<!--- The default means that actually we could leave off all id s that belong to the mb: namespace. -->
 				<DefaultCodespaceRef ref="mb"/>
-				
-				<DefaultResponsibilitySetRef   version="1.0"  ref="mb:tariffs"/>
+				<DefaultResponsibilitySetRef version="1.0" ref="mb:tariffs"/>
 				<DefaultCurrency>GBP</DefaultCurrency>
-				
 			</FrameDefaults>
 			<frames>
 				<!--==== FAREs ==== -->
 				<!-- Metrobus Pass  products -->
-				<FareFrame version="1.0" id="mb:Products@Pass@Network" responsibilitySetRef="mb:network_data">
+				<FareFrame version="1.0" id="mb:Metrorider@Pass@network" responsibilitySetRef="mb:network_data">
 					<Name>Metrorider &amp; Metrovoyager fare network </Name>
 					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@fare_network"/>
-						<FrameDefaults>
-				<!--- The default means that actually we could leave off all id s that belong to the mb: namespace. -->
-				<DefaultCodespaceRef ref="mb"/> 
-				<DefaultResponsibilitySetRef version="1.0" ref="mb:network_data"/>
-			</FrameDefaults>
+					<FrameDefaults>
+						<!--- The default means that actually we could leave off all id s that belong to the mb: namespace. -->
+						<DefaultCodespaceRef ref="mb"/>
+						<DefaultResponsibilitySetRef version="1.0" ref="mb:network_data"/>
+					</FrameDefaults>
+					<prerequisites>
+						<FareFrameRef version="fxc:v1.0" ref="fxc:Common_UK_Fare_Components"/>
+						<ResourceFrameRef version="1.0" ref="mb:Metrobus_resources"/>
+					</prerequisites>
 					<!--==== Fare zones === NB These are just a guess from the map s -->
 					<fareZones>
 						<FareZone version="1.0" id="mb:metrovoyager">
@@ -461,13 +463,18 @@ At the end are shown some sample transactions showing the parameters that define
 						</DistributionChannel>
 					</distributionChannels>
 				</FareFrame>
-				<FareFrame version="1.0" id="mb:Products@Pass@Metrorider" responsibilitySetRef="mb:tariffs">
+				<FareFrame version="1.0" id="mb:Metrorider@Pass@products" responsibilitySetRef="mb:tariffs">
 					<Name>Metrorider &amp; Metrovoyager fare products and  </Name>
 					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@products"/>
-							<FrameDefaults> 
-				<DefaultCodespaceRef ref="mb"/> 	
-					<DefaultResponsibilitySetRef version="1.0" ref="mb:tariffs"/>
-			</FrameDefaults>
+					<FrameDefaults>
+						<DefaultCodespaceRef ref="mb"/>
+						<DefaultResponsibilitySetRef version="1.0" ref="mb:tariffs"/>
+					</FrameDefaults>
+					<prerequisites>
+						<FareFrameRef version="1.0" ref="mb:Metrorider@Pass@network"/>
+						<SiteFrameRef version="1.0" ref="mb:Metrobus@Common_Resource@sales_network"/>
+						<ServiceCalendarFrameRef version="1.0" ref="mb:Metrobus@Service_Calendar"/>
+					</prerequisites>
 					<!--==== Pricing Parameters ====-->
 					<PricingParameterSet version="1.0" id="mb:Pass@Metrorider">
 						<pricingRules>
@@ -1695,12 +1702,16 @@ ______	______	______	_	|	______	______	______	______	______	______	________	|	__
 						</GroupOfSalesOfferPackages>
 					</groupsOfSalesOfferPackages>
 				</FareFrame>
-				<FareFrame version="1.0" id="mb:Products@Pass@Metrorider@prices" responsibilitySetRef="mb:tariffs">
+				<FareFrame version="1.0" id="mb:Metrorider@Pass@prices" responsibilitySetRef="mb:tariffs">
 					<Name>Metrorider prices</Name>
 					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@prices"/>
-					<FrameDefaults> 
-				<DefaultCodespaceRef ref="mb"/> 		<DefaultResponsibilitySetRef version="1.0" ref="mb:tariffs"/>
-			</FrameDefaults>
+					<FrameDefaults>
+						<DefaultCodespaceRef ref="mb"/>
+						<DefaultResponsibilitySetRef version="1.0" ref="mb:tariffs"/>
+					</FrameDefaults>
+					<prerequisites>
+						<FareFrameRef version="1.0" ref="mb:Metrorider@Pass@products"/>
+					</prerequisites>
 					<fareTables>
 						<FareTable version="1.0" id="mb:Pass@metrorider">
 							<Name>metrorider Fares</Name>
@@ -2846,13 +2857,16 @@ ______	______	______	_	|	______	______	______	______	______	______	________	|	__
 					</fareTables>
 				</FareFrame>
 				<!-- Metrobus Carnet products -->
-				<FareFrame version="1.0" id="mb:Products@Trip@multitrip" responsibilitySetRef="mb:tariffs">
-					<Name>Multitrip product and prices</Name>
+				<FareFrame version="1.0" id="mb:Multitrip@Trip@products" responsibilitySetRef="mb:tariffs">
+					<Name>Multitrip product s</Name>
 					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@products"/>
-					<FrameDefaults> 
-				<DefaultCodespaceRef ref="mb"/> 
-				<DefaultResponsibilitySetRef version="1.0" ref="mb:tariffs"/>
-			</FrameDefaults>
+					<FrameDefaults>
+						<DefaultCodespaceRef ref="mb"/>
+						<DefaultResponsibilitySetRef version="1.0" ref="mb:tariffs"/>
+					</FrameDefaults>
+					<prerequisites>
+						<FareFrameRef version="1.0" ref="mb:Metrorider@Pass@products"/>
+					</prerequisites>
 					<!--====Tariff Structure ==== -->
 					<tariffs>
 						<Tariff version="1.0" id="mb:Tariff@multitrip">
@@ -3028,18 +3042,16 @@ ______	______	______	_	|	______	______	______	______	______	______	________	|	__
 						</SalesOfferPackage>
 					</salesOfferPackages>
 				</FareFrame>
-				<FareFrame version="1.0" id="mb:Products@Trip@multitrip@prices" responsibilitySetRef="mb:tariffs">
+				<FareFrame version="1.0" id="mb:Multitrip@Trip@prices" responsibilitySetRef="mb:tariffs">
 					<Name>Multitrip product prices</Name>
 					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@prices"/>
-					<FrameDefaults> 
-					 
-			
-				<DefaultCodespaceRef ref="mb"/>		
-					
-	<DefaultResponsibilitySetRef version="1.0" ref="mb:tariffs"/>
-					
-					
+					<FrameDefaults>
+						<DefaultCodespaceRef ref="mb"/>
+						<DefaultResponsibilitySetRef version="1.0" ref="mb:tariffs"/>
 					</FrameDefaults>
+					<prerequisites>
+						<FareFrameRef version="1.0" ref="mb:Multitrip@Trip@products"/>
+					</prerequisites>
 					<!--====Tariff Structure ==== -->
 					<fareTables>
 						<FareTable version="1.0" id="mb:Trip@multitrip@smartcard">
@@ -3166,9 +3178,13 @@ ______	______	______	_	|
 					</fareTables>
 				</FareFrame>
 				<!-- Metrobus Gatrwickarea  Pass -->
-				<FareFrame version="1.0" id="mb:Products@Pass@Gatwick_travelcard" responsibilitySetRef="mb:tariffs">
+				<FareFrame version="1.0" id="mb:Gatwick_travelcard@Pass@products" responsibilitySetRef="mb:tariffs">
 					<Name>Gatwick Travelcard</Name>
 					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@products"/>
+					<prerequisites>
+						<ServiceFrameRef version="1.0" ref="mb:Gatwick_travelcard@Pass@network"/>
+						<FareFrameRef version="1.0" ref="mb:Metrorider@Pass@products"/>
+					</prerequisites>
 					<!--====Tariff Structure ==== -->
 					<tariffs>
 						<Tariff version="1.0" id="mb:Tariff@Gatwick_travelcard">
@@ -3325,12 +3341,16 @@ Please note that Gatwick Travelcards are not transferable and can only be used b
 						</SalesOfferPackage>
 					</salesOfferPackages>
 				</FareFrame>
-				<FareFrame version="1.0" id="mb:Products@Pass@Gatwick_travelcard@prices" responsibilitySetRef="mb:tariffs">
+				<FareFrame version="1.0" id="mb:Gatwick_travelcard@Pass@prices" responsibilitySetRef="mb:tariffs">
 					<Name>Gatwick Travelcard prices</Name>
 					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@prices"/>
-						<FrameDefaults> 
-				<DefaultCodespaceRef ref="mb"/> 		<DefaultResponsibilitySetRef version="1.0" ref="mb:tariffs"/>
-			</FrameDefaults>
+					<FrameDefaults>
+						<DefaultCodespaceRef ref="mb"/>
+						<DefaultResponsibilitySetRef version="1.0" ref="mb:tariffs"/>
+					</FrameDefaults>
+					<prerequisites>
+						<FareFrameRef version="1.0" ref="mb:Metrorider@Pass@products"/>
+					</prerequisites>
 					<!--==== Fare Prices ==== -->
 					<fareTables>
 						<FareTable version="1.0" id="mb:Pass@Gatwick_travelcard-SOP@smartcard">
@@ -3367,7 +3387,7 @@ Please note that Gatwick Travelcards are not transferable and can only be used b
 						</FareTable>
 					</fareTables>
 				</FareFrame>
-				<ServiceFrame version="1.0" id="mb:Products@Pass@Gatwick_travelcard@network" responsibilitySetRef="mb:tariffs">
+				<ServiceFrame version="1.0" id="mb:Gatwick_travelcard@Pass@network" responsibilitySetRef="mb:tariffs">
 					<Name>Lines for Gatwick Travelcard</Name>
 					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@service_network"/>
 					<groupsOfLines>
@@ -3408,10 +3428,9 @@ Please note that Gatwick Travelcards are not transferable and can only be used b
 					</groupsOfLines>
 				</ServiceFrame>
 				<!-- Easit discount  Card -->
-				<FareFrame version="1.0" id="ezt:Products@Discount@Easit" responsibilitySetRef="mb:tariffs">
+				<FareFrame version="1.0" id="ezt:Easit@Discount@products" responsibilitySetRef="mb:tariffs">
 					<Name>easit cards</Name>
 					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@products"/>
-					
 					<codespaces>
 						<Codespace id="ezt">
 							<Xmlns>ezt</Xmlns>
@@ -3419,13 +3438,15 @@ Please note that Gatwick Travelcards are not transferable and can only be used b
 							<Description>Easit Network.</Description>
 						</Codespace>
 					</codespaces>
-						<FrameDefaults>
-				<!--- The default means that actually we could leave off all id s that belong to the mb: namespace. -->
-				<DefaultCodespaceRef ref="ezt"/>
-				
-			<DefaultResponsibilitySetRef version="1.0" ref="mb:tariffs"/>
-				<DefaultCurrency>GBP</DefaultCurrency>
-			</FrameDefaults>
+					<FrameDefaults>
+						<!--- The default means that actually we could leave off all id s that belong to the mb: namespace. -->
+						<DefaultCodespaceRef ref="ezt"/>
+						<DefaultResponsibilitySetRef version="1.0" ref="mb:tariffs"/>
+						<DefaultCurrency>GBP</DefaultCurrency>
+					</FrameDefaults>
+					<prerequisites>
+						<FareFrameRef version="fxc:v1.0" ref="fxc:Common_UK_Fare_Components"/>
+					</prerequisites>
 					<PricingParameterSet version="1.0" id="ezt:Products@Discount@Easit">
 						<pricingRules>
 							<DiscountingRule version="1.0" id="ezt:Tariff@Discount@Easit@Crawley@metrobus">
@@ -3737,7 +3758,7 @@ Unfortunately not. As our discounts are genuine discounts off of the cost of the
 					</salesOfferPackages>
 				</FareFrame>
 				<!-- ====== MB Operator resources -->
-				<SiteFrame version="1.0" id="mb:Metrobus@CommonResource@sales_network" responsibilitySetRef="mb:tariffs">
+				<SiteFrame version="1.0" id="mb:Metrobus@Common_Resource@sales_network" responsibilitySetRef="mb:tariffs">
 					<Name>Common site elements for Metrobus</Name>
 					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@site_network"/>
 					<FrameDefaults>
@@ -3800,6 +3821,9 @@ Metrobus Travel Shop, Crawley Bus Station, Marlborough Street, Crawley, BS1 3NU
 						<DefaultDataSourceRef ref="mb:example" version="1.0"/>
 						<DefaultResponsibilitySetRef ref="mb:tariffs" version="1.0"/>
 					</FrameDefaults>
+					<prerequisites>
+						<FareFrameRef version="fxc:v1.0" ref="fxc:Common_UK_Fare_Components"/>
+					</prerequisites>
 					<dayTypes>
 						<FareDayType version="1.0" id="mb:travel_shop@Crawley@M-F">
 							<Name>Crawley Travel shop Working day</Name>
@@ -3885,12 +3909,11 @@ Metrobus Travel Shop, Crawley Bus Station, Marlborough Street, Crawley, BS1 3NU
 						</Codespace>
 					</codespaces>
 					<FrameDefaults>
-				<!--- The default means that actually we could leave off all id s that belong to the mb: namespace. -->
-				<DefaultCodespaceRef ref="ezt"/>
-				
-			<DefaultResponsibilitySetRef version="1.0" ref="mb:network_data"/>
-				<DefaultCurrency>GBP</DefaultCurrency>
-			</FrameDefaults>
+						<!--- The default means that actually we could leave off all id s that belong to the mb: namespace. -->
+						<DefaultCodespaceRef ref="ezt"/>
+						<DefaultResponsibilitySetRef version="1.0" ref="mb:network_data"/>
+						<DefaultCurrency>GBP</DefaultCurrency>
+					</FrameDefaults>
 					<dataSources>
 						<DataSource id="mb:metrobus" version="1.0">
 							<Email>feedback@metrobus.co.uk</Email>
@@ -3987,7 +4010,7 @@ Metrobus Travel Shop, Crawley Bus Station, Marlborough Street, Crawley, BS1 3NU
 				</ResourceFrame>
 			</frames>
 		</CompositeFrame>
-		<CompositeFrame version="1.0" id="dsc:Products@Pass@Discovery" responsibilitySetRef="dsc:products:DSC">
+		<CompositeFrame version="1.0" id="dsc:Discovery@Pass@composite" responsibilitySetRef="dsc:products:DSC">
 			<ValidBetween>
 				<FromDate>2017-01-01T00:00:00</FromDate>
 				<ToDate>2020-12-31T12:00:00</ToDate>
@@ -4007,10 +4030,14 @@ Metrobus Travel Shop, Crawley Bus Station, Marlborough Street, Crawley, BS1 3NU
 				<DefaultCurrency>GBP</DefaultCurrency>
 			</FrameDefaults>
 			<frames>
-				<FareFrame version="1.0" id="dsc:Products@Pass@Discovery">
+				<FareFrame version="1.0" id="dsc:Discovery@Pass@products">
 					<Name>Other Passes</Name>
 					<Description>Access rights are to a listof operators, rather than a network.</Description>
 					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@products"/>
+					<prerequisites>
+						<FareFrameRef version="fxc:v1.0" ref="fxc:Common_UK_Fare_Components"/>
+						<ResourceFrameRef version="1.0" ref="dsc:Discovery@Common_Resources"/>
+					</prerequisites>
 					<!--==== TARIFFS ==== -->
 					<tariffs>
 						<Tariff version="1.0" id="dsc:Tariff@Discovery">
@@ -4187,9 +4214,12 @@ Cuckmere Community Bus, Emsworth & District, Farleigh Coaches, Go-Coach, Metrobu
 						</SalesOfferPackage>
 					</salesOfferPackages>
 				</FareFrame>
-				<FareFrame version="v1.0" id="dsc:Pass@Discovery@Prices" responsibilitySetRef="dsc:products:DSC">
+				<FareFrame version="v1.0" id="dsc:Discovery@Pass@prices" responsibilitySetRef="dsc:products:DSC">
 					<Name>Discovery Pass Prices</Name>
 					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@prices"/>
+					<prerequisites>
+						<FareFrameRef version="1.0" ref="dsc:Discovery@Pass@products"/>
+					</prerequisites>
 					<priceGroups>
 						<PriceGroup version="1.0" id="dsc:Pass@Discovery@prices">
 							<members>
@@ -4381,7 +4411,7 @@ Cuckmere Community Bus, Emsworth & District, Farleigh Coaches, Go-Coach, Metrobu
 				</ResourceFrame>
 			</frames>
 		</CompositeFrame>
-		<CompositeFrame version="1.0" id="jsp:JSP@Products@Pass@PlusBus" responsibilitySetRef="jsp:products:JSP">
+		<CompositeFrame version="1.0" id="jsp:PlusBus@Pass@composite" responsibilitySetRef="jsp:products:JSP">
 			<ValidBetween>
 				<FromDate>2017-01-01T00:00:00</FromDate>
 				<ToDate>2020-12-31T12:00:00</ToDate>
@@ -4402,7 +4432,7 @@ Cuckmere Community Bus, Emsworth & District, Farleigh Coaches, Go-Coach, Metrobu
 				<DefaultCurrency>GBP</DefaultCurrency>
 			</FrameDefaults>
 			<frames>
-				<FareFrame version="1.0" id="jsp:JSP@Products@Pass@PlusBus@Products">
+				<FareFrame version="1.0" id="jsp:PlusBus@Pass@products">
 					<Name>Plus Bus   Passes</Name>
 					<Description>Generic definition - assumes a separate 
 					 NetworkRef  ref="nptg:PlusBus 
@@ -4411,6 +4441,10 @@ Cuckmere Community Bus, Emsworth & District, Farleigh Coaches, Go-Coach, Metrobu
 						GroupOfLinesRef  jsp:PlusBus@excluded_lines
 					 </Description>
 					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@products"/>
+					<prerequisites>
+						<FareFrameRef version="fxc:v1.0" ref="fxc:Common_UK_Fare_Components"/>
+						<ServiceCalendarFrameRef version="1.0" ref="jsp:PlusBus@Service_Calendar"/>
+					</prerequisites>
 					<tariffs>
 						<Tariff version="1.0" id="jsp:Tariff@PlusBus@Day">
 							<Name>Plusbus -Tariff</Name>
@@ -4762,9 +4796,7 @@ You must buy 2 tickets at the same time.					</Description>
 								</SalesOfferPackageElement>
 							</salesOfferPackageElements>
 						</SalesOfferPackage>
-						
-						
-	<SalesOfferPackage version="1.0" id="jsp:Pass@PlusBus-SOP@Day@online">
+						<SalesOfferPackage version="1.0" id="jsp:Pass@PlusBus-SOP@Day@online">
 							<BrandingRef version="1.0" ref="jsp:PlusBus@brand"/>
 							<Name>Plus Bus Dy Pass</Name>
 							<Description>Can be bought separately from ticket. at origin or destination station.</Description>
@@ -4775,8 +4807,6 @@ You must buy 2 tickets at the same time.					</Description>
 									<DistributionChannelRef version="fxc:v1.0" ref="fxc:online"/>
 									<FulfilmentMethodRef ref="fxc:collect_from_machine" version="fxc:v1.0"/>
 								</DistributionAssignment>
-								 
-								 
 							</distributionAssignments>
 							<salesOfferPackageElements>
 								<SalesOfferPackageElement version="1.0" id="jsp:Pass@PlusBus-SOP@Day@online" order="1">
@@ -4785,8 +4815,6 @@ You must buy 2 tickets at the same time.					</Description>
 								</SalesOfferPackageElement>
 							</salesOfferPackageElements>
 						</SalesOfferPackage>
-												
-						
 						<SalesOfferPackage version="1.0" id="jsp:Pass@PlusBus-SOP@Season@p-ticket">
 							<BrandingRef version="1.0" ref="jsp:PlusBus@brand"/>
 							<Name>Plus Bus Season Pass</Name>
@@ -4820,9 +4848,14 @@ You must buy 2 tickets at the same time.					</Description>
 						</SalesOfferPackage>
 					</salesOfferPackages>
 				</FareFrame>
-				<FareFrame version="1.0" id="jsp:JSP@Products@Pass@PlusBus@Prices@Crawley">
+				<FareFrame version="1.0" id="jsp:PlusBus@Pass@prices@Crawley">
 					<Name>Plus Bus Crawley Prices</Name>
 					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@prices"/>
+					<prerequisites>
+						<ResourceFrameRef version="1.0" ref="jsp:PlusBus@Pass@resources@Crawley"/>
+						<ServiceFrameRef version="1.0" ref="jsp:PlusBus@Pass@network@Crawley"/>
+						<FareFrameRef version="1.0" ref="jsp:PlusBus@Pass@products"/>
+					</prerequisites>
 					<!--==== Fare Prices ==== -->
 					<fareTables>
 						<FareTable version="1.0" id="jsp:Pass@PlusBus@Crawley">
@@ -4837,42 +4870,41 @@ You must buy 2 tickets at the same time.					</Description>
 							<columns>
 								<FareTableColumn version="1.0" id="jsp:Pass@PlusBus@adult">
 									<Name>Adult</Name>
-										<UserProfileRef ref="fxc:adult" version="fxc:v1.0"/>
+									<UserProfileRef ref="fxc:adult" version="fxc:v1.0"/>
 								</FareTableColumn>
 								<FareTableColumn version="1.0" id="jsp:Pass@PlusBus@child">
 									<Name>Child</Name>
-										<UserProfileRef ref="fxc:child" version="fxc:v1.0"/>
+									<UserProfileRef ref="fxc:child" version="fxc:v1.0"/>
 								</FareTableColumn>
 								<FareTableColumn version="1.0" id="jsp:Pass@PlusBus@rail_card">
-								
 									<Name>Railcard Holder</Name>
-																				<UserProfileRef ref="atc:railcard_holder" versionRef="any">EXTERNAL use dail defintion</UserProfileRef>
+									<UserProfileRef ref="atc:railcard_holder" versionRef="any">EXTERNAL use dail defintion</UserProfileRef>
 								</FareTableColumn>
 							</columns>
 							<rows>
 								<FareTableRow version="1.0" id="jsp:Pass@PlusBus@1day@at_stop">
 									<Name>Day</Name>
-											<SalesOfferPackageRef version="1.0" ref="jsp:Pass@PlusBus-SOP@Day@p-ticket"/>
+									<SalesOfferPackageRef version="1.0" ref="jsp:Pass@PlusBus-SOP@Day@p-ticket"/>
 								</FareTableRow>
 								<FareTableRow version="1.0" id="mb:multitrip@1day@online">
 									<Name>Day- Only in July and August when bought online</Name>
-																		<SalesOfferPackageRef version="1.0" ref="jsp:Pass@PlusBus-SOP@Day@online"/>
+									<SalesOfferPackageRef version="1.0" ref="jsp:Pass@PlusBus-SOP@Day@online"/>
 								</FareTableRow>
 								<FareTableRow version="1.0" id="jsp:Pass@PlusBus@7day">
 									<Name>Week</Name>
-											<TimeIntervalRef version="1.0" ref="jsp:Tariff@PlusBus@Season@1week"/>
+									<TimeIntervalRef version="1.0" ref="jsp:Tariff@PlusBus@Season@1week"/>
 								</FareTableRow>
 								<FareTableRow version="1.0" id="jsp:Pass@PlusBus@1month">
 									<Name> Month</Name>
-													<TimeIntervalRef version="1.0" ref="jsp:Tariff@PlusBus@Season@1month"/>
+									<TimeIntervalRef version="1.0" ref="jsp:Tariff@PlusBus@Season@1month"/>
 								</FareTableRow>
 								<FareTableRow version="1.0" id="jsp:Pass@PlusBus@3month">
 									<Name>Quarter</Name>
-										<TimeIntervalRef version="1.0" ref="jsp:Tariff@PlusBus@Season@3month"/>
+									<TimeIntervalRef version="1.0" ref="jsp:Tariff@PlusBus@Season@3month"/>
 								</FareTableRow>
 								<FareTableRow version="1.0" id="jsp:Pass@PlusBus@1year">
 									<Name>Annual</Name>
-											<TimeIntervalRef version="1.0" ref="jsp:Tariff@PlusBus@Season@1year"/>
+									<TimeIntervalRef version="1.0" ref="jsp:Tariff@PlusBus@Season@1year"/>
 								</FareTableRow>
 							</rows>
 							<includes>
@@ -5115,9 +5147,12 @@ Annual	£440.00	£1.83 Child discount: half adult season ticket prices.
 						</FareTable>
 					</fareTables>
 				</FareFrame>
-				<ServiceFrame version="1.0" id="jsp:JSP@Products@Pass@PlusBus@Network@Crawley">
+				<ServiceFrame version="1.0" id="jsp:PlusBus@Pass@network@Crawley">
 					<Name>Plus Bus Crawley zones</Name>
 					<TypeOfFrameRef version="fxc:v1.0" ref="nptg:UK_general_profile@tariff_zones"/>
+					<prerequisites>
+						<FareFrameRef version="fxc:v1.0" ref="fxc:Common_UK_Fare_Components"/>
+					</prerequisites>
 					<Network version="any" id="jsp:PlusBus@zones">
 						<Name>Plusbus network - Crawley</Name>
 						<Description>
@@ -5143,19 +5178,16 @@ Metrobus (including Fastway services), Southdown PSV, Compass Travel
 							<TariffZoneRef version="any" ref="nptgTariffZone:CRAWLEY"/>
 						</tariffZones>
 					</Network>
-					
-					
-						<additionalNetworks>
+					<additionalNetworks>
 						<Network version="any" id="jsp:PlusBus@excluded_lines" responsibilitySetRef="jsp:products:JSP">
 							<Name> Excluded lines </Name>
-						<groupsOfLines>
-						<GroupOfLines version="any" id="jsp:PlusBus@excluded_lines@Crawley">
-							<Name>Lines excluded from Crawley Plusbus </Name>
-						</GroupOfLines>
-					</groupsOfLines>
-							
-							</Network>
-							</additionalNetworks>
+							<groupsOfLines>
+								<GroupOfLines version="any" id="jsp:PlusBus@excluded_lines@Crawley">
+									<Name>Lines excluded from Crawley Plusbus </Name>
+								</GroupOfLines>
+							</groupsOfLines>
+						</Network>
+					</additionalNetworks>
 					<scheduledStopPoints>
 						<ScheduledStopPoint version="any" id="naptStop:9100CRAWLEY">
 							<Name>Crawley Rail Station></Name>
@@ -5213,7 +5245,7 @@ Metrobus (including Fastway services), Southdown PSV, Compass Travel
 						</TariffZone>
 					</tariffZones>
 				</ServiceFrame>
-				<ServiceCalendarFrame version="1.0" id="jsp:JSP@PlusBus@Service_Calendar" responsibilitySetRef="jsp:products:JSP">
+				<ServiceCalendarFrame version="1.0" id="jsp:PlusBus@Service_Calendar" responsibilitySetRef="jsp:products:JSP">
 					<Name>Plusbus Specific Calendar</Name>
 					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@calendar"/>
 					<FrameDefaults>
@@ -5221,6 +5253,10 @@ Metrobus (including Fastway services), Southdown PSV, Compass Travel
 						<DefaultDataSourceRef ref="jsp:example" version="any"/>
 						<DefaultResponsibilitySetRef ref="jsp:products:JSP" version="1.0"/>
 					</FrameDefaults>
+					<prerequisites>
+						<FareFrameRef version="fxc:v1.0" ref="fxc:Common_UK_Fare_Components"/>
+						<ServiceCalendarFrameRef versionRef="EXTERNAL-ATOC1.0" ref="atc:ATOC@Service_Calendar"/>
+					</prerequisites>
 					<contentValidityConditions>
 						<AvailabilityCondition id="jsp:anytime@anyday" version="01">
 							<Name>Any time</Name>
@@ -5291,9 +5327,12 @@ Metrobus (including Fastway services), Southdown PSV, Compass Travel
 						</FareDayType>
 					</dayTypes>
 				</ServiceCalendarFrame>
-				<ResourceFrame version="v1.0" id="jsp:JSP@PlusBus@Network@Resources@Crawley" responsibilitySetRef="jsp:products:JSP">
+				<ResourceFrame version="1.0" id="jsp:PlusBus@Pass@resources@Crawley" responsibilitySetRef="jsp:products:JSP">
 					<Name>Plus Bus Specific  values for Crawley</Name>
 					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@operator_resources"/>
+					<prerequisites>
+						<ResourceFrameRef version="1.0" ref="jsp:PlusBus@Common_Resources"/>
+					</prerequisites>
 					<groupsOfOperators>
 						<GroupOfOperators version="any" id="jsp:PlusBus@included_operators">
 							<Name>Operators participating in PlusBus pass</Name>
@@ -5310,7 +5349,7 @@ Metrobus (including Fastway services), Southdown PSV, Compass Travel
 						</GroupOfOperators>
 					</groupsOfOperators>
 				</ResourceFrame>
-				<ResourceFrame version="v1.0" id="jsp:JSP@PlusBus@Common_Resources" responsibilitySetRef="jsp:products:JSP">
+				<ResourceFrame version="1.0" id="jsp:PlusBus@Common_Resources" responsibilitySetRef="jsp:products:JSP">
 					<Name>Plus Bus Generic code values</Name>
 					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@operator_resources"/>
 					<!--- ======= CODESPACEs======== -->
@@ -5391,7 +5430,7 @@ Metrobus (including Fastway services), Southdown PSV, Compass Travel
 				</ResourceFrame>
 			</frames>
 		</CompositeFrame>
-		<CompositeFrame version="1.0" id="ncs:Products@Pass@Concessionary" responsibilitySetRef="ncs:products">
+		<CompositeFrame version="1.0" id="ncs:Concessionary@Pass@composite" responsibilitySetRef="ncs:products">
 			<ValidBetween>
 				<FromDate>2017-01-01T00:00:00</FromDate>
 				<ToDate>2020-12-31T12:00:00</ToDate>
@@ -5410,9 +5449,14 @@ Metrobus (including Fastway services), Southdown PSV, Compass Travel
 				<DefaultCurrency>GBP</DefaultCurrency>
 			</FrameDefaults>
 			<frames>
-				<ServiceFrame version="1.0" id="ncs:Network@Pass@Concessionary">
+				<ServiceFrame version="1.0" id="ncs:Concessionary@Pass@network">
 					<Name>Network elemenst for concessionary passes</Name>
 					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@service_network"/>
+					<prerequisites>
+						<FareFrameRef version="fxc:v1.0" ref="fxc:Common_UK_Fare_Components"/>
+						<ServiceCalendarFrameRef version="1.0" ref="ncs:Concessionary@Service_Calendar"/>
+						<ResourceFrameRef version="1.0" ref="ncs:Concessionary@Common_Resources"/>
+					</prerequisites>
 					<Network version="1.0" id="ncs:Concessionary">
 						<tariffZones>
 							<TariffZoneRef version="1.0" ref="ncs:West_Sussex"/>
@@ -5447,9 +5491,13 @@ Metrobus (including Fastway services), Southdown PSV, Compass Travel
 						</TariffZone>
 					</tariffZones>
 				</ServiceFrame>
-				<FareFrame version="1.0" id="ncs:Products@Pass@Concessionary">
+				<FareFrame version="1.0" id="ncs:Concessionary@Pass@products">
 					<Name>Other Passes</Name>
 					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@products"/>
+					<prerequisites>
+						<ServiceFrameRef version="1.0" ref="ncs:Concessionary@Pass@network"/>
+						<ServiceCalendarFrameRef version="1.0" ref="ncs:Concessionary@Service_Calendar"/>
+					</prerequisites>
 					<!--====Tariff Structure ==== -->
 					<tariffs>
 						<Tariff version="1.0" id="ncs:Tariff@Concessionary">
@@ -5785,7 +5833,7 @@ E-mail: student.farecards@surreycc.gov.uk
 						<!-- TODO ADD PACKAGES FOR OUTHE BOROUGHS/COUNCILS -->
 					</salesOfferPackages>
 				</FareFrame>
-				<ServiceCalendarFrame version="1.0" id="ncs:Products@Pass@Concessionary@Service_Calendar" responsibilitySetRef="ncs:products">
+				<ServiceCalendarFrame version="1.0" id="ncs:Concessionary@Service_Calendar" responsibilitySetRef="ncs:products">
 					<Name>Concessionary Pass Specific Calendar</Name>
 					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@calendar"/>
 					<FrameDefaults>
@@ -5906,6 +5954,12 @@ E-mail: student.farecards@surreycc.gov.uk
 			<!-- ===============
 This Shows sample Purchases 
  Sales Transactions would normally be exchanged separately from the reference data on whoich they are based  -->
+			<prerequisites>
+				<CompositeFrameRef version="1.0" ref="mb:Metrobus@Pass@composite@Metrorider+Metrovoyager+Gatwick_card"/>
+				<CompositeFrameRef version="1.0" ref="dsc:Discovery@Pass@composite"/>
+				<CompositeFrameRef version="1.0" ref="jsp:PlusBus@Pass@composite"/>
+				<CompositeFrameRef version="1.0" ref="ncs:Concessionary@Pass@composite"/>
+			</prerequisites>
 			<frames>
 				<SalesTransactionFrame version="1.2" id="mbt:SampleTransactions">
 					<Name> Sample Transactions</Name>
@@ -6005,13 +6059,13 @@ This Shows sample Purchases
 									</travelSpecifications>
 									<customerPurchasePackages>
 										<CustomerPurchasePackage version="any" id="mbt:User121@ctr002@purchase_pass">
-										<Name> m-ticket Metroyoyageur 3-day Child for use 121</Name>
-										<SalesTransactionRef version="any" ref="mbt:User121@ctr002@purchase_pass"/>
-										<travelDocuments>
-											<TravelDocument version="any" id="mbt:User121@ctr002@purchase_pass">
+											<Name> m-ticket Metroyoyageur 3-day Child for use 121</Name>
+											<SalesTransactionRef version="any" ref="mbt:User121@ctr002@purchase_pass"/>
+											<travelDocuments>
+												<TravelDocument version="any" id="mbt:User121@ctr002@purchase_pass">
 													<TypeOfTravelDocumentRef version="1.0" ref="mb:m-ticket"/>
-											</TravelDocument>
-										</travelDocuments>
+												</TravelDocument>
+											</travelDocuments>
 										</CustomerPurchasePackage>
 									</customerPurchasePackages>
 								</SalesTransaction>
@@ -6129,6 +6183,9 @@ This Shows sample Purchases
 						<DefaultDataSourceRef ref="fxc:common" version="fxc:v1.0"/>
 						<DefaultResponsibilitySetRef ref="fxc:FXC_metadata" version="fxc:v1.0"/>
 					</FrameDefaults>
+					<prerequisites>
+						<ResourceFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_Tariffs@Common_Resources"/>
+					</prerequisites>
 					<PricingParameterSet id="fxc:Common_Resources" version="fxc:v1.0">
 						<priceUnits>
 							<PriceUnit id="fxc:GBP" version="fxc:v1.0">
