@@ -41,6 +41,11 @@ There is also an Oxygen project file:
 
 
 ## 1.10 Summary of Changes since v1.11 
+__
+### 2019.03.10  UK-38 *FARES*  Add ___MinimumAccess___ and ___MaximumAccess___ to __FareStructureElementinSequence___.
+
+  * _Updates to xml schema_:     	  
+ 	* netex_fareStructureElement_version.xsd
 
 ### 2019.03.10 EURA-81 *FARES*  Make relationshiop with TypeOfFareProduct many-to-many.
 
