@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?> 
+<?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_fareProduct_version">
 	<xsd:include schemaLocation="../../netex_framework/netex_utility/netex_units.xsd"/>
 	<xsd:include schemaLocation="netex_fareProduct_support.xsd"/>
@@ -29,7 +29,10 @@
 					<Modified>2018-01-18</Modified>Fix - Correct type on SupplementToFareProduct Ref
 				</Date>
 				<Date>
-					<Modified>2019-03-10</Modified>EURA-81 Make relationshiop with TypeOfFareProduct many-to-many.
+					<Modified>2019-03-10</Modified>EURA-81 Make relationship with TypeOfFareProduct many-to-many.
+				</Date>
+				<Date>
+					<Modified>2019-03-10</Modified>EURA-53 Add CappingRuleStartConstraintType attribute to  CappingRule  to state if  fixed / flexible and DayType to specify  startOnlyOn DayType
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -709,6 +712,7 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Period with which capping accumulation is done. Default is 'day'. A USAGE VALIDITY PERIDO parameter can be used to add a more specific definition.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:group ref="CappingStartConstraintGroup"/>
 			<xsd:element ref="CappedDiscountRightRef" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="PreassignedFareProductRef" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="ValidableElementRef" minOccurs="0"/>
@@ -717,6 +721,41 @@ Rail transport, Roads and Road transport
 				<xsd:annotation>
 					<xsd:documentation>Maximum fare to charge.</xsd:documentation>
 				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="CappingStartConstraintGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements specify constraints on start of CAPPING RULE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="CappingStartConstraintType" type="CappingPeriodStartConstraintTypeEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indicates if start of cappig period   is  variable  o nfixed.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="startOnlyOn" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>If StartConstraintType is Fixed, then allowed days to start on can be indicated by a DAY TYPE, for example Monday, 1st of Month, Start of Quarter, etc</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="dayTypes_RelStructure">
+							<xsd:sequence>
+								<xsd:element name="StartMonth" type="xsd:gMonth" minOccurs="0">
+									<xsd:annotation>
+										<xsd:documentation>Start date of  USAGE VALIDITY PERIOD.</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+								<xsd:element name="StartDay" type="xsd:gDay" minOccurs="0">
+									<xsd:annotation>
+										<xsd:documentation>Start time of  USAGE VALIDITY PERIOD.</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+							</xsd:sequence>
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>

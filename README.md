@@ -43,6 +43,12 @@ There is also an Oxygen project file:
 ## 1.10 Summary of Changes since v1.11 
 __
 
+### 2019.03.10 EURA-53 *FARES*   Add ___CappingRuleStartCOnstraintType___ attribute to ___CappedFareProduct___ ___CappingRule___ to if state  if _ixed_ or _variable_ -  and if _fixed_, specify a ___startOnlyOn___ ___DayType__ s, e.g. for  of week. 
+
+  * _Updates to xml schema_:     	  
+ 	* netex_fareProduct_support.xsd
+	* netex_fareProduct_version.xsd
+
 ### 2019.03.10 EURA-67 *FARES*    Add _courier_ value to ___FulfilmentMethodType___  enumerations.
 
   * _Updates to xml schema_:     	  
@@ -53,10 +59,11 @@ __
   * _Updates to xml schema_:     	  
  	* netex_usageParameterAfterSales_support.xsd
  	
-### 2019.03.10  EURA-87 *FARES* EURA-87 Specify if start  of validity is variable or fixed
-  * Add a ___StartConstraint___ attribute to ___UsageValidityPeriod___  to  specify if startday  is variable or fixed. 
+### 2019.03.10  EURA-87 *FARES* EURA-87 Specify if start  of validity is variable or fixed.  
+  * Add a ___StartConstraint___ attribute to ___UsageValidityPeriod___  to  specify if start day  is variable or fixed. 
   * Add  ___UsageStartConstraintTypeEnumeration___ : _variable_ /  _fixed_. 
   * Add  ___FixedStartDayTypes___  day type so that any required day of week, day of month, month of year can be indicated.
+  * Add two grousp to organise absolute and variable attributes. 
   * Also add _enrolment_ and  _reservation_ enum value to ___UsageTriggerEnumeration___.
   * Also add _eligibilityExpiry_  enum value to ___UsageEndEnumeration___.
   * EURA-94  Add _networks_, _operators_ and c_ountries_ to enum values for ___StepLimit___.
