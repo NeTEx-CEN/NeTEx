@@ -44,6 +44,11 @@ There is also an Oxygen project file:
 __
 
 
+
+### 2019.03.11 EURA-77 *FARES*  Add ___tariffs/TariffRef___  attribute to  ___FareProduct___.
+ * _Updates to xml schema_:     	   
+ 	* netex_usagefareProduct_version.xsd 
+
 ### 2019.03.11 EUR-71 *FARES*   Add _superOffPeak_ and _specialEvent_  enumeration values  to ___FareDemandType___.
  * _Updates to xml schema_:     	   
  	* netex_usageParameterBooking_version.xsd  
