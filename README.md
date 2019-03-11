@@ -43,7 +43,33 @@ There is also an Oxygen project file:
 ## 1.10 Summary of Changes since v1.11 
 __
 
-### 2019.03.10 EURA-42 *FARES* Add currency to PricingRule (NB thi sdoes not solve other aspects of CR)
+ 
+
+### 2019.03.11 EURA-76 *FARES*  Add ___IsFeeRefundable___ attribute to ___Reserving___
+ * _Updates to xml schema_:     	   
+ 	* netex_usageParameterBooking_version.xsd  
+
+	
+### 2019.03.11  EURA 68 *FARES*  Specify conditions fur changing  group size
+ * __Exchanging___ usage parameter ___TypeOfExchange___ attribute: add new  _changeGroupSize_ enumeration  valuee.
+ * ___GroupTicket add new attribute ___GroupSizeChanges___ with enum values noChanges, free, charge, steppedCharge.  
+ * Also ___Refunding___ element  add _changeOfGroupSize_  value  to ___RefundType___ enumeration. 
+
+ * _Updates to xml schema_:     	   
+ 	* netex_usageParameterAfterSales_support.xsd
+ 	* netex_usageParameterEligibility_support.xsd
+	* netex_usageParameterEligibility_version.xsd
+
+### 2019.03.10 UK21 *FARES*  Add ___SalesOfferEntitlementGiven___ and ___SalesOfferEntitlementRequired___ parameters 
+ * _Updates to xml schema_:     	   
+ 	* netex_salesOfferPackageEntitlement_support.xsd (new)
+	* netex_salesOfferPackageEntitlement_version.xsd (new)
+	* netex_salesOfferPackage_version.xsd
+	* netex_all_objects_part3_fares_SD.xsd
+	* netEx.SPP
+ * _Updates to xml examples_:  
+ 
+### 2019.03.10 EURA-42 *FARES* Add ___Currency___ to ___PricingRule___ (NB this does not solve other aspects of CR)
  * _Updates to xml schema_:     	   
  	* netex_calculationParameters_version.xsd
 
