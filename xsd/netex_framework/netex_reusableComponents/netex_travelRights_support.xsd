@@ -12,13 +12,17 @@
 					<Created>2010-09-04</Created>
 				</Date>
 				<Date>
-					<Modified>2014-07-15</Modified> Add PurchaseMoment enum
+					<Modified>2014-07-15</Modified>Add PurchaseMoment enum
 				</Date>
 				<Date>
 					<Modified>2019-03-02</Modified>UK-24 Add open   PaymentMethod as first class object  so that user defined methods can be added. Add epayDevice and epayAccount and mileagePoints to enum
-							Add documentation on paymnet method enumerations.
-							
-							UK-40 Add open 	Add  subscriptionOnly , also onCheckIn ,  inAdvanceOnly, beforeBoardingOnly , onBoardingOnly to  PaymentMoment enum.    				</Date>
+							Add documentation on payment method enumerations.
+				</Date>
+				<Date>
+					<Modified>2019-03-11</Modified>Fix rename PaymentMethod to TypeOfPaymentMethod to avoid name clash with enum			
+							UK-40  	Add  subscriptionOnly , also onCheckIn ,  inAdvanceOnly, beforeBoardingOnly , onBoardingOnly to  PurchasentMoment enum.  
+							UK-40 a Add bankTransfer and  directDebit to payment methods. values 
+	 			</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines  NetEX:TRAVEL RIGHTS identifier  types.</p>
 				</Description>
@@ -241,7 +245,7 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Purchase can   be made before boarding transport vehicle.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
-						<xsd:enumeration value="beforeBoardingOnly">
+			<xsd:enumeration value="beforeBoardingOnly">
 				<xsd:annotation>
 					<xsd:documentation>Purchase must  be made before boarding transport vehicle.</xsd:documentation>
 				</xsd:annotation>
@@ -251,7 +255,7 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Purchase can   be made on boarding  transport vehicle.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
-				<xsd:enumeration value="onBoardingOnly">
+			<xsd:enumeration value="onBoardingOnly">
 				<xsd:annotation>
 					<xsd:documentation>Purchase can  only be made on boarding  transport vehicle.</xsd:documentation>
 				</xsd:annotation>
@@ -510,6 +514,16 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>NFC Payment with stored value travel card or smartcard   accepted.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
+			<xsd:enumeration value="directDebit">
+				<xsd:annotation>
+					<xsd:documentation>Electronic payment by direct debit from retailer to customer's bank account .</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="bankTransfer">
+				<xsd:annotation>
+					<xsd:documentation>Electronic payment from customer account to reatler account.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
 			<xsd:enumeration value="epayDevice">
 				<xsd:annotation>
 					<xsd:documentation>Electronic payment with on device  application (e.g. ApplePay, GooglePay etc) accepted.</xsd:documentation>
@@ -564,43 +578,43 @@ Rail transport, Roads and Road transport
 		<xsd:list itemType="PaymentMethodEnumeration"/>
 	</xsd:simpleType>
 	<!-- =================================================== -->
-	<xsd:complexType name="paymentMethodRefs_RelStructure">
+	<xsd:complexType name="TypeOfPaymentMethodRefs_RelStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for a collection of one or more references to a  PAYMENT METHOD.</xsd:documentation>
+			<xsd:documentation>Type for a collection of one or more references to a  TYPE OF PAYMENT METHOD.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="oneToManyRelationshipStructure">
 				<xsd:sequence>
-					<xsd:element ref="PaymentMethodRef" maxOccurs="unbounded"/>
+					<xsd:element ref="TypeOfPaymentMethodRef" maxOccurs="unbounded"/>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:simpleType name="PaymentMethodIdType">
+	<xsd:simpleType name="TypeOfPaymentMethodIdType">
 		<xsd:annotation>
-			<xsd:documentation>Type for identifier of a PAYMENT METHOD.</xsd:documentation>
+			<xsd:documentation>Type for identifier of a TYPE OF PAYMENT METHOD.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="TypeOfValueIdType"/>
 	</xsd:simpleType>
-	<xsd:element name="PaymentMethodRef" substitutionGroup="TypeOfValueRef">
+	<xsd:element name="TypeOfPaymentMethodRef" substitutionGroup="TypeOfValueRef">
 		<xsd:annotation>
-			<xsd:documentation>Reference to a PAYMENT METHOD.</xsd:documentation>
+			<xsd:documentation>Reference to a TYPE OF PAYMENT METHOD.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
-				<xsd:extension base="PaymentMethodRefStructure"/>
+				<xsd:extension base="TypeOfPaymentMethodRefStructure"/>
 			</xsd:complexContent>
 		</xsd:complexType>
 	</xsd:element>
-	<xsd:complexType name="PaymentMethodRefStructure">
+	<xsd:complexType name="TypeOfPaymentMethodRefStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for a reference to a PAYMENT METHOD.</xsd:documentation>
+			<xsd:documentation>Type for a reference to a TYPE OF PAYMENT METHOD.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:simpleContent>
 			<xsd:restriction base="TypeOfValueRefStructure">
-				<xsd:attribute name="ref" type="PaymentMethodIdType" use="required">
+				<xsd:attribute name="ref" type="TypeOfPaymentMethodIdType" use="required">
 					<xsd:annotation>
-						<xsd:documentation>Identifier of a PAYMENT METHOD.</xsd:documentation>
+						<xsd:documentation>Identifier of a TYPE OF PAYMENT METHOD.</xsd:documentation>
 					</xsd:annotation>
 				</xsd:attribute>
 			</xsd:restriction>

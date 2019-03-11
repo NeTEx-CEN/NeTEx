@@ -24,6 +24,10 @@
 				<Date>
 					<Modified>2019-03-10</Modified>EURA 65 - Add a SharedUsage attribute to Transferability  to specify whether multiple users may use a product at the same time.
 				</Date>
+				<Date>
+					<Modified>2019-03-11</Modified>ERA-40 Subscribiions  On Exchanging, add ExchangableFromPercentUse and ExchangableUntilPercentUse
+					Also UK-46- Add typesOfPaymentMethods /TypeOfPaymentRef and move PaymentMethods up hierarchy with new name (Old attribute on REFUNDING  deprecated)
+				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the After Sales USAGE PARAMETER types.</p>
@@ -134,6 +138,11 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:group ref="ResellingPeriodGroup"/>
 			<xsd:group ref="ResellingCalculationGroup"/>
+			<xsd:group ref="ResellingPaymentGroup">
+				<xsd:annotation>
+					<xsd:documentation>Elements for making payments fo RESELLING Group.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:group>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:group name="ResellingPeriodGroup">
@@ -157,6 +166,11 @@ Rail transport, Roads and Road transport
 						<xsd:documentation>Duration to start of period before (negative) or after (positive) the trigger point (i.e. either Start of Validity or First Use ) or that ticket.</xsd:documentation>
 					</xsd:annotation>
 				</xsd:element>
+				<xsd:element name="ExchangableFromPercentUse" type="xsd:decimal">
+					<xsd:annotation>
+						<xsd:documentation>Special value Can be exchanged once a certain percentage of duration or use has been achieved. </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
 			</xsd:choice>
 			<xsd:element name="ExchangableFromIntervalRef" type="TimeIntervalRefStructure" minOccurs="0">
 				<xsd:annotation>
@@ -174,6 +188,11 @@ Rail transport, Roads and Road transport
 						<xsd:documentation>Duration to end of period before (negative) or after (positive) the trigger point (i.e. either Start of Validity or First Use ) or that ticket.</xsd:documentation>
 					</xsd:annotation>
 				</xsd:element>
+				<xsd:element name="ExchangableUntilPercentUse" type="xsd:decimal">
+					<xsd:annotation>
+						<xsd:documentation>Special value Can be exchanged until a certain percentage of duration or use has been achieved. </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
 			</xsd:choice>
 			<xsd:element name="ExchangableUntilIntervalRef" type="TimeIntervalRefStructure" minOccurs="0">
 				<xsd:annotation>
@@ -189,12 +208,29 @@ Rail transport, Roads and Road transport
 		<xsd:sequence>
 			<xsd:element name="HasFee" type="xsd:boolean" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Whether othere is afeed for reselling.</xsd:documentation>
+					<xsd:documentation>Whether othere is a fee  for reselling.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="RefundBasis" type="PerBasisEnumeration" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Whether othere is afeed for reselling.</xsd:documentation>
+					<xsd:documentation>Whether there is a fee for reselling.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="ResellingPaymentGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for RESELLING Group.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="PaymentMethods" type="PaymentMethodListOfEnumerations" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>PAYMENT METHODs allowed to pay fee or to make refund.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="typesOfPaymentMethodRef" type="TypeOfPaymentMethodRefs_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>POther AYMENT METHODs allowd to pay fee or to make refund.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -328,7 +364,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element name="PaymentMethod" type="PaymentMethodListOfEnumerations" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Payment methods allowd to make refund.</xsd:documentation>
+					<xsd:documentation>DEPRECATED - use  PaymentMethods on RESELLING</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>

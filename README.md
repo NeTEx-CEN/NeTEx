@@ -44,6 +44,53 @@ There is also an Oxygen project file:
 __
 
 
+
+### 2019.03.11 EURA-40 *FARES*  Support Supcriptions
+ * Add new  ___Subscribing___ usage parameter 
+ * Add __SubscriptionRenewalPolicy___ attribute with enumeration   values:
+	* _automatic_ - Renew automatcally at end of term.
+	* _manual_ - Renew on request.
+	* _automaticOnConfirmation_ - Confirm and enew automatically at end of subscription  term.
+	* _none_ - No renewal allowed.
+ * Add __SubscriptionSuspensionPolicyEnumeration___ attribute with enumeration   values:  
+	* _none_ - Suspension not allowed.
+	* _forCertifiedIllness_ - Suspension allowed for illness.
+	* _forParentalLeave_ - Suspension allowed for parental leave.
+	* _forHoliday_ - Suspension allowed for Holiday.
+	* _forAnyReason_ -S uspension allowed for any reason 
+ * Add __SubscriptionTermEnumeration___ attribute with enumeration  values:
+	* _fixed_ - Subscription must be for a fixed term.
+	* _variable_ - Subscription can be for  an arbitrary term
+	* _openEnded_ - Subscription term is open ended.
+ 
+ * Also cf UK-46  Rename __PaymentMethod__ to __TypeOfPayment__ method.  
+ * Also Add __AutomatedUse___ attribute to ___TypeofPaymentMethod___.
+ * Also Add _directDebit_ and bankTransfer_ values   to ___PaymentMethod___ enumeration values.
+ * Also  __RESELLING__ parameter Add __typesOfPaymentMethods/TypeOfPaymentRef__ and move __PaymentMethods__ up hierarchy with new name (Old attribute on ___REFUNDING__  deprecated)
+ * Also Add _unused_ and _earlyTermination_ to  ___Refunding___ ___RefundType___ enumeration.
+ * Also Add with specified window value to PurchaseWhen enumeration attribute. 
+ * Also Add _unused_ and _earlyTermination_ and _other_ to ___RefundType___ enumeration values.
+ * _Updates to xml schema_:     	    
+	* netex_usageParameterCharging_support.xsd
+	* netex_usageParameterCharging_version.xsd
+	* netex_usageParameterAfterSales_support.xsd
+	* netex_usageParameterAfterSales_version.xsd
+ 	* netex_travelRights_support.xsd 
+ 	* netex_travelRights_version.xsd 
+ 	* netex_salesDistribution_support.xsd 
+ * _Updates to xml examples_:
+ 	* netex_91.1_Rail_RailCard_MultipleProducts.xsd
+
+### 2019.03.11 EURA-73  *FARES*  Add new  ___StartConstraintType___ attribute enumeration  for ___UsageValidityPeriod___  with enum values  _fixed_, _variable_, _fixedWindowo_ 
+ * Also EURA-78 Add new __FixedStartWindow__	attribute to ___UsageValidityPeriod___.
+ * _Updates to xml schema_:     	    
+	* netex_usageParameterTravel_support.xsd
+	* netex_usageParameterTravel_version.xsd
+
+EURA-73 Add StartConstraintType enumeration  for UsageValidityPeriod  StartConstraintType attribute to UsageValidityPeriod  to specify  if start is floating or fixed.  
+ 
+					   * EURA-7 Add fixedWindow enum values 
+
 ### 2019.03.11 UK-22  *FARES*  Add new ___PrivateCode___ attribute to ___FarePrice___. 
  * Also UK-22 Add new ___Description___ attribute to ___FareProductPrice___. 
  * Also UK-22 Add new ___InfoLinks___ attribute to ___PriceableObject___.

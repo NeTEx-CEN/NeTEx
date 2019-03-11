@@ -23,7 +23,13 @@
 				 billOnThreshold - Only raise when threshold is reached 
 				 billAFareDayEnd - Bill at end of evey fare day.
 				 billAtPeriodEnd - Bill at end of period			
-						</Date>
+				</Date>
+				<Date>
+					<Modified>2019-03-10</Modified>EURA-40 Add Subscribing  Usage Parameter with various attributes.
+					
+					
+					
+				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the Charging USAGE PARAMETER   types.</p>
@@ -66,21 +72,22 @@ Rail transport, Roads and Road transport
 		<xsd:documentation>NeTEX: Charging USAGE PARAMETER identifier types.</xsd:documentation>
 	</xsd:annotation>
 	<xsd:include schemaLocation="netex_usageParameter_support.xsd"/>
+	<!-- ======================================================================= -->
 	<!-- === CHARGING POLICY PARAMETER============================================== -->
 	<xsd:simpleType name="ChargingPolicyIdType">
 		<xsd:annotation>
-			<xsd:documentation>Type for identifier of a CHARGING POLICY PARAMETER.</xsd:documentation>
+			<xsd:documentation>Type for identifier of a CHARGING POLICY usage parameter.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="UsageParameterIdType"/>
 	</xsd:simpleType>
 	<xsd:element name="ChargingPolicyRef" type="ChargingPolicyRefStructure" substitutionGroup="UsageParameterRef">
 		<xsd:annotation>
-			<xsd:documentation>Reference to a CHARGING POLICY PARAMETER.</xsd:documentation>
+			<xsd:documentation>Reference to a CHARGING POLICY usage parameter.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="ChargingPolicyRefStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for Reference to a CHARGING POLICY PARAMETER.</xsd:documentation>
+			<xsd:documentation>Type for Reference to a CHARGING POLICY usage parameter.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:simpleContent>
 			<xsd:restriction base="UsageParameterRefStructure">
@@ -145,18 +152,18 @@ Rail transport, Roads and Road transport
 	<!-- === PENALTY POLICY PARAMETER============================================== -->
 	<xsd:simpleType name="PenaltyPolicyIdType">
 		<xsd:annotation>
-			<xsd:documentation>Type for identifier of a PENALTY POLICY PARAMETER.</xsd:documentation>
+			<xsd:documentation>Type for identifier of a PENALTY POLICY usage parameter.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="UsageParameterIdType"/>
 	</xsd:simpleType>
 	<xsd:element name="PenaltyPolicyRef" type="PenaltyPolicyRefStructure" substitutionGroup="UsageParameterRef">
 		<xsd:annotation>
-			<xsd:documentation>Reference to a PENALTY POLICY PARAMETER.</xsd:documentation>
+			<xsd:documentation>Reference to a PENALTY POLICY usage parameter.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="PenaltyPolicyRefStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for Reference to a PENALTY POLICY PARAMETER.</xsd:documentation>
+			<xsd:documentation>Type for Reference to a PENALTY POLICY usage parameter.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:simpleContent>
 			<xsd:restriction base="UsageParameterRefStructure">
@@ -192,13 +199,151 @@ Rail transport, Roads and Road transport
 			<xsd:enumeration value="other"/>
 		</xsd:restriction>
 	</xsd:simpleType>
-	<xsd:group name="UsageParameterChargingPolicyRefGroup">
+	<!-- === SUBSCRIBING PARAMETER============================================== -->
+	<xsd:simpleType name="SubscribingIdType">
 		<xsd:annotation>
-			<xsd:documentation>USAGE PARAMETER Elements for CELL.Group.</xsd:documentation>
+			<xsd:documentation>Type for identifier of a SUBSCRIBING usage parameter.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:sequence>
-			<xsd:element ref="ChargingPolicyRef" minOccurs="0"/>
-			<xsd:element ref="PenaltyPolicyRef" minOccurs="0"/>
-		</xsd:sequence>
-	</xsd:group>
+		<xsd:restriction base="UsageParameterIdType"/>
+	</xsd:simpleType>
+	<xsd:element name="SubscribingRef" type="SubscribingRefStructure" substitutionGroup="UsageParameterRef">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a SUBSCRIBING usage parameter.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="SubscribingRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for Reference to a SUBSCRIBING usage parameter.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="UsageParameterRefStructure">
+				<xsd:attribute name="ref" type="SubscribingIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Identifier of a SUBSCRIBING usage parameter.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:simpleType name="SubscriptionTermTypeEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for  Billing Policy.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="fixed">
+				<xsd:annotation>
+					<xsd:documentation>Subscription must be for a fixed term.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="variable">
+				<xsd:annotation>
+					<xsd:documentation>Subscription can be for  an arbitray term,</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="openEnded">
+				<xsd:annotation>
+					<xsd:documentation>Subscription term is open ended. </xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SubscriptionRenewalPolicyEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for SUBSCRIBING Renewal Policy.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="automatic">
+				<xsd:annotation>
+					<xsd:documentation>Renew automatcally at end of term.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="manual">
+				<xsd:annotation>
+					<xsd:documentation>Renew on request.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="automaticOnConfirmation">
+				<xsd:annotation>
+					<xsd:documentation>Confirm and renew automatcally at end of  subscription term.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="none">
+				<xsd:annotation>
+					<xsd:documentation>No renewal allowed.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="other"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SubscriptionSuspensionPolicyEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for SUBSCRIBING Suspension Policy.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="none">
+				<xsd:annotation>
+					<xsd:documentation>Suspension not allowed.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="forCertifiedIllness">
+				<xsd:annotation>
+					<xsd:documentation>Suspension allowed for  illness.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="forParentalLeave">
+				<xsd:annotation>
+					<xsd:documentation>Suspension allowed  for parental leave.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="forHoliday">
+				<xsd:annotation>
+					<xsd:documentation>Suspension allowed  for Holiday.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="forAnyReason">
+				<xsd:annotation>
+					<xsd:documentation>Suspension allowed  for any reason.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SubscriptionSuspensionPolicyListOfEnumerations">
+		<xsd:annotation>
+			<xsd:documentation>List of SUBSCRIBING Suspension Policies</xsd:documentation>
+		</xsd:annotation>
+		<xsd:list itemType="SubscriptionSuspensionPolicyEnumeration"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="SubscriptionCancellationPolicyEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for SUBSCRIBING Cancellation Policy.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="none">
+				<xsd:annotation>
+					<xsd:documentation>Cancellation not allowed.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="fromAnyDate">
+				<xsd:annotation>
+					<xsd:documentation>Cancellation allowed from any  date (subject to minimum qualifiction).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="fromNextEndOfInterval">
+				<xsd:annotation>
+					<xsd:documentation>Cancellation allowed from end of  interval (subject to minimum qualifiction)..</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="ifMaterialChange">
+				<xsd:annotation>
+					<xsd:documentation>Cancellation allowed from end of  interval if there is a material change in the policy conditions.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="other">
+				<xsd:annotation>
+					<xsd:documentation>Other cancellation policy applies.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- ======================================================================= -->
 </xsd:schema>
