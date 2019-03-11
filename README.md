@@ -41,6 +41,14 @@ There is also an Oxygen project file:
 
 
 ## 1.11 Summary of Changes since v1.10 
+
+### 2019.03.11 EURA-72  *FARES*   Improve Fare demand type
+ * Make  ___StartTimeAtStop___ ___StartTime__ optional
+ * Add new attribute StopUseConstraint___ to   ___FareDemandType___ with values _arriving_. _departing_, _passingThrough_.
+ * _Updates to xml schema_:     	    
+	* netex_fareQualityFactor_support.xsd
+	* netex_fareQualityFactor_version.xsd
+	
 __
 ### 2019.03.11 CR-13  *PART1*   Add _replacement_  value  to ___LineType___ enumeration 
  * _Updates to xml schema_:     	    
@@ -138,7 +146,7 @@ EURA-73 Add StartConstraintType enumeration  for UsageValidityPeriod  StartConst
 	* netex_usageParameterEligibility_version.xsd
 
 ### 2019.03.10 UK-21 *FARES*  Add  new___SalesOfferEntitlementGiven___ and ___SalesOfferEntitlementRequired___  usage parameters.
- *  Add as new package because ___SalesOfferPackage___ dependecies are downstream from ___FareProduct___.
+ *  Add as new package because ___SalesOfferPackage___ dependencies are downstream from ___FareProduct___.
  * _Updates to xml schema_:     	   
  	* netex_salesOfferPackageEntitlement_support.xsd (new)
 	* netex_salesOfferPackageEntitlement_version.xsd (new)
@@ -191,7 +199,7 @@ EURA-73 Add StartConstraintType enumeration  for UsageValidityPeriod  StartConst
   * Add new ___StartConstraint___ attribute to ___UsageValidityPeriod___  to  specify if start day  is _variable_ or _fixed_.
   * Add new values _variable_ /  _fixed_ to  ___UsageStartConstraintTypeEnumeration___. 
   * Add new  ___FixedStartDayTypes___  /  ___DayType___ attribute so that any required day of week, day of month, month of year can be indicated.
-  * Add two XML groups to organise absolute and variable attributes. 
+  * Add two XML groups to organise absolute and variable start time attributes. 
   * Also add new _enrolment_ and  _reservation_ enum values to ___UsageTriggerEnumeration___.
   * Also add new _eligibilityExpiry_  enum value to ___UsageEndEnumeration___.
   * Also EURA-94  Add new enumeration values _networks_, _operators_ and _countries_ to  type of step on  ___StepLimit___.
