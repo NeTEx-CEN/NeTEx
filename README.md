@@ -43,9 +43,16 @@ There is also an Oxygen project file:
 ## 1.11 Summary of Changes since v1.10 
 __
 
-### 2019.03.11 UK-55  *FRAMEWORK* Add new ___TypeOfFareStructureElement___.
+
+### 2019.03.11 UK-22  *FARES*  Add new ___PrivateCode___ attribute to ___FarePrice___. 
+ * Also UK-22 Add new ___Description___ attribute to ___FareProductPrice___. 
+ * Also UK-22 Add new ___InfoLinks___ attribute to ___PriceableObject___.
+ * _Updates to xml schema_:     	    
+ 	* netex_farePrice_version.xsd  
+					    
+### 2019.03.11 UK-55  *FARES* Add new ___TypeOfFareStructureElement___.
  * Also	UK-89 Add new ___TypeOfFareStructureFactor___. 
- * ALso Fix: Corrections to ___TypeOfFareProduct___.
+ * Also EURA-77 Fix: Corrections to ___TypeOfFareProduct___.
  * _Updates to xml schema_:     	   
  	* netex_fareStructureElement_support.xsd
  	* netex_fareStructureElement_version.xsd 
@@ -53,15 +60,17 @@ __
  	* netex_fareStructure_version.xsd 
  	* netex_fareProduct_version.xsd 
 			 
-### 2019.03.11 UK-31 *FRAMEWORK* ___TypeOfFrame___ Change data type on ___ClassAttributeInFrame___ and ___ClassRelationshipInFrame___  / Name attributes   from ___NCName___ to ___QNAME___.
+### 2019.03.11 UK-31 *FRAMEWORK*  Fix: to attribute names on __TypeOfFrame___.
+ * ___TypeOfFrame___ Change data type on ___ClassAttributeInFrame___ and ___ClassRelationshipInFrame/Name___ attributes   from ___NCName___ to ___QNAME___.
  * _Updates to xml schema_:     	   
  	* netex_versionFrame_version.xsd 
 
-### 2019.03.11 EURA-77 *FARES*  Add ___tariffs/TariffRef___  attribute to  ___FareProduct___.
+### 2019.03.11 EURA-77 *FARES*  Add new relationship between  ___FareProduct___ and ___Tariff___.
+ * Add new ___tariffs/TariffRef___  attribute to  ___FareProduct___.
  * _Updates to xml schema_:     	   
- 	* netex_usagefareProduct_version.xsd 
+ 	* netex_fareProduct_version.xsd 
 
-### 2019.03.11 EUR-71 *FARES*   Add _superOffPeak_ and _specialEvent_  enumeration values  to ___FareDemandType___.
+### 2019.03.11 EURA-71 *FARES*   Add new  _superOffPeak_ and _specialEvent_  enumeration values  to ___FareDemandType___.
  * _Updates to xml schema_:     	   
  	* netex_usageParameterBooking_version.xsd  
 
@@ -70,17 +79,18 @@ __
  	* netex_usageParameterBooking_version.xsd  
 
 
-### 2019.03.11  EURA 68 *FARES*  Specify conditions fur changing  group size
- * __Exchanging___ usage parameter ___TypeOfExchange___ attribute: add new  _changeGroupSize_ enumeration  valuee.
- * ___GroupTicket add new attribute ___GroupSizeChanges___ with enum values noChanges, free, charge, steppedCharge.  
- * Also ___Refunding___ element  add _changeOfGroupSize_  value  to ___RefundType___ enumeration. 
+### 2019.03.11  EURA-68 *FARES*  Specify conditions for changing  group size
+ * __Exchanging___ usage parameter ___TypeOfExchange___ attribute: add new  enumeration  value _changeGroupSize_.
+ * Also ___GroupTicket___ add new attribute ___GroupSizeChanges___ with enum values _noChanges, free, charge, steppedCharge_.  
+ * Also for ___Refunding___ usage parameter,   add  new _changeOfGroupSize_  value  to ___RefundType___ enumeration. 
 
  * _Updates to xml schema_:     	   
  	* netex_usageParameterAfterSales_support.xsd
  	* netex_usageParameterEligibility_support.xsd
 	* netex_usageParameterEligibility_version.xsd
 
-### 2019.03.10 UK21 *FARES*  Add ___SalesOfferEntitlementGiven___ and ___SalesOfferEntitlementRequired___ parameters 
+### 2019.03.10 UK-21 *FARES*  Add  new___SalesOfferEntitlementGiven___ and ___SalesOfferEntitlementRequired___  usage parameters.
+ *  Add as new package because ___SalesOfferPackage___ dependecies are downstream from ___FareProduct___.
  * _Updates to xml schema_:     	   
  	* netex_salesOfferPackageEntitlement_support.xsd (new)
 	* netex_salesOfferPackageEntitlement_version.xsd (new)
@@ -93,8 +103,8 @@ __
  * _Updates to xml schema_:     	   
  	* netex_calculationParameters_version.xsd
 
-### 2019.03.10 EURA-65  *FARES*  Add a new __SharedUsage___ attribute to ___Transferability___  to specify whether multiple users may use a product at the same time.
-  * Add enum  with values _oneAtATime_, _ severalAtATime_, _severalSpecifiedCompanionsAtATime 
+### 2019.03.10 EURA-65  *FARES*  Add new __SharedUsage___ attribute to ___Transferability___  to specify whether multiple users may use a product at the same time.
+  * Add new enum for __SharedUsage___  with values _oneAtATime_, _severalAtATime_, _severalSpecifiedCompanionsAtATime_. 
   * _Updates to xml schema_:     	  
  	* netex_usageParameterAfterSales_support.xsd
  	* netex_usageParameterAfterSales_version.xsd
@@ -105,15 +115,15 @@ __
 	* netex_usageParameterCharging_support.xsd
 	* netex_usageParameterCharging_version.xsd
 
-### 2019.03.10 UK-32 *FARES* Add new ___ResidenceType___ attribute to ___ResidenceQualification___ with enumerated values;  _live_ , _work_, _study, _born_ 
-  * Also EURA -62:  Add a ___CompanionRelationshipType___ attribute to ___CompanionProfile___ with enumerated values _anyone, grandparent, parent, child, grandchild, colleague, family, legalRelative,   spouse, partner, colleague, teacher, pupil_.
-  * Also EURA-89 add _birthCertificate_ to   list of ___ProofOfIdentity___
+### 2019.03.10 UK-32 *FARES* Add new ___ResidenceType___ attribute to ___ResidenceQualification___ with enumerated values;  _live_, _work_, _study_, _born_ 
+  * Also EURA-62:  Add new ___CompanionRelationshipType___ attribute to ___CompanionProfile___ with enumerated values _anyone, grandparent, parent, child, grandchild, colleague, family, legalRelative,   spouse, partner, colleague, teacher, pupil_.
+  * Also EURA-89 Add new enumeration value _birthCertificate_ to     ___ProofOfIdentity___
   
   * _Updates to xml schema_:     	  
 	* netex_usageParameterEligibility_support.xsd
 	* netex_usageParameterEligibility_version.xsd
 
-### 2019.03.10 EURA-53 *FARES*   Add new ___CappingRuleStartConstraintType___ attribute to ___CappedFareProduct___ ___CappingRule___ to if state  if _ixed_ or _variable_ -  and if _fixed_, specify a ___startOnlyOn___ ___DayType__ s, e.g. for  of week. 
+### 2019.03.10 EURA-53 *FARES*   Add new ___CappingRuleStartConstraintType___ attribute to ___CappedFareProduct___ ___CappingRule___ to state  if _fixed_ or _variable_ -  and if _fixed_, specify a ___startOnlyOn___ ___DayType___s, e.g. for day of week. 
 
   * _Updates to xml schema_:     	  
  	* netex_fareProduct_support.xsd
@@ -124,47 +134,47 @@ __
   * _Updates to xml schema_:     	  
  	* netex_salesDistribution_support.xsd
 
-### 2019.03.10 EURA-91 *FARES*   Add new _sameProductLongerJourney_ and _sameProductShorterJourney_ to enumerated values for ___TypeOfExchange___ attribute on   ___Exchanging___ usage parameter. 
+### 2019.03.10 EURA-91 *FARES*   Add new enumerated values _sameProductLongerJourney_ and _sameProductShorterJourney_ to ___TypeOfExchange___ attribute on   ___Exchanging___ usage parameter. 
 
   * _Updates to xml schema_:     	  
  	* netex_usageParameterAfterSales_support.xsd
  	
-### 2019.03.10  EURA-87 *FARES* EURA-87 Specify if start  of validity is _variable_ or _fixed_.  
-  * Add a ___StartConstraint___ attribute to ___UsageValidityPeriod___  to  specify if start day  is _variable_ or _fixed_.
-  * Add  ___UsageStartConstraintTypeEnumeration___ : _variable_ /  _fixed_. 
-  * Add  ___FixedStartDayTypes___  /  ___DayType___ so that any required day of week, day of month, month of year can be indicated.
-  * Add two grousp to organise absolute and variable attributes. 
-  * Also add _enrolment_ and  _reservation_ enum value to ___UsageTriggerEnumeration___.
-  * Also add _eligibilityExpiry_  enum value to ___UsageEndEnumeration___.
-  * EURA-94  Add _networks_, _operators_ and c_ountries_ to enum values for ___StepLimit___.
+### 2019.03.10  EURA-87 *FARES* Specify if start  of validity is _variable_ or _fixed_.  
+  * Add new ___StartConstraint___ attribute to ___UsageValidityPeriod___  to  specify if start day  is _variable_ or _fixed_.
+  * Add new values _variable_ /  _fixed_ to  ___UsageStartConstraintTypeEnumeration___. 
+  * Add new  ___FixedStartDayTypes___  /  ___DayType___ attribute so that any required day of week, day of month, month of year can be indicated.
+  * Add two XML groups to organise absolute and variable attributes. 
+  * Also add new _enrolment_ and  _reservation_ enum values to ___UsageTriggerEnumeration___.
+  * Also add new _eligibilityExpiry_  enum value to ___UsageEndEnumeration___.
+  * Also EURA-94  Add new enumeration values _networks_, _operators_ and _countries_ to  type of step on  ___StepLimit___.
  
   * _Updates to xml schema_:   
    	* netex_usagwParameterTravel_support.xsd
  	* netex_usageParameterTravel_version.xsd
 
-### 2019.03.10  UK-38 *FARES*  Add ___MinimumAccess___ and ___MaximumAccess___ to __FareStructureElementinSequence___.
+### 2019.03.10  UK-38 *FARES*  Add new attributes ___MinimumAccess___ and ___MaximumAccess___ to ___FareStructureElementinSequence___.
 
   * _Updates to xml schema_:     	  
  	* netex_fareStructureElement_version.xsd
 
-### 2019.03.10 EURA-81 *FARES*  Make relationshiop with TypeOfFareProduct many-to-many.
+### 2019.03.10 EURA-81 *FARES*  Make relationship between ___FareProduct___ and  ___TypeOfFareProduct___ many-to-many.
 
   * _Updates to xml schema_:     	  
  	* netex_fareProduct_version.xsd
 
-### 2019.03.10 UK-8 *FRAMEWORK* Add ___LayerRef___ to ___VersionFrame__ and to ___TypeOfFrame___.
+### 2019.03.10 UK-08 *FRAMEWORK* Add new attribute ___LayerRef___  to ___VersionFrame___ and to ___TypeOfFrame___.
 
   * _Updates to xml schema_:     	 
  	* netex_layer_support.xsd
  	* netex_versionFrame_version.xsd				 
 
-### 2019.03.10 UK-28 *FARES* Add a ___CustomerAccountRef___ to  ___FareContract___.
+### 2019.03.10 UK-28 *FARES* Add new attribute ___CustomerAccountRef___ to  ___FareContract___.
 
   * _Updates to xml schema_:     	 
  	* netex_salesContract_version.xsd
  	* netex_salesTransaction_version.xsd
 
-### 2019.03.09 UK-12 *FARES* Add ___GroupOfOperatorRef___  to ___Tariff___ (ie make relationship many to many)
+### 2019.03.09 UK-12 *FARES* Add  new attribute ___GroupOfOperatorRef___  to ___Tariff___ (ie make relationship many to many)
   * _Updates to xml schema_:   
   	* netex_fareStructureElement_version.xsd
 	
@@ -172,10 +182,11 @@ __
   * _Updates to xml schema_:   
   	* netex_salesOfferPackage_version.xsd
 
-### 2019.03.08 EURA-54 *FARES* Add a Seat reference
-  * Add a ___PassengerSeatRef___  to ___ServiceValidityParameterGroup___ of  ___accessRightParamaterAssignment___.
-  	* Also Add  ___TravelDocumentRef___ and  ___RetailDeviceRef___ parameter to ___SalesTransaction____.
-	* Also Fix: make ___RetailingOrgahisationRef___ an ___OrganisationOperatorRefStructure___ and not an ___OperatorRefStructure____.
+### 2019.03.08 EURA-54 *FARES* Add a Seat reference to assignable parameters.
+  * Add a new moudle with ___PassengerSeatingRef___
+  	* Also Add a  new attribute ___PassengerSeatRef___  to ___ServiceValidityParameterGroup___ of  ___accessRightParamaterAssignment___.
+  	* Also Add new  ___TravelDocumentRef___ and  ___RetailDeviceRef___ attributes to ___SalesTransaction____.
+	* Also Fix: make ___RetailingOrgahisationRef___ an ___OrganisationOperatorRefStructure___ rather than an ___OperatorRefStructure____.
   * _Updates to xml schema_:   
   	* netex_vehicleSeating_support.xsd (New)
   	* netex_all_objects_reusable_components.xsd
@@ -183,20 +194,21 @@ __
  	* netex_accessRightParameter_version.xsd
  	* netex_salesTransaction_version.xsd
 	 
-### 2019.03.08 EURA-43 *FARES* Add new relationship to ___FareZone___ to indicate who who manages it: ___AuthorityRef___ / ___OperatorRef___,   ___GroupOfOperatorsRef___.
+### 2019.03.08 EURA-43 *FARES* Add new relationship to ___FareZone___ to indicate who who manages it.
+  * Add new attributes to ___FareZone___ ; ___AuthorityRef___ / ___OperatorRef___,   ___GroupOfOperatorsRef___.
   * _Updates to xml schema_:   
  	* netex_fareZone_version.xsd
  	
-### 2019.03.08 EURA 51 *FARES* Add  enumeration values to ___RoundTripType___ ; _returnOut_, _returnBack_  so as to distinguish legs.
+### 2019.03.08 EURA-51 *FARES* Add new enumeration values to ___RoundTripType___ ; _returnOut_, _returnBack_  so as to distinguish legs.
   * _Updates to xml schema_:  
  	* netex_usageParameterTravel_support.xsd 
 
 ### 2019.03.08 PART2 UK-44, UK-69 *FARES* Improve support for defining large tariffs in  modular fashion
-  * Add additional  ___groupsOfOperators___  to ___Network___. 
+  * Add  new relationship  ___groupsOfOperators/GroupsOfOperatorRef___  to ___Network___. 
 	* Also ___UseToExclude___   attribute to ___GroupOfOperators___.
-	* Also add _flexible_ and _urban_ to ___TypeOfLine___ enumeration.	 
-	* Add ___UseToExclude___ flag to ___GroupOfLines___.
-	* Add ___UseToExclude___ flag to ___GroupOfDistanceMatrixElements___.
+	* Also add new values  _flexible_ and _urban_ to ___TypeOfLine___ enumeration.	 
+	* Add new ___UseToExclude___ flag to ___GroupOfLines___.
+	* Add new ___UseToExclude___ flag to ___GroupOfDistanceMatrixElements___.
   * _Updates to xml schema_:  
  	* netex_line_support.xsd 
  	* netex_line_version.xsd 
@@ -206,8 +218,8 @@ __
 
 ### 2019.03.08  UK-14 *FARES* Improvements to ___FareZone___:
  * Add new ___ScopingMethod___  attribute to ___FareZone___ with   values  _explicitStops_,   _implicitSpatialProjection_, _implicitSpatialProjection.
- * UK-13 *FARES*  Add extra  ___ZoneTopology___ enumeration  values   _annular_,   _sequence_, _overlappingSequence_.		 
- * UK-18  Specify  fare stages  on a   pattern: Add new ___IsFareStage___ attribute to ___FarePointInPattern___.
+ * UK-13 Add new  ___ZoneTopology___ enumeration  values   _annular_,   _sequence_, _overlappingSequence_.		 
+ * UK-18 Specify  fare stages  on a   pattern: Add new ___IsFareStage___ attribute to ___FarePointInPattern___.
  *EURA  Allow stops to be excluded from a routing.    Add new  ___IsForbidden___ attribute  to ___FarePointInPattern___.
   * _Updates to xml schema_:  
  	* netex_fareZone_support.xsd 
@@ -220,7 +232,7 @@ __
  	* netex_travelRights_version.xsd 
  	* netex_salesDistribution_support.xsd 
 
-### 2019.03.07 NJSK *FARES* UK-74 Add enumerations to ___TariffBasis__;  _zoneToZone_, _pointToPoint_, _discount_. 
+### 2019.03.07 NJSK *FARES* UK-74 Add new enumerations to ___TariffBasis___;  _zoneToZone_, _pointToPoint_, _discount_. 
  * Also add documentation annotations   to existing annotations.
  * _Updates to xml schema_:  
  	* netex_fareStructureElement_support.xsd 
