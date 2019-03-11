@@ -43,7 +43,10 @@ There is also an Oxygen project file:
 ## 1.10 Summary of Changes since v1.11 
 __
 
- 
+
+### 2019.03.11 EUR-71 *FARES*   Add _superOffPeak_ and _specialEvent_  enumeration values  to ___FareDemandType___.
+ * _Updates to xml schema_:     	   
+ 	* netex_usageParameterBooking_version.xsd  
 
 ### 2019.03.11 EURA-76 *FARES*  Add ___IsFeeRefundable___ attribute to ___Reserving___
  * _Updates to xml schema_:     	   
