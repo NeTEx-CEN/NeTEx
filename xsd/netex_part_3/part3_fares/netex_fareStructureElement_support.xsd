@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2013 (x64) (http://www.altova.com) by Nicholas JS Knowles (Trapeze Group Limited) -->
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_fareStuctureElement_support">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_fareStuctureElement_support">
 	<xsd:include schemaLocation="netex_fareStructure_support.xsd"/>
 	<xsd:annotation>
 		<xsd:appinfo>
@@ -23,6 +23,9 @@
 				<Date>
 					<Modified>2019-03-09</Modified>UK-74 Add enumerations to TariffBasis  zoneToZone pointToPoint discount. Also add documentation annotations   to existing annotations
 				</Date>
+				<Date>
+					<Modified>2019-03-11</Modified>UK-55 Add new TypeOfFareStructureElement.
+				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the FARE STRUCTURE ELEMENT types.</p>
@@ -39,7 +42,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -266,6 +269,32 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Reference to a FARE STRUCTURE ELEMENT IN SEQUENCE.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
+	<!-- ===== TYPE OF FARE STRUCTURE ELEMENT ======================================== -->
+	<xsd:simpleType name="TypeOfFareStructureElementIdType">
+		<xsd:annotation>
+			<xsd:documentation>Type for identifier of a TYPE OF FARE STRUCTURE ELEMENT</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="TypeOfValueIdType"/>
+	</xsd:simpleType>
+	<xsd:element name="TypeOfFareStructureElementRef" type="TypeOfFareStructureElementRefStructure" substitutionGroup="TypeOfEntityRef">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a TYPE OF FARE STRUCTURE ELEMENT.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="TypeOfFareStructureElementRefStructure" abstract="false">
+		<xsd:annotation>
+			<xsd:documentation>Type for a TYPE OF TARIFF.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="TypeOfValueRefStructure">
+				<xsd:attribute name="ref" type="TypeOfFareStructureElementIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Reference to a TYPE OF FARE STRUCTURE ELEMENT.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
 	<!-- ===== TYPE OF TARIFF ======================================== -->
 	<xsd:complexType name="FareStructureElementInSequenceRefStructure">
 		<xsd:annotation>

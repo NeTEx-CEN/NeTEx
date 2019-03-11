@@ -43,7 +43,17 @@ There is also an Oxygen project file:
 ## 1.11 Summary of Changes since v1.10 
 __
 
-### 2019.03.11 UK-31 *FRAMEWORK*  Change data type on ClassAttributeInFrame and ClassRelationshipnFrame  / Name attributes   from NCName to QNAME.
+### 2019.03.11 UK-55  *FRAMEWORK* Add new ___TypeOfFareStructureElement___.
+ * Also	UK-89 Add new ___TypeOfFareStructureFactor___. 
+ * ALso Fix: Corrections to ___TypeOfFareProduct___.
+ * _Updates to xml schema_:     	   
+ 	* netex_fareStructureElement_support.xsd
+ 	* netex_fareStructureElement_version.xsd 
+ 	* netex_fareStructure_support.xsd
+ 	* netex_fareStructure_version.xsd 
+ 	* netex_fareProduct_version.xsd 
+			 
+### 2019.03.11 UK-31 *FRAMEWORK* ___TypeOfFrame___ Change data type on ___ClassAttributeInFrame___ and ___ClassRelationshipInFrame___  / Name attributes   from ___NCName___ to ___QNAME___.
  * _Updates to xml schema_:     	   
  	* netex_versionFrame_version.xsd 
 
