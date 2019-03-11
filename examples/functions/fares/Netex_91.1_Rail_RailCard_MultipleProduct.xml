@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- ==== Simple Tailcard tarriff  Example ====== 
+<!-- ==== Simple Railcard tarriff  Example ====== 
 This example shows the encoding of a rail card with  discount rights  on purchase  of rail tickets in NeTex XML  
  
  There  are three types of rail card  , standard, senior and student  
@@ -169,7 +169,7 @@ A COMPOSITE FRAME is used to group the component FRAMEs
 						<Tariff version="1.0" id="myfares:Railcard_discount">
 							<Name>Railcard Discount  tariff</Name>
 							<OperatorRef version="any" ref="mytoc:DTA"/>
-							<TypeOfTariffRef version="ntx:v1.0"  ref="ntx:zonal"/>
+							<TypeOfTariffRef version="ntx:v1.0" ref="ntx:zonal"/>
 							<timeIntervals>
 								<TimeInterval version="1.0" id="myfares:Railcard_discount@1year">
 									<Name>One Year</Name>
@@ -257,7 +257,7 @@ A COMPOSITE FRAME is used to group the component FRAMEs
 					<fareProducts>
 						<SaleDiscountRight version="1.0" id="myfares:Railcard">
 							<Name>Adult  Standard Flat  fare</Name>
-							<TypeOfFareProductRef version="ntx:v1.0"  ref="ntx:discount_card"/> 
+							<TypeOfFareProductRef version="ntx:v1.0" ref="ntx:discount_card"/>
 							<OperatorRef version="any" ref="mytoc:DTA"/>
 							<validableElements>
 								<ValidableElement version="1.0" id="myfares:Railcard@travel">
@@ -331,6 +331,23 @@ A COMPOSITE FRAME is used to group the component FRAMEs
 					<groupsOfSalesOfferPackages>
 						<GroupOfSalesOfferPackages version="1.0" id="myfares:Railcard-GSOP">
 							<Name>Common properties of Railcards</Name>
+							
+							<validityParameterAssignments>
+								<GenericParameterAssignment order="1" id="myfares:Season_pass-SOP@entitles" version="1.0">
+									<TypeOfAccessRightAssignmentRef version="ntx:v1.0" ref="ntx:eligible"/>
+									<LimitationGroupingType>XOR</LimitationGroupingType>
+									<limitations>
+										<SalesOfferPackageEntitlementGiven version="1.0" id="myfares:Railcard-GSOP@trip">
+										<Name>Right to buy rail tickets at a discount</Name>
+												<SalesOfferPackageRef versionRef="EXTERNAL" ref="myfares:Rail_Trip"/>
+										</SalesOfferPackageEntitlementGiven>
+												<SalesOfferPackageEntitlementGiven version="1.0" id="myfares:Railcard-GSOP@period_pass">
+										<Name>Right to buy rail season passes at a discount</Name>
+												<SalesOfferPackageRef versionRef="EXTERNAL" ref="myfares:Rail_Pass"/>
+										</SalesOfferPackageEntitlementGiven>
+									</limitations>
+								</GenericParameterAssignment>
+							</validityParameterAssignments>
 							<salesOfferPackageElements>
 								<SalesOfferPackageElement order="1" version="1.0" id="myfares:Railcard-GSOP">
 									<TypeOfTravelDocumentRef version="any" ref="myfares:card"/>
@@ -501,8 +518,7 @@ A COMPOSITE FRAME is used to group the component FRAMEs
 						</Codespace>
 					</codespaces>
 					<typesOfValue>
-					
-					<ValueSet version="ntx:v1.0" id="ntx:Types_of_Tariff" classOfValues="TypeOfTariff">
+						<ValueSet version="ntx:v1.0" id="ntx:Types_of_Tariff" classOfValues="TypeOfTariff">
 							<Name>Types of Tariff</Name>
 							<values>
 								<!--- ====Types OfTariff ========= -->
@@ -521,7 +537,7 @@ A COMPOSITE FRAME is used to group the component FRAMEs
 								<TypeOfTariff version="ntx:v1.0" id="ntx:zonal">
 									<Name>Zonal</Name>
 								</TypeOfTariff>
-										<TypeOfTariff version="ntx:v1.0" id="ntx:unit_distance">
+								<TypeOfTariff version="ntx:v1.0" id="ntx:unit_distance">
 									<Name>Unit distance (count of stops, sections, zones)</Name>
 								</TypeOfTariff>
 								<TypeOfTariff version="ntx:v1.0" id="ntx:section">
@@ -544,33 +560,29 @@ A COMPOSITE FRAME is used to group the component FRAMEs
 								</TypeOfTariff>
 							</values>
 						</ValueSet>
-						
-						
 						<ValueSet version="ntx:v1.0" id="ntx:Types_of_FareProduct" classOfValues="TypeOfFareProduct">
 							<Name>Types of Fare Product</Name>
-							<values> 
+							<values>
 								<TypeOfFareProduct version="ntx:v1.0" id="ntx:trip">
 									<Name>Trip product</Name>
 								</TypeOfFareProduct>
-														<TypeOfFareProduct version="ntx:v1.0" id="ntx:multi_trip">
+								<TypeOfFareProduct version="ntx:v1.0" id="ntx:multi_trip">
 									<Name>Multitrip / carnet  product</Name>
 								</TypeOfFareProduct>
-									<TypeOfFareProduct version="ntx:v1.0" id="ntx:period_pass">
+								<TypeOfFareProduct version="ntx:v1.0" id="ntx:period_pass">
 									<Name>Peroid pass product</Name>
 								</TypeOfFareProduct>
-										<TypeOfFareProduct version="ntx:v1.0" id="ntx:day_pass">
+								<TypeOfFareProduct version="ntx:v1.0" id="ntx:day_pass">
 									<Name>Day pass product</Name>
 								</TypeOfFareProduct>
-																	<TypeOfFareProduct version="ntx:v1.0" id="ntx:discount_card">
+								<TypeOfFareProduct version="ntx:v1.0" id="ntx:discount_card">
 									<Name>Discount  product</Name>
 								</TypeOfFareProduct>
-								 
 							</values>
-						</ValueSet>						
-						
+						</ValueSet>
 						<ValueSet version="any" id="myfares:Types_of_Concession" classOfValues="TypeOfConcession">
 							<Name>Types of Concession</Name>
-							<values> 
+							<values>
 								<TypeOfConcession version="any" id="myfares:standard">
 									<Name>Full</Name>
 								</TypeOfConcession>
@@ -590,8 +602,6 @@ A COMPOSITE FRAME is used to group the component FRAMEs
 								</TypeOfTravelDocument>
 							</values>
 						</ValueSet>
-						
-						
 						<ValueSet version="ntx:v1.0" id="ntx:Types_of_AccessRightAssignment" classOfValues="TypeOfAccessRightAssignment">
 							<Name>Types of Access Right Assignment</Name>
 							<values>
@@ -602,7 +612,7 @@ A COMPOSITE FRAME is used to group the component FRAMEs
 									<Name>Grants access rights to use or travel on</Name>
 								</TypeOfAccessRightAssignment>
 								<TypeOfAccessRightAssignment version="ntx:v1.0" id="ntx:can_access_when">
-									<Name>Grants access rights to use or travel during a specifed period</Name>
+									<Name>Grants access rights to use or travel during a specified period</Name>
 								</TypeOfAccessRightAssignment>
 								<TypeOfAccessRightAssignment version="ntx:v1.0" id="ntx:condition_of_use">
 									<Name>Defines a condition or restriction on use</Name>
@@ -622,5 +632,6 @@ A COMPOSITE FRAME is used to group the component FRAMEs
 				</ResourceFrame>
 			</frames>
 		</CompositeFrame>
+	 
 	</dataObjects>
 </PublicationDelivery>
