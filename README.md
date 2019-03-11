@@ -42,8 +42,9 @@ There is also an Oxygen project file:
 
 ## 1.11 Summary of Changes since v1.10 
 __
-
-
+### 2019.03.11 CR-13  *PART1*   Add _replacement_  value  to ___LineType___ enumeration 
+ * _Updates to xml schema_:     	    
+	* netex_line_support.xsd
 
 ### 2019.03.11 EURA-40 *FARES*  Support Supcriptions
  * Add new  ___Subscribing___ usage parameter 
