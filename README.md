@@ -40,10 +40,12 @@ There is also an Oxygen project file:
 # Change Log
 
 
-## 1.10 Summary of Changes since v1.11 
+## 1.11 Summary of Changes since v1.10 
 __
 
-
+### 2019.03.11 UK-31 *FRAMEWORK*  Change data type on ClassAttributeInFrame and ClassRelationshipnFrame  / Name attributes   from NCName to QNAME.
+ * _Updates to xml schema_:     	   
+ 	* netex_versionFrame_version.xsd 
 
 ### 2019.03.11 EURA-77 *FARES*  Add ___tariffs/TariffRef___  attribute to  ___FareProduct___.
  * _Updates to xml schema_:     	   
@@ -57,7 +59,7 @@ __
  * _Updates to xml schema_:     	   
  	* netex_usageParameterBooking_version.xsd  
 
-	
+
 ### 2019.03.11  EURA 68 *FARES*  Specify conditions fur changing  group size
  * __Exchanging___ usage parameter ___TypeOfExchange___ attribute: add new  _changeGroupSize_ enumeration  valuee.
  * ___GroupTicket add new attribute ___GroupSizeChanges___ with enum values noChanges, free, charge, steppedCharge.  
@@ -320,7 +322,7 @@ _oneOf_ /  _someOf_/  _allOf_
 	* netex_fareFame_version.xsd
 		 
 ### 2019.02.21 UK-07 *FARES* ___FareTable___ - Allow direct containment of ___FarePriceRef___.
-		
+ * Also UK-23 Add ___FareSectionRef___ to  F___areTable / specifics___	
  * _Updates to xml schema_:
 	* netex_fareTable_version.xsd
  * _Updates to xml examples_:Various to drop unecessary ___cells__ wrapper tags	
