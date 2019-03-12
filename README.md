@@ -38,19 +38,23 @@ There is also an Oxygen project file:
   - NeTEx.xpr
 ----
 # Change Log
-
-
-
+ 
 ## 1.11 Summary of Changes since v1.10 
+ 
+# 2019.03.12 NORWAY-102 *FARES*   Add  new enum values to ___Exchanging___ \  ExchangeableTo.
+ * Values _upgradeToSpecifiedFare_, _downgradeToSpecifedFare_, _equivalentProduct_ (alsread have 
+ _ChangeGroupSize_)  
+ * ALso Add new _purchaseGracePeriod_ (i.e. afterPurchaseWindow)    enum values to  ___Reselling  \  ResellWhen___ 
+ * _Updates to xml schema_:    
+	* netex_usageParameterAfterSales_support.xsd
 
-
-# 2019.03.12 NORWAY-105 *FARES*   Add ___MinimumDuration___ to ___TimeInterval___. 
+# 2019.03.12 NORWAY-105 *FARES*   Add new ___MinimumDuration___  attribute to ___TimeInterval___. 
  * Also fix ___TypeOffareStructureFactor___ on ___GeograohicalStructreFactor___.
  * _Updates to xml schema_:    
 	* netex_timeStructureFactor_version.xsd 
 	* netex_geographicalStructureFactor_version.xsd 
 	
-# 2019.03.12 EURA-84 *PART1-ND*   Add default ___PaymentMethods___, ___TypesOfPaymentMethods___   and ___PurchaseMoments___ attribute to ___Network___, ___GroupOfLines___, and ___Line___.   
+# 2019.03.12 EURA-84 *PART1-ND*   Add default ___PaymentMethods___, ___TypesOfPaymentMethods___   and ___PurchaseMoments___ attributes to ___Network___, ___GroupOfLines___, and ___Line___.   
  * Also add  _cashExactChangeOnly_ to values for ___PaymentMethods___.   
  
  * _Updates to xml schema_:   
