@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_salesOfferPackageEntitlement_version">
 	<xsd:include schemaLocation="netex_salesOfferPackageEntitlement_support.xsd"/>
-	<xsd:include schemaLocation="netex_usageParameterEntitlement_support.xsd"/>
+	<xsd:include schemaLocation="netex_usageParameterEntitlement_version.xsd"/>
 	<xsd:include schemaLocation="netex_salesOfferPackage_support.xsd"/>
 	<xsd:include schemaLocation="netex_usageParameter_version.xsd"/>
 	<!-- ======================================================================= -->
@@ -19,8 +19,8 @@
 						UK-21   Add  SalesOfferEntitlementGiven  and  SalesOfferEntitlementRequired _ parameters 
 				</Date>
 				<Date>
-					<Modified>2019-03-10</Modified>
-				</Date>
+					<Modified>2019-03-12</Modified>UK-45 	Add support for constraints on dependent products 		
+				 </Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the SALES OFFER ENTITLEMENT USAGE PARAMETER    types.</p>
@@ -63,6 +63,23 @@ Rail transport, Roads and Road transport
 		<xsd:documentation>NeTEX: SALES OFFER ENTITLEMENT  USAGE PARAMETER  types.</xsd:documentation>
 	</xsd:annotation>
 	<!-- ====SALES OFFER PACKAGE ENTITLEMENT GIVEN================================================= -->
+	<xsd:group name="SalesOfferPackageEntitlementCommonGroup">
+		<xsd:annotation>
+			<xsd:documentation>Common Elements for ENTITLEMENTs Group</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="EntitlementType" type="EntitlementTypeEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Type of Entitlement given.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MinimumQualificationPeriod" type="xsd:duration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Minimum duration  that required  product must be held to be eligible.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
 	<xsd:element name="SalesOfferPackageEntitlementGiven" abstract="false" substitutionGroup="UsageParameter_">
 		<xsd:annotation>
 			<xsd:documentation>A right to a SALES OFFER PACKAGE    given by a SALES OFFER PACKAGE .</xsd:documentation>
@@ -110,16 +127,8 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="SalesOfferPackageRef" minOccurs="0"/>
-			<xsd:element name="EntitlementType" type="EntitlementTypeEnumeration" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Type of Entitlement given.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="MinimumQualificationPeriod" type="xsd:duration" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Minimum duration  that required  product must be held to be eligible.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
+			<xsd:group ref="SalesOfferPackageEntitlementCommonGroup"/>
+			<xsd:group ref="EntitlementConstraintGroup"/>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ====SALES OFFER PACKAGE ENTITLEMENT REQUIRED================================================= -->
@@ -170,11 +179,8 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="SalesOfferPackageRef" minOccurs="0"/>
-			<xsd:element name="MinimumQualificationPeriod" type="xsd:duration" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Minimum duration  that required  product must be held to be eligible.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
+			<xsd:group ref="SalesOfferPackageEntitlementCommonGroup"/>
+			<xsd:group ref="EntitlementConstraintGroup"/>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->

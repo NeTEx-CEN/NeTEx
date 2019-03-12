@@ -139,7 +139,7 @@ Use separate Composite frames to group
 	<Description>Example ofencoding Plusbus </Description>
 	<!--- =============== RESULTS =========== -->
 	<dataObjects>
-		<CompositeFrame id="jsp:JSP@PlusBus" version="1.0" responsibilitySetRef="jsp:products:JSP">
+		<CompositeFrame id="jsp:JSP@PlusBus" version="1.0" responsibilitySetRef="jsp_products:JSP">
 			<ValidBetween>
 				<FromDate>2017-01-01T00:00:00</FromDate>
 				<ToDate>2020-12-31T12:00:00</ToDate>
@@ -154,10 +154,16 @@ Use separate Composite frames to group
 			<FrameDefaults>
 				<DefaultCodespaceRef ref="jsp"/>
 				<DefaultDataSourceRef ref="jsp:example" version="any"/>
-				<DefaultResponsibilitySetRef ref="jsp:products:JSP" version="1.0"/>
+				<DefaultResponsibilitySetRef ref="jsp_products:JSP" version="1.0"/>
 			</FrameDefaults>
+			<prerequisites>
+				<CompositeFrameRef version="1.0" ref="atc:ATOC@UK_Rail"/>
+				<CompositeFrameRef version="eura:v1.0" ref="fxc:eura:EURA@Generic"/>
+				<CompositeFrameRef version="fxc:v1.0" ref="fxc:DfT@Generic"/>
+			</prerequisites>
+			<!--  === CONTENTS ==== -->
 			<frames>
-				<FareFrame version="1.0" id="jsp:JSP@PlusBus@Products@Pass" responsibilitySetRef="jsp:products:JSP">
+				<FareFrame version="1.0" id="jsp:JSP@PlusBus@Pass@Products" responsibilitySetRef="jsp_products:JSP">
 					<Name>Plusbus 1 day add_on</Name>
 					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@products"/>
 					<tariffs>
@@ -170,7 +176,7 @@ Use separate Composite frames to group
 					GroupOfOperatorsRef  jsp:PlusBus@excluded_operators 
 						GroupOfLinesRef  jsp:PlusBus@excluded_olines </Description>
 							<OperatorRef ref="jsp:JSP" version="1.0"/>
-								<NetworkRef ref="jsp:PlusBus@Day@zones" version="any"/> 
+							<NetworkRef ref="jsp:PlusBus@Day@zones" version="any"/>
 							<TypeOfTariffRef ref="fxc:zonal" version="fxc:v1.0"/>
 							<timeIntervals>
 								<TimeInterval version="1.0" id="jsp:Tariff@PlusBus@Day@1day">
@@ -405,9 +411,23 @@ Disabled Persons discounts are valid during the morning peak hours.
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:prerequisites"/>
 										<LimitationGroupingType>AND</LimitationGroupingType>
 										<limitations>
-											<EntitlementRequired id="jsp:Tariff@PlusBus@Day@prequisites" version="1.0">
-												<Name>Must have a rail ticket pass</Name>
-												<FareProductRef ref="atc:ATOC@Products@Trip@Day" versionRef="01">EXTERNAL -  have to have a rail  ticket for same day  to buy</FareProductRef>
+											<EntitlementRequired id="jsp:Tariff@PlusBus@Day@prequisites@single_trip" version="1.0">
+												<Name>Must have a rai sile l ticket  </Name>
+												<PreassignedFareProductRef version="1.0" ref="atc:Rail@Single_trip"/>
+												<PeriodConstraint>sameDay</PeriodConstraint>
+												<TariffZoneConstraint>sameAsOriginOrDestination</TariffZoneConstraint>
+											</EntitlementRequired>
+											<EntitlementRequired id="jsp:Tariff@PlusBus@Day@prequisites@return_trip" version="1.0">
+												<Name>Must have a rai sile l ticket  </Name>
+												<PreassignedFareProductRef version="1.0" ref="atc:Rail@Return_trip"/>
+												<PeriodConstraint>sameDayOfReturn</PeriodConstraint>
+												<TariffZoneConstraint>sameAsOriginOrDestination</TariffZoneConstraint>
+											</EntitlementRequired>
+											<EntitlementRequired id="jsp:Tariff@PlusBus@Day@prequisites@period_pass" version="1.0">
+												<Name>Must have a rai sigle l ticket  </Name>
+												<PreassignedFareProductRef version="1.0" ref="atc:Rail@Period_pass"/>
+												<PeriodConstraint>withinSamePeriod</PeriodConstraint>
+												<TariffZoneConstraint>sameAsOriginOrDestination</TariffZoneConstraint>
 											</EntitlementRequired>
 										</limitations>
 									</GenericParameterAssignment>
@@ -440,10 +460,7 @@ Disabled Persons discounts are valid during the morning peak hours.
 							</timeIntervals>
 							<!-- ==== FARE STRUCTURE ELEMENTS ===== -->
 							<fareStructureElements>
-								<!-- Trip related -->
-								<FareStructureElementRef ref="atc:ATOC@Tariff@Trip@supplements@prerequisites" versionRef="01">EXTERNAL - thave to have a rail ticket to buy </FareStructureElementRef>
-								<!-- Pass related -->
-								<FareStructureElementRef ref="jsp:Tariff@PlusBus@modes" version="1.0"/>
+								<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@modes"/>
 								<FareStructureElement version="1.0" id="jsp:Tariff@PlusBus@Season@durations">
 									<Name>Plusbus pass  access rights - season pass</Name>
 									<timeIntervals>
@@ -461,7 +478,7 @@ Disabled Persons discounts are valid during the morning peak hours.
 											<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 											<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
 											<validityParameters>
-										<NetworkRef ref="jsp:PlusBus@Season@zones" version="any"/>
+												<NetworkRef ref="jsp:PlusBus@Season@zones" version="any"/>
 											</validityParameters>
 											<includes>
 												<GenericParameterAssignment version="1.0" id="jsp:JSP@Products@Pass@PlusBus@1zone@season@exclusions" order="1">
@@ -488,16 +505,18 @@ Disabled Persons discounts are valid during the morning peak hours.
 										</GenericParameterAssignment>
 									</validityParameterAssignments>
 								</FareStructureElement>
-								<FareStructureElement id="jsp:Tariff@PlusBus@Season@prerequisites" version="1.0">
+								<FareStructureElement version="1.0" id="jsp:Tariff@PlusBus@Season@prerequisites">
 									<Name>Prerequisites for Plusbus season ticket</Name>
 									<GenericParameterAssignment version="1.0" id="jsp:Tariff@PlusBus@Season@prerequisites" order="1">
 										<Name>Only available as Add on to rail season pass</Name>
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:prerequisites"/>
 										<LimitationGroupingType>AND</LimitationGroupingType>
 										<limitations>
-											<EntitlementRequired id="jsp:Tariff@PlusBus@Season@prequisites" version="1.0">
+											<EntitlementRequired id="jsp:Tariff@PlusBus@Season@prequisites@period_pass" version="1.0">
 												<Name>Must have a rail season pass</Name>
-												<FareProductRef ref="atc:ATOC@Products@Pass@Season" versionRef="01">EXTERNAL - thave to have a rail season ticket to buy</FareProductRef>
+												<PreassignedFareProductRef version="1.0" ref="atc:Rail@Period_pass"/>
+												<PeriodConstraint>withinSamePeriod</PeriodConstraint>
+												<TariffZoneConstraint>sameAsOriginOrDestination</TariffZoneConstraint>
 											</EntitlementRequired>
 										</limitations>
 									</GenericParameterAssignment>
@@ -677,6 +696,12 @@ http://www.plusbus.info/faq/14-are-refunds-available-ltigtplusbusltigt-tickets
 									<ValidableElementRef ref="jsp:JSP@Products@Pass@PlusBus@zone_pass@1day" version="1.0"/>
 								</AccessRightInProduct>
 							</accessRightsInProduct>
+							<supplementTo>
+								<PreassignedFareProductRef version="1.0" ref="atc:Rail@Single_trip"/>
+								<PreassignedFareProductRef version="1.0" ref="atc:Rail@Return_trip"/>
+								<PreassignedFareProductRef version="1.0" ref="atc:Rail@Day_pass"/>
+								<PreassignedFareProductRef version="1.0" ref="atc:Rail@Period_Pass"/>
+							</supplementTo>
 						</SupplementProduct>
 						<SupplementProduct version="1.0" id="jsp:JSP@Products@Pass@PlusBus@Season">
 							<Name>Plusbus Season Pass</Name>
@@ -751,12 +776,13 @@ http://www.plusbus.info/faq/14-are-refunds-available-ltigtplusbusltigt-tickets
 									<Name>Ride in Zone</Name>
 									<fareStructureElements>
 										<!-- PlusBus rules -->
-										<FareStructureElementRef ref="jsp:Tariff@PlusBus@modes" version="1.0"/>
-										<FareStructureElementRef ref="jsp:Tariff@PlusBus@Season@access" version="1.0"/>
-										<FareStructureElementRef ref="jsp:Tariff@PlusBus@Season@eligibility"/>
+										<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@modes"/>
+										<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@Season@access"/>
+										<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@Season@durations"/>
+										<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@Day@eligibility"/>
+										<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@Season@eligibility"/>
 										<!--  Season Pass related -->
-										<FareStructureElementRef ref="jsp:Tariff@PlusBus@Season@prerequisites">Must own season pass</FareStructureElementRef>
-										<FareStructureElementRef ref="jsp:Tariff@PlusBus@1zone@season"/>
+										<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@Season@prerequisites">Must own season pass</FareStructureElementRef>
 									</fareStructureElements>
 								</ValidableElement>
 							</validableElements>
@@ -766,6 +792,7 @@ http://www.plusbus.info/faq/14-are-refunds-available-ltigtplusbusltigt-tickets
 									<ValidableElementRef ref="jsp:JSP@Products@Pass@PlusBus@zone_pass@season" version="1.0"/>
 								</AccessRightInProduct>
 							</accessRightsInProduct>
+							<SupplementToFareProductRef version="1.0" ref="atc:Rail@Period_Pass"/>
 						</SupplementProduct>
 					</fareProducts>
 					<!-- === PRICES=== -->
@@ -1097,20 +1124,18 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 								</GenericParameterAssignment>
 							</validityParameterAssignments>
 							<distributionAssignments>
-							 
-									<DistributionAssignment version="1.0" id="jsp:JSP@Products@Pass@PlusBus@Season-GSOP@p-ticket@at_stop@machine" order="1">
-										<Name>At stop</Name>
-										<Description>Pay for ticket at stop and add to card .</Description>
-										<DistributionChannelRef version="fxc:v1.0" ref="fxc:self_service_ticket_machine"/>
-										<FulfilmentMethodRef ref="fxc:collect_from_machine" version="fxc:v1.0"/>
-									</DistributionAssignment>
-									<DistributionAssignment version="1.0" id="jsp:JSP@Products@Pass@PlusBus@Season-GSOP@p-ticket@online_propagation" order="1">
-										<Name>At stop</Name>
-										<Description>Orderr ticket online , collect at stop.</Description>
-										<DistributionChannelRef version="fxc:v1.0" ref="fxc:online"/>
-										<FulfilmentMethodRef ref="fxc:online_propagation" version="fxc:v1.0"/>
-									</DistributionAssignment>
-							 
+								<DistributionAssignment version="1.0" id="jsp:JSP@Products@Pass@PlusBus@Season-GSOP@p-ticket@at_stop@machine" order="1">
+									<Name>At stop</Name>
+									<Description>Pay for ticket at stop and add to card .</Description>
+									<DistributionChannelRef version="fxc:v1.0" ref="fxc:self_service_ticket_machine"/>
+									<FulfilmentMethodRef ref="fxc:collect_from_machine" version="fxc:v1.0"/>
+								</DistributionAssignment>
+								<DistributionAssignment version="1.0" id="jsp:JSP@Products@Pass@PlusBus@Season-GSOP@p-ticket@online_propagation" order="1">
+									<Name>At stop</Name>
+									<Description>Orderr ticket online , collect at stop.</Description>
+									<DistributionChannelRef version="fxc:v1.0" ref="fxc:online"/>
+									<FulfilmentMethodRef ref="fxc:online_propagation" version="fxc:v1.0"/>
+								</DistributionAssignment>
 							</distributionAssignments>
 							<!-- == PACKAGE ELEMENTS == -->
 							<salesOfferPackageElements>
@@ -1163,7 +1188,7 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 					</groupsOfSalesOfferPackages>
 					<!--==== Fare Prices ==== -->
 				</FareFrame>
-				<ServiceFrame version="1.0" id="jsp:JSP@PlusBus@Network" responsibilitySetRef="nptg:tariff_zones">
+				<ServiceFrame version="1.0" id="jsp:JSP@PlusBus@Pass@Network" responsibilitySetRef="nptg:tariff_zones">
 					<Name>Plusbus zones</Name>
 					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@service_network"/>
 					<!--- ======= CODESPACEs======== -->
@@ -1199,7 +1224,7 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 								<!-- TO DO Add Rest Of  Season pass Zones -->
 							</tariffZones>
 						</Network>
-						<Network version="any" id="jsp:PlusBus@excluded_lines" responsibilitySetRef="jsp:products:JSP">
+						<Network version="any" id="jsp:PlusBus@excluded_lines" responsibilitySetRef="jsp_products:JSP">
 							<Name> Excluded lines </Name>
 							<OperatorRef version="1.0" ref="jsp:JSP"/>
 							<groupsOfLines>
@@ -1497,14 +1522,14 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 						<!-- TO DO Add REst Of Zones -->
 					</tariffZones>
 				</ServiceFrame>
-				<ResourceFrame version="jsp:v1.0" id="jsp:JSP@PlusBus@Network_Resources" responsibilitySetRef="jsp:products:JSP">
+				<ResourceFrame version="jsp:v1.0" id="jsp:JSP@PlusBus@Network_Resources" responsibilitySetRef="jsp_products:JSP">
 					<Name>Plus Bus Operators provifign services</Name>
 					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@operator_resources"/>
 					<!--- ======= CODESPACEs======== -->
 					<FrameDefaults>
 						<DefaultCodespaceRef ref="jsp"/>
 						<DefaultDataSourceRef ref="jsp:example" version="1.0"/>
-						<DefaultResponsibilitySetRef ref="jsp:products:JSP" version="1.0"/>
+						<DefaultResponsibilitySetRef ref="jsp_products:JSP" version="1.0"/>
 					</FrameDefaults>
 					<organisations>
 						<!--==== Operators ==== -->
@@ -1540,7 +1565,7 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 							<Name>Operators not participating in   Plusbus pass</Name>
 							<!-- 	To add    -->
 						</GroupOfOperators>
-							<GroupOfOperators version="any" id="jsp:PlusBus@smartcard_operators">
+						<GroupOfOperators version="any" id="jsp:PlusBus@smartcard_operators">
 							<Name>Operators participating in PlusBus pass with smartcard </Name>
 							<members>
 								<!--  Crawley: Participating operators: Metrobus (including 'Fastway' services), Southdown PSV, Compass Travel  -->
@@ -1569,13 +1594,13 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 						</GroupOfOperators>
 					</groupsOfOperators>
 				</ResourceFrame>
-				<ServiceCalendarFrame version="1.0" id="jsp:JSP@PlusBus@Service_Calendar" responsibilitySetRef="jsp:products:JSP">
+				<ServiceCalendarFrame version="1.0" id="jsp:JSP@PlusBus@Service_Calendar" responsibilitySetRef="jsp_products:JSP">
 					<Name>Plusbus Specific Calendar</Name>
 					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@calendar"/>
 					<FrameDefaults>
 						<DefaultCodespaceRef ref="jsp"/>
 						<DefaultDataSourceRef ref="jsp:example" version="any"/>
-						<DefaultResponsibilitySetRef ref="jsp:products:JSP" version="1.0"/>
+						<DefaultResponsibilitySetRef ref="jsp_products:JSP" version="1.0"/>
 					</FrameDefaults>
 					<contentValidityConditions>
 						<AvailabilityCondition id="jsp:anytime@anyday" version="1.0">
@@ -1647,7 +1672,7 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 						</FareDayType>
 					</dayTypes>
 				</ServiceCalendarFrame>
-				<ResourceFrame version="jsp:v1.0" id="jsp:JSP@PlusBus@Common_Resources" responsibilitySetRef="jsp:products:JSP">
+				<ResourceFrame version="jsp:v1.0" id="jsp:JSP@PlusBus@Common_Resources" responsibilitySetRef="jsp_products:JSP">
 					<Name>Plus Bus Specific code values</Name>
 					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@operator_resources"/>
 					<!--- ======= CODESPACEs======== -->
@@ -1661,7 +1686,7 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 					<FrameDefaults>
 						<DefaultCodespaceRef ref="jsp"/>
 						<DefaultDataSourceRef ref="jsp:example" version="1.0"/>
-						<DefaultResponsibilitySetRef ref="jsp:products:JSP" version="1.0"/>
+						<DefaultResponsibilitySetRef ref="jsp_products:JSP" version="1.0"/>
 					</FrameDefaults>
 					<dataSources>
 						<DataSource id="jsp:example" version="1.0">
@@ -1669,10 +1694,10 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 						</DataSource>
 					</dataSources>
 					<responsibilitySets>
-						<ResponsibilitySet version="1.0" id="jsp:products:JSP">
+						<ResponsibilitySet version="1.0" id="jsp_products:JSP">
 							<Name>Plus Bus Products</Name>
 							<roles>
-								<ResponsibilityRoleAssignment version="1.0" id="jsp:products">
+								<ResponsibilityRoleAssignment version="1.0" id="jsp_products">
 									<StakeholderRoleType>FareManagement</StakeholderRoleType>
 									<ResponsibleOrganisationRef ref="jsp:JSP" version="1.0"/>
 									<ResponsibleAreaRef ref="jsp:uk">TODO</ResponsibleAreaRef>
@@ -1684,8 +1709,7 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 							<roles>
 								<ResponsibilityRoleAssignment version="nptg:v2.1" id="nptg:tariff_zones">
 									<StakeholderRoleType>FareManagement</StakeholderRoleType>
-							 
-												<ResponsibleOrganisationRef ref="fxc:DfT" version="fxc:v1.0"/>
+									<ResponsibleOrganisationRef ref="fxc:DfT" version="fxc:v1.0"/>
 									<ResponsibleAreaRef ref="nptg:uk">TODO</ResponsibleAreaRef>
 								</ResponsibilityRoleAssignment>
 							</roles>
@@ -1729,7 +1753,7 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 				</ResourceFrame>
 			</frames>
 		</CompositeFrame>
-		<CompositeFrame id="atc:ATOC@Network" version="1.0" responsibilitySetRef="atc:products:NRE">
+		<CompositeFrame id="atc:ATOC@UK_Rail" version="1.0" responsibilitySetRef="atc_products:NRE">
 			<ValidBetween>
 				<FromDate>2017-01-01T00:00:00</FromDate>
 				<ToDate>2020-12-31T12:00:00</ToDate>
@@ -1738,61 +1762,360 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 			<FrameDefaults>
 				<DefaultCodespaceRef ref="atoc"/>
 				<DefaultDataSourceRef ref="atc:example" version="any"/>
-				<DefaultResponsibilitySetRef ref="atc:products:NRE" version="any"/>
+				<DefaultResponsibilitySetRef ref="atc_products:NRE" version="any"/>
 			</FrameDefaults>
+			<CompositeFrameRef version="eura:v1.0" ref="eura:EURA@Generic"/>
+			<CompositeFrameRef version="fxc:v1.0" ref="fxc:DfT@Generic"/>
 			<frames>
-				<SiteFrame id="atc:ATOC@Common_Site" version="1.0" responsibilitySetRef="atc:products:NRE">
-					<Name>UK Common Site</Name>
-					<siteFacilitySets>
-						<SiteFacilitySet id="atc:first_class_lounge" version="1.0">
-							<Description>First class Lounge</Description>
-							<FareClasses>firstClass</FareClasses>
-						</SiteFacilitySet>
-					</siteFacilitySets>
-				</SiteFrame>
-				<ServiceFrame id="atc:ATOC@Lines" version="1.0" responsibilitySetRef="atc:products:NRE">
-					<Name>UK Rail Network and Lines</Name>
-					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@service_network"/>
-					<Network version="1.0" id="atc:ATOC@Lines@Network">
-						<Name>UK Rail Network</Name>
-						<TransportMode>rail</TransportMode>
-						<OperatorRef ref="uic:operator:1170" version="any">ATOC</OperatorRef>
-					</Network>
-				</ServiceFrame>
-				<TimetableFrame id="atc:ATOC@Services" version="1.0" responsibilitySetRef="atc:products:NRE">
-					<serviceFacilitySets>
-						<ServiceFacilitySet version="any" id="atc:allows_bicycles@reservation">
-							<Description>allows Bicycles</Description>
-							<LuggageCarriageFacilityList>cyclesAllowedWithReservation</LuggageCarriageFacilityList>
-						</ServiceFacilitySet>
-						<ServiceFacilitySet version="any" id="atc:allows_bicycles@no_reservation">
-							<Description>allows Bicycles</Description>
-							<LuggageCarriageFacilityList>cyclesAllowed</LuggageCarriageFacilityList>
-						</ServiceFacilitySet>
-						<ServiceFacilitySet version="any" id="atc:no_bicyles">
-							<Description>allows Bicycles</Description>
-							<LuggageCarriageFacilityList>noCycles</LuggageCarriageFacilityList>
-						</ServiceFacilitySet>
-					</serviceFacilitySets>
-				</TimetableFrame>
-				<FareFrame id="atc:ATOC@ODs" version="1.0" responsibilitySetRef="atc:products:NRE">
-					<Name>This frame holds stop points and distance matrix elements referenced by other frames</Name>
+				<FareFrame id="atc:ATOC@Products" version="1.0" responsibilitySetRef="atc_products:NRE">
+					<Name>UK Rail Prducts (STUB ONL) </Name>
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@products"/>
+					<prerequisites>
+						<FareFrameRef version="1.0" ref="atc:ATOC@Network@ODs"/>
+					</prerequisites>
+					<!--  === CONTENTS ==== -->
+					<!-- === TARIFFS === -->
+					<tariffs>
+						<Tariff id="atc:ATOC@ODs@all" version="1.0">
+							<Name>P2P based fares for UK</Name>
+							<OperatorRef ref="uic_operator:1170" version="any">ATOC</OperatorRef>
+									<TariffBasis>pointToPoint</TariffBasis> 
+							<!--- ===FARE STRUCTURE==== -->
+							<fareStructureElements>
+								<FareStructureElement id="atc:ATOC@ODs@p2p_OD" version="1.0">
+									<Name>A single O/D pair from the following</Name>
+									<!-- TODO ADD others fromwhole network -->
+									<GroupOfDistanceMatrixElementsRef ref="atc:ATOC@ODs@any#any" version="1.0"/>
+								</FareStructureElement>
+							</fareStructureElements>
+							<!--- ===DISTANCE MATRIX==== -->
+							<groupsOfDistanceMatrixElements>
+								<GroupOfDistanceMatrixElements id="atc:ATOC@ODs@any#any" version="1.0">
+									<Name>OD Pairs</Name>
+									<members>
+										<DistanceMatrixElementRef version="1.0" ref="atc:LST+TOM">London Liverpool Street to Tottenham Hale</DistanceMatrixElementRef>
+										<DistanceMatrixElementRef version="1.0" ref="atc:TOM+SSD">Tottenham Hale to Stansted Airport</DistanceMatrixElementRef>
+										<DistanceMatrixElementRef version="1.0" ref="atc:SSD+GYM">Stansted Airport to Great Yarmouth</DistanceMatrixElementRef>
+										<DistanceMatrixElementRef version="1.0" ref="atc:LST+SSD">London Liverpool Street to Stansted Airport</DistanceMatrixElementRef>
+										<DistanceMatrixElementRef version="1.0" ref="atc:LST+SNF">London Liverpool Street to Shenfield</DistanceMatrixElementRef>
+										<DistanceMatrixElementRef version="1.0" ref="atc:LST+IPS">London Liverpool Street to Shenfield</DistanceMatrixElementRef>
+										<DistanceMatrixElementRef version="1.0" ref="atc:SNF+IPS">Shenfield to Ipswich</DistanceMatrixElementRef>
+										<DistanceMatrixElementRef version="1.0" ref="atc:IPS+NRW">Ipswich to Norwich</DistanceMatrixElementRef>
+										<DistanceMatrixElementRef version="1.0" ref="atc:LST+NRW">London Liverpool Street to Norwich</DistanceMatrixElementRef>
+										<DistanceMatrixElementRef version="1.0" ref="atc:LST+SOV">London Liverpool Street to Southend Victoria</DistanceMatrixElementRef>
+										<DistanceMatrixElementRef version="1.0" ref="atc:LST+LWT">London Liverpool Street to Lowestoft</DistanceMatrixElementRef>
+										<!-- TODO ADD ALL OTHER STATIONS -->
+									</members>
+								</GroupOfDistanceMatrixElements>
+							</groupsOfDistanceMatrixElements>
+							<!-- TODO ADD ELEMENTS FOR P2P for ALL OTHER ROUTES -->
+						</Tariff>
+						<Tariff id="atc:ATOC@ODs@LE" version="1.0">
+							<Name>P2P based fare structure elements for UK, Greater Anglia</Name>
+							<OperatorRef ref="atc_operator:LE" version="any"/>
+									<TariffBasis>pointToPoint</TariffBasis> 
+							<!--- ===DISTANCE MATRIX==== -->
+							<groupsOfDistanceMatrixElements>
+								<GroupOfDistanceMatrixElements id="atc:ATOC@ODs@LE@all" version="1.0">
+									<Name>OD Pairs</Name>
+									<members>
+										<DistanceMatrixElement version="1.0" id="atc:LST+TOM">
+											<Name>London Liverpool Street to Tottenham Hale</Name>
+											<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+											<EndStopPointRef version="1.0" ref="atc_station:TOM" xsi:type="FareScheduledStopPointRefStructure"/>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1.0" id="atc:TOM+LST">
+											<Name>Tottenham Hale to London Liverpool Street</Name>
+											<StartStopPointRef version="1.0" ref="atc_station:TOM" xsi:type="FareScheduledStopPointRefStructure"/>
+											<EndStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1.0" id="atc:TOM+SSD">
+											<Name>Tottenham Hale to Stansted Airport</Name>
+											<StartStopPointRef version="1.0" ref="atc_station:TOM" xsi:type="FareScheduledStopPointRefStructure"/>
+											<EndStopPointRef version="1.0" ref="atc_station:SSD" xsi:type="FareScheduledStopPointRefStructure"/>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1.0" id="atc:SSD+TOM">
+											<Name>Stansted Airport to Tottenham Hale</Name>
+											<StartStopPointRef version="1.0" ref="atc_station:SSD" xsi:type="FareScheduledStopPointRefStructure"/>
+											<EndStopPointRef version="1.0" ref="atc_station:TOM" xsi:type="FareScheduledStopPointRefStructure"/>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1.0" id="atc:SSD+GYM">
+											<Name>Stansted Airport to Great Yarmouth</Name>
+											<StartStopPointRef version="1.0" ref="atc_station:SSD" xsi:type="FareScheduledStopPointRefStructure"/>
+											<EndStopPointRef version="1.0" ref="atc_station:GYM" xsi:type="FareScheduledStopPointRefStructure"/>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1.0" id="atc:GYM+SSD">
+											<Name>Great Yarmouth to Stansted Airport</Name>
+											<StartStopPointRef version="1.0" ref="atc_station:GYM" xsi:type="FareScheduledStopPointRefStructure"/>
+											<EndStopPointRef version="1.0" ref="atc_station:SSD" xsi:type="FareScheduledStopPointRefStructure"/>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1.0" id="atc:LST+SSD">
+											<Name>London Liverpool Street to Stansted Airport</Name>
+											<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+											<EndStopPointRef version="1.0" ref="atc_station:SSD" xsi:type="FareScheduledStopPointRefStructure"/>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1.0" id="atc:SSD+LST">
+											<Name>Stansted Airport to London Liverpool Street</Name>
+											<StartStopPointRef version="1.0" ref="atc_station:SSD" xsi:type="FareScheduledStopPointRefStructure"/>
+											<EndStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1.0" id="atc:LST+SNF">
+											<Name>London Liverpool Street to Shenfield</Name>
+											<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+											<EndStopPointRef version="1.0" ref="atc_station:SNF" xsi:type="FareScheduledStopPointRefStructure"/>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1.0" id="atc:SNF+LST">
+											<Name>Shenfield to London Liverpool Street</Name>
+											<StartStopPointRef version="1.0" ref="atc_station:SNF" xsi:type="FareScheduledStopPointRefStructure"/>
+											<EndStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1.0" id="atc:LST+IPS">
+											<Name>London Liverpool Street to Ipswich</Name>
+											<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+											<EndStopPointRef version="1.0" ref="atc_station:IPS" xsi:type="FareScheduledStopPointRefStructure"/>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1.0" id="atc:IPS+LST">
+											<Name>Ipswich to London Liverpool Street</Name>
+											<StartStopPointRef version="1.0" ref="atc_station:IPS" xsi:type="FareScheduledStopPointRefStructure"/>
+											<EndStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1.0" id="atc:SNF+IPS">
+											<Name>Shenfield to Ipswich</Name>
+											<StartStopPointRef version="1.0" ref="atc_station:SNF" xsi:type="FareScheduledStopPointRefStructure"/>
+											<EndStopPointRef version="1.0" ref="atc_station:IPS" xsi:type="FareScheduledStopPointRefStructure"/>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1.0" id="atc:IPS+SNF">
+											<Name>Ipswich to Shenfield</Name>
+											<StartStopPointRef version="1.0" ref="atc_station:IPS" xsi:type="FareScheduledStopPointRefStructure"/>
+											<EndStopPointRef version="1.0" ref="atc_station:SNF" xsi:type="FareScheduledStopPointRefStructure"/>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1.0" id="atc:IPS+NRW">
+											<Name>Ipswich to Norwich</Name>
+											<StartStopPointRef version="1.0" ref="atc_station:IPS" xsi:type="FareScheduledStopPointRefStructure"/>
+											<EndStopPointRef version="1.0" ref="atc_station:NRW" xsi:type="FareScheduledStopPointRefStructure"/>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1.0" id="atc:NRW#IPS">
+											<Name>Norwich to Ipswich</Name>
+											<StartStopPointRef version="1.0" ref="atc_station:NRW" xsi:type="FareScheduledStopPointRefStructure"/>
+											<EndStopPointRef version="1.0" ref="atc_station:IPS" xsi:type="FareScheduledStopPointRefStructure"/>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1.0" id="atc:SNF+NRW">
+											<Name>Shenfield to Norwich</Name>
+											<StartStopPointRef version="1.0" ref="atc_station:SNF" xsi:type="FareScheduledStopPointRefStructure"/>
+											<EndStopPointRef version="1.0" ref="atc_station:NRW" xsi:type="FareScheduledStopPointRefStructure"/>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1.0" id="atc:NRW#SNF">
+											<Name>Norwich to Shenfield</Name>
+											<StartStopPointRef version="1.0" ref="atc_station:NRW" xsi:type="FareScheduledStopPointRefStructure"/>
+											<EndStopPointRef version="1.0" ref="atc_station:SNF" xsi:type="FareScheduledStopPointRefStructure"/>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1.0" id="atc:LST+NRW">
+											<Name>London Liverpool Street to Norwich</Name>
+											<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+											<EndStopPointRef version="1.0" ref="atc_station:NRW" xsi:type="FareScheduledStopPointRefStructure"/>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1.0" id="atc:NRW#LST">
+											<Name>Norwich to London Liverpool Street</Name>
+											<StartStopPointRef version="1.0" ref="atc_station:NRW" xsi:type="FareScheduledStopPointRefStructure"/>
+											<EndStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1.0" id="atc:LST+SOV">
+											<Name>London Liverpool Street to Southend Victoria</Name>
+											<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+											<EndStopPointRef version="1.0" ref="atc_station:SOV" xsi:type="FareScheduledStopPointRefStructure"/>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1.0" id="atc:SOV#LST">
+											<Name>Southend Victoria to London Liverpool Street</Name>
+											<StartStopPointRef version="1.0" ref="atc_station:SOV" xsi:type="FareScheduledStopPointRefStructure"/>
+											<EndStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1.0" id="atc:LST+LWT">
+											<Name>London Liverpool Street to Lowestoft</Name>
+											<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+											<EndStopPointRef version="1.0" ref="atc_station:LWT" xsi:type="FareScheduledStopPointRefStructure"/>
+										</DistanceMatrixElement>
+										<DistanceMatrixElement version="1.0" id="atc:LWT+LST">
+											<Name>Lowestoft to London Liverpool Street</Name>
+											<StartStopPointRef version="1.0" ref="atc_station:LWT" xsi:type="FareScheduledStopPointRefStructure"/>
+											<EndStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+										</DistanceMatrixElement>
+										<!-- TODO ADD ALL OTHER STATIONS -->
+									</members>
+								</GroupOfDistanceMatrixElements>
+								<GroupOfDistanceMatrixElements id="atc:ATOC@ODs@LE@season" version="1.0">
+									<Name>OD Pairs for Season Tickets for East Anglia</Name>
+									<Description>Season Tickets are available for most short and medium distance journeys on the National Rail network. Season Tickets are not generally available for long distance journeys, but maybe available where a train company chooses to offer them.</Description>
+									<members>
+										<DistanceMatrixElementRef version="1.0" ref="atc:LST+TOM">London Liverpool Street to Tottenham Hale</DistanceMatrixElementRef>
+										<DistanceMatrixElementRef version="1.0" ref="atc:TOM+SSD">Tottenham Hale to Stansted Airport</DistanceMatrixElementRef>
+										<DistanceMatrixElementRef version="1.0" ref="atc:SSD+GYM">Stansted Airport to Great Yarmouth</DistanceMatrixElementRef>
+										<DistanceMatrixElementRef version="1.0" ref="atc:LST+SSD">London Liverpool Street to Stansted Airport</DistanceMatrixElementRef>
+										<DistanceMatrixElementRef version="1.0" ref="atc:LST+SNF">London Liverpool Street to Shenfield</DistanceMatrixElementRef>
+										<DistanceMatrixElementRef version="1.0" ref="atc:LST+IPS">London Liverpool Street to Shenfield</DistanceMatrixElementRef>
+										<DistanceMatrixElementRef version="1.0" ref="atc:SNF+IPS">Shenfield to Ipswich</DistanceMatrixElementRef>
+										<DistanceMatrixElementRef version="1.0" ref="atc:IPS+NRW">Ipswich to Norwich</DistanceMatrixElementRef>
+										<DistanceMatrixElementRef version="1.0" ref="atc:LST+NRW">London Liverpool Street to Norwich</DistanceMatrixElementRef>
+										<DistanceMatrixElementRef version="1.0" ref="atc:LST+SOV">London Liverpool Street to Southend Victoria</DistanceMatrixElementRef>
+										<DistanceMatrixElementRef version="1.0" ref="atc:LST+LWT">London Liverpool Street to Lowestoft</DistanceMatrixElementRef>
+										<!-- TODO ADD ALL OTHER SEASON TICKET STATION ODS -->
+									</members>
+								</GroupOfDistanceMatrixElements>
+								<GroupOfDistanceMatrixElements id="atc:ATOC@ODs@LE@network" version="1.0">
+									<Name>OD Pairs for East Anglia</Name>
+									<Description>OD pairs making up network</Description>
+									<members>
+										<DistanceMatrixElementRef version="1.0" ref="atc:LST+TOM">London Liverpool Street to Tottenham Hale</DistanceMatrixElementRef>
+										<DistanceMatrixElementRef version="1.0" ref="atc:TOM+SSD">Tottenham Hale to Stansted Airport</DistanceMatrixElementRef>
+										<DistanceMatrixElementRef version="1.0" ref="atc:SSD+GYM">Stansted Airport to Great Yarmouth</DistanceMatrixElementRef>
+										<DistanceMatrixElementRef version="1.0" ref="atc:LST+SSD">London Liverpool Street to Stansted Airport</DistanceMatrixElementRef>
+										<DistanceMatrixElementRef version="1.0" ref="atc:LST+SNF">London Liverpool Street to Shenfield</DistanceMatrixElementRef>
+										<DistanceMatrixElementRef version="1.0" ref="atc:LST+IPS">London Liverpool Street to Shenfield</DistanceMatrixElementRef>
+										<DistanceMatrixElementRef version="1.0" ref="atc:SNF+IPS">Shenfield to Ipswich</DistanceMatrixElementRef>
+										<DistanceMatrixElementRef version="1.0" ref="atc:IPS+NRW">Ipswich to Norwich</DistanceMatrixElementRef>
+										<DistanceMatrixElementRef version="1.0" ref="atc:LST+NRW">London Liverpool Street to Norwich</DistanceMatrixElementRef>
+										<DistanceMatrixElementRef version="1.0" ref="atc:LST+SOV">London Liverpool Street to Southend Victoria</DistanceMatrixElementRef>
+										<DistanceMatrixElementRef version="1.0" ref="atc:LST+LWT">London Liverpool Street to Lowestoft</DistanceMatrixElementRef>
+										<!-- TODO ADD ALL OTHER ODs just For LE -->
+									</members>
+								</GroupOfDistanceMatrixElements>
+							</groupsOfDistanceMatrixElements>
+							<!-- TODO ADD ELEMENTS FOR P2P for ALL OTHER ROUTES -->
+						</Tariff>
+						<Tariff id="atc:TfL@ODs@London" version="1.0">
+							<Name>London Transfers </Name>
+							<OperatorRef ref="atc_operator:LE" version="any"/>
+							<TariffBasis>zone</TariffBasis>  
+							<!--- ===DISTANCE MATRIX==== -->
+							<groupsOfDistanceMatrixElements>
+								<GroupOfDistanceMatrixElements version="1.0" ref="atc:TfL@ODs@London_transfers"/>
+							</groupsOfDistanceMatrixElements>
+						</Tariff>
+						
+						<Tariff id="atc:Rail@Single_Trip" version="1.0">
+							<Name>London Transfers </Name>
+							<OperatorRef ref="atc_operator:LE" version="any"/>
+							<TariffBasis>pointToPoint</TariffBasis> 
+							
+											<fareStructureElements>
+										<FareStructureElement version="1.0" id="atc:Rail@Trip@gives_entitlement@Single_trip">
+									<Name> Allowsr Plusbus season ticket</Name>
+									<GenericParameterAssignment version="1.0" id="atc:Rail@Trip@gives_entitlement" order="1">
+										<Name>Only available as Add on to rail season pass</Name>
+										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:prerequisites"/>
+										<LimitationGroupingType>AND</LimitationGroupingType>
+										<limitations>
+											<EntitlementGiven id="atc:Rail@Trip@gives_entitlements" version="1.0">
+												<Name>Must have valid ticket</Name>
+												<PreassignedFareProductRef version="1.0" ref="atc:Rail@Period_pass"/>
+												<PeriodConstraint>sameDay</PeriodConstraint>
+												<TariffZoneConstraint>sameAsOriginOrDestination</TariffZoneConstraint>
+											</EntitlementGiven>
+										</limitations>
+									</GenericParameterAssignment>
+								</FareStructureElement>
+							</fareStructureElements>
+								</Tariff>
+						
+					</tariffs>
+					<!--==== Fare Products ==== -->
+					<fareProducts>
+						<PreassignedFareProduct version="1.0" id="atc:Rail@Single_trip">
+							<Name>Rail Single trip</Name>
+							<OperatorRef ref="uic_operator:1170" version="any">ATOC</OperatorRef>
+						</PreassignedFareProduct>
+						<PreassignedFareProduct version="1.0" id="atc:Rail@Return_trip">
+							<Name>Rail Return trip</Name>
+							<OperatorRef ref="uic_operator:1170" version="any">ATOC</OperatorRef>
+						</PreassignedFareProduct>
+						<PreassignedFareProduct version="1.0" id="atc:Rail@Day_pass">
+							<Name>Rail Day Pass</Name>
+							<OperatorRef ref="uic_operator:1170" version="any">ATOC</OperatorRef>
+						</PreassignedFareProduct>
+						<PreassignedFareProduct version="1.0" id="atc:Rail@Period_pass">
+							<Name>Rail Period Pass </Name>
+							<OperatorRef ref="uic_operator:1170" version="any">ATOC</OperatorRef>
+						</PreassignedFareProduct>
+					</fareProducts>
+				</FareFrame>
+				<FareFrame id="atc:ATOC@Network@ODs" version="1.0" responsibilitySetRef="atc_products:NRE">
+					<Name>This frame holds Rail stop points and distance matrix elements referenced by other frames</Name>
 					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@fare_network"/>
 					<codespaces>
-						<Codespace id="atc:Station">
-							<Xmlns>atc:Station</Xmlns>
+						<Codespace id="atc_station">
+							<Xmlns>atc_station</Xmlns>
 							<XmlnsUrl>https://data.atoc.org.uk/</XmlnsUrl>
 							<Description>UK station data</Description>
 						</Codespace>
-						<Codespace id="atc:FareZone">
-							<Xmlns>atc:FareZone</Xmlns>
+						<Codespace id="atc_fare_zone">
+							<Xmlns>atc_fare_zone</Xmlns>
 							<XmlnsUrl>https://data.atoc.org.uk/</XmlnsUrl>
 							<Description>UK fare zones</Description>
 						</Codespace>
 					</codespaces>
+					<prerequisites>
+						<ServiceFrameRef version="1.0" ref="atc:ATOC@Network@Lines"/>
+						<SiteFrameRef version="1.0" ref="atc:ATOC@Common_Site"/>
+						<TimetableFrameRef version="1.0" ref="atc:ATOC@Common_Facilities"/>
+						<ServiceCalendarFrame version="1.0" ref="atc:ATOC@Common_Service_Calendar@2018"/>
+						<ResourcFrameRef version="1.0" ref="atc:ATOC@Common_Resources"/>
+					</prerequisites>
+					<!--  === CONTENTS ==== -->
+					<groupsOfDistanceMatrixElements>
+						<GroupOfDistanceMatrixElements id="atc:TfL@ODs@London_transfers" version="1.0">
+							<Name>OD Pairs</Name>
+							<members>
+								<DistanceMatrixElement version="1.0" id="atc:LST+WAT">
+									<Name>London Liverpool Street to Waterloo</Name>
+									<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+									<EndStopPointRef versionRef="TODO" ref="atc_station:WAT" xsi:type="FareScheduledStopPointRefStructure"/>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="1.0" id="atc:LST+KGX">
+									<Name>London Liverpool Street to Kings CRoss</Name>
+									<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+									<EndStopPointRef versionRef="TODO" ref="atc_station:KGX" xsi:type="FareScheduledStopPointRefStructure"/>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="1.0" id="atc:LST+VIC">
+									<Name>London Liverpool Street to Victoria</Name>
+									<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+									<EndStopPointRef versionRef="TODO" ref="atc_station:VIC" xsi:type="FareScheduledStopPointRefStructure"/>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="1.0" id="atc:LST+PAD">
+									<Name>London Liverpool Street to Paddington</Name>
+									<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+									<EndStopPointRef versionRef="TODO" ref="atc_station:PAD" xsi:type="FareScheduledStopPointRefStructure"/>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="1.0" id="atc:LST+LBG">
+									<Name>London Liverpool Street to London Bridge</Name>
+									<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+									<EndStopPointRef versionRef="TODO" ref="atc_station:LBG" xsi:type="FareScheduledStopPointRefStructure"/>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="1.0" id="atc:LST+CHX">
+									<Name>London Liverpool Street to London Charing Cross</Name>
+									<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+									<EndStopPointRef versionRef="TODO" ref="atc_station:CHX" xsi:type="FareScheduledStopPointRefStructure"/>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="1.0" id="atc:LST+MYB">
+									<Name>London Liverpool Street to London Marylebone</Name>
+									<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+									<EndStopPointRef versionRef="TODO" ref="atc_station:MYB" xsi:type="FareScheduledStopPointRefStructure"/>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="1.0" id="atc:LST+FST">
+									<Name>London Liverpool Street to London Fenchurch Street</Name>
+									<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+									<EndStopPointRef versionRef="TODO" ref="atc_station:FST" xsi:type="FareScheduledStopPointRefStructure"/>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="1.0" id="atc:LST+STP">
+									<Name>London Liverpool Street to London St Pancras</Name>
+									<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+									<EndStopPointRef versionRef="TODO" ref="atc_station:STP" xsi:type="FareScheduledStopPointRefStructure"/>
+								</DistanceMatrixElement>
+								<!-- add others -->
+							</members>
+						</GroupOfDistanceMatrixElements>
+					</groupsOfDistanceMatrixElements>
 					<!--- ===STOP POINTS======= -->
 					<fareScheduledStopPoints>
-						<FareScheduledStopPoint id="atc:Station:BTR" version="1.0" responsibilitySetRef="uic:Station_Management:0070">
+						<FareScheduledStopPoint id="atc_station:BTR" version="1.0" responsibilitySetRef="uic_station_management:0070">
 							<ValidBetween>
 								<FromDate>1987-12-31T00:00:00Z</FromDate>
 							</ValidBetween>
@@ -1817,7 +2140,7 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 								<Name>Braintree</Name>
 							</TopographicPlaceView>
 						</FareScheduledStopPoint>
-						<FareScheduledStopPoint id="atc:Station:CLT" version="1.0" responsibilitySetRef="uic:Station_Management:0070">
+						<FareScheduledStopPoint id="atc_station:CLT" version="1.0" responsibilitySetRef="uic_station_management:0070">
 							<ValidBetween>
 								<FromDate>1987-12-31T00:00:00Z</FromDate>
 							</ValidBetween>
@@ -1842,7 +2165,7 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 								<Name>Clacton</Name>
 							</TopographicPlaceView>
 						</FareScheduledStopPoint>
-						<FareScheduledStopPoint id="atc:Station:GYM" version="1.0" responsibilitySetRef="uic:Station_Management:0070">
+						<FareScheduledStopPoint id="atc_station:GYM" version="1.0" responsibilitySetRef="uic_station_management:0070">
 							<ValidBetween>
 								<FromDate>1987-12-31T00:00:00Z</FromDate>
 							</ValidBetween>
@@ -1867,7 +2190,7 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 								<Name>Great Yarmouth</Name>
 							</TopographicPlaceView>
 						</FareScheduledStopPoint>
-						<FareScheduledStopPoint id="atc:Station:HWC" version="1.0" responsibilitySetRef="uic:Station_Management:0070">
+						<FareScheduledStopPoint id="atc_station:HWC" version="1.0" responsibilitySetRef="uic_station_management:0070">
 							<ValidBetween>
 								<FromDate>1987-12-31T00:00:00Z</FromDate>
 							</ValidBetween>
@@ -1892,7 +2215,7 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 								<Name>Harwich</Name>
 							</TopographicPlaceView>
 						</FareScheduledStopPoint>
-						<FareScheduledStopPoint id="atc:Station:IPS" version="1.0" responsibilitySetRef="uic:Station_Management:0070">
+						<FareScheduledStopPoint id="atc_station:IPS" version="1.0" responsibilitySetRef="uic_station_management:0070">
 							<ValidBetween>
 								<FromDate>1987-12-31T00:00:00Z</FromDate>
 							</ValidBetween>
@@ -1917,7 +2240,7 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 								<Name>Ipswich</Name>
 							</TopographicPlaceView>
 						</FareScheduledStopPoint>
-						<FareScheduledStopPoint id="atc:Station:LST" version="1.0" responsibilitySetRef="uic:Station_Management:0070">
+						<FareScheduledStopPoint id="atc_station:LST" version="1.0" responsibilitySetRef="uic_station_management:0070">
 							<ValidBetween>
 								<FromDate>1987-12-31T00:00:00Z</FromDate>
 							</ValidBetween>
@@ -1948,7 +2271,7 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 								<QualifierName>London</QualifierName>
 							</TopographicPlaceView>
 						</FareScheduledStopPoint>
-						<FareScheduledStopPoint id="atc:Station:LWT" version="1.0" responsibilitySetRef="uic:Station_Management:0070">
+						<FareScheduledStopPoint id="atc_station:LWT" version="1.0" responsibilitySetRef="uic_station_management:0070">
 							<ValidBetween>
 								<FromDate>1987-12-31T00:00:00Z</FromDate>
 							</ValidBetween>
@@ -1973,7 +2296,7 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 								<Name>Lowestoft</Name>
 							</TopographicPlaceView>
 						</FareScheduledStopPoint>
-						<FareScheduledStopPoint id="atc:Station:NRW" version="1.0" responsibilitySetRef="uic:Station_Management:0070">
+						<FareScheduledStopPoint id="atc_station:NRW" version="1.0" responsibilitySetRef="uic_station_management:0070">
 							<ValidBetween>
 								<FromDate>1987-12-31T00:00:00Z</FromDate>
 							</ValidBetween>
@@ -1998,7 +2321,7 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 								<Name>Norwich</Name>
 							</TopographicPlaceView>
 						</FareScheduledStopPoint>
-						<FareScheduledStopPoint id="atc:Station:SFA" version="1.0" responsibilitySetRef="uic:Station_Management:0070">
+						<FareScheduledStopPoint id="atc_station:SFA" version="1.0" responsibilitySetRef="uic_station_management:0070">
 							<ValidBetween>
 								<FromDate>1987-12-31T00:00:00Z</FromDate>
 							</ValidBetween>
@@ -2024,7 +2347,7 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 								<QualifierName>London</QualifierName>
 							</TopographicPlaceView>
 						</FareScheduledStopPoint>
-						<FareScheduledStopPoint id="atc:Station:SNF" version="1.0" responsibilitySetRef="uic:Station_Management:0070">
+						<FareScheduledStopPoint id="atc_station:SNF" version="1.0" responsibilitySetRef="uic_station_management:0070">
 							<ValidBetween>
 								<FromDate>1987-12-31T00:00:00Z</FromDate>
 							</ValidBetween>
@@ -2050,7 +2373,7 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 								<QualifierName>Brentwood</QualifierName>
 							</TopographicPlaceView>
 						</FareScheduledStopPoint>
-						<FareScheduledStopPoint id="atc:Station:SSD" version="1.0" responsibilitySetRef="uic:Station_Management:0070">
+						<FareScheduledStopPoint id="atc_station:SSD" version="1.0" responsibilitySetRef="uic_station_management:0070">
 							<ValidBetween>
 								<FromDate>1987-12-31T00:00:00Z</FromDate>
 							</ValidBetween>
@@ -2075,7 +2398,7 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 								<Name>Stansted Airport</Name>
 							</TopographicPlaceView>
 						</FareScheduledStopPoint>
-						<FareScheduledStopPoint id="atc:Station:SOV" version="1.0" responsibilitySetRef="uic:Station_Management:0070">
+						<FareScheduledStopPoint id="atc_station:SOV" version="1.0" responsibilitySetRef="uic_station_management:0070">
 							<ValidBetween>
 								<FromDate>1987-12-31T00:00:00Z</FromDate>
 							</ValidBetween>
@@ -2100,7 +2423,7 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 								<Name>Southend-on-Sea</Name>
 							</TopographicPlaceView>
 						</FareScheduledStopPoint>
-						<FareScheduledStopPoint id="atc:Station:SUY" version="1.0" responsibilitySetRef="uic:Station_Management:0070">
+						<FareScheduledStopPoint id="atc_station:SUY" version="1.0" responsibilitySetRef="uic_station_management:0070">
 							<ValidBetween>
 								<FromDate>1987-12-31T00:00:00Z</FromDate>
 							</ValidBetween>
@@ -2126,7 +2449,7 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 								<QualifierName>Suffolk</QualifierName>
 							</TopographicPlaceView>
 						</FareScheduledStopPoint>
-						<FareScheduledStopPoint id="atc:Station:TOM" version="1.0" responsibilitySetRef="uic:Station_Management:0070">
+						<FareScheduledStopPoint id="atc_station:TOM" version="1.0" responsibilitySetRef="uic_station_management:0070">
 							<ValidBetween>
 								<FromDate>1987-12-31T00:00:00Z</FromDate>
 							</ValidBetween>
@@ -2152,7 +2475,7 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 								<QualifierName>London</QualifierName>
 							</TopographicPlaceView>
 						</FareScheduledStopPoint>
-						<FareScheduledStopPoint id="atc:Station:WON" version="1.0">
+						<FareScheduledStopPoint id="atc_station:WON" version="1.0">
 							<ValidBetween>
 								<FromDate>1987-12-31T00:00:00Z</FromDate>
 							</ValidBetween>
@@ -2182,7 +2505,7 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 					</fareScheduledStopPoints>
 					<fareZones>
 						<!--==== Fare regions === -->
-						<FareZone version="1.0" id="atc:FareZone:ATOC@Network_railcard_area">
+						<FareZone version="1.0" id="atc_fare_zone:ATOC@Network_railcard_area">
 							<Name lang="en">Area in which Network Railcards are valid</Name>
 							<projections>
 								<TopographicProjection>
@@ -2191,11 +2514,11 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 							</projections>
 							<!-- TO DO add members -->
 						</FareZone>
-						<FareZone id="atc:FareZone:ATOC@Gold_Card_area" version="1.0" responsibilitySetRef="atc:NT">
+						<FareZone id="atc_fare_zone:ATOC@Gold_Card_area" version="1.0" responsibilitySetRef="atc:NT">
 							<Name>Arriva Trains Northern</Name>
 							<!-- TO DO add members -->
 						</FareZone>
-						<FareZone id="atc:FareZone:ATOC@London_terminii" version="1.0" responsibilitySetRef="atc:NT">
+						<FareZone id="atc_fare_zone:ATOC@London_terminii" version="1.0" responsibilitySetRef="atc:NT">
 							<Name>London Termini Stations for transfers</Name>
 							<Description>'London Terminal' stations
 Tickets issued for travel to/from London usually show 'London Terminals' as the destination/origin rather than naming a specific station. This is because the ticket is valid to more than one London Terminal station provided it's on any reasonable line of route. Tickets can only be used on National Rail services.
@@ -2251,37 +2574,37 @@ Please note:
 Tickets issued to or from 'LONDON TERMINALS' are only valid as described above. Customers with London Terminals tickets routes "Plus High Speed" are also permitted to travel in either direction on Thameslink services between London St Pancras International and Farringdon, City Thameslink, London Blackfriars, Elephant and Castle and London Bridge
 Shoreditch High Street is not considered to be part of 'London Terminals'</Description>
 							<members>
-								<FareScheduledStopPointRef ref="atc:Station:BFR" versionRef="TODO">London Blackfriars</FareScheduledStopPointRef>
-								<FareScheduledStopPointRef ref="atc:Station:CAS" versionRef="TODO">London Cannon Street</FareScheduledStopPointRef>
-								<FareScheduledStopPointRef ref="atc:Station:CHX" versionRef="TODO">London Charing Cross</FareScheduledStopPointRef>
-								<FareScheduledStopPointRef ref="atc:Station:FST" versionRef="TODO">London Fenchurch Street</FareScheduledStopPointRef>
-								<FareScheduledStopPointRef ref="atc:Station:LBG" versionRef="TODO">London Bridge</FareScheduledStopPointRef>
-								<FareScheduledStopPointRef ref="atc:Station:LST" version="1.0">London Liverpool Street</FareScheduledStopPointRef>
-								<FareScheduledStopPointRef ref="atc:Station:KGX" versionRef="TODO">London Kings Crosss</FareScheduledStopPointRef>
-								<FareScheduledStopPointRef ref="atc:Station:MYB" versionRef="TODO">London Marylebone</FareScheduledStopPointRef>
-								<FareScheduledStopPointRef ref="atc:Station:MOG" versionRef="TODO">London Moorgate</FareScheduledStopPointRef>
-								<FareScheduledStopPointRef ref="atc:Station:OLD" versionRef="TODO">London Old Street</FareScheduledStopPointRef>
-								<FareScheduledStopPointRef ref="atc:Station:PAD" versionRef="TODO">London Paddington</FareScheduledStopPointRef>
-								<FareScheduledStopPointRef ref="atc:Station:VIC" versionRef="TODO">London Victoria</FareScheduledStopPointRef>
-								<FareScheduledStopPointRef ref="atc:Station:STP" versionRef="TODO">London St Pancras</FareScheduledStopPointRef>
-								<FareScheduledStopPointRef ref="atc:Station:WAT" versionRef="TODO">London Waterloo</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:BFR" versionRef="TODO">London Blackfriars</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:CAS" versionRef="TODO">London Cannon Street</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:CHX" versionRef="TODO">London Charing Cross</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:FST" versionRef="TODO">London Fenchurch Street</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:LBG" versionRef="TODO">London Bridge</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:LST" version="1.0">London Liverpool Street</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:KGX" versionRef="TODO">London Kings Crosss</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:MYB" versionRef="TODO">London Marylebone</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:MOG" versionRef="TODO">London Moorgate</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:OLD" versionRef="TODO">London Old Street</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:PAD" versionRef="TODO">London Paddington</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:VIC" versionRef="TODO">London Victoria</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:STP" versionRef="TODO">London St Pancras</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:WAT" versionRef="TODO">London Waterloo</FareScheduledStopPointRef>
 							</members>
 						</FareZone>
-						<FareZone id="atc:FareZone:ATOC@London_Thameslink" version="1.0" responsibilitySetRef="atc:NT">
+						<FareZone id="atc_fare_zone:ATOC@London_Thameslink" version="1.0" responsibilitySetRef="atc:NT">
 							<Name>London Termini Thaneslink</Name>
 							<Description>London Thameslink
 Tickets with an origin/destination of 'London Thameslink' are valid to/from the following stations:
 
 </Description>
 							<members>
-								<FareScheduledStopPointRef ref="atc:Station:STP" versionRef="TODO">London St Pancras</FareScheduledStopPointRef>
-								<FareScheduledStopPointRef ref="atc:Station:ZFD" versionRef="TODO">London Farringdon</FareScheduledStopPointRef>
-								<FareScheduledStopPointRef ref="atc:Station:CTK" versionRef="TODO">London City Thameslink</FareScheduledStopPointRef>
-								<FareScheduledStopPointRef ref="atc:Station:BFR" versionRef="TODO">London Blackfriars</FareScheduledStopPointRef>
-								<FareScheduledStopPointRef ref="atc:Station:LBG" versionRef="TODO">London Bridge</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:STP" versionRef="TODO">London St Pancras</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:ZFD" versionRef="TODO">London Farringdon</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:CTK" versionRef="TODO">London City Thameslink</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:BFR" versionRef="TODO">London Blackfriars</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:LBG" versionRef="TODO">London Bridge</FareScheduledStopPointRef>
 							</members>
 						</FareZone>
-						<FareZone id="atc:FareZone:ATOC@Stations_with_first_class_lounges@GR" version="1.0">
+						<FareZone id="atc_fare_zone:ATOC@Stations_with_first_class_lounges@GR" version="1.0">
 							<Name>Stations with First class Lounges - Virgin Trains East Coast</Name>
 							<Description>At Stations Virgin Trains East Coast
 First Class Lounges are available at London King's Cross, Leeds, Newcastle, Edinburgh Waverley, Berwick-upon-Tweed, Darlington, Wakefield Westgate and Doncaster stations.
@@ -2297,17 +2620,17 @@ Please be aware that First Advance and Weekend First tickets are not entitled to
 http://www.nationalrail.co.uk/stations_destinations/44863.aspx
 </Description>
 							<members>
-								<FareScheduledStopPointRef ref="atc:Station:BWK" versionRef="TODO">Berwick-upon-Tweed</FareScheduledStopPointRef>
-								<FareScheduledStopPointRef ref="atc:Station:DAR" versionRef="TODO">Darlington</FareScheduledStopPointRef>
-								<FareScheduledStopPointRef ref="atc:Station:DON" versionRef="TODO">Doncaster</FareScheduledStopPointRef>
-								<FareScheduledStopPointRef ref="atc:Station:EDB" versionRef="TODO">Edinburgh Waverley</FareScheduledStopPointRef>
-								<FareScheduledStopPointRef ref="atc:Station:LDS" versionRef="TODO">Leeds</FareScheduledStopPointRef>
-								<FareScheduledStopPointRef ref="atc:Station:KGX" versionRef="TODO">London Kings Crosss</FareScheduledStopPointRef>
-								<FareScheduledStopPointRef ref="atc:Station:NCL" versionRef="TODO">Newcastle</FareScheduledStopPointRef>
-								<FareScheduledStopPointRef ref="atc:Station:WKF" versionRef="TODO">Wakefield Westgate</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:BWK" versionRef="TODO">Berwick-upon-Tweed</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:DAR" versionRef="TODO">Darlington</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:DON" versionRef="TODO">Doncaster</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:EDB" versionRef="TODO">Edinburgh Waverley</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:LDS" versionRef="TODO">Leeds</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:KGX" versionRef="TODO">London Kings Crosss</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:NCL" versionRef="TODO">Newcastle</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:WKF" versionRef="TODO">Wakefield Westgate</FareScheduledStopPointRef>
 							</members>
 						</FareZone>
-						<FareZone id="atc:FareZone:ATOC@Stations_with_first_class_lounges@EM" version="1.0">
+						<FareZone id="atc_fare_zone:ATOC@Stations_with_first_class_lounges@EM" version="1.0">
 							<Name>Stations with First class Lounges - East Midlands</Name>
 							<Description>At Stations
 The First Class lounges are open Monday to Friday and are a great place to work or relax while you're waiting for a train. They offer complimentary refreshments, WiFi, fax and phone services are available.
@@ -2322,13 +2645,13 @@ First Class Lounges are available to customers with First Inclusive, First Plus 
 http://www.nationalrail.co.uk/stations_destinations/44863.aspx
 </Description>
 							<members>
-								<FareScheduledStopPointRef ref="atc:Station:NOT" versionRef="TODO">Nottingham</FareScheduledStopPointRef>
-								<FareScheduledStopPointRef ref="atc:Station:DBR" versionRef="TODO">Derby</FareScheduledStopPointRef>
-								<FareScheduledStopPointRef ref="atc:Station:LEI" versionRef="TODO">Leicester</FareScheduledStopPointRef>
-								<FareScheduledStopPointRef ref="atc:Station:STP" versionRef="TODO">London St Pancras</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:NOT" versionRef="TODO">Nottingham</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:DBR" versionRef="TODO">Derby</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:LEI" versionRef="TODO">Leicester</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:STP" versionRef="TODO">London St Pancras</FareScheduledStopPointRef>
 							</members>
 						</FareZone>
-						<FareZone id="atc:FareZone:ATOC@Stations_with_first_class_lounges@GW" version="1.0">
+						<FareZone id="atc_fare_zone:ATOC@Stations_with_first_class_lounges@GW" version="1.0">
 							<Name>Stations with First class Lounges - Great Western</Name>
 							<Description>Great Western Railway
  
@@ -2337,409 +2660,179 @@ Exclusive access to First Class lounges at London Paddington, and Cardiff Centra
 http://www.nationalrail.co.uk/stations_destinations/44863.aspx
 </Description>
 							<members>
-								<FareScheduledStopPointRef ref="atc:Station:CDF" versionRef="TODO">Cardiff Central</FareScheduledStopPointRef>
-								<FareScheduledStopPointRef ref="atc:Station:PAD" versionRef="TODO">London Paddington</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:CDF" versionRef="TODO">Cardiff Central</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:PAD" versionRef="TODO">London Paddington</FareScheduledStopPointRef>
 							</members>
 						</FareZone>
 						<!-- TOC zones -->
-						<FareZone id="atc:FareZone:ATOC@23" version="1.0" responsibilitySetRef="atc:NT">
+						<FareZone id="atc_fare_zone:ATOC@23" version="1.0" responsibilitySetRef="atc:NT">
 							<Name>Arriva Trains Northern</Name>
 						</FareZone>
-						<FareZone id="atc:FareZone:ATOC@71" version="1.0" responsibilitySetRef="AW">
+						<FareZone id="atc_fare_zone:ATOC@71" version="1.0" responsibilitySetRef="AW">
 							<Name>Arriva Trains Wales</Name>
 						</FareZone>
-						<FareZone id="atc:FareZone:ATOC@79" version="1.0" responsibilitySetRef="CC">
+						<FareZone id="atc_fare_zone:ATOC@79" version="1.0" responsibilitySetRef="CC">
 							<Name>c2c</Name>
 						</FareZone>
-						<FareZone id="atc:FareZone:ATOC@35" version="1.0" responsibilitySetRef="CS">
+						<FareZone id="atc_fare_zone:ATOC@35" version="1.0" responsibilitySetRef="CS">
 							<Name>Caledonian Sleeper</Name>
 						</FareZone>
-						<FareZone id="atc:FareZone:ATOC@74" version="1.0" responsibilitySetRef="CH">
+						<FareZone id="atc_fare_zone:ATOC@74" version="1.0" responsibilitySetRef="CH">
 							<Name>Chiltern Railway</Name>
 						</FareZone>
-						<FareZone id="atc:FareZone:ATOC@27" version="1.0" responsibilitySetRef="XC">
+						<FareZone id="atc_fare_zone:ATOC@27" version="1.0" responsibilitySetRef="XC">
 							<Name>CrossCountry</Name>
 						</FareZone>
-						<FareZone id="atc:FareZone:ATOC@34" version="1.0" responsibilitySetRef="ZZ">
+						<FareZone id="atc_fare_zone:ATOC@34" version="1.0" responsibilitySetRef="ZZ">
 							<Name>Devon and Cornwall Railways</Name>
 						</FareZone>
-						<FareZone id="atc:FareZone:ATOC@28" version="1.0" responsibilitySetRef="EM">
+						<FareZone id="atc_fare_zone:ATOC@28" version="1.0" responsibilitySetRef="EM">
 							<Name>East Midlands Trains</Name>
 						</FareZone>
-						<FareZone id="atc:FareZone:ATOC@6" version="1.0" responsibilitySetRef="ES">
+						<FareZone id="atc_fare_zone:ATOC@6" version="1.0" responsibilitySetRef="ES">
 							<Name>Eurostar</Name>
 						</FareZone>
-						<FareZone id="atc:FareZone:ATOC@26" version="1.0" responsibilitySetRef="FC">
+						<FareZone id="atc_fare_zone:ATOC@26" version="1.0" responsibilitySetRef="FC">
 							<Name>First Capital Connect (defunct)</Name>
 						</FareZone>
-						<FareZone id="atc:FareZone:ATOC@55" version="1.0" responsibilitySetRef="HT">
+						<FareZone id="atc_fare_zone:ATOC@55" version="1.0" responsibilitySetRef="HT">
 							<Name>First Hull Trains</Name>
 						</FareZone>
-						<FareZone id="atc:FareZone:ATOC@81" version="1.0" responsibilitySetRef="GX">
+						<FareZone id="atc_fare_zone:ATOC@81" version="1.0" responsibilitySetRef="GX">
 							<Name>Gatwick Express</Name>
 						</FareZone>
-						<FareZone id="atc:FareZone:ATOC@54" version="1.0" responsibilitySetRef="ZZ">
+						<FareZone id="atc_fare_zone:ATOC@54" version="1.0" responsibilitySetRef="ZZ">
 							<Name>GB Railfreight</Name>
 						</FareZone>
-						<FareZone id="atc:FareZone:ATOC@88a" version="1.0" responsibilitySetRef="TL">
+						<FareZone id="atc_fare_zone:ATOC@88a" version="1.0" responsibilitySetRef="TL">
 							<Name>Govia Thameslink Railway (Thameslink)	</Name>
 						</FareZone>
-						<FareZone id="atc:FareZone:ATOC@22" version="1.0" responsibilitySetRef="GC">
+						<FareZone id="atc_fare_zone:ATOC@22" version="1.0" responsibilitySetRef="GC">
 							<Name>Grand Central</Name>
 						</FareZone>
-						<FareZone id="atc:FareZone:ATOC@25" version="1.0" responsibilitySetRef="GW">
+						<FareZone id="atc_fare_zone:ATOC@25" version="1.0" responsibilitySetRef="GW">
 							<Name>Great Western Railway</Name>
 						</FareZone>
-						<FareZone id="atc:FareZone:ATOC@21" version="1.0" responsibilitySetRef="LE">
+						<FareZone id="atc_fare_zone:ATOC@21" version="1.0" responsibilitySetRef="LE">
 							<Name>Greater Anglia</Name>
 							<members>
-								<FareScheduledStopPointRef ref="atc:Station:BTR" version="1.0">Braintree</FareScheduledStopPointRef>
-								<FareScheduledStopPointRef ref="atc:Station:CLT" version="1.0">Clacton-on-Sea</FareScheduledStopPointRef>
-								<FareScheduledStopPointRef ref="atc:Station:GYM" version="1.0">Great Yarmouth</FareScheduledStopPointRef>
-								<FareScheduledStopPointRef ref="atc:Station:HWC" version="1.0">Harwich Town</FareScheduledStopPointRef>
-								<FareScheduledStopPointRef ref="atc:Station:IPS" version="1.0">Ipswich</FareScheduledStopPointRef>
-								<FareScheduledStopPointRef ref="atc:Station:LST" version="1.0">London Liverpool Street</FareScheduledStopPointRef>
-								<FareScheduledStopPointRef ref="atc:Station:LWT" version="1.0">Lowestoft</FareScheduledStopPointRef>
-								<FareScheduledStopPointRef ref="atc:Station:NRW" version="1.0">Norwich</FareScheduledStopPointRef>
-								<FareScheduledStopPointRef ref="atc:Station:SFA" version="1.0">Stratford</FareScheduledStopPointRef>
-								<FareScheduledStopPointRef ref="atc:Station:SNF" version="1.0">Shenfield</FareScheduledStopPointRef>
-								<FareScheduledStopPointRef ref="atc:Station:SSD" version="1.0">Stansted Airport</FareScheduledStopPointRef>
-								<FareScheduledStopPointRef ref="atc:Station:SOV" version="1.0">Southend Victoria</FareScheduledStopPointRef>
-								<FareScheduledStopPointRef ref="atc:Station:SUY" version="1.0">Sudbury</FareScheduledStopPointRef>
-								<FareScheduledStopPointRef ref="atc:Station:TOM" version="1.0">Tottenham Hale</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:BTR" version="1.0">Braintree</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:CLT" version="1.0">Clacton-on-Sea</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:GYM" version="1.0">Great Yarmouth</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:HWC" version="1.0">Harwich Town</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:IPS" version="1.0">Ipswich</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:LST" version="1.0">London Liverpool Street</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:LWT" version="1.0">Lowestoft</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:NRW" version="1.0">Norwich</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:SFA" version="1.0">Stratford</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:SNF" version="1.0">Shenfield</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:SSD" version="1.0">Stansted Airport</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:SOV" version="1.0">Southend Victoria</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:SUY" version="1.0">Sudbury</FareScheduledStopPointRef>
+								<FareScheduledStopPointRef ref="atc_station:TOM" version="1.0">Tottenham Hale</FareScheduledStopPointRef>
 								<!-- TODO Add other stations -->
 							</members>
 						</FareZone>
-						<FareZone id="atc:FareZone:ATOC@24" version="1.0" responsibilitySetRef="HC">
+						<FareZone id="atc_fare_zone:ATOC@24" version="1.0" responsibilitySetRef="HC">
 							<Name>Heathrow Connect</Name>
 						</FareZone>
-						<FareZone id="atc:FareZone:ATOC@86" version="1.0" responsibilitySetRef="HX">
+						<FareZone id="atc_fare_zone:ATOC@86" version="1.0" responsibilitySetRef="HX">
 							<Name>Heathrow Express</Name>
 						</FareZone>
-						<FareZone id="atc:FareZone:ATOC@85" version="1.0" responsibilitySetRef="IL">
+						<FareZone id="atc_fare_zone:ATOC@85" version="1.0" responsibilitySetRef="IL">
 							<Name>Island Lines</Name>
 						</FareZone>
-						<FareZone id="atc:FareZone:ATOC@29" version="1.0" responsibilitySetRef="LM">
+						<FareZone id="atc_fare_zone:ATOC@29" version="1.0" responsibilitySetRef="LM">
 							<Name>London Midland</Name>
 						</FareZone>
-						<FareZone id="atc:FareZone:ATOC@30" version="1.0" responsibilitySetRef="LO">
+						<FareZone id="atc_fare_zone:ATOC@30" version="1.0" responsibilitySetRef="LO">
 							<Name>London Overground</Name>
 						</FareZone>
-						<FareZone id="atc:FareZone:ATOC@91" version="1.0" responsibilitySetRef="LT">
+						<FareZone id="atc_fare_zone:ATOC@91" version="1.0" responsibilitySetRef="LT">
 							<Name>LUL Bakerloo Line</Name>
 						</FareZone>
-						<FareZone id="atc:FareZone:ATOC@93" version="1.0" responsibilitySetRef="LT">
+						<FareZone id="atc_fare_zone:ATOC@93" version="1.0" responsibilitySetRef="LT">
 							<Name>LUL District Line - Richmond</Name>
 						</FareZone>
-						<FareZone id="atc:FareZone:ATOC@90" version="1.0" responsibilitySetRef="LT">
+						<FareZone id="atc_fare_zone:ATOC@90" version="1.0" responsibilitySetRef="LT">
 							<Name>LUL District Line - Wimbledon</Name>
 						</FareZone>
-						<FareZone id="atc:FareZone:ATOC@64" version="1.0" responsibilitySetRef="ME">
+						<FareZone id="atc_fare_zone:ATOC@64" version="1.0" responsibilitySetRef="ME">
 							<Name>Merseyrail</Name>
 						</FareZone>
-						<FareZone id="atc:FareZone:ATOC@56" version="1.0" responsibilitySetRef="TW">
+						<FareZone id="atc_fare_zone:ATOC@56" version="1.0" responsibilitySetRef="TW">
 							<Name>Nexus (Tyne &amp; Wear Metro)</Name>
 						</FareZone>
-						<FareZone id="atc:FareZone:ATOC@51" version="1.0" responsibilitySetRef="NY">
+						<FareZone id="atc_fare_zone:ATOC@51" version="1.0" responsibilitySetRef="NY">
 							<Name>North Yorkshire Moors Railway</Name>
 						</FareZone>
-						<FareZone id="atc:FareZone:ATOC@60" version="1.0" responsibilitySetRef="SR">
+						<FareZone id="atc_fare_zone:ATOC@60" version="1.0" responsibilitySetRef="SR">
 							<Name>ScotRail</Name>
 						</FareZone>
-						<FareZone id="atc:FareZone:ATOC@84" version="1.0" responsibilitySetRef="SW">
+						<FareZone id="atc_fare_zone:ATOC@84" version="1.0" responsibilitySetRef="SW">
 							<Name>South Western Railway</Name>
 						</FareZone>
-						<FareZone id="atc:FareZone:ATOC@80" version="1.0" responsibilitySetRef="SW">
+						<FareZone id="atc_fare_zone:ATOC@80" version="1.0" responsibilitySetRef="SW">
 							<Name>Southeastern</Name>
 						</FareZone>
-						<FareZone id="atc:FareZone:ATOC@88" version="1.0" responsibilitySetRef="SN">
+						<FareZone id="atc_fare_zone:ATOC@88" version="1.0" responsibilitySetRef="SN">
 							<Name>Southern</Name>
 						</FareZone>
-						<FareZone id="atc:FareZone:ATOC@33" version="1.0" responsibilitySetRef="XR">
+						<FareZone id="atc_fare_zone:ATOC@33" version="1.0" responsibilitySetRef="XR">
 							<Name>TfL Rail</Name>
 						</FareZone>
-						<FareZone id="atc:FareZone:ATOC@20" version="1.0" responsibilitySetRef="TP">
+						<FareZone id="atc_fare_zone:ATOC@20" version="1.0" responsibilitySetRef="TP">
 							<Name>TransPennine Express</Name>
 						</FareZone>
-						<FareZone id="atc:FareZone:ATOC@65" version="1.0" responsibilitySetRef="VT">
+						<FareZone id="atc_fare_zone:ATOC@65" version="1.0" responsibilitySetRef="VT">
 							<Name>Virgin Trains</Name>
 						</FareZone>
-						<FareZone id="atc:FareZone:ATOC@61" version="1.0" responsibilitySetRef="GR">
+						<FareZone id="atc_fare_zone:ATOC@61" version="1.0" responsibilitySetRef="GR">
 							<Name>Virgin Trains East Coast</Name>
 						</FareZone>
-						<FareZone id="atc:FareZone:ATOC@50" version="1.0" responsibilitySetRef="WR">
+						<FareZone id="atc_fare_zone:ATOC@50" version="1.0" responsibilitySetRef="WR">
 							<Name>West Coast Railway Co.</Name>
 						</FareZone>
 					</fareZones>
-					<!-- === TARIFFS === -->
-					<tariffs>
-						<Tariff id="atc:ATOC@ODs@all" version="1.0">
-							<Name>P2P based fares for UK</Name>
-							<OperatorRef ref="uic:operator:1170" version="any">ATOC</OperatorRef>
-							<TypeOfTariffRef ref="eura:point#point" version="any"/>
-							<!--- ===FARE STRUCTURE==== -->
-							<fareStructureElements>
-								<FareStructureElement id="atc:ATOC@ODs@p2p_OD" version="1.0">
-									<Name>A single O/D pair from the following</Name>
-									<!-- TODO ADD others fromwhole network -->
-									<GroupOfDistanceMatrixElementsRef ref="atc:ATOC@ODs@any#any" version="1.0"/>
-								</FareStructureElement>
-							</fareStructureElements>
-							<!--- ===DISTANCE MATRIX==== -->
-							<groupsOfDistanceMatrixElements>
-								<GroupOfDistanceMatrixElements id="atc:ATOC@ODs@any#any" version="1.0">
-									<Name>OD Pairs</Name>
-									<members>
-										<DistanceMatrixElementRef version="1.0" ref="atc:LST#TOM">London Liverpool Street to Tottenham Hale</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:TOM#SSD">Tottenham Hale to Stansted Airport</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:SSD#GYM">Stansted Airport to Great Yarmouth</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:LST#SSD">London Liverpool Street to Stansted Airport</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:LST#SNF">London Liverpool Street to Shenfield</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:LST#IPS">London Liverpool Street to Shenfield</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:SNF#IPS">Shenfield to Ipswich</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:IPS#NRW">Ipswich to Norwich</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:LST#NRW">London Liverpool Street to Norwich</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:LST#SOV">London Liverpool Street to Southend Victoria</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:LST#LWT">London Liverpool Street to Lowestoft</DistanceMatrixElementRef>
-										<!-- TODO ADD ALL OTHER STATIONS -->
-									</members>
-								</GroupOfDistanceMatrixElements>
-							</groupsOfDistanceMatrixElements>
-							<!-- TODO ADD ELEMENTS FOR P2P for ALL OTHER ROUTES -->
-						</Tariff>
-						<Tariff id="atc:ATOC@ODs@LE" version="1.0">
-							<Name>P2P based fare structure elements for UK, Greater Anglia</Name>
-							<OperatorRef ref="atc:operator:LE" version="any"/>
-							<TypeOfTariffRef ref="eura:point#point" version="any"/>
-							<!--- ===DISTANCE MATRIX==== -->
-							<groupsOfDistanceMatrixElements>
-								<GroupOfDistanceMatrixElements id="atc:ATOC@ODs@LE@all" version="1.0">
-									<Name>OD Pairs</Name>
-									<members>
-										<DistanceMatrixElement version="1.0" id="atc:LST#TOM">
-											<Name>London Liverpool Street to Tottenham Hale</Name>
-											<StartStopPointRef version="1.0" ref="atc:Station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc:Station:TOM" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:TOM#LST">
-											<Name>Tottenham Hale to London Liverpool Street</Name>
-											<StartStopPointRef version="1.0" ref="atc:Station:TOM" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc:Station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:TOM#SSD">
-											<Name>Tottenham Hale to Stansted Airport</Name>
-											<StartStopPointRef version="1.0" ref="atc:Station:TOM" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc:Station:SSD" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:SSD#TOM">
-											<Name>Stansted Airport to Tottenham Hale</Name>
-											<StartStopPointRef version="1.0" ref="atc:Station:SSD" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc:Station:TOM" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:SSD#GYM">
-											<Name>Stansted Airport to Great Yarmouth</Name>
-											<StartStopPointRef version="1.0" ref="atc:Station:SSD" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc:Station:GYM" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:GYM#SSD">
-											<Name>Great Yarmouth to Stansted Airport</Name>
-											<StartStopPointRef version="1.0" ref="atc:Station:GYM" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc:Station:SSD" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:LST#SSD">
-											<Name>London Liverpool Street to Stansted Airport</Name>
-											<StartStopPointRef version="1.0" ref="atc:Station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc:Station:SSD" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:SSD#LST">
-											<Name>Stansted Airport to London Liverpool Street</Name>
-											<StartStopPointRef version="1.0" ref="atc:Station:SSD" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc:Station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:LST#SNF">
-											<Name>London Liverpool Street to Shenfield</Name>
-											<StartStopPointRef version="1.0" ref="atc:Station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc:Station:SNF" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:SNF#LST">
-											<Name>Shenfield to London Liverpool Street</Name>
-											<StartStopPointRef version="1.0" ref="atc:Station:SNF" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc:Station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:LST#IPS">
-											<Name>London Liverpool Street to Ipswich</Name>
-											<StartStopPointRef version="1.0" ref="atc:Station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc:Station:IPS" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:IPS#LST">
-											<Name>Ipswich to London Liverpool Street</Name>
-											<StartStopPointRef version="1.0" ref="atc:Station:IPS" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc:Station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:SNF#IPS">
-											<Name>Shenfield to Ipswich</Name>
-											<StartStopPointRef version="1.0" ref="atc:Station:SNF" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc:Station:IPS" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:IPS#SNF">
-											<Name>Ipswich to Shenfield</Name>
-											<StartStopPointRef version="1.0" ref="atc:Station:IPS" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc:Station:SNF" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:IPS#NRW">
-											<Name>Ipswich to Norwich</Name>
-											<StartStopPointRef version="1.0" ref="atc:Station:IPS" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc:Station:NRW" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:NRW#IPS">
-											<Name>Norwich to Ipswich</Name>
-											<StartStopPointRef version="1.0" ref="atc:Station:NRW" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc:Station:IPS" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:SNF#NRW">
-											<Name>Shenfield to Norwich</Name>
-											<StartStopPointRef version="1.0" ref="atc:Station:SNF" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc:Station:NRW" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:NRW#SNF">
-											<Name>Norwich to Shenfield</Name>
-											<StartStopPointRef version="1.0" ref="atc:Station:NRW" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc:Station:SNF" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:LST#NRW">
-											<Name>London Liverpool Street to Norwich</Name>
-											<StartStopPointRef version="1.0" ref="atc:Station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc:Station:NRW" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:NRW#LST">
-											<Name>Norwich to London Liverpool Street</Name>
-											<StartStopPointRef version="1.0" ref="atc:Station:NRW" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc:Station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:LST#SOV">
-											<Name>London Liverpool Street to Southend Victoria</Name>
-											<StartStopPointRef version="1.0" ref="atc:Station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc:Station:SOV" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:SOV#LST">
-											<Name>Southend Victoria to London Liverpool Street</Name>
-											<StartStopPointRef version="1.0" ref="atc:Station:SOV" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc:Station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:LST#LWT">
-											<Name>London Liverpool Street to Lowestoft</Name>
-											<StartStopPointRef version="1.0" ref="atc:Station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc:Station:LWT" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:LWT#LST">
-											<Name>Lowestoft to London Liverpool Street</Name>
-											<StartStopPointRef version="1.0" ref="atc:Station:LWT" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc:Station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<!-- TODO ADD ALL OTHER STATIONS -->
-									</members>
-								</GroupOfDistanceMatrixElements>
-								<GroupOfDistanceMatrixElements id="atc:ATOC@ODs@LE@season" version="1.0">
-									<Name>OD Pairs for Season Tickets for East Anglia</Name>
-									<Description>Season Tickets are available for most short and medium distance journeys on the National Rail network. Season Tickets are not generally available for long distance journeys, but maybe available where a train company chooses to offer them.</Description>
-									<members>
-										<DistanceMatrixElementRef version="1.0" ref="atc:LST#TOM">London Liverpool Street to Tottenham Hale</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:TOM#SSD">Tottenham Hale to Stansted Airport</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:SSD#GYM">Stansted Airport to Great Yarmouth</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:LST#SSD">London Liverpool Street to Stansted Airport</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:LST#SNF">London Liverpool Street to Shenfield</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:LST#IPS">London Liverpool Street to Shenfield</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:SNF#IPS">Shenfield to Ipswich</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:IPS#NRW">Ipswich to Norwich</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:LST#NRW">London Liverpool Street to Norwich</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:LST#SOV">London Liverpool Street to Southend Victoria</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:LST#LWT">London Liverpool Street to Lowestoft</DistanceMatrixElementRef>
-										<!-- TODO ADD ALL OTHER SEASON TICKET STATION ODS -->
-									</members>
-								</GroupOfDistanceMatrixElements>
-								<GroupOfDistanceMatrixElements id="atc:ATOC@ODs@LE@network" version="1.0">
-									<Name>OD Pairs for East Anglia</Name>
-									<Description>OD pairs making up network</Description>
-									<members>
-										<DistanceMatrixElementRef version="1.0" ref="atc:LST#TOM">London Liverpool Street to Tottenham Hale</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:TOM#SSD">Tottenham Hale to Stansted Airport</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:SSD#GYM">Stansted Airport to Great Yarmouth</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:LST#SSD">London Liverpool Street to Stansted Airport</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:LST#SNF">London Liverpool Street to Shenfield</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:LST#IPS">London Liverpool Street to Shenfield</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:SNF#IPS">Shenfield to Ipswich</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:IPS#NRW">Ipswich to Norwich</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:LST#NRW">London Liverpool Street to Norwich</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:LST#SOV">London Liverpool Street to Southend Victoria</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:LST#LWT">London Liverpool Street to Lowestoft</DistanceMatrixElementRef>
-										<!-- TODO ADD ALL OTHER ODs just For LE -->
-									</members>
-								</GroupOfDistanceMatrixElements>
-							</groupsOfDistanceMatrixElements>
-							<!-- TODO ADD ELEMENTS FOR P2P for ALL OTHER ROUTES -->
-						</Tariff>
-						<Tariff id="atc:TfL@ODs@London" version="1.0">
-							<Name>London Transfers </Name>
-							<OperatorRef ref="atc:operator:LE" version="any"/>
-							<TypeOfTariffRef ref="eura:zonal" version="any"/>
-							<!--- ===DISTANCE MATRIX==== -->
-							<groupsOfDistanceMatrixElements>
-								<GroupOfDistanceMatrixElements id="atc:TfL@ODs@London_transfers" version="1.0">
-									<Name>OD Pairs</Name>
-									<members>
-										<DistanceMatrixElement version="1.0" id="atc:LST#WAT">
-											<Name>London Liverpool Street to Waterloo</Name>
-											<StartStopPointRef version="1.0" ref="atc:Station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef versionRef="TODO" ref="atc:Station:WAT" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:LST#KGX">
-											<Name>London Liverpool Street to Kings CRoss</Name>
-											<StartStopPointRef version="1.0" ref="atc:Station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef versionRef="TODO" ref="atc:Station:KGX" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:LST#VIC">
-											<Name>London Liverpool Street to Victoria</Name>
-											<StartStopPointRef version="1.0" ref="atc:Station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef versionRef="TODO" ref="atc:Station:VIC" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:LST#PAD">
-											<Name>London Liverpool Street to Paddington</Name>
-											<StartStopPointRef version="1.0" ref="atc:Station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef versionRef="TODO" ref="atc:Station:PAD" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:LST#LBG">
-											<Name>London Liverpool Street to London Bridge</Name>
-											<StartStopPointRef version="1.0" ref="atc:Station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef versionRef="TODO" ref="atc:Station:LBG" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:LST#CHX">
-											<Name>London Liverpool Street to London Charing Cross</Name>
-											<StartStopPointRef version="1.0" ref="atc:Station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef versionRef="TODO" ref="atc:Station:CHX" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:LST#MYB">
-											<Name>London Liverpool Street to London Marylebone</Name>
-											<StartStopPointRef version="1.0" ref="atc:Station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef versionRef="TODO" ref="atc:Station:MYB" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:LST#FST">
-											<Name>London Liverpool Street to London Fenchurch Street</Name>
-											<StartStopPointRef version="1.0" ref="atc:Station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef versionRef="TODO" ref="atc:Station:FST" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:LST#STP">
-											<Name>London Liverpool Street to London St Pancras</Name>
-											<StartStopPointRef version="1.0" ref="atc:Station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef versionRef="TODO" ref="atc:Station:STP" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<!-- add others -->
-									</members>
-								</GroupOfDistanceMatrixElements>
-							</groupsOfDistanceMatrixElements>
-						</Tariff>
-					</tariffs>
 				</FareFrame>
-				<ServiceCalendarFrame id="atc:ATOC@Common_Service_Calendar_2018" version="1.0" responsibilitySetRef="atc:products:NRE">
+				<ServiceFrame id="atc:ATOC@Network@Lines" version="1.0" responsibilitySetRef="atc_products:NRE">
+					<Name>UK Rail Network and Lines</Name>
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@service_network"/>
+					<prerequisites>
+						<ResourceFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_Tariffs@Common_Resources"/>
+					</prerequisites>
+					<Network version="1.0" id="atc:ATOC@Lines@Network">
+						<Name>UK Rail Network</Name>
+						<TransportMode>rail</TransportMode>
+						<OperatorRef ref="uic_operator:1170" version="any">ATOC</OperatorRef>
+					</Network>
+				</ServiceFrame>
+				<SiteFrame id="atc:ATOC@Common_Site" version="1.0" responsibilitySetRef="atc_products:NRE">
+					<Name>UK Common Site</Name>
+					<siteFacilitySets>
+						<SiteFacilitySet id="atc:first_class_lounge" version="1.0">
+							<Description>First class Lounge</Description>
+							<FareClasses>firstClass</FareClasses>
+						</SiteFacilitySet>
+					</siteFacilitySets>
+				</SiteFrame>
+				<TimetableFrame id="atc:ATOC@Common_Facilities" version="1.0" responsibilitySetRef="atc_products:NRE">
+					<serviceFacilitySets>
+						<ServiceFacilitySet version="any" id="atc:allows_bicycles@reservation">
+							<Description>allows Bicycles</Description>
+							<LuggageCarriageFacilityList>cyclesAllowedWithReservation</LuggageCarriageFacilityList>
+						</ServiceFacilitySet>
+						<ServiceFacilitySet version="any" id="atc:allows_bicycles@no_reservation">
+							<Description>allows Bicycles</Description>
+							<LuggageCarriageFacilityList>cyclesAllowed</LuggageCarriageFacilityList>
+						</ServiceFacilitySet>
+						<ServiceFacilitySet version="any" id="atc:no_bicyles">
+							<Description>allows Bicycles</Description>
+							<LuggageCarriageFacilityList>noCycles</LuggageCarriageFacilityList>
+						</ServiceFacilitySet>
+					</serviceFacilitySets>
+				</TimetableFrame>
+				<ServiceCalendarFrame id="atc:ATOC@Common_Service_Calendar@2018" version="1.0" responsibilitySetRef="atc_products:NRE">
 					<Name>UK Specific Calendar</Name>
 					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@calendar"/>
 					<contentValidityConditions>
@@ -3116,7 +3209,7 @@ http://www.nationalrail.co.uk/stations_destinations/44863.aspx
 						</DayTypeAssignment>
 					</dayTypeAssignments>
 				</ServiceCalendarFrame>
-				<ResourceFrame id="atc:ATOC@Common_Resources" version="1.0" responsibilitySetRef="atc:products:NRE">
+				<ResourceFrame id="atc:ATOC@Common_Resources" version="1.0" responsibilitySetRef="atc_products:NRE">
 					<Name>UK Specifc code values</Name>
 					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@operator_resources"/>
 					<codespaces>
@@ -3125,8 +3218,18 @@ http://www.nationalrail.co.uk/stations_destinations/44863.aspx
 							<XmlnsUrl>https://www.nationalrail.co.uk/</XmlnsUrl>
 							<Description>Uk common rail</Description>
 						</Codespace>
-						<Codespace id="atc:operator">
-							<Xmlns>atc:operator</Xmlns>
+						<Codespace id="atc_operator">
+							<Xmlns>atc_operator</Xmlns>
+							<XmlnsUrl>https://www.nationalrail.co.uk/</XmlnsUrl>
+							<Description>Uk operators</Description>
+						</Codespace>
+						<Codespace id="atc_operator_group">
+							<Xmlns>atc_operator_group</Xmlns>
+							<XmlnsUrl>https://www.nationalrail.co.uk/</XmlnsUrl>
+							<Description>Uk operators</Description>
+						</Codespace>
+						<Codespace id="atc_consortium">
+							<Xmlns>atc_consortium</Xmlns>
 							<XmlnsUrl>https://www.nationalrail.co.uk/</XmlnsUrl>
 							<Description>Uk operators</Description>
 						</Codespace>
@@ -3156,6 +3259,12 @@ http://www.nationalrail.co.uk/stations_destinations/44863.aspx
 						<DefaultSystemOfUnits>SiKilometersAndMetres</DefaultSystemOfUnits>
 						<DefaultCurrency>GBP</DefaultCurrency>
 					</FrameDefaults>
+					<prerequisites>
+						<ResourceFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_Tariffs@Common_Resources"/>
+						<ResourceFrameRef version="eura:v1.0" ref="eura:EURA@Common_Resources"/>
+						<FareFrameRef version="eura:v1.0" ref="eura:EURA@Common_Fare_Components"/>
+					</prerequisites>
+					<!--  === CONTENTS ==== -->
 					<dataSources>
 						<DataSource id="atc:example" version="any">
 							<Email>info@atoc.org.uk</Email>
@@ -3163,12 +3272,12 @@ http://www.nationalrail.co.uk/stations_destinations/44863.aspx
 					</dataSources>
 					<!-- ========Responsibility Sets========== -->
 					<responsibilitySets>
-						<ResponsibilitySet version="any" id="atc:products:NRE">
+						<ResponsibilitySet version="any" id="atc_products:NRE">
 							<Name>National Rail Products</Name>
 							<roles>
-								<ResponsibilityRoleAssignment version="any" id="atc:products:NRE">
+								<ResponsibilityRoleAssignment version="any" id="atc_products:NRE">
 									<StakeholderRoleType>Other</StakeholderRoleType>
-									<ResponsibleOrganisationRef ref="atc:Consortium:NRE" version="any"/>
+									<ResponsibleOrganisationRef ref="atc_consortium:NRE" version="any"/>
 									<ResponsibleAreaRef ref="atc:uk">TODO</ResponsibleAreaRef>
 								</ResponsibilityRoleAssignment>
 							</roles>
@@ -3176,7 +3285,7 @@ http://www.nationalrail.co.uk/stations_destinations/44863.aspx
 					</responsibilitySets>
 					<!-- ========Types of value ========== -->
 					<typesOfValue>
-						<ValueSet version="any" id="atc:TypesOfProductCategory_class" classOfValues="TypeOfProductCategory">
+						<ValueSet version="any" id="atc:Types_of_ProductCategory_class" classOfValues="TypeOfProductCategory">
 							<Name>Fare Table Types</Name>
 							<values>
 								<TypeOfProductCategory version="any" id="atc:no_high_speed">
@@ -3190,7 +3299,7 @@ http://www.nationalrail.co.uk/stations_destinations/44863.aspx
 								</TypeOfProductCategory>
 							</values>
 						</ValueSet>
-						<ValueSet version="any" id="atc:TypesOfFacility@first_class" classOfValues="TypeOfFacility">
+						<ValueSet version="any" id="atc:Types_of_Facility@first_class" classOfValues="TypeOfFacility">
 							<Name>Fare Table Types</Name>
 							<values>
 								<TypeOfFacility version="any" id="atc:first_class_lounge">
@@ -3201,7 +3310,7 @@ http://www.nationalrail.co.uk/stations_destinations/44863.aspx
 								</TypeOfFacility>
 							</values>
 						</ValueSet>
-						<ValueSet version="any" id="atc:TypesOfService@named" classOfValues="TypeOfService">
+						<ValueSet version="any" id="atc:Types_of_Service@named" classOfValues="TypeOfService">
 							<!--- ====Type of Service ======== -->
 							<Name>Types of named service</Name>
 							<values>
@@ -3213,7 +3322,7 @@ http://www.nationalrail.co.uk/stations_destinations/44863.aspx
 								</TypeOfService>
 							</values>
 						</ValueSet>
-						<ValueSet version="any" id="atc:TypesOfFareContract" classOfValues="TypeOfFareContract">
+						<ValueSet version="any" id="atc:Types_of_FareContract" classOfValues="TypeOfFareContract">
 							<Name>Types of Fare Contract</Name>
 							<values>
 								<!--- ====TypeOfFareContract ========= -->
@@ -3231,19 +3340,19 @@ http://www.nationalrail.co.uk/stations_destinations/44863.aspx
 					</typesOfValue>
 					<!-- ========Operators ========== -->
 					<organisations>
-						<Operator version="any" id="atc:operator:NR">
+						<Operator version="any" id="atc_operator:NR">
 							<PublicCode>NR</PublicCode>
 							<Name>Network Rail</Name>
 							<PrimaryMode>rail</PrimaryMode>
 							<OperatorActivities>infrastructure</OperatorActivities>
 						</Operator>
-						<Operator version="any" id="atc:operator:ANY">
+						<Operator version="any" id="atc_operator:ANY">
 							<PublicCode>Any</PublicCode>
 							<Name>Any Rail Operator</Name>
 							<PrimaryMode>rail</PrimaryMode>
 							<OperatorActivities>passenger</OperatorActivities>
 						</Operator>
-						<Operator version="any" id="atc:operator:LE">
+						<Operator version="any" id="atc_operator:LE">
 							<PublicCode>GA</PublicCode>
 							<CompanyNumber>07861414</CompanyNumber>
 							<Name>Greater Anglia</Name>
@@ -3265,7 +3374,7 @@ http://www.nationalrail.co.uk/stations_destinations/44863.aspx
 							<PrimaryMode>rail</PrimaryMode>
 							<OperatorActivities>passenger</OperatorActivities>
 						</Operator>
-						<Operator version="any" id="atc:operator:LT">
+						<Operator version="any" id="atc_operator:LT">
 							<PublicCode>LT</PublicCode>
 							<Name>TfL Customer Service</Name>
 							<LegalName>Transport for London</LegalName>
@@ -3286,7 +3395,7 @@ http://www.nationalrail.co.uk/stations_destinations/44863.aspx
 							<PrimaryMode>metro</PrimaryMode>
 							<OperatorActivities>passenger</OperatorActivities>
 						</Operator>
-						<RetailConsortium version="any" id="atc:Consortium:NRE">
+						<RetailConsortium version="any" id="atc_consortium:NRE">
 							<PublicCode>nre</PublicCode>
 							<Name>National Rail Enquiries</Name>
 							<LegalName>National Rail Enquiries</LegalName>
@@ -3298,64 +3407,106 @@ http://www.nationalrail.co.uk/stations_destinations/44863.aspx
 							<OrganisationType>retailConsortium</OrganisationType>
 							<members>
 								<!-- Others to do -->
-								<OperatorRef ref="atc:operator:AR">Alliance Rail</OperatorRef>
-								<OperatorRef ref="atc:operator:NT">Arriva Trains Northern</OperatorRef>
-								<OperatorRef ref="atc:operator:AW">Arriva Trains Wales</OperatorRef>
-								<OperatorRef ref="atc:operator:CC">c2c</OperatorRef>
-								<OperatorRef ref="atc:operator:CS">Caledonian Sleeper</OperatorRef>
-								<OperatorRef ref="atc:operator:CH">Chiltern Railway</OperatorRef>
-								<OperatorRef ref="atc:operator:XC">CrossCountry</OperatorRef>
-								<OperatorRef ref="atc:operator:ZZ">Devon and Cornwall Railways</OperatorRef>
-								<OperatorRef ref="atc:operator:EM">East Midlands Trains</OperatorRef>
-								<OperatorRef ref="atc:operator:ES">Eurostar</OperatorRef>
-								<OperatorRef ref="atc:operator:FC">First Capital Connect (defunct)</OperatorRef>
-								<OperatorRef ref="atc:operator:HT">First Hull Trains</OperatorRef>
-								<OperatorRef ref="atc:operator:GX">Gatwick Express</OperatorRef>
-								<OperatorRef ref="atc:operator:GN">Govia Thameslink Railway (Great Northern)</OperatorRef>
-								<OperatorRef ref="atc:operator:TL">Govia Thameslink Railway (Thameslink)</OperatorRef>
-								<OperatorRef ref="atc:operator:GC">Grand Central</OperatorRef>
-								<OperatorRef ref="atc:operator:LN">Great North Western Railway</OperatorRef>
-								<OperatorRef ref="atc:operator:GW">Great Western Railway</OperatorRef>
-								<OperatorRef ref="atc:operator:LE" version="any"/>
-								<OperatorRef ref="atc:operator:HC">Heathrow Connect</OperatorRef>
-								<OperatorRef ref="atc:operator:HX">Heathrow Express</OperatorRef>
-								<OperatorRef ref="atc:operator:IL">Island Lines</OperatorRef>
-								<OperatorRef ref="atc:operator:LS">Locomotive Services</OperatorRef>
-								<OperatorRef ref="atc:operator:LM">London Midland</OperatorRef>
-								<OperatorRef ref="atc:operator:LO">London Overground</OperatorRef>
-								<OperatorRef ref="atc:operator:LT">LUL Bakerloo Line</OperatorRef>
-								<OperatorRef ref="atc:operator:LT">LUL District Line - Richmond</OperatorRef>
-								<OperatorRef ref="atc:operator:LT">LUL District Line - Wimbledon</OperatorRef>
-								<OperatorRef ref="atc:operator:ME">Merseyrail</OperatorRef>
-								<OperatorRef ref="atc:operator:TW">Nexus (Tyne &amp; Wear Metro)</OperatorRef>
-								<OperatorRef ref="atc:operator:NR">Network Rail</OperatorRef>
-								<OperatorRef ref="atc:operator:NT">Northern</OperatorRef>
-								<OperatorRef ref="atc:operator:NY">North Yorkshire Moors Railway</OperatorRef>
-								<OperatorRef ref="atc:operator:SR">ScotRail</OperatorRef>
-								<OperatorRef ref="atc:operator:SW">South Western Railway</OperatorRef>
-								<OperatorRef ref="atc:operator:SJ">South Yorkshire Supertram</OperatorRef>
-								<OperatorRef ref="atc:operator:SE">Southeastern</OperatorRef>
-								<OperatorRef ref="atc:operator:SN">Southern</OperatorRef>
-								<OperatorRef ref="atc:operator:SP">Swanage Railway</OperatorRef>
-								<OperatorRef ref="atc:operator:SX">Stansted Express</OperatorRef>
-								<OperatorRef ref="atc:operator:XR">TfL Rail</OperatorRef>
-								<OperatorRef ref="atc:operator:TP">TransPennine Express</OperatorRef>
-								<OperatorRef ref="atc:operator:VT">Virgin Trains</OperatorRef>
-								<OperatorRef ref="atc:operator:GR">Virgin Trains East Coast</OperatorRef>
-								<OperatorRef ref="atc:operator:WR">West Coast Railway Co.</OperatorRef>
-								<OperatorRef ref="atc:operator:WM">West Midlands.</OperatorRef>
+								<OperatorRef ref="atc_operator:AR">Alliance Rail</OperatorRef>
+								<OperatorRef ref="atc_operator:NT">Arriva Trains Northern</OperatorRef>
+								<OperatorRef ref="atc_operator:AW">Arriva Trains Wales</OperatorRef>
+								<OperatorRef ref="atc_operator:CC">c2c</OperatorRef>
+								<OperatorRef ref="atc_operator:CS">Caledonian Sleeper</OperatorRef>
+								<OperatorRef ref="atc_operator:CH">Chiltern Railway</OperatorRef>
+								<OperatorRef ref="atc_operator:XC">CrossCountry</OperatorRef>
+								<OperatorRef ref="atc_operator:ZZ">Devon and Cornwall Railways</OperatorRef>
+								<OperatorRef ref="atc_operator:EM">East Midlands Trains</OperatorRef>
+								<OperatorRef ref="atc_operator:ES">Eurostar</OperatorRef>
+								<OperatorRef ref="atc_operator:FC">First Capital Connect (defunct)</OperatorRef>
+								<OperatorRef ref="atc_operator:HT">First Hull Trains</OperatorRef>
+								<OperatorRef ref="atc_operator:GX">Gatwick Express</OperatorRef>
+								<OperatorRef ref="atc_operator:GN">Govia Thameslink Railway (Great Northern)</OperatorRef>
+								<OperatorRef ref="atc_operator:TL">Govia Thameslink Railway (Thameslink)</OperatorRef>
+								<OperatorRef ref="atc_operator:GC">Grand Central</OperatorRef>
+								<OperatorRef ref="atc_operator:LN">Great North Western Railway</OperatorRef>
+								<OperatorRef ref="atc_operator:GW">Great Western Railway</OperatorRef>
+								<OperatorRef ref="atc_operator:LE" version="any"/>
+								<OperatorRef ref="atc_operator:HC">Heathrow Connect</OperatorRef>
+								<OperatorRef ref="atc_operator:HX">Heathrow Express</OperatorRef>
+								<OperatorRef ref="atc_operator:IL">Island Lines</OperatorRef>
+								<OperatorRef ref="atc_operator:LS">Locomotive Services</OperatorRef>
+								<OperatorRef ref="atc_operator:LM">London Midland</OperatorRef>
+								<OperatorRef ref="atc_operator:LO">London Overground</OperatorRef>
+								<OperatorRef ref="atc_operator:LT">LUL Bakerloo Line</OperatorRef>
+								<OperatorRef ref="atc_operator:LT">LUL District Line - Richmond</OperatorRef>
+								<OperatorRef ref="atc_operator:LT">LUL District Line - Wimbledon</OperatorRef>
+								<OperatorRef ref="atc_operator:ME">Merseyrail</OperatorRef>
+								<OperatorRef ref="atc_operator:TW">Nexus (Tyne &amp; Wear Metro)</OperatorRef>
+								<OperatorRef ref="atc_operator:NR">Network Rail</OperatorRef>
+								<OperatorRef ref="atc_operator:NT">Northern</OperatorRef>
+								<OperatorRef ref="atc_operator:NY">North Yorkshire Moors Railway</OperatorRef>
+								<OperatorRef ref="atc_operator:SR">ScotRail</OperatorRef>
+								<OperatorRef ref="atc_operator:SW">South Western Railway</OperatorRef>
+								<OperatorRef ref="atc_operator:SJ">South Yorkshire Supertram</OperatorRef>
+								<OperatorRef ref="atc_operator:SE">Southeastern</OperatorRef>
+								<OperatorRef ref="atc_operator:SN">Southern</OperatorRef>
+								<OperatorRef ref="atc_operator:SP">Swanage Railway</OperatorRef>
+								<OperatorRef ref="atc_operator:SX">Stansted Express</OperatorRef>
+								<OperatorRef ref="atc_operator:XR">TfL Rail</OperatorRef>
+								<OperatorRef ref="atc_operator:TP">TransPennine Express</OperatorRef>
+								<OperatorRef ref="atc_operator:VT">Virgin Trains</OperatorRef>
+								<OperatorRef ref="atc_operator:GR">Virgin Trains East Coast</OperatorRef>
+								<OperatorRef ref="atc_operator:WR">West Coast Railway Co.</OperatorRef>
+								<OperatorRef ref="atc_operator:WM">West Midlands.</OperatorRef>
 							</members>
 						</RetailConsortium>
 					</organisations>
 					<groupsOfOperators>
-						<GroupOfOperators version="1.0" id="atc:operatorGroup:Tfl">
+						<GroupOfOperators version="1.0" id="atc_operator_group:All_UK">
 							<members>
-								<OperatorRef ref="atc:operator:LO">London Overground</OperatorRef>
-								<OperatorRef ref="atc:operator:LT">LUL Bakerloo Line</OperatorRef>
-								<OperatorRef ref="atc:operator:XR">TfL Rail</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:AR">Alliance Rail</OperatorRef>
+								<!-- TO DO CHECK -->
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:AW">Arriva Trains Wales</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:CC">c2c</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:CH">Chiltern Railway</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:XC">CrossCountry</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:EM">East Midlands Trains</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:ES">Eurostar</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:FC">First Capital Connect (defunct)</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:HT">First Hull Trains</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:GX">Gatwick Express</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:GN">Govia Thameslink Railway (Great Northern)</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:TL">Govia Thameslink Railway (Thameslink)</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:GC">Grand Central</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:LN">Great North Western Railway</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:GW">Great Western Railway</OperatorRef>
+								<OperatorRef version="any" ref="atc_operator:LE">Greater Anglia</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:LO">London Overground</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:HC">Heathrow Connect</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:HX">Heathrow Express</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:IL">Island Lines</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:LS">Locomotive Services</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:LM">London Midland</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:ME">Merseyrail</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:TW">Nexus (Tyne &amp; Wear Metro)</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:NT">Arriva Trains Northern</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:NY">North Yorkshire Moors Railway</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:SR">ScotRail</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:SW">South Western Railway</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:SE">Southeastern</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:SN">Southern</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:SX">Stansted Express</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:XR">TfL Rail</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:TP">TransPennine Express</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:VT">Virgin Trains</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:GR">Virgin Trains East Coast</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:WM">West Midlands.</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:WR">West Coast Railway Co.</OperatorRef>
 							</members>
 						</GroupOfOperators>
-						<GroupOfOperators version="1.0" id="atc:operatorGroup:gold_card">
+						<GroupOfOperators version="1.0" id="atc_operator_group:Tfl">
+							<members>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:LO">London Overground</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:LT">LUL Bakerloo Line</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:XR">TfL Rail</OperatorRef>
+							</members>
+						</GroupOfOperators>
+						<GroupOfOperators version="1.0" id="atc_operator_group:gold_card">
 							<Name>Gold card scheme Operators</Name>
 							<Description>Where can I travel?
 Annual Gold Card discounted tickets are valid for travel on journeys wholly within the Annual Gold Card area on the following participating train companies services:
@@ -3373,72 +3524,71 @@ Thameslink
 West Midlands Railway	
 </Description>
 							<members>
-								<OperatorRef ref="atc:operator:AW">Arriva Trains Wales</OperatorRef>
-								<OperatorRef ref="atc:operator:CC">c2c</OperatorRef>
-								<OperatorRef ref="atc:operator:CH">Chiltern Railway</OperatorRef>
-								<OperatorRef ref="atc:operator:XC">CrossCountry</OperatorRef>
-								<OperatorRef ref="atc:operator:EM">East Midlands Trains</OperatorRef>
-								<OperatorRef ref="atc:operator:FC">First Capital Connect (defunct)</OperatorRef>
-								<OperatorRef ref="atc:operator:GX">Gatwick Express</OperatorRef>
-								<OperatorRef ref="atc:operator:GN">Govia Thameslink Railway (Great Northern)</OperatorRef>
-								<OperatorRef ref="atc:operator:TL">Govia Thameslink Railway (Thameslink)</OperatorRef>
-								<OperatorRef ref="atc:operator:GW">Great Western Railway</OperatorRef>
-								<OperatorRef ref="atc:operator:LE" version="any">Grreater Anglia</OperatorRef>
-								<OperatorRef ref="atc:operator:LO">London Overground</OperatorRef>
-								<OperatorRef ref="atc:operator:HX">Heathrow Express</OperatorRef>
-								<OperatorRef ref="atc:operator:IL">Island Lines</OperatorRef>
-								<OperatorRef ref="atc:operator:NT">Northern</OperatorRef>
-								<OperatorRef ref="atc:operator:SR">ScotRail</OperatorRef>
-								<OperatorRef ref="atc:operator:SW">South Western Railway</OperatorRef>
-								<OperatorRef ref="atc:operator:SN">Southern</OperatorRef>
-								<OperatorRef ref="atc:operator:SX">Stansted Express</OperatorRef>
-								<OperatorRef ref="atc:operator:WM">West Midlands.</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:AW">Arriva Trains Wales</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:CC">c2c</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:CH">Chiltern Railway</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:XC">CrossCountry</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:EM">East Midlands Trains</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:FC">First Capital Connect (defunct)</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:GX">Gatwick Express</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:GN">Govia Thameslink Railway (Great Northern)</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:TL">Govia Thameslink Railway (Thameslink)</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:GW">Great Western Railway</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:LE" version="any">Grreater Anglia</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:LO">London Overground</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:HX">Heathrow Express</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:IL">Island Lines</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:NT">Northern</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:SR">ScotRail</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:SW">South Western Railway</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:SN">Southern</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:SX">Stansted Express</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:WM">West Midlands.</OperatorRef>
 							</members>
 						</GroupOfOperators>
-						<GroupOfOperators version="1.0" id="atc:operatorGroup:mobile_app">
+						<GroupOfOperators version="1.0" id="atc_operator_group:mobile_app">
 							<members>
-								<OperatorRef ref="atc:operator:AR">Alliance Rail</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:AR">Alliance Rail</OperatorRef>
 								<!-- TO DO CHECK -->
-								<OperatorRef ref="atc:operator:NT">Arriva Trains Northern</OperatorRef>
-								<OperatorRef ref="atc:operator:AW">Arriva Trains Wales</OperatorRef>
-								<OperatorRef ref="atc:operator:CC">c2c</OperatorRef>
-								<OperatorRef ref="atc:operator:CH">Chiltern Railway</OperatorRef>
-								<OperatorRef ref="atc:operator:XC">CrossCountry</OperatorRef>
-								<OperatorRef ref="atc:operator:EM">East Midlands Trains</OperatorRef>
-								<OperatorRef ref="atc:operator:ES">Eurostar</OperatorRef>
-								<OperatorRef ref="atc:operator:FC">First Capital Connect (defunct)</OperatorRef>
-								<OperatorRef ref="atc:operator:HT">First Hull Trains</OperatorRef>
-								<OperatorRef ref="atc:operator:GX">Gatwick Express</OperatorRef>
-								<OperatorRef ref="atc:operator:GN">Govia Thameslink Railway (Great Northern)</OperatorRef>
-								<OperatorRef ref="atc:operator:TL">Govia Thameslink Railway (Thameslink)</OperatorRef>
-								<OperatorRef ref="atc:operator:GC">Grand Central</OperatorRef>
-								<OperatorRef ref="atc:operator:LN">Great North Western Railway</OperatorRef>
-								<OperatorRef ref="atc:operator:GW">Great Western Railway</OperatorRef>
-								<OperatorRef ref="atc:operator:LE" version="any">Grreater Anglia</OperatorRef>
-								<OperatorRef ref="atc:operator:HC">Heathrow Connect</OperatorRef>
-								<OperatorRef ref="atc:operator:HX">Heathrow Express</OperatorRef>
-								<OperatorRef ref="atc:operator:IL">Island Lines</OperatorRef>
-								<OperatorRef ref="atc:operator:LS">Locomotive Services</OperatorRef>
-								<OperatorRef ref="atc:operator:LM">London Midland</OperatorRef>
-								<OperatorRef ref="atc:operator:ME">Merseyrail</OperatorRef>
-								<OperatorRef ref="atc:operator:TW">Nexus (Tyne &amp; Wear Metro)</OperatorRef>
-								<OperatorRef ref="atc:operator:NT">Northern</OperatorRef>
-								<OperatorRef ref="atc:operator:NY">North Yorkshire Moors Railway</OperatorRef>
-								<OperatorRef ref="atc:operator:SR">ScotRail</OperatorRef>
-								<OperatorRef ref="atc:operator:SW">South Western Railway</OperatorRef>
-								<OperatorRef ref="atc:operator:SE">Southeastern</OperatorRef>
-								<OperatorRef ref="atc:operator:SN">Southern</OperatorRef>
-								<OperatorRef ref="atc:operator:XR">TfL Rail</OperatorRef>
-								<OperatorRef ref="atc:operator:TP">TransPennine Express</OperatorRef>
-								<OperatorRef ref="atc:operator:VT">Virgin Trains</OperatorRef>
-								<OperatorRef ref="atc:operator:GR">Virgin Trains East Coast</OperatorRef>
-								<OperatorRef ref="atc:operator:WM">West Midlands.</OperatorRef>
-								<OperatorRef ref="atc:operator:WR">West Coast Railway Co.</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:AW">Arriva Trains Wales</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:CC">c2c</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:CH">Chiltern Railway</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:XC">CrossCountry</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:EM">East Midlands Trains</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:ES">Eurostar</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:FC">First Capital Connect (defunct)</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:HT">First Hull Trains</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:GX">Gatwick Express</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:GN">Govia Thameslink Railway (Great Northern)</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:TL">Govia Thameslink Railway (Thameslink)</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:GC">Grand Central</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:LN">Great North Western Railway</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:GW">Great Western Railway</OperatorRef>
+								<OperatorRef version="any" ref="atc_operator:LE">Greater Anglia</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:HC">Heathrow Connect</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:HX">Heathrow Express</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:IL">Island Lines</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:LS">Locomotive Services</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:LM">London Midland</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:ME">Merseyrail</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:TW">Nexus (Tyne &amp; Wear Metro)</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:NT">Northern</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:NY">North Yorkshire Moors Railway</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:SR">ScotRail</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:SW">South Western Railway</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:SE">Southeastern</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:SN">Southern</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:XR">TfL Rail</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:TP">TransPennine Express</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:VT">Virgin Trains</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:GR">Virgin Trains East Coast</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:WM">West Midlands.</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="atc_operator:WR">West Coast Railway Co.</OperatorRef>
 							</members>
 						</GroupOfOperators>
-						<GroupOfOperators version="1.0" id="atc:operatorGroup:buy_onboard">
+						<GroupOfOperators version="1.0" id="atc_operator_group:buy_onboard">
 							<members>
-								<OperatorRef ref="atc:operator:LE" version="any">Greater Anglia</OperatorRef>
+								<OperatorRef version="any" ref="atc_operator:LE">Greater Anglia</OperatorRef>
 								<!-- TO DO CHECK -->
 							</members>
 						</GroupOfOperators>
@@ -3446,7 +3596,7 @@ West Midlands Railway
 				</ResourceFrame>
 			</frames>
 		</CompositeFrame>
-		<CompositeFrame id="eura:EURA@Generic" version="1.0" responsibilitySetRef="eura:code_sets">
+		<CompositeFrame id="eura:EURA@Generic" version="eura:v1.0" responsibilitySetRef="eura:code_sets">
 			<ValidBetween>
 				<FromDate>2017-01-01T00:00:00</FromDate>
 				<ToDate>2020-12-31T12:00:00</ToDate>
@@ -3490,12 +3640,12 @@ West Midlands Railway
 					</dataSources>
 					<!-- ========Responsibility Sets========== -->
 					<responsibilitySets>
-						<ResponsibilitySet version="any" id="uic:Station_Management:0070">
+						<ResponsibilitySet version="any" id="uic_station_management:0070">
 							<Name>National Rail Stations</Name>
 							<roles>
-								<ResponsibilityRoleAssignment version="any" id="uic:Station_Management:0070">
+								<ResponsibilityRoleAssignment version="any" id="uic_station_management:0070">
 									<StakeholderRoleType>Operation</StakeholderRoleType>
-									<ResponsibleOrganisationRef ref="uic:Station_Management:0070" version="any"/>
+									<ResponsibleOrganisationRef ref="uic_station_management:0070" version="any"/>
 									<ResponsibleAreaRef ref="atc:uk">TODO</ResponsibleAreaRef>
 								</ResponsibilityRoleAssignment>
 							</roles>
@@ -3517,7 +3667,7 @@ West Midlands Railway
 						<TypeOfFrame version="any" id="eura:Fare">
 							<Name>Fares Frame</Name>
 						</TypeOfFrame>
-						<ValueSet version="any" id="eura:TypesOfProductCategory" classOfValues="TypeOfProductCategory">
+						<ValueSet version="any" id="eura:Types_of_ProductCategory" classOfValues="TypeOfProductCategory">
 							<Name>Types of Product Category</Name>
 							<values>
 								<!--- ====TypeOfConcession method========= -->
@@ -3538,7 +3688,7 @@ West Midlands Railway
 								</TypeOfProductCategory>
 							</values>
 						</ValueSet>
-						<ValueSet version="any" id="eura:ChargingMoments" classOfValues="ChargingMoment">
+						<ValueSet version="any" id="eura:Charging_Moments" classOfValues="ChargingMoment">
 							<Name>Charging Moments</Name>
 							<values>
 								<!--- ====TypeOfConcession method========= -->
@@ -3562,7 +3712,7 @@ West Midlands Railway
 								</ChargingMoment>
 							</values>
 						</ValueSet>
-						<ValueSet version="any" id="eura:TypesOfFareProduct@operator" classOfValues="TypeOfFareProduct">
+						<ValueSet version="any" id="eura:Types_of_FareProduct@operator" classOfValues="TypeOfFareProduct">
 							<Name>Types Of Fare Product - Classify as single of multi operator</Name>
 							<values>
 								<TypeOfFareProduct version="any" id="eura:standard_product@single_toc">
@@ -3583,7 +3733,7 @@ West Midlands Railway
 								</TypeOfFareProduct>
 							</values>
 						</ValueSet>
-						<ValueSet version="any" id="eura:PurposeOfGrouping@Fare Tables" classOfValues="PurposeOfGrouping">
+						<ValueSet version="any" id="eura:Purposes_of_Grouping@Fare Tables" classOfValues="PurposeOfGrouping">
 							<Name>Fare Table Types</Name>
 							<values>
 								<!--- ====PurposeOfGrouping method========= -->
@@ -3598,7 +3748,7 @@ West Midlands Railway
 								</PurposeOfGrouping>
 							</values>
 						</ValueSet>
-						<ValueSet version="any" id="eura:ClassesOfUse" classOfValues="ClassOfUse">
+						<ValueSet version="any" id="eura:Classes_of_Use" classOfValues="ClassOfUse">
 							<Name>Classes of Use</Name>
 							<values>
 								<!--- ====ClassOfUse ========= -->
@@ -3610,7 +3760,7 @@ West Midlands Railway
 								</ClassOfUse>
 							</values>
 						</ValueSet>
-						<ValueSet version="any" id="eura:TypesOfFareContractEntry" classOfValues="TypeOfFareContractEntry">
+						<ValueSet version="any" id="eura:Types_of_FareContractEntry" classOfValues="TypeOfFareContractEntry">
 							<Name>Types of fare contract entry</Name>
 							<values>
 								<!--- ====TypeOfFareContractEntry ========= -->
@@ -3622,7 +3772,7 @@ West Midlands Railway
 								</TypeOfFareContractEntry>
 							</values>
 						</ValueSet>
-						<ValueSet version="any" id="eura:TypesOfConcession" classOfValues="TypeOfConcession">
+						<ValueSet version="any" id="eura:Types_of_Concession" classOfValues="TypeOfConcession">
 							<Name>Types of concession</Name>
 							<values>
 								<!--- ====TypeOfConcession method========= -->
@@ -3658,14 +3808,14 @@ West Midlands Railway
 								</TypeOfConcession>
 							</values>
 						</ValueSet>
-						<ValueSet version="any" id="eura:TypesOfTariff" classOfValues="TypeOfTariff">
+						<ValueSet version="any" id="eura:Types_of_Tariff" classOfValues="TypeOfTariff">
 							<Name>Types of Tariff</Name>
 							<values>
 								<!--- ====Types OfTariff ========= -->
 								<TypeOfTariff version="any" id="eura:Distance_kilometers">
 									<Name>Kilometer Distance Kilometers</Name>
 								</TypeOfTariff>
-								<TypeOfTariff version="any" id="eura:point#point">
+								<TypeOfTariff version="any" id="eura:poinT+point">
 									<Name>Point to point</Name>
 								</TypeOfTariff>
 								<TypeOfTariff version="any" id="eura:zonal">
@@ -3682,7 +3832,7 @@ West Midlands Railway
 								</TypeOfTariff>
 							</values>
 						</ValueSet>
-						<ValueSet version="any" id="eura:TypesOfAccessRightAssignment" classOfValues="TypeOfAccessRightAssignment">
+						<ValueSet version="any" id="eura:Types_of_AccessRightAssignment" classOfValues="TypeOfAccessRightAssignment">
 							<Name>Types of Access right Assignment</Name>
 							<values>
 								<TypeOfAccessRightAssignment version="any" id="eura:eligible">
@@ -3756,7 +3906,7 @@ West Midlands Railway
 							<OrganisationType>statutoryBody</OrganisationType>
 						</GeneralOrganisation>
 						<!-- === UIC RUs ==== -->
-						<Operator version="any" id="uic:operator:1170">
+						<Operator version="any" id="uic_operator:1170">
 							<PublicCode>ATOC</PublicCode>
 							<Name>Association of Train Operating Companies Limited</Name>
 							<ShortName>UIC</ShortName>
@@ -3766,7 +3916,7 @@ West Midlands Railway
 							</ValidityPeriod>
 							<CountryRef ref="uk" refPrincipality="GB-UKM"/>
 						</Operator>
-						<Operator version="any" id="uic:Station_Management:0070">
+						<Operator version="any" id="uic_station_management:0070">
 							<PublicCode>NR</PublicCode>
 							<Name>Network Rail Limited</Name>
 							<ShortName>Network Rail</ShortName>
@@ -3776,7 +3926,7 @@ West Midlands Railway
 							</ValidityPeriod>
 							<CountryRef ref="uk" refPrincipality="GB-UKM"/>
 						</Operator>
-						<Operator version="any" id="uic:operator:0003">
+						<Operator version="any" id="uic_operator:0003">
 							<PublicCode>UIC</PublicCode>
 							<Name>International Union of Railways</Name>
 							<ShortName>UIC</ShortName>
@@ -4037,6 +4187,10 @@ West Midlands Railway
 						<DefaultDataSourceRef ref="fxc:common" version="fxc:v1.0"/>
 						<DefaultResponsibilitySetRef ref="fxc:FXC_metadata" version="fxc:v1.0"/>
 					</FrameDefaults>
+					<prerequisites>
+						<ResourceFrameRef version="fxc:v1.0" ref="xc:UK_Bus_Tariffs@Common_Resources"/>
+					</prerequisites>
+					<!--  === CONTENTS ==== -->
 					<PricingParameterSet id="fxc:Common_Resources" version="fxc:v1.0">
 						<priceUnits>
 							<PriceUnit id="fxc:GBP" version="fxc:v1.0">
@@ -4832,7 +4986,7 @@ West Midlands Railway
 							<OrganisationType>statutoryBody</OrganisationType>
 						</GeneralOrganisation>
 						<!-- === UIC RUs ==== -->
-						<Operator version="fxc:v1.0" id="uic:operator:1170">
+						<Operator version="fxc:v1.0" id="uic_operator:1170">
 							<PublicCode>ATOC</PublicCode>
 							<Name>Association of Train Operating Companies Limited</Name>
 							<ShortName>UIC</ShortName>
@@ -4854,16 +5008,16 @@ West Midlands Railway
 						</Operator>
 					</organisations>
 					<groupsOfEntities>
-						<Layer version="fxc:v1.0" id="fxc:fareNetwork_fareProducts_farePrices">
+						<Layer version="fxc:v1.0" id="fxc:fare_network+fare_products+fare_prices">
 							<Name>Fares and fare prices</Name>
 						</Layer>
-						<Layer version="fxc:v1.0" id="fxc:fareNetwork">
+						<Layer version="fxc:v1.0" id="fxc:fare_network">
 							<Name>Fares networks</Name>
 						</Layer>
-						<Layer version="fxc:v1.0" id="fxc:fareProducts">
+						<Layer version="fxc:v1.0" id="fxc:fare_products">
 							<Name>Fares ad fare prices</Name>
 						</Layer>
-						<Layer version="fxc:v1.0" id="fxc:farePrices">
+						<Layer version="fxc:v1.0" id="fxc:fare_prices">
 							<Name>Fares and fare prices</Name>
 						</Layer>
 					</groupsOfEntities>

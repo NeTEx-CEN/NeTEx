@@ -254,6 +254,10 @@ At the end are shown some sample transactions showing the parameters that define
 				<DefaultResponsibilitySetRef version="1.0" ref="mb:tariffs"/>
 				<DefaultCurrency>GBP</DefaultCurrency>
 			</FrameDefaults>
+			<prerequisites>
+				<CompositeFrameRef version="1.0" ref="jsp:PlusBus@Pass@composite"/>
+				<CompositeFrameRef version="fxc:v1.0" ref="fxc:DfT@Generic"/>
+			</prerequisites>
 			<frames>
 				<!--==== FAREs ==== -->
 				<!-- Metrobus Pass  products -->
@@ -3239,9 +3243,10 @@ ______	______	______	_	|
 											 If you work for an easitCRAWLEY member company, you will need to show your valid Easit_card - If you don't have an Easit_card click here to apply , or speak to your employer for further advice. 
 											If you work for one of the eligible City Place companies you will need to show your valid Staff ID card.</Description>
 											</CommercialProfile>
-											<EntitlementRequired version="1.0" id="mb:Gatwick_travelcard@EasitCrawley_holdesr">
+											<EntitlementRequired version="1.0" id="mb:Gatwick_travelcard@EasitCrawley_holders">
 												<Name>easitCRAWLEY ccard holder</Name>
 												<ThirdPartyProductRef ref="ezt:Discount@Easit_card" version="1.0"/>
+												<TypeOfTravelDocumentConstraint>sameSmartcard</TypeOfTravelDocumentConstraint>
 											</EntitlementRequired>
 										</limitations>
 									</GenericParameterAssignment>
@@ -3516,6 +3521,8 @@ Please note that Gatwick Travelcards are not transferable and can only be used b
 												<DiscountingRuleRef ref="ezt:Tariff@Discount@Easit@Crawley@metrobus" version="1.0"/>
 												<PreassignedFareProductRef ref="mb:Pass@Gatwick_travelcard" version="1.0"/>
 												<EntitlementType>purchaseAtDiscount</EntitlementType>
+												<TariffZoneConstraint>equivalent</TariffZoneConstraint>
+												<TypeOfTravelDocumentConstraint>sameSmartcard</TypeOfTravelDocumentConstraint>
 											</EntitlementGiven>
 										</limitations>
 									</GenericParameterAssignment>
@@ -3696,6 +3703,8 @@ Please log into your account on our site and follow the prompts to order a repla
 											<Name>Discount on gatwick travelcard </Name>
 											<DiscountingRuleRef ref="ezt:Tariff@Discount@Easit@Crawley@metrobus" version="1.0"/>
 											<PreassignedFareProductRef version="1.0" ref="mb:Pass@Gatwick_travelcard"/>
+											<TariffZoneConstraint>equivalent</TariffZoneConstraint>
+											<TypeOfTravelDocumentConstraint>sameSmartcard</TypeOfTravelDocumentConstraint>
 										</EntitlementGiven>
 									</limitations>
 								</GenericParameterAssignment>
@@ -3715,6 +3724,7 @@ Unfortunately not. As our discounts are genuine discounts off of the cost of the
 											<Name>Discount Rail</Name>
 											<DiscountingRuleRef ref="ezt:Tariff@Discount@Easit@Crawley@rail" version="1.0"/>
 											<PreassignedFareProductRef versionRef="1.0" ref="mb:Trip@Rail"/>
+											<TariffZoneConstraint>within</TariffZoneConstraint>
 										</EntitlementGiven>
 									</limitations>
 									<validityParameters>
@@ -4431,6 +4441,10 @@ Cuckmere Community Bus, Emsworth & District, Farleigh Coaches, Go-Coach, Metrobu
 				<DefaultResponsibilitySetRef ref="jsp:products:JSP" version="1.0"/>
 				<DefaultCurrency>GBP</DefaultCurrency>
 			</FrameDefaults>
+			<prerequisites>
+				<CompositeFrameRef version="1.0" ref="jsp:PlusBus@Pass@composite"/>
+				<CompositeFrameRef version="fxc:v1.0" ref="fxc:DfT@Generic"/>
+			</prerequisites>
 			<frames>
 				<FareFrame version="1.0" id="jsp:PlusBus@Pass@products">
 					<Name>Plus Bus   Passes</Name>
@@ -4602,9 +4616,23 @@ You must buy 2 tickets at the same time.					</Description>
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:prerequisites"/>
 										<LimitationGroupingType>AND</LimitationGroupingType>
 										<limitations>
+											<EntitlementRequired id="jsp:Tariff@PlusBus@Day@prequisites@single_trip" version="01">
+												<Name>Must have a rail ticket pass</Name>
+												<FareProductRef ref="atc:ATOC@Products@Trip@single" versionRef="01">EXTERNAL -  have to have a rail  ticket for same day  to buy</FareProductRef>
+												<PeriodConstraint>sameDay</PeriodConstraint>
+												<TariffZoneConstraint>sameAsOriginOrDestination</TariffZoneConstraint>
+											</EntitlementRequired>
+											<EntitlementRequired id="jsp:Tariff@Trip@return" version="01">
+												<Name>Must have a rail ticket pass</Name>
+												<FareProductRef ref="atc:ATOC@Products@Trip@Return" versionRef="01">EXTERNAL -  have to have areturn for same day  to buy</FareProductRef>
+												<PeriodConstraint>sameDay</PeriodConstraint>
+												<TariffZoneConstraint>sameAsOriginOrDestination</TariffZoneConstraint>
+											</EntitlementRequired>
 											<EntitlementRequired id="jsp:Tariff@PlusBus@Day@prequisites" version="01">
 												<Name>Must have a rail ticket pass</Name>
-												<FareProductRef ref="atc:ATOC@Products@Trip@Day" versionRef="01">EXTERNAL -  have to have a rail  ticket for same day  to buy</FareProductRef>
+												<FareProductRef ref="atc:ATOC@Products@Pass@Day" versionRef="01">EXTERNAL -  have to have a rail  ticket for same day  to buy</FareProductRef>
+												<PeriodConstraint>sameDayOfReturn</PeriodConstraint>
+												<TariffZoneConstraint>sameAsOriginOrDestination</TariffZoneConstraint>
 											</EntitlementRequired>
 										</limitations>
 									</GenericParameterAssignment>
@@ -4670,6 +4698,8 @@ You must buy 2 tickets at the same time.					</Description>
 											<EntitlementRequired id="jsp:Tariff@PlusBus@Season@prequisites" version="01">
 												<Name>Must have a rail seaon ticket </Name>
 												<FareProductRef ref="atc:ATOC@Products@Pass@Period" versionRef="01">EXTERNAL -  have to have a rail  season ticket for same period  to buy</FareProductRef>
+												<PeriodConstraint>withinSamePeriod</PeriodConstraint>
+												<TariffZoneConstraint>sameAsOriginOrDestination</TariffZoneConstraint>
 											</EntitlementRequired>
 											<!-- NB THis applies to prerequisite -->
 										</limitations>
@@ -4720,6 +4750,12 @@ You must buy 2 tickets at the same time.					</Description>
 									<ValidableElementRef version="1.0" ref="jsp:Pass@PlusBus@Day@travel"/>
 								</AccessRightInProduct>
 							</accessRightsInProduct>
+							<supplementTo>
+								<PreassignedFareProductRef versionRef="EXTERNAL" ref="atc:Rail@Single_trip"/>
+								<PreassignedFareProductRef versionRef="EXTERNAL" ref="atc:Rail@Return_trip"/>
+								<PreassignedFareProductRef versionRef="EXTERNAL" ref="atc:Rail@Day_pass"/>
+								<PreassignedFareProductRef versionRef="EXTERNAL" ref="atc:Rail@Period_Pass"/>
+							</supplementTo>
 						</SupplementProduct>
 						<SupplementProduct version="1.0" id="jsp:Pass@PlusBus@Season">
 							<Name>PlusBus Suplement</Name>
@@ -4761,6 +4797,7 @@ You must buy 2 tickets at the same time.					</Description>
 									<ValidableElementRef version="1.0" ref="jsp:Pass@PlusBus@Season@travel"/>
 								</AccessRightInProduct>
 							</accessRightsInProduct>
+							<SupplementToFareProductRef versionRef="EXTERNAL" ref="atc:Rail@Period_Pass"/>
 						</SupplementProduct>
 					</fareProducts>
 					<!-- === SALES OFFER PACKAGES === -->
@@ -5984,7 +6021,7 @@ This Shows sample Purchases
 									<TypeOfFareContractEntryRef version="fxc:v1.0" ref="fxc:on_board_purchase"/>
 									<Amount>4.90</Amount>
 									<PaymentMethod>cash</PaymentMethod>
-										<travelSpecifications>
+									<travelSpecifications>
 										<TravelSpecification version="any" id="mbt:Anon001@trans002@purchase_pass">
 											<Date>2017-07-08T01:07:00</Date>
 											<TypeOfFareContractEntryRef version="fxc:v1.0" ref="fxc:on_board_purchase"/>
@@ -6014,11 +6051,10 @@ This Shows sample Purchases
 											</specificParameterAssignments>
 										</TravelSpecification>
 									</travelSpecifications>
-												<TravelDocumentRef versionRef="EXTERNAL" ref="mbt:T97656452"/>
+									<TravelDocumentRef versionRef="EXTERNAL" ref="mbt:T97656452"/>
 									<CollectionNote>Have a nice day</CollectionNote>
-									<OrganisationalUnitRef  versionRef="EXTERNAL"  ref="MbtSales"></OrganisationalUnitRef>
-									<RetailDeviceRef  versionRef="EXTERNAL" ref="mb:4534"/>
-					
+									<OrganisationalUnitRef versionRef="EXTERNAL" ref="MbtSales"/>
+									<RetailDeviceRef versionRef="EXTERNAL" ref="mb:4534"/>
 								</SalesTransaction>
 							</fareContractEntries>
 						</FareContract>
@@ -6056,7 +6092,7 @@ This Shows sample Purchases
 														<TariffZoneRef version="1.0" ref="mb:metrovoyager"/>
 														<DistributionChannelRef version="fxc:v1.0" ref="fxc:online"/>
 														<TypeOfTravelDocumentRef version="1.0" ref="mb:m-ticket"/>
-															<PassengerSeatRef versionRef="1.0" ref="mb:21A"/>
+														<PassengerSeatRef versionRef="1.0" ref="mb:21A"/>
 													</validityParameters>
 													<TimeIntervalRef version="1.0" ref="mb:Tariff@Metrorider@3day"/>
 												</SpecificParameterAssignment>
