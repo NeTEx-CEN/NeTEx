@@ -40,10 +40,65 @@ There is also an Oxygen project file:
 # Change Log
 
 
+
 ## 1.11 Summary of Changes since v1.10 
 
 
+# 2019.03.12 NORWAY-105 *FARES*   Add ___MinimumDuration___ to ___TimeInterval___. 
+ * Also fix ___TypeOffareStructureFactor___ on ___GeograohicalStructreFactor___.
+ * _Updates to xml schema_:    
+	* netex_timeStructureFactor_version.xsd 
+	* netex_geographicalStructureFactor_version.xsd 
+	
+# 2019.03.12 EURA-84 *PART1-ND*   Add default ___PaymentMethods___, ___TypesOfPaymentMethods___   and ___PurchaseMoments___ attribute to ___Network___, ___GroupOfLines___, and ___Line___.   
+ * Also add  _cashExactChangeOnly_ to values for ___PaymentMethods___.   
+ 
+ * _Updates to xml schema_:   
+	* netex_travelRights.xsd
+	* netex_line_version.xsd 
+ * _Updates to xml examples_:	
+	* examples\standards\fxc\uk_fxc_trip_Metrobus_1.xml 
 
+### 2019.03.12 UK-45  *FARES*  Add  constraint mechanism  to Entitlements so that supplements and dependent products have same parameters  
+
+ * Add constraint elements to   __EntitlementRequired___, __EntitlementGiven___,
+ * Add constraint elements to   __SalesOfferEntitlementRequired___, __SalesOfferEntitlementGiven___,
+ 
+ * _Updates to xml schema_:   
+	* netex_usageParameterEntitlement_support.xsd
+	* netex_usageParameterEntitlement_version.xsd
+	* netex_salesOfferPackageEntitlement_support.xsd
+	* netex_salesOfferPackage_version.xsd
+ * _Updates to xml examples_:	
+	* examples\standards\fxc\uk_fxc_pass_Metrobus_metrorider.xml  
+	* exaamplesstandards\fxc\uk_fxc_addon_HSP_plusbus.xml
+	
+ 
+### 2019.03.12 NORWAY-99  *FARES*  Change cardinality of ___SupplementProduct__ / ___SupplementToFareProductRef___   from _0:1_ to _0:*_.
+ * Also add  missing constraint for ___SupplementTofareProductRef___ 
+ 
+ * _Updates to xml schema_:   
+ 	* netex_fareProduct_supplement.xsd
+	* netex_fareProduct_version.xsd
+	* netex_publication_version.xsd
+ * _Updates to xml examples_:	
+	* examples\standards\fxc\uk_fxc_pass_Metrobus_metrorider.xml  
+	* exaamplesstandards\fxc\uk_fxc_addon_HSP_plusbus.xml
+	
+	
+
+### 2019.03.11 NORWAY-98  *FARES*  NORWAY-98 Add new  value _activation_ to ___UsageTriggerEnumeration___ for ___UsageValidityPeriod___. 
+ * Also add  _Deregistration_ value to ___UsageEnd___ enumeration
+ * ALso and annototation comments.
+ 
+ * _Updates to xml schema_:     	    
+	* netex_usageParameterTravel_support.xsd
+
+### 2019.03.11 NORWAY-97 *FARES*  : Add new values to ___UserProfile \ UserType___; _student, schoolPupil, youngPerson, military, disabled, disabledCompanion,  employee, jobSeeker_.
+  * _Updates to xml schema_:    
+	* netex_user_support.xsd
+ * _Updates to xml examples_:
+	* \examples\standards\fxc\uk_fxc_common_profile.xml 
 
 ### 2019.03.11 EURA-87 *FARES*  Support Partial Refunds of   Passes
  * Add new enumeration values  _unused_ and _earlyTermination_ to ___RefundType___ on ___Reselling___. 
@@ -117,15 +172,12 @@ __
  * _Updates to xml examples_:
  	* netex_91.1_Rail_RailCard_MultipleProducts.xsd
 
-### 2019.03.11 EURA-73  *FARES*  Add new  ___StartConstraintType___ attribute enumeration  for ___UsageValidityPeriod___  with enum values  _fixed_, _variable_, _fixedWindowo_ 
- * Also EURA-78 Add new __FixedStartWindow__	attribute to ___UsageValidityPeriod___.
+### 2019.03.11 EURA-73  *FARES*  Add new  ___StartConstraintType___ attribute enumeration  for ___UsageValidityPeriod___  with enum values  _fixed_, _variable_, _fixedWindow_ 
+ * Also EURA-78 Flexible start window: Add new __FixedStartWindow__	attribute to ___UsageValidityPeriod___ with contents
+   ___MaximumServicesBefore__. ___FlexiblePeriodBefore___, MaximumServicesAfter___, ___FlexiblePeriodAfter___. 
  * _Updates to xml schema_:     	    
 	* netex_usageParameterTravel_support.xsd
 	* netex_usageParameterTravel_version.xsd
-
-EURA-73 Add StartConstraintType enumeration  for UsageValidityPeriod  StartConstraintType attribute to UsageValidityPeriod  to specify  if start is floating or fixed.  
- 
-					   * EURA-7 Add fixedWindow enum values 
 
 ### 2019.03.11 UK-22  *FARES*  Add new ___PrivateCode___ attribute to ___FarePrice___. 
  * Also UK-22 Add new ___Description___ attribute to ___FareProductPrice___. 
