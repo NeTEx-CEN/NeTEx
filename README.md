@@ -42,13 +42,45 @@ There is also an Oxygen project file:
 
 ## 1.11 Summary of Changes since v1.10 
 
-### 2019.03.11 EURA-72  *FARES*   Improve Fare demand type
+
+
+
+### 2019.03.11 EURA-87 *FARES*  Support Partial Refunds of   Passes
+ * Add new enumeration values  _unused_ and _earlyTermination_ to ___RefundType___ on ___Reselling___. 
+ * Add new ___RefundPolicy___ attribute to ___Refunding___ with enum values   _illness, death, redundancy, maternity, other, etc_
+ * Add new ___RefundBasis___  atribute to ___Refunding___  _unusedDays, unusedWeeks ,unusedMonths, other_. 
+ * Add new  ___ExchangableFromPercentUse___ and ExchangableUntilPercentUse__ attributes to ___Reselling___.
+ * Add new enumeration value _withinSpecifiedWindow_  to ___PurchaseWhen___  attribute on ___Reselling___.
+ *  Add add new EffectiveFrom___ attribute  to ___Reselling___ with values _anytime, nextInterval, nextInstallment, never_.
+ * Add new ____NoticePeriod___ to ___Reselling___.
+ * Also UK-46- Add typesOfPaymentMethods /TypeOfPaymentRef and move PaymentMethods up hierarchy with new name (Old attribute on REFUNDING  deprecated) 
+ * _Updates to xml schema_:    
+	* netex_usageParameterAfterSales_support.xsd
+	* netex_usageParameterAfterSales_version.xsd
+ * _Updates to xml examples_:
+ 	* netex_era_toc_uk.xsd
+
+### 2019.03.11 EURA-40 *FARES*  Support Suspension
+ * add _subscription_ enum value to ____UsageValidityPeriodType___. 
+ * Add __SubscriptionSuspensionPolicyEnumeration___ attribute to ____UsageValidityPeriod___ with enumeration   values:  
+	* _none_ - Suspension not allowed.
+	* _forCertifiedIllness_ - Suspension allowed for illness.
+	* _forParentalLeave_ - Suspension allowed for parental leave.
+	* _forHoliday_ - Suspension allowed for Holiday.
+	* _forAnyReason_ - Suspension allowed for any reason 
+ * _Updates to xml schema_:     	    
+	* netex_usageParameterTravel_support.xsd
+	* netex_usageParameterTravel_version.xsd
+ 
+### 2019.03.11 EURA-72  *FARES*   Improve Fare demand type for direction constraints
  * Make  ___StartTimeAtStop___ ___StartTime__ optional
  * Add new attribute StopUseConstraint___ to   ___FareDemandType___ with values _arriving_. _departing_, _passingThrough_.
  * _Updates to xml schema_:     	    
 	* netex_fareQualityFactor_support.xsd
 	* netex_fareQualityFactor_version.xsd
-	
+ * _Updates to xml examples_:
+ 	* netex_era_toc_uk.xsd
+ 	* Netex_101.21_TfL_GeographicFares_UnitZone_MultipleProduct.xml
 __
 ### 2019.03.11 CR-13  *PART1*   Add _replacement_  value  to ___LineType___ enumeration 
  * _Updates to xml schema_:     	    
@@ -61,24 +93,19 @@ __
 	* _manual_ - Renew on request.
 	* _automaticOnConfirmation_ - Confirm and enew automatically at end of subscription  term.
 	* _none_ - No renewal allowed.
- * Add __SubscriptionSuspensionPolicyEnumeration___ attribute with enumeration   values:  
-	* _none_ - Suspension not allowed.
-	* _forCertifiedIllness_ - Suspension allowed for illness.
-	* _forParentalLeave_ - Suspension allowed for parental leave.
-	* _forHoliday_ - Suspension allowed for Holiday.
-	* _forAnyReason_ -S uspension allowed for any reason 
  * Add __SubscriptionTermEnumeration___ attribute with enumeration  values:
 	* _fixed_ - Subscription must be for a fixed term.
 	* _variable_ - Subscription can be for  an arbitrary term
 	* _openEnded_ - Subscription term is open ended.
  
- * Also cf UK-46  Rename __PaymentMethod__ to __TypeOfPayment__ method.  
+ * Also cf UK-46  Add new __TypeOfPayment__ method.  
  * Also Add __AutomatedUse___ attribute to ___TypeofPaymentMethod___.
  * Also Add _directDebit_ and bankTransfer_ values   to ___PaymentMethod___ enumeration values.
  * Also  __RESELLING__ parameter Add __typesOfPaymentMethods/TypeOfPaymentRef__ and move __PaymentMethods__ up hierarchy with new name (Old attribute on ___REFUNDING__  deprecated)
  * Also Add _unused_ and _earlyTermination_ to  ___Refunding___ ___RefundType___ enumeration.
  * Also Add with specified window value to PurchaseWhen enumeration attribute. 
- * Also Add _unused_ and _earlyTermination_ and _other_ to ___RefundType___ enumeration values.
+ * Also EURA-90 Add a new attribute  ___MaximumNumberOfFailToCheckOutEvents___  to ___PenaltyPolicy___.
+
  * _Updates to xml schema_:     	    
 	* netex_usageParameterCharging_support.xsd
 	* netex_usageParameterCharging_version.xsd
@@ -179,7 +206,8 @@ EURA-73 Add StartConstraintType enumeration  for UsageValidityPeriod  StartConst
 	* netex_usageParameterEligibility_support.xsd
 	* netex_usageParameterEligibility_version.xsd
 
-### 2019.03.10 EURA-53 *FARES*   Add new ___CappingRuleStartConstraintType___ attribute to ___CappedFareProduct___ ___CappingRule___ to state  if _fixed_ or _variable_ -  and if _fixed_, specify a ___startOnlyOn___ ___DayType___s, e.g. for day of week. 
+### 2019.03.10 EURA-53 *FARES*   Add new ___CappingRuleStartConstraintType___ attribute to ___CappedFareProduct___ ___CappingRule___ to state  if _fixed_ or _variable_ 
+  * Also,  if _fixed_, specify a ___startOnlyOn___ \ ___DayType___s, e.g. for day of week. 
 
   * _Updates to xml schema_:     	  
  	* netex_fareProduct_support.xsd
@@ -198,7 +226,7 @@ EURA-73 Add StartConstraintType enumeration  for UsageValidityPeriod  StartConst
 ### 2019.03.10  EURA-87 *FARES* Specify if start  of validity is _variable_ or _fixed_.  
   * Add new ___StartConstraint___ attribute to ___UsageValidityPeriod___  to  specify if start day  is _variable_ or _fixed_.
   * Add new values _variable_ /  _fixed_ to  ___UsageStartConstraintTypeEnumeration___. 
-  * Add new  ___FixedStartDayTypes___  /  ___DayType___ attribute so that any required day of week, day of month, month of year can be indicated.
+  * Add new  ___startOnlyOn___  /  ___DayType___ attribute so that any required day of week, day of month, month of year can be indicated.
   * Add two XML groups to organise absolute and variable start time attributes. 
   * Also add new _enrolment_ and  _reservation_ enum values to ___UsageTriggerEnumeration___.
   * Also add new _eligibilityExpiry_  enum value to ___UsageEndEnumeration___.

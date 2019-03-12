@@ -25,8 +25,14 @@
 					<Modified>2019-03-10</Modified>EURA 65 - Add a SharedUsage attribute to Transferability  to specify whether multiple users may use a product at the same time.
 				</Date>
 				<Date>
-					<Modified>2019-03-11</Modified>ERA-40 Subscribiions  On Exchanging, add ExchangableFromPercentUse and ExchangableUntilPercentUse
-					Also UK-46- Add typesOfPaymentMethods /TypeOfPaymentRef and move PaymentMethods up hierarchy with new name (Old attribute on REFUNDING  deprecated)
+					<Modified>2019-03-11</Modified>EURA-87 partial cancellations add RefundPolicy attribute 
+					    Add RefundBasis  atribute to Refunding  unusedDays unusedWeeks unusedMonths,  
+						On Exchanging, add ExchangableFromPercentUse and ExchangableUntilPercentUse
+						 Subscriptions  - Add withinSpecified window value to PurchaseWhen enumeration attribute  
+						Also UK-46- Add typesOfPaymentMethods /TypeOfPaymentRef and move PaymentMethods up hierarchy with new name (Old attribute on REFUNDING  deprecated)
+					   Aadd unused and earlyTermination to RefundTypeEnumeration	
+					    Also Add Cancellation Notice Period to Refunding
+					    Add EffectiveFrom to Reselllng  anytime, nextInterval, nextInstallment, never
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -199,6 +205,16 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Period to endof period before (negative) or after (positive) the trigger point- as arbitrary interval.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="EffectiveFrom" type="EffectiveFromEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Constrain on  when change can be made</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="NotificationPeriod" type="xsd:duration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Notice period  needed for cancellation befiore effective</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:group name="ResellingCalculationGroup">
@@ -360,6 +376,16 @@ Rail transport, Roads and Road transport
 			<xsd:element name="RefundType" type="RefundTypeEnumeration" default="unused" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Type of Refund.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="RefundPolicy" type="RefundPolicyListOfEnumerations" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Reasons for giving refunds.d</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="PartialRefundBasis" type="PartialRefundBasisEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Basis on which partial refunds of period passes etc are calculated.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="PaymentMethod" type="PaymentMethodListOfEnumerations" minOccurs="0">

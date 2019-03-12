@@ -23,6 +23,9 @@
 					<Modified>2019-03-11</Modified>EURA-40 Add Subscribing  Usage Parameter with various attributes.
 						Add GracePeriod to CHargingPolicy
 				</Date>
+				<Date>
+					<Modified>2019-03-11</Modified>EURA-90 Add a MaximumNumberOfFailToCheckOutEvents  to PenaltyPolicy  
+				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the Charging USAGE PARAMETER    types.</p>
@@ -195,6 +198,11 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Minimum time before reentry at the same station.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="MaximumNumberOfFailToCheckOutEvents" type="xsd:integer" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Lmit on the  number of fail-to-checkout events allowed before suspension.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ==== SUBSCRIBING USER PARAMETER ================================================ -->
@@ -246,12 +254,6 @@ Rail transport, Roads and Road transport
 		<xsd:sequence>
 			<xsd:group ref="SubscribingTermGroup"/>
 			<xsd:group ref="SubscribingPaymentGroup"/>
-			<xsd:group ref="SubscribingHiatusGroup"/>
-			<xsd:group ref="SubscribingCancellationGroup">
-				<xsd:annotation>
-					<xsd:documentation>Elements relating to cancellation of subscription. Use REFUNDING parameter for charges.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:group>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:group name="SubscribingTermGroup">
@@ -299,70 +301,6 @@ Rail transport, Roads and Road transport
 			<xsd:element name="installmentTypesOfPaymentMethod" type="TypeOfPaymentMethodRefs_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Allowed means of payment of installations</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-		</xsd:sequence>
-	</xsd:group>
-	<xsd:group name="SubscribingHiatusGroup">
-		<xsd:annotation>
-			<xsd:documentation>Elements relating to suspension of subscription.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:sequence>
-			<xsd:element name="SubscriptionSuspensionPolicy" type="SubscriptionSuspensionPolicyListOfEnumerations" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Allowed policies for reneing subsciption.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="SuspensionQualificationPeriod" type="xsd:duration" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Minimum duration that must have occurred before a suspension is allowed</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="SuspensionQualificationPercent" type="xsd:decimal" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Minimum proportion of term that must  have occurred before a suspension is allowed</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="MinimumSuspensionPeriod" type="xsd:duration" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Minimum duration allowed for a suspension</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="MaximumSuspensionPeriod" type="xsd:duration" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Maximum duration allowed for a suspension.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="MaximumNumberOfSuspensionsPerTerm" type="xsd:integer" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Maximum duration allowed for a suspension. with the term of the subscription</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-		</xsd:sequence>
-	</xsd:group>
-	<xsd:group name="SubscribingCancellationGroup">
-		<xsd:annotation>
-			<xsd:documentation>Elements relating to cancellation of subscription.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:sequence>
-			<xsd:element name="SubscriptionCancellationPolicy" type="SubscriptionCancellationPolicyEnumeration" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Allowed policies for cancelling subsciption.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="CancellationQualificationPeriod" type="xsd:duration" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Minimum duration that must have occurred before a cancellation is allowed</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="CancellationQualificationPercent" type="xsd:decimal" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Minimum proportion of term that must  have occurred before a cancellation is allowed</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="CancellationNotificationPeriod" type="xsd:duration" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Notice period  needed for cancellation</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>

@@ -32,11 +32,21 @@
 				<Date>
 					<Modified>2019-03-10</Modified>EURA-94   * Add networks, operators and countries to enum values for StepLimit 
 				</Date>
-				
 				<Date>
 					<Modified>2019-03-11</Modified>EURA-73 Add StartConstraintType enumeration  for UsageValidityPeriod  StartConstraintType attribute to UsageValidityPeriod  to specify  if start is floating or fixed.   
 					   * EURA-78 Add fixedWindow enum values 
+					   * Add Activation to usage start 
 				</Date>
+				<Date>
+					<Modified>2019-03-10</Modified>EURA-40 Support Suspension    U  
+					 * Add __SubscriptionSuspensionPolicyEnumeration___ attribute with enumeration   values:  
+								* _none_ - Suspension not allowed.
+								* _forCertifiedIllness_ - Suspension allowed for illness.
+								* _forParentalLeave_ - Suspension allowed for parental leave.
+								* _forHoliday_ - Suspension allowed for Holiday.
+							* _forAnyReason_ - Suspension allowed for any reason  
+					    
+					</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the Travel USAGE PARAMETER  types.</p>
@@ -270,6 +280,7 @@ Rail transport, Roads and Road transport
 			<xsd:enumeration value="annualPass"/>
 			<xsd:enumeration value="seasonTicket"/>
 			<xsd:enumeration value="profileMembership"/>
+			<xsd:enumeration value="subscription"/>
 			<xsd:enumeration value="openEnded"/>
 			<xsd:enumeration value="other"/>
 		</xsd:restriction>
@@ -294,6 +305,7 @@ Rail transport, Roads and Road transport
 			<xsd:enumeration value="reservation"/>
 			<xsd:enumeration value="purchase"/>
 			<xsd:enumeration value="fulfilment"/>
+			<xsd:enumeration value="activation"/>
 			<xsd:enumeration value="specifiedStartDate"/>
 			<xsd:enumeration value="startOutboundRide"/>
 			<xsd:enumeration value="endOutboundRide"/>
@@ -340,6 +352,44 @@ Rail transport, Roads and Road transport
 				</xsd:annotation>
 			</xsd:enumeration>
 		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SuspensionPolicyEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for Suspension Policy.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="none">
+				<xsd:annotation>
+					<xsd:documentation>Suspension not allowed.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="forCertifiedIllness">
+				<xsd:annotation>
+					<xsd:documentation>Suspension allowed for  illness.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="forParentalLeave">
+				<xsd:annotation>
+					<xsd:documentation>Suspension allowed  for parental leave.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="forHoliday">
+				<xsd:annotation>
+					<xsd:documentation>Suspension allowed  for Holiday.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="forAnyReason">
+				<xsd:annotation>
+					<xsd:documentation>Suspension allowed  for any reason.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SuspensionPolicyListOfEnumerations">
+		<xsd:annotation>
+			<xsd:documentation>List of  Suspension Policiy values</xsd:documentation>
+		</xsd:annotation>
+		<xsd:list itemType="SuspensionPolicyEnumeration"/>
 	</xsd:simpleType>
 	<!-- === FREQUENCY OF USE PARAMETER====================================================== -->
 	<xsd:simpleType name="FrequencyOfUseTypeEnumeration">

@@ -422,16 +422,17 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Duration of  USAGE VALIDITY PERIOD.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:group ref="UsageValidityExplicitPeriodGroup">
+			<xsd:group ref="UsageValidityPeriodFixedPeriodGroup">
 				<xsd:annotation>
 					<xsd:documentation>Elements defining a validtiy period in terms of an absolute calendar date </xsd:documentation>
 				</xsd:annotation>
 			</xsd:group>
-			<xsd:group ref="UsageValidityStartConstraintGroup">
+			<xsd:group ref="UsageValidityPeriodStartConstraintGroup">
 				<xsd:annotation>
 					<xsd:documentation>Elements defining a permitted  validitiy period in terms of an calendar date </xsd:documentation>
 				</xsd:annotation>
 			</xsd:group>
+			<xsd:group ref="UsageValidityPeriodUsageHiatusGroup"/>
 			<xsd:element name="BlackoutUse" type="BlackoutStartEnumeration" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Interaction with blackout periods.</xsd:documentation>
@@ -439,9 +440,9 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
-	<xsd:group name="UsageValidityExplicitPeriodGroup">
+	<xsd:group name="UsageValidityPeriodFixedPeriodGroup">
 		<xsd:annotation>
-			<xsd:documentation>Elements for USAGE VALIDITY EXPLICIT PERIOD Group.</xsd:documentation>
+			<xsd:documentation>Elements to specify a fixed period.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element name="StartDate" type="xsd:date" minOccurs="0">
@@ -466,7 +467,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
-	<xsd:group name="UsageValidityStartConstraintGroup">
+	<xsd:group name="UsageValidityPeriodStartConstraintGroup">
 		<xsd:annotation>
 			<xsd:documentation>Elements to specify specify constraints on start of  USAGE VALIDITY PERIOD.</xsd:documentation>
 		</xsd:annotation>
@@ -482,26 +483,50 @@ Rail transport, Roads and Road transport
 				</xsd:annotation>
 				<xsd:complexType>
 					<xsd:complexContent>
-						<xsd:extension base="dayTypes_RelStructure">
-							<xsd:sequence>
-								<xsd:element name="StartMonth" type="xsd:gMonth" minOccurs="0">
-									<xsd:annotation>
-										<xsd:documentation>Start date of  USAGE VALIDITY PERIOD.</xsd:documentation>
-									</xsd:annotation>
-								</xsd:element>
-								<xsd:element name="StartDay" type="xsd:gDay" minOccurs="0">
-									<xsd:annotation>
-										<xsd:documentation>Start time of  USAGE VALIDITY PERIOD.</xsd:documentation>
-									</xsd:annotation>
-								</xsd:element>
-							</xsd:sequence>
-						</xsd:extension>
+						<xsd:extension base="dayTypes_RelStructure"/>
 					</xsd:complexContent>
 				</xsd:complexType>
 			</xsd:element>
 			<xsd:element name="FixedStartWindow" type="FixedStartWindowStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>If UsageStartConstraintType is "fixedWindow" , then can specify a window relative to booked train for alternative services that may be used.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="UsageValidityPeriodUsageHiatusGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements relating to suspension of subscription.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="SuspensionPolicy" type="SuspensionPolicyListOfEnumerations" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Allowed policies for reneing subsciption.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="SuspensionQualificationPeriod" type="xsd:duration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Minimum duration that must have occurred before a suspension is allowed</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="SuspensionQualificationPercent" type="xsd:decimal" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Minimum proportion of term that must  have occurred before a suspension is allowed</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MinimumSuspensionPeriod" type="xsd:duration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Minimum duration allowed for a suspension</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MaximumSuspensionPeriod" type="xsd:duration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Maximum duration allowed for a suspension.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MaximumNumberOfSuspensionsPerTerm" type="xsd:integer" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Maximum duration allowed for a suspension. with the term of the subscription</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>

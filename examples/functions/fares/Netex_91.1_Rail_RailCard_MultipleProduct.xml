@@ -208,9 +208,26 @@ A COMPOSITE FRAME is used to group the component FRAMEs
 										<TimeIntervalRef version="1.0" ref="myfares:Railcard_discount@1year"/>
 										<TimeIntervalRef version="1.0" ref="myfares:Railcard_discount@2year"/>
 									</timeIntervals>
+									
 									<GenericParameterAssignment order="1" id="myfares:Time_interval@access_when" version="1.0">
 										<TypeOfAccessRightAssignmentRef versionRef="fxc:v1.0" ref="fxc:can_access_when"/>
-										<ValidityParameterGroupingType>XOR</ValidityParameterGroupingType>
+										<LimitationGroupingType>AND</LimitationGroupingType>
+										<limitations>
+											<UsageValidityPeriod version="1.0" id="myfares:Time_interval@access_whes">
+												<ValidityPeriodType>seasonTicket</ValidityPeriodType>
+												<UsageTrigger>specifiedStartDate</UsageTrigger>
+												<UsageStartConstraintType>variable</UsageStartConstraintType>
+												<startOnlyOn>
+													<DayType id="myfares:Time_interval@access_when" version="1.0">
+														<properties>
+															<PropertyOfDay>
+																<DayOfMonth>---01</DayOfMonth>
+															</PropertyOfDay>
+														</properties>
+													</DayType>
+												</startOnlyOn>
+											</UsageValidityPeriod>
+										</limitations>
 									</GenericParameterAssignment>
 								</FareStructureElement>
 								<FareStructureElement version="1.0" id="myfares:Railcard_discount@can_purchase">
@@ -359,26 +376,34 @@ A COMPOSITE FRAME is used to group the component FRAMEs
 												<TimeIntervalRef version="1.0" ref="myfares:payment_installment@1year"/>
 											</possibleInstallmenttIntervals>
 											<InstallmentPaymentMethods>debitCard creditCard directDebit</InstallmentPaymentMethods>
-											<SubscriptionSuspensionPolicy>forCertifiedIllness</SubscriptionSuspensionPolicy>
+										</Subscribing>
+										<UsageValidityPeriod version="1.0" id="myfares:ABO_validity_conditions">
+											<Name>Refund for subscription</Name>
+											<ValidityPeriodType>subscription</ValidityPeriodType>
+											<UsageTrigger>specifiedStartDate</UsageTrigger>
+											<UsageStartConstraintType>variable</UsageStartConstraintType>
+											<SuspensionPolicy>forCertifiedIllness forHoliday</SuspensionPolicy>
 											<SuspensionQualificationPeriod>P6M</SuspensionQualificationPeriod>
 											<MinimumSuspensionPeriod>P1M</MinimumSuspensionPeriod>
 											<MaximumSuspensionPeriod>P9M</MaximumSuspensionPeriod>
 											<MaximumNumberOfSuspensionsPerTerm>1</MaximumNumberOfSuspensionsPerTerm>
-											<SubscriptionCancellationPolicy>fromNextEndOfInterval</SubscriptionCancellationPolicy>
-											<CancellationQualificationPercent>0.30</CancellationQualificationPercent>
-											<CancellationNotificationPeriod>P1M</CancellationNotificationPeriod>
-										</Subscribing>
+										</UsageValidityPeriod>
 										<Refunding version="1.0" id="myfares:ABO_refund_conditions">
 											<Name>Refund for subscription</Name>
 											<CanChangeClass>true</CanChangeClass>
 											<UnusedTicketsOnly>false</UnusedTicketsOnly>
 											<OnlyAtCertainDistributionPoints>true</OnlyAtCertainDistributionPoints>
 											<ResellWhen>withinSpecifiedWindow</ResellWhen>
-											<ExchangableFromPercentUse>50.00</ExchangableFromPercentUse>
+											<ExchangableFromPercentUse>0.30</ExchangableFromPercentUse>
+											<ExchangableUntilPercentUse>0.90</ExchangableUntilPercentUse>
+											<EffectiveFrom>nextInstallment</EffectiveFrom>
+											<NotificationPeriod>P1M</NotificationPeriod>
 											<HasFee>true</HasFee>
 											<RefundBasis>perOffer</RefundBasis>
 											<PaymentMethods>cheque bankTransfer creditCard</PaymentMethods>
 											<RefundType>earlyTermination</RefundType>
+											<RefundPolicy>always</RefundPolicy>
+											<PartialRefundBasis>unusedMonths</PartialRefundBasis>
 										</Refunding>
 										<PurchaseWindow version="1.0" id="myfares:ABO_purchase Window_conditions">
 											<Name>Purchase window for subscription</Name>
@@ -684,7 +709,6 @@ A COMPOSITE FRAME is used to group the component FRAMEs
 								<TypeOfAccessRightAssignment version="ntx:v1.0" id="ntx:condition_of_sale">
 									<Name>Defines a condition or restriction on sale</Name>
 								</TypeOfAccessRightAssignment>
-								
 								<TypeOfAccessRightAssignment version="ntx:v1.0" id="ntx:can_purchase">
 									<Name>Describes an available purchase or means of purchase</Name>
 								</TypeOfAccessRightAssignment>
