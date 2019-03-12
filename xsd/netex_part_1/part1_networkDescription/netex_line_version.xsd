@@ -24,8 +24,7 @@
 					<Created>2010-09-04</Created>
 				</Date>
 				<Date>
-					<Modified>2011-02-05</Modified>
-					<!-- Name Space changes -->
+					<Modified>2011-02-05</Modified> Name Space changes 
 				</Date>
 				<Date>
 					<Modified>2017-03-27 CR27 Add Submode to Group of lines</Modified>
@@ -45,6 +44,9 @@
 											 Also add tariff and scheduling to GroupOfLinesType enumeration	
 											Add UseToExclude flag to GroupOfLines
 				</Date>
+				<Date>
+					<Modified>2019-03-12</Modified>EURA-84 (and GTFS)  Add default PaymentMethod, TypesOfPaymentMethods   and Payment Moments attribute to NETWORK, GROUP OF LINES and LINE   
+				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the LINE types.</p>
@@ -61,7 +63,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2017</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -240,6 +242,7 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Classification of GROUP OF LINES. +v1.1</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:group ref="LinePaymentMethodGroup"/>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ==Line============================================================ -->
@@ -438,6 +441,11 @@ Rail transport, Roads and Road transport
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:group ref="LinePresentationGroup"/>
+			<xsd:group ref="LinePaymentMethodGroup">
+				<xsd:annotation>
+					<xsd:documentation>Default  payment methods supported for l LINE or Network. +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:group>
 			<xsd:element name="ContactDetails" type="ContactStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>CantactDetails for Line +V1.1</xsd:documentation>
@@ -497,6 +505,28 @@ Rail transport, Roads and Road transport
 			<xsd:element name="PrintedPresentation" type="PrintPresentationStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Presentation values to use in printed material for LINE, such as a colour. +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="LinePaymentMethodGroup">
+		<xsd:annotation>
+			<xsd:documentation>Defauly Mayment methods supported for l LINE. +v1.1</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="PaymentMethods" type="PaymentMethodListOfEnumerations" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Payment Methods allowed on LINE. +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="typesOfPaymentMethod" type="TypeOfPaymentMethod_ValueStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>TYPES OF PAYMENT yment Methods allowed on LINE. +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="PurchaseMoment" type="PurchaseMomentListOfEnumerations" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>PURCHASE MOMENT types allowed on LINE. +v1.1</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
