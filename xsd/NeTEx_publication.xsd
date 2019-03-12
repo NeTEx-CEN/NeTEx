@@ -16,13 +16,15 @@
 				<Contributor>CEN TC278 WG3 SG9 Team.</Contributor>
 				<Coverage>Europe</Coverage>
 				<Creator>First Drafted for NeTEx version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.  mailto:schemer@netex.org.uk</Creator>
-				
-						<Date>
-					<Modified>2019-03-01</Modified>EURA-(nk) Add DistanceMatrixInversRef for backwards direction of reference to a DIstance Matrix Element
+				<Date>
+					<Modified>2019-03-01</Modified>Fix: Add  constraint for  SupplementToFareProductRef .
+				</Date>
+				<Date>
+					<Modified>2019-03-01</Modified>EURA-(nk) Add constraint for  DistanceMatrixInverseRef for backwards direction of reference to a DIstance Matrix Element
 				</Date>
 				<Date>
 					<Modified>2019-02-18</Modified>
-					   (a) Relax uniqueness constraint on  FareTable Fare  GroupPrice   now unique within type, 
+					   (a) Relax uniqueness constraint on  FareTable and PriceGroup   now unique within type, 
 				</Date>
 				<Date>
 					<Modified>2019-01-15</Modified>
@@ -173,7 +175,7 @@
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
-			<xsd:attribute name="version" type="xsd:NMTOKEN" default="1.0"/>
+		<xsd:attribute name="version" type="xsd:NMTOKEN" default="1.0"/>
 	</xsd:complexType>
 	<!-- ===================================================================   -->
 	<xsd:element name="PublicationDelivery" type="PublicationDeliveryStructure">
@@ -184,7 +186,7 @@
 		<!-- =====REFERENTIAL INTEGRITY Constraints========================= -->
 		<!-- =====FRAMEWORK Constraints=========================  -->
 		<!-- =====Codespace Key ========================== -->
-		<!-- ===== Codespace Unique===========================  --> 
+		<!-- ===== Codespace Unique===========================  -->
 		<xsd:unique name="Codespace_UniqueId">
 			<xsd:annotation>
 				<xsd:documentation>Every Codespace ID must be unique.</xsd:documentation>
@@ -748,7 +750,7 @@
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-	 	<!-- =====GeneralGroupOfEntities============================== -->
+		<!-- =====GeneralGroupOfEntities============================== -->
 		<!-- =====GeneralGroupOfEntities unique========================== -->
 		<xsd:unique name="GeneralGroupOfEntities_UniqueBy_Id_Version">
 			<xsd:annotation>
@@ -1001,8 +1003,7 @@
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 			<xsd:field xpath="@order"/>
-		</xsd:key>		
-		
+		</xsd:key>
 		<!-- =====Zone============================== -->
 		<xsd:keyref name="Zone_AnyKeyRef" refer="netex:Zone_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:ZoneRef |   .//netex:ParentZoneRef | .//netex:ProjectedZoneRef | .//netex:ProjectToZoneRef  |.//netex:ProjectedObjectRef"/>
@@ -5328,8 +5329,6 @@
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-	   
-		 
 		<!-- =====TimeDemandType============================== -->
 		<!-- =====TimeDemandType unique========================== -->
 		<xsd:unique name="TimeDemandType_UniqueBy_Id_Version">
@@ -6389,7 +6388,6 @@
 			<xsd:field xpath="@version"/>
 		</xsd:key>
 		<!-- =====FareProduct============================== -->
-	 
 		<!-- =====SaleDiscountRight  ========================== -->
 		<!-- =====SaleDiscountRight unique========================== -->
 		<xsd:unique name="SaleDiscountRight_UniqueBy_Id_Version">
@@ -6486,7 +6484,7 @@
 		</xsd:unique>
 		<!-- =====PreassignedFareProduct Key ========================== -->
 		<xsd:keyref name="PreassignedFareProduct_KeyRef" refer="netex:PreassignedFareProduct_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:PreassignedFareProductRef"/>
+			<xsd:selector xpath=".//netex:PreassignedFareProductRef | .//netex:SupplementToFareProductRef"/>
 			<xsd:field xpath="@ref"/>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>

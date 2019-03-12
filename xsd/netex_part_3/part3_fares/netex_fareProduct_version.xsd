@@ -37,6 +37,9 @@
 				<Date>
 					<Modified>2019-03-11</Modified>EURA-77 Add Tariffs/ TariffRef  attribute to  FareProduct. Also correct TypeOfFareProduct
 				</Date>
+				<Date>
+					<Modified>2019-03-12</Modified>NORWAY-99 change cardinality of ___SupplementProduct__ / ___SupplementToFareProductRef___   from 0:1 to 0:* 
+				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the FARE PRODUCT types.</p>
@@ -942,13 +945,18 @@ Rail transport, Roads and Road transport
 		<xsd:annotation>
 			<xsd:documentation>Elements for a PREASSIGNED FARE PRODUCT.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:sequence>
+		<xsd:choice>
 			<xsd:element name="SupplementToFareProductRef" type="FareProductRefStructure" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>FARE PRODUCT to which this is a sublement.</xsd:documentation>
+					<xsd:documentation>FARE PRODUCT to which this SUPPLEMENT PRODUCT can be a a supplement.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-		</xsd:sequence>
+			<xsd:element name="supplementTo" type="fareProductRefs_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>FARE PRODUCTa to which this SUPPLEMENT PRODUCT can be a a supplement.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:choice>
 	</xsd:group>
 	<!-- ====ACCESS RIGHT IN PRODUCT..============================= -->
 	<xsd:complexType name="accessRightsInProduct_RelStructure">
