@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_calculationParameters_support">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_calculationParameters_support">
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_dayType_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_responsibility/netex_relationship_support.xsd"/>
 	<xsd:annotation>
@@ -16,8 +16,7 @@
 					<Created>2013-04-14</Created>
 				</Date>
 				<Date>
-					<Modified>2013-04-15</Modified>
-					<!--   -->
+					<Modified>2019-03-10</Modified>NORMWAY-101 Add new  TypeOfTaxRate element 
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -35,7 +34,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2014</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -125,6 +124,18 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
+	<xsd:simpleType name="PriceUnitDimensionEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for PRICE UNIT Dimension</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="currency"/>
+			<xsd:enumeration value="distance"/>
+			<xsd:enumeration value="time"/>
+			<xsd:enumeration value="valueToken"/>
+			<xsd:enumeration value="other"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<!-- === ROUNDING====================================================== -->
 	<xsd:simpleType name="RoundingIdType">
 		<xsd:annotation>
@@ -341,6 +352,68 @@ Rail transport, Roads and Road transport
 				<xsd:attribute name="ref" type="MonthValidityOffsetIdType" use="required">
 					<xsd:annotation>
 						<xsd:documentation>Identifier of a MONTH VALIDITY OFFSET.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!-- ====TYPE OF PRICING RULE  ================================================== -->
+	<xsd:complexType name="TypeOfPricingRuleRefs_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of TYPEs OF PRICING RULE.  </xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="oneToManyRelationshipStructure">
+				<xsd:sequence>
+					<xsd:element ref="TypeOfPricingRuleRef" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:simpleType name="TypeOfPricingEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for TypeOf Prcing Ruke +v1.1</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="valueAddedTax"/>
+			<xsd:enumeration value="salesTax"/>
+			<xsd:enumeration value="other"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TaxCategoryEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for Tax categories +v1.1</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="exempt"/>
+			<xsd:enumeration value="general"/>
+			<xsd:enumeration value="transportation"/>
+			<xsd:enumeration value="parking"/>
+			<xsd:enumeration value="food"/>
+			<xsd:enumeration value="alcoholicBeverage"/>
+			<xsd:enumeration value="other"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TypeOfPricingRuleIdType">
+		<xsd:annotation>
+			<xsd:documentation>Type for identifier of a TYPE OF PRICING RULE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="TypeOfValueIdType"/>
+	</xsd:simpleType>
+	<xsd:element name="TypeOfPricingRuleRef" type="TypeOfPricingRuleRefStructure" substitutionGroup="TypeOfEntityRef">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a TYPE OF PRICING RULE. +v1.1</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="TypeOfPricingRuleRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for Reference to a TYPE OF PRICING RULE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="TypeOfValueRefStructure">
+				<xsd:attribute name="ref" type="TypeOfPricingRuleIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Identifier of a TYPE OF PRICING RULE.</xsd:documentation>
 					</xsd:annotation>
 				</xsd:attribute>
 			</xsd:restriction>

@@ -41,11 +41,40 @@ There is also an Oxygen project file:
  
 ## 1.11 Summary of Changes since v1.10 
  
- 
- ### 2019.03.12 NORWAY-100 *FARES* Add ___ReservationType___ to ___Reserving___ usage parameter with values _autoAssigned_, _seatMap_  and _openSeating_.	
+### 2019.03.12 NORWAY-100 *FARES* Support VAT (and other tax)  categories Add ___TypeOfPricingRule__  element 
+  * Also FIX  add missing (!) relationship  ___ruleStepResults \ RuleStep___ on  ___SalesTrnasaction
+  * Also FIX  Allow payments in Price  units other than Money (!) ___ruleStepResults \ RuleStep___ to ___SalesTransaction___
+  * Also fix Type ___Transaction___ \___ AMount(!)___  to be _currencyType_ not _distance_. 
+  * Also add a   NARRATIVE text element on RuleStepResult
+  * Also add ___UnitDimension___ attribute to ___PriceUit___ with values _currency, distance, time,valueToken, other_.
+  * Also revise  ___FarePrice___ element   to add ___AmountWithResultsGroup___ and refactor  ___FarePriceAmount___ groups to be clearer
+   * Also revise ___PriceRuleStepResult___:  add  new attributes ___AdjustmentAmount, ___AdjustmentUnits___,  ___RoundingRef___,  
+   * NB this revises current sense of   ___PriceRuleStepResult___ \ ___Amount___
+   * Also allow nesting of Fare Table column headings and rows
+   ___RoundingStepRef___, and   ___Narrative___ text element.
+  
+  * _Updates to xml schema_:    
+	* netex_farePrice_support.xsd
+	* netex_farePrice_version.xsd
+	* netex_fareTable_support.xsd
+	* netex_fareTable_version.xsd
+	* netex_salesTransaction_version.xsd
+ * _Updates to xml examples_:	
+	* examples\rail\tariffs\Netex_era_distance_ro.xml  	
+	
+### 2019.03.12 EURA-40 *FARES*  Add integrity  constraints for  new elements  
+   * Elements ___Subscribing___, ___TypeOfPaymentMethod___, ___TypeOfFareStructureFactor___, ___TypeOfFareStructureElement___, ___TypeOfPricingRule___.
+  * Also drop some spurious selectors.
+  * Add constraint for ___SupplementToFareProductRef___.
+   * _Updates to xml examples_:	
+	* netex_publication_support.xsd  
+	
+### 2019.03.12 NORWAY-100 *FARES* Add ___ReservationType___ to ___Reserving___ usage parameter with values _autoAssigned_, _seatMap_  and _openSeating_.	
   * _Updates to xml schema_:    
 	* netex_usageParameterBooking_support.xsd
 	* netex_usageParameterBooking_version.xsd
+ * _Updates to xml examples_:	
+	* examples\standards\fxc\uk_fxc_trip_Metrobus_1.xml
 
 ### 2019.03.12 NORWAY-102 *FARES*   Add  new enum values to ___Exchanging___ \  ExchangeableTo.
  * Values _upgradeToSpecifiedFare_, _downgradeToSpecifedFare_, _equivalentProduct_ (alsread have 
@@ -95,8 +124,6 @@ There is also an Oxygen project file:
 	* examples\standards\fxc\uk_fxc_pass_Metrobus_metrorider.xml  
 	* exaamplesstandards\fxc\uk_fxc_addon_HSP_plusbus.xml
 	
-	
-
 ### 2019.03.11 NORWAY-98  *FARES*  NORWAY-98 Add new  value _activation_ to ___UsageTriggerEnumeration___ for ___UsageValidityPeriod___. 
  * Also add  _Deregistration_ value to ___UsageEnd___ enumeration
  * ALso and annototation comments.
@@ -125,7 +152,7 @@ There is also an Oxygen project file:
  * _Updates to xml examples_:
  	* netex_era_toc_uk.xsd
 
-### 2019.03.11 EURA-40 *FARES*  Support Suspension
+### 2019.03.11 EURA-52, EURA40 *FARES*  Support Suspension
  * add _subscription_ enum value to ____UsageValidityPeriodType___. 
  * Add __SubscriptionSuspensionPolicyEnumeration___ attribute to ____UsageValidityPeriod___ with enumeration   values:  
 	* _none_ - Suspension not allowed.
@@ -183,7 +210,7 @@ __
  	* netex_91.1_Rail_RailCard_MultipleProducts.xsd
 
 ### 2019.03.11 EURA-73  *FARES*  Add new  ___StartConstraintType___ attribute enumeration  for ___UsageValidityPeriod___  with enum values  _fixed_, _variable_, _fixedWindow_ 
- * Also EURA-78 Flexible start window: Add new __FixedStartWindow__	attribute to ___UsageValidityPeriod___ with contents
+ * Also EURA-88 Flexible start window: Add new __FixedStartWindow__	attribute to ___UsageValidityPeriod___ with contents
    ___MaximumServicesBefore__. ___FlexiblePeriodBefore___, MaximumServicesAfter___, ___FlexiblePeriodAfter___. 
  * _Updates to xml schema_:     	    
 	* netex_usageParameterTravel_support.xsd

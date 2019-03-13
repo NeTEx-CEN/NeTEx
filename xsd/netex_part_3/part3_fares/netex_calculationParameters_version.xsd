@@ -19,6 +19,9 @@
 				<Date>
 					<Modified>2019-03-10</Modified>EURA-42 Add currency to PricingRule
 				</Date>
+				<Date>
+					<Modified>2019-03-10</Modified>NORMWAY-101 Add new  TypeOfTaxRate element 
+				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the FARE PRICING PARAMETER SET types.</p>
@@ -208,11 +211,11 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="TypeOfValue_VersionStructure">
-				<xsd:group ref="PriceUnitlGroup"/>
+				<xsd:group ref="PriceUnitGroup"/>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:group name="PriceUnitlGroup">
+	<xsd:group name="PriceUnitGroup">
 		<xsd:annotation>
 			<xsd:documentation>Elements for a PRICE UNIT.</xsd:documentation>
 		</xsd:annotation>
@@ -220,6 +223,11 @@ Rail transport, Roads and Road transport
 			<xsd:element name="Precision" type="xsd:integer" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Precision to use for units.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="UnitDimension" type="PriceUnitDimensionEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indicative Dimension of pricing unit. +1.1</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -560,11 +568,18 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>PricingRule method to use.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element ref="TypeOfPricingRuleRef" minOccurs="0"/>
 			<xsd:element name="Factor" type="xsd:decimal" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Pricing factor to use.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="Currency" type="CurrencyType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Currency unit for amount +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="PriceUnitRef" minOccurs="0"/>
 			<xsd:element name="url" type="xsd:anyURI" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>URLor rule. with infor fmethod to use.</xsd:documentation>
@@ -628,11 +643,6 @@ Rail transport, Roads and Road transport
 			<xsd:element name="DiscountAsValue" type="CurrencyAmountType" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Discount amount. i.e. DIfference between full and discounted price.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="Currency" type="CurrencyType" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Currencuy unit for amount</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="CanBeCumulative" type="xsd:boolean" default="true" minOccurs="0">
@@ -791,6 +801,53 @@ Rail transport, Roads and Road transport
 			</xsd:complexContent>
 		</xsd:complexType>
 	</xsd:element>
+	<!-- ==== TYPE OF PRICING RULE. ================================== -->
+	<xsd:element name="TypeOfPricingRule" abstract="false" substitutionGroup="TypeOfValue">
+		<xsd:annotation>
+			<xsd:documentation>Classification of pricing rule. Can be used for VAT categories, etc.  +v1.1</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="TypeOfPricingRule_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="TypeOfValueGroup"/>
+						</xsd:sequence>
+						<xsd:group ref="TypeOfPricingRuleGroup"/>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="TypeOfPricingRuleIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="TypeOfPricingRule_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for TYPE OF PRICING RULE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="TypeOfValue_VersionStructure">
+				<xsd:group ref="TypeOfPricingRuleGroup"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="TypeOfPricingRuleGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a TYPE OF PRICING RULE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="TaxCategory" type="TaxCategoryEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Tax category associated with pricing rule.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
 	<!-- === PRICING SERVICE================================================= -->
 	<xsd:complexType name="pricingServices_RelStructure">
 		<xsd:annotation>

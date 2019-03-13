@@ -43,6 +43,11 @@
 					  Also UK-22 Add  Description to FareProductPrice 
 					    Also UK-22 Add  InfoLinks to PriceableObject
 				</Date>
+				<Date>
+					<Modified>2019-03-02</Modified>UK-19 Fix  To FarePrice amounts to allow price in Price  units other than Money
+						Add  FarePrice AmountWithResultsGroup and refactor  FarePriceAmount groups to be clearer
+					   Also  revise PriceRuleStepResult:  add AdjustmentAmount, AdjustmentUnits .  RoundingRef, RoundingStepRef, and   NARRATIVE text element 
+				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the FARE PRICE   types.</p>
@@ -276,12 +281,11 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>End date for selling product or services at the PRICE.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:group ref="FarePriceAmountGroup"/>
-			<xsd:element name="ruleStepResults" type="priceRuleStepResults_RelStructure" minOccurs="0">
+			<xsd:group ref="FarePriceAmountWithDerivationGroup">
 				<xsd:annotation>
-					<xsd:documentation>Interim amounts for any pricing rules  applied, for example VAT amount  charged. </xsd:documentation>
+					<xsd:documentation>Amount Elements for a FARE PRICE. +v1.1</xsd:documentation>
 				</xsd:annotation>
-			</xsd:element>
+			</xsd:group>
 			<xsd:element name="IsAllowed" type="xsd:boolean" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Whether the PRICE is allowed.</xsd:documentation>
@@ -292,6 +296,19 @@ Rail transport, Roads and Road transport
 			<xsd:element name="Ranking" type="xsd:integer" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Ranking to give this discount relatove to other applicable discounts.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="FarePriceAmountWithDerivationGroup">
+		<xsd:annotation>
+			<xsd:documentation>Amount Elements for a FARE PRICE with derivation steps.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:group ref="FarePriceAmountGroup"/>
+			<xsd:element name="ruleStepResults" type="priceRuleStepResults_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Interim amounts for any pricing rules  applied to derive price , for example VAT amount  charged.  +v1.1</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -311,12 +328,12 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Currency of Price ISO 4217.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element ref="PriceUnitRef" minOccurs="0"/>
 			<xsd:element name="Units" type="xsd:decimal" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Other units for PRICE.</xsd:documentation>
+					<xsd:documentation>Other units for PRICE (If not in a currency).</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element ref="PriceUnitRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:group name="FarePriceCalculationGroup">
@@ -346,7 +363,7 @@ Rail transport, Roads and Road transport
 				<xsd:sequence>
 					<xsd:element name="RuleStepResult" type="PriceRuleStepResultStructure" maxOccurs="unbounded">
 						<xsd:annotation>
-							<xsd:documentation>Record of amount deducted by a price rule calculation, e.g. an additional tax step. If rules are chained there may be multiple steps to record. </xsd:documentation>
+							<xsd:documentation>Record of amount deducted by a price rule calculation, e.g. an additional tax step. If PRICING RULES are chained there may be multiple steps to record.  The record (a) The Inputs to the caolcualtion (b) the  caalculated difference of apply a rule.  NOTE The NETT REult is not shown as it is either the input to the enxt step or the final Amount for teh FARE PRICE </xsd:documentation>
 						</xsd:annotation>
 					</xsd:element>
 				</xsd:sequence>
@@ -361,15 +378,24 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="FarePriceRef" minOccurs="0"/>
 			<xsd:group ref="FarePriceAmountGroup">
 				<xsd:annotation>
-					<xsd:documentation>Amount Elements Step Calculation</xsd:documentation>
+					<xsd:documentation>An amount for a fair price in either  currency. arbitrary units, or both</xsd:documentation>
 				</xsd:annotation>
 			</xsd:group>
-			<xsd:element name="RateUsed" type="xsd:decimal" minOccurs="0">
+			<xsd:group ref="StepCalculationAmountGroup">
 				<xsd:annotation>
-					<xsd:documentation>Discount rate used .</xsd:documentation>
+					<xsd:documentation>Step calculation amounts, ie difference between base and result, +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:group>
+			<xsd:group ref="PriceRuleStepRateGroup">
+				<xsd:annotation>
+					<xsd:documentation>Rules used to  perform step</xsd:documentation>
+				</xsd:annotation>
+			</xsd:group>
+			<xsd:element name="Narrative" type="MultilingualString" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Explanation of calcuation step as text.  +v1.1</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element ref="PricingRuleRef"/>
 		</xsd:sequence>
 		<xsd:attribute name="id" type="RuleStepResultIdType">
 			<xsd:annotation>
@@ -382,6 +408,38 @@ Rail transport, Roads and Road transport
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
+	<xsd:group name="StepCalculationAmountGroup">
+		<xsd:annotation>
+			<xsd:documentation>Step anounts for for FARE STEP RESULT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="RateUsed" type="xsd:decimal" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Discount rate used .</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="AdjustmentAmount" type="CurrencyAmountType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Step calculation amount,  in same currency as STEP RESULT Amount. ( i.e. difference between  Base Amount and result Amount. PRICE) +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="AdjustmentUnits" type="xsd:decimal" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Step calculation Units,  in same  PRICE UNIT as STEP RESULT Amount.  ( i.e. difference between base Units and Result Units. +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="PriceRuleStepRateGroup">
+		<xsd:annotation>
+			<xsd:documentation>Rates for for FARE STEP RESULT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="PricingRuleRef"/>
+			<xsd:element ref="RoundingRef" minOccurs="0"/>
+			<xsd:element ref="RoundingStepRef" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
 	<!-- ======================================================================= -->
 	<!-- ==PRICE GROUP============================================================ -->
 	<xsd:complexType name="compositePrices_RelStructure">
