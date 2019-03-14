@@ -5,6 +5,7 @@
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_serviceCalendar_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_dayType_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_vehicleSeating_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_trainElement_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_part_1/part1_ifopt/netex_ifopt_site_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_part_1/part1_ifopt/netex_ifopt_pointOfInterest_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_part_1/part1_networkDescription/netex_line_support.xsd"/>
@@ -73,7 +74,17 @@
 					<Modified>2019-03-01</Modified>UK-41 Add an additional functional operator to GenericParameterAssignment  to clarify use of groups :  oneOf /  someOf/  allOf
 				</Date>
 				<Date>
-					<Modified>2019-03-09</Modified>UK-41 Add a PassengerSeatRef to 
+					<Modified>2019-03-09</Modified>EURA-54 Add a PassengerSeatRef to 
+				</Date>
+				<Date>
+					<Modified>2019-03-14</Modified>UK-41  Also LimitationSelectionType Add an additional functional operator to GenericParameterAssignment  to clarify use of groups :  oneOf /  someOf/  allOf
+					
+					* Add  new ___FareStructureValidityParametersGroup___ to validity paarmaters with new attributes   ___TypeOfTariffRef___,   ___TypeOfFareStructureFactor___,  ___TypeOfFarFresStructureFactorRef___,   
+					  * Extend  ___FareProduct ValidityParametersGroup___  to validity paramaters  with new attributes   ___TypeOfPriceingRuleRef___,   ___ChargingMethodRef___, ___TypeOfPaymentMethodRef___, ___TypeOfMachineReadability___, ___TypeOfFareTableRef.___  TypeofMachineReadabilityRef.
+					  * Add  new ___SeatingValidityParametersGroup___ with new attributes   ___TrainElementRef___,    ___TrainComponentLabelAssignmentRef___.  
+					 * Also add OperatingPeriod Ref to Temporal  validity Parameters 
+					 * Also Fix change choice of TrainNumber etc to selection, 
+			 
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -232,7 +243,6 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="ControllableElementRef" minOccurs="0"/>
 			<xsd:group ref="FareProductRefGroup" minOccurs="0"/>
 			<xsd:element ref="TariffRef" minOccurs="0"/>
-			<xsd:element ref="TypeOfTariffRef" minOccurs="0"/>
 			<xsd:element ref="FareStructureElementRef" minOccurs="0"/>
 			<xsd:element ref="FareElementInSequenceRef" minOccurs="0"/>
 			<xsd:element ref="DistanceMatrixElementRef" minOccurs="0"/>
@@ -253,6 +263,11 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Operator for Grouping Scope Elements: logical OR, AND, NOT. Default is AND.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="LimitationSetSelectionType" type="SetOperatorEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>where parameter is a group (GROUP of xxx) , operator for distinguishing between whole set and item interpretation of elements which are sets of elements.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element name="limitations" type="usageParameters_RelStructure" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
@@ -271,9 +286,9 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Operator for Grouping Scope Elements: logical OR, AND, NOT. Default is AND.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="ValidityParameterSetOperator" type="SetOperatorEnumeration" minOccurs="0">
+			<xsd:element name="ValidityParameterSetSelectionType" type="SetOperatorEnumeration" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Operator for distinguishing between whole set and item interpretation of elements which are sets of elements (GROUP OF xxx)</xsd:documentation>
+					<xsd:documentation>where parameter is a group (GROUP of xxx) , operator for distinguishing between whole set and item interpretation of elements which are sets of elements.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="temporalValidityParameters" type="temporalValidityParameters_RelStructure" minOccurs="0">
@@ -309,6 +324,7 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="DayTypeRef" minOccurs="0"/>
 			<xsd:element ref="GroupOfTimebandsRef" minOccurs="0"/>
 			<xsd:element ref="OperatingDayRef" minOccurs="0"/>
+			<xsd:element ref="OperatingPeriodRef" minOccurs="0"/>
 			<xsd:element ref="ValidityConditionRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
@@ -345,7 +361,12 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Service validity parameters for ACCESS RIGHT PARAMETER ASSIGNMENT.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:group>
-			<xsd:group ref="ProductValidityParametersGroup"/>
+			<xsd:group ref="SeatingValidityParametersGroup">
+				<xsd:annotation>
+					<xsd:documentation>Seating validity parameters for ACCESS RIGHT PARAMETER ASSIGNMENT. +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:group>
+			<xsd:group ref="FareValidityParametersGroup"/>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:group name="OrganisationValidityParametersGroup">
@@ -423,13 +444,22 @@ Rail transport, Roads and Road transport
 				</xsd:annotation>
 			</xsd:group>
 			<xsd:element ref="TypeOfProductCategoryRef" minOccurs="0"/>
-			<xsd:choice minOccurs="0">
-				<xsd:element ref="ServiceJourneyRef"/>
-				<xsd:element ref="TrainNumberRef"/>
-				<xsd:element ref="GroupOfServicesRef"/>
-			</xsd:choice>
+			<xsd:sequence minOccurs="0">
+				<xsd:element ref="ServiceJourneyRef" minOccurs="0"/>
+				<xsd:element ref="TrainNumberRef" minOccurs="0"/>
+				<xsd:element ref="GroupOfServicesRef" minOccurs="0"/>
+			</xsd:sequence>
 			<xsd:element ref="VehicleTypeRef" minOccurs="0"/>
 			<xsd:element ref="TypeOfServiceRef" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="SeatingValidityParametersGroup">
+		<xsd:annotation>
+			<xsd:documentation>Seating validity parameters for ACCESS RIGHT PARAMETER ASSIGNMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="TrainElementRef" minOccurs="0"/>
+			<xsd:element ref="TrainComponentLabelAssignmentRef" minOccurs="0"/>
 			<xsd:element ref="PassengerSeatRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
@@ -450,20 +480,57 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="FacilitySetRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
-	<xsd:group name="ProductValidityParametersGroup">
+	<xsd:group name="FareValidityParametersGroup">
 		<xsd:annotation>
-			<xsd:documentation>Product distribution related  validity parameters for ACCESS RIGHT PARAMETER ASSIGNMENT.</xsd:documentation>
+			<xsd:documentation>Fare validity parameters for ACCESS RIGHT PARAMETER ASSIGNMENT.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
+			<xsd:group ref="TariffValidityParametersGroup"/>
+			<xsd:group ref="ProductValidityParametersGroup"/>
+			<xsd:group ref="DistributionParametersGroup">
+				<xsd:annotation>
+					<xsd:documentation>Product distribution validity parameters for ACCESS RIGHT PARAMETER ASSIGNMENT. </xsd:documentation>
+				</xsd:annotation>
+			</xsd:group>
+			<xsd:element ref="TypeOfFareTableRef" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="ProductValidityParametersGroup">
+		<xsd:annotation>
+			<xsd:documentation>FARE PRODUCTdefinition validity parameters for ACCESS RIGHT PARAMETER ASSIGNMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="PricingRuleRef" minOccurs="0"/>
+			<xsd:element ref="TypeOfPricingRuleRef" minOccurs="0"/>
 			<xsd:element ref="TypeOfFareProductRef" minOccurs="0"/>
 			<xsd:element ref="TypeOfUsageParameterRef" minOccurs="0"/>
 			<xsd:element ref="TypeOfConcessionRef" minOccurs="0"/>
+			<xsd:element ref="ChargingMomentRef" minOccurs="0"/>
+			<xsd:element ref="TypeOfTravelDocumentRef" minOccurs="0"/>
+			<xsd:element ref="TypeOfMachineReadabilityRef" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="TariffValidityParametersGroup">
+		<xsd:annotation>
+			<xsd:documentation>TARIFFfrelated  validity parameters for ACCESS RIGHT PARAMETER ASSIGNMENT. +v1.1</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="TypeOfFareStructureFactorRef" minOccurs="0"/>
+			<xsd:element ref="TypeOfFareStructureElementRef" minOccurs="0"/>
+			<xsd:element ref="TypeOfTariffRef" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="DistributionParametersGroup">
+		<xsd:annotation>
+			<xsd:documentation>Product distribution validity parameters for ACCESS RIGHT PARAMETER ASSIGNMENT. +v1.1</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
 			<xsd:choice>
 				<xsd:element ref="DistributionChannelRef" minOccurs="0"/>
 				<xsd:element ref="GroupOfDistributionChannelsRef" minOccurs="0"/>
 			</xsd:choice>
 			<xsd:element ref="FulfilmentMethodRef" minOccurs="0"/>
-			<xsd:element ref="TypeOfTravelDocumentRef" minOccurs="0"/>
+			<xsd:element ref="TypeOfPaymentMethodRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ====VALIDITY PARAMETER ASSIGNMENT=================================================== -->

@@ -40,9 +40,34 @@ There is also an Oxygen project file:
 # Change Log
  
 ## 1.11 Summary of Changes since v1.10 
-  
+
+### 2019.03.13 Eura-50  *FARES* Add new ___PurchaseAction___ attribute to  ___PurchaseWindow__    with values: _purchase_,  _reserve_,  _orderWithoutPaying_,  payForPreviousOrder, other_  _
+, _seatMap_  and _openSeating_.	
+  * Also reaname  ______Reserving___  \ ReservationType___ to ___SeatAllocationMethod___ and move ___SeatAllocationMethodEnumeration___ to ___VehicleSeating___ package.
+  * Also add ___ReservationExpiryPeriod___ to ___Reserving___.
+  * _Updates to xml schema_:    
+	* netex_vehicleSeating_support.xsd
+	* netex_usageParameterBooking_support.xsd
+	* netex_usageParameterBooking_version.xsd 
+
+add Private Code to TravelDocument
+    	
+## 2019.03.13  EURA-40 *FARES* Tidy up - Include new elements as fare validity parameters
+  * Add  new ___FareStructureValidityParametersGroup___ to validity paarmaters with new attributes   ___TypeOfTariffRef___,   ___TypeOfFareStructureFactor___,  ___TypeOfFarFresStructureFactorRef___,   
+  * Extend  ___FareProduct ValidityParametersGroup___  to validity paramaters  with new attributes   ___TypeOfPriceingRuleRef___,   ___ChargingMethodRef___, ___TypeOfPaymentMethodRef___, ___TypeOfMachineReadability___, ___TypeOfFareTableRef.___ 
+  * Add  new ___SeatingValidityParametersGroup___ with new attributes   ___TrainElementRef___,    ___TrainComponentLabelAssignmentRef___. 
+  * Also UK-69 Scaleability. allow classification of FareTable with  add  new TypeOfOfFareTable element
+  * Also Rename ___ValidityParameterSetOperator___ ___ValidityParameterSelectionType___
+  * Also UK-41  Also add new ___LimitationSelectionType___ as additional functional operator to GenericParameterAssignment  to clarify use of groups :  oneOf /  someOf/  allOf
+  * Also add integrity constraints for ___TypeOfMachineReadability___
+  * _Updates to xml schema_:    
+	* netex_fareTable_support.xsd
+	* netex_fareTable_version.xsd
+	* netex_validityCondition_support.xsd
+ 	* netex_accessRightParameter_version.xsd
+ 	* netex_publication.xsd
 	
-## 2019.03.13  EURA-40 *FARES*  Support Suscriptions 
+### 2019.03.13  EURA-40 *FARES*  Support Suscriptions 
   * lso add  Charging summary options. PenaltyIfWithoutTicket and AvailableOnSubscription.
 	* netex_conditionSummary_version.xsd 
  

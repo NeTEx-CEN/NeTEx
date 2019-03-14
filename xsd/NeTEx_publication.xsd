@@ -17,9 +17,9 @@
 				<Coverage>Europe</Coverage>
 				<Creator>First Drafted for NeTEx version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.  mailto:schemer@netex.org.uk</Creator>
 				<Date>
-					<Modified>2019-03-12</Modified>Fix: Add integrity  constraints for  new elements  Subscribing, TypeOfPaymentMethod ,  TypeOfFareStructureFactor, TypeOfFareStructureElement, TypeOfPricingRule.
+					<Modified>2019-03-12</Modified>Fix: Add integrity  constraints for  new elements  Subscribing, TypeOfPaymentMethod ,  TypeOfFareStructureFactor, TypeOfFareStructureElement, TypeOfPricingRule, TypeOfFareTable, TypeOfMachineReadability
 					       Also drop some spurious selectors.
-				</Date>								
+				</Date>
 				<Date>
 					<Modified>2019-03-10</Modified>Fix: Add  constraint for  SupplementToFareProductRef .
 				</Date>
@@ -1614,8 +1614,6 @@
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		
-		
 		<!-- =====TypeOfFarePaymentMethod============================== -->
 		<!-- =====TypeOfFarePaymentMethod unique========================== -->
 		<xsd:unique name="TypeOfFarePaymentMethod_UniqueBy_Id_Version">
@@ -1636,9 +1634,7 @@
 			<xsd:selector xpath=".//netex:TypeOfFarePaymentMethod"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
-		</xsd:key>				
-		
-		
+		</xsd:key>
 		<!-- =====Blacklist============================== -->
 		<!-- =====Blacklist unique========================== -->
 		<xsd:unique name="Blacklist_UniqueBy_Id_Version">
@@ -6746,8 +6742,6 @@
 			<xsd:field xpath="@version"/>
 			<xsd:field xpath="@order"/>
 		</xsd:key>
-		
-		
 		<!-- =====TypeOfFareStructureElement============================== -->
 		<!-- =====TypeOfFareStructureElement unique========================== -->
 		<xsd:unique name="TypeOfFareStructureElement_UniqueBy_Id_Version">
@@ -6768,9 +6762,7 @@
 			<xsd:selector xpath=".//netex:TypeOfFareStructureElement"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
-		</xsd:key>				
-		
-		
+		</xsd:key>
 		<!-- =====AccessRightInProduct============================== -->
 		<!-- =====AccessRightInProduct unique========================== -->
 		<xsd:unique name="AccessRightInProduct_UniqueBy_Id_Version_Order">
@@ -6945,9 +6937,7 @@
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		
-		
-<!-- =====TypeOfPricingRule============================== -->
+		<!-- =====TypeOfPricingRule============================== -->
 		<!-- =====TypeOfPricingRule unique========================== -->
 		<xsd:unique name="TypeOfPricingRule_UniqueBy_Id_Version">
 			<xsd:annotation>
@@ -6967,9 +6957,7 @@
 			<xsd:selector xpath=".//netex:TypeOfPricingRule"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
-		</xsd:key>		
-		
-		
+		</xsd:key>
 		<!-- =====FarePrice============================== -->
 		<!-- =====FarePrice Key ========================== -->
 		<xsd:keyref name="FarePrice_KeyRef" refer="netex:FarePrice_AnyVersionedKey">
@@ -7341,6 +7329,28 @@
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
+		<!-- ===== FareTable============================== -->
+		<!-- =====TypeOfFareTable============================== -->
+		<!-- =====TypeOfFareTable unique========================== -->
+		<xsd:unique name="TypeOfFareTable_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [TypeOfFareTable Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:TypeOfFareTable"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====TypeOfFareTable Key ========================== -->
+		<xsd:keyref name="TypeOfFareTable_KeyRef" refer="netex:TypeOfFareTable_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:TypeOfFareTableRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="TypeOfFareTable_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:TypeOfFareTable"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
 		<!-- =====Cell============================== -->
 		<!-- =====Cell unique========================== -->
 		<xsd:unique name="Cell_UniqueBy_Id_Version_Order">
@@ -7571,7 +7581,7 @@
 			<xsd:field xpath="@version"/>
 		</xsd:unique>
 		<xsd:keyref name="PenaltyPolicy_KeyRef" refer="netex:PenaltyPolicy_AnyVersionedKey">
-			<xsd:selector xpath=" .//netex:PenaltyPolicyRef "  />
+			<xsd:selector xpath=" .//netex:PenaltyPolicyRef "/>
 			<xsd:field xpath="@ref"/>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
@@ -7580,8 +7590,7 @@
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		
-<!-- === Subscribing Key ========================== -->
+		<!-- === Subscribing Key ========================== -->
 		<!-- =====Subscribing unique========================== -->
 		<xsd:unique name="Subscribing">
 			<xsd:annotation>
@@ -7592,7 +7601,7 @@
 			<xsd:field xpath="@version"/>
 		</xsd:unique>
 		<xsd:keyref name="Subscribing_KeyRef" refer="netex:Subscribing_AnyVersionedKey">
-			<xsd:selector xpath=" .//netex:SubscribingRef"  />
+			<xsd:selector xpath=" .//netex:SubscribingRef"/>
 			<xsd:field xpath="@ref"/>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
@@ -7600,10 +7609,7 @@
 			<xsd:selector xpath=".//netex:Subscribing"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
-		</xsd:key>		
-		
-		
-		
+		</xsd:key>
 		<!-- ===== CommercialProfile Key ========================== -->
 		<!-- =====CommercialProfile unique========================== -->
 		<xsd:unique name="CommercialProfile">
@@ -8203,7 +8209,6 @@
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		
 		<!-- =====TypeOfFareStructureFactor============================== -->
 		<!-- =====TypeOfFareStructureFactor unique========================== -->
 		<xsd:unique name="TypeOfFareStructureFactor_UniqueBy_Id_Version">
@@ -8224,8 +8229,7 @@
 			<xsd:selector xpath=".//netex:TypeOfFareStructureFactor"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
-		</xsd:key>		
-		
+		</xsd:key>
 		<!-- =====TimeStructureFactor============================== -->
 		<!-- =====TimeStructureFactor unique========================== -->
 		<xsd:unique name="TimeStructureFactor_UniqueBy_Id_Version">
@@ -8439,6 +8443,27 @@
 		</xsd:keyref>
 		<xsd:key name="TypeOfTravelDocument_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:TypeOfTravelDocument"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====TypeOfMachineReadability============================== -->
+		<!-- =====TypeOfMachineReadability unique========================== -->
+		<xsd:unique name="TypeOfMachineReadability_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [TypeOfMachineReadability Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:TypeOfMachineReadability"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====TypeOfMachineReadability Key ========================== -->
+		<xsd:keyref name="TypeOfMachineReadability_KeyRef" refer="netex:TypeOfMachineReadability_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:TypeOfMachineReadabilityRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="TypeOfMachineReadability_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:TypeOfMachineReadability"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>

@@ -2,6 +2,7 @@
 <!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
 <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_usageParameterBooking_version">
 	<xsd:include schemaLocation="netex_usageParameterBooking_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_vehicleSeating_support.xsd"/>
 	<xsd:include schemaLocation="netex_timeStructureFactor_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_travelRights_version.xsd"/>
 	<xsd:include schemaLocation="netex_usageParameter_version.xsd"/>
@@ -26,6 +27,10 @@
 				</Date>
 				<Date>
 					<Modified>2019-03-12</Modified>Norway 100 Add Reservation type with valies autoAssigned, seatMap  and openSeating.
+				</Date>
+				<Date>
+					<Modified>2019-03-14</Modified>Eura-50  *FARES* Add new PurchaseAction attribute to  PurchaseWindow    with values purchase,  reserve,  orderWithoutPaying,  payForPreviousOrder, other   
+			      * Also add ReservationExpiryPeriod
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -115,6 +120,11 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Elements for PURCHASE WINDOW Group.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
+			<xsd:element name="PurchaseAction" type="PurchaseActionEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Action governed by Purchase Wondow. default is purchase. +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element name="PurchaseWhen" type="PurchaseWhenEnumeration" default="advanceAndDayOfTravel" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>When ticket can be purchased.</xsd:documentation>
@@ -137,7 +147,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element name="MaximumPeriodBeforeDeparture" type="xsd:duration" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Maximum period before departure that purchase canbe made.</xsd:documentation>
+					<xsd:documentation>Maximum period before departure that purchase can be made.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="MaximumPeriodIntervalRef" type="TimeIntervalRefStructure" minOccurs="0">
@@ -147,7 +157,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element name="PurchaseMoment" type="PurchaseMomentListOfEnumerations" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Permitted  moments of purchase </xsd:documentation>
+					<xsd:documentation>Permitted  moments of purchase. +v1.1 </xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -225,6 +235,16 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Booking Arrangements for Reservations.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="SeatAllocationMethod" type="SeatAllocationMethodEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Method Seat  Reservation that is used. +V1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ReservationExpiryPeriod" type="xsd:duration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Period after which reservation without  payment  will expire if not  paid for.  +V1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:group name="ReservingCalculationGroup">
@@ -254,12 +274,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element name="IsFeeRefundable" type="xsd:boolean" default="false" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Whether reservation fees is refundable.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="ReservationType" type="ReservationTypeEnumeration" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Type of Reservation that is allowed. +V1.1</xsd:documentation>
+					<xsd:documentation>Whether reservation fees is refundable. +v1.1</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
