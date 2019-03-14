@@ -20,7 +20,11 @@
 				</Date>
 				<Date>
 					<Modified>2019-03-10</Modified>EURA-53 Add attribute to  CappingRule  to state if  fixed / flexible and DayType to specify  startOnlyOn DayType
-				</Date>		 
+				</Date>
+				<Date>
+					<Modified>2019-03-13</Modified>Simplify use of Fares: Add new  Atrribute  rPreeassignedFareProductType to      PreassignedFareProduct with values singleTip,  timeTimitedSingleTrip, dayReturnTrip, periodReturnTrip, multiStepTrip, dayPass,  periodPass, other.
+					Simplify Add new attribute   AmountOfPriceUnitType to     AmountOfPriceUnitFareProduct with values  tripCarnet, passCarnet, unitCoupons, other., 
+				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the FARE PRODUCT types.</p>
@@ -37,7 +41,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
-				 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -387,6 +391,17 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
+	<xsd:simpleType name="AmountOfPriceUnitProductTypeEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for  PREASSIGNED FARE PRODUCT enumeration +v1.1</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="tripCarnet"/>
+			<xsd:enumeration value="passCarnet"/>
+			<xsd:enumeration value="unitCoupon"/>
+			<xsd:enumeration value="other"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<!-- ====PREASSIGNED FARE PRODUCT==================================================== -->
 	<xsd:simpleType name="PreassignedFareProductIdType">
 		<xsd:annotation>
@@ -413,6 +428,22 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
+	<xsd:simpleType name="PreassignedFareProductTypeEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for  PREASSIGNED FARE PRODUCT enumeration +v1.1</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="singleTrip"/>
+			<xsd:enumeration value="timeLimitedSingleTrip"/>
+			<xsd:enumeration value="dayReturnTrip"/>
+			<xsd:enumeration value="periodReturnTrip"/>
+			<xsd:enumeration value="multistepTrip"/>
+			<xsd:enumeration value="dayPass"/>
+			<xsd:enumeration value="periodPass"/>
+			<xsd:enumeration value="supplement"/>
+			<xsd:enumeration value="other"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<!-- ====SUPPLEMENT PRODUCT======================================== -->
 	<xsd:simpleType name="SupplementProductIdType">
 		<xsd:annotation>
@@ -493,7 +524,7 @@ Rail transport, Roads and Road transport
 	</xsd:complexType>
 	<xsd:simpleType name="CappingPeriodStartConstraintTypeEnumeration">
 		<xsd:annotation>
-			<xsd:documentation>Allowed values for CAPPING RULE Capping Period Start constraint.</xsd:documentation>
+			<xsd:documentation>Allowed values for CAPPING RULE Capping Period Start constraint. +v1.1</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:normalizedString">
 			<xsd:enumeration value="variable">
@@ -537,12 +568,12 @@ Rail transport, Roads and Road transport
 	<!-- =====TYPE OF LINE======================================================= -->
 	<xsd:element name="ChargingMomentRef" type="ChargingMomentRefStructure" substitutionGroup="TypeOfValueRef">
 		<xsd:annotation>
-			<xsd:documentation>Reference to a CHARGING MOMENT.</xsd:documentation>
+			<xsd:documentation>Reference to a CHARGING MOMENT. +v1.1</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="ChargingMomentRefStructure" abstract="false">
 		<xsd:annotation>
-			<xsd:documentation>Type for a CHARGING MOMENT.</xsd:documentation>
+			<xsd:documentation>Type for a CHARGING MOMENT. +v1.1</xsd:documentation>
 		</xsd:annotation>
 		<xsd:simpleContent>
 			<xsd:restriction base="TypeOfValueRefStructure">
@@ -556,7 +587,7 @@ Rail transport, Roads and Road transport
 	</xsd:complexType>
 	<xsd:simpleType name="ChargingMomentIdType">
 		<xsd:annotation>
-			<xsd:documentation>Type for identifier of a CHARGING MOMENT.</xsd:documentation>
+			<xsd:documentation>Type for identifier of a CHARGING MOMENT. +v1.1</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="TypeOfValueIdType"/>
 	</xsd:simpleType>

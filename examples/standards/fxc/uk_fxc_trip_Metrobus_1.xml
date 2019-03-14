@@ -122,6 +122,7 @@ Concessionary passes are valid throughout from 0930-2300 Mon-Fri, and anytime at
 					</prerequisites>
 					<!--==== Pricing Parameters ====-->
 					<PricingParameterSet version="1.0" id="mb:Metrobus">
+					
 						<pricingRules>
 							<DiscountingRule version="1.0" id="mb:half_price">
 								<Name>Discount for child fares></Name>
@@ -132,6 +133,12 @@ Concessionary passes are valid throughout from 0930-2300 Mon-Fri, and anytime at
 								<DiscountAsPercentage>100</DiscountAsPercentage>
 							</DiscountingRule>
 						</pricingRules>
+			 <roundings>
+						<Rounding version="1.0" id="mb:split">
+								<Name>Split roundig to nearest </Name> 
+								<RoundingMethod>split</RoundingMethod>
+							</Rounding>
+				</roundings>
 					</PricingParameterSet>
 					<!--==== Fare Structure ==== -->
 					<tariffs>
@@ -1717,6 +1724,17 @@ This Shows  sample Purchases
 											<SalesTransactionRef version="any" ref="mbt:Anon001@trans002@purchase_single"/>
 											<GeographicalIntervalPriceRef version="1.0" ref="mb:price_band_A@child"/>
 											<Amount>0.80</Amount>
+											
+											<ruleStepResults>
+												<RuleStepResult id="mbt:Anon001@trans002@purchase_single" order="1">
+													<GeographicalIntervalPriceRef version="1.0" ref="mb:price_band_A@adult"/>
+														<Amount>0.80</Amount>
+																<AdjustmentAmount>0.80</AdjustmentAmount>
+														<DiscountingRuleRef version="1.0" ref="mb:half_price"/>
+														<RoundingRef version="1.0" ref="mb:split"/> 
+													<Narrative>Child is half adult price</Narrative>
+												</RuleStepResult>
+											</ruleStepResults>
 											<StartOfValidity>2017-07-08T01:07:00</StartOfValidity>
 											<specificParameterAssignments>
 												<SpecificParameterAssignment version="any" order="1" id="mbt:Anon001@trans002@purchase_single">

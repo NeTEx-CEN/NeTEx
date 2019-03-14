@@ -158,7 +158,7 @@ Use separate Composite frames to group
 			</FrameDefaults>
 			<prerequisites>
 				<CompositeFrameRef version="1.0" ref="atc:ATOC@UK_Rail"/>
-				<CompositeFrameRef version="eura:v1.0" ref="fxc:eura:EURA@Generic"/>
+				<CompositeFrameRef version="eura:v1.0" ref="eura:EURA@Generic"/>
 				<CompositeFrameRef version="fxc:v1.0" ref="fxc:DfT@Generic"/>
 			</prerequisites>
 			<!--  === CONTENTS ==== -->
@@ -248,7 +248,7 @@ You must buy 2 tickets at the same time.					</Description>
 							<!-- ==== FARE STRUCTURE ELEMENTS ===== -->
 							<fareStructureElements>
 								<!-- Pass related -->
-								<FareStructureElement id="jsp:Tariff@PlusBus@modes" version="1.0">
+								<FareStructureElement id="jsp:Tariff@PlusBus@Day@modes" version="1.0">
 									<Name>Available modes</Name>
 									<GenericParameterAssignment order="1" id="sp:Tariff@PlusBus@modes@bus" version="1.0">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
@@ -318,7 +318,7 @@ http://www.plusbus.info/sites/default/files/Railcard%20discount%20restrictions%2
 											<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access_when"/>
 											<LimitationGroupingType>AND</LimitationGroupingType>
 											<limitations>
-												<UsageValidityPeriod version="1.0" id="jsp:JSP@Products@Pass@PlusBus@Day@access@validity">
+												<UsageValidityPeriod version="1.0" id="jsp:JSP@Pass@PlusBus@Day@access@validity">
 													<UsageTrigger>endOutboundRide</UsageTrigger>
 													<UsageEnd>endOfFareDay</UsageEnd>
 													<StandardDuration>P1D</StandardDuration>
@@ -384,6 +384,12 @@ Disabled Persons discounts are valid during the morning peak hours.
 										</GenericParameterAssignment>
 									</validityParameterAssignments>
 								</FareStructureElement>
+								<FareStructureElement version="1.0" id="jsp:Tariff@PlusBus@Day@durations">
+									<Name>Plusbus pass  access rights - day pass available  intervals</Name>
+									<timeIntervals>
+										<TimeIntervalRef ref="jsp:Tariff@PlusBus@Day@1day"/>
+									</timeIntervals>
+								</FareStructureElement>
 								<FareStructureElement version="1.0" id="jsp:Tariff@PlusBus@Day@eligibility">
 									<Name>eligible user types</Name>
 									<GenericParameterAssignment order="1" id="jsp:Tariff@PlusBus@Day@eligibility" version="1.0">
@@ -397,13 +403,6 @@ Disabled Persons discounts are valid during the morning peak hours.
 										</limitations>
 									</GenericParameterAssignment>
 								</FareStructureElement>
-								<FareStructureElement version="1.0" id="jsp:Tariff@PlusBus@Day@durations">
-									<Name>Plusbus pass  access rights - day pass available  intervals</Name>
-									<timeIntervals>
-										<TimeIntervalRef ref="jsp:Tariff@PlusBus@Day@1day"/>
-									</timeIntervals>
-								</FareStructureElement>
-								<!-- Sales related -->
 								<FareStructureElement id="jsp:Tariff@PlusBus@Day@prerequisites" version="1.0">
 									<Name>Prerequisites for Plusbus day ticket</Name>
 									<GenericParameterAssignment version="1.0" id="jsp:Tariff@PlusBus@Day@prerequisites" order="1">
@@ -423,7 +422,7 @@ Disabled Persons discounts are valid during the morning peak hours.
 												<PeriodConstraint>sameDayOfReturn</PeriodConstraint>
 												<TariffZoneConstraint>sameAsOriginOrDestination</TariffZoneConstraint>
 											</EntitlementRequired>
-											<EntitlementRequired id="jsp:Tariff@PlusBus@Day@prequisites@period_pass" version="1.0">
+											<EntitlementRequired id="jsp:Tariff@PlusBus@Day@prequisites@Period_pass" version="1.0">
 												<Name>Must have a rai sigle l ticket  </Name>
 												<PreassignedFareProductRef version="1.0" ref="atc:Rail@Period_pass"/>
 												<PeriodConstraint>withinSamePeriod</PeriodConstraint>
@@ -460,7 +459,7 @@ Disabled Persons discounts are valid during the morning peak hours.
 							</timeIntervals>
 							<!-- ==== FARE STRUCTURE ELEMENTS ===== -->
 							<fareStructureElements>
-								<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@modes"/>
+								<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@Day@modes"/>
 								<FareStructureElement version="1.0" id="jsp:Tariff@PlusBus@Season@durations">
 									<Name>Plusbus pass  access rights - season pass</Name>
 									<timeIntervals>
@@ -473,7 +472,7 @@ Disabled Persons discounts are valid during the morning peak hours.
 								<FareStructureElement version="1.0" id="jsp:Tariff@PlusBus@Season@access">
 									<Name>Plusbus pass  access rights - season pass</Name>
 									<validityParameterAssignments>
-										<GenericParameterAssignment version="1.0" id="jsp:JSP@Products@Pass@PlusBus@1zone@season" order="1">
+										<GenericParameterAssignment version="1.0" id="jsp:JSP@Pass@PlusBus@1zone@season" order="1">
 											<IsAllowed>true</IsAllowed>
 											<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 											<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
@@ -481,7 +480,7 @@ Disabled Persons discounts are valid during the morning peak hours.
 												<NetworkRef ref="jsp:PlusBus@Season@zones" version="any"/>
 											</validityParameters>
 											<includes>
-												<GenericParameterAssignment version="1.0" id="jsp:JSP@Products@Pass@PlusBus@1zone@season@exclusions" order="1">
+												<GenericParameterAssignment version="1.0" id="jsp:JSP@Pass@PlusBus@1zone@season@exclusions" order="1">
 													<IsAllowed>false</IsAllowed>
 													<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:cannot_access"/>
 													<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
@@ -491,11 +490,11 @@ Disabled Persons discounts are valid during the morning peak hours.
 												</GenericParameterAssignment>
 											</includes>
 										</GenericParameterAssignment>
-										<GenericParameterAssignment version="1.0" id="jsp:JSP@Products@Pass@PlusBus@1zone@season@validity" order="1">
+										<GenericParameterAssignment version="1.0" id="jsp:JSP@Pass@PlusBus@1zone@season@validity" order="1">
 											<Name>Validity Pass any Plusbus zone</Name>
 											<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access_when"/>
 											<limitations>
-												<UsageValidityPeriod version="1.0" id="jsp:JSP@Products@Pass@PlusBus@1zone@season@validity">
+												<UsageValidityPeriod version="1.0" id="jsp:JSP@Pass@PlusBus@1zone@season@validity">
 													<Name>Validity Pass any Plusbus zone</Name>
 													<UsageTrigger>specifiedStartDate</UsageTrigger>
 													<UsageEnd>productExpiry</UsageEnd>
@@ -505,6 +504,7 @@ Disabled Persons discounts are valid during the morning peak hours.
 										</GenericParameterAssignment>
 									</validityParameterAssignments>
 								</FareStructureElement>
+								<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@Day@eligibility"/>
 								<FareStructureElement version="1.0" id="jsp:Tariff@PlusBus@Season@prerequisites">
 									<Name>Prerequisites for Plusbus season ticket</Name>
 									<GenericParameterAssignment version="1.0" id="jsp:Tariff@PlusBus@Season@prerequisites" order="1">
@@ -512,7 +512,7 @@ Disabled Persons discounts are valid during the morning peak hours.
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:prerequisites"/>
 										<LimitationGroupingType>AND</LimitationGroupingType>
 										<limitations>
-											<EntitlementRequired id="jsp:Tariff@PlusBus@Season@prequisites@period_pass" version="1.0">
+											<EntitlementRequired id="jsp:Tariff@PlusBus@Season@prequisites@Period_pass" version="1.0">
 												<Name>Must have a rail season pass</Name>
 												<PreassignedFareProductRef version="1.0" ref="atc:Rail@Period_pass"/>
 												<PeriodConstraint>withinSamePeriod</PeriodConstraint>
@@ -526,7 +526,7 @@ Disabled Persons discounts are valid during the morning peak hours.
 					</tariffs>
 					<!--==== Fare Products ==== -->
 					<fareProducts>
-						<SupplementProduct version="1.0" id="jsp:JSP@Products@Pass@PlusBus@1day">
+						<SupplementProduct version="1.0" id="jsp:JSP@Pass@PlusBus@1day">
 							<Name>Plusbus Day Pass</Name>
 							<Description>
 PlusBus gives you unlimited* bus and tram travel (on participating operators services) around the whole urban area of the rail-served town or city. There are no peak period restrictions, so you can hop-on and hop-off buses and trams as much as you like all day. 
@@ -586,7 +586,7 @@ Buy your tickets online from most rail websites.</Description>
 							</ConditionSummary>
 							<OperatorRef ref="jsp:JSP" version="1.0"/>
 							<validityParameterAssignments>
-								<GenericParameterAssignment order="1" id="jsp:JSP@Products@Pass@PlusBus@1day@railcard" version="1.0">
+								<GenericParameterAssignment order="1" id="jsp:JSP@Pass@PlusBus@1day@railcard" version="1.0">
 									<Name>PlusBusRailcard discount</Name>
 									<Description>Discounts:
 Under 16 years old? You pay half our adult day ticket prices.
@@ -610,7 +610,7 @@ Two Together Railcard (you must buy 2 tickets together)</Description>
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:eligible"/>
 									<GroupOfSalesOfferPackagesRef ref="atc:ATOC@Products@Discount@Rail_Card-GSOP@pass" versionRef="01">EXTERNAL List of railcards for which applicable</GroupOfSalesOfferPackagesRef>
 								</GenericParameterAssignment>
-								<GenericParameterAssignment order="1" id="jsp:JSP@Products@Pass@PlusBus@1day@group" version="1.0">
+								<GenericParameterAssignment order="1" id="jsp:JSP@Pass@PlusBus@1day@group" version="1.0">
 									<Name>PlusBus Group ticket discount</Name>
 									<Description>Do I get a discount off PLUSBUS with my Railcard?
 Yes, with a valid National Railcard you will get 1/3 off the adult price of a PlusBusday ticket (Railcard discounts are not available with any season ticket, as the price of seasons is already heavily discounted).
@@ -632,7 +632,7 @@ Two Together Railcard (you must buy 2 tickets together)</Description>
 										<GroupTicketRef ref="atc:ATOC@Tariff@Trip@Group_Saver_3-to-9_people@trip" versionRef="any">EXTERNAL Rail product </GroupTicketRef>
 									</limitations>
 								</GenericParameterAssignment>
-								<GenericParameterAssignment order="1" id="jsp:JSP@Products@Pass@PlusBus@1day@purchasing@bundled" version="1.0">
+								<GenericParameterAssignment order="1" id="jsp:JSP@Pass@PlusBus@1day@purchasing@bundled" version="1.0">
 									<Description>
 1. Can I buy PLUSBUS online?
 Yes, PLUSBUS day tickets can be purchased at the same time as train tickets online from most rail ticket retailing websites.
@@ -652,7 +652,7 @@ You must show the actual PLUSBUS ticket to the bus driver (or tram conductor) to
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_purchase_when"/>
 									<LimitationGroupingType>OR</LimitationGroupingType>
 									<limitations>
-										<PurchaseWindow id="jsp:JSP@Products@Pass@PlusBus@1day@purchasing@purchase_window" version="1.0">
+										<PurchaseWindow id="jsp:JSP@Pass@PlusBus@1day@purchasing@purchase_window" version="1.0">
 											<PurchaseWhen>advanceOnly</PurchaseWhen>
 										</PurchaseWindow>
 									</limitations>
@@ -660,8 +660,8 @@ You must show the actual PLUSBUS ticket to the bus driver (or tram conductor) to
 										<DistributionChannelRef version="fxc:v1.0" ref="fxc:online"/>
 									</validityParameters>
 								</GenericParameterAssignment>
-								<GenericParameterAssignment id="jsp:JSP@Products@Pass@PlusBus@1day@after_sales" version="1.0" order="1">
-									<Name>COmmercial conditions</Name>
+								<GenericParameterAssignment id="jsp:JSP@Pass@PlusBus@1day@after_sales" version="1.0" order="1">
+									<Name>Commercial conditions</Name>
 									<Description>14. Are refunds available for PLUSBUS tickets?
 PLUSBUS is a National Rail ticket, whose standard terms and conditions apply (including for ticket refunds). If you have bought a PLUSBUS ticket in advance from a station (or online) and do not want to use it, then you may claim a refund from the ticket office (or ticket retailer) that took original payment, but you must do this within 28 days of the travel date shown on the ticket. You must also return the ticket. Some ticket offices (and agents) may charge an administration fee of up to £10 to process refunds.
 
@@ -677,11 +677,11 @@ http://www.plusbus.info/faq/14-are-refunds-available-ltigtplusbusltigt-tickets
 								</GenericParameterAssignment>
 							</validityParameterAssignments>
 							<validableElements>
-								<ValidableElement version="1.0" id="jsp:JSP@Products@Pass@PlusBus@zone_pass@1day">
+								<ValidableElement version="1.0" id="jsp:JSP@Pass@PlusBus@zone_pass@1day">
 									<Name>Ride in Zone for1 day</Name>
 									<fareStructureElements>
 										<!-- PlusBus rules -->
-										<FareStructureElementRef ref="jsp:Tariff@PlusBus@modes" version="1.0"/>
+										<FareStructureElementRef ref="jsp:Tariff@PlusBus@Day@modes" version="1.0"/>
 										<!-- Day Pass related -->
 										<FareStructureElementRef ref="jsp:Tariff@PlusBus@Day@access" version="1.0"/>
 										<FareStructureElementRef ref="jsp:Tariff@PlusBus@Day@durations"/>
@@ -691,19 +691,19 @@ http://www.plusbus.info/faq/14-are-refunds-available-ltigtplusbusltigt-tickets
 								</ValidableElement>
 							</validableElements>
 							<accessRightsInProduct>
-								<AccessRightInProduct order="1" id="jsp:JSP@Products@Pass@PlusBus@1day@access" version="1.0">
+								<AccessRightInProduct order="1" id="jsp:JSP@Pass@PlusBus@1day@access" version="1.0">
 									<Name>Plus bus</Name>
-									<ValidableElementRef ref="jsp:JSP@Products@Pass@PlusBus@zone_pass@1day" version="1.0"/>
+									<ValidableElementRef ref="jsp:JSP@Pass@PlusBus@zone_pass@1day" version="1.0"/>
 								</AccessRightInProduct>
 							</accessRightsInProduct>
 							<supplementTo>
 								<PreassignedFareProductRef version="1.0" ref="atc:Rail@Single_trip"/>
 								<PreassignedFareProductRef version="1.0" ref="atc:Rail@Return_trip"/>
 								<PreassignedFareProductRef version="1.0" ref="atc:Rail@Day_pass"/>
-								<PreassignedFareProductRef version="1.0" ref="atc:Rail@Period_Pass"/>
+								<PreassignedFareProductRef version="1.0" ref="atc:Rail@Period_pass"/>
 							</supplementTo>
 						</SupplementProduct>
-						<SupplementProduct version="1.0" id="jsp:JSP@Products@Pass@PlusBus@Season">
+						<SupplementProduct version="1.0" id="jsp:JSP@Pass@PlusBus@Season">
 							<Name>Plusbus Season Pass</Name>
 							<Description>For commuters, We've season tickets for 7-days, a month, a quarter year and annual (to match your rail season validity).
 
@@ -727,7 +727,7 @@ The validity of your PlusBus season ticket does not have to match your rail seas
 							</ConditionSummary>
 							<OperatorRef ref="jsp:JSP" version="1.0"/>
 							<validityParameterAssignments>
-								<GenericParameterAssignment order="1" id="jsp:JSP@Products@Pass@PlusBus@Season@eligibility" version="1.0">
+								<GenericParameterAssignment id="jsp:JSP@Pass@PlusBus@Season@eligibility@adult_only" version="1.0" order="1">
 									<Description>Adults only Can buy season ticket</Description>
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:eligible"/>
 									<LimitationGroupingType>OR</LimitationGroupingType>
@@ -735,24 +735,27 @@ The validity of your PlusBus season ticket does not have to match your rail seas
 										<UserProfileRef version="fxc:v1.0" ref="fxc:adult"/>
 									</limitations>
 								</GenericParameterAssignment>
-								<GenericParameterAssignment order="1" id="jsp:JSP@Products@Pass@PlusBus@Season@railcard" version="1.0">
+								<GenericParameterAssignment id="jsp:JSP@Pass@PlusBus@Season@railcard" version="1.0" order="1">
 									<Description>Do I get a discount off PLUSBUS with my Railcard?
  (Railcard discounts are not available with any season ticket, as the price of seasons is already heavily discounted). 
 </Description>
 									<IsAllowed>false</IsAllowed>
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_purchase"/>
-									<GroupOfSalesOfferPackagesRef ref="atc:ATOC@Products@Discount@Rail_Card-GSOP@pass" versionRef="01">EXTERNAL eligible rail prducts</GroupOfSalesOfferPackagesRef>
+									<GroupOfSalesOfferPackagesRef versionRef="01" ref="atc:ATOC@Products@Discount@Rail_Card-GSOP@pass">EXTERNAL eligible rail prducts</GroupOfSalesOfferPackagesRef>
+									<validityParameters>
+										<TypeOfProductCategoryRef versionRef="EXTERNAL" ref="atc:Railcard"/>
+									</validityParameters>
 								</GenericParameterAssignment>
-								<GenericParameterAssignment id="jsp:Season_Pass@usage" version="1.0" order="1">
+								<GenericParameterAssignment id="jsp:JSP@Pass@PlusBus@Season@conditions_of_use" version="1.0" order="1">
 									<Name>Usage conditions</Name>
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:condition_of_use"/>
 									<LimitationGroupingType>AND</LimitationGroupingType>
 									<limitations>
-										<FrequencyOfUseRef versionRef="any" ref="atc:ATOC@Tariff@Pass@Season@unlimited_use">EXTERNAL</FrequencyOfUseRef>
-										<TransferabilityRef versionRef="any" ref="atc:ATOC@Tariff@General@transferring@individual@not_transferable">EXTERNAL</TransferabilityRef>
+										<FrequencyOfUseRef versionRef="EXTERNAL" ref="atc:ATOC@Tariff@Pass@Season@unlimited_use">EXTERNAL</FrequencyOfUseRef>
+										<TransferabilityRef versionRef="EXTERNAL" ref="atc:ATOC@Tariff@General@transferring@individual@not_transferable">EXTERNAL</TransferabilityRef>
 									</limitations>
 								</GenericParameterAssignment>
-								<GenericParameterAssignment id="jsp:Season_Pass@after_sales" version="1.0" order="1">
+								<GenericParameterAssignment id="JSP@Pass@PlusBus@Season@after_sales" version="1.0" order="1">
 									<Name>COmmercial conditions</Name>
 									<Description>14. Are refunds available for PLUSBUS tickets?
 PLUSBUS is a National Rail ticket, whose standard terms and conditions apply (including for ticket refunds). If you have bought a PLUSBUS ticket in advance from a station (or online) and do not want to use it, then you may claim a refund from the ticket office (or ticket retailer) that took original payment, but you must do this within 28 days of the travel date shown on the ticket. You must also return the ticket. Some ticket offices (and agents) may charge an administration fee of up to £10 to process refunds.
@@ -766,33 +769,32 @@ http://www.plusbus.info/faq/14-are-refunds-available-ltigtplusbusltigt-tickets
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:condition_of_sale"/>
 									<LimitationGroupingType>AND</LimitationGroupingType>
 									<limitations>
-										<RefundingRef versionRef="any" ref="atc:ATOC@Tariff@Pass@Season@can_refund">EXTERNAL use rail rules</RefundingRef>
-										<ReplacingRef versionRef="any" ref="atc:ATOC@Tariff@Pass@Season@can_replace">EXTERNAL use rail rules</ReplacingRef>
+										<RefundingRef versionRef="EXTERNAL" ref="atc:ATOC@Tariff@Pass@Season@can_refund">EXTERNAL use rail rules</RefundingRef>
+										<ReplacingRef versionRef="EXTERNAL" ref="atc:ATOC@Tariff@Pass@Season@can_replace">EXTERNAL use rail rules</ReplacingRef>
 									</limitations>
 								</GenericParameterAssignment>
 							</validityParameterAssignments>
 							<validableElements>
-								<ValidableElement version="1.0" id="jsp:JSP@Products@Pass@PlusBus@zone_pass@season">
+								<ValidableElement version="1.0" id="jsp:JSP@Pass@PlusBus@zone_pass@season">
 									<Name>Ride in Zone</Name>
 									<fareStructureElements>
 										<!-- PlusBus rules -->
-										<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@modes"/>
-										<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@Season@access"/>
+										<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@Day@modes"/>
 										<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@Season@durations"/>
-										<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@Day@eligibility"/>
-										<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@Season@eligibility"/>
+										<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@Season@access"/>
+										<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@Day@eligibility"/> 
 										<!--  Season Pass related -->
 										<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@Season@prerequisites">Must own season pass</FareStructureElementRef>
 									</fareStructureElements>
 								</ValidableElement>
 							</validableElements>
 							<accessRightsInProduct>
-								<AccessRightInProduct order="1" id="jsp:JSP@Products@Pass@PlusBus@Season@access" version="1.0">
+								<AccessRightInProduct order="1" id="jsp:JSP@Pass@PlusBus@Season@access" version="1.0">
 									<Name>Plus bus</Name>
-									<ValidableElementRef ref="jsp:JSP@Products@Pass@PlusBus@zone_pass@season" version="1.0"/>
+									<ValidableElementRef ref="jsp:JSP@Pass@PlusBus@zone_pass@season" version="1.0"/>
 								</AccessRightInProduct>
 							</accessRightsInProduct>
-							<SupplementToFareProductRef version="1.0" ref="atc:Rail@Period_Pass"/>
+							<SupplementToFareProductRef version="1.0" ref="atc:Rail@Period_pass"/>
 						</SupplementProduct>
 					</fareProducts>
 					<!-- === PRICES=== -->
@@ -813,7 +815,7 @@ http://www.plusbus.info/faq/14-are-refunds-available-ltigtplusbusltigt-tickets
 					</priceGroups>
 					<!-- === SALES OFFER PACKAGES === -->
 					<salesOfferPackages>
-						<SalesOfferPackage id="jsp:JSP@Products@Pass@PlusBus@Day-SOP@1D@p-ticket" version="1.0">
+						<SalesOfferPackage id="jsp:JSP@Pass@PlusBus@Day-SOP@1D@p-ticket" version="1.0">
 							<BrandingRef ref="jsp:PlusBus@brand" version="1.0"/>
 							<Name>PlusBus Day - Paper ticket</Name>
 							<Description>Add On - bought separately rather than bundled with product
@@ -829,12 +831,12 @@ Period Return rail ticket = issue two PlusBus Day (PBD) tickets for origin and/o
 							<Url>http://www.plusbus.info/how-issue</Url>
 							<PrivateCode>PBD</PrivateCode>
 							<validityParameterAssignments>
-								<GenericParameterAssignment order="1" id="jsp:JSP@Products@Pass@PlusBus@Day-SOP@1D@p-ticket@purchasing" version="1.0">
+								<GenericParameterAssignment order="1" id="jsp:JSP@Pass@PlusBus@Day-SOP@1D@p-ticket@purchasing" version="1.0">
 									<Name>How to purchase</Name>
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_purchase_when"/>
 									<LimitationGroupingType>OR</LimitationGroupingType>
 									<includes>
-										<GenericParameterAssignment order="1" id="jsp:JSP@Products@Pass@PlusBus@Day-SOP@1D@p-ticket@purchasing@separate@at_counter" version="1.0">
+										<GenericParameterAssignment order="1" id="jsp:JSP@Pass@PlusBus@Day-SOP@1D@p-ticket@purchasing@separate@at_counter" version="1.0">
 											<Name>Separate Purchase at counter</Name>
 											<Description>2. I have already bought my train ticket, can I still buy PLUSBUS for my journey?
 Yes, if you take your valid train ticket to any National Rail station ticket office, ask for PLUSBUS for either the origin and/or destination town of your rail journey. You will be asked to pay the relevant PLUSBUS ticket price. This only applies to the purchase of PlusBus day tickets (not season tickets).</Description>
@@ -844,7 +846,7 @@ Yes, if you take your valid train ticket to any National Rail station ticket off
 												<DistributionChannelRef version="fxc:v1.0" ref="fxc:at_counter"/>
 											</validityParameters>
 										</GenericParameterAssignment>
-										<GenericParameterAssignment order="1" id="jsp:JSP@Products@Pass@PlusBus@Day-SOP@1D@p-ticket@purchasing@separate@onboard" version="1.0">
+										<GenericParameterAssignment order="1" id="jsp:JSP@Pass@PlusBus@Day-SOP@1D@p-ticket@purchasing@separate@onboard" version="1.0">
 											<Name>Separate Purchase onboard</Name>
 											<Description>3. Can I buy PLUSBUS on the train from a conductor?
 Train companies prefer customers to buy their tickets before getting on a train (where this is possible), from a ticket office, a self-service ticket machine or in advance by 'phone or online.
@@ -860,25 +862,25 @@ Train companies prefer customers to buy their tickets before getting on a train 
 								</GenericParameterAssignment>
 							</validityParameterAssignments>
 							<distributionAssignments>
-								<DistributionAssignment version="1.0" id="jsp:JSP@Products@Pass@PlusBus@Day-SOP@1D@p-ticket@at_stop@machine" order="1">
+								<DistributionAssignment version="1.0" id="jsp:JSP@Pass@PlusBus@Day-SOP@1D@p-ticket@at_stop@machine" order="1">
 									<Name>At stop</Name>
 									<Description>Pay for ticket at stop.</Description>
 									<DistributionChannelRef version="fxc:v1.0" ref="fxc:at_stop"/>
 									<FulfilmentMethodRef ref="fxc:collect_from_machine" version="fxc:v1.0"/>
 								</DistributionAssignment>
-								<DistributionAssignment version="1.0" id="jsp:JSP@Products@Pass@PlusBus@Day-SOP@1D@p-ticket@at_stop@counter" order="1">
+								<DistributionAssignment version="1.0" id="jsp:JSP@Pass@PlusBus@Day-SOP@1D@p-ticket@at_stop@counter" order="1">
 									<Name>At stop</Name>
 									<Description>Pay for ticket at stop.</Description>
 									<DistributionChannelRef version="fxc:v1.0" ref="fxc:at_counter"/>
 									<FulfilmentMethodRef ref="fxc:collect_at_counter" version="fxc:v1.0"/>
 								</DistributionAssignment>
-								<DistributionAssignment version="1.0" id="jsp:JSP@Products@Pass@PlusBus@Day-SOP@1D@p-ticket@online-post" order="1">
+								<DistributionAssignment version="1.0" id="jsp:JSP@Pass@PlusBus@Day-SOP@1D@p-ticket@online-post" order="1">
 									<Name>At stop</Name>
 									<Description>Orderr ticket online at stop.</Description>
 									<DistributionChannelRef version="fxc:v1.0" ref="fxc:online"/>
 									<FulfilmentMethodRef ref="fxc:post" version="fxc:v1.0"/>
 								</DistributionAssignment>
-								<DistributionAssignment version="1.0" id="jsp:JSP@Products@Pass@PlusBus@Day-SOP@1D@p-ticket@online-collect" order="1">
+								<DistributionAssignment version="1.0" id="jsp:JSP@Pass@PlusBus@Day-SOP@1D@p-ticket@online-collect" order="1">
 									<Name>At stop</Name>
 									<Description>Orderr ticket online , collect at stop.</Description>
 									<DistributionChannelRef version="fxc:v1.0" ref="fxc:online"/>
@@ -886,14 +888,14 @@ Train companies prefer customers to buy their tickets before getting on a train 
 								</DistributionAssignment>
 							</distributionAssignments>
 							<salesOfferPackageElements>
-								<SalesOfferPackageElement id="jsp:JSP@Products@Pass@PlusBus@Day-SOP@1D@p-ticket" version="1.0" order="4">
+								<SalesOfferPackageElement id="jsp:JSP@Pass@PlusBus@Day-SOP@1D@p-ticket" version="1.0" order="4">
 									<Name>PlusBus printed ticket</Name>
 									<TypeOfTravelDocumentRef version="fxc:v1.0" ref="fxc:printed_ticket"/>
-									<SupplementProductRef ref="jsp:JSP@Products@Pass@PlusBus@1day" version="1.0"/>
+									<SupplementProductRef ref="jsp:JSP@Pass@PlusBus@1day" version="1.0"/>
 								</SalesOfferPackageElement>
 							</salesOfferPackageElements>
 						</SalesOfferPackage>
-						<SalesOfferPackage id="jsp:JSP@Products@Pass@PlusBus@Day-SOP@1D@smartcard" version="1.0">
+						<SalesOfferPackage id="jsp:JSP@Pass@PlusBus@Day-SOP@1D@smartcard" version="1.0">
 							<BrandingRef ref="jsp:PlusBus@brand" version="1.0"/>
 							<Name>PlusBus Day - Smartcard</Name>
 							<Description>Add On - bought separately rather than bundled with product
@@ -908,7 +910,7 @@ Period Return rail ticket = issue two PlusBus Day (PBD) tickets for origin and/o
 							<Url>http://www.plusbus.info/how-issue</Url>
 							<PrivateCode>PBD</PrivateCode>
 							<validityParameterAssignments>
-								<GenericParameterAssignment order="1" id="jsp:JSP@Products@Pass@PlusBus@Day-SOP@1D@smartcard@self_service_machine" version="1.0">
+								<GenericParameterAssignment order="1" id="jsp:JSP@Pass@PlusBus@Day-SOP@1D@smartcard@self_service_machine" version="1.0">
 									<Description>self service</Description>
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_purchase_where"/>
 									<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
@@ -917,7 +919,7 @@ Period Return rail ticket = issue two PlusBus Day (PBD) tickets for origin and/o
 										<DistributionChannelRef version="fxc:v1.0" ref="fxc:self_service_ticket_machine"/>
 									</validityParameters>
 								</GenericParameterAssignment>
-								<GenericParameterAssignment order="1" id="jsp:JSP@Products@Pass@PlusBus@Day-SOP@1D@smartcard@online" version="1.0">
+								<GenericParameterAssignment order="1" id="jsp:JSP@Pass@PlusBus@Day-SOP@1D@smartcard@online" version="1.0">
 									<Description>1 </Description>
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_purchase_where"/>
 									<ValidityParameterGroupingType>AND</ValidityParameterGroupingType>
@@ -927,13 +929,13 @@ Period Return rail ticket = issue two PlusBus Day (PBD) tickets for origin and/o
 								</GenericParameterAssignment>
 							</validityParameterAssignments>
 							<distributionAssignments>
-								<DistributionAssignment version="1.0" id="jsp:JSP@Products@Pass@PlusBus@Day-SOP@1D@smartcard@at_stop@machine" order="1">
+								<DistributionAssignment version="1.0" id="jsp:JSP@Pass@PlusBus@Day-SOP@1D@smartcard@at_stop@machine" order="1">
 									<Name>At stop</Name>
 									<Description>Pay for ticket at stop and add to card .</Description>
 									<DistributionChannelRef version="fxc:v1.0" ref="fxc:at_stop"/>
 									<FulfilmentMethodRef ref="fxc:collect_from_machine" version="fxc:v1.0"/>
 								</DistributionAssignment>
-								<DistributionAssignment version="1.0" id="jsp:JSP@Products@Pass@PlusBus@Day-SOP@1D@smartcard@online_propagation" order="1">
+								<DistributionAssignment version="1.0" id="jsp:JSP@Pass@PlusBus@Day-SOP@1D@smartcard@online_propagation" order="1">
 									<Name>At stop</Name>
 									<Description>Orderr ticket online , collect at stop.</Description>
 									<DistributionChannelRef version="fxc:v1.0" ref="fxc:online"/>
@@ -941,15 +943,15 @@ Period Return rail ticket = issue two PlusBus Day (PBD) tickets for origin and/o
 								</DistributionAssignment>
 							</distributionAssignments>
 							<salesOfferPackageElements>
-								<SalesOfferPackageElement id="jsp:JSP@Products@Pass@PlusBus@Day-SOP@1D@smartcard" version="1.0" order="4">
+								<SalesOfferPackageElement id="jsp:JSP@Pass@PlusBus@Day-SOP@1D@smartcard" version="1.0" order="4">
 									<Name>PlusBus printed ticket</Name>
 									<TypeOfTravelDocumentRef version="fxc:v1.0" ref="fxc:smart_card"/>
-									<SupplementProductRef ref="jsp:JSP@Products@Pass@PlusBus@1day" version="1.0"/>
+									<SupplementProductRef ref="jsp:JSP@Pass@PlusBus@1day" version="1.0"/>
 								</SalesOfferPackageElement>
 							</salesOfferPackageElements>
 						</SalesOfferPackage>
 						<!--  Season Passes -->
-						<SalesOfferPackage id="jsp:JSP@Products@Pass@PlusBus@Season-SOP@1W@p-ticket" version="1.0">
+						<SalesOfferPackage id="jsp:JSP@Pass@PlusBus@Season-SOP@1W@p-ticket" version="1.0">
 							<Name>PlusBus 7-day</Name>
 							<Description>Season are available for set periods only: 7-days, Month; Quarter and Annual. See the ticket codes and descriptions (below).
 You will need to use the same Photocard number on the PlusBus season ticket as used on the rail season ticket.
@@ -957,16 +959,16 @@ You will need to use the same Photocard number on the PlusBus season ticket as u
 							<Url>http://www.plusbus.info/how-issue</Url>
 							<PrivateCode>PB7</PrivateCode>
 							<validityParameterAssignments>
-								<GenericParameterAssignment version="1.0" id="jsp:JSP@Products@Pass@PlusBus@Season@1W@p-ticket@duration" order="1">
+								<GenericParameterAssignment version="1.0" id="jsp:JSP@Pass@PlusBus@Season@1W@p-ticket@duration" order="1">
 									<Name>Valid 1 week</Name>
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access_when"/>
 									<TimeIntervalRef version="1.0" ref="jsp:Tariff@PlusBus@Season@1week"/>
 								</GenericParameterAssignment>
 							</validityParameterAssignments>
-							<!-- for Sales package elements see<GroupOfSalesOfferPackagesRef ref="jsp:JSP@Products@Pass@PlusBus@Season-GSOP -->
-							<GroupOfSalesOfferPackagesRef ref="jsp:JSP@Products@Pass@PlusBus@Season-GSOP@p-ticket" version="1.0"/>
+							<!-- for Sales package elements see<GroupOfSalesOfferPackagesRef ref="jsp:JSP@Pass@PlusBus@Season-GSOP -->
+							<GroupOfSalesOfferPackagesRef ref="jsp:JSP@Pass@PlusBus@Season-GSOP@p-ticket" version="1.0"/>
 						</SalesOfferPackage>
-						<SalesOfferPackage id="jsp:JSP@Products@Pass@PlusBus@Season-SOP@1W@smartcard" version="1.0">
+						<SalesOfferPackage id="jsp:JSP@Pass@PlusBus@Season-SOP@1W@smartcard" version="1.0">
 							<Name>PlusBus 7-day Smartcard  </Name>
 							<Description>Season are available for set periods only: 7-days, Month; Quarter and Annual. See the ticket codes and descriptions (below).
 You will need to use the same Photocard number on the PlusBus season ticket as used on the rail season ticket.
@@ -974,16 +976,16 @@ You will need to use the same Photocard number on the PlusBus season ticket as u
 							<Url>http://www.plusbus.info/how-issue</Url>
 							<PrivateCode>PB7</PrivateCode>
 							<validityParameterAssignments>
-								<GenericParameterAssignment version="1.0" id="jsp:JSP@Products@Pass@PlusBus@Season@1W@smartcard@duration" order="1">
+								<GenericParameterAssignment version="1.0" id="jsp:JSP@Pass@PlusBus@Season@1W@smartcard@duration" order="1">
 									<Name>Valid 1 week</Name>
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access_when"/>
 									<TimeIntervalRef version="1.0" ref="jsp:Tariff@PlusBus@Season@1week"/>
 								</GenericParameterAssignment>
 							</validityParameterAssignments>
-							<!-- for Sales package elements see<GroupOfSalesOfferPackagesRef ref="jsp:JSP@Products@Pass@PlusBus@Season-GSOP -->
-							<GroupOfSalesOfferPackagesRef ref="jsp:JSP@Products@Pass@PlusBus@Season-GSOP@smartcard" version="1.0"/>
+							<!-- for Sales package elements see<GroupOfSalesOfferPackagesRef ref="jsp:JSP@Pass@PlusBus@Season-GSOP -->
+							<GroupOfSalesOfferPackagesRef ref="jsp:JSP@Pass@PlusBus@Season-GSOP@smartcard" version="1.0"/>
 						</SalesOfferPackage>
-						<SalesOfferPackage id="jsp:JSP@Products@Pass@PlusBus@Season-SOP@1M@p-ticket" version="1.0">
+						<SalesOfferPackage id="jsp:JSP@Pass@PlusBus@Season-SOP@1M@p-ticket" version="1.0">
 							<Name>PlusBus Month</Name>
 							<Description>Season are available for set periods only: 7-days, Month; Quarter and Annual. See the ticket codes and descriptions (below).
 You will need to use the same Photocard number on the PlusBus season ticket as used on the rail season ticket.
@@ -991,16 +993,16 @@ Month season		PBM				PlusBus Month</Description>
 							<Url>http://www.plusbus.info/how-issue</Url>
 							<PrivateCode>PBM</PrivateCode>
 							<validityParameterAssignments>
-								<GenericParameterAssignment version="1.0" id="jsp:JSP@Products@Pass@PlusBus@Season@1M@p-ticket@duration" order="1">
+								<GenericParameterAssignment version="1.0" id="jsp:JSP@Pass@PlusBus@Season@1M@p-ticket@duration" order="1">
 									<Name>Valid 1 month</Name>
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access_when"/>
 									<TimeIntervalRef version="1.0" ref="jsp:Tariff@PlusBus@Season@1month"/>
 								</GenericParameterAssignment>
 							</validityParameterAssignments>
-							<!-- for Sales package elements see<GroupOfSalesOfferPackagesRef ref="jsp:JSP@Products@Pass@PlusBus@Season-GSOP -->
-							<GroupOfSalesOfferPackagesRef ref="jsp:JSP@Products@Pass@PlusBus@Season-GSOP@p-ticket" version="1.0"/>
+							<!-- for Sales package elements see<GroupOfSalesOfferPackagesRef ref="jsp:JSP@Pass@PlusBus@Season-GSOP -->
+							<GroupOfSalesOfferPackagesRef ref="jsp:JSP@Pass@PlusBus@Season-GSOP@p-ticket" version="1.0"/>
 						</SalesOfferPackage>
-						<SalesOfferPackage id="jsp:JSP@Products@Pass@PlusBus@Season-SOP@3M@p-ticket" version="1.0">
+						<SalesOfferPackage id="jsp:JSP@Pass@PlusBus@Season-SOP@3M@p-ticket" version="1.0">
 							<Name>PlusBus Month</Name>
 							<Description>Season are available for set periods only: 7-days, Month; Quarter and Annual. See the ticket codes and descriptions (below).
 You will need to use the same Photocard number on the PlusBus season ticket as used on the rail season ticket.
@@ -1008,16 +1010,16 @@ Quarter season		PBQ				PlusBus Quarter</Description>
 							<Url>http://www.plusbus.info/how-issue</Url>
 							<PrivateCode>PBQ</PrivateCode>
 							<validityParameterAssignments>
-								<GenericParameterAssignment version="1.0" id="jsp:JSP@Products@Pass@PlusBus@Season@3M@p-ticket@duration" order="1">
+								<GenericParameterAssignment version="1.0" id="jsp:JSP@Pass@PlusBus@Season@3M@p-ticket@duration" order="1">
 									<Name>Valid 3 months</Name>
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access_when"/>
 									<TimeIntervalRef version="1.0" ref="jsp:Tariff@PlusBus@Season@3month"/>
 								</GenericParameterAssignment>
 							</validityParameterAssignments>
-							<!-- for Sales package elements see<GroupOfSalesOfferPackagesRef ref="jsp:JSP@Products@Pass@PlusBus@Season-GSOP -->
-							<GroupOfSalesOfferPackagesRef ref="jsp:JSP@Products@Pass@PlusBus@Season-GSOP@p-ticket" version="1.0"/>
+							<!-- for Sales package elements see<GroupOfSalesOfferPackagesRef ref="jsp:JSP@Pass@PlusBus@Season-GSOP -->
+							<GroupOfSalesOfferPackagesRef ref="jsp:JSP@Pass@PlusBus@Season-GSOP@p-ticket" version="1.0"/>
 						</SalesOfferPackage>
-						<SalesOfferPackage id="jsp:JSP@Products@Pass@PlusBus@Season-SOP@1Y@p-ticket" version="1.0">
+						<SalesOfferPackage id="jsp:JSP@Pass@PlusBus@Season-SOP@1Y@p-ticket" version="1.0">
 							<Name>PlusBus Annual</Name>
 							<Description>Season ticket = issue the relevant period PlusBus season ticket. Most, but not all towns have PlusBus season tickets.
 Season are available for set periods only: 7-days, Month; Quarter and Annual. See the ticket codes and descriptions (below).
@@ -1026,19 +1028,19 @@ Annual season		PBA				PlusBus Annual</Description>
 							<Url>http://www.plusbus.info/how-issue</Url>
 							<PrivateCode>PBA</PrivateCode>
 							<validityParameterAssignments>
-								<GenericParameterAssignment version="1.0" id="jsp:JSP@Products@Pass@PlusBus@Season@1Y@p-ticket@duration" order="1">
+								<GenericParameterAssignment version="1.0" id="jsp:JSP@Pass@PlusBus@Season@1Y@p-ticket@duration" order="1">
 									<Name>Time Interval</Name>
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access_when"/>
 									<TimeIntervalRef version="1.0" ref="jsp:Tariff@PlusBus@Season@1year"/>
 								</GenericParameterAssignment>
 							</validityParameterAssignments>
-							<!-- for Sales package elements see<GroupOfSalesOfferPackagesRef ref="jsp:JSP@Products@Pass@PlusBus@Season-GSOP -->
-							<GroupOfSalesOfferPackagesRef ref="jsp:JSP@Products@Pass@PlusBus@Season-GSOP@p-ticket" version="1.0"/>
+							<!-- for Sales package elements see<GroupOfSalesOfferPackagesRef ref="jsp:JSP@Pass@PlusBus@Season-GSOP -->
+							<GroupOfSalesOfferPackagesRef ref="jsp:JSP@Pass@PlusBus@Season-GSOP@p-ticket" version="1.0"/>
 						</SalesOfferPackage>
 					</salesOfferPackages>
 					<groupsOfSalesOfferPackages>
 						<!-- Common Properties of PlusBUS season passes-->
-						<GroupOfSalesOfferPackages id="jsp:JSP@Products@Pass@PlusBus@Season-GSOP@p-ticket" version="1.0">
+						<GroupOfSalesOfferPackages id="jsp:JSP@Pass@PlusBus@Season-GSOP@p-ticket" version="1.0">
 							<BrandingRef ref="jsp:PlusBus@brand" version="1.0"/>
 							<Name>Common Properties of PlusBUS season passes</Name>
 							<Description>7. Is it possible to buy season tickets for PLUSBUS?
@@ -1056,7 +1058,7 @@ Annual season		PBA				PlusBus Annual
 The validity of your PlusBus season ticket does not have to match your rail season ticket validity, but your PlusBus ticket MUST expire either on the same date as your rail season ticket, or on a date before your rail season ticket expires.</Description>
 							<TypeOfSalesOfferPackageRef version="fxc:v1.0" ref="fxc:standard_product@multi_operator"/>
 							<validityParameterAssignments>
-								<GenericParameterAssignment order="1" id="jsp:JSP@Products@Pass@PlusBus@Season-GSOP@p-ticket@at_counter" version="1.0">
+								<GenericParameterAssignment order="1" id="jsp:JSP@Pass@PlusBus@Season-GSOP@p-ticket@at_counter" version="1.0">
 									<Description>Can buy season ticket at ticket counter</Description>
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_purchase_where"/>
 									<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
@@ -1064,7 +1066,7 @@ The validity of your PlusBus season ticket does not have to match your rail seas
 										<DistributionChannelRef version="fxc:v1.0" ref="fxc:at_counter"/>
 									</validityParameters>
 								</GenericParameterAssignment>
-								<GenericParameterAssignment order="1" id="jsp:JSP@Products@Pass@PlusBus@Season-GSOP@p-ticket@online" version="1.0">
+								<GenericParameterAssignment order="1" id="jsp:JSP@Pass@PlusBus@Season-GSOP@p-ticket@online" version="1.0">
 									<Description>1. Can I buy PLUSBUS online?
 Yes, PLUSBUS day tickets can be purchased at the same time as train tickets online from most rail ticket retailing websites.
 
@@ -1085,27 +1087,27 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 							</distributionAssignments>
 							<!-- == PACKAGE ELEMENTS == -->
 							<salesOfferPackageElements>
-								<SalesOfferPackageElement id="jsp:JSP@Products@Pass@PlusBus@Season-GSOP@p-ticket@pass" version="1.0" order="1">
+								<SalesOfferPackageElement id="jsp:JSP@Pass@PlusBus@Season-GSOP@p-ticket@pass" version="1.0" order="1">
 									<Name>PlusBus Season as pass</Name>
 									<TypeOfTravelDocumentRef version="fxc:v1.0" ref="fxc:pass"/>
-									<SupplementProductRef ref="jsp:JSP@Products@Pass@PlusBus@Season" version="1.0"/>
+									<SupplementProductRef ref="jsp:JSP@Pass@PlusBus@Season" version="1.0"/>
 								</SalesOfferPackageElement>
 							</salesOfferPackageElements>
 							<!-- == Conforming Sales Offer Packages == -->
 							<members>
-								<SalesOfferPackageRef ref="jsp:JSP@Products@Pass@PlusBus@Season-SOP@1W@p-ticket" version="1.0"/>
-								<SalesOfferPackageRef ref="jsp:JSP@Products@Pass@PlusBus@Season-SOP@1M@p-ticket" version="1.0"/>
-								<SalesOfferPackageRef ref="jsp:JSP@Products@Pass@PlusBus@Season-SOP@3M@p-ticket" version="1.0"/>
-								<SalesOfferPackageRef ref="jsp:JSP@Products@Pass@PlusBus@Season-SOP@1Y@p-ticket" version="1.0"/>
+								<SalesOfferPackageRef ref="jsp:JSP@Pass@PlusBus@Season-SOP@1W@p-ticket" version="1.0"/>
+								<SalesOfferPackageRef ref="jsp:JSP@Pass@PlusBus@Season-SOP@1M@p-ticket" version="1.0"/>
+								<SalesOfferPackageRef ref="jsp:JSP@Pass@PlusBus@Season-SOP@3M@p-ticket" version="1.0"/>
+								<SalesOfferPackageRef ref="jsp:JSP@Pass@PlusBus@Season-SOP@1Y@p-ticket" version="1.0"/>
 							</members>
 						</GroupOfSalesOfferPackages>
-						<GroupOfSalesOfferPackages id="jsp:JSP@Products@Pass@PlusBus@Season-GSOP@smartcard" version="1.0">
+						<GroupOfSalesOfferPackages id="jsp:JSP@Pass@PlusBus@Season-GSOP@smartcard" version="1.0">
 							<BrandingRef ref="jsp:PlusBus@brand" version="1.0"/>
 							<Name>Common Properties of PlusBUS season passes on smartcard </Name>
 							<Description>Only certain operator support PlusBus On Smartcard .</Description>
 							<TypeOfSalesOfferPackageRef version="fxc:v1.0" ref="fxc:standard_product@multi_operator"/>
 							<validityParameterAssignments>
-								<GenericParameterAssignment order="1" id="jsp:JSP@Products@Pass@PlusBus@Season-GSOP@smartcard@self_service_machine" version="1.0">
+								<GenericParameterAssignment order="1" id="jsp:JSP@Pass@PlusBus@Season-GSOP@smartcard@self_service_machine" version="1.0">
 									<Description>self service</Description>
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_purchase_where"/>
 									<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
@@ -1114,7 +1116,7 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 										<DistributionChannelRef version="fxc:v1.0" ref="fxc:self_service_ticket_machine"/>
 									</validityParameters>
 								</GenericParameterAssignment>
-								<GenericParameterAssignment order="1" id="jsp:JSP@Products@Pass@PlusBus@Season-GSOP@smartcard@online" version="1.0">
+								<GenericParameterAssignment order="1" id="jsp:JSP@Pass@PlusBus@Season-GSOP@smartcard@online" version="1.0">
 									<Description>1 </Description>
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_purchase_where"/>
 									<ValidityParameterGroupingType>AND</ValidityParameterGroupingType>
@@ -1124,13 +1126,13 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 								</GenericParameterAssignment>
 							</validityParameterAssignments>
 							<distributionAssignments>
-								<DistributionAssignment version="1.0" id="jsp:JSP@Products@Pass@PlusBus@Season-GSOP@p-ticket@at_stop@machine" order="1">
+								<DistributionAssignment version="1.0" id="jsp:JSP@Pass@PlusBus@Season-GSOP@p-ticket@at_stop@machine" order="1">
 									<Name>At stop</Name>
 									<Description>Pay for ticket at stop and add to card .</Description>
 									<DistributionChannelRef version="fxc:v1.0" ref="fxc:self_service_ticket_machine"/>
 									<FulfilmentMethodRef ref="fxc:collect_from_machine" version="fxc:v1.0"/>
 								</DistributionAssignment>
-								<DistributionAssignment version="1.0" id="jsp:JSP@Products@Pass@PlusBus@Season-GSOP@p-ticket@online_propagation" order="1">
+								<DistributionAssignment version="1.0" id="jsp:JSP@Pass@PlusBus@Season-GSOP@p-ticket@online_propagation" order="1">
 									<Name>At stop</Name>
 									<Description>Orderr ticket online , collect at stop.</Description>
 									<DistributionChannelRef version="fxc:v1.0" ref="fxc:online"/>
@@ -1139,12 +1141,12 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 							</distributionAssignments>
 							<!-- == PACKAGE ELEMENTS == -->
 							<salesOfferPackageElements>
-								<SalesOfferPackageElement id="jsp:JSP@Products@Pass@PlusBus@Season-GSOP@smart_card" version="1.0" order="1">
+								<SalesOfferPackageElement id="jsp:JSP@Pass@PlusBus@Season-GSOP@smart_card" version="1.0" order="1">
 									<Name>PlusBus Season on smart card</Name>
 									<TypeOfTravelDocumentRef version="fxc:v1.0" ref="fxc:smart_card"/>
-									<SupplementProductRef ref="jsp:JSP@Products@Pass@PlusBus@Season" version="1.0"/>
+									<SupplementProductRef ref="jsp:JSP@Pass@PlusBus@Season" version="1.0"/>
 									<validityParameterAssignments>
-										<GenericParameterAssignment id="jsp:JSP@Products@Pass@PlusBus@Season-GSOP@travel_documents@smart_card" version="1.0" order="1">
+										<GenericParameterAssignment id="jsp:JSP@Pass@PlusBus@Season-GSOP@travel_documents@smart_card" version="1.0" order="1">
 											<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_use_with_type_of_travel_document"/>
 											<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
 											<validityParameters>
@@ -1156,7 +1158,7 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 							</salesOfferPackageElements>
 							<!-- == Conforming Sales Offer Packages == -->
 							<members>
-								<SalesOfferPackageRef ref="jsp:JSP@Products@Pass@PlusBus@Season-SOP@1W@smartcard" version="1.0"/>
+								<SalesOfferPackageRef ref="jsp:JSP@Pass@PlusBus@Season-SOP@1W@smartcard" version="1.0"/>
 							</members>
 						</GroupOfSalesOfferPackages>
 						<!-- == ============= -->
@@ -1205,9 +1207,9 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 						<OperatorRef version="1.0" ref="jsp:JSP"/>
 						<tariffZones>
 							<!--==== Fare zones === NB BOGUS CODES &amp;COORDINATES -->
-							<TariffZoneRef version="any" ref="nptg:PlusBus_zone:IPSWICH"/>
-							<TariffZoneRef version="any" ref="nptg:PlusBus_zone:NORWICH"/>
-							<TariffZoneRef version="any" ref="nptg:PlusBus_zone:LOWESTOFT"/>
+							<TariffZoneRef version="any" ref="nptg_PlusBus_zone:IPSWICH"/>
+							<TariffZoneRef version="any" ref="nptg_PlusBus_zone:NORWICH"/>
+							<TariffZoneRef version="any" ref="nptg_PlusBus_zone:LOWESTOFT"/>
 							<!-- TO DO Add Rest Of Day Pass  Zones -->
 						</tariffZones>
 					</Network>
@@ -1218,9 +1220,9 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 							<OperatorRef version="1.0" ref="jsp:JSP"/>
 							<tariffZones>
 								<!--==== Fare zones === NB BOGUS CODES &amp;COORDINATES -->
-								<TariffZoneRef version="any" ref="nptg:PlusBus_zone:IPSWICH"/>
-								<TariffZoneRef version="any" ref="nptg:PlusBus_zone:NORWICH"/>
-								<TariffZoneRef version="any" ref="nptg:PlusBus_zone:LOWESTOFT"/>
+								<TariffZoneRef version="any" ref="nptg_PlusBus_zone:IPSWICH"/>
+								<TariffZoneRef version="any" ref="nptg_PlusBus_zone:NORWICH"/>
+								<TariffZoneRef version="any" ref="nptg_PlusBus_zone:LOWESTOFT"/>
 								<!-- TO DO Add Rest Of  Season pass Zones -->
 							</tariffZones>
 						</Network>
@@ -1405,11 +1407,11 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 					</additionalNetworks>
 					<tariffZones>
 						<!--==== Fare regions === -->
-						<TariffZone version="any" id="nptgTariffZone:All_Zones">
+						<TariffZone version="any" id="nptg_tarif_zone:All_Zones">
 							<Name lang="en">All Zones</Name>
 							<PrivateCode>PlusBus</PrivateCode>
 							<types>
-								<TypeOfZoneRef ref="nptg:PlusBus_region" version="nptg:v2.1"/>
+								<TypeOfZoneRef ref="nptg:region_type@PlusBus" version="nptg:v2.1"/>
 							</types>
 							<projections>
 								<TopographicProjection>
@@ -1417,38 +1419,38 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 								</TopographicProjection>
 							</projections>
 						</TariffZone>
-						<TariffZone version="any" id="nptgTariffZone:South_East_Region">
+						<TariffZone version="any" id="nptg_tarif_zone:South_East_Region">
 							<Name lang="en">South East Region</Name>
 							<PrivateCode>SE</PrivateCode>
 							<types>
-								<TypeOfZoneRef ref="nptg:PlusBus_region" version="nptg:v2.1"/>
+								<TypeOfZoneRef ref="nptg:region_type@PlusBus" version="nptg:v2.1"/>
 							</types>
 							<projections>
 								<TopographicProjection>
 									<CountryRef ref="uk" refPrincipality="GB-ENG"/>
 								</TopographicProjection>
 							</projections>
-							<ParentZoneRef ref="nptgTariffZone:All_Zones" version="any"/>
+							<ParentZoneRef ref="nptg_tarif_zone:All_Zones" version="any"/>
 						</TariffZone>
-						<TariffZone version="any" id="nptgTariffZone:Outside_South_East_Region">
+						<TariffZone version="any" id="nptg_tarif_zone:Outside_South_East_Region">
 							<Name lang="en">South East Region</Name>
 							<PrivateCode>SE</PrivateCode>
 							<types>
-								<TypeOfZoneRef ref="nptg:PlusBus_zone" version="nptg:v2.1"/>
+								<TypeOfZoneRef ref="nptg:zone_type@PlusBus" version="nptg:v2.1"/>
 							</types>
 							<projections>
 								<TopographicProjection>
 									<CountryRef ref="uk" refPrincipality="GB-ENG"/>
 								</TopographicProjection>
 							</projections>
-							<ParentZoneRef ref="nptgTariffZone:All_Zones" version="any"/>
+							<ParentZoneRef ref="nptg_tarif_zone:All_Zones" version="any"/>
 						</TariffZone>
 						<!--==== Plusbus Fare zones === NB BOGUS CODES &amp;COORDINATES -->
-						<TariffZone created="2013-10-11T12:27:13" changed="2013-10-11T12:27:13" modification="new" version="any" id="nptg:PlusBus_zone:IPSWICH">
+						<TariffZone created="2013-10-11T12:27:13" changed="2013-10-11T12:27:13" modification="new" version="any" id="nptg_PlusBus_zone:IPSWICH">
 							<Name lang="en">IPSWICH</Name>
 							<PrivateCode>IPSWICH</PrivateCode>
 							<types>
-								<TypeOfZoneRef ref="nptg:PlusBus_zone" version="nptg:v2.1"/>
+								<TypeOfZoneRef ref="nptg:zone_type@PlusBus" version="nptg:v2.1"/>
 							</types>
 							<gml:Polygon srsName="UKOS" gml:id="IPSWICH">
 								<gml:exterior>
@@ -1467,13 +1469,13 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 									<CountryRef ref="uk" refPrincipality="GB-SFK">Suffolk</CountryRef>
 								</TopographicProjection>
 							</projections>
-							<ParentZoneRef ref="nptgTariffZone:South_East_Region" version="any"/>
+							<ParentZoneRef ref="nptg_tarif_zone:South_East_Region" version="any"/>
 						</TariffZone>
-						<TariffZone created="2013-10-11T12:27:13" changed="2013-10-11T12:27:13" modification="new" version="any" id="nptg:PlusBus_zone:NORWICH">
+						<TariffZone created="2013-10-11T12:27:13" changed="2013-10-11T12:27:13" modification="new" version="any" id="nptg_PlusBus_zone:NORWICH">
 							<Name lang="en">NORWICH</Name>
 							<PrivateCode>NORWICH</PrivateCode>
 							<types>
-								<TypeOfZoneRef ref="nptg:PlusBus_zone" version="nptg:v2.1"/>
+								<TypeOfZoneRef ref="nptg:zone_type@PlusBus" version="nptg:v2.1"/>
 							</types>
 							<gml:Polygon srsName="UKOS" gml:id="NORWICH">
 								<gml:exterior>
@@ -1492,13 +1494,13 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 									<CountryRef ref="uk" refPrincipality="GB-NFK">Norfolk</CountryRef>
 								</TopographicProjection>
 							</projections>
-							<ParentZoneRef ref="nptgTariffZone:South_East_Region" version="any"/>
+							<ParentZoneRef ref="nptg_tarif_zone:South_East_Region" version="any"/>
 						</TariffZone>
-						<TariffZone created="2013-10-11T12:27:13" changed="2013-10-11T12:27:13" modification="new" version="any" id="nptg:PlusBus_zone:LOWESTOFT">
+						<TariffZone created="2013-10-11T12:27:13" changed="2013-10-11T12:27:13" modification="new" version="any" id="nptg_PlusBus_zone:LOWESTOFT">
 							<Name lang="en">LOWESTOFT</Name>
 							<PrivateCode>LOWESTOFT</PrivateCode>
 							<types>
-								<TypeOfZoneRef ref="nptg:PlusBus_zone" version="nptg:v2.1"/>
+								<TypeOfZoneRef ref="nptg:zone_type@PlusBus" version="nptg:v2.1"/>
 							</types>
 							<gml:Polygon srsName="UKOS" gml:id="LOWESTOFT">
 								<gml:exterior>
@@ -1517,7 +1519,7 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 									<CountryRef ref="uk" refPrincipality="GB-NFK">Norfolk</CountryRef>
 								</TopographicProjection>
 							</projections>
-							<ParentZoneRef ref="nptgTariffZone:South_East_Region" version="any"/>
+							<ParentZoneRef ref="nptg_tarif_zone:South_East_Region" version="any"/>
 						</TariffZone>
 						<!-- TO DO Add REst Of Zones -->
 					</tariffZones>
@@ -1717,17 +1719,6 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 					</responsibilitySets>
 					<!-- === Types of value === -->
 					<typesOfValue>
-						<ValueSet version="nptg:v2.1" id="nptg:TypeOfZone" classOfValues="TypeOfZone">
-							<Name>Types of Plusbus Zone</Name>
-							<values>
-								<TypeOfZone version="nptg:v2.1" id="nptg:PlusBus_zone">
-									<Name>Plusbus Zone</Name>
-								</TypeOfZone>
-								<TypeOfZone version="nptg:v2.1" id="nptg:PlusBus_region">
-									<Name>Plusbus Region</Name>
-								</TypeOfZone>
-							</values>
-						</ValueSet>
 						<ValueSet version="1.0" id="jsp:Branding" classOfValues="Branding">
 							<Name>Branding</Name>
 							<values>
@@ -1764,11 +1755,10 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 				<DefaultDataSourceRef ref="atc:example" version="any"/>
 				<DefaultResponsibilitySetRef ref="atc_products:NRE" version="any"/>
 			</FrameDefaults>
-			<prerequisites>	
-			<CompositeFrameRef version="eura:v1.0" ref="eura:EURA@Generic" />
-			<CompositeFrameRef version="fxc:v1.0" ref="fxc:DfT@Generic"/>
+			<prerequisites>
+				<CompositeFrameRef version="eura:v1.0" ref="eura:EURA@Generic"/>
+				<CompositeFrameRef version="fxc:v1.0" ref="fxc:DfT@Generic"/>
 			</prerequisites>
-		
 			<frames>
 				<FareFrame id="atc:ATOC@Products" version="1.0" responsibilitySetRef="atc_products:NRE">
 					<Name>UK Rail Prducts (STUB ONL) </Name>
@@ -1782,225 +1772,48 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 						<Tariff id="atc:ATOC@ODs@all" version="1.0">
 							<Name>P2P based fares for UK</Name>
 							<OperatorRef ref="uic_operator:1170" version="any">ATOC</OperatorRef>
-									<TariffBasis>pointToPoint</TariffBasis> 
+							<TariffBasis>pointToPoint</TariffBasis>
 							<!--- ===FARE STRUCTURE==== -->
 							<fareStructureElements>
 								<FareStructureElement id="atc:ATOC@ODs@p2p_OD" version="1.0">
 									<Name>A single O/D pair from the following</Name>
 									<!-- TODO ADD others fromwhole network -->
-									<GroupOfDistanceMatrixElementsRef ref="atc:ATOC@ODs@any#any" version="1.0"/>
+									<GroupOfDistanceMatrixElementsRef ref="atc:ATOC@ODs@all" version="1.0"/>
 								</FareStructureElement>
 							</fareStructureElements>
 							<!--- ===DISTANCE MATRIX==== -->
 							<groupsOfDistanceMatrixElements>
-								<GroupOfDistanceMatrixElements id="atc:ATOC@ODs@any#any" version="1.0">
-									<Name>OD Pairs</Name>
-									<members>
-										<DistanceMatrixElementRef version="1.0" ref="atc:LST+TOM">London Liverpool Street to Tottenham Hale</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:TOM+SSD">Tottenham Hale to Stansted Airport</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:SSD+GYM">Stansted Airport to Great Yarmouth</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:LST+SSD">London Liverpool Street to Stansted Airport</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:LST+SNF">London Liverpool Street to Shenfield</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:LST+IPS">London Liverpool Street to Shenfield</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:SNF+IPS">Shenfield to Ipswich</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:IPS+NRW">Ipswich to Norwich</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:LST+NRW">London Liverpool Street to Norwich</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:LST+SOV">London Liverpool Street to Southend Victoria</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:LST+LWT">London Liverpool Street to Lowestoft</DistanceMatrixElementRef>
-										<!-- TODO ADD ALL OTHER STATIONS -->
-									</members>
-								</GroupOfDistanceMatrixElements>
+								<GroupOfDistanceMatrixElementsRef ref="atc:ATOC@ODs@all" version="1.0"/>
 							</groupsOfDistanceMatrixElements>
 							<!-- TODO ADD ELEMENTS FOR P2P for ALL OTHER ROUTES -->
 						</Tariff>
 						<Tariff id="atc:ATOC@ODs@LE" version="1.0">
 							<Name>P2P based fare structure elements for UK, Greater Anglia</Name>
 							<OperatorRef ref="atc_operator:LE" version="any"/>
-									<TariffBasis>pointToPoint</TariffBasis> 
+							<TariffBasis>pointToPoint</TariffBasis>
 							<!--- ===DISTANCE MATRIX==== -->
 							<groupsOfDistanceMatrixElements>
-								<GroupOfDistanceMatrixElements id="atc:ATOC@ODs@LE@all" version="1.0">
-									<Name>OD Pairs</Name>
-									<members>
-										<DistanceMatrixElement version="1.0" id="atc:LST+TOM">
-											<Name>London Liverpool Street to Tottenham Hale</Name>
-											<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc_station:TOM" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:TOM+LST">
-											<Name>Tottenham Hale to London Liverpool Street</Name>
-											<StartStopPointRef version="1.0" ref="atc_station:TOM" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:TOM+SSD">
-											<Name>Tottenham Hale to Stansted Airport</Name>
-											<StartStopPointRef version="1.0" ref="atc_station:TOM" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc_station:SSD" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:SSD+TOM">
-											<Name>Stansted Airport to Tottenham Hale</Name>
-											<StartStopPointRef version="1.0" ref="atc_station:SSD" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc_station:TOM" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:SSD+GYM">
-											<Name>Stansted Airport to Great Yarmouth</Name>
-											<StartStopPointRef version="1.0" ref="atc_station:SSD" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc_station:GYM" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:GYM+SSD">
-											<Name>Great Yarmouth to Stansted Airport</Name>
-											<StartStopPointRef version="1.0" ref="atc_station:GYM" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc_station:SSD" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:LST+SSD">
-											<Name>London Liverpool Street to Stansted Airport</Name>
-											<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc_station:SSD" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:SSD+LST">
-											<Name>Stansted Airport to London Liverpool Street</Name>
-											<StartStopPointRef version="1.0" ref="atc_station:SSD" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:LST+SNF">
-											<Name>London Liverpool Street to Shenfield</Name>
-											<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc_station:SNF" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:SNF+LST">
-											<Name>Shenfield to London Liverpool Street</Name>
-											<StartStopPointRef version="1.0" ref="atc_station:SNF" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:LST+IPS">
-											<Name>London Liverpool Street to Ipswich</Name>
-											<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc_station:IPS" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:IPS+LST">
-											<Name>Ipswich to London Liverpool Street</Name>
-											<StartStopPointRef version="1.0" ref="atc_station:IPS" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:SNF+IPS">
-											<Name>Shenfield to Ipswich</Name>
-											<StartStopPointRef version="1.0" ref="atc_station:SNF" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc_station:IPS" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:IPS+SNF">
-											<Name>Ipswich to Shenfield</Name>
-											<StartStopPointRef version="1.0" ref="atc_station:IPS" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc_station:SNF" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:IPS+NRW">
-											<Name>Ipswich to Norwich</Name>
-											<StartStopPointRef version="1.0" ref="atc_station:IPS" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc_station:NRW" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:NRW#IPS">
-											<Name>Norwich to Ipswich</Name>
-											<StartStopPointRef version="1.0" ref="atc_station:NRW" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc_station:IPS" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:SNF+NRW">
-											<Name>Shenfield to Norwich</Name>
-											<StartStopPointRef version="1.0" ref="atc_station:SNF" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc_station:NRW" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:NRW#SNF">
-											<Name>Norwich to Shenfield</Name>
-											<StartStopPointRef version="1.0" ref="atc_station:NRW" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc_station:SNF" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:LST+NRW">
-											<Name>London Liverpool Street to Norwich</Name>
-											<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc_station:NRW" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:NRW#LST">
-											<Name>Norwich to London Liverpool Street</Name>
-											<StartStopPointRef version="1.0" ref="atc_station:NRW" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:LST+SOV">
-											<Name>London Liverpool Street to Southend Victoria</Name>
-											<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc_station:SOV" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:SOV#LST">
-											<Name>Southend Victoria to London Liverpool Street</Name>
-											<StartStopPointRef version="1.0" ref="atc_station:SOV" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:LST+LWT">
-											<Name>London Liverpool Street to Lowestoft</Name>
-											<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc_station:LWT" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<DistanceMatrixElement version="1.0" id="atc:LWT+LST">
-											<Name>Lowestoft to London Liverpool Street</Name>
-											<StartStopPointRef version="1.0" ref="atc_station:LWT" xsi:type="FareScheduledStopPointRefStructure"/>
-											<EndStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-										</DistanceMatrixElement>
-										<!-- TODO ADD ALL OTHER STATIONS -->
-									</members>
-								</GroupOfDistanceMatrixElements>
-								<GroupOfDistanceMatrixElements id="atc:ATOC@ODs@LE@season" version="1.0">
-									<Name>OD Pairs for Season Tickets for East Anglia</Name>
-									<Description>Season Tickets are available for most short and medium distance journeys on the National Rail network. Season Tickets are not generally available for long distance journeys, but maybe available where a train company chooses to offer them.</Description>
-									<members>
-										<DistanceMatrixElementRef version="1.0" ref="atc:LST+TOM">London Liverpool Street to Tottenham Hale</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:TOM+SSD">Tottenham Hale to Stansted Airport</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:SSD+GYM">Stansted Airport to Great Yarmouth</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:LST+SSD">London Liverpool Street to Stansted Airport</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:LST+SNF">London Liverpool Street to Shenfield</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:LST+IPS">London Liverpool Street to Shenfield</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:SNF+IPS">Shenfield to Ipswich</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:IPS+NRW">Ipswich to Norwich</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:LST+NRW">London Liverpool Street to Norwich</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:LST+SOV">London Liverpool Street to Southend Victoria</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:LST+LWT">London Liverpool Street to Lowestoft</DistanceMatrixElementRef>
-										<!-- TODO ADD ALL OTHER SEASON TICKET STATION ODS -->
-									</members>
-								</GroupOfDistanceMatrixElements>
-								<GroupOfDistanceMatrixElements id="atc:ATOC@ODs@LE@network" version="1.0">
-									<Name>OD Pairs for East Anglia</Name>
-									<Description>OD pairs making up network</Description>
-									<members>
-										<DistanceMatrixElementRef version="1.0" ref="atc:LST+TOM">London Liverpool Street to Tottenham Hale</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:TOM+SSD">Tottenham Hale to Stansted Airport</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:SSD+GYM">Stansted Airport to Great Yarmouth</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:LST+SSD">London Liverpool Street to Stansted Airport</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:LST+SNF">London Liverpool Street to Shenfield</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:LST+IPS">London Liverpool Street to Shenfield</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:SNF+IPS">Shenfield to Ipswich</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:IPS+NRW">Ipswich to Norwich</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:LST+NRW">London Liverpool Street to Norwich</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:LST+SOV">London Liverpool Street to Southend Victoria</DistanceMatrixElementRef>
-										<DistanceMatrixElementRef version="1.0" ref="atc:LST+LWT">London Liverpool Street to Lowestoft</DistanceMatrixElementRef>
-										<!-- TODO ADD ALL OTHER ODs just For LE -->
-									</members>
-								</GroupOfDistanceMatrixElements>
+								<GroupOfDistanceMatrixElementsRef ref="atc:ATOC@ODs@LE@all" version="1.0"/>
+								<GroupOfDistanceMatrixElementsRef ref="atc:ATOC@ODs@LE@season" version="1.0"/>
+								<GroupOfDistanceMatrixElementsRef ref="atc:ATOC@ODs@LE@network" version="1.0"/>
 							</groupsOfDistanceMatrixElements>
 							<!-- TODO ADD ELEMENTS FOR P2P for ALL OTHER ROUTES -->
 						</Tariff>
 						<Tariff id="atc:TfL@ODs@London" version="1.0">
 							<Name>London Transfers </Name>
 							<OperatorRef ref="atc_operator:LE" version="any"/>
-							<TariffBasis>zone</TariffBasis>  
+							<TariffBasis>zone</TariffBasis>
 							<!--- ===DISTANCE MATRIX==== -->
 							<groupsOfDistanceMatrixElements>
 								<GroupOfDistanceMatrixElementsRef version="1.0" ref="atc:TfL@ODs@London_transfers"/>
 							</groupsOfDistanceMatrixElements>
 						</Tariff>
-						
 						<Tariff id="atc:Rail@Single_Trip" version="1.0">
 							<Name>London Transfers </Name>
 							<OperatorRef ref="atc_operator:LE" version="any"/>
-							<TariffBasis>pointToPoint</TariffBasis> 
-							
-											<fareStructureElements>
-										<FareStructureElement version="1.0" id="atc:Rail@Trip@gives_entitlement@Single_trip">
+							<TariffBasis>pointToPoint</TariffBasis>
+							<fareStructureElements>
+								<FareStructureElement version="1.0" id="atc:Rail@Trip@gives_entitlement@Single_trip">
 									<Name> Allowsr Plusbus season ticket</Name>
 									<GenericParameterAssignment version="1.0" id="atc:Rail@Trip@gives_entitlement" order="1">
 										<Name>Only available as Add on to rail season pass</Name>
@@ -2017,8 +1830,7 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 									</GenericParameterAssignment>
 								</FareStructureElement>
 							</fareStructureElements>
-								</Tariff>
-						
+						</Tariff>
 					</tariffs>
 					<!--==== Fare Products ==== -->
 					<fareProducts>
@@ -2059,63 +1871,10 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 						<ServiceFrameRef version="1.0" ref="atc:ATOC@Network@Lines"/>
 						<SiteFrameRef version="1.0" ref="atc:ATOC@Common_Site"/>
 						<TimetableFrameRef version="1.0" ref="atc:ATOC@Common_Facilities"/>
-						<ServiceCalendarFrame version="1.0" ref="atc:ATOC@Common_Service_Calendar@2018"/>
-						<ResourcFrameRef version="1.0" ref="atc:ATOC@Common_Resources"/>
+						<ServiceCalendarFrameRef version="1.0" ref="atc:ATOC@Common_Service_Calendar@2018"/>
+						<ResourceFrameRef version="1.0" ref="atc:ATOC@Common_Resources"/>
 					</prerequisites>
 					<!--  === CONTENTS ==== -->
-					<groupsOfDistanceMatrixElements>
-						<GroupOfDistanceMatrixElements id="atc:TfL@ODs@London_transfers" version="1.0">
-							<Name>OD Pairs</Name>
-							<members>
-								<DistanceMatrixElement version="1.0" id="atc:LST+WAT">
-									<Name>London Liverpool Street to Waterloo</Name>
-									<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-									<EndStopPointRef versionRef="TODO" ref="atc_station:WAT" xsi:type="FareScheduledStopPointRefStructure"/>
-								</DistanceMatrixElement>
-								<DistanceMatrixElement version="1.0" id="atc:LST+KGX">
-									<Name>London Liverpool Street to Kings CRoss</Name>
-									<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-									<EndStopPointRef versionRef="TODO" ref="atc_station:KGX" xsi:type="FareScheduledStopPointRefStructure"/>
-								</DistanceMatrixElement>
-								<DistanceMatrixElement version="1.0" id="atc:LST+VIC">
-									<Name>London Liverpool Street to Victoria</Name>
-									<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-									<EndStopPointRef versionRef="TODO" ref="atc_station:VIC" xsi:type="FareScheduledStopPointRefStructure"/>
-								</DistanceMatrixElement>
-								<DistanceMatrixElement version="1.0" id="atc:LST+PAD">
-									<Name>London Liverpool Street to Paddington</Name>
-									<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-									<EndStopPointRef versionRef="TODO" ref="atc_station:PAD" xsi:type="FareScheduledStopPointRefStructure"/>
-								</DistanceMatrixElement>
-								<DistanceMatrixElement version="1.0" id="atc:LST+LBG">
-									<Name>London Liverpool Street to London Bridge</Name>
-									<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-									<EndStopPointRef versionRef="TODO" ref="atc_station:LBG" xsi:type="FareScheduledStopPointRefStructure"/>
-								</DistanceMatrixElement>
-								<DistanceMatrixElement version="1.0" id="atc:LST+CHX">
-									<Name>London Liverpool Street to London Charing Cross</Name>
-									<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-									<EndStopPointRef versionRef="TODO" ref="atc_station:CHX" xsi:type="FareScheduledStopPointRefStructure"/>
-								</DistanceMatrixElement>
-								<DistanceMatrixElement version="1.0" id="atc:LST+MYB">
-									<Name>London Liverpool Street to London Marylebone</Name>
-									<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-									<EndStopPointRef versionRef="TODO" ref="atc_station:MYB" xsi:type="FareScheduledStopPointRefStructure"/>
-								</DistanceMatrixElement>
-								<DistanceMatrixElement version="1.0" id="atc:LST+FST">
-									<Name>London Liverpool Street to London Fenchurch Street</Name>
-									<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-									<EndStopPointRef versionRef="TODO" ref="atc_station:FST" xsi:type="FareScheduledStopPointRefStructure"/>
-								</DistanceMatrixElement>
-								<DistanceMatrixElement version="1.0" id="atc:LST+STP">
-									<Name>London Liverpool Street to London St Pancras</Name>
-									<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
-									<EndStopPointRef versionRef="TODO" ref="atc_station:STP" xsi:type="FareScheduledStopPointRefStructure"/>
-								</DistanceMatrixElement>
-								<!-- add others -->
-							</members>
-						</GroupOfDistanceMatrixElements>
-					</groupsOfDistanceMatrixElements>
 					<!--- ===STOP POINTS======= -->
 					<fareScheduledStopPoints>
 						<FareScheduledStopPoint id="atc_station:BTR" version="1.0" responsibilitySetRef="uic_station_management:0070">
@@ -2797,6 +2556,243 @@ http://www.nationalrail.co.uk/stations_destinations/44863.aspx
 							<Name>West Coast Railway Co.</Name>
 						</FareZone>
 					</fareZones>
+					<groupsOfDistanceMatrixElements>
+						<GroupOfDistanceMatrixElements id="atc:ATOC@ODs@LE@all" version="1.0">
+							<Name>OD Pairs</Name>
+							<members>
+								<DistanceMatrixElement version="1.0" id="atc:LST+TOM">
+									<Name>London Liverpool Street to Tottenham Hale</Name>
+									<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+									<EndStopPointRef version="1.0" ref="atc_station:TOM" xsi:type="FareScheduledStopPointRefStructure"/>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="1.0" id="atc:TOM+LST">
+									<Name>Tottenham Hale to London Liverpool Street</Name>
+									<StartStopPointRef version="1.0" ref="atc_station:TOM" xsi:type="FareScheduledStopPointRefStructure"/>
+									<EndStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="1.0" id="atc:TOM+SSD">
+									<Name>Tottenham Hale to Stansted Airport</Name>
+									<StartStopPointRef version="1.0" ref="atc_station:TOM" xsi:type="FareScheduledStopPointRefStructure"/>
+									<EndStopPointRef version="1.0" ref="atc_station:SSD" xsi:type="FareScheduledStopPointRefStructure"/>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="1.0" id="atc:SSD+TOM">
+									<Name>Stansted Airport to Tottenham Hale</Name>
+									<StartStopPointRef version="1.0" ref="atc_station:SSD" xsi:type="FareScheduledStopPointRefStructure"/>
+									<EndStopPointRef version="1.0" ref="atc_station:TOM" xsi:type="FareScheduledStopPointRefStructure"/>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="1.0" id="atc:SSD+GYM">
+									<Name>Stansted Airport to Great Yarmouth</Name>
+									<StartStopPointRef version="1.0" ref="atc_station:SSD" xsi:type="FareScheduledStopPointRefStructure"/>
+									<EndStopPointRef version="1.0" ref="atc_station:GYM" xsi:type="FareScheduledStopPointRefStructure"/>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="1.0" id="atc:GYM+SSD">
+									<Name>Great Yarmouth to Stansted Airport</Name>
+									<StartStopPointRef version="1.0" ref="atc_station:GYM" xsi:type="FareScheduledStopPointRefStructure"/>
+									<EndStopPointRef version="1.0" ref="atc_station:SSD" xsi:type="FareScheduledStopPointRefStructure"/>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="1.0" id="atc:LST+SSD">
+									<Name>London Liverpool Street to Stansted Airport</Name>
+									<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+									<EndStopPointRef version="1.0" ref="atc_station:SSD" xsi:type="FareScheduledStopPointRefStructure"/>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="1.0" id="atc:SSD+LST">
+									<Name>Stansted Airport to London Liverpool Street</Name>
+									<StartStopPointRef version="1.0" ref="atc_station:SSD" xsi:type="FareScheduledStopPointRefStructure"/>
+									<EndStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="1.0" id="atc:LST+SNF">
+									<Name>London Liverpool Street to Shenfield</Name>
+									<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+									<EndStopPointRef version="1.0" ref="atc_station:SNF" xsi:type="FareScheduledStopPointRefStructure"/>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="1.0" id="atc:SNF+LST">
+									<Name>Shenfield to London Liverpool Street</Name>
+									<StartStopPointRef version="1.0" ref="atc_station:SNF" xsi:type="FareScheduledStopPointRefStructure"/>
+									<EndStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="1.0" id="atc:LST+IPS">
+									<Name>London Liverpool Street to Ipswich</Name>
+									<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+									<EndStopPointRef version="1.0" ref="atc_station:IPS" xsi:type="FareScheduledStopPointRefStructure"/>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="1.0" id="atc:IPS+LST">
+									<Name>Ipswich to London Liverpool Street</Name>
+									<StartStopPointRef version="1.0" ref="atc_station:IPS" xsi:type="FareScheduledStopPointRefStructure"/>
+									<EndStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="1.0" id="atc:SNF+IPS">
+									<Name>Shenfield to Ipswich</Name>
+									<StartStopPointRef version="1.0" ref="atc_station:SNF" xsi:type="FareScheduledStopPointRefStructure"/>
+									<EndStopPointRef version="1.0" ref="atc_station:IPS" xsi:type="FareScheduledStopPointRefStructure"/>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="1.0" id="atc:IPS+SNF">
+									<Name>Ipswich to Shenfield</Name>
+									<StartStopPointRef version="1.0" ref="atc_station:IPS" xsi:type="FareScheduledStopPointRefStructure"/>
+									<EndStopPointRef version="1.0" ref="atc_station:SNF" xsi:type="FareScheduledStopPointRefStructure"/>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="1.0" id="atc:IPS+NRW">
+									<Name>Ipswich to Norwich</Name>
+									<StartStopPointRef version="1.0" ref="atc_station:IPS" xsi:type="FareScheduledStopPointRefStructure"/>
+									<EndStopPointRef version="1.0" ref="atc_station:NRW" xsi:type="FareScheduledStopPointRefStructure"/>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="1.0" id="atc:NRW#IPS">
+									<Name>Norwich to Ipswich</Name>
+									<StartStopPointRef version="1.0" ref="atc_station:NRW" xsi:type="FareScheduledStopPointRefStructure"/>
+									<EndStopPointRef version="1.0" ref="atc_station:IPS" xsi:type="FareScheduledStopPointRefStructure"/>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="1.0" id="atc:SNF+NRW">
+									<Name>Shenfield to Norwich</Name>
+									<StartStopPointRef version="1.0" ref="atc_station:SNF" xsi:type="FareScheduledStopPointRefStructure"/>
+									<EndStopPointRef version="1.0" ref="atc_station:NRW" xsi:type="FareScheduledStopPointRefStructure"/>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="1.0" id="atc:NRW#SNF">
+									<Name>Norwich to Shenfield</Name>
+									<StartStopPointRef version="1.0" ref="atc_station:NRW" xsi:type="FareScheduledStopPointRefStructure"/>
+									<EndStopPointRef version="1.0" ref="atc_station:SNF" xsi:type="FareScheduledStopPointRefStructure"/>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="1.0" id="atc:LST+NRW">
+									<Name>London Liverpool Street to Norwich</Name>
+									<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+									<EndStopPointRef version="1.0" ref="atc_station:NRW" xsi:type="FareScheduledStopPointRefStructure"/>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="1.0" id="atc:NRW#LST">
+									<Name>Norwich to London Liverpool Street</Name>
+									<StartStopPointRef version="1.0" ref="atc_station:NRW" xsi:type="FareScheduledStopPointRefStructure"/>
+									<EndStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="1.0" id="atc:LST+SOV">
+									<Name>London Liverpool Street to Southend Victoria</Name>
+									<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+									<EndStopPointRef version="1.0" ref="atc_station:SOV" xsi:type="FareScheduledStopPointRefStructure"/>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="1.0" id="atc:SOV#LST">
+									<Name>Southend Victoria to London Liverpool Street</Name>
+									<StartStopPointRef version="1.0" ref="atc_station:SOV" xsi:type="FareScheduledStopPointRefStructure"/>
+									<EndStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="1.0" id="atc:LST+LWT">
+									<Name>London Liverpool Street to Lowestoft</Name>
+									<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+									<EndStopPointRef version="1.0" ref="atc_station:LWT" xsi:type="FareScheduledStopPointRefStructure"/>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="1.0" id="atc:LWT+LST">
+									<Name>Lowestoft to London Liverpool Street</Name>
+									<StartStopPointRef version="1.0" ref="atc_station:LWT" xsi:type="FareScheduledStopPointRefStructure"/>
+									<EndStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+								</DistanceMatrixElement>
+								<!-- TODO ADD ALL OTHER STATIONS -->
+							</members>
+						</GroupOfDistanceMatrixElements>
+						<GroupOfDistanceMatrixElements id="atc:ATOC@ODs@LE@season" version="1.0">
+							<Name>OD Pairs for Season Tickets for East Anglia</Name>
+							<Description>Season Tickets are available for most short and medium distance journeys on the National Rail network. Season Tickets are not generally available for long distance journeys, but maybe available where a train company chooses to offer them.</Description>
+							<members>
+								<DistanceMatrixElementRef version="1.0" ref="atc:LST+TOM">London Liverpool Street to Tottenham Hale</DistanceMatrixElementRef>
+								<DistanceMatrixElementRef version="1.0" ref="atc:TOM+SSD">Tottenham Hale to Stansted Airport</DistanceMatrixElementRef>
+								<DistanceMatrixElementRef version="1.0" ref="atc:SSD+GYM">Stansted Airport to Great Yarmouth</DistanceMatrixElementRef>
+								<DistanceMatrixElementRef version="1.0" ref="atc:LST+SSD">London Liverpool Street to Stansted Airport</DistanceMatrixElementRef>
+								<DistanceMatrixElementRef version="1.0" ref="atc:LST+SNF">London Liverpool Street to Shenfield</DistanceMatrixElementRef>
+								<DistanceMatrixElementRef version="1.0" ref="atc:LST+IPS">London Liverpool Street to Shenfield</DistanceMatrixElementRef>
+								<DistanceMatrixElementRef version="1.0" ref="atc:SNF+IPS">Shenfield to Ipswich</DistanceMatrixElementRef>
+								<DistanceMatrixElementRef version="1.0" ref="atc:IPS+NRW">Ipswich to Norwich</DistanceMatrixElementRef>
+								<DistanceMatrixElementRef version="1.0" ref="atc:LST+NRW">London Liverpool Street to Norwich</DistanceMatrixElementRef>
+								<DistanceMatrixElementRef version="1.0" ref="atc:LST+SOV">London Liverpool Street to Southend Victoria</DistanceMatrixElementRef>
+								<DistanceMatrixElementRef version="1.0" ref="atc:LST+LWT">London Liverpool Street to Lowestoft</DistanceMatrixElementRef>
+								<!-- TODO ADD ALL OTHER SEASON TICKET STATION ODS -->
+							</members>
+						</GroupOfDistanceMatrixElements>
+						<GroupOfDistanceMatrixElements id="atc:ATOC@ODs@LE@network" version="1.0">
+							<Name>OD Pairs for East Anglia</Name>
+							<Description>OD pairs making up network</Description>
+							<members>
+								<DistanceMatrixElementRef version="1.0" ref="atc:LST+TOM">London Liverpool Street to Tottenham Hale</DistanceMatrixElementRef>
+								<DistanceMatrixElementRef version="1.0" ref="atc:TOM+SSD">Tottenham Hale to Stansted Airport</DistanceMatrixElementRef>
+								<DistanceMatrixElementRef version="1.0" ref="atc:SSD+GYM">Stansted Airport to Great Yarmouth</DistanceMatrixElementRef>
+								<DistanceMatrixElementRef version="1.0" ref="atc:LST+SSD">London Liverpool Street to Stansted Airport</DistanceMatrixElementRef>
+								<DistanceMatrixElementRef version="1.0" ref="atc:LST+SNF">London Liverpool Street to Shenfield</DistanceMatrixElementRef>
+								<DistanceMatrixElementRef version="1.0" ref="atc:LST+IPS">London Liverpool Street to Shenfield</DistanceMatrixElementRef>
+								<DistanceMatrixElementRef version="1.0" ref="atc:SNF+IPS">Shenfield to Ipswich</DistanceMatrixElementRef>
+								<DistanceMatrixElementRef version="1.0" ref="atc:IPS+NRW">Ipswich to Norwich</DistanceMatrixElementRef>
+								<DistanceMatrixElementRef version="1.0" ref="atc:LST+NRW">London Liverpool Street to Norwich</DistanceMatrixElementRef>
+								<DistanceMatrixElementRef version="1.0" ref="atc:LST+SOV">London Liverpool Street to Southend Victoria</DistanceMatrixElementRef>
+								<DistanceMatrixElementRef version="1.0" ref="atc:LST+LWT">London Liverpool Street to Lowestoft</DistanceMatrixElementRef>
+								<!-- TODO ADD ALL OTHER ODs just For LE -->
+							</members>
+						</GroupOfDistanceMatrixElements>
+						<GroupOfDistanceMatrixElements id="atc:TfL@ODs@London_transfers" version="1.0">
+							<Name>OD Pairs</Name>
+							<members>
+								<DistanceMatrixElement version="1.0" id="atc:LST+WAT">
+									<Name>London Liverpool Street to Waterloo</Name>
+									<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+									<EndStopPointRef versionRef="TODO" ref="atc_station:WAT" xsi:type="FareScheduledStopPointRefStructure"/>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="1.0" id="atc:LST+KGX">
+									<Name>London Liverpool Street to Kings CRoss</Name>
+									<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+									<EndStopPointRef versionRef="TODO" ref="atc_station:KGX" xsi:type="FareScheduledStopPointRefStructure"/>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="1.0" id="atc:LST+VIC">
+									<Name>London Liverpool Street to Victoria</Name>
+									<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+									<EndStopPointRef versionRef="TODO" ref="atc_station:VIC" xsi:type="FareScheduledStopPointRefStructure"/>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="1.0" id="atc:LST+PAD">
+									<Name>London Liverpool Street to Paddington</Name>
+									<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+									<EndStopPointRef versionRef="TODO" ref="atc_station:PAD" xsi:type="FareScheduledStopPointRefStructure"/>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="1.0" id="atc:LST+LBG">
+									<Name>London Liverpool Street to London Bridge</Name>
+									<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+									<EndStopPointRef versionRef="TODO" ref="atc_station:LBG" xsi:type="FareScheduledStopPointRefStructure"/>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="1.0" id="atc:LST+CHX">
+									<Name>London Liverpool Street to London Charing Cross</Name>
+									<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+									<EndStopPointRef versionRef="TODO" ref="atc_station:CHX" xsi:type="FareScheduledStopPointRefStructure"/>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="1.0" id="atc:LST+MYB">
+									<Name>London Liverpool Street to London Marylebone</Name>
+									<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+									<EndStopPointRef versionRef="TODO" ref="atc_station:MYB" xsi:type="FareScheduledStopPointRefStructure"/>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="1.0" id="atc:LST+FST">
+									<Name>London Liverpool Street to London Fenchurch Street</Name>
+									<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+									<EndStopPointRef versionRef="TODO" ref="atc_station:FST" xsi:type="FareScheduledStopPointRefStructure"/>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="1.0" id="atc:LST+STP">
+									<Name>London Liverpool Street to London St Pancras</Name>
+									<StartStopPointRef version="1.0" ref="atc_station:LST" xsi:type="FareScheduledStopPointRefStructure"/>
+									<EndStopPointRef versionRef="TODO" ref="atc_station:STP" xsi:type="FareScheduledStopPointRefStructure"/>
+								</DistanceMatrixElement>
+								<!-- add others -->
+							</members>
+						</GroupOfDistanceMatrixElements>
+						
+						<!--   ===== -->
+								<GroupOfDistanceMatrixElements id="atc:ATOC@ODs@all" version="1.0">
+							<Name>OD Pairs</Name>
+							<members>
+											<DistanceMatrixElementRef version="1.0" ref="atc:LST+TOM">London Liverpool Street to Tottenham Hale</DistanceMatrixElementRef>
+								<DistanceMatrixElementRef version="1.0" ref="atc:TOM+SSD">Tottenham Hale to Stansted Airport</DistanceMatrixElementRef>
+								<DistanceMatrixElementRef version="1.0" ref="atc:SSD+GYM">Stansted Airport to Great Yarmouth</DistanceMatrixElementRef>
+														<DistanceMatrixElementRef version="1.0" ref="atc:GYM+SSD"> Great Yarmouth to Stansted Airport</DistanceMatrixElementRef>
+								<DistanceMatrixElementRef version="1.0" ref="atc:LST+SSD">London Liverpool Street to Stansted Airport</DistanceMatrixElementRef>
+								<DistanceMatrixElementRef version="1.0" ref="atc:LST+SNF">London Liverpool Street to Shenfield</DistanceMatrixElementRef>
+								<DistanceMatrixElementRef version="1.0" ref="atc:LST+IPS">London Liverpool Street to Shenfield</DistanceMatrixElementRef>
+								<DistanceMatrixElementRef version="1.0" ref="atc:SNF+IPS">Shenfield to Ipswich</DistanceMatrixElementRef>
+								<DistanceMatrixElementRef version="1.0" ref="atc:IPS+NRW">Ipswich to Norwich</DistanceMatrixElementRef>
+								<DistanceMatrixElementRef version="1.0" ref="atc:LST+NRW">London Liverpool Street to Norwich</DistanceMatrixElementRef>
+								<DistanceMatrixElementRef version="1.0" ref="atc:LST+SOV">London Liverpool Street to Southend Victoria</DistanceMatrixElementRef>
+								<DistanceMatrixElementRef version="1.0" ref="atc:LST+LWT">London Liverpool Street to Lowestoft</DistanceMatrixElementRef>
+								
+								<!-- TODO ADD ALL OTHER STATIONS -->
+							</members>
+						</GroupOfDistanceMatrixElements>
+						
+					</groupsOfDistanceMatrixElements>
 				</FareFrame>
 				<ServiceFrame id="atc:ATOC@Network@Lines" version="1.0" responsibilitySetRef="atc_products:NRE">
 					<Name>UK Rail Network and Lines</Name>
@@ -4191,7 +4187,7 @@ West Midlands Railway
 						<DefaultResponsibilitySetRef ref="fxc:FXC_metadata" version="fxc:v1.0"/>
 					</FrameDefaults>
 					<prerequisites>
-						<ResourceFrameRef version="fxc:v1.0" ref="xc:UK_Bus_Tariffs@Common_Resources"/>
+						<ResourceFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_Tariffs@Common_Resources"/>
 					</prerequisites>
 					<!--  === CONTENTS ==== -->
 					<PricingParameterSet id="fxc:Common_Resources" version="fxc:v1.0">
@@ -4497,20 +4493,20 @@ West Midlands Railway
 						<Codespace id="nptg">
 							<Xmlns>nptg</Xmlns>
 							<XmlnsUrl>http://nptg.org.uk/</XmlnsUrl>
-							<Description>National Public Transport gazetteer</Description>
+							<Description>National Public Transport gazetteer  </Description>
 						</Codespace>
-						<Codespace id="nptgUkLocality">
-							<Xmlns>nptgUkLocality</Xmlns>
+						<Codespace id="nptg_uk_locality">
+							<Xmlns>nptg_uk_locality</Xmlns>
 							<XmlnsUrl>http://nptg.org.uk/locations</XmlnsUrl>
 							<Description>National Public Transport gazetteer locations</Description>
 						</Codespace>
-						<Codespace id="nptgTariffZone">
-							<Xmlns>nptgTariffZone</Xmlns>
+						<Codespace id="nptg_tarif_zone">
+							<Xmlns>nptg_tarif_zone</Xmlns>
 							<XmlnsUrl>http://nptg.org.uk/tariffZones</XmlnsUrl>
 							<Description>National Public Transport gazetteer plus bus zones</Description>
 						</Codespace>
-						<Codespace id="nptgUkAdministrativeArea">
-							<Xmlns>nptgUkAdministrativeArea</Xmlns>
+						<Codespace id="nptg_uk_administrative_area">
+							<Xmlns>nptg_uk_administrative_area</Xmlns>
 							<XmlnsUrl>http://www.nptg.org.uk/adminAreas</XmlnsUrl>
 							<Description>UK National Public Transport gazetteer. Codes of administrative areas, are unique within the UK.</Description>
 						</Codespace>
@@ -4567,7 +4563,18 @@ West Midlands Railway
 					</responsibilitySets>
 					<!-- ======== Code sets ========= -->
 					<typesOfValue>
-						<ValueSet version="fxc:v1.0" id="fxc:TypeOfFrame" classOfValues="TypeOfFrame">
+						<ValueSet version="nptg:v2.1" id="nptg:Types_of_Zone" classOfValues="TypeOfZone">
+							<Name>Types of Plusbus Zone</Name>
+							<values>
+								<TypeOfZone version="nptg:v2.1" id="nptg:zone_type@PlusBus">
+									<Name>Plusbus Zone</Name>
+								</TypeOfZone>
+								<TypeOfZone version="nptg:v2.1" id="nptg:region_type@PlusBus">
+									<Name>Plusbus Region</Name>
+								</TypeOfZone>
+							</values>
+						</ValueSet>
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_Frame" classOfValues="TypeOfFrame">
 							<Name>Types of UK Frame</Name>
 							<values>
 								<TypeOfFrame version="fxc:v1.0" id="nptg:UK_general_profile@locations">
@@ -4638,7 +4645,7 @@ West Midlands Railway
 								</TypeOfFrame>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:PointOfInterestClassification" classOfValues="PointOfInterestClassification">
+						<ValueSet version="fxc:v1.0" id="fxc:Points_of_Interest_Classification" classOfValues="PointOfInterestClassification">
 							<Name>Types of POI</Name>
 							<values>
 								<!--- ====Type of Product category ========= -->
@@ -4650,7 +4657,7 @@ West Midlands Railway
 								</PointOfInterestClassification>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:TypesOfFareZone" classOfValues="TypeOfZone">
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareZone" classOfValues="TypeOfZone">
 							<Name>Types of Fare Zone</Name>
 							<values>
 								<!--- ====Type of Product category ========= -->
@@ -4665,7 +4672,7 @@ West Midlands Railway
 								</TypeOfZone>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:TypesOfProductCategory" classOfValues="TypeOfProductCategory">
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_ProductCategory" classOfValues="TypeOfProductCategory">
 							<Name>Types of Product Category</Name>
 							<values>
 								<!--- ====Type of Product category ========= -->
@@ -4680,7 +4687,7 @@ West Midlands Railway
 								</TypeOfProductCategory>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:PurposesOfGrouping" classOfValues="PurposeOfGrouping">
+						<ValueSet version="fxc:v1.0" id="fxc:Purposes_of_Grouping" classOfValues="PurposeOfGrouping">
 							<Name>Purposes of Grouping</Name>
 							<values>
 								<!--- ====Type of Product category ========= -->
@@ -4689,7 +4696,7 @@ West Midlands Railway
 								</PurposeOfGrouping>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:ChargingMoments" classOfValues="ChargingMoment">
+						<ValueSet version="fxc:v1.0" id="fxc:Charging_Moments" classOfValues="ChargingMoment">
 							<Name>Charging Moments</Name>
 							<values>
 								<!--- ==== TypeOfChargingMoment ========= -->
@@ -4710,7 +4717,7 @@ West Midlands Railway
 								</ChargingMoment>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:TypesOfFareProduct@trip" classOfValues="TypeOfFareProduct">
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareProduct@trip" classOfValues="TypeOfFareProduct">
 							<Name>Types Of Fare Product - Trip</Name>
 							<values>
 								<TypeOfFareProduct version="fxc:v1.0" id="fxc:standard_product@trip@short_hop">
@@ -4731,7 +4738,7 @@ West Midlands Railway
 								</TypeOfFareProduct>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:TypesOfFareProduct@pass" classOfValues="TypeOfFareProduct">
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareProduct@pass" classOfValues="TypeOfFareProduct">
 							<Name>Types Of Fare Product - Pass</Name>
 							<values>
 								<TypeOfFareProduct version="fxc:v1.0" id="fxc:standard_product@pass@day">
@@ -4745,7 +4752,7 @@ West Midlands Railway
 								</TypeOfFareProduct>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:TypesOfFareProduct@carnet" classOfValues="TypeOfFareProduct">
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareProduct@carnet" classOfValues="TypeOfFareProduct">
 							<Name>Types Of Fare Product - Pass</Name>
 							<values>
 								<TypeOfFareProduct version="fxc:v1.0" id="fxc:standard_product@carnet@trips">
@@ -4756,7 +4763,7 @@ West Midlands Railway
 								</TypeOfFareProduct>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:TypesOfFareProduct@discount" classOfValues="TypeOfFareProduct">
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareProduct@discount" classOfValues="TypeOfFareProduct">
 							<Name>Types Of Fare Product - Pass</Name>
 							<values>
 								<TypeOfFareProduct version="fxc:v1.0" id="fxc:standard_product@discount@sales">
@@ -4767,7 +4774,7 @@ West Midlands Railway
 								</TypeOfFareProduct>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:TypesOfFareProduct@stored_value" classOfValues="TypeOfFareProduct">
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareProduct@stored_value" classOfValues="TypeOfFareProduct">
 							<Name>Types Of Fare Product - Epurse</Name>
 							<values>
 								<TypeOfFareProduct version="fxc:v1.0" id="fxc:standard_product@stored_value@epurse">
@@ -4775,7 +4782,7 @@ West Midlands Railway
 								</TypeOfFareProduct>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:TypesOfSalesOfferPackage" classOfValues="TypeOfSalesOfferPackage">
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_SalesOfferPackage" classOfValues="TypeOfSalesOfferPackage">
 							<Name>Types Of Sales Offer Product</Name>
 							<values>
 								<TypeOfSalesOfferPackage version="fxc:v1.0" id="fxc:standard_product@all_operators">
@@ -4792,7 +4799,7 @@ West Midlands Railway
 								</TypeOfSalesOfferPackage>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:ClassesOfUse" classOfValues="ClassOfUse">
+						<ValueSet version="fxc:v1.0" id="fxc:Classes_of_Use" classOfValues="ClassOfUse">
 							<Name>Classes of Use</Name>
 							<values>
 								<!--- ====ClassOfUse ========= -->
@@ -4804,7 +4811,7 @@ West Midlands Railway
 								</ClassOfUse>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:TypesOfProjection" classOfValues="TypeOfProjection">
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_Projection" classOfValues="TypeOfProjection">
 							<Name>TypesOf Projection</Name>
 							<values>
 								<!--- ====ClassOfUse ========= -->
@@ -4813,7 +4820,7 @@ West Midlands Railway
 								</TypeOfProjection>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:TypesOfFareContractEntry" classOfValues="TypeOfFareContractEntry">
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareContractEntry" classOfValues="TypeOfFareContractEntry">
 							<Name>Types of fare contract entry</Name>
 							<values>
 								<!--- ====TypeOfFareContractEntry ========= -->
@@ -4831,7 +4838,7 @@ West Midlands Railway
 								</TypeOfFareContractEntry>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:TypesOfConcession" classOfValues="TypeOfConcession">
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_Concession" classOfValues="TypeOfConcession">
 							<Name>Types of concession</Name>
 							<values>
 								<!--- ====TypeOfConcession method========= -->
@@ -4873,7 +4880,7 @@ West Midlands Railway
 								</TypeOfConcession>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:TypesOfTariff" classOfValues="TypeOfTariff">
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_Tariff" classOfValues="TypeOfTariff">
 							<Name>Types of Tariff</Name>
 							<values>
 								<!--- ====Types OfTariff ========= -->
@@ -4909,7 +4916,7 @@ West Midlands Railway
 								</TypeOfTariff>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:TypesOfAccessRightAssignment" classOfValues="TypeOfAccessRightAssignment">
+						<ValueSet version="fxc:v1.0" id="fxc:Typesof_AccessRightAssignment" classOfValues="TypeOfAccessRightAssignment">
 							<Name>Types of Access Right Assignment</Name>
 							<values>
 								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:eligible">
