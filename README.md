@@ -40,13 +40,35 @@ There is also an Oxygen project file:
 # Change Log
  
 ## 1.11 Summary of Changes since v1.10 
+  
+	
+## 2019.03.13  EURA-40 *FARES*  Support Suscriptions 
+  * lso add  Charging summary options. PenaltyIfWithoutTicket and AvailableOnSubscription.
+	* netex_conditionSummary_version.xsd 
  
-### 2019.03.12 NORWAY-100 *FARES* Support VAT (and other tax)  categories Add ___TypeOfPricingRule__  element 
+### 2019.03.13 Eura-93, EURA-085  *FARES* Add new attribute to  ___InterChanging __  RegisterBreak with values _ none,   markByStaff,  markByValidator,  markByMobileApp, other_ 
+  * Also EURA-085  Add  new attribute ___ActivationMeans___ attribute  to ___UsageValidityPerido___ with values  _noneRequired, checkIn,  useOfValidato useOfMobileDevice, automaticByTime,  automaticByProximity, other_
+, _seatMap_  and _openSeating_.	
+  * _Updates to xml schema_:    
+	* netex_usageParameterTravel_support.xsd
+	* netex_usageParameterTravel_version.xsd 
+	
+### 2019.03.13 UK  *FARES* Simplify use of Fares: 
+  * Add new  Atrribute  ___PreeassignedFareProductType___ to      ___PreassignedFareProduct___ with values _singleTip,  timeTimitedSingleTrip, dayReturnTrip, periodReturnTrip, multiStepTrip, dayPass,  periodPass, other_.
+  * Add new attribute   ___AmountOfPriceUnitType___ to     ___AmountOfPriceUnitFareProduct___ with values  _tripCarnet, passCarnet, unitCoupons, other_.
+  * NB these are separate from __TariffBasis___. 
+, _seatMap_  and _openSeating_.	
+  * _Updates to xml schema_:    
+	* netex_fareProduct_support.xsd
+	* netex_fareProduct_version.xsd 	
+ 
+	
+### 2019.03.13 NORWAY-100 *FARES* Support VAT (and other tax)  categories Add ___TypeOfPricingRule__  element 
   * Also FIX  add missing (!) relationship  ___ruleStepResults \ RuleStep___ on  ___SalesTrnasaction
   * Also FIX  Allow payments in Price  units other than Money (!) ___ruleStepResults \ RuleStep___ to ___SalesTransaction___
   * Also fix Type ___Transaction___ \___ AMount(!)___  to be _currencyType_ not _distance_. 
   * Also add a   NARRATIVE text element on RuleStepResult
-  * Also add ___UnitDimension___ attribute to ___PriceUit___ with values _currency, distance, time,valueToken, other_.
+  * Also add ___UnitDimension___ attribute to ___PriceUnit___ with values _currency, distance, time,valueToken, other_.
   * Also revise  ___FarePrice___ element   to add ___AmountWithResultsGroup___ and refactor  ___FarePriceAmount___ groups to be clearer
    * Also revise ___PriceRuleStepResult___:  add  new attributes ___AdjustmentAmount, ___AdjustmentUnits___,  ___RoundingRef___,  
    * NB this revises current sense of   ___PriceRuleStepResult___ \ ___Amount___
@@ -178,7 +200,7 @@ __
  * _Updates to xml schema_:     	    
 	* netex_line_support.xsd
 
-### 2019.03.11 EURA-40 *FARES*  Support Supcriptions
+### 2019.03.11 EURA-40 *FARES*  Support Subscriptions
  * Add new  ___Subscribing___ usage parameter 
  * Add __SubscriptionRenewalPolicy___ attribute with enumeration   values:
 	* _automatic_ - Renew automatcally at end of term.

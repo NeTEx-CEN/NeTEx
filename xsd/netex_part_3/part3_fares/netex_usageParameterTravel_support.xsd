@@ -22,7 +22,7 @@
 					<Modified>2011-02-05</Modified> Name Space changes 
 				</Date>
 				<Date>
-					<Modified>2019-03-9</Modified> EURA 051 Add  enumeration values to RoundTripType  returnOut returnBack  so as to disstinguish legs . ALso add documentation  annotations
+					<Modified>2019-03-09</Modified> EURA 051 Add  enumeration values to RoundTripType  returnOut returnBack  so as to disstinguish legs . ALso add documentation  annotations
 				</Date>
 				<Date>
 					<Modified>2019-03-10</Modified>EURA-073 Add an UsageStartConstraintTypeEnumeration for UsageStartConstraintType attribute for  UsageValidityPeriod  to specify  if start is floating or fixed. 
@@ -44,9 +44,13 @@
 								* _forCertifiedIllness_ - Suspension allowed for illness.
 								* _forParentalLeave_ - Suspension allowed for parental leave.
 								* _forHoliday_ - Suspension allowed for Holiday.
-							* _forAnyReason_ - Suspension allowed for any reason  
-					    
-					</Date>
+							* _forAnyReason_ - Suspension allowed for any reason   
+				</Date>
+				<Date>
+					<Modified>2019-03-12</Modified>EURA-093 Add  new attribute RegisterBreakOfJourney  to Interchanging with values    none,   markByStaff,  markByValidator,  markByMobileApp , 		
+	 						EURA-085  Add  new attribute ActivationMeans  with values  none required,, checkIn,  useOfValidato useOfMobileDevice, automaticByTime,  automaticByProximity, other				
+				</Date>
+ 
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the Travel USAGE PARAMETER  types.</p>
@@ -331,7 +335,7 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Validity period starts on date specified on product..</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
-			<xsd:enumeration value="startOutboundRide" >
+			<xsd:enumeration value="startOutboundRide">
 				<xsd:annotation>
 					<xsd:documentation>Validity period starts on commencement of outbound trip..</xsd:documentation>
 				</xsd:annotation>
@@ -351,11 +355,25 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Validity period starts at beginning of interval specified for product   (e.g.  every month  for a monthly pass that renews automatically)   .</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
-			<xsd:enumeration value="dayOffsetBeforeCalendarPeriod" >
+			<xsd:enumeration value="dayOffsetBeforeCalendarPeriod">
 				<xsd:annotation>
 					<xsd:documentation>Validity period starts a specifed number of days before  beginning of specified start date .</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ActivationMeansEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for Activation Means</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+					<xsd:enumeration value="noneRequired"/>
+			<xsd:enumeration value="checkIn"/>
+				<xsd:enumeration value="useOfValidator"/>  
+		 <xsd:enumeration value="useOfMobileDevice"/>
+		 		 <xsd:enumeration value="automaticByTime"/>
+		 		 		 <xsd:enumeration value="automaticByProximity"/>
+		 		 		  <xsd:enumeration value="other"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="UsageEndEnumeration">
@@ -372,7 +390,7 @@ Rail transport, Roads and Road transport
 			<xsd:enumeration value="productExpiry"/>
 			<xsd:enumeration value="profileExpiry"/>
 			<xsd:enumeration value="eligibilityExpiry"/>
-						<xsd:enumeration value="deregistration"/>
+			<xsd:enumeration value="deregistration"/>
 			<xsd:enumeration value="other"/>
 		</xsd:restriction>
 	</xsd:simpleType>
@@ -531,6 +549,44 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
+	<xsd:simpleType name="RegisterBreakOfJourneyEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for Register Break of Journey.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="none">
+				<xsd:annotation>
+					<xsd:documentation>No action needed  .</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="markByStaff">
+				<xsd:annotation>
+					<xsd:documentation>JourneyBreak must be marked by operator staff.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="markByValidator">
+				<xsd:annotation>
+					<xsd:documentation>Journey Break must be marked by validator.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="markByMobileApp">
+				<xsd:annotation>
+					<xsd:documentation>Journey Break must be marked using mobile application.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="other">
+				<xsd:annotation>
+					<xsd:documentation>Journey Break must be marked by othermeans.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RegisterBreakOfJourneyListOfEnumerations">
+		<xsd:annotation>
+			<xsd:documentation>List of  Register Break of Journey. values</xsd:documentation>
+		</xsd:annotation>
+		<xsd:list itemType="SuspensionPolicyEnumeration"/>
+	</xsd:simpleType>
 	<!-- === MINIMUM STAY  PARAMETER====================================================== -->
 	<xsd:simpleType name="MinimumStayIdType">
 		<xsd:annotation>
