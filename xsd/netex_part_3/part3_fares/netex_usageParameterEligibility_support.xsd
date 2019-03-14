@@ -29,11 +29,25 @@
 						Also EURA-89 add birthCertifcate, emailAccount to ProofOfIdentity enumeration 
 				</Date>
 				<Date>
-					<Modified>2019-03-10</Modified>EURA-68,    Add new GroupSizeChanges enumeration to GroupTicket   with enumerated values;  		 none,  free,  charged, steppedCharge 
+					<Modified>2019-03-10</Modified>EURA-68,  Add new GroupSizeChanges enumeration to GroupTicket   with enumerated values;  		 none,  free,  charged, steppedCharge 
 			 	</Date>
 				<Date>
-					<Modified>2019-03-12</Modified>>
- 					
+					<Modified>2019-03-14</Modified>EURA-29  Add EligibilityChange usage parameter with attribues BecomesEligiblePolicy and CeasesToBeEligiblePolicy  
+OnBecomingEnumeration
+
+* automatic - If user becomes eligible, automatically apply additional user profile benefits to user, e.g. apply student or senior discounts.
+* invite - If user becomes eligible, invite user to take up eligible products. e.g. Invite to buy Senior railcard.
+* noAction - If user becomes eligible,, no automatic measures are taken.
+* other 
+
+OnCeasingEnumeration - Allowed values  
+ 
+* immediateTermination - If user ceases to be eligible, automatically terminate validity of an  elibility dependent product.
+* useUntilExpiry - If user ceases to be eligible, they may go on using the product until it  expires..
+* terminateAfterGracePeriod - If user ceases to be eligible,  termination  take place after the end of a grace period
+* _automaticallySubstituteProduct_ - If user ceases to be eligible, assign them an appropiate  replacement product. 
+* noAction - If user ceases to be eligible, take no action.
+* other 					
 					
 				</Date>
 				<Description>
@@ -91,52 +105,52 @@ Rail transport, Roads and Road transport
 	</xsd:group>
 	<xsd:group name="UsageParameterProductRefGroup">
 		<xsd:annotation>
-			<xsd:documentation>USAGE PARAMETER Elements forCELL.Group.</xsd:documentation>
+			<xsd:documentation>USAGE PARAMETER Elements for CELL.Group.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element name="CommercialProfileRef" type="CommercialProfileRefStructure" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Reference to a COMMERCIAL PROFILE PARAMETER.</xsd:documentation>
+					<xsd:documentation>Reference to a COMMERCIAL PROFILE usage parameter</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="GroupTicketRef" type="GroupTicketRefStructure" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Reference to a GROUP TICKET PARAMETER.</xsd:documentation>
+					<xsd:documentation>Reference to a GROUP TICKET usage parameter</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="UserProfileRef" type="UserProfileRefStructure" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Reference to a USER PROFILE PARAMETER.</xsd:documentation>
+					<xsd:documentation>Reference to a USER PROFILE usage parameter</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:element name="ProfileParameterRef" type="UsageParameterRefStructure" substitutionGroup="UsageParameterRef">
 		<xsd:annotation>
-			<xsd:documentation>Reference to a PROFILE PARAMETER.</xsd:documentation>
+			<xsd:documentation>Reference to a PROFILE usage parameter</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<!-- === USER PROFILE PARAMETER======================================= -->
 	<xsd:simpleType name="UserProfileIdType">
 		<xsd:annotation>
-			<xsd:documentation>Type for identifier of a USER PROFILE PARAMETER.</xsd:documentation>
+			<xsd:documentation>Type for identifier of a USER PROFILE usage parameter</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="UsageParameterIdType"/>
 	</xsd:simpleType>
 	<xsd:element name="UserProfileRef" type="UserProfileRefStructure" substitutionGroup="ProfileParameterRef">
 		<xsd:annotation>
-			<xsd:documentation>Reference to a USER PROFILE PARAMETER.</xsd:documentation>
+			<xsd:documentation>Reference to a USER PROFILE usage parameter</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="UserProfileRefStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for Reference to a USER PROFILE PARAMETER.</xsd:documentation>
+			<xsd:documentation>Type for Reference to a USER PROFILE usage parameter</xsd:documentation>
 		</xsd:annotation>
 		<xsd:simpleContent>
 			<xsd:restriction base="UsageParameterRefStructure">
 				<xsd:attribute name="ref" type="UserProfileIdType" use="required">
 					<xsd:annotation>
-						<xsd:documentation>Identifier of a USER PROFILE PARAMETER.</xsd:documentation>
+						<xsd:documentation>Identifier of a USER PROFILE usage parameter</xsd:documentation>
 					</xsd:annotation>
 				</xsd:attribute>
 			</xsd:restriction>
@@ -159,31 +173,31 @@ Rail transport, Roads and Road transport
 			<xsd:enumeration value="disabledCompanion"/>
 			<xsd:enumeration value="jobSeeker"/>
 			<xsd:enumeration value="employee"/>
-				<xsd:enumeration value="animal"/>
+			<xsd:enumeration value="animal"/>
 			<xsd:enumeration value="anyone"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<!-- === COMMERCIAL PROFILE ===================================================== -->
 	<xsd:simpleType name="CommercialProfileIdType">
 		<xsd:annotation>
-			<xsd:documentation>Type for identifier of a COMMERCIAL PROFILE PARAMETER.</xsd:documentation>
+			<xsd:documentation>Type for identifier of a COMMERCIAL PROFILE usage parameter</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="UsageParameterIdType"/>
 	</xsd:simpleType>
 	<xsd:element name="CommercialProfileRef" type="CommercialProfileRefStructure" substitutionGroup="ProfileParameterRef">
 		<xsd:annotation>
-			<xsd:documentation>Reference to a COMMERCIAL PROFILE PARAMETER.</xsd:documentation>
+			<xsd:documentation>Reference to a COMMERCIAL PROFILE usage parameter</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="CommercialProfileRefStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for Reference to a COMMERCIAL PROFILE PARAMETER.</xsd:documentation>
+			<xsd:documentation>Type for Reference to a COMMERCIAL PROFILE usage parameter</xsd:documentation>
 		</xsd:annotation>
 		<xsd:simpleContent>
 			<xsd:restriction base="UsageParameterRefStructure">
 				<xsd:attribute name="ref" type="CommercialProfileIdType" use="required">
 					<xsd:annotation>
-						<xsd:documentation>Identifier of a COMMERCIAL PROFILE PARAMETER.</xsd:documentation>
+						<xsd:documentation>Identifier of a COMMERCIAL PROFILE usage parameter</xsd:documentation>
 					</xsd:annotation>
 				</xsd:attribute>
 			</xsd:restriction>
@@ -203,24 +217,24 @@ Rail transport, Roads and Road transport
 	<!-- === GROUP TICKET PARAMETER====================================================== -->
 	<xsd:simpleType name="GroupTicketIdType">
 		<xsd:annotation>
-			<xsd:documentation>Type for identifier of a GROUP TICKET PARAMETER.</xsd:documentation>
+			<xsd:documentation>Type for identifier of a GROUP TICKET usage parameter</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="UsageParameterIdType"/>
 	</xsd:simpleType>
 	<xsd:element name="GroupTicketRef" type="GroupTicketRefStructure" substitutionGroup="ProfileParameterRef">
 		<xsd:annotation>
-			<xsd:documentation>Reference to a GROUP TICKET PARAMETER.</xsd:documentation>
+			<xsd:documentation>Reference to a GROUP TICKET usage parameter</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="GroupTicketRefStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for Reference to a GROUP TICKET PARAMETER.</xsd:documentation>
+			<xsd:documentation>Type for Reference to a GROUP TICKET usage parameter</xsd:documentation>
 		</xsd:annotation>
 		<xsd:simpleContent>
 			<xsd:restriction base="UsageParameterRefStructure">
 				<xsd:attribute name="ref" type="GroupTicketIdType" use="required">
 					<xsd:annotation>
-						<xsd:documentation>Identifier of a GROUP TICKET PARAMETER.</xsd:documentation>
+						<xsd:documentation>Identifier of a GROUP TICKET usage parameter</xsd:documentation>
 					</xsd:annotation>
 				</xsd:attribute>
 			</xsd:restriction>
@@ -249,7 +263,7 @@ Rail transport, Roads and Road transport
 	</xsd:simpleType>
 	<xsd:simpleType name="GroupSizeChangesEnumeration">
 		<xsd:annotation>
-			<xsd:documentation>Allowed values for GROUP SIZE CHANGE</xsd:documentation>
+			<xsd:documentation>Allowed values for GROUP SIZE CHANGE. +v1.1</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:normalizedString">
 			<xsd:enumeration value="noChanges">
@@ -264,7 +278,7 @@ Rail transport, Roads and Road transport
 			</xsd:enumeration>
 			<xsd:enumeration value="charged">
 				<xsd:annotation>
-					<xsd:documentation>Group size can be changed for a fee (as specified by a EXCHANGING parameter).</xsd:documentation>
+					<xsd:documentation>Group size can be changed for a fee (as specified by a EXCHANGING usage parameter).</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="steppedCharge">
@@ -277,24 +291,24 @@ Rail transport, Roads and Road transport
 	<!-- === COMPANION PROFILE ============================================== -->
 	<xsd:simpleType name="CompanionProfileIdType">
 		<xsd:annotation>
-			<xsd:documentation>Type for identifier of a COMPANION PROFILE PARAMETER.</xsd:documentation>
+			<xsd:documentation>Type for identifier of a COMPANION PROFILE usage parameter</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="UserProfileIdType"/>
 	</xsd:simpleType>
 	<xsd:element name="CompanionProfileRef" type="CompanionProfileRefStructure" substitutionGroup="UserProfileRef">
 		<xsd:annotation>
-			<xsd:documentation>Reference to a COMPANION PROFILE PARAMETER.</xsd:documentation>
+			<xsd:documentation>Reference to a COMPANION PROFILE usage parameter</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="CompanionProfileRefStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for Reference to a COMPANION PROFILE PARAMETER.</xsd:documentation>
+			<xsd:documentation>Type for Reference to a COMPANION PROFILE usage parameter</xsd:documentation>
 		</xsd:annotation>
 		<xsd:simpleContent>
 			<xsd:restriction base="UserProfileRefStructure">
 				<xsd:attribute name="ref" type="CompanionProfileIdType" use="required">
 					<xsd:annotation>
-						<xsd:documentation>Identifier of a COMPANION PROFILE PARAMETER.</xsd:documentation>
+						<xsd:documentation>Identifier of a COMPANION PROFILE usage parameter</xsd:documentation>
 					</xsd:annotation>
 				</xsd:attribute>
 			</xsd:restriction>
@@ -361,13 +375,27 @@ Rail transport, Roads and Road transport
 	<!-- ===  RESIDENTIAL QUALIFICATION ============================================== -->
 	<xsd:simpleType name="ResidentialQualificationIdType">
 		<xsd:annotation>
-			<xsd:documentation>Type for identifier of a RESIDENTIAL QUALIFICATION PARAMETER.</xsd:documentation>
+			<xsd:documentation>Type for identifier of a RESIDENTIAL QUALIFICATION usage parameter</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="ObjectIdType"/>
 	</xsd:simpleType>
+	<xsd:complexType name="ResidentialQualificationRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for Reference to a RESIDENTIAL QUALIFICATION usage parameter.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="VersionOfObjectRefStructure">
+				<xsd:attribute name="ref" type="ResidentialQualificationIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Identifier of a RESIDENTIAL QUALIFICATION usage parameter</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
 	<xsd:element name="ResidentialQualificationRef" type="ResidentialQualificationRefStructure" substitutionGroup="VersionOfObjectRef">
 		<xsd:annotation>
-			<xsd:documentation>Reference to a RESIDENTIAL QUALIFICATION PARAMETER.</xsd:documentation>
+			<xsd:documentation>Reference to a RESIDENTIAL QUALIFICATION usage parameter</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:simpleType name="ResidenceTypeEnumeration">
@@ -382,18 +410,82 @@ Rail transport, Roads and Road transport
 			<xsd:enumeration value="born"/>
 		</xsd:restriction>
 	</xsd:simpleType>
-	<xsd:complexType name="ResidentialQualificationRefStructure">
+	<!-- ===  ELIGIBILITY CHANGE ============================================== -->
+	<xsd:complexType name="EligibilityChangePolicyRefStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for Reference to a RESIDENTIAL QUALIFICATION PARAMETER.</xsd:documentation>
+			<xsd:documentation>Type for Reference to an ELIGIBILITY CHANGE POLICY usage parameter.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:simpleContent>
-			<xsd:restriction base="VersionOfObjectRefStructure">
-				<xsd:attribute name="ref" type="ResidentialQualificationIdType" use="required">
+			<xsd:restriction base="UsageParameterRefStructure">
+				<xsd:attribute name="ref" type="EligibilityChangePolicyIdType" use="required">
 					<xsd:annotation>
-						<xsd:documentation>Identifier of a RESIDENTIAL QUALIFICATION PARAMETER.</xsd:documentation>
+						<xsd:documentation>Identifier of an ELIGIBILITY CHANGE POLICY usage parameter.</xsd:documentation>
 					</xsd:annotation>
 				</xsd:attribute>
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
+	<xsd:simpleType name="OnCeasingEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for Ceasing  to be Eligible + v1.1</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="immediateTermination">
+				<xsd:annotation>
+					<xsd:documentation>If user ceases to be eligible, automatically terminate validity of an  elibility dependent product.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="useUntilExpiry">
+				<xsd:annotation>
+					<xsd:documentation>If user ceases to be eligible, they may go on using the product until it  expires..</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="terminateAfterGracePeriod">
+				<xsd:annotation>
+					<xsd:documentation>If user ceases to be eligible,  termination  take place after the end of a grace period </xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="automaticallySubstituteProduct"/>
+			<xsd:enumeration value="noAction">
+				<xsd:annotation>
+					<xsd:documentation>If user ceases to be eligible, automatically substitute them with an appropiate  replacement product.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="other"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="EligibilityChangePolicyIdType">
+		<xsd:annotation>
+			<xsd:documentation>Type for identifier of an ELIGIBILITY CHANGE POLICY usage parameter.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="UsageParameterIdType"/>
+	</xsd:simpleType>
+	<xsd:element name="EligibilityChangePolicyRef" type="EligibilityChangePolicyRefStructure" substitutionGroup="UsageParameterRef">
+		<xsd:annotation>
+			<xsd:documentation>Reference to anELIGIBILITY CHANGE POLICY usage parameter. +v1.1</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="OnBecomingEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for Becoming Eiiigble + v1.1</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="automatic">
+				<xsd:annotation>
+					<xsd:documentation>If user becomes eligible, automatically apply additional user profile benefits to user, e.g. apply student or senior discounts.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="invite">
+				<xsd:annotation>
+					<xsd:documentation>If user becomes eligible, invite user to take up eligible products. e.g. Invite to buy Senior railcard.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="noAction">
+				<xsd:annotation>
+					<xsd:documentation>If user becomes eligible,, no automatic measures are taken.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="other"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 </xsd:schema>

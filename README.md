@@ -41,7 +41,23 @@ There is also an Oxygen project file:
  
 ## 1.11 Summary of Changes since v1.10 
 
-### 2019.03.13 Eura-50  *FARES* Add new ___PurchaseAction___ attribute to  ___PurchaseWindow__    with values: _purchase_,  _reserve_,  _orderWithoutPaying_,  payForPreviousOrder, other_  _
+
+	
+### 2019.03.13 EURA-29  *FARES*    Add  new ___EligibilityChangePolicy___  usage parameter with attributes ___OnBecomingPolicy___ and ___OnCeasingPolicy___.  
+  * ___OnBecomingEnumeration___
+ 	* _automatic_ - If user becomes eligible, automatically apply additional user profile benefits to user, e.g. apply student or senior discounts.
+	* _invite_ - If user becomes eligible, invite user to take up eligible products. e.g. Invite to buy Senior railcard.
+	* _noAction_ - If user becomes eligible,, no automatic measures are taken.
+	* _other_ 
+ * OnCeasingEnumeration - Allowed values  
+ 	* _immediateTermination_ - If user ceases to be eligible, automatically terminate validity of an  elibility dependent product.
+	* _useUntilExpiry_ - If user ceases to be eligible, they may go on using the product until it  expires..
+	* _terminateAfterGracePeriod_ - If user ceases to be eligible,  termination  take place after the end of a grace period
+	* _automaticallySubstituteProduct_ - If user ceases to be eligible, assign them an appropiate  replacement product. 
+	* _noAction_ - If user ceases to be eligible, take no action.
+	* _other_ 					
+
+### 2019.03.13 EURA-50  *FARES* Add new ___PurchaseAction___ attribute to  ___PurchaseWindow__    with values: _purchase_,  _reserve_,  _orderWithoutPaying_,  payForPreviousOrder, other_  _
 , _seatMap_  and _openSeating_.	
   * Also reaname  ______Reserving___  \ ReservationType___ to ___SeatAllocationMethod___ and move ___SeatAllocationMethodEnumeration___ to ___VehicleSeating___ package.
   * Also add ___ReservationExpiryPeriod___ to ___Reserving___.
