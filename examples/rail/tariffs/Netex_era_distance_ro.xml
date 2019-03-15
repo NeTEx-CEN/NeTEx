@@ -35,7 +35,7 @@ Key Features
      TFC Common resources
 
 Composite Frame Example transactions
-    TFC-t Sales Transactions
+    tfc_t Sales Transactions
 
  Composite Frame COmmon definitions
       Common EURA resources
@@ -273,19 +273,18 @@ FARE PRODUCTS::: Trip
 							<!--   DISTANCE RULES  -->
 							<LimitingRule version="any" id="tfc:TFC@Common@rate@student_maximum_distance">
 								<Name>Student fare Distance is maximum of 300 km</Name>
-											<PriceUnitRef  version="any" ref="eura:kilometeres"/>
+								<PriceUnitRef version="any" ref="eura:kilometeres"/>
 								<MaximumLimitPrice>300</MaximumLimitPrice>
 							</LimitingRule>
 							<LimitingRule version="any" id="tfc:TFC@Common@rate@distance_more than_50km">
 								<Name>Reservation requited over 50 km</Name>
-											<PriceUnitRef  version="any" ref="eura:kilometeres"/>
+								<PriceUnitRef version="any" ref="eura:kilometeres"/>
 								<MinimumLimitPrice>50</MinimumLimitPrice>
 							</LimitingRule>
 							<LimitingRule version="any" id="tfc:TFC@Common@rate@distance_more than_70km">
 								<Name>Reservation requited over 70 km</Name>
-								<PriceUnitRef  version="any" ref="eura:kilometeres"/>
-
-								<MinimumLimitPrice>70</MinimumLimitPrice> 
+								<PriceUnitRef version="any" ref="eura:kilometeres"/>
+								<MinimumLimitPrice>70</MinimumLimitPrice>
 							</LimitingRule>
 						</pricingRules>
 						<RoundingRef ref="tfc:split" version="any"/>
@@ -736,6 +735,15 @@ FARE PRODUCTS::: Trip
 												<Url>https://www.transferoviarcalatori.ro/tarife/facilitati.html</Url>
 												<DiscountingRuleRef ref="tfc:TFC@Common@rate@ethnic_victim" version="any"/>
 												<TypeOfConcessionRef version="any" ref="eura:statutory"/>
+												<LocalResident>true</LocalResident>
+												<resides>
+													<ResidentialQualification version="any" id="tfc:TFC@Tariff@General@eligibilities@ethnic_victim@minority_area_blah">
+													<Name>Blah Mountain Region</Name>
+ 	
+<TopographicPlaceRef versionRef="EXTERNAL"   ref="rom::Province_of_persecutia"/>
+													<ResidenceType>born</ResidenceType>
+													</ResidentialQualification>
+												</resides>
 												<ProofRequired>membershipCard</ProofRequired>
 												<DiscountBasis>discount</DiscountBasis>
 												<companionProfiles>
@@ -881,9 +889,9 @@ Free travel tickets for all train categories, for the booking fee, 2nd class, as
 										</limitations>
 									</GenericParameterAssignment>
 								</FareStructureElement>
-								<FareStructureElement id="tfc:TFC@Tariff@General@purchase_windows" version="01">
+								<FareStructureElement id="tfc:TFC@Tariff@General@purchase_whens" version="01">
 									<Name>Eligible user types</Name>
-									<GenericParameterAssignment order="1" id="tfc:TFC@Tariff@General@purchase_windows" version="01">
+									<GenericParameterAssignment order="1" id="tfc:TFC@Tariff@General@purchase_whens" version="01">
 										<TypeOfAccessRightAssignmentRef version="any" ref="eura:can_purchase_when"/>
 										<LimitationGroupingType>OR</LimitationGroupingType>
 										<limitations>
@@ -1120,7 +1128,7 @@ Tickets will be issued for the distance traveled by a single train and the conti
 								<FareStructureElementRef ref="tfc:TFC@Tariff@General@eligibilities" version="01"/>
 								<FareStructureElementRef ref="tfc:TFC@Tariff@General@train_types" version="01"/>
 								<FareStructureElementRef ref="tfc:TFC@Tariff@General@routings" version="01"/>
-								<FareStructureElementRef ref="tfc:TFC@Tariff@General@purchase_windows" version="01"/>
+								<FareStructureElementRef ref="tfc:TFC@Tariff@General@purchase_whens" version="01"/>
 								<FareStructureElementRef ref="tfc:TFC@Tariff@General@reserving" version="01"/>
 								<FareStructureElementRef ref="tfc:TFC@Tariff@General@luggage" version="01"/>
 								<FareStructureElement id="tfc:TFC@Tariff@Trip@day_types" version="01">
@@ -1143,11 +1151,11 @@ Tickets will be issued for the distance traveled by a single train and the conti
 												<Name>Single</Name>
 												<TripType>single</TripType>
 											</RoundTrip>
-											<RoundTrip version="any" id="tfc:TFC@Tariff@Trip@trip_type@period_return@outbound">
+											<RoundTrip version="any" id="tfc:TFC@Tariff@Trip@trip_type@period_return@out">
 												<Name>Return - Outbound</Name>
 												<TripType>single</TripType>
 											</RoundTrip>
-											<RoundTrip version="any" id="tfc:TFC@Tariff@Trip@trip_type@period_return@inbound">
+											<RoundTrip version="any" id="tfc:TFC@Tariff@Trip@trip_type@period_return@back">
 												<alternativeTexts>
 													<AlternativeText>
 														<Text lang="ro" textIdType="Name">intors</Text>
@@ -1251,19 +1259,19 @@ Tickets will be issued for the distance traveled by a single train and the conti
 									<Description>A return Ticket must be used in the correct sequence (you must use the  outward portion of your return Ticket before you use the return portion). 
 						</Description>
 									<fareStructureElementsInSequence>
-										<FareStructureElementInSequence id="tfc:TFC@Tariff@Trip@composition@return@outbound@legs" version="01" order="1">
+										<FareStructureElementInSequence id="tfc:TFC@Tariff@Trip@composition@return@out@legs" version="01" order="1">
 											<Name>Outbound One or more Train rides</Name>
 											<IsFirstInSequence>true</IsFirstInSequence>
 											<IsLastInSequence>false</IsLastInSequence>
 											<AccessNumberIsLimited>false</AccessNumberIsLimited>
-											<ValidableElementRef ref="tfc:TFC@Trip_period_return@travel@outbound" version="01"/>
+											<ValidableElementRef ref="tfc:TFC@Trip_period_return@travel@out" version="01"/>
 										</FareStructureElementInSequence>
-										<FareStructureElementInSequence id="tfc:TFC@Tariff@Trip@composition@return@inbound@legs" version="01" order="2">
+										<FareStructureElementInSequence id="tfc:TFC@Tariff@Trip@composition@return@back@legs" version="01" order="2">
 											<Name>One or more Train rides</Name>
 											<IsFirstInSequence>false</IsFirstInSequence>
 											<IsLastInSequence>true</IsLastInSequence>
 											<AccessNumberIsLimited>false</AccessNumberIsLimited>
-											<ValidableElementRef ref="tfc:TFC@Trip_period_return@travel@inbound" version="01"/>
+											<ValidableElementRef ref="tfc:TFC@Trip_period_return@travel@back" version="01"/>
 										</FareStructureElementInSequence>
 									</fareStructureElementsInSequence>
 								</FareStructureElement>
@@ -1287,7 +1295,7 @@ Tickets will be issued for the distance traveled by a single train and the conti
 								<FareStructureElementRef ref="tfc:TFC@Tariff@Trip@frequency" version="01"/>
 								<FareStructureElementRef ref="tfc:TFC@Tariff@Trip@student_maximum_distance" version="01"/>
 								<FareStructureElementRef ref="tfc:TFC@Tariff@Trip@entitles" version="01"/>
-								<FareStructureElementRef ref="tfc:TFC@Tariff@General@purchase_windows" version="01"/>
+								<FareStructureElementRef ref="tfc:TFC@Tariff@General@purchase_whens" version="01"/>
 								<FareStructureElementRef ref="tfc:TFC@Tariff@General@reserving" version="01"/>
 							</fareStructureElements>
 							<validityParameterAssignments>
@@ -1313,28 +1321,28 @@ Tickets will be issued for the distance traveled by a single train and the conti
 								</GenericParameterAssignment>
 							</validityParameterAssignments>
 						</ValidableElement>
-						<ValidableElement id="tfc:TFC@Trip_period_return@travel@outbound" version="01">
+						<ValidableElement id="tfc:TFC@Trip_period_return@travel@out" version="01">
 							<validityParameterAssignments>
-								<GenericParameterAssignment id="tfc:TFC@Trip_period_return@travel@outbound@trip_type" version="01" order="1">
+								<GenericParameterAssignment id="tfc:TFC@Trip_period_return@travel@out@trip_type" version="01" order="1">
 									<Name>Trip is   single, </Name>
 									<TypeOfAccessRightAssignmentRef version="any" ref="eura:can_access"/>
 									<ValidableElementRef ref="tfc:TFC@Trip_Common@leg" version="01">CHAIN on common leg </ValidableElementRef>
 									<LimitationGroupingType>AND</LimitationGroupingType>
 									<limitations>
-										<RoundTripRef ref="tfc:TFC@Tariff@Trip@trip_type@period_return@outbound" version="any"/>
+										<RoundTripRef ref="tfc:TFC@Tariff@Trip@trip_type@period_return@out" version="any"/>
 									</limitations>
 								</GenericParameterAssignment>
 							</validityParameterAssignments>
 						</ValidableElement>
-						<ValidableElement id="tfc:TFC@Trip_period_return@travel@inbound" version="01">
+						<ValidableElement id="tfc:TFC@Trip_period_return@travel@back" version="01">
 							<validityParameterAssignments>
-								<GenericParameterAssignment id="tfc:TFC@Trip_period_return@travel@inbound@trip_type" version="01" order="1">
+								<GenericParameterAssignment id="tfc:TFC@Trip_period_return@travel@back@trip_type" version="01" order="1">
 									<Name>Trip is   single, </Name>
 									<TypeOfAccessRightAssignmentRef version="any" ref="eura:can_access"/>
 									<ValidableElementRef ref="tfc:TFC@Trip_Common@leg" version="01">CHAIN on common trip </ValidableElementRef>
 									<LimitationGroupingType>AND</LimitationGroupingType>
 									<limitations>
-										<RoundTripRef ref="tfc:TFC@Tariff@Trip@trip_type@period_return@inbound" version="any"/>
+										<RoundTripRef ref="tfc:TFC@Tariff@Trip@trip_type@period_return@back" version="any"/>
 									</limitations>
 								</GenericParameterAssignment>
 							</validityParameterAssignments>
@@ -1345,7 +1353,10 @@ Tickets will be issued for the distance traveled by a single train and the conti
 						<PreassignedFareProduct id="tfc:TFC@Trip_single" version="01">
 							<Name>Standard Single Fare</Name>
 							<ChargingMomentRef ref="eura:prepaid" version="any"/>
-							<TypeOfFareProductRef version="any" ref="eura:standard_product@all_tocs"/>
+						
+	 <typesOfFareProduct>
+	 	<TypeOfFareProductRef version="any" ref="eura:standard_product@all_tocs"/>
+		<TypeOfFareProductRef version="any" ref="eura:product_type@single_trip"/>	  </typesOfFareProduct>
 							<ConditionSummary>
 								<FareStructureType>pointToPointDistanceFare</FareStructureType>
 								<HasOperatorRestrictions>specifiedOperatorOnly</HasOperatorRestrictions>
@@ -1371,12 +1382,16 @@ Tickets will be issued for the distance traveled by a single train and the conti
 									<ValidableElementRef ref="tfc:TFC@Trip_single@leg" version="01"/>
 								</AccessRightInProduct>
 							</accessRightsInProduct>
-							<!--  ===FARE PRODUCTS ===  -->
+	<PreassignedFareProductType>singleTrip</PreassignedFareProductType> 
 						</PreassignedFareProduct>
 						<PreassignedFareProduct id="tfc:TFC@Trip_period_return" version="01">
 							<Name>Standard Return Fare</Name>
-							<ChargingMomentRef ref="eura:prepaid" version="any"/>
-							<TypeOfFareProductRef version="any" ref="eura:standard_product@all_tocs"/>
+							<ChargingMomentRef ref="eura:prepaid" version="any"/> 
+							
+								 <typesOfFareProduct>
+	 	<TypeOfFareProductRef version="any" ref="eura:standard_product@all_tocs"/>
+		<TypeOfFareProductRef version="any" ref="eura:product_type@return_trip"/>	 
+	 </typesOfFareProduct>
 							<ConditionSummary>
 								<FareStructureType>pointToPointDistanceFare</FareStructureType>
 								<HasOperatorRestrictions>specifiedOperatorOnly</HasOperatorRestrictions>
@@ -1393,23 +1408,24 @@ Tickets will be issued for the distance traveled by a single train and the conti
 							<!--  === Validable elements  ===  -->
 							<validableElements>
 								<ValidableElementRef ref="tfc:TFC@Trip_Common@leg" version="01"/>
-								<ValidableElementRef ref="tfc:TFC@Trip_period_return@travel@inbound" version="01"/>
-								<ValidableElementRef ref="tfc:TFC@Trip_period_return@travel@outbound" version="01"/>
+								<ValidableElementRef ref="tfc:TFC@Trip_period_return@travel@back" version="01"/>
+								<ValidableElementRef ref="tfc:TFC@Trip_period_return@travel@out" version="01"/>
 							</validableElements>
 							<accessRightsInProduct>
-								<AccessRightInProduct order="1" id="tfc:TFC@Trip_return@outbound" version="01">
+								<AccessRightInProduct order="1" id="tfc:TFC@Trip_return@out" version="01">
 									<Name>Outbound legs</Name>
 									<IsFirstInSequence>true</IsFirstInSequence>
 									<IsLastInSequence>false</IsLastInSequence>
-									<ValidableElementRef ref="tfc:TFC@Trip_period_return@travel@outbound" version="01"/>
+									<ValidableElementRef ref="tfc:TFC@Trip_period_return@travel@out" version="01"/>
 								</AccessRightInProduct>
-								<AccessRightInProduct order="2" id="tfc:TFC@Trip_return@inbound" version="01">
+								<AccessRightInProduct order="2" id="tfc:TFC@Trip_return@back" version="01">
 									<Name>Inbound legs</Name>
 									<IsFirstInSequence>false</IsFirstInSequence>
 									<IsLastInSequence>true</IsLastInSequence>
-									<ValidableElementRef ref="tfc:TFC@Trip_period_return@travel@inbound" version="01"/>
+									<ValidableElementRef ref="tfc:TFC@Trip_period_return@travel@back" version="01"/>
 								</AccessRightInProduct>
 							</accessRightsInProduct>
+	 <PreassignedFareProductType>periodReturnTrip</PreassignedFareProductType>
 						</PreassignedFareProduct>
 					</fareProducts>
 					<!-- ====SALES OFFER PACKAGE ========     -->
@@ -1433,23 +1449,23 @@ Tickets will be issued for the distance traveled by a single train and the conti
 						<SalesOfferPackage id="tfc:TFC@Trip_return-SOP" version="01">
 							<Name>Standard  Fare</Name>
 							<salesOfferPackageElements>
-								<SalesOfferPackageElement id="tfc:TFC@Trip_return-SOP@trip@outbound@travel_document" version="01" order="1">
+								<SalesOfferPackageElement id="tfc:TFC@Trip_return-SOP@trip@out@travel_document" version="01" order="1">
 									<Name>Tickets for return trip  </Name>
 									<PreassignedFareProductRef ref="tfc:TFC@Trip_period_return" version="01"/>
 									<validityParameterAssignments>
-										<GenericParameterAssignment id="tfc:TFC@Trip_return-SOP@trip@outbound@travel_document" version="01" order="1">
+										<GenericParameterAssignment id="tfc:TFC@Trip_return-SOP@trip@out@travel_document" version="01" order="1">
 											<Name>Separate ticket for outbound leg</Name>
 											<TypeOfAccessRightAssignmentRef version="any" ref="eura:can_use_with_type_of_travel_document"/>
-											<ValidableElementRef ref="tfc:TFC@Trip_period_return@travel@outbound" version="01"/>
+											<ValidableElementRef ref="tfc:TFC@Trip_period_return@travel@out" version="01"/>
 											<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
 											<validityParameters>
 												<TypeOfTravelDocumentRef ref="eura:printed_ticket" version="01"/>
 											</validityParameters>
 										</GenericParameterAssignment>
-										<GenericParameterAssignment id="tfc:TFC@Trip_return-SOP@trip@inbound@travel_document" version="01" order="1">
+										<GenericParameterAssignment id="tfc:TFC@Trip_return-SOP@trip@back@travel_document" version="01" order="1">
 											<Name>Separate ticket for inbound leg</Name>
 											<TypeOfAccessRightAssignmentRef version="any" ref="eura:can_use_with_type_of_travel_document"/>
-											<ValidableElementRef ref="tfc:TFC@Trip_period_return@travel@inbound" version="01"/>
+											<ValidableElementRef ref="tfc:TFC@Trip_period_return@travel@back" version="01"/>
 											<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
 											<validityParameters>
 												<TypeOfTravelDocumentRef ref="eura:printed_ticket" version="01"/>
@@ -1457,30 +1473,30 @@ Tickets will be issued for the distance traveled by a single train and the conti
 										</GenericParameterAssignment>
 									</validityParameterAssignments>
 								</SalesOfferPackageElement>
-								<SalesOfferPackageElement id="tfc:TFC@Trip_return-SOP@outbound@seat" version="01" order="2">
+								<SalesOfferPackageElement id="tfc:TFC@Trip_return-SOP@out@seat" version="01" order="2">
 									<Name>Seat reservation  ticket</Name>
 									<TypeOfTravelDocumentRef ref="eura:printed_ticket" version="01"/>
 									<SupplementProductRef ref="tfc:TFC@Trip_Supplement@Seat_Reservation" version="01"/>
 									<validityParameterAssignments>
-										<GenericParameterAssignment id="tfc:TFC@Trip_return-SOP@outbound@seat" version="01" order="1">
+										<GenericParameterAssignment id="tfc:TFC@Trip_return-SOP@out@seat" version="01" order="1">
 											<TypeOfAccessRightAssignmentRef version="any" ref="eura:can_use_with_type_of_travel_document"/>
-											<ValidableElementRef ref="tfc:TFC@Trip_Supplement@Seat_Reservation@outbound" version="01"/>
+											<ValidableElementRef ref="tfc:TFC@Trip_Supplement@Seat_Reservation@out" version="01"/>
 											<limitations>
-												<RoundTripRef ref="tfc:TFC@Tariff@Trip@trip_type@period_return@outbound" version="any"/>
+												<RoundTripRef ref="tfc:TFC@Tariff@Trip@trip_type@period_return@out" version="any"/>
 											</limitations>
 										</GenericParameterAssignment>
 									</validityParameterAssignments>
 								</SalesOfferPackageElement>
-								<SalesOfferPackageElement id="tfc:TFC@Trip_return-SOP@inbound@seat" version="01" order="4">
+								<SalesOfferPackageElement id="tfc:TFC@Trip_return-SOP@back@seat" version="01" order="4">
 									<Name>Seat reservation  ticket</Name>
 									<TypeOfTravelDocumentRef ref="eura:printed_ticket" version="01"/>
 									<SupplementProductRef ref="tfc:TFC@Trip_Supplement@Seat_Reservation" version="01"/>
 									<validityParameterAssignments>
-										<GenericParameterAssignment id="tfc:TFC@Trip_return-SOP@inbound@seat" version="01" order="1">
+										<GenericParameterAssignment id="tfc:TFC@Trip_return-SOP@back@seat" version="01" order="1">
 											<TypeOfAccessRightAssignmentRef version="any" ref="eura:can_use_with_type_of_travel_document"/>
-											<ValidableElementRef ref="tfc:TFC@Trip_Supplement@Seat_Reservation@inbound" version="01"/>
+											<ValidableElementRef ref="tfc:TFC@Trip_Supplement@Seat_Reservation@back" version="01"/>
 											<limitations>
-												<RoundTripRef ref="tfc:TFC@Tariff@Trip@trip_type@period_return@inbound" version="any"/>
+												<RoundTripRef ref="tfc:TFC@Tariff@Trip@trip_type@period_return@back" version="any"/>
 											</limitations>
 										</GenericParameterAssignment>
 									</validityParameterAssignments>
@@ -1574,12 +1590,12 @@ Tickets will be issued for the distance traveled by a single train and the conti
 							<ReturnFareTwiceSingle>true</ReturnFareTwiceSingle>
 							<!--- ===GEOGRAPHICAL STRUCTURE FACTORS==== -->
 							<fareStructureElements>
-								<!-- all availabel OD pairs -->
+								<!-- all availableOD pairs -->
 								<FareStructureElementRef ref="tfc:TFC@ODs@p2p_OD" version="01"/>
 								<!-- General Rules -->
 								<FareStructureElementRef ref="tfc:TFC@Tariff@General@eligibilities" version="01"/>
 								<FareStructureElementRef ref="tfc:TFC@Tariff@General@train_types" version="01"/>
-								<FareStructureElementRef ref="tfc:TFC@Tariff@General@purchase_windows" version="01"/>
+								<FareStructureElementRef ref="tfc:TFC@Tariff@General@purchase_whens" version="01"/>
 								<FareStructureElementRef ref="tfc:TFC@Tariff@General@reserving" version="01"/>
 								<FareStructureElementRef ref="tfc:TFC@Tariff@General@luggage" version="01"/>
 								<!-- Trip Rules -->
@@ -1601,6 +1617,9 @@ Tickets will be issued for the distance traveled by a single train and the conti
 											<EntitlementRequired id="tfc:TFC@Tariff@Trip@supplements@prerequisites@return" version="any">
 												<Name>Requires  Trip ticket</Name>
 												<PreassignedFareProductRef ref="tfc:TFC@Trip_period_return" version="01"/>
+												<JourneyConstraint>sameServiceJourney</JourneyConstraint>
+												<OriginConstraint>sameAsOrigin</OriginConstraint>
+												<DestinationConstraint>sameAsDestination</DestinationConstraint>
 											</EntitlementRequired>
 										</limitations>
 									</GenericParameterAssignment>
@@ -1621,11 +1640,11 @@ Tickets will be issued for the distance traveled by a single train and the conti
 								<FareStructureElementRef ref="tfc:TFC@Tariff@Trip@supplements@prerequisites" version="01"/>
 							</fareStructureElements>
 						</ValidableElement>
-						<ValidableElement id="tfc:TFC@Trip_Supplement@Seat_Reservation@outbound" version="01">
+						<ValidableElement id="tfc:TFC@Trip_Supplement@Seat_Reservation@out" version="01">
 							<Name>Seat Reservation  - outbound</Name>
 							<Description>Reservation for a seat on a specific train between two points</Description>
 							<validityParameterAssignments>
-								<GenericParameterAssignment order="1" id="tfc:TFC@Trip_Supplement@Seat_Reservation@outbound" version="01">
+								<GenericParameterAssignment order="1" id="tfc:TFC@Trip_Supplement@Seat_Reservation@out" version="01">
 									<Name>Must be for origin to destination</Name>
 									<TypeOfAccessRightAssignmentRef version="any" ref="eura:prerequisites"/>
 									<ValidableElementRef ref="tfc:TFC@Trip_Supplement@COMMON" version="01">CHAIN on basic supplement</ValidableElementRef>
@@ -1636,11 +1655,11 @@ Tickets will be issued for the distance traveled by a single train and the conti
 								</GenericParameterAssignment>
 							</validityParameterAssignments>
 						</ValidableElement>
-						<ValidableElement id="tfc:TFC@Trip_Supplement@Seat_Reservation@inbound" version="01">
+						<ValidableElement id="tfc:TFC@Trip_Supplement@Seat_Reservation@back" version="01">
 							<Name>Seat Reservation  - outbound</Name>
 							<Description>Reservation for a seat on a specific train between two points</Description>
 							<validityParameterAssignments>
-								<GenericParameterAssignment order="1" id="tfc:TFC@Trip_Supplement@Seat_Reservation@inbound" version="01">
+								<GenericParameterAssignment order="1" id="tfc:TFC@Trip_Supplement@Seat_Reservation@back" version="01">
 									<Name>Must be for    destination to origin</Name>
 									<TypeOfAccessRightAssignmentRef version="any" ref="eura:prerequisites"/>
 									<ValidableElementRef ref="tfc:TFC@Trip_Supplement@COMMON" version="01">Chain on basic supplement</ValidableElementRef>
@@ -1692,7 +1711,13 @@ Tickets will be issued for the distance traveled by a single train and the conti
 							<Name lang="ro">Tichet de Rezervare</Name>
 							<Description>Seat reservation Clasa 1 and Casa 2</Description>
 							<ChargingMomentRef ref="eura:prepaid" version="any"/>
-							<TypeOfFareProductRef version="any" ref="eura:standard_product@all_tocs"/>
+				 
+							 <typesOfFareProduct>
+	 	<TypeOfFareProductRef version="any" ref="eura:standard_product@all_tocs"/>
+		<TypeOfFareProductRef version="any" ref="eura:product_type@trip_supplement"/>	 
+	 </typesOfFareProduct>
+
+							
 							<ConditionSummary>
 								<IsSupplement/>
 								<RequiresReservation>true</RequiresReservation>
@@ -1794,14 +1819,14 @@ Dear travelers, we inform you that no reservations are made at this time. Thank 
 							<!--  === VALIDABLE ELEMENTs===  -->
 							<validableElements>
 								<ValidableElementRef ref="tfc:TFC@Trip_Supplement@COMMON" version="01">Chain on basic supplement</ValidableElementRef>
-								<ValidableElementRef ref="tfc:TFC@Trip_Supplement@Seat_Reservation@outbound" version="01"/>
-								<ValidableElementRef ref="tfc:TFC@Trip_Supplement@Seat_Reservation@inbound" version="01"/>
+								<ValidableElementRef ref="tfc:TFC@Trip_Supplement@Seat_Reservation@out" version="01"/>
+								<ValidableElementRef ref="tfc:TFC@Trip_Supplement@Seat_Reservation@back" version="01"/>
 							</validableElements>
 							<!--  === ACCESS RIGHTs ===  -->
 							<accessRightsInProduct>
 								<AccessRightInProduct order="1" id="tfc:TFC@Trip_Supplement@Seat_Reservation" version="01">
 									<Name>Product covers domestic trips</Name>
-									<ValidableElementRef ref="tfc:TFC@Trip_Supplement@Seat_Reservation@outbound" version="01"/>
+									<ValidableElementRef ref="tfc:TFC@Trip_Supplement@Seat_Reservation@out" version="01"/>
 								</AccessRightInProduct>
 							</accessRightsInProduct>
 							<prices>
@@ -1816,6 +1841,8 @@ Dear travelers, we inform you that no reservations are made at this time. Thank 
 									<SupplementProductRef ref="tfc:TFC@Trip_Supplement@Seat_Reservation" version="01"/>
 								</FareProductPrice>
 							</prices>
+								 
+	  <SupplementProductType>seatReservation</SupplementProductType>
 						</SupplementProduct>
 						<SupplementProduct id="tfc:TFC@Trip_Supplement@Bicycle" version="01">
 							<Name lang="ro">Tarif transport biciclete</Name>
@@ -1849,6 +1876,7 @@ Dear travelers, we inform you that no reservations are made at this time. Thank 
 									<FareProductRef ref="tfc:TFC@Trip_Supplement@Bicycle" version="01"/>
 								</FareProductPrice>
 							</prices>
+								  <SupplementProductType>bicycle</SupplementProductType>
 						</SupplementProduct>
 						<SupplementProduct id="tfc:TFC@Trip_Supplement@Baggage" version="01">
 							<Name lang="ro">tarif pentru transportul bagajelor insotite sau neinsotite</Name>
@@ -1882,6 +1910,7 @@ Dear travelers, we inform you that no reservations are made at this time. Thank 
 									<FareProductRef ref="tfc:TFC@Trip_Supplement@Baggage" version="01"/>
 								</FareProductPrice>
 							</prices>
+								  <SupplementProductType>extraLuggage</SupplementProductType>
 						</SupplementProduct>
 						<SupplementProduct id="tfc:TFC@Trip_Supplement@Dog" version="01">
 							<Name lang="ro">tariful de transport a unui caine</Name>
@@ -1911,6 +1940,7 @@ Dear travelers, we inform you that no reservations are made at this time. Thank 
 									<FareProductRef ref="tfc:TFC@Trip_Supplement@Dog" version="01"/>
 								</FareProductPrice>
 							</prices>
+									  <SupplementProductType>dog</SupplementProductType>
 						</SupplementProduct>
 					</fareProducts>
 					<!-- ====SALES OFFER PACKAGE ========     -->
@@ -1939,7 +1969,7 @@ Dear travelers, we inform you that no reservations are made at this time. Thank 
 							<GroupOfSalesOfferPackagesRef ref="tfc:TFC@Trip_Supplement@Common-GSOP" version="01"/>
 						</SalesOfferPackage>
 						<SalesOfferPackage id="tfc:TFC@Trip_Supplement@Baggage-SOP" version="01">
-							<Name>Standard  Fare</Name>
+							<Name>Extra Baggage Ticket</Name>
 							<salesOfferPackageElements>
 								<SalesOfferPackageElement id="tfc:TFC@Trip_Supplement@Baggage-SOP@travel_document" version="01" order="2">
 									<Name>Baggage  ticket</Name>
@@ -1950,7 +1980,7 @@ Dear travelers, we inform you that no reservations are made at this time. Thank 
 							<GroupOfSalesOfferPackagesRef ref="tfc:TFC@Trip_Supplement@Common-GSOP" version="01"/>
 						</SalesOfferPackage>
 						<SalesOfferPackage id="tfc:TFC@Trip_Supplement@Dog-SOP" version="01">
-							<Name>Standard  Fare</Name>
+							<Name>Dog  ticket</Name>
 							<salesOfferPackageElements>
 								<SalesOfferPackageElement id="tfc:TFC@Trip_Supplement@Dog-SOP@travel_document" version="01" order="2">
 									<Name>Dog  ticket</Name>
@@ -7591,10 +7621,10 @@ State Secretariat for Revolutionary Issues in December 1989: : 12 free round tri
 								</ResponsibilityRoleAssignment>
 							</roles>
 						</ResponsibilitySet>
-						<ResponsibilitySet version="any" id="tfc-t:tfc_sales">
+						<ResponsibilitySet version="any" id="tfc_t:tfc_sales">
 							<Name>TFC Sales Example Data owner</Name>
 							<roles>
-								<ResponsibilityRoleAssignment version="any" id="tfc-t:tfc_sales">
+								<ResponsibilityRoleAssignment version="any" id="tfc_t:tfc_sales">
 									<DataRoleType>creates aggregates distributes</DataRoleType>
 									<StakeholderRoleType>Operation</StakeholderRoleType>
 									<ResponsibleOrganisationRef ref="uic:3181" version="any"/>
@@ -7696,18 +7726,18 @@ c
 				</ServiceCalendarFrame>
 			</frames>
 		</CompositeFrame>
-		<CompositeFrame id="tfc-t:Sample_Transactions" version="01" responsibilitySetRef="tfc-t:tfc_sales">
+		<CompositeFrame id="tfc_t:Sample_Transactions" version="01" responsibilitySetRef="tfc_t:tfc_sales">
 			<FrameDefaults>
-				<DefaultCodespaceRef ref="tfc-t"/>
+				<DefaultCodespaceRef ref="tfc_t"/>
 				<DefaultDataSourceRef ref="tfc:example" version="any"/>
-				<DefaultResponsibilitySetRef ref="tfc-t:tfc_sales" version="any"/>
+				<DefaultResponsibilitySetRef ref="tfc_t:tfc_sales" version="any"/>
 			</FrameDefaults>
 			<prerequisites>
 				<CompositeFrameRef version="01" ref="tfc:TFC@DistanceTariff_Example"/>
 			</prerequisites>
 			<!--- ===== CONTENTS ======= -->
 			<frames>
-				<SalesTransactionFrame version="any" id="tfc-t:Sales_Transactions" responsibilitySetRef="tfc-t:tfc_sales">
+				<SalesTransactionFrame version="any" id="tfc_t:Sales_Transactions" responsibilitySetRef="tfc_t:tfc_sales">
 					<ValidBetween>
 						<FromDate>2018-07-08T01:00:00</FromDate>
 						<ToDate>2018-08-08T01:24:00</ToDate>
@@ -7716,350 +7746,491 @@ c
 					<Description>Netex code example based on   TFC (Romania) data</Description>
 					<!--- ======= CODESPACEs======== -->
 					<codespaces>
-						<Codespace id="tfc-t">
-							<Xmlns>tfc-t</Xmlns>
+						<Codespace id="tfc-cd">
+							<Xmlns>tfc-cd</Xmlns>
+							<XmlnsUrl>https://www.transferoviarcalatori.ro/</XmlnsUrl>
+							<Description>Transferoviar Calatori customer data</Description>
+						</Codespace>
+						<Codespace id="tfc_t">
+							<Xmlns>tfc_t</Xmlns>
 							<XmlnsUrl>https://www.transferoviarcalatori.ro/</XmlnsUrl>
 							<Description>Transferoviar Calatori transaction</Description>
 						</Codespace>
 					</codespaces>
 					<!--- =======FRAME DEFAULTS======== -->
 					<FrameDefaults>
-						<DefaultCodespaceRef ref="tfc-t"/>
+						<DefaultCodespaceRef ref="tfc_t"/>
 						<DefaultDataSourceRef ref="tfc:example" version="any"/>
-						<DefaultResponsibilitySetRef ref="tfc-t:tfc_sales" version="any"/>
+						<DefaultResponsibilitySetRef ref="tfc_t:tfc_sales" version="any"/>
 					</FrameDefaults>
-					<fareContracts>
-						<FareContract version="any" id="tfc-t:ANONYMOUS@transactions">
-							<Name>Sales to Anonymous customers </Name>
-							<StartDate>2018-07-08T01:00:00</StartDate>
-							<EndDate>2018-08-08T01:24:00</EndDate>
-							<CustomerRef ref="tfc-t:ANONYMOUS" versionRef="TODO"/>
-							<TypeOfFareContractRef ref="tfc:contract@trip" version="any"/>
-							<fareContractEntries>
-								<SalesTransaction version="any" id="tfc-t:ANONYMOUS@trans12345001">
-									<Description>Single Ticket - Bucharest North to Buzau, first class, adult, bought at ticket machine, issued as  paper ticket </Description>
-									<Date>2018-07-08T01:07:00</Date>
-									<TypeOfFareContractEntryRef ref="eura:product_purchase"/>
-									<Amount>36.30</Amount>
-									<PriceUnitRef ref="eura:Kilometres"/>
-									<Units>139</Units>
-									<ruleStepResults>
-										<RuleStepResult id="tfc-t:ANONYMOUS@trans12345001@product_purchase@trip@single0" order="1">
-											<GeographicalIntervalPriceRef ref="tfc:Single@preboard@R@C1@full@121+140" version="01"/>
-											<Amount>30.50</Amount>
-											<Currency>LEI</Currency>
-											<PriceUnitRef ref="eura:Kilometres"/>
-											<Units>139</Units>
-											<RateUsed>0.19</RateUsed>
-											<AdjustmentAmount>5.80</AdjustmentAmount>
-											<DiscountingRuleRef ref="tfc:TFC@Common@rate@tva_tax"/>
-											<RoundingRef ref="tfc:split" version="any"/>
-											<Narrative>Application of TVA </Narrative>
-										</RuleStepResult>
-									</ruleStepResults>
-									<PaymentMethod>cash</PaymentMethod>
-									<travelSpecifications>
-										<TravelSpecification version="any" id="tfc-t:ANONYMOUS@trans12345001@product_purchase@trip@single">
-											<Date>2018-07-08T01:07:00</Date>
-											<GeographicalIntervalPriceRef ref="tfc:Single@preboard@R@C1@full@121+140" version="01"/>
-											<Amount>36.30</Amount>
-											<PriceUnitRef ref="tfc:LEI" version="any"/>
-											<ruleStepResults>
-												<RuleStepResult id="tfc-t:ANONYMOUS@trans12345001@product_purchase@trip@single" order="1">
-													<GeographicalIntervalPriceRef ref="tfc:Single@preboard@R@C1@full@121+140" version="01"/>
-													<Amount>30.50</Amount>
-													<Currency>LEI</Currency>
+					<customers>
+						<!--- IMPERSONAL  TRANSACTIONS -->
+						<Customer id="tfc_cd:ANONYMOUS" version="01">
+							<Surname>Placeholder for impersonal transaction Anonymous</Surname>
+							<customerAccounts>
+								<CustomerAccount id="tfc_cd:AC00000001" version="01">
+									<Name>Clearing account for  for impersonal transactions</Name>
+									<StartDate>2000-01-01T00:00:00Z</StartDate>
+									<TypeOfCustomerAccountRef versionRef="EXTERNAL" ref="tfc:company"/>
+									<CustomerAccountStatusType>active</CustomerAccountStatusType>
+									<fareContracts>
+										<FareContract version="any" id="tfc-cdb:ANONYMOUS@transactions">
+											<Name>Sales to Anonymous customers </Name>
+											<StartDate>2018-07-08T01:00:00</StartDate>
+											<EndDate>2018-08-08T01:24:00</EndDate>
+											<CustomerRef version="01" ref="tfc-cd:ANONYMOUS"/>
+											<CustomerAccountRef version="01" ref="tfc_cd:ANONYMOUS"/>
+											<TypeOfFareContractRef ref="tfc:contract@trip" version="any"/>
+											<fareContractEntries>
+												<SalesTransaction version="any" id="tfc_t:ANONYMOUS@trans12345001">
+													<Description>Single Ticket - Bucharest North to Buzau, first class, adult, bought at ticket machine, issued as  paper ticket </Description>
+													<Date>2018-07-08T01:07:00</Date>
+													<TypeOfFareContractEntryRef ref="eura:product_purchase"/>
+													<Amount>36.30</Amount>
 													<PriceUnitRef ref="eura:Kilometres"/>
 													<Units>139</Units>
-													<RateUsed>0.19</RateUsed>
-													<AdjustmentAmount>5.80</AdjustmentAmount>
-													<DiscountingRuleRef ref="tfc:TFC@Common@rate@tva_tax"/>
-													<RoundingRef ref="tfc:split" version="any"/>
-													<Narrative>Application of TVA </Narrative>
-												</RuleStepResult>
-											</ruleStepResults>
-											<StartOfValidity>2018-07-08T01:07:00</StartOfValidity>
-											<specificParameterAssignments>
-												<SpecificParameterAssignment version="any" order="1" id="tfc-t:ANONYMOUS@trans12345001@product_purchase@trip@single@Bucharest+Buzau">
-													<ValidableElementRef ref="tfc:TFC@Trip_single@leg" version="01"/>
-													<PreassignedFareProductRef ref="tfc:TFC@Trip_single" version="01"/>
-														<TariffRef ref="TFC@Tariff@Trip" version="01"/>
-													<FareStructureElementRef version="01" ref="tfc:TFC@Tariff@Trip@composition@single"/>
-													<DistanceMatrixElementRef ref="tfc:dme_10108+50342" version="01">Bucharest to Buzau</DistanceMatrixElementRef>
-													<SalesOfferPackageRef version="01" ref="tfc:TFC@Trip_single-SOP"/>
-													<limitations>
-														<UserProfileRef version="any" ref="tfc:TFC@Tariff@General@eligibilities@adult"/>
-													</limitations>
-													<validityParameters>
-														<ClassOfUseRef ref="eura:first" version="any"/>
-															
-				
-														<TypeOfProductCategoryRef  version="any" ref="eura:interregional"/>
-														
-														<TypeOfTariffRef version="any" ref="eura:Distance_kilometers"/> 	
-															
-														<TrainNumberRef ref="tfc:E425" versionRef="EXTERNAL"/>		
-															<TrainElementRef ref="tfc:Carriage6" versionRef="EXTERNAL"/>												
-														<PassengerSeatRef ref="tfc:1234" versionRef="EXTERNAL">Seat Reservation</PassengerSeatRef>
-														<TypeOfFareProductRef version="any" ref="eura:product_type@single_trip"/>
-														<TypeOfFareProductRef version="any" ref="eura:standard_product@single_toc"/>
-														<ChargingMomentRef version="any" ref="eura:prepaid"/>		
-														<DistributionChannelRef ref="tfc:TFC@Common@self_service_ticket_machine" version="01"/>
-																<FulfilmentMethodRef ref="tfc:Tcollect_" version="01"/>
-														<TypeOfTravelDocumentRef ref="eura:printed_ticket" version="01"/>
-													</validityParameters>
-													<GeographicalIntervalRef ref="tfc:TFC@Tariff@General@geographic_intervals@d_121+140" version="01"/>
-													
- 												
-													
-													
-												</SpecificParameterAssignment>
-											</specificParameterAssignments>
-										</TravelSpecification>
-									</travelSpecifications>
-									<TravelDocumentRef ref="tfc-t:1267459" versionRef="EXTERNAL">Ticket number</TravelDocumentRef>
-								</SalesTransaction>
-							</fareContractEntries>
-						</FareContract>
-						<FareContract version="any" id="tfc-t:Customer5645@contract002">
-							<Name>Season pass contract for Customer 5645 </Name>
-							<Description>Contract is for one year, renewing every month</Description>
-							<StartDate>2018-07-08T01:07:00</StartDate>
-							<EndDate>2019-07-08T01:07:00</EndDate>
-							<Status>Active</Status>
-							<CustomerRef ref="tfc-t:Customer5645" versionRef="TODO"/>
-							<TypeOfFareContractRef ref="tfc:contract@season_pass" version="any"/>
-							<fareContractEntries>
-								<SalesTransaction version="any" id="tfc-t:Customer5645@trans005">
-									<Description>Season Pass - Bucharest North to Buzau ; 1 Month, second class, bought at counter</Description>
-									<Date>2018-07-08T01:07:00</Date>
-									<TypeOfFareContractEntryRef ref="eura:product_purchase" version="any"/>
-									<Amount>30.50</Amount>
-									<PriceUnitRef ref="eura:Kilometres"/>
-									<Units>139</Units>
-									<ruleStepResults>
-										<RuleStepResult id="tfc-t:ANONYMOUS@trans12345001@product_purchase@trip@single0" order="1">
-											<GeographicalIntervalPriceRef ref="tfc:Single@preboard@R@C1@full@121+140" version="01"/>
-											<Amount>30.50</Amount>
-											<Currency>LEI</Currency>
-											<PriceUnitRef ref="eura:Kilometres"/>
-											<Units>139</Units>
-											<RateUsed>0.19</RateUsed>
-											<AdjustmentAmount>5.80</AdjustmentAmount>
-											<DiscountingRuleRef ref="tfc:TFC@Common@rate@tva_tax"/>
-											<RoundingRef ref="tfc:split" version="any"/>
-											<Narrative>Application of TVA </Narrative>
-										</RuleStepResult>
-									</ruleStepResults>
-									<PaymentMethod>cash</PaymentMethod> 
-									<CardNumber>5245-1234-4567-0099</CardNumber>
-									<travelSpecifications>
-										<TravelSpecification version="any" id="tfc-t:Customer5645@trans005@product_purchase@pass@season">
-											<Date>2018-07-08T01:07:00</Date>
-											<TypeOfFareContractEntryRef ref="eura:product_purchase" version="any"/>
-											<Amount>4.90</Amount>
-											<StartOfValidity>2018-07-08T01:07:00</StartOfValidity>
-											<specificParameterAssignments>
-												<SpecificParameterAssignment version="any" order="1" id="tfc-t:trans005@trans005@product_purchase@pass@season@Bucharest+Buzau">
-													<ValidableElementRef ref="tfc:TFC@Season_pass@repeated_trip@train_p2p" version="01"/>
-													<PreassignedFareProductRef ref="tfc:TFC@Season_pass" version="01"/>
-													<FareStructureElementRef version="01" ref="tfc:TFC@Tariff@Pass@Season@COMPOSITION"/>
-													<DistanceMatrixElementRef ref="tfc:dme_10108+50342" version="01">Bucharest to Buzau</DistanceMatrixElementRef>
-													<SalesOfferPackageRef version="01" ref="tfc:TFC@Season_pass-SOP"/>
-													<limitations>
-														<UserProfileRef version="any" ref="tfc:TFC@Tariff@General@eligibilities@senior"/>
-														<FrequencyOfUseRef version="any" ref="tfc:TFC@Tariff@Pass@Season@validity@unlimited_use"/>
-														<UsageValidityPeriodRef version="any" ref="tfc:TFC@Tariff@Pass@Season@validity@month"/>
-													</limitations>
-													<validityParameters>
-														<ClassOfUseRef ref="eura:second" version="any"/>
-														<DistributionChannelRef ref="eura:at_counter" version="01"/>
-														<TypeOfTravelDocumentRef ref="eura:pass" version="01"/>
-													</validityParameters>
-													
-													<TimeIntervalRef ref="tfc:TFC@Tariff@Pass@Season@1M" version="01"/>
-													<GeographicalIntervalRef ref="tfc:TFC@Tariff@General@geographic_intervals@d_121+140" version="01"/>
-												</SpecificParameterAssignment>
-											</specificParameterAssignments>
-										</TravelSpecification>
-									</travelSpecifications>
-									<TravelDocumentRef ref="tfc-t:PASS134455" versionRef="any">EXTERNAL REFERENCE</TravelDocumentRef>
-								</SalesTransaction>
-							</fareContractEntries>
-						</FareContract>
-						<FareContract version="any" id="tfc-t:Customer55678@contract0012">
-							<Name>Discount  pass contract for Customer 55678 </Name>
-							<Description>Contract is for one year,  start 1st Jan</Description>
-							<StartDate>2018-01-01T00:00:00</StartDate>
-							<EndDate>2018-12-31T24:00:00</EndDate>
-							<Status>Active</Status>
-							<CustomerRef ref="tfc-t:Customer55678" versionRef="TODO"/>
-							<TypeOfFareContractRef ref="tfc:contract@discount" version="any"/>
-							<fareContractEntries>
-								<SalesTransaction version="any" id="tfc-t:Customer55678@trans005">
-									<Name>Discounted Ticket Purchase</Name>
-									<Description>Discounted Ticket Purchase</Description>
-									<Date>2018-07-08T01:07:00</Date>
-									<TypeOfFareContractEntryRef ref="eura:product_purchase" version="any"/>
-									<Amount>0.00</Amount>
-									<PriceUnitRef ref="tfc:LEI" version="any"/>
-									<travelSpecifications>
-										<TravelSpecification version="any" id="tfc-t:Customer55678@contract002@discount@access@#2">
-											<Name>Use of  statutory free discount  for veteran.  Access no 2</Name>
-											<Date>2018-07-08T01:07:00</Date>
-											<TypeOfFareContractEntryRef ref="eura:product_purchase" version="any"/>
-											<Amount>2</Amount>
-											<PriceUnitRef ref="tfc:access" version="any"/>
-											<StartOfValidity>2018-07-08T05:25:00</StartOfValidity>
-											<specificParameterAssignments>
-												<SpecificParameterAssignment version="any" order="1" id="Customer55678@contract0012@discount@access@#2">
-													<ValidableElementRef ref="tfc:TFC@Products@Discount@Statutory_Right+Travel@consume" version="01"/>
-													<SaleDiscountRightRef ref="tfc:TFC@Discount@Statutory_Right+Travel" version="01"/>
-													<FareStructureElementRef version="01" ref="tfc:TFC@Tariff@Discount@Statutory_Right+Travel@COMPOSITION"/>
-													<SalesOfferPackageRef version="01" ref="tfc:TFC@Discount@Statutory_Right+Travel-SOP"/>
-													<LimitationGroupingType>AND</LimitationGroupingType>
-													<limitations>
-														<UserProfileRef version="any" ref="tfc:TFC@Tariff@General@eligibilities@veteran"/>
-														<CompanionProfileRef version="any" ref="tfc:TFC@Tariff@General@eligibilities@veteran@companion@personal_assistant"/>
-														<UsageValidityPeriodRef version="any" ref="tfc:TFC@Discount@Statutory_Right+Travel@validity@use_within_1Y"/>
-													</limitations>
-													<validityParameters>
-														<DistributionChannelRef ref="eura:at_counter" version="01"/>
-													</validityParameters>
-													<QualityStructureFactorRef ref="tfc:TFC@Tariff@Discount@Statutory_Right+Travel@multi_trip@12" version="1"/>
-												</SpecificParameterAssignment>
-											</specificParameterAssignments>
-										</TravelSpecification>
-										<TravelSpecification version="any" id="tfc-t:Customer55678@contract002@discount@outbound">
-											<Name>Veteran and assistant on same ticket - outbound  </Name>
-											<Date>2018-07-08T01:07:00</Date>
-											<TypeOfFareContractEntryRef ref="eura:product_purchase" version="any"/>
-											<Amount>0.00</Amount>
-											<PriceUnitRef ref="tfc:LEI" version="any"/>
-											<StartOfValidity>2018-07-08T05:25:00</StartOfValidity>
-											<specificParameterAssignments>
-												<SpecificParameterAssignment version="any" order="1" id="Customer55678@contract0012@discount@product_purchase@trip@return@Bucharest+Buzau@outbound">
-													<Name>Trip Ticket for veteran and assistant</Name>
-													<ValidableElementRef ref="tfc:TFC@Trip_period_return@travel@outbound" version="01"/>
-													<PreassignedFareProductRef ref="tfc:TFC@Trip_period_return" version="01"/>
-													<FareStructureElementRef version="01" ref="tfc:TFC@Tariff@Trip@composition@period_return"/>
-													<DistanceMatrixElementRef ref="tfc:dme_10108+50342" version="01">Bucharest to Buzau</DistanceMatrixElementRef>
-													<SalesOfferPackageRef version="01" ref="tfc:TFC@Trip_return-SOP"/>
-													<limitations>
-														<UserProfileRef version="any" ref="tfc:TFC@Tariff@General@eligibilities@veteran"/>
-														<CompanionProfileRef version="any" ref="tfc:TFC@Tariff@General@eligibilities@veteran@companion@personal_assistant"/>
-														<FrequencyOfUseRef ref="tfc:TFC@Tariff@Trip@frequency@single" version="any"/>
-														<InterchangingRef ref="tfc:TFC@Tariff@Trip@frequency@single" version="any"/>
-													</limitations>
-													<validityParameters>
-														<ServiceJourneyRef ref="tfc:train-IR1571" versionRef="TODO">Specific journey for reservation</ServiceJourneyRef>
-														<ClassOfUseRef ref="eura:first" version="any"/>
-														<DistributionChannelRef ref="eura:at_counter" version="01"/>
-														<TypeOfTravelDocumentRef ref="eura:printed_ticket" version="01"/>
-													</validityParameters>
-												</SpecificParameterAssignment>
-												<SpecificParameterAssignment version="any" order="2" id="Customer55678@contract0012@discount@product_purchase@trip@return@Bucharest+Buzau@outbound@seat_reservation@veteran">
-													<Name>Seat Reservation  for veteran </Name>
-													<ValidableElementRef ref="tfc:TFC@Trip_Supplement@Seat_Reservation@outbound" version="01"/>
-													<SupplementProductRef ref="tfc:TFC@Trip_Supplement@Seat_Reservation" version="01"/>
-													<DistanceMatrixElementRef ref="tfc:dme_10108+50342" version="01">Bucharest to Buzau</DistanceMatrixElementRef>
-													<SalesOfferPackageRef version="01" ref="tfc:TFC@Trip_Supplement@Seat_Reservation-SOP"/>
-													<limitations>
-														<UserProfileRef version="any" ref="tfc:TFC@Tariff@General@eligibilities@veteran"/>
-													</limitations>
-													<validityParameters>
-														<ServiceJourneyRef ref="tfc:train-IR1571" versionRef="TODO">Specific journey for reservation</ServiceJourneyRef>
-														<ClassOfUseRef ref="eura:first" version="any"/>
-														<DistributionChannelRef ref="eura:at_counter" version="01"/>
-														<TypeOfTravelDocumentRef ref="eura:printed_ticket" version="01"/>
-													</validityParameters>
-												</SpecificParameterAssignment>
-												<SpecificParameterAssignment version="any" order="3" id="Customer55678@contract0012@discount@product_purchase@trip@return@Bucharest+Buzau@outbound@seat_reservation@personal_assistant">
-													<Name>Seat Reservation  for assisantt </Name>
-													<ValidableElementRef ref="tfc:TFC@Trip_Supplement@Seat_Reservation@outbound" version="01"/>
-													<SupplementProductRef ref="tfc:TFC@Trip_Supplement@Seat_Reservation" version="01"/>
-													<DistanceMatrixElementRef ref="tfc:dme_10108+50342" version="01">Bucharest to Buzau</DistanceMatrixElementRef>
-													<SalesOfferPackageRef version="01" ref="tfc:TFC@Trip_Supplement@Seat_Reservation-SOP"/>
-													<limitations>
-														<CompanionProfileRef version="any" ref="tfc:TFC@Tariff@General@eligibilities@veteran@companion@personal_assistant"/>
-													</limitations>
-													<validityParameters>
-														<ServiceJourneyRef ref="tfc:train-IR1571" versionRef="TODO">Specific journey for reservation</ServiceJourneyRef>
-														<ClassOfUseRef ref="eura:first" version="any"/>
-														<DistributionChannelRef ref="eura:at_counter" version="01"/>
-														<TypeOfTravelDocumentRef ref="eura:printed_ticket" version="01"/>
-													</validityParameters>
-												</SpecificParameterAssignment>
-											</specificParameterAssignments>
-										</TravelSpecification>
-										<TravelSpecification version="any" id="tfc-t:Customer55678@contract002@discount@trip@return@inbound">
-											<Name>Veteran and assistant on same ticket - inbound </Name>
-											<Date>2018-07-08T01:07:00</Date>
-											<TypeOfFareContractEntryRef ref="eura:product_purchase" version="any"/>
-											<Amount>0.00</Amount>
-											<PriceUnitRef ref="tfc:LEI" version="any"/>
-											<StartOfValidity>2018-07-09T18:40:00</StartOfValidity>
-											<specificParameterAssignments>
-												<SpecificParameterAssignment version="any" order="1" id="Customer55678@contract0012@discount@product_purchase@trip@return@inbound@Buzau+Bucharest @trip">
-													<Name>Trip Ticket for veteran and assistant</Name>
-													<ValidableElementRef ref="tfc:TFC@Trip_period_return@travel@inbound" version="01"/>
-													<PreassignedFareProductRef ref="tfc:TFC@Trip_period_return" version="01"/>
-													<FareStructureElementRef version="01" ref="tfc:TFC@Tariff@Trip@composition@period_return"/>
-													<DistanceMatrixElementRef ref="tfc:dme_50342+10108" version="01">Buzau to Bucharest</DistanceMatrixElementRef>
-													<SalesOfferPackageRef version="01" ref="tfc:TFC@Trip_return-SOP"/>
-													<limitations>
-														<UserProfileRef version="any" ref="tfc:TFC@Tariff@General@eligibilities@veteran"/>
-														<CompanionProfileRef version="any" ref="tfc:TFC@Tariff@General@eligibilities@veteran@companion@personal_assistant"/>
-														<FrequencyOfUseRef ref="tfc:TFC@Tariff@Trip@frequency@single" version="any"/>
-														<InterchangingRef ref="tfc:TFC@Tariff@Trip@frequency@single" version="any"/>
-													</limitations>
-													<validityParameters>
+													<PaymentMethod>cash</PaymentMethod>
+													<travelSpecifications>
+														<TravelSpecification version="any" id="tfc_t:ANONYMOUS@trans12345001@product_purchase@trip@single">
+															<Date>2018-07-08T01:07:00</Date>
+															<GeographicalIntervalPriceRef ref="tfc:Single@preboard@R@C1@full@121+140" version="01"/>
+															<Amount>36.30</Amount>
+															<PriceUnitRef ref="tfc:LEI" version="any"/>
+															<ruleStepResults>
+																<RuleStepResult id="tfc_t:ANONYMOUS@trans12345001@product_purchase@trip@single" order="1">
+																	<GeographicalIntervalPriceRef ref="tfc:Single@preboard@R@C1@full@121+140" version="01"/>
+																	<PriceUnitRef ref="eura:Kilometres"/>
+																	<Units>139</Units>
+																	<AdjustmentAmount>30.50</AdjustmentAmount>
+																	<PricingRuleRef version="any" ref="tfc:TFC@Tariff@General@geographic_intervals@distance"/>
+																	<RoundingRef ref="tfc:split" version="any"/>
+																	<Narrative>Distance is  139km -- Use price fo 121 -140  interval</Narrative>
+																</RuleStepResult>
+																<RuleStepResult id="tfc_t:ANONYMOUS@trans12345001@product_purchase@trip@single" order="2">
+																	<Amount>36.50</Amount>
+																	<PriceUnitRef ref="eura:Kilometres"/>
+																	<RateUsed>0.19</RateUsed>
+																	<AdjustmentAmount>5.80</AdjustmentAmount>
+																	<DiscountingRuleRef ref="tfc:TFC@Common@rate@tva_tax"/>
+																	<RoundingRef ref="tfc:split" version="any"/>
+																	<Narrative>Application of TVA : LEI 30.50  +  LEI 5.80 VAT  (@19%)  = LEI 36.50 </Narrative>
+																</RuleStepResult>
+															</ruleStepResults>
+															<StartOfValidity>2018-07-08T01:07:00</StartOfValidity>
+															<specificParameterAssignments>
+																<SpecificParameterAssignment version="any" order="1" id="tfc_t:ANONYMOUS@trans12345001@product_purchase@trip@single@Bucharest+Buzau">
+																	<ValidableElementRef ref="tfc:TFC@Trip_single@leg" version="01"/>
+																	<PreassignedFareProductRef ref="tfc:TFC@Trip_single" version="01"/>
+																	<TariffRef ref="tfc:TFC@Tariff@Trip" version="01"/>
+																	<FareStructureElementRef version="01" ref="tfc:TFC@Tariff@Trip@composition@single"/>
+																	<DistanceMatrixElementRef ref="tfc:dme_10108+50342" version="01">Bucharest to Buzau</DistanceMatrixElementRef>
+																	<SalesOfferPackageRef version="01" ref="tfc:TFC@Trip_single-SOP"/>
+																	<limitations>
+																		<UserProfileRef version="any" ref="tfc:TFC@Tariff@General@eligibilities@adult"/>
+																	</limitations>
+																	<validityParameters>
+																		<ClassOfUseRef ref="eura:first" version="any"/>
+																		<TypeOfProductCategoryRef version="any" ref="eura:interregional"/>
+																		<TypeOfTariffRef version="any" ref="eura:Distance_kilometers"/>
+																		<TrainNumberRef ref="tfc:E425" versionRef="EXTERNAL"/>
+																		<TrainElementRef ref="tfc:Carriage6" versionRef="EXTERNAL"/>
+																		<PassengerSeatRef ref="tfc:1234" versionRef="EXTERNAL">Seat Reservation</PassengerSeatRef>
+																		<TypeOfFareProductRef version="any" ref="eura:product_type@single_trip"/>
+																		<TypeOfFareProductRef version="any" ref="eura:standard_product@single_toc"/>
+																		<ChargingMomentRef version="any" ref="eura:prepaid"/>
+																		<DistributionChannelRef ref="tfc:TFC@Common@self_service_ticket_machine" version="01"/>
+																		<FulfilmentMethodRef ref="eura:collect_at_counter" version="01"/>
+																		<TypeOfPaymentMethodRef versionRef="EXTERNAL" ref="tfc:vodka_bottles" version="01"/>
+																		<TypeOfTravelDocumentRef ref="eura:printed_ticket" version="01"/>
+																	</validityParameters>
+																	<GeographicalIntervalRef ref="tfc:TFC@Tariff@General@geographic_intervals@d_121+140" version="01"/>
+																</SpecificParameterAssignment>
+															</specificParameterAssignments>
+														</TravelSpecification>
+													</travelSpecifications>
+													<TravelDocumentRef ref="tfc_t:1267459" versionRef="EXTERNAL">Ticket number</TravelDocumentRef>
+												</SalesTransaction>
+											</fareContractEntries>
+										</FareContract>
+									</fareContracts>
+								</CustomerAccount>
+							</customerAccounts>
+						</Customer>
+						<!--- pERSONAL  TRANSACTIONS -->
+						<Customer id="tfc_cd:Customer5645" version="01">
+							<Surname>Lupescu</Surname>
+							<FirstName>Margarita</FirstName>
+							<DateOfBirth>1920-01-01</DateOfBirth>
+	<customerEligibilities>
+<UserProfileEligibility id="tfc_cd:Customer5645@senior" version="01">
+<UserProfileRef version="any" ref="tfc:TFC@Tariff@General@eligibilities@senior"/>
+</UserProfileEligibility>							
+						 
+							
+							</customerEligibilities>							
+							
+							<customerAccounts>
+								<CustomerAccount id="tfc_cd:AC00000001" version="01">
+									<Name>Account Margarita Lupescu </Name>
+									<StartDate>2005-08-08T09:00:00Z</StartDate>
+									<TypeOfCustomerAccountRef versionRef="EXTERNAL" ref="tfc:personal"/>
+									<CustomerAccountStatusType>active</CustomerAccountStatusType>
+									<fareContracts>
+										<FareContract version="any" id="tfc_cd:Customer5645@contract002">
+											<Name>Season pass contract for Customer 5645 </Name>
+											<Description>Contract is for one year, renewing every month</Description>
+											<StartDate>2018-07-08T01:07:00</StartDate>
+											<EndDate>2019-07-08T01:07:00</EndDate>
+											<Status>Active</Status>
+											<CustomerRef ref="tfc_cd:Customer5645" versionRef="TODO"/>
+											<TypeOfFareContractRef ref="tfc:contract@season_pass" version="any"/>
+											<fareContractEntries>
+												<SalesTransaction version="any" id="tfc_t:Customer5645@contract002@trans005">
+													<Description>Season Pass - Bucharest North to Buzau ; 1 Month, second class, bought at counter</Description>
+													<Date>2018-07-08T01:07:00</Date>
+													<TypeOfFareContractEntryRef ref="eura:product_purchase" version="any"/>
+													<Amount>30.50</Amount>
+													<PriceUnitRef ref="eura:Kilometres"/>
+													<Units>139</Units>
+													<PaymentMethod>cash</PaymentMethod>
+													<CardNumber>5245-1234-4567-0099</CardNumber>
+													<travelSpecifications>
+														<TravelSpecification version="any" id="tfc_t:Customer5645@contract002@trans005@product_purchase@pass@season">
+															<Date>2018-07-08T01:07:00</Date>
+															<TypeOfFareContractEntryRef ref="eura:product_purchase" version="any"/>
+															<Amount>408.00</Amount>
+															<ruleStepResults>
+																<RuleStepResult id="tfc_t:Customer5645@contract002@trans005@product_purchase@pass@season" order="1">
+																	<GeographicalIntervalPriceRef ref="tfc:Pass@Season@adult@1M@C2@Regio-R@121+140" version="01"/>
+																	<Amount>408.00</Amount>
+																	<PriceUnitRef ref="eura:Kilometres"/>
+																	<Units>129</Units>
+																	<AdjustmentAmount>408.00</AdjustmentAmount>
+																	<PricingRuleRef version="any" ref="tfc:TFC@Tariff@General@geographic_intervals@distance"/>
+																	<RoundingRef ref="tfc:split" version="any"/>
+																	<Narrative>Distance is  129km -- Use price for 121 -140  interval: 408 LEI</Narrative>
+																</RuleStepResult>
+																<RuleStepResult id="tfc_t:Customer5645@contract002@trans005@product_purchase@pass@season" order="2">
+																	<Amount>485.52</Amount>
+																	<PriceUnitRef ref="eura:Kilometres"/>
+																	<RateUsed>0.19</RateUsed>
+																	<AdjustmentAmount>77.52</AdjustmentAmount>
+																	<DiscountingRuleRef ref="tfc:TFC@Common@rate@tva_tax"/>
+																	<RoundingRef ref="tfc:split" version="any"/>
+																	<Narrative>Application of TVA : LEI 408  +  LEI 77.52 VAT  (@19%)  = LEI 485.52 </Narrative>
+																</RuleStepResult>
+															</ruleStepResults>
+															<StartOfValidity>2018-07-08T01:07:00</StartOfValidity>
+															<specificParameterAssignments>
+																<SpecificParameterAssignment version="any" order="1" id="tfc_t:trans005@trans005@product_purchase@pass@season@Bucharest+Buzau">
+																	<ValidableElementRef ref="tfc:TFC@Season_pass@repeated_trip@train_p2p" version="01"/>
+																	<PreassignedFareProductRef ref="tfc:TFC@Season_pass" version="01"/>
+																	<TariffRef ref="tfc:TFC@Tariff@Pass@Season" version="01"/>
+																	<FareStructureElementRef version="01" ref="tfc:TFC@Tariff@Pass@Season@COMPOSITION"/>
+																	<DistanceMatrixElementRef ref="tfc:dme_10108+50342" version="01">Bucharest to Buzau</DistanceMatrixElementRef>
+																	<SalesOfferPackageRef version="01" ref="tfc:TFC@Season_pass-SOP"/>
+																	<limitations>
+																		<UserProfileRef version="any" ref="tfc:TFC@Tariff@General@eligibilities@senior"/>
+																		<FrequencyOfUseRef version="any" ref="tfc:TFC@Tariff@Pass@Season@validity@unlimited_use"/>
+																		<UsageValidityPeriodRef version="any" ref="tfc:TFC@Tariff@Pass@Season@validity@month"/>
+																	</limitations>
+																	<validityParameters>
+																	<Directions>both</Directions>
+																		<ClassOfUseRef ref="eura:second" version="any"/>
+																		<TypeOfProductCategoryRef version="any" ref="eura:interregional"/>
+																		<TypeOfTariffRef version="any" ref="eura:Distance_kilometers"/>
+																		<TypeOfFareProductRef version="any" ref="eura:product_type@period_pass"/>
+																		<TypeOfFareProductRef version="any" ref="eura:standard_product@single_toc"/>
+																		<ChargingMomentRef version="any" ref="eura:prepaid"/>
+																		<DistributionChannelRef ref="eura:at_counter" version="01"/>
+																		<FulfilmentMethodRef ref="eura:collect_at_counter" version="01"/>
+																		<TypeOfPaymentMethodRef versionRef="EXTERNAL" ref="tfc:vodka_bottles" version="01"/>
+																		<TypeOfTravelDocumentRef ref="eura:pass" version="01"/>
+																	</validityParameters>
+																	<TimeIntervalRef ref="tfc:TFC@Tariff@Pass@Season@1M" version="01"/>
+																	<GeographicalIntervalRef ref="tfc:TFC@Tariff@General@geographic_intervals@d_121+140" version="01"/>
+																</SpecificParameterAssignment>
+															</specificParameterAssignments>
+														</TravelSpecification>
+													</travelSpecifications>
+													<TravelDocumentRef ref="tfc_t:PASS134455" versionRef="any">EXTERNAL REFERENCE</TravelDocumentRef>
+												</SalesTransaction>
+											</fareContractEntries>
+										</FareContract>
+									</fareContracts>
+								</CustomerAccount>
+							</customerAccounts>
+						</Customer>
+						<Customer id="tfc_cd:Customer55678" version="01">
+							<Surname>Apercu</Surname>
+							
+							<FirstName>Boris</FirstName>
+										<DateOfBirth>1958-11-01</DateOfBirth>
+							<customerEligibilities>
+<UserProfileEligibility id="tfc_cd:Customer55678@veteran" version="01">
+<UserProfileRef version="any" ref="tfc:TFC@Tariff@General@eligibilities@veteran"/>
+</UserProfileEligibility>				
+
+<UserProfileEligibility id="tfc_cd:Customer55678@political_victim" version="01">
+<UserProfileRef version="any" ref="tfc:TFC@Tariff@General@eligibilities@political_victim"/>
+</UserProfileEligibility>				
+
+<UserProfileEligibility id="tfc_cd:Customer55678@ethnic_victim" version="01">
+<UserProfileRef version="any" ref="tfc:TFC@Tariff@General@eligibilities@ethnic_victim"/>
+</UserProfileEligibility>	
+
+<UserProfileEligibility id="tfc_cd:Customer55678@disables" version="01">
+<UserProfileRef version="any" ref="tfc:TFC@Tariff@General@eligibilities@disables"/>
+</UserProfileEligibility>	
+
+<UserProfileEligibility id="tfc_cd:Customer55678@member_of_parliament" version="01">
+<UserProfileRef version="any" ref="tfc:TFC@Tariff@General@eligibilities@member_of_parliament"/>
+</UserProfileEligibility>	
+							<ResidentialQualificationEligibility id="tfc_cd:Customer55678@minority_region" version="01">
+							<ResidentialQualificationRef version="any" ref="tfc:TFC@Tariff@General@eligibilities@ethnic_victim@minority_area_blah"/>
+							<ResidencyType>born</ResidencyType>
+							<StartDate>1958-11-01</StartDate>
+							</ResidentialQualificationEligibility>
+							
+							
+							 
+							
+							</customerEligibilities>
+							<customerAccounts>
+								<CustomerAccount id="tfc_cd:Customer55678@personal" version="01">
+									<Name>Account Boris Apercu </Name>
+									<Description>Veteran Hero of the Revolution  Account</Description>
+									<StartDate>2010-07-08T09:00:00Z</StartDate>
+									<TypeOfCustomerAccountRef versionRef="EXTERNAL" ref="tfc:personal"/>
+									<CustomerAccountStatusType>active</CustomerAccountStatusType>
+									<fareContracts>
+										<FareContract version="any" id="tfc_cd:Customer55678@contract0012">
+											<Name>Discount  pass contract for Customer 55678 </Name>
+											<Description>Contract is for one year,  start 1st Jan</Description>
+											<StartDate>2018-01-01T00:00:00</StartDate>
+											<EndDate>2018-12-31T24:00:00</EndDate>
+											<Status>Active</Status>
+											<CustomerRef ref="tfc_cd:Customer55678" version="01"/>
+											<TypeOfFareContractRef ref="tfc:contract@discount" version="any"/>
+											<fareContractEntries>
+												<SalesTransaction version="any" id="tfc_t:Customer55678@contract0012@trans005">
+													<Name>Discounted Ticket Purchase</Name>
+													<Description>Discounted Ticket Purchase</Description>
+													<Date>2018-07-08T01:07:00</Date>
+													<TypeOfFareContractEntryRef ref="eura:product_purchase" version="any"/>
+													<Amount>0.00</Amount>
+													<PriceUnitRef ref="tfc:LEI" version="any"/>
+													<travelSpecifications>
+														<TravelSpecification version="any" id="tfc_t:Customer55678@contract0012@trans005@access@#2">
+															<Name>Use of  statutory free discount  for veteran.  Access no 2</Name>
+															<Date>2018-07-08T01:07:00</Date>
+															<TypeOfFareContractEntryRef ref="eura:product_purchase" version="any"/>
+															<StartOfValidity>2018-07-08T05:25:00</StartOfValidity>
+															<specificParameterAssignments>
+																<SpecificParameterAssignment version="any" order="1" id="Customer55678@contract0012@trans005@access@#2">
+																	<ValidableElementRef ref="tfc:TFC@Products@Discount@Statutory_Right+Travel@consume" version="01"/>
+																	<SaleDiscountRightRef ref="tfc:TFC@Discount@Statutory_Right+Travel" version="01"/>
+																	<FareStructureElementRef version="01" ref="tfc:TFC@Tariff@Discount@Statutory_Right+Travel@COMPOSITION"/>
+																	<SalesOfferPackageRef version="01" ref="tfc:TFC@Discount@Statutory_Right+Travel-SOP"/>
+																	<LimitationGroupingType>AND</LimitationGroupingType>
+																	<limitations>
+																		<UserProfileRef version="any" ref="tfc:TFC@Tariff@General@eligibilities@veteran"/>
+																		<CompanionProfileRef version="any" ref="tfc:TFC@Tariff@General@eligibilities@veteran@companion@personal_assistant"/>
+																		<UsageValidityPeriodRef version="any" ref="tfc:TFC@Discount@Statutory_Right+Travel@validity@use_within_1Y"/>
+																	</limitations>
+																	<validityParameters>
+																		<DistributionChannelRef ref="eura:at_counter" version="01"/>
+																	</validityParameters>
+																	<QualityStructureFactorRef ref="tfc:TFC@Tariff@Discount@Statutory_Right+Travel@multi_trip@12" version="1"/>
+																	<AccessNumber>2</AccessNumber>
+																</SpecificParameterAssignment>
+															</specificParameterAssignments>
+														</TravelSpecification>
+														<TravelSpecification version="any" id="tfc_t:Customer55678@contract0012@trans005@access@#2@out">
+															<Name>Veteran and assistant on same ticket - outbound  </Name>
+															<Date>2018-07-08T01:07:00</Date>
+															<TypeOfFareContractEntryRef ref="eura:product_purchase" version="any"/>
+															<Amount>0.00</Amount>
+															<PriceUnitRef ref="tfc:LEI" version="any"/>
+															<StartOfValidity>2018-07-08T05:25:00</StartOfValidity>
+															<specificParameterAssignments>
+																<SpecificParameterAssignment version="any" order="1" id="Customer55678@contract0012@trans005@access@#2@product_purchase@trip@return@Bucharest+Buzau@out">
+																	<Name>Trip Ticket for veteran and assistant</Name>
+																	<ValidableElementRef ref="tfc:TFC@Trip_period_return@travel@out" version="01"/>
+																	<PreassignedFareProductRef ref="tfc:TFC@Trip_period_return" version="01"/>
+																	<FareStructureElementRef version="01" ref="tfc:TFC@Tariff@Trip@composition@period_return"/>
+																	<DistanceMatrixElementRef ref="tfc:dme_10108+50342" version="01">Bucharest to Buzau</DistanceMatrixElementRef>
+																	<SalesOfferPackageRef version="01" ref="tfc:TFC@Trip_return-SOP"/>
+																	<limitations>
+																		<UserProfileRef version="any" ref="tfc:TFC@Tariff@General@eligibilities@veteran"/>
+																		<CompanionProfileRef version="any" ref="tfc:TFC@Tariff@General@eligibilities@veteran@companion@personal_assistant"/>
+																		<FrequencyOfUseRef ref="tfc:TFC@Tariff@Trip@frequency@single" version="any"/>
+																		<InterchangingRef ref="tfc:TFC@Tariff@Trip@frequency@single" version="any"/>
+																	</limitations>
+																	<validityParameters>
+																		<ServiceJourneyRef ref="tfc:train-IR1571" versionRef="TODO">Specific journey for reservation</ServiceJourneyRef>
+																		<ClassOfUseRef ref="eura:first" version="any"/>
+																		 <TypeOfProductCategoryRef version="any" ref="eura:interregional"/>  
+																		 	 <TypeOfProductCategoryRef version="any" ref="eura:return_trip"/>
+																		<TypeOfTariffRef version="any" ref="eura:Distance_kilometers"/>
+																				<TrainNumberRef ref="tfc:IR1571" versionRef="EXTERNAL"/>
+																																<ChargingMomentRef version="any" ref="eura:prepaid"/>
+																		<DistributionChannelRef ref="eura:at_counter" version="01"/>
+																		
+																		<TypeOfPaymentMethodRef versionRef="EXTERNAL" ref="tfc:vodka_bottles" version="01"/>
+																		<TypeOfTravelDocumentRef ref="eura:printed_ticket" version="01"/>
+																	</validityParameters>
+																</SpecificParameterAssignment>
+																<SpecificParameterAssignment version="any" order="2" id="Customer55678@contract0012@trans005@access@#2@product_purchase@trip@return@Bucharest+Buzau@out@seat_reservation@veteran">
+																	<Name>Seat Reservation  for veteran </Name>
+																	<ValidableElementRef ref="tfc:TFC@Trip_Supplement@Seat_Reservation@out" version="01"/>
+																	<SupplementProductRef ref="tfc:TFC@Trip_Supplement@Seat_Reservation" version="01"/>
+																	<DistanceMatrixElementRef ref="tfc:dme_10108+50342" version="01">Bucharest to Buzau</DistanceMatrixElementRef>
+																	<SalesOfferPackageRef version="01" ref="tfc:TFC@Trip_Supplement@Seat_Reservation-SOP"/>
+																	<limitations>
+																		<UserProfileRef version="any" ref="tfc:TFC@Tariff@General@eligibilities@veteran"/>
+																	</limitations>
+																	<validityParameters>
+																		<ServiceJourneyRef ref="tfc:train-IR1571" versionRef="TODO">Specific journey for reservation</ServiceJourneyRef>
+																		<ClassOfUseRef ref="eura:first" version="any"/>
+																	    <TypeOfProductCategoryRef version="any" ref="eura:interregional"/>
+																		<TypeOfTariffRef version="any" ref="eura:supplement"/>
+																		<TrainNumberRef ref="tfc:IR1571" versionRef="EXTERNAL"/>
+																		<TrainElementRef ref="tfc:Carriage@6" versionRef="EXTERNAL"/>
+																		<PassengerSeatRef ref="tfc:23" versionRef="EXTERNAL">Seat Reservation</PassengerSeatRef>
+														<ChargingMomentRef version="any" ref="eura:prepaid"/>
+																		<DistributionChannelRef ref="eura:at_counter" version="01"/>
+																		
+																		<TypeOfPaymentMethodRef versionRef="EXTERNAL" ref="tfc:vodka_bottles" version="01"/>
+																		<TypeOfTravelDocumentRef ref="eura:printed_ticket" version="01"/>
+																	</validityParameters>
+																	
+																
+																	
+																	
+																	
+																	
+																	
+																	
+																</SpecificParameterAssignment>
+																<SpecificParameterAssignment version="any" order="3" id="Customer55678@contract0012@trans005@access@#2@product_purchase@trip@return@Bucharest+Buzau@out@seat_reservation@personal_assistant">
+																	<Name>Seat Reservation  for assisantt </Name>
+																	<ValidableElementRef ref="tfc:TFC@Trip_Supplement@Seat_Reservation@out" version="01"/>
+																	<SupplementProductRef ref="tfc:TFC@Trip_Supplement@Seat_Reservation" version="01"/>
+																	<DistanceMatrixElementRef ref="tfc:dme_10108+50342" version="01">Bucharest to Buzau</DistanceMatrixElementRef>
+																	<SalesOfferPackageRef version="01" ref="tfc:TFC@Trip_Supplement@Seat_Reservation-SOP"/>
+																	<limitations>
+																		<CompanionProfileRef version="any" ref="tfc:TFC@Tariff@General@eligibilities@veteran@companion@personal_assistant"/>
+																	</limitations>
+																	<validityParameters>
+																		<ServiceJourneyRef ref="tfc:train-IR1571" versionRef="TODO">Specific journey for reservation</ServiceJourneyRef>
+																		<ClassOfUseRef ref="eura:first" version="any"/>
+																		 <TypeOfProductCategoryRef version="any" ref="eura:interregional"/>
+																		<TypeOfTariffRef version="any" ref="eura:supplement"/>
+																		<TrainNumberRef ref="tfc:IR1571" versionRef="EXTERNAL"/>
+																		<TrainElementRef ref="tfc:Carriage@6" versionRef="EXTERNAL"/>
+																		<PassengerSeatRef ref="tfc:24" versionRef="EXTERNAL">Seat Reservation</PassengerSeatRef>
+			<ChargingMomentRef version="any" ref="eura:prepaid"/>
+																		<DistributionChannelRef ref="eura:at_counter" version="01"/>
+																		<TypeOfTravelDocumentRef ref="eura:printed_ticket" version="01"/>
+																	</validityParameters>
+																</SpecificParameterAssignment>
+															</specificParameterAssignments>
+														</TravelSpecification>
+														<TravelSpecification version="any" id="tfc_t:Customer55678@contract002@discount@trip@return@back">
+															<Name>Veteran and assistant on same ticket - inbound </Name>
+															<Date>2018-07-08T01:07:00</Date>
+															<TypeOfFareContractEntryRef ref="eura:product_purchase" version="any"/>
+															<Amount>0.00</Amount>
+															<PriceUnitRef ref="tfc:LEI" version="any"/>
+															<StartOfValidity>2018-07-09T18:40:00</StartOfValidity>
+															<specificParameterAssignments>
+																<SpecificParameterAssignment version="any" order="1" id="Customer55678@contract0012@trans005@discount@product_purchase@trip@return@back@Buzau+Bucharest @trip">
+																	<Name>Trip Ticket for veteran and assistant</Name>
+																	<ValidableElementRef ref="tfc:TFC@Trip_period_return@travel@back" version="01"/>
+																	<PreassignedFareProductRef ref="tfc:TFC@Trip_period_return" version="01"/>
+																	<FareStructureElementRef version="01" ref="tfc:TFC@Tariff@Trip@composition@period_return"/>
+																	<DistanceMatrixElementRef ref="tfc:dme_50342+10108" version="01">Buzau to Bucharest</DistanceMatrixElementRef>
+																	<SalesOfferPackageRef version="01" ref="tfc:TFC@Trip_return-SOP"/>
+																	<limitations>
+																		<UserProfileRef version="any" ref="tfc:TFC@Tariff@General@eligibilities@veteran"/>
+																		<CompanionProfileRef version="any" ref="tfc:TFC@Tariff@General@eligibilities@veteran@companion@personal_assistant"/>
+																		<FrequencyOfUseRef ref="tfc:TFC@Tariff@Trip@frequency@single" version="any"/>
+																		<InterchangingRef ref="tfc:TFC@Tariff@Trip@frequency@single" version="any"/>
+																	</limitations>
+																	<validityParameters>
+																		<ServiceJourneyRef ref="tfc:train-IR1950" versionRef="TODO">Specific journey for reservation</ServiceJourneyRef>
+																		<ClassOfUseRef ref="eura:first" version="any"/>
+																			 <TypeOfProductCategoryRef version="any" ref="eura:interregional"/> 
+																		<TypeOfTariffRef version="any" ref="eura:Distance_kilometers"/>
+																		<TrainNumberRef ref="tfc:train-IR1950" versionRef="EXTERNAL"/>
+																 
+			<TypeOfFareProductRef version="any" ref="eura:product_type@return_trip"/>
+																		<TypeOfFareProductRef version="any" ref="eura:standard_product@single_toc"/>
+																		<ChargingMomentRef version="any" ref="eura:prepaid"/>
+																		<DistributionChannelRef ref="tfc:TFC@Common@self_service_ticket_machine" version="01"/>
+																		<FulfilmentMethodRef ref="eura:collect_at_counter" version="01"/>
+																		<TypeOfPaymentMethodRef versionRef="EXTERNAL" ref="tfc:vodka_bottles" version="01"/>
+																		<TypeOfTravelDocumentRef ref="eura:printed_ticket" version="01"/>
+																	</validityParameters> 
+																	
+										 							
+																	
+																</SpecificParameterAssignment>
+																<SpecificParameterAssignment version="any" order="2" id="Customer55678@contract0012@trans005@discount@product_purchase@trip@return@back@Buzau+Bucharest@seat_reservation@veteran">
+																	<Name>Seat Reservation  for veteran </Name>
+																	<ValidableElementRef ref="tfc:TFC@Trip_Supplement@Seat_Reservation@back" version="01"/>
+																	<SupplementProductRef ref="tfc:TFC@Trip_Supplement@Seat_Reservation" version="01"/>
+																	<DistanceMatrixElementRef ref="tfc:dme_50342+10108" version="01">Buzau to Bucharest</DistanceMatrixElementRef>
+																	<SalesOfferPackageRef version="01" ref="tfc:TFC@Trip_Supplement@Seat_Reservation-SOP"/>
+																	<limitations>
+																		<UserProfileRef version="any" ref="tfc:TFC@Tariff@General@eligibilities@veteran"/>
+																	</limitations>
+																	<validityParameters>
 														<ServiceJourneyRef ref="tfc:train-IR1950" versionRef="TODO">Specific journey for reservation</ServiceJourneyRef>
-														<ClassOfUseRef ref="eura:first" version="any"/>
-														<DistributionChannelRef ref="eura:at_counter" version="01"/>
-														<TypeOfTravelDocumentRef ref="eura:printed_ticket" version="01"/>
-													</validityParameters>
-												</SpecificParameterAssignment>
-												<SpecificParameterAssignment version="any" order="2" id="Customer55678@contract0012@discount@product_purchase@trip@return@Buzau+Bucharest@inbound@seat_reservation@veteran">
-													<Name>Seat Reservation  for veteran </Name>
-													<ValidableElementRef ref="tfc:TFC@Trip_Supplement@Seat_Reservation@inbound" version="01"/>
-													<SupplementProductRef ref="tfc:TFC@Trip_Supplement@Seat_Reservation" version="01"/>
-													<DistanceMatrixElementRef ref="tfc:dme_50342+10108" version="01">Buzau to Bucharest</DistanceMatrixElementRef>
-													<SalesOfferPackageRef version="01" ref="tfc:TFC@Trip_Supplement@Seat_Reservation-SOP"/>
-													<limitations>
-														<UserProfileRef version="any" ref="tfc:TFC@Tariff@General@eligibilities@veteran"/>
-													</limitations>
-													<validityParameters>
-														<ServiceJourneyRef ref="tfc:train-IR1950" versionRef="TODO">Specific journey for reservation</ServiceJourneyRef>
-														<ClassOfUseRef ref="eura:first" version="any"/>
-														<DistributionChannelRef ref="eura:at_counter" version="01"/>
-														<TypeOfTravelDocumentRef ref="eura:printed_ticket" version="01"/>
-													</validityParameters>
-												</SpecificParameterAssignment>
-												<SpecificParameterAssignment version="any" order="3" id="Customer55678@contract0012@discount@product_purchase@trip@return@Buzau+Bucharest@inbound@seat_reservation@personal_assistant">
-													<Name>Seat Reservation  for assisantt </Name>
-													<ValidableElementRef ref="tfc:TFC@Trip_Supplement@Seat_Reservation@inbound" version="01"/>
-													<SupplementProductRef ref="tfc:TFC@Trip_Supplement@Seat_Reservation" version="01"/>
-													<DistanceMatrixElementRef ref="tfc:dme_50342+10108" version="01">Buzau to Bucharest</DistanceMatrixElementRef>
-													<SalesOfferPackageRef version="01" ref="tfc:TFC@Trip_Supplement@Seat_Reservation-SOP"/>
-													<limitations>
-														<CompanionProfileRef version="any" ref="tfc:TFC@Tariff@General@eligibilities@veteran@companion@personal_assistant"/>
-													</limitations>
-													<validityParameters>
-														<ServiceJourneyRef ref="tfc:train-IR1950" versionRef="TODO">Specific journey for reservation</ServiceJourneyRef>
-														<ClassOfUseRef ref="eura:first" version="any"/>
-														<DistributionChannelRef ref="eura:at_counter" version="01"/>
-														<TypeOfTravelDocumentRef ref="eura:printed_ticket" version="01"/>
-													</validityParameters>
-												</SpecificParameterAssignment>
-											</specificParameterAssignments>
-										</TravelSpecification>
-									</travelSpecifications>
-									<TravelDocumentRef ref="tfc-t:PASS134455" versionRef="any">EXTERNAL REFERENCE</TravelDocumentRef>
-								</SalesTransaction>
-							</fareContractEntries>
-						</FareContract>
-					</fareContracts>
+																		<ClassOfUseRef ref="eura:first" version="any"/>
+																			 <TypeOfProductCategoryRef version="any" ref="eura:interregional"/> 
+																		<TypeOfTariffRef version="any" ref="eura:supplement"/>
+																		<TrainNumberRef ref="tfc:train-IR1950" versionRef="EXTERNAL"/>
+																		<TrainElementRef ref="tfc:Carriage@8" versionRef="EXTERNAL"/>
+																		<PassengerSeatRef ref="tfc:12" versionRef="EXTERNAL">Seat Reservation</PassengerSeatRef>
+																		<DistributionChannelRef ref="eura:at_counter" version="01"/>
+																		<TypeOfTravelDocumentRef ref="eura:printed_ticket" version="01"/>
+																	</validityParameters>
+																</SpecificParameterAssignment>
+																<SpecificParameterAssignment version="any" order="3" id="Customer55678@contract0012@trans005@discount@product_purchase@trip@return@Buzau+Bucharest@back@seat_reservation@personal_assistant">
+																	<Name>Seat Reservation  for assisantt </Name>
+																	<ValidableElementRef ref="tfc:TFC@Trip_Supplement@Seat_Reservation@back" version="01"/>
+																	<SupplementProductRef ref="tfc:TFC@Trip_Supplement@Seat_Reservation" version="01"/>
+																	<DistanceMatrixElementRef ref="tfc:dme_50342+10108" version="01">Buzau to Bucharest</DistanceMatrixElementRef>
+																	<SalesOfferPackageRef version="01" ref="tfc:TFC@Trip_Supplement@Seat_Reservation-SOP"/>
+																	<limitations>
+																		<CompanionProfileRef version="any" ref="tfc:TFC@Tariff@General@eligibilities@veteran@companion@personal_assistant"/>
+																	</limitations>
+																	<validityParameters>
+																	<ServiceJourneyRef ref="tfc:train-IR1950" versionRef="TODO">Specific journey for reservation</ServiceJourneyRef>
+																		<ClassOfUseRef ref="eura:first" version="any"/>
+																			 <TypeOfProductCategoryRef version="any" ref="eura:interregional"/> 
+																		<TypeOfTariffRef version="any" ref="eura:supplement"/>
+																		<TrainNumberRef ref="tfc:train-IR1950" versionRef="EXTERNAL"/>
+																		<TrainElementRef ref="tfc:Carriage@7" versionRef="EXTERNAL"/>
+																		<PassengerSeatRef ref="tfc:12" versionRef="EXTERNAL">Seat Reservation</PassengerSeatRef>
+																		<DistributionChannelRef ref="eura:at_counter" version="01"/>
+																		<TypeOfTravelDocumentRef ref="eura:printed_ticket" version="01"/>
+																	</validityParameters>
+																</SpecificParameterAssignment>
+															</specificParameterAssignments>
+														</TravelSpecification>
+													</travelSpecifications>
+													<TravelDocumentRef ref="tfc_t:PASS134455" versionRef="any">EXTERNAL REFERENCE</TravelDocumentRef>
+												</SalesTransaction>
+											</fareContractEntries>
+										</FareContract>
+									</fareContracts>
+								</CustomerAccount>
+							</customerAccounts>
+						</Customer>
+					</customers>
 				</SalesTransactionFrame>
 			</frames>
 		</CompositeFrame>
@@ -8176,8 +8347,6 @@ c
 								</ChargingMoment>
 							</values>
 						</ValueSet>
-						
-						
 						<ValueSet version="any" id="eura:Types_of_FareProduct@operator" classOfValues="TypeOfFareProduct">
 							<Name>Types Of Fare Product  - Classify as  single of multi operator</Name>
 							<values>
@@ -8187,14 +8356,22 @@ c
 								<TypeOfFareProduct version="any" id="eura:standard_product@selected_tocs">
 									<Name>Stand product - selected  tocs </Name>
 								</TypeOfFareProduct>
-								<TypeOfFareProduct version="any" id="eura:era:standard_product@all_tocs">
+								<TypeOfFareProduct version="any" id="eura:standard_product@all_tocs">
 									<Name>Standard product - all tocs </Name>
 								</TypeOfFareProduct>
 								<!--- Special -->
 								<TypeOfFareProduct version="any" id="eura:special_product@single_toc">
 									<Name>Special  Product single toc </Name>
 								</TypeOfFareProduct>
-								<TypeOfFareProduct version="any" id="eura:era:special_product@selected_tocs">
+								<TypeOfFareProduct version="any" id="eura:special_product@selected_tocs">
+									<Name>Special product - selected  tocs </Name>
+								</TypeOfFareProduct>
+								
+											<!--- Special -->
+								<TypeOfFareProduct version="any" id="eura:product_type@single_trip">
+									<Name>Special  Product single toc </Name>
+								</TypeOfFareProduct>
+								<TypeOfFareProduct version="any" id="eura:product_type@return_trip">
 									<Name>Special product - selected  tocs </Name>
 								</TypeOfFareProduct>
 							</values>
@@ -8272,7 +8449,7 @@ c
 								<TypeOfConcession version="any" id="eura:statutory">
 									<Name>Statutory</Name>
 								</TypeOfConcession>
-									<TypeOfConcession version="any" id="eura:full_fare">
+								<TypeOfConcession version="any" id="eura:full_fare">
 									<Name>Adult</Name>
 								</TypeOfConcession>
 								<TypeOfConcession version="any" id="eura:discounted">

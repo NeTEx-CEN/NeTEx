@@ -2,6 +2,7 @@
 <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_salesContract_version">
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_facility_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_loggable_version.xsd"/>
+	<xsd:include schemaLocation="netex_customerPurchasePackage_support.xsd"/>
 	<xsd:include schemaLocation="netex_retailConsortium_support.xsd"/>
 	<xsd:include schemaLocation="netex_salesContract_support.xsd"/>
 	<xsd:include schemaLocation="netex_customerEligibility_version.xsd"/>
@@ -36,14 +37,18 @@
 					  Rename Passenger Contract Event to FareContractEntry.
 					  Rename Passenger Contract Security Listing  to FareContractSecurityListing
 					  Rename Type of Passenger Contract  to TypeOfFareContract.
-					  Rename Type of Passenger Contract Wntry  to TypeOfFareContractEntry .
+					  Rename Type of Passenger Contract Entry  to TypeOfFareContractEntry .
 					  Adjust References in Dependent packages. 
 				</Date>
 				<Date>
 					<Modified>2018-06-10</Modified> Fix for  Align with TM6         correct use of case on fareContracts
 				</Date>
-								<Date>
+				<Date>
 					<Modified>2019-03-10</Modified> UK-28  Add reference to CustomerAccount to FareContract
+						Add fareContracts / CustomerAccount to Customer 
+						Remove FareContractEntries from CustomerAccount  : Use relationship on FareCOntract
+						Add email to CustomerContact details
+						Add customerPurchasePackageRefs to CustomerAccount. This can eb derived from FarCOntractENtries
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -61,7 +66,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -162,8 +167,7 @@ Rail transport, Roads and Road transport
 	<xsd:element name="Customer" abstract="false" substitutionGroup="DataManagedObject">
 		<xsd:annotation>
 			<xsd:documentation>An identified person or organisation involved in a fare process. There may be a FARE CONTRACT between the CUSTOMER and the OPERATOR or the AUTHORITY ruling the consumption of services.
-
-</xsd:documentation>
+ 		</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -206,6 +210,7 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:group ref="CustomerParticularsGroup"/>
+			<xsd:group ref="CustomerContactGroup"/>
 			<xsd:group ref="CustomerProfileGroup"/>
 			<xsd:element name="customerAccounts" type="customerAccounts_RelStructure" minOccurs="0">
 				<xsd:annotation>
@@ -257,6 +262,18 @@ Rail transport, Roads and Road transport
 			<xsd:element name="Photo" type="xsd:anyURI" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Photo of CUSTOMER.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="CustomerContactGroup">
+		<xsd:annotation>
+			<xsd:documentation>Contact Elements for CUSTOMER.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Email" type="EmailAddressType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Email address of CUSTOMER.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="Phone" type="TelephoneContactStructure" minOccurs="0"/>
@@ -634,11 +651,37 @@ Rail transport, Roads and Road transport
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element ref="CustomerRef" minOccurs="0"/>
+			<xsd:group ref="CustomerAccountPropertiesGroup"/>
+			<xsd:group ref="CustomerAccountContentsGroup"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="CustomerAccountPropertiesGroup">
+		<xsd:annotation>
+			<xsd:documentation>Property Elements for CUSTOMER ACCOUNT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
 			<xsd:element ref="TypeOfCustomerAccountRef" minOccurs="0"/>
 			<xsd:element ref="CustomerAccountStatusRef" minOccurs="0"/>
-			<xsd:element name="fareContractEntries" type="fareContractEntries_RelStructure" minOccurs="0">
+			<xsd:element name="CustomerAccountStatusType" type="AccountStatusTypeEnumeration" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Log Entries for CONTRACT.</xsd:documentation>
+					<xsd:documentation>Standard values for account status. +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="CustomerAccountContentsGroup">
+		<xsd:annotation>
+			<xsd:documentation>PropContent Elements for CUSTOMER ACCOUNT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="fareContracts" type="fareContracts_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>FARE CONTRACTs for CUSTOMER ACCOUNT +v1.1.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="customerPurchasePackages" type="customerPurchasePackageRefs_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>CUSTOMER PURCHASE PACKAGES  for CUSTOMER ACCOUT.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>

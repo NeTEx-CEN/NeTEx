@@ -41,6 +41,46 @@ There is also an Oxygen project file:
  
 ## 1.11 Summary of Changes since v1.10 
 
+### 2019.03.13 UK-27 & FIXES  *FARES* Fix ___FareContract___ and ___CustomerPurchasePackage___ issues and allow marking of use of ___CustomerPurchasePackage___,	
+  * Also  Fix several issues and align with TM 
+  * UK-28  Add reference to ___CustomerAccount___ to ___FareContract___
+  * Add new attribute ___AccountStatusType___ to ___CustomerAccount___.
+  * Add new ___email___ attribute to ___Customer___
+  * Fix:  Add  missing relationship ___fareContracts / FareContract___ to ___CustomerAccount___.
+  * Remove ___fareContractEntries___ relationship from ___CustomerAccount___  : Use relationship on ___FareContract___. NB BREAKAGE! 
+  * Fix:  Add  missing relationship customerPurchasePackageRefs / ___CustomerPurchasePackage___ to ___CustomerAccount___.
+  * Add missing attributes ___CustomerRef___, ___CustomerAccountRef___ and FareCOntractRef___ to ___CustomerPurchasePackage___.
+  * Add ___PassengerSeatRef___ and ___TrainElementRef___ to ___TravelDocument___.
+  * Add ___PrivateCode___ to ___TravelDocument___
+  * Also add missing ___CustomerPurchasePackageRef___ to ___TravelDocument___.
+  * Add new attribute ___PassengerSeatRef___ and ___TrainElementRef___ to ___TravelDocument___.
+  * Add new attribute  ___AccessNumber___ to ___SpecificParameter Assignment___
+  * Add new attribute  ___CustomerPurchasePackageStatus___  to to ___CustomerPurchasePackage___ with values _resrved_,_ordered_, _paidFor_, _unused_, _activated_ _partiallyUsed_, _used_, _archived_.
+   * Add _new attribute ___MarkedAs___ to ___CustomerPurchasePackageElement___.
+  * Add new  child element  ___CustomerPurchasePackageElementAccess___ to ___CustomerPurchasePackageElement___.
+  * Add missing relationship   ___travelDocuments \ TravelDucment___   to ___CustomerPurchasePackage___.
+
+  * Add new view element  ___TravelSpecificationSummaryView___ to ___TravelSpecification___.
+  * Add new view element  ___TravelSpecificationSummaryView___ to ___CustomerPurchasePackage___.
+  * Add  new ___CustomerPurchasePackageElementAccess__ element to ___CustomerPurchasePackageElement___.
+  * Also   UK-32 *FARES*add ___StartDate___ and ___EndDate___ attributes to ___ResidentialEligibility___.
+  * HOUSEKEEPING Separate out  netex_typeOfravelDocumentPackage.xsd_ from _netex_travelDocumentPackag.xsde_ 
+  * HOUSEKEEPING Move   _netex_travelDocumentPackage.xsd_ from _\fares_ to to \ _sales_Transaction_ folder.
+with values seatReservation,  dog, animal, bicycle, meal, wifi, other
+  * _Updates to xml schema_:   
+  	* netex_typeOfTravelDocumentPackage_support.xsd (new)
+  	* netex_typeOfTravelDocumentPackage_version.xsd (new)
+  	* netex_travelSpecifcationSUmmaryView_version.xsd (new)
+  	* netex_travelDocumentPackage_support.xsd
+	* netex_travelDocumenPackage_version.xsd
+	* netex_customerPurchasePackage_support.xsd
+	* netex_customerPurchasePackage_version.xsd
+	* netex_usageParameterEligibility_support.xsd
+	* netex_usageParameterEligibility_version.xsd 	
+	* netex_salesContract_support.xsd
+	* netex_salesTransaction_version.xsd 
+	* netex_publication.xsd
+	* netex.spp
 
 ### 2019.03.13 UK-27 & FIXES  *FARES* Extend ___CustomerPurchasePackage___ implementation 	
 * Also add   Atrribute ___SupplementProductType___ to   ___SupplementProduct___ with values    _seatReservation, bicycle, dog, animal, meal, wifi_ 
@@ -60,16 +100,14 @@ There is also an Oxygen project file:
 	* _terminateAfterGracePeriod_ - If user ceases to be eligible,  termination  take place after the end of a grace period
 	* _automaticallySubstituteProduct_ - If user ceases to be eligible, assign them an appropiate  replacement product. 
 	* _noAction_ - If user ceases to be eligible, take no action.
-	* _other_
-	
+	* _other_	
   * add integrity constraint for ___EligibilityChangePolicy___
   * _Updates to xml schema_:     
 	* netex_usageParameterEligibility_support.xsd
 	* netex_usageParameterEligibility_version.xsd 	
 	* netex_publication.xsd
 
-### 2019.03.13 EURA-50  *FARES* Add new ___PurchaseAction___ attribute to  ___PurchaseWindow__    with values: _purchase_,  _reserve_,  _orderWithoutPaying_,  payForPreviousOrder, other_  _
-, _seatMap_  and _openSeating_.	
+### 2019.03.13 EURA-50  *FARES* Add new ___PurchaseAction___ attribute to  ___PurchaseWindow__    with values: _purchase_,  _reserve_,  _orderWithoutPaying_,  payForPreviousOrder, other_, _seatMap_  and _openSeating_.	
   * Also reaname  ______Reserving___  \ ReservationType___ to ___SeatAllocationMethod___ and move ___SeatAllocationMethodEnumeration___ to ___VehicleSeating___ package.
   * Also add ___ReservationExpiryPeriod___ to ___Reserving___.
   * _Updates to xml schema_:    
@@ -81,9 +119,9 @@ There is also an Oxygen project file:
   * Add  new ___FareStructureValidityParametersGroup___ to validity paarmaters with new attributes   ___TypeOfTariffRef___,   ___TypeOfFareStructureFactor___,  ___TypeOfFarFresStructureFactorRef___,   
   * Extend  ___FareProduct ValidityParametersGroup___  to validity paramaters  with new attributes   ___TypeOfPriceingRuleRef___,   ___ChargingMethodRef___, ___TypeOfPaymentMethodRef___, ___TypeOfMachineReadability___, ___TypeOfFareTableRef.___ 
   * Add  new ___SeatingValidityParametersGroup___ with new attributes   ___TrainElementRef___,    ___TrainComponentLabelAssignmentRef___. 
-  * Also UK-69 Scaleability. allow classification of FareTable with  add  new TypeOfOfFareTable element
-  * Also Rename ___ValidityParameterSetOperator___ ___ValidityParameterSelectionType___
-  * Also UK-41  Also add new ___LimitationSelectionType___ as additional functional operator to GenericParameterAssignment  to clarify use of groups :  oneOf /  someOf/  allOf
+  * Also UK-69 Scaleability. Allow classification ofto  ___FareTable___ with     new ___TypeOfOfFareTable___ element.
+  * Also Rename draft  ___ValidityParameterSetOperator___ ___ValidityParameterSelectionType___
+  * Also UK-41  Also add new ___LimitationSelectionType___ as additional functional operator to ___GenericParameterAssignment___  to clarify use of groups :  _oneOf /  someOf/  allOf_.
   * Also add integrity constraints for ___TypeOfMachineReadability___
   * _Updates to xml schema_:    
 	* netex_fareTable_support.xsd
@@ -93,7 +131,7 @@ There is also an Oxygen project file:
  	* netex_publication.xsd
 	
 ### 2019.03.13  EURA-40 *FARES*  Support Suscriptions 
-  * lso add  Charging summary options. PenaltyIfWithoutTicket and AvailableOnSubscription.
+  * Also add  new attrributes to ___FareProduct \ ConditionSummary___:  ___PenaltyIfWithoutTicket___ and ___AvailableOnSubscription___.
 	* netex_conditionSummary_version.xsd 
  
 ### 2019.03.13 Eura-93, EURA-085  *FARES* Add new attribute to  ___InterChanging __  RegisterBreak with values _ none,   markByStaff,  markByValidator,  markByMobileApp, other_ 
@@ -183,8 +221,7 @@ There is also an Oxygen project file:
  * _Updates to xml examples_:	
 	* examples\standards\fxc\uk_fxc_pass_Metrobus_metrorider.xml  
 	* exaamplesstandards\fxc\uk_fxc_addon_HSP_plusbus.xml
-	
- 
+	 
 ### 2019.03.12 NORWAY-99  *FARES*  Change cardinality of ___SupplementProduct__ / ___SupplementToFareProductRef___   from _0:1_ to _0:*_.
  * Also add  missing constraint for ___SupplementTofareProductRef___ 
  

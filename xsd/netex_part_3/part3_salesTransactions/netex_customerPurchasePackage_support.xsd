@@ -3,6 +3,7 @@
 <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_customerPurchasePackage_support">
 	<xsd:include schemaLocation="../part3_fares/netex_salesOfferPackage_support.xsd"/>
 	<xsd:include schemaLocation="../part3_fares/netex_accessRightParameter_support.xsd"/>
+	<xsd:include schemaLocation="../part3_fares/netex_validableElement_support.xsd"/>
 	<!-- =============================================================== -->
 	<xsd:annotation>
 		<xsd:appinfo>
@@ -20,7 +21,12 @@
 					<Modified>2017-02-05</Modified>Name Space changes  
 				</Date>
 				<Date>
-					<Modified>2019-03-01</Modified>Fix: Correct case on customerPurchasePackageRefs
+					<Modified>2019-03-01</Modified>Fix: Correct case on customerPurchasePackageRefs				 
+				</Date>
+				<Date>
+					<Modified>2019-03-15</Modified>EURA-(nk)  Allow marking of use of CustomerPurchasePackage
+						Add MarkedAsEnumeration   attribute with values unused, activated, marked and used 
+						Add new CustomerPurchasePackageElementAccess element
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -38,7 +44,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2017</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -127,6 +133,35 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
+	<xsd:simpleType name="CustomerPurchasePackageStatusEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for CUSTOMER PURCHASE PACKAGE  Status. +v1.1</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="reserved"/>
+			<xsd:enumeration value="ordered"/>
+			<xsd:enumeration value="paidFor"/>
+			<xsd:enumeration value="unused"/>
+			<xsd:enumeration value="activated"/>
+			<xsd:enumeration value="partiallyUsed"/>
+			<xsd:enumeration value="used"/>
+			<xsd:enumeration value="blocked"/>
+			<xsd:enumeration value="archived"/>
+			<xsd:enumeration value="other"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MarkedAsEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for MarkedAs Status.++ +v1.1</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="unused"/>
+			<xsd:enumeration value="activated"/>
+			<xsd:enumeration value="marked"/>
+			<xsd:enumeration value="used"/>
+			<xsd:enumeration value="expired"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<!-- === CUSTOMER PURCHASE PACKAGE PRICE====================================================== -->
 	<xsd:simpleType name="CustomerPurchasePackagePriceIdType">
 		<xsd:annotation>
@@ -191,7 +226,7 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
-	<!-- === GENERIC PARAMETER====================================================== -->
+	<!-- === CUSTOME PURCHASE PACKAGE PARAMETER ASSIGNMENT====================================================== -->
 	<xsd:simpleType name="CustomerPurchaseParameterAssignmentIdType">
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of a CUSTOMER PURCHASE PARAMETER.</xsd:documentation>
@@ -207,6 +242,27 @@ Rail transport, Roads and Road transport
 				<xsd:attribute name="ref" type="CustomerPurchaseParameterAssignmentIdType" use="required">
 					<xsd:annotation>
 						<xsd:documentation>Identifier of a CUSTOMER PURCHASE PARAMETER.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!-- === CUSTOMER PURCHASE PACKAGE ELEMENT ACCESS. ====================================================== -->
+	<xsd:simpleType name="CustomerPurchasePackageElementAccessIdType">
+		<xsd:annotation>
+			<xsd:documentation>Type for identifier of a CUSTOMER PURCHASE PACKAGE ELEMENT ACCESS.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ObjectIdType"/>
+	</xsd:simpleType>
+	<xsd:complexType name="CustomerPurchasePackageElementAccessRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for Reference to a CUSTOMER PURCHASE PACKAGE ELEMENT ACCESS.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="VersionOfObjectRefStructure">
+				<xsd:attribute name="ref" type="CustomerPurchasePackageElementAccessIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Identifier of a CUSTOMER PURCHASE PACKAGE ELEMENT ACCESS.</xsd:documentation>
 					</xsd:annotation>
 				</xsd:attribute>
 			</xsd:restriction>

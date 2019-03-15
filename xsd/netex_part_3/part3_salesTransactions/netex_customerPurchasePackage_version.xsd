@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
 <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_customerPurchasePackage_version">
-	<xsd:include schemaLocation="netex_customerPurchasePackage_support.xsd"/>
-	<xsd:include schemaLocation="netex_salesTransaction_support.xsd"/>
 	<!-- ======================================================================= -->
 	<xsd:include schemaLocation="../part3_fares/netex_geographicStructureFactor_support.xsd"/>
 	<xsd:include schemaLocation="../part3_fares/netex_timeStructureFactor_support.xsd"/>
 	<xsd:include schemaLocation="../part3_fares/netex_fareStructureElement_support.xsd"/>
+	<xsd:include schemaLocation="netex_travelDocument_support.xsd"/>
+	<xsd:include schemaLocation="netex_customerPurchasePackage_support.xsd"/>
+	<xsd:include schemaLocation="netex_salesTransaction_support.xsd"/>
+	<xsd:include schemaLocation="netex_travelDocument_version.xsd"/>
+	<xsd:include schemaLocation="../../netex_framework/netex_responsibility/netex_alternativeText_version.xsd"/>
 	<xsd:include schemaLocation="../part3_fares/netex_salesOfferPackage_version.xsd"/>
-	<xsd:include schemaLocation="../part3_fares/netex_travelDocument_version.xsd"/>
+	<xsd:include schemaLocation="netex_travelSpecificationSummary_version.xsd"/>
+	<xsd:include schemaLocation="../part3_fares/netex_salesOfferPackage_version.xsd"/>
 	<!-- ======================================================================= -->
 	<xsd:annotation>
 		<xsd:appinfo>
@@ -25,7 +29,17 @@
 					<Modified>2019-03-01</Modified>Fix: Correct case on customerPurchasePackageRefs
 				</Date>
 				<Date>
-					<Modified>2019-03-01</Modified>EURA-10: Improve support for CUtomser PucrhasePackages: allow inlining of packages in SalesTransaction
+					<Modified>2019-03-01</Modified>EURA-10: Improve support for Customer PurchasePackages: allow inlining of packages in SalesTransaction 
+				</Date>
+				<Date>
+					<Modified>2019-03-01</Modified>Fix: Correct case on customerPurchasePackageRefs				 
+				</Date>
+				<Date>
+					<Modified>2019-03-15</Modified>EURA-(nk)  	  	Allow marking of use of CustomerPurchasePackage		
+				    	Also  Fix Numerous issues and align with TM 
+						Add new attribute Status    to  CustomerPurchasePackage   with values reserved, ordered,  paidFor, unused, activated,  partiallyUsed,  blocked,   used,   archived and other
+					    Add new attribute MarkedAs  to  CustomerPurchasePackageElement  with values unused, activated, marked and used  
+						Add new  child element  CustomerPurchasePackageElementAccess to CustomerPurchasePackage 
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -43,7 +57,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2017</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -152,8 +166,18 @@ Rail transport, Roads and Road transport
 		<xsd:sequence>
 			<xsd:element ref="PrivateCode" minOccurs="0"/>
 			<xsd:element ref="SalesOfferPackageRef" minOccurs="0"/>
+			<xsd:group ref="CustomerPurchasePackageCustomerGroup">
+				<xsd:annotation>
+					<xsd:documentation>Customer for whom package was created. These can also be derived through the SALES TRANSACTION.   +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:group>
 			<xsd:group ref="CustomerPurchasePackageSelectionGroup"/>
 			<xsd:element ref="SalesTransactionRef" minOccurs="0"/>
+			<xsd:element name="salesTransactions" type="salesTransactionRefs_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>SALES TRANSACTIONS for CUSTOMERPURCHASE PACKAGE.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:group ref="CustomerPurchasePackagePricingGroup"/>
 			<xsd:element name="travelDocuments" type="travelDocuments_RelStructure" minOccurs="0">
 				<xsd:annotation>
@@ -162,14 +186,30 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
-	<xsd:group name="CustomerPurchasePackageSelectionGroup">
+	<xsd:group name="CustomerPurchasePackageCustomerGroup">
 		<xsd:annotation>
-			<xsd:documentation>Elements for CUSTOMER PURCHASE PACKAGE.</xsd:documentation>
+			<xsd:documentation>Customer Elements for CUSTOMER PURCHASE PACKAGE. These can be derived from  SALES TRANSACTION but are sated explicitly in case SALE TRANSACTION is archived.   v1.1</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
+			<xsd:element ref="CustomerRef" minOccurs="0"/>
+			<xsd:element ref="CustomerAccountRef" minOccurs="0"/>
+			<xsd:element ref="FareContractRef" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="CustomerPurchasePackageSelectionGroup">
+		<xsd:annotation>
+			<xsd:documentation>Selection Elements for CUSTOMER PURCHASE PACKAGE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="TravelSpecificationSummaryView" minOccurs="0"/>
+			<xsd:element name="travelSpecifications" type="travelSpecificationRefs_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>TRAVEL SPEECIFICATIONs for FARE CONTRACT.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element name="validityParameterAssignments" type="customerPurchaseParameterAssignments_RelStructure" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>NOTICE ASSIGNMENTs for  CUSTOMER PURCHASE PACKAGE.</xsd:documentation>
+					<xsd:documentation>PARAMETER ASSIGNMENTs applying to whole CUSTOMER PURCHASE PACKAGE.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="distributionAssignments" type="distributionAssignments_RelStructure" minOccurs="0">
@@ -180,6 +220,23 @@ Rail transport, Roads and Road transport
 			<xsd:element name="customerPurchasePackageElements" type="customerPurchasePackageElements_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>CUSTOMER PURCHASE PACKAGE ELEMENTs in CUSTOMER PURCHASE PACKAGE.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="CustomerPurchasePackageValidationGroup">
+		<xsd:annotation>
+			<xsd:documentation>Validation Elements for CUSTOMER PURCHASE PACKAGE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="MarkedAs" type="MarkedAsEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether the element has been used. +v1.1 </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="elementAccesses" type="customerPurchasePackageElementAccesses_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>VALIDABLE ELEMENTs for  CUSTOMER PURCHASE PACKAGE.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -263,10 +320,10 @@ Rail transport, Roads and Road transport
 		<xsd:sequence>
 			<xsd:element ref="CustomerPurchasePackageRef" minOccurs="0"/>
 			<xsd:element ref="SalesOfferPackageElementRef" minOccurs="0"/>
-			<xsd:group ref="CustomerPurchasePackageElementSelectionGroup"/>
+			<xsd:group ref="CustomerPurchasePackageValidationGroup"/>
 			<xsd:element name="validityParameterAssignments" type="customerPurchaseParameterAssignments_RelStructure" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>VALIDITY PARAMETER ASSIGNMENTs for  CUSTOMER PURCHASE PACKAGE.</xsd:documentation>
+					<xsd:documentation>VALIDITY PARAMETER ASSIGNMENTs applying to CUSTOMER PURCHASE PACKAGE ELEMENT..</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="prices" type="customerPurchasePackagePrices_RelStructure" minOccurs="0">
@@ -287,9 +344,66 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="TimeStructureFactorRef" minOccurs="0"/>
 			<xsd:element ref="TimeIntervalRef" minOccurs="0"/>
 			<xsd:element ref="QualityStructureFactorRef" minOccurs="0"/>
-			<xsd:element name="validableElements" type="validableElements_RelStructure" minOccurs="0">
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ====CUSTOMER PURCHASE PACKAGE ELEMENT ACCESS ======================================== -->
+	<xsd:complexType name="customerPurchasePackageElementAccesses_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of CUSTOMER PURCHASE PACKAGE ELEMENT ACCESS..</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="strictContainmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="CustomerPurchasePackageElementAccess" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="CustomerPurchasePackageElementAccess" abstract="false">
+		<xsd:annotation>
+			<xsd:documentation>Access to a VALIDABLE ELEMENT through use of CUSTOMER PURCHASE PACKAGE. +v1.1. This is only needed for complex faris that use FARE STRUCTURE ELEMENT IN SEQUENCT to </xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="CustomerPurchasePackageElementAccess_VersionedChildStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="CustomerPurchasePackageElementAccessGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="CustomerPurchasePackageElementAccessIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="CustomerPurchasePackageElementAccess_VersionedChildStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a CUSTOMER PURCHASE PACKAGE ELEMENT ACCESS.  +v1.1</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="VersionedChildStructure">
+				<xsd:sequence>
+					<xsd:group ref="CustomerPurchasePackageElementAccessGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="CustomerPurchasePackageElementAccessGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a CUSTOMER PURCHASE PACKAGE ELEMENT ACCESS.  +v1.1</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="ValidableElementRef" minOccurs="0"/>
+			<xsd:element ref="FareStructureElementRef" minOccurs="0"/>
+			<xsd:element ref="FareStructureElementInSequenceRef" minOccurs="0"/>
+			<xsd:element name="MarkedAs" type="MarkedAsEnumeration" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>VALIDABLE ELEMENTs for  CUSTOMER PURCHASE PACKAGE.</xsd:documentation>
+					<xsd:documentation>Whether the element has been used </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="validityParameterAssignments" type="customerPurchaseParameterAssignments_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>PARAMETER ASSIGNMENTs applying to  CUSTOMER PURCHASE PACKAGE ELEMENT ACCESS. </xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -363,7 +477,7 @@ Rail transport, Roads and Road transport
 	<!-- == CUSTOMER PURCHASE PARAMETER ASSIGNMENT PRICE.================================ -->
 	<xsd:complexType name="customerPurchaseParameterAssignments_RelStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for a list of FARE ACCESS RIGHT PARAMETERs.</xsd:documentation>
+			<xsd:documentation>Type for a list of CUSTOMER PURCHASE PARAMETER ASSIGNMENT.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="containmentAggregationStructure">
@@ -379,7 +493,7 @@ Rail transport, Roads and Road transport
 	</xsd:complexType>
 	<xsd:element name="CustomerPurchaseParameterAssignment" abstract="false" substitutionGroup="AccessRightParameterAssignment_">
 		<xsd:annotation>
-			<xsd:documentation>A VALIDITY PARAMETER ASSIGNMENT specifying practical parameters during a TRAVEL CustomerPurchaseATION, within a given fare structure (e.g. the origin or destination zone in a zone-counting system).</xsd:documentation>
+			<xsd:documentation>A VALIDITY PARAMETER ASSIGNMENT specifying practical parameters for use in a  CUSTOMER PURCHASE PACKAGE.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -425,7 +539,7 @@ Rail transport, Roads and Road transport
 	</xsd:complexType>
 	<xsd:group name="CustomerPurchaseParameterAssignmentGroup">
 		<xsd:annotation>
-			<xsd:documentation>Elements for CUSTOMER PURCHASE PARAMETER ASSIGNMENT.</xsd:documentation>
+			<xsd:documentation>Elements for a CUSTOMER PURCHASE PARAMETER ASSIGNMENT.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence/>
 	</xsd:group>

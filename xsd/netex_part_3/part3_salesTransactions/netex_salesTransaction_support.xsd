@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_salesTransaction_support">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_salesTransaction_support">
 	<xsd:include schemaLocation="netex_salesContract_support.xsd"/>
 	<xsd:include schemaLocation="../part3_fares/netex_accessRightParameter_support.xsd"/>
 	<!-- =============================================================== -->
@@ -19,7 +19,8 @@
 				<Date>
 					<Modified>2011-02-05</Modified>Name Space changes  
 				</Date>
-				<Date><Modified>2017-08-10</Modified> Rename FareContractEvent to FareContractEntry
+				<Date>
+					<Modified>2017-08-10</Modified> Rename FareContractEvent to FareContractEntry
 				</Date>
 				<Date>
 					<Modified>2017-08-10</Modified> Align with TM6 
@@ -28,6 +29,10 @@
 					  Rename Type of Passenger Contract  to TypeOfFareContract. 	
 					  Adjust References in Dependent packages.				   
 				</Date>
+			<Date>
+					<Modified>2019-10-15</Modified>Add list of refs to enable CustomerPurchasePackage improvements
+				</Date>				
+				
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the SALES TRANSACTION types.</p>
@@ -44,7 +49,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -69,7 +74,19 @@ Rail transport, Roads and Road transport
 		</xsd:appinfo>
 		<xsd:documentation>NeTEx: SALES TRANSACTION identifier types.</xsd:documentation>
 	</xsd:annotation>
-	<!-- ====SALES TRANSACTION.======================================================== --> 
+	<!-- ====SALES TRANSACTION.======================================================== -->
+	<xsd:complexType name="salesTransactionRefs_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a collection of one or more references to a SALES TRANSACTION.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="oneToManyRelationshipStructure">
+				<xsd:sequence>
+					<xsd:element ref="SalesTransactionRef" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 	<xsd:simpleType name="SalesTransactionIdType">
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of a SALES TRANSACTION.</xsd:documentation>
@@ -96,6 +113,18 @@ Rail transport, Roads and Road transport
 		</xsd:simpleContent>
 	</xsd:complexType>
 	<!-- ====TRAVEL SPECIFICATION.======================================================== -->
+	<xsd:complexType name="travelSpecificationRefs_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a collection of one or more references to a TRAVEL SPECIFICATION.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="oneToManyRelationshipStructure">
+				<xsd:sequence>
+					<xsd:element ref="TravelSpecificationRef" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 	<xsd:simpleType name="TravelSpecificationIdType">
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of a TRAVEL SPECIFICATION.</xsd:documentation>
