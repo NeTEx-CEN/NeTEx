@@ -41,8 +41,10 @@
 					<Modified>2019-03-12</Modified>NORWAY-99 change cardinality of ___SupplementProduct__ / ___SupplementToFareProductRef___   from 0:1 to 0:* 
 				</Date>
 				<Date>
-					<Modified>2019-03-13</Modified>Simplify use of Fares: Add new  Atrribute  PreeassignedFareProductType to      PreassignedFareProduct with values singleTip,  timeTimitedSingleTrip, dayReturnTrip, periodReturnTrip, multiStepTrip, dayPass,  periodPass, other.
-					Simplify Add new atrribute   AmountOfPriceUnitType to     AmountOfPriceUnitFareProduct with values  tripCarnet, passCarnet, unitCoupons, other., 
+					<Modified>2019-03-13</Modified>Simplify use of Fares: 
+					Add new  Attribute  PreeassignedFareProductType to      PreassignedFareProduct with values singleTip,  timeTimitedSingleTrip, dayReturnTrip, periodReturnTrip, multiStepTrip, dayPass,  periodPass, other. 	 
+					Add new  Atrribute   SupplementProductType to      SupplementProduct with values seatReservation,  dog, animal, bicycle, meal, wifi, other
+					Add new atrribute   AmountOfPriceUnitType to     AmountOfPriceUnitFareProduct with values  tripCarnet, passCarnet, unitCoupons, other., 
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -960,18 +962,25 @@ Rail transport, Roads and Road transport
 		<xsd:annotation>
 			<xsd:documentation>Elements for a PREASSIGNED FARE PRODUCT.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:choice>
-			<xsd:element name="SupplementToFareProductRef" type="FareProductRefStructure" minOccurs="0">
+		<xsd:sequence>
+			<xsd:element name="SupplementProductType" type="SupplementProductTypeEnumeration" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>FARE PRODUCT to which this SUPPLEMENT PRODUCT can be a a supplement.</xsd:documentation>
+					<xsd:documentation>Classification of PEEASSIGNED FARE PRODUCT. +v1.1</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="supplementTo" type="fareProductRefs_RelStructure" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>FARE PRODUCTa to which this SUPPLEMENT PRODUCT can be a a supplement.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-		</xsd:choice>
+			<xsd:choice>
+				<xsd:element name="SupplementToFareProductRef" type="FareProductRefStructure" minOccurs="0">
+					<xsd:annotation>
+						<xsd:documentation>FARE PRODUCT to which this SUPPLEMENT PRODUCT can be a a supplement.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="supplementTo" type="fareProductRefs_RelStructure" minOccurs="0">
+					<xsd:annotation>
+						<xsd:documentation>FARE PRODUCTa to which this SUPPLEMENT PRODUCT can be a a supplement.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:choice>
+		</xsd:sequence>
 	</xsd:group>
 	<!-- ====ACCESS RIGHT IN PRODUCT..============================= -->
 	<xsd:complexType name="accessRightsInProduct_RelStructure">

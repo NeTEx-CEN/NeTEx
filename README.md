@@ -42,6 +42,11 @@ There is also an Oxygen project file:
 ## 1.11 Summary of Changes since v1.10 
 
 
+### 2019.03.13 UK-27 & FIXES  *FARES* Extend ___CustomerPurchasePackage___ implementation 	
+* Also add   Atrribute ___SupplementProductType___ to   ___SupplementProduct___ with values    _seatReservation, bicycle, dog, animal, meal, wifi_ 
+  * _Updates to xml schema_:   
+  	* netex_fareProduct_support.xsd
+	* netex_fareProducte_version.xsd
 	
 ### 2019.03.13 EURA-29  *FARES*    Add  new ___EligibilityChangePolicy___  usage parameter with attributes ___OnBecomingPolicy___ and ___OnCeasingPolicy___.  
   * ___OnBecomingEnumeration___
@@ -55,7 +60,13 @@ There is also an Oxygen project file:
 	* _terminateAfterGracePeriod_ - If user ceases to be eligible,  termination  take place after the end of a grace period
 	* _automaticallySubstituteProduct_ - If user ceases to be eligible, assign them an appropiate  replacement product. 
 	* _noAction_ - If user ceases to be eligible, take no action.
-	* _other_ 					
+	* _other_
+	
+  * add integrity constraint for ___EligibilityChangePolicy___
+  * _Updates to xml schema_:     
+	* netex_usageParameterEligibility_support.xsd
+	* netex_usageParameterEligibility_version.xsd 	
+	* netex_publication.xsd
 
 ### 2019.03.13 EURA-50  *FARES* Add new ___PurchaseAction___ attribute to  ___PurchaseWindow__    with values: _purchase_,  _reserve_,  _orderWithoutPaying_,  payForPreviousOrder, other_  _
 , _seatMap_  and _openSeating_.	
@@ -65,8 +76,6 @@ There is also an Oxygen project file:
 	* netex_vehicleSeating_support.xsd
 	* netex_usageParameterBooking_support.xsd
 	* netex_usageParameterBooking_version.xsd 
-
-add Private Code to TravelDocument
     	
 ## 2019.03.13  EURA-40 *FARES* Tidy up - Include new elements as fare validity parameters
   * Add  new ___FareStructureValidityParametersGroup___ to validity paarmaters with new attributes   ___TypeOfTariffRef___,   ___TypeOfFareStructureFactor___,  ___TypeOfFarFresStructureFactorRef___,   
