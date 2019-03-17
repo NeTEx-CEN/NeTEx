@@ -8,7 +8,7 @@ Version 1.10 - Base version plus minor fixes comprising
    * The approved 1.1 CRs 1-50
    * Rollup of fixes  and additional documentation on other fixes. 
    * Corrections to  integration of NK  1.09.
-   * 1.10 CRS from Meeting Feb 2019 
+   * 1.105 CRS from Meeting Feb 2019 : Incudes EURA, UK and Norway inout.
 
 ### Note on the schema
 The schema is broken down systematically into small modular files; generally for each functional package in the design model  (See UML Model) there are two xml schema files
@@ -40,6 +40,8 @@ There is also an Oxygen project file:
 # Change Log
  
 ## 1.11 Summary of Changes since v1.10 
+
+### 2019.03.15  !.11 Small tidy ups to new value names and to documentation
 
 ### 2019.03.13 UK-27 & FIXES  *FARES* Fix ___FareContract___ and ___CustomerPurchasePackage___ issues and allow marking of use of ___CustomerPurchasePackage___,	
   * Also  Fix several issues and align with TM 
@@ -292,7 +294,7 @@ __
  * Add __SubscriptionRenewalPolicy___ attribute with enumeration   values:
 	* _automatic_ - Renew automatcally at end of term.
 	* _manual_ - Renew on request.
-	* _automaticOnConfirmation_ - Confirm and enew automatically at end of subscription  term.
+	* _automaticOnConfirmation_ - Confirm and renew automatically at end of subscription  term.
 	* _none_ - No renewal allowed.
  * Add __SubscriptionTermEnumeration___ attribute with enumeration  values:
 	* _fixed_ - Subscription must be for a fixed term.
@@ -594,7 +596,8 @@ _oneOf_ /  _someOf_/  _allOf_
  	* netex_distanceMatriElement_support.xsd
  	* netex_distanceMatriElement_version.xsd
  	* netex_publication.xsd
- 
+ * _Documentation Changes_:  [uml_diagram: NONE], [doc-NONE]
+  
 ### 2019.02.28 EURA-10 *FARES* Improve ___CustomerPurchasePackage___.
  * Fix correct case on ___customerPurchasePackageRefs____.
  * Allow  inlining of ___CustomerPurchasePackages___ in a ___FareContract____.
@@ -602,57 +605,67 @@ _oneOf_ /  _someOf_/  _allOf_
   	* netex_customerPurchasePackage_support.xsd
  	* netex_customerPurchasePackage_version.xsd
  	* netex_salesTransaction_version.xsd
+ * _Documentation Changes_:  [uml_diagram: NONE], [doc-NONE]
+ 
 
 ### 2019.02.21 UK-07  *FARES* Allow __xxPriceRefs__ directly in  ___FareTable___ / ___cells___. 
  * Also allow ___VersionOfObjectRef___ on  ___FareTable___ ___Row___ and ___Column___.
  * _Updates to xml schema_:
  	* netex_fareZone_version.xsd
+ * _Documentation Changes_:  [uml_diagram: done], [doc-included]
   
 ### 2019.02.21 UK-20 *FARES* Add contains relationship to ___FareZone___.
  * _Updates to xml schema_:
  	* netex_fareZone_version.xsd
  * _Updates to xml examples_:
   	* uk_fxc_trip_First_WoE_Line48_stage+Passses.xsd
+ * _Documentation Changes_:  [uml_diagram: done], [doc-included]
 
 ### 2019.02.21 UK-57 *FARES* Add Allow list of ___MachineReadable___  enumerations, 
  * ALso add open ended ___TypeOfMachineRedability___. 
  * _Updates to xml schema_:
  	* netex_travelDocument_support.xsd
 	* netex_travelDocument_version.xsd
+* _Documentation Changes_:  [uml_diagram: done], [doc-included]
 
 ### 2019.02.21 UK-34 *FARES* TRAVEL DOCUMENT  should not be in FARE FRAME  - remove.
  * _Updates to xml schema_:
  	* netex_travelDocument_version.xsd
 	* netex_fareFame_version.xsd
+ * _Documentation Changes_:  [uml_diagram: NONE], [doc-NONE]
 		 
 ### 2019.02.21 UK-07 *FARES* ___FareTable___ - Allow direct containment of ___FarePriceRef___.
  * Also UK-23 Add ___FareSectionRef___ to  F___areTable / specifics___	
  * _Updates to xml schema_:
 	* netex_fareTable_version.xsd
  * _Updates to xml examples_:Various to drop unecessary ___cells__ wrapper tags	
-
+ * _Documentation Changes_:  [uml_diagram: done], [doc-included]
  
 ## 1.10 Summary of Changes since v1.09
 
 
-### 2019.02.21 .No-Fix *PART2* Reapply 1.09  Fix Merge in correction  to spelling of ___AccountingTime___. NB THis will break any existing documents that use ___AccountingTime___.
+### 2019.02.21 .No-Fix *PART2* Reapply 1.09  Fix Merge in correction  to spelling of ___AccountingTime___. NB This will break any existing documents that use ___AccountingTime___.
  * _Updates to xml schema_:
 		* netex_duty_version.xsd
-
+ * _Documentation Changes_:  [uml_diagram: NONE], [doc-NONE]
+ 
 ### 2019.02.21 .No-Fix *FARES*  Reapply 1.09  Fix up examples
  * _Updates to xml examples_:  fare examples, Norway examples
+ * _Documentation Changes_:  [uml_diagram: NONE], [doc-NONE]
 
 ### 2019.02.21 NJSK-Fix *FRAMEWORK*  Make dummy types abstract ___TransportOrganisation___ .
-  * _Updates to xml schema_:
+ * _Updates to xml schema_:
 		* netex_transportOrganisation_version.xsd
+ * _Documentation Changes_:  [uml_diagram: NONE], [doc-NONE]
 
 ### 2019.02.21 NJSK-Fix *FRAMEWORK* Reapply 1.09 Make ___ValidityCondition___ etc visible   [xsd only] 
  * _Updates to xml schema_:
-		* netex_travelRights.xsd
+	* netex_travelRights.xsd
         * netex_trainElement.xsd
+ * _Documentation Changes_:  [uml_diagram: NONE], [doc-NONE]
 
 ### 2019.02.21 NJSK-Fix: *FRAMEWORK* Reapply 1.09 Constraint changes and further clean up constraints  [xsd only] 
-    *Changes includee
+   * Changes includee
 	* (a) Fix keyref constraint on ___TimingLinkInJourneyPattern_AnyVersionedKey___,   (Drop ___DropFarePointInPattern___. ___TimingTimingLinkInJournePattern___, ___StopTimingLinkInJourneyPattern___).
 	* (b) Fix keyref constraint on ___ServiceLinkInJourneyPattern_AnyVersionedKey___ (Drop ___xxxPoints___).
 	* (c) Fix keyref constraint on ___FarePointInPattern_AnyVersionedKey___ - Add ___xxxPoints___.
@@ -665,24 +678,27 @@ _oneOf_ /  _someOf_/  _allOf_
 	* (j) Fix (again) ___Constraints on SalesOfferPackage___ and ___SalesOfferPackagePrice____.
 	* (k) Fix keyref  ___LinkInJourneyPattern_AnyVersionedKey___  correct  ___LinkInPattern___ to ___ServiceLinkInPattern___.
 	* (l) Fix remove obsolete ___ParkingTaxRate___ constraint
-	* (m) Fix Reinstate Constraints on StopPointInJourneyPattern, etc  {NB THIS MAY CATCHE EXISTING ERRORS IN EXAMPLES].
-	* (n) Fix Add Constraints on ___SectionInSequence ___. {NB THIS MAY CATCHE EXISTING ERRORS IN EXAMPLES].
+	* (m) Fix Reinstate integrity constraints on StopPointInJourneyPattern, etc  {NB THIS MAY CATCHE EXISTING ERRORS IN EXAMPLES].
+	* (n) Fix Add  constraints on ___SectionInSequence ___. {NB THIS MAY CATCHE EXISTING ERRORS IN EXAMPLES].
 	* (o) Revise key names to emphasise when key is ordered separate.
 	* (b) Fix Make uniqueness of ___PriceGroup___ and  ___FareTable___.
 
-
-* _Updates to xml schema_:
+ * _Updates to xml schema_:
       * netex_publication.xsd
+ * _Documentation Changes_:  [uml_diagram: NONE], [doc-NONE]
 
-### 2019.02.18 NJSK-Fix *FRAMEWORK* Correct data type of ___LayerRef___ and substitution group on ___Layer___  and ___CellRef___ [xsd only] 
-   * _Updates to files_: 
+### 2019.02.18 NJSK-Fix *FRAMEWORK* Correct data type of ___LayerRef___ and substitution group on ___Layer___  and ___CellRef___  
+  * NB dependencies need sorting out - move layer to core framework?
+  * _Updates to files_: 
         * netex_layer_support.xml 
-        * netex_layer_vesrion.xml g
+        * netex_layer_vesrion.xml
+  * _Documentation Changes_:  [uml_diagram: NONE], [doc-NONE]
 
 ### 2019.02.18 NJSK-Fix OTHER  update XML SPy & Oxygen project files [xsd only]
-   * _Updates to files_: 
+ * _Updates to files_: 
         * netex.spp 
         * netex.spr 
+ * _Documentation Changes_:  [uml_diagram: NONE], [doc-NONE]
 
 ### 2019.02.18  EXAMPLES - Add new  Fare examples [xsd only]
 #### Rail fares
@@ -700,13 +716,15 @@ _oneOf_ /  _someOf_/  _allOf_
     * uk_fxc_pass_Metrobus_metrorider.xml
 * Example: Stage trip fares:  
     * uk_fxc_trip_First_WoE_stage-distance_minimal1.xml
- 
+* _Documentation Changes_:  [uml_diagram: NONE], [doc-NONE] 
 
 ### 2019.02.18 UK-006 *FARES* - Add missing FARE TABLE  price references  [DOCTODO]
    * Fix: Add ___CellSpecificNetworkGroup___   to Fare Table Specifics, 
-   * Fix: Add ___TariffZoneRef , LineRef,, FareZoneRef,  TariffRef,  LineRef, ScheduledStopPointRef___ and   ___FareStructureElementInSequenceRef___. ___SectionRef__ to  ___CellSpecificNetworkGroup____
+   * Fix: Add ___TariffZoneRef , LineRef, FareZoneRef,  TariffRef,  LineRef, ScheduledStopPointRef___ and   ___FareStructureElementInSequenceRef___. ___SectionRef__ to  ___CellSpecificNetworkGroup____
    * _Updates to xml schema_: 
-        * netex_fareTable_version.xsd 
+        * netex_fareTable_version.xsd  
+	* netex_stopPlace_version.xsd
+* _Documentation Changes_:  [uml_diagram: Done-NK;  Included-NK], [doc-Done-NK; XML Diagram Replaced: Done-NK;]
 
 ### 2019.01.11 1.09  NJSK-Fix *FARES* Constraints  [xsd only] x
  * Fix: Correction to constraints
@@ -719,6 +737,7 @@ _oneOf_ /  _someOf_/  _allOf_
         
 * _Updates to xml schema_:
       * netex_publication.xsd
+* _Documentation Changes_:  [uml_diagram: NONE], [doc-NONE]
  
  
 ### 2019.01.10 HOUSEKEEPING  Migrate to Github. Rename all  schema files to remove version numbers 
@@ -728,7 +747,7 @@ _oneOf_ /  _someOf_/  _allOf_
 ### 2018.06.02  GITHUBBER  FRAMEWORK Add ___Centroid___ to ___GroupOfStopPlaces___  [uml_diagram, doctodo]
    * _Updates to xml schema_: 
 	   * netex_stopPlace_version.xsd
-   
+   * _Documentation Changes_:  [uml_diagram: Done-NK;  Included-NK], [doc-TODO-CDo; XML Diagram Replaced: =Cd2do]
 ----
 # 1.09 Summary of Changes since v1.08
 
@@ -749,7 +768,7 @@ _oneOf_ /  _someOf_/  _allOf_
 
 ### 2018.06.01 CR049 Rename  to align with Transmodel.  Fix case of names  [xsd only]
    * TM Alignment: Rename Sales Package to SALES OFFER PACKAGE 
-   * Fix: Correct the camel casing of  groupsOfsaleOfffPackages ==>  groupsOfSaleOfferPackages 
+   * Fix: Correct the camel casing of  groupsOfsaleOfferPackages ==>  groupsOfSaleOfferPackages 
    * Fix: Correct constraint names
    * _Updates to xml schema_: 
         * netex_SalesOfferPackage_version-v1.1.xsd 
@@ -774,7 +793,7 @@ _oneOf_ /  _someOf_/  _allOf_
 
 ### 2018.03.20 1.09  Fix Inheritance Companion ProfileRef a type of UserProfileRef  [xsd only]
    * _Updates to xml schema_: 
-        * netex_usageParameterEligibility_support-v1.0 make Companion ''
+        * netex_usageParameterEligibility_support-v1.0 make Companion  
 
 ### 2018.03.20  CR049 Rename  to align with Transmodel - Fix Capitalisation  [xsd only] x
    * Fix Capitalisation of wrapper tags 
