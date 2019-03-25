@@ -39,6 +39,13 @@ There is also an Oxygen project file:
 ----
 # Change Log 
 
+
+## 2019.03.25 CR55 *PART1-IFOPT* CD Change #52 Add new attribute  ___StopPlaceWeight___  to ___StopPlace__ with values _international, national, regional, local_. 
+  * NJSK Review: Make  values lowerCamelCase consistent with NeTEx conventions.
+  * _Updates to xml schema_:  
+  	* netex_ifopt_stopPlace_support.xsd
+	* netex_ifopt_stopPlace_version.xsd 
+
 ## 2019.03.25 CR51 *PART2-TI* CD Add new ___VehicleJourneyStopAssignment___ entity to set default stop assignment for ___VehicleJourney___.
   * NJSK Review CR51:  add doc comments  
   * NJSK make ___vehicleJourneyStopAssignmentsInFrame_RelStructure___ lower camel case consistent with NeTEx conventions. 
