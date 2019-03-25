@@ -40,21 +40,25 @@ There is also an Oxygen project file:
 # Change Log 
 
 
+# 2019.03.25 NL31 *FRAMEWORK-RC* CD #60 Add new attributes ___BoardingHeight___ and ___GapToPlatform___ to ___VehicleType___
+  * 	 NJSK Review: Correct data types of new attributes to be of _LengthType_.
+  * _Updates to xml schema_:   
+	* netex_vehicleType_version.xsd 
+	 
 ## 2019.03.25 NL28 *FRAMEWORK-CC* CD #59 Add new ___Presentation___ attribute to ___Branding___.
   * NJSK Review; Use a ___BrandingGroup___ to be consistent with NeTEx coding patterns.
   * _Updates to xml schema_:   
 	* netex_dataSource_version.xsd 
 
-
 ## 2019.03.25 SBB23 *FRAMEWORK-CC*  CD #57. Add new ___BackgroundColour___ and ___BackgroundColourName___ attributes to ___Presentation___ and ___PrintPresentation___  elements. 
   * Also add _icon_ to ___TypeOfInfolink___ enum values. 
-  * NJSK Review; ___BackgroundColourName___  should be  type xsd:normalizedString, not xsd:string.
+  * NJSK Review; ___BackgroundColourName___  should be  type _xsd:normalizedString_, not _xsd:string_.
   * _Updates to xml schema_:   
 	* netex_utility_version.xsd 
 
-## 2019.03.25 SBB21 *FRAMEWORK-CC*  CD #56. Add new ColourSystem attribute to Presentationa PrintPresentation. 
-  * NJSK Review ColourSystem and ColourName  should be  type xsd:normalizedString, not xsd:string.
-  * Also Merge in Corrections to comments as per SBB20 #55  Also Correct camel case on names of ___StopPointInXXX___ groups. 
+## 2019.03.25 SBB21 *FRAMEWORK-CC*  CD #56. Add new ___ColourSystem___ attribute to ___Presentation___ and ___PrintPresentation___. 
+  * NJSK Review: ___ColourSystem___ and ___ColourName___  should be  type _xsd:normalizedString_, not _xsd:string_.
+  * Also Merge in Corrections to comments as per SBB20 #55  Also Correct camel case on names of ___StopPointInXXXGroup___ groups. 
   * _Updates to xml schema_:   
 	* netex_utility_version.xsd 
 	* netex_servicePattern_version.xsd 
