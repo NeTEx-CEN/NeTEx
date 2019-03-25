@@ -39,6 +39,9 @@ There is also an Oxygen project file:
 ----
 # Change Log
 
+## 2019.03.25 Fix *FRAMEWORK* Integrate constraint fix  #49 ny CD with other constraint changes: Add ___EquipmentPlace___  to  ___Place_AnyVersionedKey___. 
+  * _Updates to xml schema_:  
+	* netex_publication.xsd 
 
 ## 2019.03.25 CR50 by CD from 2019-02-20 *FRAMEWORK-CC*.  CD add snow and ice modes. 
   * NJSK  Revise - 
