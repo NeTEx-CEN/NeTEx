@@ -41,11 +41,17 @@ There is also an Oxygen project file:
  
 ## 1.11  
 
-## 2019.03.25  1.11  Skinkie  Fix:  Correction to  typo on AccountingTime
-    NJSK  Also add separate EndDayOffSer - DayOffSet should apply to start time relative to operatig day of Duty
+## 2019.03.25  1.11  Skinkie  Fix:  Correction to typo on AccountingTime
+  * NB This will break existing XML that uses AccountingTime.
+  * NJSK  Also add separate EndDayOffSer - DayOffSet should apply to start time relative to operatig day of Duty
   * _Updates to xml schema_:    
 	* netex_duty_version.xsd
- 
+	
+## 2019.03.25 Fix #37 by Skinkie *PART2-ND*  Correct Typo:  rename OppositeDIrectionRef to OppositeDirectionRef
+   * NB This will break existing XML  that uses OppositeDirectionRef. 
+   * _Updates to xml schema_:    
+	* netex_route_version.xsd
+	
 ## 1.11 Summary of Changes since v1.10 
 
 ### 2019.03.15  !.11 Small tidy ups to new value names and to documentation
