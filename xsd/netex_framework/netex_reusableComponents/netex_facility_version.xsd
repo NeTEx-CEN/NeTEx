@@ -21,7 +21,11 @@
 					<Modified>2011-02-05</Modified>Name Space changes
 				</Date>
 				<Date>
-					<Modified>2019-03-25</Modified> FR-5  CD  change #53 Add AccessFacilityList to SiteFacilitySet.
+					<Modified>2019-03-25</Modified>FR-5  CD  change #53 Add AccessFacilityList to SiteFacilitySet.
+				</Date>
+				<Date>
+					<Modified>2019-03-25</Modified>NL32 CD  change #61 Add new VehicleAccessFacilityList to ServiceFacilitySet.
+					NJSK Review: Do not add SiteAccess dacilitrie sto vehicle, but rather add a new  VehicleAccessFacilityList
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -238,6 +242,8 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="SanitaryFacilityList" minOccurs="0"/>
 			<xsd:element ref="TicketingFacilityList" minOccurs="0"/>
 			<xsd:element ref="TicketingServiceFacilityList" minOccurs="0"/>
+			<xsd:element ref="AccessFacilityList" minOccurs="0"/>
+			<xsd:element ref="VehicleAccessFacilityList" minOccurs="0"/>
 			<xsd:element ref="AccessibilityToolList" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>List of TYPEs of ACCESSIBILITY TOOLs.</xsd:documentation>
@@ -321,6 +327,11 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Facilities that apply to services.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
+			<xsd:element ref="VehicleAccessFacilityList" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>List of Vehicle Access FACILITies. +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element ref="AccommodationAccessList" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>List of ACCOMMODATION Access rights.</xsd:documentation>
@@ -421,7 +432,7 @@ Rail transport, Roads and Road transport
 	</xsd:element>
 	<xsd:complexType name="SiteFacilitySetStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for a Site FACILITY.</xsd:documentation>
+			<xsd:documentation>Type for a SITEFACILITY.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="FacilitySet_VersionStructure">
@@ -774,20 +785,37 @@ Rail transport, Roads and Road transport
 		</xsd:complexContent>
 	</xsd:complexType>
 	<!-- ======================================== -->
-	<!-- ===Access FACILITY====================================== -->
+	<!-- === Site Access FACILITY====================================== -->
 	<xsd:element name="AccessFacility" type="AccessFacilityEnumeration" default="unknown">
 		<xsd:annotation>
-			<xsd:documentation>Classification of ACCESS FACILITY.</xsd:documentation>
+			<xsd:documentation>Classification of SITE  ACCESS FACILITY.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:element name="AccessFacilityList" type="AccessFacilityListOfEnumerations" default="unknown">
 		<xsd:annotation>
-			<xsd:documentation>List of ACCESS FACILITies.</xsd:documentation>
+			<xsd:documentation>List of SITE ACCESS FACILITies.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:simpleType name="AccessFacilityListOfEnumerations">
 		<xsd:annotation>
-			<xsd:documentation>List of values for ACCESS FACILITY.</xsd:documentation>
+			<xsd:documentation>List of values for SITE ACCESS FACILITY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:list itemType="AccessFacilityEnumeration"/>
+	</xsd:simpleType>
+	<!-- === Vehicle Access FACILITY====================================== -->
+	<xsd:element name="VehicleAccessFacility" type="VehicleAccessFacilityEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Classification of VEHICLE ACCESS FACILITY.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="VehicleAccessFacilityList" type="VehicleAccessFacilityListOfEnumerations" default="unknown">
+		<xsd:annotation>
+			<xsd:documentation>List of VEHICLE ACCESS FACILITies.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="VehicleAccessFacilityListOfEnumerations">
+		<xsd:annotation>
+			<xsd:documentation>List of values for VEHICLE ACCESS FACILITY.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:list itemType="AccessFacilityEnumeration"/>
 	</xsd:simpleType>
@@ -808,7 +836,7 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:list itemType="AccessibilityInfoFacilityEnumeration"/>
 	</xsd:simpleType>
-	<!-- ===Access FACILITY====================================== -->
+	<!-- ===Accessibility Tool ================================== -->
 	<xsd:element name="AccessibilityTool" type="AccessibilityToolEnumeration">
 		<xsd:annotation>
 			<xsd:documentation>Classification of ACCESSIBILITY TOOLs.</xsd:documentation>
@@ -825,7 +853,7 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:list itemType="AccessibilityToolEnumeration"/>
 	</xsd:simpleType>
-	<!-- ===Accommodation FACILITY====================================== -->
+	<!-- ===Accommodation Accss====================================== -->
 	<xsd:element name="AccommodationAccess" type="AccommodationAccessEnumeration">
 		<xsd:annotation>
 			<xsd:documentation>Classification of ACCOMMODATION ACCESS type -</xsd:documentation>
@@ -882,13 +910,13 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Classification of BERTHFACILITY type - TPEG pti23.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<!-- === BookingFACILITY====================================== -->
+	<!-- === Booking FACILITY====================================== -->
 	<xsd:element name="BoardingPermisssion" type="BoardingPermissionEnumeration">
 		<xsd:annotation>
 			<xsd:documentation>Classification of BOARDING PERMISSION - UIC 7161 Code list.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<!-- === BookingFACILITY====================================== -->
+	<!-- === Booking Process FACILITY====================================== -->
 	<xsd:element name="BookingProcessFacility" type="BookingProcessEnumeration">
 		<xsd:annotation>
 			<xsd:documentation>Classification of BOOKING PROCESS FACILITY type - UIC 7037 Code list.</xsd:documentation>
@@ -905,7 +933,7 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:list itemType="BookingProcessEnumeration"/>
 	</xsd:simpleType>
-	<!-- ===Accommodation FACILITY====================================== -->
+	<!-- === Couchette n FACILITY====================================== -->
 	<xsd:element name="CouchetteFacility" type="CouchetteFacilityEnumeration" default="unknown">
 		<xsd:annotation>
 			<xsd:documentation>Classification of COUCHETTE FACILITY type - TPEG pti23.</xsd:documentation>
@@ -922,7 +950,7 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:list itemType="CouchetteFacilityEnumeration"/>
 	</xsd:simpleType>
-	<!-- EmergebncyFACILITY====================================== -->
+	<!-- ========== Emergency Service FACILITY============================-->
 	<xsd:element name="EmergencyService" type="EmergencyServiceEnumeration">
 		<xsd:annotation>
 			<xsd:documentation>Classification of EMERGENCY SERVICE FACILITY.</xsd:documentation>
@@ -956,7 +984,7 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:list itemType="FamilyFacilityEnumeration"/>
 	</xsd:simpleType>
-	<!-- ===FareClass FACILITY====================================== -->
+	<!-- ===Fare Class FACILITY====================================== -->
 	<xsd:element name="FareClass" type="FareClassEnumeration" default="unknown">
 		<xsd:annotation>
 			<xsd:documentation>Classification of FARE CLASSes.</xsd:documentation>
@@ -1081,7 +1109,7 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:list itemType="MobilityFacilityEnumeration"/>
 	</xsd:simpleType>
-	<!-- Meney FACILITY====================================== -->
+	<!--=======  Money FACILITY====================================== -->
 	<xsd:element name="MoneyFacility" type="MoneyFacilityEnumeration">
 		<xsd:annotation>
 			<xsd:documentation>Classification of MONEY FACILITY.</xsd:documentation>
@@ -1098,7 +1126,7 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:list itemType="MoneyFacilityEnumeration"/>
 	</xsd:simpleType>
-	<!-- ===Nuisance FACILITY====================================== -->
+	<!-- === Nuisance FACILITY====================================== -->
 	<xsd:element name="NuisanceFacility" type="NuisanceFacilityListOfEnumerations" default="unknown">
 		<xsd:annotation>
 			<xsd:documentation>Classification of NUISANCE FACILITY type - TPEG pti23.</xsd:documentation>
@@ -1132,7 +1160,7 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:list itemType="ParkingFacilityEnumeration"/>
 	</xsd:simpleType>
-	<!-- ===Care Service  FACILITY====================================== -->
+	<!-- === Car Service  FACILITY====================================== -->
 	<xsd:element name="CarServiceFacility" type="CarServiceFacilityEnumeration">
 		<xsd:annotation>
 			<xsd:documentation>Classification of CAR SERVICE FACILITY.</xsd:documentation>
@@ -1149,7 +1177,7 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:list itemType="CarServiceFacilityEnumeration"/>
 	</xsd:simpleType>
-	<!-- === PassengerInfo FACILITY====================================== -->
+	<!-- === Passenger Information FACILITY====================================== -->
 	<xsd:element name="PassengerInformationFacility" type="PassengerInformationFacilityEnumeration">
 		<xsd:annotation>
 			<xsd:documentation>Classification of PASSENGER INFO FACILITY type - TPEG pti23.</xsd:documentation>
@@ -1200,7 +1228,7 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:list itemType="CateringFacilityEnumeration"/>
 	</xsd:simpleType>
-	<!-- ===Reservation FACILITY====================================== -->
+	<!-- === service Reservation FACILITY====================================== -->
 	<xsd:element name="ServiceReservationFacility" type="ReservationEnumeration" default="unknown">
 		<xsd:annotation>
 			<xsd:documentation>Classification of RESERVATION FACILITY type - UIC 7037 Code list.</xsd:documentation>
@@ -1279,7 +1307,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>List of SANITARY FACILITies.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<!-- ===GenderLimitations ====================================== -->
+	<!-- ===Gender Limitation  ====================================== -->
 	<xsd:element name="GenderLimitation" type="GenderLimitationEnumeration">
 		<xsd:annotation>
 			<xsd:documentation>Classification GENDER LIMITATION.</xsd:documentation>
@@ -1342,7 +1370,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>List of TICKETING SERVICE FACILITies, e.g. purchase, collection. top up.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<!-- ==== ===================================================== -->
+	<!-- ==== ==UIC Train rate ========================================= -->
 	<xsd:element name="UicTrainRate" type="UicRateTypeEnumeration">
 		<xsd:annotation>
 			<xsd:documentation>Classification of UIC Rate Type FACILITY type - UIC 5163 Code list.</xsd:documentation>
@@ -1372,7 +1400,7 @@ Rail transport, Roads and Road transport
 		<xsd:list itemType="UicProductCharacteristicEnumeration"/>
 	</xsd:simpleType>
 	<!-- ======================================================================= -->
-	<!-- ===Sanitary FACILITY====================================== -->
+	<!-- === Medical FACILITY====================================== -->
 	<xsd:element name="MedicalFacility" type="MedicalFacilityEnumeration">
 		<xsd:annotation>
 			<xsd:documentation>Classification of MEDICAL FACILITY type - TPEG pti23.</xsd:documentation>

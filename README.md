@@ -39,6 +39,11 @@ There is also an Oxygen project file:
 ----
 # Change Log 
 
+# 2019.03.25 NL32 *FRAMEWORK-RC* CD #61 Add new values to SITE ___AccessFacility___ enum; _wheelchairLift, automaticRamp. slidingStep_.
+  * NJSK Review: Keep SITE and SERVICE aspects separate; add separate ___VehicleAccessFacility___ enum with values   _unknown, wheelchairLift, manualRamp, automaticRamp, steps, slidingStep, narrowEntrance, validator_.
+  * _Updates to xml schema_: 
+  	* netex_facility_support.xsd 
+	* netex_facility_version.xsd 
 
 # 2019.03.25 NL31 *FRAMEWORK-RC* CD #60 Add new attributes ___BoardingHeight___ and ___GapToPlatform___ to ___VehicleType___
   * 	 NJSK Review: Correct data types of new attributes to be of _LengthType_.
