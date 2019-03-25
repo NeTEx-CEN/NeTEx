@@ -39,6 +39,18 @@ There is also an Oxygen project file:
 ----
 # Change Log
 
+
+## 2019.03.25 CR50 by CD from 2019-02-20 *FRAMEWORK-CC*.  CD add snow and ice modes. 
+  * NJSK  Revise - 
+  * Correct camel casing of _snowAndIce_   value foe ___TransportMode___,  
+  * Correct camel casing of  ___SnowAndIceSubmode___ values ; 	 _unknown, undefined,  snowMobile,  snowCat,  snowCoach,  terraBus, windSled_,  
+  * Add _snowAandIce_ to Submode choices
+  * Add _snowAndIce_ to ___AllModes___
+  * Add _ski_ and _skate_ to ___AccessMode___  ___ContinuousMode___ values 
+  * _Updates to xml schema_:    
+	* netex_submode_version.xsd
+	* netex_mode_support.xsd 
+
 ## 2019.03.25 Fix #42 by Seime from 2019.01.07 *FRAMEWORK-CC*. Fix move  _canalBarge_ value from air to water modes.
   * NB this will break existing XML that uses _canalBarge_ value. 
   * Also changed ___Duty.TransportMode___ from ___VehicleModeEnumeration__   to __AllVehicleModesOfTransportEnumeration__ to allow for non-vehicle modes.
