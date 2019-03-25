@@ -39,6 +39,13 @@ There is also an Oxygen project file:
 ----
 # Change Log
 
+## 2019.03.25 Fix #42 by Seime from 2019.01.07 *FRAMEWORK-CC*. Fix move  _canalBarge_ value from air to water modes.
+  * NB this will break existing XML that uses _canalBarge_ value. 
+  * Also changed ___Duty.TransportMode___ from ___VehicleModeEnumeration__   to __AllVehicleModesOfTransportEnumeration__ to allow for non-vehicle modes.
+  * _Updates to xml schema_:    
+	* netex_submode_version.xsd
+ 	* netex_duty_version.xsd
+
 ## 2019.03.25 Fix #43 by Skinkie from 2019.01.07 *FRAMEWORK-CC*. Fix typo on _tactilePlatformEdges_.   
   * NB this will break existing XML that uses _tactilePlatformEdges_ value. 
   * _Updates to xml schema_:    
@@ -79,7 +86,7 @@ There is also an Oxygen project file:
 	
 ## 1.11 Summary of Changes since v1.10 
 
-### 2019.03.15  !.11 Small tidy ups to new value names and to documentation
+### 2019.03.15  1.11 Small tidy ups to new value names and to documentation
 
 ### 2019.03.13 UK-27 & FIXES  *FARES* Fix ___FareContract___ and ___CustomerPurchasePackage___ issues and allow marking of use of ___CustomerPurchasePackage___,	
   * Also  Fix several issues and align with TM 
