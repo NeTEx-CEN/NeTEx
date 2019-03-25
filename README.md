@@ -40,6 +40,10 @@ There is also an Oxygen project file:
 # Change Log
  
  
+## 2019.03.25 Fix #39 by Skinkie from 2019.01.07 *Part1-IFOPT* . Fix typo on ServiceSiteRef.Structure.  
+  * _Updates to xml schema_:    
+	* netex_ifopt_site_support.xsd
+ 
 ## 2019.03.25 Fix #38 by Skinkie from 2019.01.07 *Part1-IFOPT* . Fix typo on KeyScheme.  
   * NB this will break existing XML that uses KeyScheme. 
   * _Updates to xml schema_:    
