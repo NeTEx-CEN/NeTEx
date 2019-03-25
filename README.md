@@ -39,6 +39,13 @@ There is also an Oxygen project file:
 ----
 # Change Log 
 
+
+## 2019.03.25 NL28 *FRAMEWORK-CC* CD #59 Add new ___Presentation___ attribute to ___Branding___.
+  * NJSK Review; Use a ___BrandingGroup___ to be consistent with NeTEx coding patterns.
+  * _Updates to xml schema_:   
+	* netex_dataSource_version.xsd 
+
+
 ## 2019.03.25 SBB23 *FRAMEWORK-CC*  CD #57. Add new ___BackgroundColour___ and ___BackgroundColourName___ attributes to ___Presentation___ and ___PrintPresentation___  elements. 
   * Also add _icon_ to ___TypeOfInfolink___ enum values. 
   * NJSK Review; ___BackgroundColourName___  should be  type xsd:normalizedString, not xsd:string.
