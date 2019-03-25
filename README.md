@@ -39,7 +39,10 @@ There is also an Oxygen project file:
 ----
 # Change Log 
 
-
+## 2019.03.25 FR-5 *FRAMEWORK-CC* CD change #53 Add ___AccessFacilityList___ attribute to ___SiteFacilitySet___.
+  * _Updates to xml schema_:   
+	* netex_facility_version.xsd 
+ 
 ## 2019.03.25 CR55 *PART1-IFOPT* CD Change #52 Add new attribute  ___StopPlaceWeight___  to ___StopPlace__ with values _international, national, regional, local_. 
   * NJSK Review: Make  values lowerCamelCase consistent with NeTEx conventions.
   * _Updates to xml schema_:  
