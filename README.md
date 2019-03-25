@@ -39,6 +39,13 @@ There is also an Oxygen project file:
 ----
 # Change Log
  
+## 1.11  
+
+## 2019.03.25  1.11  Skinkie  Fix:  Correction to  typo on AccountingTime
+    NJSK  Also add separate EndDayOffSer - DayOffSet should apply to start time relative to operatig day of Duty
+  * _Updates to xml schema_:    
+	* netex_duty_version.xsd
+ 
 ## 1.11 Summary of Changes since v1.10 
 
 ### 2019.03.15  !.11 Small tidy ups to new value names and to documentation
