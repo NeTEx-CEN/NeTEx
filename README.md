@@ -38,7 +38,12 @@ There is also an Oxygen project file:
   - NeTEx.xpr
 ----
 # Change Log
- 
+
+## 2019.03.25 Fix #41 by Skinkie from 2019.01.07 *FRAMEWORK-CC*. Fix typo on MobilityList.  Internal chaneg only.
+  * _Updates to xml schema_:    
+	* netex_acsb_passengerMobility.xsd
+	* netex_equipmentVehiclePassenger_version.xsd
+
 ## 2019.03.25 Fix #40 by Skinkie from 2019.01.07 *FARES-FS* . Fix typo on DistanceMatrixElement.IsDirect.  
   * NB this will break existing XML that uses IsDirect. 
   * _Updates to xml schema_:    
