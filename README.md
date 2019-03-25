@@ -39,6 +39,10 @@ There is also an Oxygen project file:
 ----
 # Change Log
  
+## 2019.03.25 Fix #40 by Skinkie from 2019.01.07 *FARES-FS* . Fix typo on DistanceMatrixElement.IsDirect.  
+  * NB this will break existing XML that uses IsDirect. 
+  * _Updates to xml schema_:    
+	* netex_distanceMatrixElement_version.xsd
  
 ## 2019.03.25 Fix #39 by Skinkie from 2019.01.07 *Part1-IFOPT* . Fix typo on ServiceSiteRef.Structure.  
   * _Updates to xml schema_:    
