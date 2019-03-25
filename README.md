@@ -39,6 +39,13 @@ There is also an Oxygen project file:
 ----
 # Change Log 
 
+## 2019.03.25 SBB21 *FRAMEWORK-CC*  CD #56. Add new ColourSystem attribute to Presentationa PrintPresentation. 
+  * NJSK Review ColourSystem and ColourName  should be  type xsd:normalizedString, not xsd:string.
+  * Also Merge in Corrections to comments as per SBB20 #55  Also Correct camel case on names of ___StopPoinInXXX___ groups. 
+  * _Updates to xml schema_:   
+	* netex_utility_version.xsd 
+	* netex_servicePattern_version.xsd 
+
 ## 2019.03.25 FR-5 *FRAMEWORK-CC* CD change #53 Add ___AccessFacilityList___ attribute to ___SiteFacilitySet___.
   * _Updates to xml schema_:   
 	* netex_facility_version.xsd 
