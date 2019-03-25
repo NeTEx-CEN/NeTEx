@@ -26,7 +26,19 @@
 				<Date>
 					<Modified>2019-03-25</Modified>Fix #42 by Seime from 2019.01.07  move  _canalBarge_ value from air to water modes.
 						   NB this will break existing XML that uses _canalBarge_ value. 
-				</Date>				
+				</Date>
+				<Date>
+					<Modified>2019-03-25</Modified>CR #50  NJSK ntegrate with other changes     NJSK - revise capitalisation of canalBarge to use camelcase 
+				</Date>
+				<Date>
+					<Modified>2019-02-20</Modified>CR50 CD add SnowAndIce mode and submodes	 unknown, undefined,  snowmobile,  snowcCat,  snowcoach,  terraBus, windsled, 
+				</Date>
+				<Date>
+					<Modified>2019-03-25</Modified>NJSK  Revise 
+						(a) correct camel casing of snowAndIce,  
+						(b) correct camel casing of  submodes 	 unknown, undefined,  snowMobile,  snowCat,  snowCoach,  terraBus, windSled,  
+						(c) add snowAdnIce to submode choice
+				</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines common SUB MODE types that qualify Mode types. These are based on TPEG values</p>
 				</Description>
@@ -123,6 +135,11 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="TelecabinSubmode"/>
 			<xsd:element ref="RailSubmode"/>
 			<xsd:element ref="WaterSubmode"/>
+			<xsd:element ref="SnowAndIceSubmode">
+				<xsd:annotation>
+					<xsd:documentation>Extra: Snow and Ice Submodes</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 		</xsd:choice>
 	</xsd:group>
 	<xsd:group name="PrivateSubmodeChoiceGroup">
@@ -334,7 +351,7 @@ Local train adapted for running in mountain railway lines.</xsd:documentation>
 			<xsd:enumeration value="riverBus"/>
 			<xsd:enumeration value="scheduledFerry"/>
 			<xsd:enumeration value="shuttleFerryService"/>
-					<xsd:enumeration value="canalBarge">
+			<xsd:enumeration value="canalBarge">
 				<xsd:annotation>
 					<xsd:documentation source="Not in TPEG"/>
 				</xsd:annotation>
@@ -368,7 +385,6 @@ Local train adapted for running in mountain railway lines.</xsd:documentation>
 			<xsd:enumeration value="SchengenAreaFlight"/>
 			<xsd:enumeration value="airshipService"/>
 			<xsd:enumeration value="shortHaulInternationalFlight"/>
-	
 		</xsd:restriction>
 	</xsd:simpleType>
 	<!-- ======================================================================= -->
@@ -453,5 +469,23 @@ Local train adapted for running in mountain railway lines.</xsd:documentation>
 			<xsd:enumeration value="allHireVehicles"/>
 		</xsd:restriction>
 	</xsd:simpleType>
+	<!-- ======================================================================= -->
+	<xsd:element name="SnowAndIceSubmode" type="SnowAndIceSubmodeEnumeration" default="unknown"/>
+	<xsd:simpleType name="SnowAndIceSubmodeEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Values for Snow and Ice SUBMODEs of TRANSPORT</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="unknown"/>
+			<xsd:enumeration value="undefined"/>
+			<xsd:enumeration value="snowMobile"/>
+			<xsd:enumeration value="snowCat"/>
+			<xsd:enumeration value="snowCoach"/>
+			<xsd:enumeration value="terraBus"/>
+			<xsd:enumeration value="windSled"/>
+			<!--offroad bus-->
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- ======================================================================= -->
 	<!-- ======================================================================= -->
 </xsd:schema>
