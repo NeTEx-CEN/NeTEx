@@ -37,9 +37,20 @@ There is an XMLSpy project file in the root directory  that provides an organise
 There is also an Oxygen project file:
   - NeTEx.xpr
 ----
-# Change Log
+# Change Log 
 
-## 2019.03.25 Fix *FRAMEWORK* Integrate constraint fix  #49 ny CD with other constraint changes: Add ___EquipmentPlace___  to  ___Place_AnyVersionedKey___. 
+## 2019.03.25 CR51 *PART2-TI* CD Add new ___VehicleJourneyStopAssignment___ entity to set default stop assignment for ___VehicleJourney___.
+  * NJSK Review CR51:  add doc comments  
+  * NJSK make ___vehicleJourneyStopAssignmentsInFrame_RelStructure___ lower camel case consistent with NeTEx conventions. 
+  * NJSK Allow inlining of ___vehicleJourneyStopAssignments___ within ___VehicleJourney___ as for other subcomponents
+  * NJSK Also correct camel case on ___trainComponentLabelAssignents___ and ___trainComponentLabelAssignents_RelStructure___.
+  * _Updates to xml schema_:  
+	* netex_vehicleJourney_support.xsd  
+	* netex_vehicleJourney_version.xsd 
+	* netex_timetableFrame_version.xsd  
+	* netex_stopAssignment_version.xsd
+
+## 2019.03.25 Fix *FRAMEWORK* Integrate constraint fix  #49 by CD 2019.02.22 with other constraint changes: Add ___EquipmentPlace___  to  ___Place_AnyVersionedKey___. 
   * _Updates to xml schema_:  
 	* netex_publication.xsd 
 
