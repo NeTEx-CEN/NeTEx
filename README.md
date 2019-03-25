@@ -39,9 +39,15 @@ There is also an Oxygen project file:
 ----
 # Change Log 
 
+## 2019.03.25 SBB23 *FRAMEWORK-CC*  CD #57. Add new ___BackgroundColour___ and ___BackgroundColourName___ attributes to ___Presentation___ and ___PrintPresentation___  elements. 
+  * Also add _icon_ to ___TypeOfInfolink___ enum values. 
+  * NJSK Review; ___BackgroundColourName___  should be  type xsd:normalizedString, not xsd:string.
+  * _Updates to xml schema_:   
+	* netex_utility_version.xsd 
+
 ## 2019.03.25 SBB21 *FRAMEWORK-CC*  CD #56. Add new ColourSystem attribute to Presentationa PrintPresentation. 
   * NJSK Review ColourSystem and ColourName  should be  type xsd:normalizedString, not xsd:string.
-  * Also Merge in Corrections to comments as per SBB20 #55  Also Correct camel case on names of ___StopPoinInXXX___ groups. 
+  * Also Merge in Corrections to comments as per SBB20 #55  Also Correct camel case on names of ___StopPointInXXX___ groups. 
   * _Updates to xml schema_:   
 	* netex_utility_version.xsd 
 	* netex_servicePattern_version.xsd 
