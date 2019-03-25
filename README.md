@@ -39,33 +39,41 @@ There is also an Oxygen project file:
 ----
 # Change Log
 
-## 2019.03.25 Fix #41 by Skinkie from 2019.01.07 *FRAMEWORK-CC*. Fix typo on MobilityList.  Internal chaneg only.
+## 2019.03.25 Fix #43 by Skinkie from 2019.01.07 *FRAMEWORK-CC*. Fix typo on _tactilePlatformEdges_.   
+  * NB this will break existing XML that uses _tactilePlatformEdges_ value. 
+  * _Updates to xml schema_:    
+	* netex_facility_support.xsd
+ * _Updates to xml examples_:	
+	* examples\functions\stopPlace\Netex_10_StopPlace_uk_ComplexStation_Wimbledon_1.xml
+	* examples\functions\stopPlace\Netex_10_StopPlace_withParking_1.xml
+	
+## 2019.03.25 Fix #41 by Skinkie from 2019.01.07 *FRAMEWORK-CC*. Fix typo on ___MobilityList___.  Internal change only.
   * _Updates to xml schema_:    
 	* netex_acsb_passengerMobility.xsd
 	* netex_equipmentVehiclePassenger_version.xsd
 
-## 2019.03.25 Fix #40 by Skinkie from 2019.01.07 *FARES-FS* . Fix typo on DistanceMatrixElement.IsDirect.  
-  * NB this will break existing XML that uses IsDirect. 
+## 2019.03.25 Fix #40 by Skinkie from 2019.01.07 *FARES-FS* . Fix typo on ___DistanceMatrixElement.IsDirect___.  
+  * NB this will break existing XML that uses ___IsDirect___ attribute. 
   * _Updates to xml schema_:    
 	* netex_distanceMatrixElement_version.xsd
  
-## 2019.03.25 Fix #39 by Skinkie from 2019.01.07 *Part1-IFOPT* . Fix typo on ServiceSiteRef.Structure.  
+## 2019.03.25 Fix #39 by Skinkie from 2019.01.07 *Part1-IFOPT* . Fix typo on ___ServiceSiteRef.Structure___.  
   * _Updates to xml schema_:    
 	* netex_ifopt_site_support.xsd
  
-## 2019.03.25 Fix #38 by Skinkie from 2019.01.07 *Part1-IFOPT* . Fix typo on KeyScheme.  
-  * NB this will break existing XML that uses KeyScheme. 
+## 2019.03.25 Fix #38 by Skinkie from 2019.01.07 *Part1-IFOPT* . Fix typo on ___KeyScheme___.  
+  * NB this will break existing XML that uses ___KeyScheme___ attribute. 
   * _Updates to xml schema_:    
 	* netex_ifopt_equipmentPassenger_version.xsd
 
-## 2019.03.25 Fix #35 by Skinkie  from 209.01.03 *PART2-DM*   Fix:  Correction to typo on AccountingTime
-  * NB This will break existing XML that uses AccountingTime.
+## 2019.03.25 Fix #35 by Skinkie  from 209.01.03 *PART2-DM*   Fix:  Correction to typo on ___AccountingTime___.
+  * NB This will break existing XML that uses ___AccountingTime___ attribute.
   * NJSK  Also add separate EndDayOffSer - DayOffSet should apply to start time relative to operatig day of Duty
   * _Updates to xml schema_:    
 	* netex_duty_version.xsd
 	
-## 2019.03.25 Fix #37 by Skinkie from 2019.01.07  *PART1-ND*  Correct Typo:  rename OppositeDIrectionRef to OppositeDirectionRef
-   * NB This will break existing XML  that uses OppositeDirectionRef. 
+## 2019.03.25 Fix #37 by Skinkie from 2019.01.07  *PART1-ND*  Correct Typo:  rename ___OppositeDIrectionRef___ to ___OppositeDirectionRef___.
+   * NB This will break existing XML  that uses ___OppositeDirectionRef___ attribute. 
    * _Updates to xml schema_:    
 	* netex_route_version.xsd
 	
@@ -140,7 +148,7 @@ with values seatReservation,  dog, animal, bicycle, meal, wifi, other
 	* netex_publication.xsd
 
 ### 2019.03.13 EURA-50  *FARES* Add new ___PurchaseAction___ attribute to  ___PurchaseWindow__    with values: _purchase_,  _reserve_,  _orderWithoutPaying_,  payForPreviousOrder, other_, _seatMap_  and _openSeating_.	
-  * Also reaname  ______Reserving___  \ ReservationType___ to ___SeatAllocationMethod___ and move ___SeatAllocationMethodEnumeration___ to ___VehicleSeating___ package.
+  * Also rename  ______Reserving___  \ ReservationType___ to ___SeatAllocationMethod___ and move ___SeatAllocationMethodEnumeration___ to ___VehicleSeating___ package.
   * Also add ___ReservationExpiryPeriod___ to ___Reserving___.
   * _Updates to xml schema_:    
 	* netex_vehicleSeating_support.xsd
