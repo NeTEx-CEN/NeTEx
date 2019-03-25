@@ -39,15 +39,19 @@ There is also an Oxygen project file:
 ----
 # Change Log
  
-## 1.11  
+ 
+## 2019.03.25 Fix #38 by Skinkie from 2019.01.07 *Part1-IFOPT* . Fix typo on KeyScheme.  
+  * NB this will break existing XML that uses KeyScheme. 
+  * _Updates to xml schema_:    
+	* netex_ifopt_equipmentPassenger_version.xsd
 
-## 2019.03.25  1.11  Skinkie  Fix:  Correction to typo on AccountingTime
+## 2019.03.25 Fix #35 by Skinkie  from 209.01.03 *PART2-DM*   Fix:  Correction to typo on AccountingTime
   * NB This will break existing XML that uses AccountingTime.
   * NJSK  Also add separate EndDayOffSer - DayOffSet should apply to start time relative to operatig day of Duty
   * _Updates to xml schema_:    
 	* netex_duty_version.xsd
 	
-## 2019.03.25 Fix #37 by Skinkie *PART2-ND*  Correct Typo:  rename OppositeDIrectionRef to OppositeDirectionRef
+## 2019.03.25 Fix #37 by Skinkie from 2019.01.07  *PART1-ND*  Correct Typo:  rename OppositeDIrectionRef to OppositeDirectionRef
    * NB This will break existing XML  that uses OppositeDirectionRef. 
    * _Updates to xml schema_:    
 	* netex_route_version.xsd
