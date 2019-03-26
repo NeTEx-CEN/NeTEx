@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2010 rel. 3 sp1 (http://www.altova.com) by Nicholas Knowles (Kizoom) -->
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_ifopt_equipmentTicketing_version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1`" id="netex_ifopt_equipmentTicketing_version">
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_travelRights_support.xsd"/>
 	<xsd:include schemaLocation="netex_ifopt_equipmentTicketing_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_facility_version.xsd"/>
@@ -22,6 +22,11 @@
 				<Date>
 					<Modified>2011-12-16</Modified>
 				</Date>
+				<Date>
+					<Modified>2019-03-25</Modified>FR49 CD #65  Accessibility changes
+					 Add  new attributes to TicketingEquipment; TactileInterfaceAvailable, AudioInterfaceAvailable, DisabledPriority, WheelchairSuitable. 
+					  NJSK Review: Place  accessibility attributes in a separate group. Break down into subgroups.
+				</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines EQUIPMENT base types.</p>
 				</Description>
@@ -34,7 +39,7 @@
 				<Language>[ISO 639-2/B] ENG</Language>
 				<Publisher>Kizoom Software Ltd, 16 High Holborn, London WC1V 6BX</Publisher>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2014</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -111,6 +116,16 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Modes for which ticketing services apply.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:group ref="TicketingEquipmentPropertiesGroup"/>
+			<xsd:group ref="TicketingEquipmentServiceGroup"/>
+			<xsd:group ref="TicketingEquipmentAccessibilityGroup"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="TicketingEquipmentPropertiesGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a TICKETING EQUIPMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
 			<xsd:element name="TicketMachines" type="xsd:boolean" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Whether there are ticket machines.</xsd:documentation>
@@ -148,6 +163,13 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Queue management.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="TicketingEquipmentServiceGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a TICKETING EQUIPMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
 			<xsd:element name="PaymentMethods" type="PaymentMethodListOfEnumerations" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Payment methods allowed.</xsd:documentation>
@@ -163,6 +185,13 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Types of Ticket available.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="TicketingEquipmentAccessibilityGroup">
+		<xsd:annotation>
+			<xsd:documentation>AccessibilityElements for a TICKETING EQUIPMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
 			<xsd:element name="LowCounterAccess" type="xsd:boolean" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Whether there is a low counter for accessibility.</xsd:documentation>
@@ -176,6 +205,26 @@ Rail transport, Roads and Road transport
 			<xsd:element name="InductionLoops" type="xsd:boolean" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Whether there are induction loops.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TactileInterfaceAvailable" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indicates whether there is a tactile interface +v1.1.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="AudioInterfaceAvailable" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indicates whether there is an accessible audio interface (allowing a use closed eyes). +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DisabledPriority" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indicates a priority access for disabled (no-queue). +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="WheelchairSuitable" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indicates whether equipment may be used while seated in a wheelchair. +v1.1</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
