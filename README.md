@@ -39,12 +39,75 @@ There is also an Oxygen project file:
 ----
 # Change Log 
 
-
-## 2019.03.25 NL48 *Part1-ND* CD #64 Add 
- * Move DynamicAdvertisementEnumeration to here rom netex_serviceJourney_support.xsd.  Correct the annotations.
+## 2019.03.25 FR49 *Part1-IF*  CD #65  Accesibility changes
+  * _netex_ifopt_equipmentTicketing_: 
+  	* CD Add  new attributes to ___TicketingEquipment___; ___TactileInterfaceAvailable, AudioInterfaceAvailable, DisabledPriority, WheelchairSuitable___. 
+  	 	* NJSK Review: Place  accessibility attributes in a separate group.
+  	* CD: Add  new attributes to ___TicketValidatorEquipment___; ___AudioValidationFeedback, VisualValidationFeedback, TactileValidationFeedback, ValidationGuidance___.
+  * _netex_ifopt_localService_: 
+  	* CD add LuggageMaximalWeihgt to LuggageService.
+	* NJSK Review: Correct Typo on ___LuggageMaximumWeight___.  Make datatype _WeightType_. Also add to ___LeftLuggageService___.
+  * _netex_ifopt_equipmentAccess_: 
+  	* CD add ___NecessaryForce___ with values _noForce, lightForce, mediumForce,  heavyForce, unknown_.
+  	* CD add __LightingMethodEnumeration__ with values _movementDetector, stepDetector, switchOnTheWall, 
+  	atDoorOpening, onlyAtNight_.
+		* NJSK Review: Correct typo on stepDetector
+	* CD add ___TactileWarningStripEnumeration___ with values _tactileStripAtBeginning, tactileStripAtEnd, 	tactileStripAtBothEnds, noTactileStrip, unknown_,
+	* CD add ___FlooringTypeEnumeration___  with values _carpet, concrete, asphalt, cork, fibreglassGrating, glazedCeramicTiles, plasticMatting, ceramicTiles, rubber, steelPlate, vinyl, wood, stone, grass, dirt, gravel, uneven, unknown, other_
+	* CD add ___BorderTypeEnumeration___ with values _wall, grass, dirt, barrier, road, cyclingLane, step, rail, plants, trees, mud, solidEdge, water, gravel, noPhysicalBorder, otherPhysicalBorder, unknown, other,_	
+___NJSK Review:  Move ___TactileWarningStripEnumeration, FlooringTypeEnumeration, BorderTypeEnumeration___ to _netex_ifopt_equipmentAccess_ from netex_path_support , use lower camel case for values.		 
+	* CD add new attribute NecessaryForceEnumeration with values noForce, lightForce, mediumForce,  heavyForce, unknown
+  	* CD add new attributeLightingMethod  to PlaceLighting with values movementDetector, stepDetector, switchOnTheWall, atDoorOpening, onlyAtNight, other
+___NJSK Review:  correct typo on _stepDetector_.
+  	* CD Add new attribute to __StairEquipment__; __WithoutRiser__.
+		* NJSK Review:  change order of new elements to be with other  step properties.
+  	* CD  Add new attribute to __EscalatorEquipment__  __EscalatorWithLanding__.
+  	* CD  Add new attributes to __TravellatorEquipment__; __Length__, __Slope__ and __IntegratesAnEscalatorPart__.		
+  		* NJSK Review:  correct  name of __IntegratesAnEscalatorPart__
+  	* CD Add new attributs  to __EscalatorEquipment__: __MagneticInductionLoop__, __GroundMarkAlignedWithButton__, __TactileGroundFloorButton__,  __ExternalFloorSelection__.
+		* NJSK Review:  correct  name of __GroundMarkAlignedWithButton__.
+		* NJSK Review:  drop __ButtonsHeigt__ as all ready covered  by __CallButtonHeight__.
+		* NJSK Review: change order to group with like properties.
+  	* CD Add new attributes  to __EntranceEquipment__: __AudioOrVideoIntercom, Airlock, DoorstepMark AudioPassthroughIndicator, OpeningNecessaryForce__
+  		* NJSK Review: change order of new elements to group with like properties
+  		* NJSK Review: NB __AudioOrVideoIntercom__ overlaps with __EntranceAttention___
+  	* CD Add new attributes  to __QueuingEquipment__:  __DisabledPriority, QueuingSeatedPossible.__
+   * _netex_ifopt_path_:  	
+  	* CD add new attributes to __PathLink__;  __Width, FlooringType,  RightSideBorder,  LeftSideBordert, TiltAngle, CodedTilt, TactileWarningStrip,  TactileGuidingStrip__.	
+  		* NJSK Review: Reorder so as to place like elements together, add sub Groups to organize  
+   * _netex_ifopt_equipmentPassenger_:
+  	* CD add new attribute to ___PassengerSafetyEquipment___;  ___AcousticAnnouncementsTrigger___  with values _onDemand,   automatic_.	 
+  	* CD add new attribute to ___PassengerSafetyEquipment___; ___AnnouncementsTriggeringMethod___  with values _presenceDetector,  app, internetPage, specificDevice, pushButton_.
+  		* NJSK Review: Correct typo on SupportBarHeigth, reorder new elements.
+    * _netex_ifopt_equipmentWaiting_:
+  	* CD to Add new attribute to ___LuggageLockerEquipment___:  ___LockingType___  with values _key, keyboard, mechanicalNumbering, contactless, phoneApp, other_.
+  	* CD to Add new attributes to ___LuggageLockerEquipment___:  ___BlindAccessible ,WheelchairAccepted___
+  		* NJSK Review: CorrectTypo on ___WheelchairAccepted___, Change order of new attributes, move ___LockerTypeEnumeration___  and ___LuggageServiceEnumeration___ enums   to support file.
+  	* CD to Add new attributes to ___SeatingEquipment___:  ___Armrest ,SeatingHeight___.,
+  		* NJSK Review: Correct data type on  ___SeatingHeight___.
+     * _netex_ifopt_equipmentSign_:
+  	* CD add new attribute to __SignEquipment__; __AudioAnnouncementType__  with values _cyclicReading, whenSomebodyIsDetected, throughAnApp, throughASpecificDevice, other_
+  	* CD add new attribute to __SignEquipment__;  __FontSize__; with values; _verySmall, small, medium, large, veryLarge_
+  		* NJSK Review:  Correct Typos, camelCase values, move __SignContentEnumeration__   enums   to support file , add _other_ value, zap _xxxx_value. change"big" to "large" in value names.
+ 
+  * _Updates to xml schema_: 
+  	* netex_ifopt_equipmentTicketing_version.xsd
+  	* netex_ifopt_localService_version.xsd
+  	* netex_ifopt_equipmentAccess_support.xsd
+  	* netex_ifopt_equipmentAccess_ version.xsd
+  	* netex_ifopt_path_support.xsd
+  	* netex_ifopt_path_ version.xsd
+  	* netex_ifopt_equipmentPassenger_support.xsd
+  	* netex_ifopt_equipmentWaiting_support.xsd
+  	* netex_ifopt_equipmentWaiting_version.xsd
+	* netex_ifopt_equipmentSign_support.xsd
+  	* netex_ifopt_equipmentSign_version.xsd
+  	
+## 2019.03.25 NL48 *Part1-ND* CD #64  Add new attributes to ___StopPointInPattern___ for   advertising of stop; ___Print___ and ___Dynamic___.
+  * Move  DynamicAdvertisement of use of stop  from netex_serviceJourney_support.xsd.  
   * NJSK Review: correct the annotations.
   * _Updates to xml schema_: 
-  	* netex_facility_support.xsd 
+  	* netex_serviceJourney_support.xsd 
   	* netex_servicePattern_support.xsd 
 	* netex_servicePattern_version.xsd 
 
