@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:siri="http://www.siri.org.uk/siri" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_travelRights_support">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:siri="http://www.siri.org.uk/siri" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_serviceRestrictions_support">
 	<xsd:include schemaLocation="../netex_responsibility/netex_responsibility_support.xsd"/>
 	<xsd:annotation>
 		<xsd:appinfo>
@@ -15,7 +15,7 @@
 					<Modified>2014-07-15</Modified>Add PurchaseMoment enum
 				</Date>
 				<Date>
-					<Modified>2019-03-02</Modified>UK-24 Add open   PaymentMethod as first class object  so that user defined methods can be added. Add epayDevice and epayAccount and mileagePoints to enum
+					<Modified>2019-03-02</Modified> Add open   PaymentMethod as first class object  so that user defined methods can be added. Add epayDevice and epayAccount and mileagePoints to enum
 							Add documentation on payment method enumerations.
 				</Date>
 				<Date>
@@ -27,6 +27,11 @@
 				<Date>
 					<Modified>2019-03-12</Modified>EURA-84 add  cashExactChangeOnly to values for PaymentMethods
 	 			</Date>
+				<Date>
+					<Modified>2019-03-27</Modified>NL-27 Add default  TypeOfProductCategory and TypeOfService to Line
+					Move TypeOfProductCategory amnd TypeOfService from netex_vehicleJourney  to  Framework reusable components netex_travelRights  so they are visible from part 1		 
+					Rename netex_travel_rights to netext_serviceRestrictions so as to align with TM6
+				</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines  NetEX:TRAVEL RIGHTS identifier  types.</p>
 				</Description>
@@ -35,7 +40,7 @@
 					<Syntax>http://www.w3.org/2001/XMLSchema</Syntax>
 					<Description>XML schema, W3C Recommendation 2001</Description>
 				</Format>
-				<Identifier>{http://www.netex.org.uk/schemas/1.0/xsd/netex_framework/netex_reusableComponents}netex_travelRights_support.xsd</Identifier>
+				<Identifier>{http://www.netex.org.uk/schemas/1.0/xsd/netex_framework/netex_reusableComponents}netex_serviceRestrictions_support.xsd</Identifier>
 				<Language>[ISO 639-2/B] ENG</Language>
 				<Publisher>Kizoom Software Ltd, 16 High Holborn, London WC1V 6BX</Publisher>
 				<Rights>Unclassified
@@ -699,4 +704,83 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:list itemType="TicketingServiceFacilityEnumeration"/>
 	</xsd:simpleType>
+	<!-- =================================================== -->
+	<!-- ====== TYPE OF SERVICE ============================================== -->
+	<xsd:simpleType name="TypeOfServiceIdType">
+		<xsd:annotation>
+			<xsd:documentation>Type for identifier of a TYPE OF SERVICE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="TypeOfValueIdType"/>
+	</xsd:simpleType>
+	<xsd:element name="TypeOfServiceRef" type="TypeOfServiceRefStructure" abstract="false" substitutionGroup="TypeOfEntityRef">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a TYPE OF SERVICE.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="TypeOfServiceRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a reference to a TYPE OF SERVICE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="TypeOfValueRefStructure">
+				<xsd:attribute name="ref" type="TypeOfServiceIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Reference to a TYPE OF SERVICE.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="typeOfServiceRefs_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of TYPEs OF SERVICE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="oneToManyRelationshipStructure">
+				<xsd:sequence>
+					<xsd:element ref="TypeOfServiceRef" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ======== TYPE OF PRODUCT CATEGORY ============================================ -->
+	<xsd:simpleType name="TypeOfProductCategoryIdType">
+		<xsd:annotation>
+			<xsd:documentation>Type for identifier of a TYPE OF PRODUCT CATEGORY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="TypeOfValueIdType"/>
+	</xsd:simpleType>
+	<xsd:element name="TypeOfProductCategoryRef" type="TypeOfProductCategoryRefStructure" abstract="false" substitutionGroup="TypeOfValueRef">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a TYPE OF PRODUCT CATEGORY. Product of a JOURNEY. e.g. ICS, Thales etc 
+See ERA B.4 7037 Characteristic description code.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="TypeOfProductCategoryRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a reference to a TYPE OF PRODUCT CATEGORY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="TypeOfValueRefStructure">
+				<xsd:attribute name="ref" type="TypeOfProductCategoryIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Reference to a TYPE OF PRODUCT CATEGORY.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="typeOfProductCategoryRefs_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of TYPEs OF PRODUCT CATEGORY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="oneToManyRelationshipStructure">
+				<xsd:sequence>
+					<xsd:element ref="TypeOfProductCategoryRef" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- =================================================== -->
 </xsd:schema>

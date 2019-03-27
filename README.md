@@ -39,14 +39,34 @@ There is also an Oxygen project file:
 ----
 # Change Log 
 
-## 2019.03.25 FR49 *Part1-IF*  CD #65  Accesibility changes
+### 2019.03.26 __NL27__ *Part1-ND*: CD #58  Add default  ___TypeOfProductCategory___ and ___TypeOfService___ to ___Line___: 
+  * CD  Move ___TypeOfProductCategory___ and ___TypeOfService___ to _netex_line_version.xsd_. 
+  * NJSK Review:  Move ___TypeOfProductCategory___ and ___TypeOfService__  from (Part2:) _netex_journey_version.xsd_   to (Framework reusable component)  _netex_travelRights_version.xsd_)- rather than _line.xsd_,  so they are visible to part 1. 
+  * NJSK Review: clean up dependencies
+  	* Drop include of _netex_travelRights_version.xsd_ from _netex_accessRightParameter_version.xsd_.
+ 	* Drop include of _netex_travelRights_version.xsd_ from _netex_usageParameterAfterSales_version.xsd_.
+ 	* Drop include of _netex_travelRights_version.xsd_ from _netex_fareTable_version.xsd_.
+ 	* Drop include of _netex_travelRights_version.xsd_ from _netex_parking_version.xsd_.
+  * NJSK Review: correct the annotations.
+  * _Updates to xml schema_: 
+  	* netex_serviceJourney_support.xsd 
+  	* netex_servicePattern_support.xsd 
+	* netex_travelRights_support.xsd 
+	* netex_travelRights_version.xsd 
+	* netex_line_version.xsd 
+	* netex_accessRightParameter_version.xsd
+	* netex_usageParameterAfterSales_version.xsd.
+	* netex_fareTable_version.xsd
+	* netex_parking_version.xsd
+	
+### 2019.03.25 __FR49__ *Part1-IFOPT*:  CD #65 Accessibility changes
   * _netex_ifopt_equipmentTicketing_: 
-  	* CD Add  new attributes to ___TicketingEquipment___; ___TactileInterfaceAvailable, AudioInterfaceAvailable, DisabledPriority, WheelchairSuitable___. 
-  	 	* NJSK Review: Place  accessibility attributes in a separate group.
+  	* CD Add new attributes to ___TicketingEquipment___; ___TactileInterfaceAvailable, AudioInterfaceAvailable, DisabledPriority, WheelchairSuitable___. 
+  	 	* NJSK Review: Place  accessibility attributes in a separate group. Break down into subgroups;  ___TicketingEquipmentPropertiesGroup, TicketingEquipmentServiceGroup, TicketingEquipmentAccessibilityGroup___.
   	* CD: Add  new attributes to ___TicketValidatorEquipment___; ___AudioValidationFeedback, VisualValidationFeedback, TactileValidationFeedback, ValidationGuidance___.
   * _netex_ifopt_localService_: 
   	* CD add LuggageMaximalWeihgt to LuggageService.
-	* NJSK Review: Correct Typo on ___LuggageMaximumWeight___.  Make datatype _WeightType_. Also add to ___LeftLuggageService___.
+	* NJSK Review: Correct Typo and revise name on ___LuggageMaximumWeight___.  Make datatype of ___LuggageMaximumWeight___  _WeightType_. Also add to ___LeftLuggageService___.
   * _netex_ifopt_equipmentAccess_: 
   	* CD add ___NecessaryForce___ with values _noForce, lightForce, mediumForce,  heavyForce, unknown_.
   	* CD add __LightingMethodEnumeration__ with values _movementDetector, stepDetector, switchOnTheWall, 
@@ -103,7 +123,7 @@ ___NJSK Review:  correct typo on _stepDetector_.
 	* netex_ifopt_equipmentSign_support.xsd
   	* netex_ifopt_equipmentSign_version.xsd
   	
-## 2019.03.25 NL48 *Part1-ND* CD #64  Add new attributes to ___StopPointInPattern___ for   advertising of stop; ___Print___ and ___Dynamic___.
+### 2019.03.25 __NL48__ *Part1-ND*: CD #64  Add new attributes to ___StopPointInPattern___ for   advertising of stop; ___Print___ and ___Dynamic___.
   * Move  DynamicAdvertisement of use of stop  from netex_serviceJourney_support.xsd.  
   * NJSK Review: correct the annotations.
   * _Updates to xml schema_: 
@@ -111,46 +131,46 @@ ___NJSK Review:  correct typo on _stepDetector_.
   	* netex_servicePattern_support.xsd 
 	* netex_servicePattern_version.xsd 
 
-## 2019.03.25 NL32 *FRAMEWORK-RC* CD #61 Add new values to SITE ___AccessFacility___ enum; _wheelchairLift, automaticRamp. slidingStep_.
+### 2019.03.25 __NL32__ *FRAMEWORK-RC*: CD #61 Add new values to SITE ___AccessFacility___ enum; _wheelchairLift, automaticRamp. slidingStep_.
   * NJSK Review: Keep SITE and SERVICE aspects separate; add separate ___VehicleAccessFacility___ enum with values   _unknown, wheelchairLift, manualRamp, automaticRamp, steps, slidingStep, narrowEntrance, validator_.
   * _Updates to xml schema_: 
   	* netex_facility_support.xsd 
 	* netex_facility_version.xsd 
 
-## 2019.03.25 NL31 *FRAMEWORK-RC* CD #60 Add new attributes ___BoardingHeight___ and ___GapToPlatform___ to ___VehicleType___
+### 2019.03.25 __NL31__ *FRAMEWORK-RC*: CD #60 Add new attributes ___BoardingHeight___ and ___GapToPlatform___ to ___VehicleType___
   * 	 NJSK Review: Correct data types of new attributes to be of _LengthType_.
   * _Updates to xml schema_:   
 	* netex_vehicleType_version.xsd 
 	 
-## 2019.03.25 NL28 *FRAMEWORK-CC* CD #59 Add new ___Presentation___ attribute to ___Branding___.
+### 2019.03.25 __NL28__ *FRAMEWORK-CC*: CD #59 Add new ___Presentation___ attribute to ___Branding___.
   * NJSK Review; Use a ___BrandingGroup___ to be consistent with NeTEx coding patterns.
   * _Updates to xml schema_:   
 	* netex_dataSource_version.xsd 
 
-## 2019.03.25 SBB23 *FRAMEWORK-CC*  CD #57. Add new ___BackgroundColour___ and ___BackgroundColourName___ attributes to ___Presentation___ and ___PrintPresentation___  elements. 
+### 2019.03.25 __SBB23__ *FRAMEWORK-CC*: CD #57. Add new ___BackgroundColour___ and ___BackgroundColourName___ attributes to ___Presentation___ and ___PrintPresentation___  elements. 
   * Also add _icon_ to ___TypeOfInfolink___ enum values. 
   * NJSK Review; ___BackgroundColourName___  should be  type _xsd:normalizedString_, not _xsd:string_.
   * _Updates to xml schema_:   
 	* netex_utility_version.xsd 
 
-## 2019.03.25 SBB21 *FRAMEWORK-CC*  CD #56. Add new ___ColourSystem___ attribute to ___Presentation___ and ___PrintPresentation___. 
+### 2019.03.25 __SBB21__ *FRAMEWORK-CC*: CD #56. Add new ___ColourSystem___ attribute to ___Presentation___ and ___PrintPresentation___. 
   * NJSK Review: ___ColourSystem___ and ___ColourName___  should be  type _xsd:normalizedString_, not _xsd:string_.
   * Also Merge in Corrections to comments as per SBB20 #55  Also Correct camel case on names of ___StopPointInXXXGroup___ groups. 
   * _Updates to xml schema_:   
 	* netex_utility_version.xsd 
 	* netex_servicePattern_version.xsd 
 
-## 2019.03.25 FR-5 *FRAMEWORK-CC* CD change #53 Add ___AccessFacilityList___ attribute to ___SiteFacilitySet___.
+### 2019.03.25 __FR-5__ *FRAMEWORK-CC*: CD change #53 Add ___AccessFacilityList___ attribute to ___SiteFacilitySet___.
   * _Updates to xml schema_:   
 	* netex_facility_version.xsd 
  
-## 2019.03.25 CR55 *PART1-IFOPT* CD Change #52 Add new attribute  ___StopPlaceWeight___  to ___StopPlace__ with values _international, national, regional, local_. 
+### 2019.03.25 __CR55__ *PART1-IFOPT*: CD Change #52 Add new attribute  ___StopPlaceWeight___  to ___StopPlace__ with values _international, national, regional, local_. 
   * NJSK Review: Make  values lowerCamelCase consistent with NeTEx conventions.
   * _Updates to xml schema_:  
   	* netex_ifopt_stopPlace_support.xsd
 	* netex_ifopt_stopPlace_version.xsd 
 
-## 2019.03.25 CR51 *PART2-TI* CD Add new ___VehicleJourneyStopAssignment___ entity to set default stop assignment for ___VehicleJourney___.
+### 2019.03.25 __CR51__ *PART2-TI*: CD Add new ___VehicleJourneyStopAssignment___ entity to set default stop assignment for ___VehicleJourney___.
   * NJSK Review CR51:  add doc comments  
   * NJSK make ___vehicleJourneyStopAssignmentsInFrame_RelStructure___ lower camel case consistent with NeTEx conventions. 
   * NJSK Allow inlining of ___vehicleJourneyStopAssignments___ within ___VehicleJourney___ as for other subcomponents
@@ -161,11 +181,11 @@ ___NJSK Review:  correct typo on _stepDetector_.
 	* netex_timetableFrame_version.xsd  
 	* netex_stopAssignment_version.xsd
 
-## 2019.03.25 Fix *FRAMEWORK* Integrate constraint fix  #49 by CD 2019.02.22 with other constraint changes: Add ___EquipmentPlace___  to  ___Place_AnyVersionedKey___. 
+### 2019.03.25 __Fix__ *FRAMEWORK-FR*: Integrate constraint fix  #49 by CD 2019.02.22 with other constraint changes: Add ___EquipmentPlace___  to  ___Place_AnyVersionedKey___. 
   * _Updates to xml schema_:  
 	* netex_publication.xsd 
 
-## 2019.03.25 CR50 by CD from 2019-02-20 *FRAMEWORK-CC*.  CD add snow and ice modes. 
+### 2019.03.25 __CR50__ by CD from 2019-02-20 *FRAMEWORK-CC*.  CD add snow and ice modes. 
   * NJSK  Revise - 
   * Correct camel casing of _snowAndIce_   value foe ___TransportMode___,  
   * Correct camel casing of  ___SnowAndIceSubmode___ values ; 	 _unknown, undefined,  snowMobile,  snowCat,  snowCoach,  terraBus, windSled_,  
@@ -176,56 +196,61 @@ ___NJSK Review:  correct typo on _stepDetector_.
 	* netex_submode_version.xsd
 	* netex_mode_support.xsd 
 
-## 2019.03.25 NL34  from 2019.01.07 *FRAMEWORK-CC*. Fix #42 by Seime & #63 by CD move  _canalBarge_ value from air to water modes.
+### 2019.03.25 __NL34__  from 2019.01.07 *FRAMEWORK-CC*. Fix #42 by Seime & #63 by CD move  _canalBarge_ value from air to water modes.
   * NB this will break existing XML that uses _canalBarge_ value. 
   * Also changed ___Duty.TransportMode___ from ___VehicleModeEnumeration__   to __AllVehicleModesOfTransportEnumeration__ to allow for non-vehicle modes.
   * _Updates to xml schema_:    
 	* netex_submode_version.xsd
  	* netex_duty_version.xsd
 
-## 2019.03.25 Fix #43 by Skinkie from 2019.01.07 *FRAMEWORK-CC*. Fix typo on _tactilePlatformEdges_.   
+### 2019.03.25 __Fix__  *FRAMEWORK-CC*:   #43 by Skinkie from 2019.01.07 
+  * Fix typo on _tactilePlatformEdges_.   
   * NB this will break existing XML that uses _tactilePlatformEdges_ value. 
   * _Updates to xml schema_:    
 	* netex_facility_support.xsd
- * _Updates to xml examples_:	
+  * _Updates to xml examples_:	
 	* examples\functions\stopPlace\Netex_10_StopPlace_uk_ComplexStation_Wimbledon_1.xml
 	* examples\functions\stopPlace\Netex_10_StopPlace_withParking_1.xml
 	
-## 2019.03.25 Fix #41 by Skinkie from 2019.01.07 *FRAMEWORK-CC*. Fix typo on ___MobilityList___.  Internal change only.
+### 2019.03.25 __Fix__  *FRAMEWORK-CC*: #41 by Skinkie from 2019.01.07: Fix typo on ___MobilityList___.  Internal change only.
   * _Updates to xml schema_:    
 	* netex_acsb_passengerMobility.xsd
 	* netex_equipmentVehiclePassenger_version.xsd
 
-## 2019.03.25 Fix #40 by Skinkie from 2019.01.07 *FARES-FS* . Fix typo on ___DistanceMatrixElement.IsDirect___.  
+### 2019.03.25 __Fix__ *FARES-FS*: #40 by Skinkie from 2019.01.07  Fix typo on ___DistanceMatrixElement.IsDirect___.  
   * NB this will break existing XML that uses ___IsDirect___ attribute. 
   * _Updates to xml schema_:    
 	* netex_distanceMatrixElement_version.xsd
  
-## 2019.03.25 Fix #39 by Skinkie from 2019.01.07 *Part1-IFOPT* . Fix typo on ___ServiceSiteRef.Structure___.  
+### 2019.03.25 __Fix__  *Part1-IFOPT*: #39 by Skinkie from 2019.01.07. 
+  * Fix typo on ___ServiceSiteRef.Structure___.  
   * _Updates to xml schema_:    
 	* netex_ifopt_site_support.xsd
  
-## 2019.03.25 Fix #38 by Skinkie from 2019.01.07 *Part1-IFOPT* . Fix typo on ___KeyScheme___.  
+### 2019.03.25 __Fix__  *Part1-IFOPT*: Fix #38 by Skinkie from 2019.01.07 
+  * Fix typo on ___KeyScheme___.  
   * NB this will break existing XML that uses ___KeyScheme___ attribute. 
   * _Updates to xml schema_:    
 	* netex_ifopt_equipmentPassenger_version.xsd
 
-## 2019.03.25 Fix #35 by Skinkie  from 209.01.03 *PART2-DM*   Fix:  Correction to typo on ___AccountingTime___.
+### 2019.03.25 __Fix__  *PART2-DM*: Fix  #35 by Skinkie  from 209.01.03
+  * Fix:  Correction to typo on ___AccountingTime___.
   * NB This will break existing XML that uses ___AccountingTime___ attribute.
   * NJSK  Also add separate EndDayOffSer - DayOffSet should apply to start time relative to operatig day of Duty
   * _Updates to xml schema_:    
 	* netex_duty_version.xsd
 	
-## 2019.03.25 Fix #37 by Skinkie from 2019.01.07  *PART1-ND*  Correct Typo:  rename ___OppositeDIrectionRef___ to ___OppositeDirectionRef___.
+### 2019.03.25 __Fix__  *PART1-ND*: #37 by Skinkie from 2019.01.07 
+   * Correct Typo:  rename ___OppositeDIrectionRef___ to ___OppositeDirectionRef___.
    * NB This will break existing XML  that uses ___OppositeDirectionRef___ attribute. 
    * _Updates to xml schema_:    
 	* netex_route_version.xsd
 	
-## 1.11 Summary of Changes since v1.10 
+### 1.11 Summary of Changes since v1.10 
 
 ### 2019.03.15  1.11 Small tidy ups to new value names and to documentation
 
-### 2019.03.13 UK-27 & FIXES  *FARES* Fix ___FareContract___ and ___CustomerPurchasePackage___ issues and allow marking of use of ___CustomerPurchasePackage___,	
+### 2019.03.13 __UK-27 & FIXES__  *FARES* Fix ___FareContract___ and ___CustomerPurchasePackage___ issues and allow marking of use of ___CustomerPurchasePackage___,	
   * Also  Fix several issues and align with TM 
   * UK-28  Add reference to ___CustomerAccount___ to ___FareContract___
   * Add new attribute ___AccountStatusType___ to ___CustomerAccount___.
