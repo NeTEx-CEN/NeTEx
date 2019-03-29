@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_travelSpecificationSummaryView_version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_travelSpecificationSummary_version">
 	<xsd:include schemaLocation="../part3_fares/netex_fareProduct_version.xsd"/>
 	<!-- ======================================================================= -->
 	<xsd:annotation>
@@ -26,7 +26,7 @@
 					<Syntax>http://www.w3.org/2001/XMLSchema</Syntax>
 					<Description>XML schema, W3C Recommendation 2001</Description>
 				</Format>
-				<Identifier>{http://www.netex.org.uk/schemas/1.0/xsd/netex_part_3/part3_salesTransactions}netex_travelSpecificationSummaryView_version.xsd</Identifier>
+				<Identifier>{http://www.netex.org.uk/schemas/1.0/xsd/netex_part_3/part3_salesTransactions}netex_travelSpecificationSummary_version.xsd</Identifier>
 				<Language>[ISO 639-2/B] ENG</Language>
 				<Publisher>Kizoom, 109-123 Clifton Street, London EC4A 4LD </Publisher>
 				<Relation>
@@ -52,7 +52,7 @@ Rail transport, Roads and Road transport
 </Category>
 					<Project>CEN TC278 WG3 SG9.</Project>
 				</Subject>
-				<Title>NeTEx SALES TRANSACTION    types.</Title>
+				<Title>NeTEx TRAVEL SPECIFICATION  SUMMARY VIEW  types.</Title>
 				<Type>Standard</Type>
 			</Metadata>
 		</xsd:appinfo>
@@ -102,20 +102,6 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Journey elements for TRAVEL SPECIFICATION Summary View.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="journeys" type="travelSpecificationJourneyRefs_RelStructure" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Specified journeys for trip.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="seriesContraints" type="seriesConstraintRefs_RelStructure" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Routig for trip</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:choice minOccurs="0">
-				<xsd:element ref="OperatorRef"/>
-				<xsd:element ref="GroupOfOperatorsRef"/>
-			</xsd:choice>
 			<xsd:element name="Start" type="xsd:dateTime" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Start tiem for trip or pass.</xsd:documentation>
@@ -131,6 +117,20 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>DUration for trip or pass</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="journeys" type="travelSpecificationJourneyRefs_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Specified journeys for trip.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="seriesConstraints" type="seriesConstraintRefs_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Routig for trip</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:choice minOccurs="0">
+				<xsd:element ref="OperatorRef"/>
+				<xsd:element ref="GroupOfOperatorsRef"/>
+			</xsd:choice>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:group name="TravelSpecificationSummaryFareGroup">
@@ -138,15 +138,17 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Fare elements for TRAVEL SPECIFICATION.  Summary View.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
+			<xsd:element ref="TypeOfProductCategoryRef" minOccurs="0"/>
 			<xsd:element ref="TypeOfFareProductRef" minOccurs="0"/>
+			<xsd:element ref="FareClass" minOccurs="0"/>
+			<xsd:element ref="ClassOfUseRef" minOccurs="0"/>
+			<xsd:element ref="UserProfileRef" minOccurs="0"/>
 			<xsd:element ref="GroupTicketRef" minOccurs="0"/>
 			<xsd:element name="MaximumNumberOFUsers" type="xsd:positiveInteger" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Maimum number of users on Group ticket. </xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element ref="ClassOfUse" minOccurs="0"/>
-			<xsd:element ref="UserProfileRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:complexType name="travelSpecificationJourneyRefs_RelStructure">

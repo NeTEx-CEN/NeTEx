@@ -39,6 +39,24 @@ There is also an Oxygen project file:
 ----
 # Change Log 
 
+
+
+### 2019.03.26 __UK-27__ *FRAMEWORK* NJSK Fix add missing TrainSize attribute to TrainElement
+ * Align doc with schema
+ * _Updates to xml schema_: 
+  	* netex_trsin_version.xsd 
+
+### 2019.03.26 __UK-27__ *Fares-ST* NJSK Correct annotations, reorder parameters, add ___TypeOfProductCategoryRef___ to ___TravelSpecifcationSummary___, fix CellRef_ .  Make TravelDOcumentRefmany to one.as per TM.	
+ * ALso EURA-(nk)Allow marking of use of CustomerPurchasePackage. Refine model: make blocking separate from status. Correct annotations.	 
+ 
+ * _Updates to xml schema_: 
+  	* netex_salesTransaction_version.xsd 
+  	* netex_travelSpecifcationSummary_version.xsd 
+  	* netex_customerPurchasePackage_support.xsd 
+  	* netex_customerPurchasePackage_version.xsd 
+   * _Updates to xml examples_: 
+   	* uk_fxc_pass_Metrobus_metrorider.xml
+   	
 ### 2019.03.26 __NL27__ *Part1-ND*: CD #58  Add default  ___TypeOfProductCategory___ and ___TypeOfService___ to ___Line___: 
   * CD  Move ___TypeOfProductCategory___ and ___TypeOfService___ to _netex_line_version.xsd_. 
   * NJSK Review:  Move ___TypeOfProductCategory___ and ___TypeOfService__  from (Part2:) _netex_journey_version.xsd_   to (Framework reusable component)  _netex_travelRights_version.xsd_)- rather than _line.xsd_,  so they are visible to part 1. 
@@ -47,18 +65,22 @@ There is also an Oxygen project file:
  	* Drop include of _netex_travelRights_version.xsd_ from _netex_usageParameterAfterSales_version.xsd_.
  	* Drop include of _netex_travelRights_version.xsd_ from _netex_fareTable_version.xsd_.
  	* Drop include of _netex_travelRights_version.xsd_ from _netex_parking_version.xsd_.
-  * NJSK Review: correct the annotations.
+  * NJSK Review: Rename _netex_travelRights_version to netex_servicRetrictions.xsd so as to align with TMc and UML.
+  * NJSK Review: correct the annotations.  Also align xpr with spp and correct spp.
   * _Updates to xml schema_: 
   	* netex_serviceJourney_support.xsd 
   	* netex_servicePattern_support.xsd 
-	* netex_travelRights_support.xsd 
-	* netex_travelRights_version.xsd 
+	* netex_serviceRestrictions_support.xsd (renamed from netex_travelRights_support.xsd)
+	* netex_serviceRestrictions_version.xsd (renamed from netex_travelRights_version.xsd)
 	* netex_line_version.xsd 
 	* netex_accessRightParameter_version.xsd
 	* netex_usageParameterAfterSales_version.xsd.
 	* netex_fareTable_version.xsd
 	* netex_parking_version.xsd
-	
+	* netex.spp
+	* netex.xpr
+  * _Documentation Changes_:  [uml_diagrams: Done-NK;  UML Diagrams Replaced:  TODO-C], [doc: TODO-CD; XML Diagrams replaced: TODO-CD]
+  
 ### 2019.03.25 __FR49__ *Part1-IFOPT*:  CD #65 Accessibility changes
   * _netex_ifopt_equipmentTicketing_: 
   	* CD Add new attributes to ___TicketingEquipment___; ___TactileInterfaceAvailable, AudioInterfaceAvailable, DisabledPriority, WheelchairSuitable___. 
@@ -722,6 +744,8 @@ __
  	* netex_travelRights_support.xsd 
  	* netex_travelRights_version.xsd 
  	* netex_salesDistribution_support.xsd 
+  * _Documentation Changes_:  [uml_diagrams: Done-NK;  UML Diagrams Replaced:  TODO-C], [doc: TODO-CD; XML Diagrams replaced: TODO-CD]
+
 
 ### 2019.03.07 NJSK *FARES* UK-74 Add new enumerations to ___TariffBasis___;  _zoneToZone_, _pointToPoint_, _discount_. 
  * Also add documentation annotations   to existing annotations.
@@ -742,7 +766,7 @@ __
 
 ### 2019.03.07 EURA-40 *FARES* Add support for  Subscriptions
  * Basic steps
-	* Subscriptions Add _onlineAccount_ to enumerations  of ___DistributionChannelType___
+	* Subscriptions add new values  _onlineAccount_  and _postal_ to enumerations  of ___DistributionChannelType___
  	* Add _subscriptionOnly_, also _onCheckIn_, _inAdvanceOnly_, _beforeBoardingOnly_ , _onBoardingOnly_  to  ___PaymentMoment___ enum.  
  	* Fix: add ___PaymentMoment___ to ___PurchaseWindow___
   * _Updates to xml schema_:  

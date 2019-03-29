@@ -41,6 +41,9 @@
 					    Add new attribute MarkedAs  to  CustomerPurchasePackageElement  with values unused, activated, marked and used  
 						Add new  child element  CustomerPurchasePackageElementAccess to CustomerPurchasePackage 
 				</Date>
+				<Date>
+					<Modified>2019-03-26</Modified>EURA-(nk)  	  	Allow marking of use of CustomerPurchasePackage. Refine model: make blocking separate from status. Correct annotations.	 
+				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the CUSTOMER PURCHASE PACKAGE types.</p>
@@ -171,6 +174,11 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Customer for whom package was created. These can also be derived through the SALES TRANSACTION.   +v1.1</xsd:documentation>
 				</xsd:annotation>
 			</xsd:group>
+			<xsd:element name="CUstomerPurchasePackageStatus" type="CustomerPurchasePackageStatusEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Status of CUSTOMER PURCHASE PACKAGE +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:group ref="CustomerPurchasePackageSelectionGroup"/>
 			<xsd:element ref="SalesTransactionRef" minOccurs="0"/>
 			<xsd:element name="salesTransactions" type="salesTransactionRefs_RelStructure" minOccurs="0">
@@ -231,7 +239,12 @@ Rail transport, Roads and Road transport
 		<xsd:sequence>
 			<xsd:element name="MarkedAs" type="MarkedAsEnumeration" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Whether the element has been used. +v1.1 </xsd:documentation>
+					<xsd:documentation>Usage status of the element. +v1.1 </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Blocked" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether the element has been blocked+v1.1 </xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="elementAccesses" type="customerPurchasePackageElementAccesses_RelStructure" minOccurs="0">
@@ -261,18 +274,14 @@ Rail transport, Roads and Road transport
 		<xsd:complexContent>
 			<xsd:extension base="containmentAggregationStructure">
 				<xsd:sequence>
-					<xsd:element ref="CustomerPurchasePackageElement" maxOccurs="unbounded">
-						<xsd:annotation>
-							<xsd:documentation>A sequence or set of CONTROLLABLE ELEMENTs to which rules for limitation of access rights and calculation of prices (CUSTOMER PURCHASE PACKAGE) are applied.</xsd:documentation>
-						</xsd:annotation>
-					</xsd:element>
+					<xsd:element ref="CustomerPurchasePackageElement" maxOccurs="unbounded"/>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
 	<xsd:element name="CustomerPurchasePackageElement" abstract="false" substitutionGroup="PriceableObject">
 		<xsd:annotation>
-			<xsd:documentation>The assignment of a FARE PRODUCT to a TYPE OF TRAVEL DOCUMENT in order to define a CUSTOMER PURCHASE PACKAGE, realised as a fixed assignment (printing, magnetic storage etc.) or by the possibility for the FARE PRODUCT to be reloaded on the TYPE OF TRAVEL DOCUMENT.</xsd:documentation>
+			<xsd:documentation>The assignment of a  SALES OFFER PACKAGE ELEMENT, for use in a CUSTOMER SALES PACKAGE.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -361,12 +370,16 @@ Rail transport, Roads and Road transport
 	</xsd:complexType>
 	<xsd:element name="CustomerPurchasePackageElementAccess" abstract="false">
 		<xsd:annotation>
-			<xsd:documentation>Access to a VALIDABLE ELEMENT through use of CUSTOMER PURCHASE PACKAGE. +v1.1. This is only needed for complex faris that use FARE STRUCTURE ELEMENT IN SEQUENCT to </xsd:documentation>
+			<xsd:documentation>Access to a VALIDABLE ELEMENT by a specific CUSTOMER PURCHASE PACKAGE  through use of CUSTOMER PURCHASE PACKAGE. This is needed for validation of complex SALES OFFER PACKAGEs containing tariffs structures that have FARE STRUCTURE ELEMENTs IN SEQUENCE, in such a case a given SALES PACKAGE ELEMENT may have multiple VALIDABLE ELEMENTs associated with it, each of which can be separately validated and marked. +v1.1
+</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
 				<xsd:restriction base="CustomerPurchasePackageElementAccess_VersionedChildStructure">
 					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="VersionedChildGroup"/>
+						</xsd:sequence>
 						<xsd:sequence>
 							<xsd:group ref="CustomerPurchasePackageElementAccessGroup"/>
 						</xsd:sequence>
@@ -393,6 +406,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Elements for a CUSTOMER PURCHASE PACKAGE ELEMENT ACCESS.  +v1.1</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
+			<xsd:element ref="CustomerPurchasePackageElementRef" minOccurs="0"/>
 			<xsd:element ref="ValidableElementRef" minOccurs="0"/>
 			<xsd:element ref="FareStructureElementRef" minOccurs="0"/>
 			<xsd:element ref="FareStructureElementInSequenceRef" minOccurs="0"/>
