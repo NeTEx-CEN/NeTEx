@@ -39,24 +39,55 @@ There is also an Oxygen project file:
 ----
 # Change Log 
 
+### 2019.03.30 __FR49__ *Part1-IFOPT*:  CD #65 Accessibility changes
+		Fix add missing ___DropKerbOutside___ attribute  to ___EntranceEquipment___
+ * NJSK Review: Rename ___LuggageService___ new attribute  ___LuggageMaixumWeight___ new attribute to  to MaximumBagWeight
+ * NJSK Review: Rename  ___Entrance___ new attribute OpeningNecssaryForce___ to ___NecessaryForceToOpen___
+ * NJSK Review: Move  ___Stair___ new attribute ___WithoutRiser___ to ___StairCase___ (does not apply to escalators).
+ * NJSK Review: Rename ___PathLink___ new attribute ___Width___ to ___MinimumWidth also add ___MinimumHeight___
+  * r Add value_alwaysOn_ to LightingMethodEnumeration. Rename to LightinOnMethod.
+ * NJSK Review: Systemise; for ___SignEquipment  : reuse  ___AudioTriggerMethod__ rather than have separate valeu set
+ * NJSK review: Add ___PrintedPresentation___ to ___SignEquipment rather than simple ___FontSize___ so as to separate presntation from content 
+ * NJSK review: Add ___FontSizeEnum___ to PrintedPresentation as a general property. * NJSK Review ___PassengerSafetyEquipment_ rename Acoustic to Audio. rename app _value_ to _mobileApp_, add _cyclicReadingValue
+ * _Updates to xml schema_: 
+  	* netex_ifopt_equipmentTicketing_version.xsd
+  	* netex_ifopt_localService_version.xsd
+  	* netex_ifopt_equipmentAccess_support.xsd
+  	* netex_ifopt_equipmentAccess_ version.xsd
+  	* netex_ifopt_path_support.xsd
+  	* netex_ifopt_path_ version.xsd
+  	* netex_ifopt_equipmentPassenger_support.xsd
+  	* netex_ifopt_equipmentWaiting_support.xsd
+  	* netex_ifopt_equipmentWaiting_version.xsd
+	* netex_ifopt_equipmentSign_support.xsd
+  	* netex_ifopt_equipmentSign_version.xsd
 
 
-### 2019.03.26 __UK-27__ *FRAMEWORK* NJSK Fix add missing TrainSize attribute to TrainElement
+### 2019.03.26 __UK-27__ *FRAMEWORK* NJSK Fix add missing ___TrainSize___ attribute to ___TrainElement___
  * Align doc with schema
  * _Updates to xml schema_: 
-  	* netex_trsin_version.xsd 
+  	* netex_line_support.xsd 
+  	* netex_trsinElement_version.xsd 
+  	* netex_vehicleJourney_version.xsd 
 
 ### 2019.03.26 __UK-27__ *Fares-ST* NJSK Correct annotations, reorder parameters, add ___TypeOfProductCategoryRef___ to ___TravelSpecifcationSummary___, fix CellRef_ .  Make TravelDOcumentRefmany to one.as per TM.	
  * ALso EURA-(nk)Allow marking of use of CustomerPurchasePackage. Refine model: make blocking separate from status. Correct annotations.	 
- 
- * _Updates to xml schema_: 
+ * wrap ___CustomerPurchasePackage___ TravelDOcref in 
+ * Align doc with schema
+ * reorganize fare examples
+ * _Updates to xml schema_:  
   	* netex_salesTransaction_version.xsd 
-  	* netex_travelSpecifcationSummary_version.xsd 
+  	* netex_travelDocument_version.xsd 
+  	* netex_salesDistribution_support.xsd 
+  	* netex_travelSpecificationSummary_version.xsd 
   	* netex_customerPurchasePackage_support.xsd 
   	* netex_customerPurchasePackage_version.xsd 
    * _Updates to xml examples_: 
    	* uk_fxc_pass_Metrobus_metrorider.xml
-   	
+   	* netex_era_distance_ro.xml
+   	* netex_era_crossborder_de.xml
+    	* netex_era_toc_uk.xml
+    	
 ### 2019.03.26 __NL27__ *Part1-ND*: CD #58  Add default  ___TypeOfProductCategory___ and ___TypeOfService___ to ___Line___: 
   * CD  Move ___TypeOfProductCategory___ and ___TypeOfService___ to _netex_line_version.xsd_. 
   * NJSK Review:  Move ___TypeOfProductCategory___ and ___TypeOfService__  from (Part2:) _netex_journey_version.xsd_   to (Framework reusable component)  _netex_travelRights_version.xsd_)- rather than _line.xsd_,  so they are visible to part 1. 
@@ -87,24 +118,24 @@ There is also an Oxygen project file:
   	 	* NJSK Review: Place  accessibility attributes in a separate group. Break down into subgroups;  ___TicketingEquipmentPropertiesGroup, TicketingEquipmentServiceGroup, TicketingEquipmentAccessibilityGroup___.
   	* CD: Add  new attributes to ___TicketValidatorEquipment___; ___AudioValidationFeedback, VisualValidationFeedback, TactileValidationFeedback, ValidationGuidance___.
   * _netex_ifopt_localService_: 
-  	* CD add LuggageMaximalWeihgt to LuggageService.
-	* NJSK Review: Correct Typo and revise name on ___LuggageMaximumWeight___.  Make datatype of ___LuggageMaximumWeight___  _WeightType_. Also add to ___LeftLuggageService___.
+  	* CD add ___LuggageMaximalWeihgt___ to ___LuggageService___.
+	* NJSK Review: Correct Typo and revise name on ___LuggageMaximumWeight___ to MaximumBagWeight.  Make datatype of ___LuggageMaximumWeight___  _WeightType_. Also add to ___LeftLuggageService___.
   * _netex_ifopt_equipmentAccess_: 
-  	* CD add ___NecessaryForce___ with values _noForce, lightForce, mediumForce,  heavyForce, unknown_.
-  	* CD add __LightingMethodEnumeration__ with values _movementDetector, stepDetector, switchOnTheWall, 
+  	* CD add ___NecessaryForce___ to ___Entrance___ with values _noForce, lightForce, mediumForce,  heavyForce, unknown_.
+  	* CD add __LightingMethodEnumeration__ to ___PlaceLighting___ with values _movementDetector, stepDetector, switchOnTheWall, 
   	atDoorOpening, onlyAtNight_.
-		* NJSK Review: Correct typo on stepDetector
-	* CD add ___TactileWarningStripEnumeration___ with values _tactileStripAtBeginning, tactileStripAtEnd, 	tactileStripAtBothEnds, noTactileStrip, unknown_,
-	* CD add ___FlooringTypeEnumeration___  with values _carpet, concrete, asphalt, cork, fibreglassGrating, glazedCeramicTiles, plasticMatting, ceramicTiles, rubber, steelPlate, vinyl, wood, stone, grass, dirt, gravel, uneven, unknown, other_
-	* CD add ___BorderTypeEnumeration___ with values _wall, grass, dirt, barrier, road, cyclingLane, step, rail, plants, trees, mud, solidEdge, water, gravel, noPhysicalBorder, otherPhysicalBorder, unknown, other,_	
+		* NJSK Review: Correct typo on _stepDetector_.
+	* CD add ___TactileWarningStripEnumeration___ to ___CrossingEquipment___ with values _tactileStripAtBeginning, tactileStripAtEnd, 	tactileStripAtBothEnds, noTactileStrip, unknown_,
+	* CD add ___FlooringTypeEnumeration___ to ___PathLink___ with values _carpet, concrete, asphalt, cork, fibreglassGrating, glazedCeramicTiles, plasticMatting, ceramicTiles, rubber, steelPlate, vinyl, wood, stone, grass, dirt, gravel, uneven, unknown, other_
+	* CD add ___BorderTypeEnumeration___ with __PathLink___ values _wall, grass, dirt, barrier, road, cyclingLane, step, rail, plants, trees, mud, solidEdge, water, gravel, noPhysicalBorder, otherPhysicalBorder, unknown, other,_	
 ___NJSK Review:  Move ___TactileWarningStripEnumeration, FlooringTypeEnumeration, BorderTypeEnumeration___ to _netex_ifopt_equipmentAccess_ from netex_path_support , use lower camel case for values.		 
-	* CD add new attribute NecessaryForceEnumeration with values noForce, lightForce, mediumForce,  heavyForce, unknown
-  	* CD add new attributeLightingMethod  to PlaceLighting with values movementDetector, stepDetector, switchOnTheWall, atDoorOpening, onlyAtNight, other
+	* CD add new attribute ___NecessaryForceEnumeration___ with values _noForce, lightForce, mediumForce,  heavyForce, unknown_.
+  	* CD add new attributeLightingMethod  to PlaceLighting with values _movementDetector, stepDetector, switchOnTheWall, atDoorOpening, onlyAtNight, other_.
 ___NJSK Review:  correct typo on _stepDetector_.
   	* CD Add new attribute to __StairEquipment__; __WithoutRiser__.
 		* NJSK Review:  change order of new elements to be with other  step properties.
   	* CD  Add new attribute to __EscalatorEquipment__  __EscalatorWithLanding__.
-  	* CD  Add new attributes to __TravellatorEquipment__; __Length__, __Slope__ and __IntegratesAnEscalatorPart__.		
+  	* CD  Add new attributes to __TravelatorEquipment__; __Length__, __Slope__ and __IntegratesAnEscalatorPart__.		
   		* NJSK Review:  correct  name of __IntegratesAnEscalatorPart__
   	* CD Add new attributs  to __EscalatorEquipment__: __MagneticInductionLoop__, __GroundMarkAlignedWithButton__, __TactileGroundFloorButton__,  __ExternalFloorSelection__.
 		* NJSK Review:  correct  name of __GroundMarkAlignedWithButton__.
@@ -120,18 +151,21 @@ ___NJSK Review:  correct typo on _stepDetector_.
    * _netex_ifopt_equipmentPassenger_:
   	* CD add new attribute to ___PassengerSafetyEquipment___;  ___AcousticAnnouncementsTrigger___  with values _onDemand,   automatic_.	 
   	* CD add new attribute to ___PassengerSafetyEquipment___; ___AnnouncementsTriggeringMethod___  with values _presenceDetector,  app, internetPage, specificDevice, pushButton_.
-  		* NJSK Review: Correct typo on SupportBarHeigth, reorder new elements.
+  	 CD add new attribute to ___SanitaryEquipment___;  ___SupportBarHeight___  with values _onDemand,   automatic_.	 
+
+  	* NJSK Review: Correct typo on SupportBarHeigth, reorder new elements.
+  	* NJSK Review: Add missing ___ChangeAvailable___ attribute
     * _netex_ifopt_equipmentWaiting_:
   	* CD to Add new attribute to ___LuggageLockerEquipment___:  ___LockingType___  with values _key, keyboard, mechanicalNumbering, contactless, phoneApp, other_.
   	* CD to Add new attributes to ___LuggageLockerEquipment___:  ___BlindAccessible ,WheelchairAccepted___
   		* NJSK Review: CorrectTypo on ___WheelchairAccepted___, Change order of new attributes, move ___LockerTypeEnumeration___  and ___LuggageServiceEnumeration___ enums   to support file.
   	* CD to Add new attributes to ___SeatingEquipment___:  ___Armrest ,SeatingHeight___.,
-  		* NJSK Review: Correct data type on  ___SeatingHeight___.
+  		* NJSK Review: Correct data type on  ___SeatingHeight___. and rename to ___SeatHeight___
      * _netex_ifopt_equipmentSign_:
   	* CD add new attribute to __SignEquipment__; __AudioAnnouncementType__  with values _cyclicReading, whenSomebodyIsDetected, throughAnApp, throughASpecificDevice, other_
   	* CD add new attribute to __SignEquipment__;  __FontSize__; with values; _verySmall, small, medium, large, veryLarge_
   		* NJSK Review:  Correct Typos, camelCase values, move __SignContentEnumeration__   enums   to support file , add _other_ value, zap _xxxx_value. change"big" to "large" in value names.
- 
+ 		* NJSK Review:  Add missing ___AsBraille___ attribute 
   * _Updates to xml schema_: 
   	* netex_ifopt_equipmentTicketing_version.xsd
   	* netex_ifopt_localService_version.xsd
