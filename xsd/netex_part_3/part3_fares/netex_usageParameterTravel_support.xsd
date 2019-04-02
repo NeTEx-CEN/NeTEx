@@ -50,7 +50,6 @@
 					<Modified>2019-03-12</Modified>EURA-093 Add  new attribute RegisterBreakOfJourney  to Interchanging with values    none,   markByStaff,  markByValidator,  markByMobileApp , 		
 	 						EURA-085  Add  new attribute ActivationMeans  with values  none required,, checkIn,  useOfValidato useOfMobileDevice, automaticByTime,  automaticByProximity, other				
 				</Date>
- 
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the Travel USAGE PARAMETER  types.</p>
@@ -274,6 +273,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Allowed values for Usage Validity Period Type.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="singleRide"/>
 			<xsd:enumeration value="singleTrip"/>
 			<xsd:enumeration value="returnTrip"/>
 			<xsd:enumeration value="carnet"/>
@@ -307,17 +307,17 @@ Rail transport, Roads and Road transport
 		<xsd:restriction base="xsd:normalizedString">
 			<xsd:enumeration value="enrolment">
 				<xsd:annotation>
-					<xsd:documentation>Validity period starts when user registers (e.g. creates a customer account)..</xsd:documentation>
+					<xsd:documentation>Validity period starts when user registers (e.g. creates a customer account).</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="reservation">
 				<xsd:annotation>
-					<xsd:documentation>Validity period starts when user makes a reservation..</xsd:documentation>
+					<xsd:documentation>Validity period starts when user makes a reservation.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="purchase">
 				<xsd:annotation>
-					<xsd:documentation>Validity period starts when user makes a purchases.</xsd:documentation>
+					<xsd:documentation>Validity period starts when user makes a purchase.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="fulfilment">
@@ -332,17 +332,17 @@ Rail transport, Roads and Road transport
 			</xsd:enumeration>
 			<xsd:enumeration value="specifiedStartDate">
 				<xsd:annotation>
-					<xsd:documentation>Validity period starts on date specified on product..</xsd:documentation>
+					<xsd:documentation>Validity period starts on date specified on produc..</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="startOutboundRide">
 				<xsd:annotation>
-					<xsd:documentation>Validity period starts on commencement of outbound trip..</xsd:documentation>
+					<xsd:documentation>Validity period starts on commencement of outbound trip.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="endOutboundRide">
 				<xsd:annotation>
-					<xsd:documentation>Validity period starts on completion of outbound trip of a return or multi-part trip..</xsd:documentation>
+					<xsd:documentation>Validity period starts on completion of outbound trip of a return or multi-part trip.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="startReturnRide">
@@ -352,7 +352,7 @@ Rail transport, Roads and Road transport
 			</xsd:enumeration>
 			<xsd:enumeration value="startOfPeriod">
 				<xsd:annotation>
-					<xsd:documentation>Validity period starts at beginning of interval specified for product   (e.g.  every month  for a monthly pass that renews automatically)   .</xsd:documentation>
+					<xsd:documentation>Validity period starts at beginning of interval specified for product   (e.g.  every month  for a monthly pass that renews automatically).</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="dayOffsetBeforeCalendarPeriod">
@@ -367,13 +367,13 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Allowed values for Activation Means</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:normalizedString">
-					<xsd:enumeration value="noneRequired"/>
+			<xsd:enumeration value="noneRequired"/>
 			<xsd:enumeration value="checkIn"/>
-				<xsd:enumeration value="useOfValidator"/>  
-		 <xsd:enumeration value="useOfMobileDevice"/>
-		 		 <xsd:enumeration value="automaticByTime"/>
-		 		 		 <xsd:enumeration value="automaticByProximity"/>
-		 		 		  <xsd:enumeration value="other"/>
+			<xsd:enumeration value="useOfValidator"/>
+			<xsd:enumeration value="useOfMobileDevice"/>
+			<xsd:enumeration value="automaticByTime"/>
+			<xsd:enumeration value="automaticByProximity"/>
+			<xsd:enumeration value="other"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="UsageEndEnumeration">
@@ -389,7 +389,6 @@ Rail transport, Roads and Road transport
 			<xsd:enumeration value="endOfFarePeriod"/>
 			<xsd:enumeration value="productExpiry"/>
 			<xsd:enumeration value="profileExpiry"/>
-			<xsd:enumeration value="eligibilityExpiry"/>
 			<xsd:enumeration value="deregistration"/>
 			<xsd:enumeration value="other"/>
 		</xsd:restriction>
@@ -401,7 +400,7 @@ Rail transport, Roads and Road transport
 		<xsd:restriction base="xsd:normalizedString">
 			<xsd:enumeration value="variable">
 				<xsd:annotation>
-					<xsd:documentation>Validity start date  can be chosen by user.</xsd:documentation>
+					<xsd:documentation>Validity start date can be chosen by user.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="fixed">
@@ -411,11 +410,37 @@ Rail transport, Roads and Road transport
 			</xsd:enumeration>
 			<xsd:enumeration value="fixedWindow">
 				<xsd:annotation>
-					<xsd:documentation>Validity start date for a trip  is constrained relative to  start of booked service, eg may catch previous train as well..</xsd:documentation>
+					<xsd:documentation>Validity start date for a trip  is constrained relative to  start of booked service, eg may catch previous train as well.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 		</xsd:restriction>
 	</xsd:simpleType>
+	<!-- === SUSPENDING  PARAMETER====================================================== -->
+	<xsd:simpleType name="SuspendingIdType">
+		<xsd:annotation>
+			<xsd:documentation>Type for identifier of a SUSPENDING.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="UsageParameterIdType"/>
+	</xsd:simpleType>
+	<xsd:element name="SuspendingRef" type="SuspendingRefStructure" substitutionGroup="UsageParameterRef">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a SUSPENDING.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="SuspendingRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for Reference to a SUSPENDING.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="UsageParameterRefStructure">
+				<xsd:attribute name="ref" type="SuspendingIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Identifier of a SUSPENDING.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
 	<xsd:simpleType name="SuspensionPolicyEnumeration">
 		<xsd:annotation>
 			<xsd:documentation>Allowed values for Suspension Policy.</xsd:documentation>
@@ -428,7 +453,7 @@ Rail transport, Roads and Road transport
 			</xsd:enumeration>
 			<xsd:enumeration value="forCertifiedIllness">
 				<xsd:annotation>
-					<xsd:documentation>Suspension allowed for  illness.</xsd:documentation>
+					<xsd:documentation>Suspension allowed for illness.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="forParentalLeave">
@@ -438,7 +463,7 @@ Rail transport, Roads and Road transport
 			</xsd:enumeration>
 			<xsd:enumeration value="forHoliday">
 				<xsd:annotation>
-					<xsd:documentation>Suspension allowed  for Holiday.</xsd:documentation>
+					<xsd:documentation>Suspension allowed  for holiday.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="forAnyReason">
@@ -556,7 +581,7 @@ Rail transport, Roads and Road transport
 		<xsd:restriction base="xsd:normalizedString">
 			<xsd:enumeration value="none">
 				<xsd:annotation>
-					<xsd:documentation>No action needed  .</xsd:documentation>
+					<xsd:documentation>No action needed.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="markByStaff">

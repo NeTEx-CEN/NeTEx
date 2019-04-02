@@ -39,6 +39,11 @@ There is also an Oxygen project file:
 ----
 # Change Log 
 
+### 2019.03.30  EURA-52, EURA40 *FARES*  Support Suspension
+  * NJSK Review: Make ___Suspending___ a  separate usage parameter. 
+ with attributes __SuspensionPolicy, QualificationPeriod, QualificationPercent,  MinimumSuspensionPeriod, MaximumSuspensionPeriod, MaximumNumberOfSuspensionsPerTer
+ 
+
 ### 2019.03.30 __FR49__ *Part1-IFOPT*:  CD #65 Accessibility changes
 		Fix add missing ___DropKerbOutside___ attribute  to ___EntranceEquipment___
  * NJSK Review: Rename ___LuggageService___ new attribute  ___LuggageMaixumWeight___ new attribute to  to MaximumBagWeight
