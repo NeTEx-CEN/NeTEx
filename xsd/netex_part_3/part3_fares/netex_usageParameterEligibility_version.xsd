@@ -32,6 +32,9 @@
 				<Date>
 					<Modified>2019-03-10</Modified> EURA-68: Add new OneForN parameter to GroupTicket. Add  new enumvalue  toneForN to DiscountBasis enumerationo  
 				</Date>
+				<Date>
+						<Modified>2019-03-10</Modified> Fix add missing Tickting element Reoraise groups of elements
+				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the ELIGIBILITY USAGE PARAMETER    types.</p>
@@ -306,22 +309,12 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="TypeOfConcessionRef" minOccurs="0"/>
 			<xsd:group ref="GroupTicketSizeGroup"/>
 			<xsd:group ref="GroupTicketCalculationGroup"/>
-			<xsd:element name="GroupSizeChanges" type="GroupSizeChangesEnumeration" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Possibilities for changiing the numbe of people in the group.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="JointCheckIn" type="GroupCheckInEnumeration" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Whether the group must check in together.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element ref="GroupBookingFacility" minOccurs="0"/>
+			<xsd:group ref="GroupTicketBookingGroup"/>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:group name="GroupTicketSizeGroup">
 		<xsd:annotation>
-			<xsd:documentation>Elements for GROUP TICKET Group.</xsd:documentation>
+			<xsd:documentation>Group size elements for GROUP TICKET Group.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element name="MinimumNumberOfPersons" type="NumberOfPassengers" minOccurs="0">
@@ -348,7 +341,7 @@ Rail transport, Roads and Road transport
 	</xsd:group>
 	<xsd:group name="GroupTicketCalculationGroup">
 		<xsd:annotation>
-			<xsd:documentation>Elements for GROUP TICKET Group.</xsd:documentation>
+			<xsd:documentation>Calculation elements for GROUP TICKET Group.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element name="PricingBasis" type="PerBasisEnumeration" minOccurs="0">
@@ -376,6 +369,29 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Discount is given as one free place for  n people. Intermediate numbers are rounded down.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="GroupSizeChanges" type="GroupSizeChangesEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Possibilities for changiing the numbe of people in the group.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="GroupTicketBookingGroup">
+		<xsd:annotation>
+			<xsd:documentation>Booking related elements for GROUP TICKET Group.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Ticketing" type="GroupTicketingEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Natute of tickets issued for group</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="JointCheckIn" type="GroupCheckInEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether the group must check in together.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="GroupBookingFacility" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ====COMPANION PROFILE =================================================== -->
@@ -448,9 +464,9 @@ Rail transport, Roads and Road transport
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element ref="UserProfileRef" minOccurs="0"/>
-			<xsd:element name="CompanionRelationshipType" type="CompanionRelationshipTypeEnumeration" minOccurs="0">
+			<xsd:element name="CompanionRelationshipType" type="CompanionRelationshipEnumeration" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Relationship of companion to  eligble user.</xsd:documentation>
+					<xsd:documentation>Required Relationship of companion to eliigble user +V1.1.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="MinimumNumberOfPersons" type="NumberOfPassengers" minOccurs="0">
