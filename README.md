@@ -39,10 +39,19 @@ There is also an Oxygen project file:
 ----
 # Change Log 
 
+### 2019.04.02  FIX *PART2* Add TransportOperatorRef to JourneyDesignator
+  * NJSK Review: Make ___Suspending___ a  separate usage parameter. 
+ with attributes __SuspensionPolicy, QualificationPeriod, QualificationPercent,  MinimumSuspensionPeriod, MaximumSuspensionPeriod, MaximumNumberOfSuspensionsPerTer
+   * _Updates to xml schema_: 
+  	* netex_journeyDesignator_support.xsd
+
+
 ### 2019.03.30  EURA-52, EURA40 *FARES*  Support Suspension
   * NJSK Review: Make ___Suspending___ a  separate usage parameter. 
  with attributes __SuspensionPolicy, QualificationPeriod, QualificationPercent,  MinimumSuspensionPeriod, MaximumSuspensionPeriod, MaximumNumberOfSuspensionsPerTer
- 
+  * _Updates to xml schema_: 
+    	* netex_usageParameterTravel_support.xsd.
+  	* netex_usageParameterTravel_version.xsd.
 
 ### 2019.03.30 __FR49__ *Part1-IFOPT*:  CD #65 Accessibility changes
 		Fix add missing ___DropKerbOutside___ attribute  to ___EntranceEquipment___
