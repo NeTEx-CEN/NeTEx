@@ -39,6 +39,37 @@ There is also an Oxygen project file:
 ----
 # Change Log 
 
+### 2019.04.04  FIX *PART2*NJSK Fix: Add missing ConnectionCertainty element that is in doc
+  * NJSK Review: Add new ___COnnectionCertainty___ attribute to ___Interchange___s per UML diagrams and doc to 
+ with attributes __SuspensionPolicy, QualificationPeriod, QualificationPercent,  MinimumSuspensionPeriod, MaximumSuspensionPeriod, MaximumNumberOfSuspensionsPerTer
+   * _Updates to xml schema_: 
+      	* netex_interchange_support.xsd
+  	* netex_interchang_version.xsd
+
+### 2019.04.04  FIX *PART2* Further tidy ups arising from doc
+  * NJSK Review: Add new value to ___PreassignedFareProduct / Product___ enumeration;  _shortTrip_. 
+  * NJSK Review: Add new value to  ___AmountOfPriceUnit / ProductType___ numeration; _storedValue_.
+  * NJSK Review:Add new  attribute     ProductType to  ___UsageDiscountRight ___ with values _mileagePoints, usageRebate, other_
+  * NJSK Review: Add new  attribute   ___ProductType to ___SaleDiscountRight___ with values;  _travelCard, payAsYouGoDiscount, other_.
+  * NJSK Review: Add new values to ___SupplementProductType___; _penalty_.
+  * NK Add new ___ChargingMomentType___ attribute to ___FareProduct__ with values: _beforeTravel, onStartOfTravel, beforeEndOfTravel, onStartThenAdjustAtEndOfTravel, onStarThenAdjustAtEndOfFareDay, onStartThenAdjustAtEndOfChargePeriod, atEndOfTravel, atEndOfFareDay, atEndOfChargePeriod, free, other_.
+  * NJSK Review: ALso move ___TariffBasisENum___ to netex.fare_element_support
+    * NJSK Review: Add new ___TypeOfSalsOfferPackage___ attribute to ___ValidityParameterAssignment___. Regoiragnoes fare parameters_. 
+   * _Updates to xml schema_: 
+	* netex_fareStructureElement_support.xsd
+    	* netex_fareProduct_support.xsd
+  	* netex_fareProduct_version.xsd
+	* netex_fareConditionSummary_support.xsd
+	* netex_validityParameterAssignment_version.xsd
+	* netex_facility_version.xsd
+   * _Updates to xml examples_: 
+   	* uk_fxc_pass_Metrobus_metrorider.xml
+   	* netex_era_distance_ro.xml
+   	* netex_era_crossborder_de.xml
+    	* netex_era_toc_uk.xml
+ 	* uk_fxc_trip_First_York_Line26_stage-Z2Z_minimal1.xml 
+ 	* uk_fxc_trip_First_WoE_Line48_stage-distance_minimal1.xml
+
 ### 2019.04.02  FIX *PART2* Add TransportOperatorRef to JourneyDesignator
   * NJSK Review: Make ___Suspending___ a  separate usage parameter. 
  with attributes __SuspensionPolicy, QualificationPeriod, QualificationPercent,  MinimumSuspensionPeriod, MaximumSuspensionPeriod, MaximumNumberOfSuspensionsPerTer
