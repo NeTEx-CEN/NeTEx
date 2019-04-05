@@ -26,6 +26,9 @@
 				<Date>
 					<Modified>2019-03-11</Modified>UK-55 Add new TypeOfFareStructureElement.
 				</Date>
+				<Date>
+					<Modified>2019-04-04</Modified>Fix: move TariffBasis gere from fareConditionSummary
+				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the FARE STRUCTURE ELEMENT types.</p>
@@ -105,6 +108,70 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
+	<xsd:simpleType name="TariffBasisEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for TariffBasis.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="flat">
+				<xsd:annotation>
+					<xsd:documentation>Tariff is flat, i.e. not based on spatial elements.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="distance">
+				<xsd:annotation>
+					<xsd:documentation>Tariff is based on spatial distance.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="unitSection"/>
+			<xsd:enumeration value="zone">
+				<xsd:annotation>
+					<xsd:documentation>Tariff is based on use of specified zones.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="zoneToZone">
+				<xsd:annotation>
+					<xsd:documentation>Tariff is based on specified zone to zone transitions.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="pointToPoint">
+				<xsd:annotation>
+					<xsd:documentation>Tariff is based on specified point to point transitions.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="route">
+				<xsd:annotation>
+					<xsd:documentation>Tariff is based on specific routes, eg. for SERIES CONSTRAINTs.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="tour">
+				<xsd:annotation>
+					<xsd:documentation>Tariff is based on a specific tour.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="group">
+				<xsd:annotation>
+					<xsd:documentation>Tariff is based on size of group.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="discount">
+				<xsd:annotation>
+					<xsd:documentation>Tariff is for discount rates.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="period">
+				<xsd:annotation>
+					<xsd:documentation>Tariff is based on temporal durtaions, e.g minutes or days of travel.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			
+			<xsd:enumeration value="other">
+				<xsd:annotation>
+					<xsd:documentation>Other Tariff Basis.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<!-- ===== TYPE OF TARIFF ======================================== -->
 	<xsd:simpleType name="TypeOfTariffIdType">
 		<xsd:annotation>
@@ -131,68 +198,6 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
-	<xsd:simpleType name="TariffBasisEnumeration">
-		<xsd:annotation>
-			<xsd:documentation>Allowed values for TariffBasis.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="xsd:normalizedString">
-			<xsd:enumeration value="flat">
-				<xsd:annotation>
-					<xsd:documentation>Tariff is flat, i.e. not based on spatial elements.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="distance">
-				<xsd:annotation>
-					<xsd:documentation>Tariff is based on spatial distance.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="route">
-				<xsd:annotation>
-					<xsd:documentation>Tariff is based on specific routes, eg. for SERIES CONSTRAINTs.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="zone">
-				<xsd:annotation>
-					<xsd:documentation>Tariff is based on use of specified zones.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="zoneToZone">
-				<xsd:annotation>
-					<xsd:documentation>Tariff is based on specified zone to zone transitions.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="pointToPoint">
-				<xsd:annotation>
-					<xsd:documentation>Tariff is based on specified point to point transitions.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="period">
-				<xsd:annotation>
-					<xsd:documentation>Tariff is based on temporal durtaions, e.g minutes or days of travel.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="tour">
-				<xsd:annotation>
-					<xsd:documentation>Tariff is based on a specific tour.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="group">
-				<xsd:annotation>
-					<xsd:documentation>Tariff is based on size of group.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="discount">
-				<xsd:annotation>
-					<xsd:documentation>Tariff is for discount rates.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="other">
-				<xsd:annotation>
-					<xsd:documentation>Other Tariff Basis.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-		</xsd:restriction>
-	</xsd:simpleType>
 	<!-- ====FARE STRUCTURE ELEMENT.======================================================== -->
 	<xsd:complexType name="fareStructureElementRefs_RelStructure">
 		<xsd:annotation>
