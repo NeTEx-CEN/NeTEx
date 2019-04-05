@@ -23,9 +23,17 @@
 				</Date>
 				<Date>
 					<Modified>2019-03-13</Modified>Simplify use of Fares: 
-					 Add new  Atrribute   PreeassignedFareProductType to      PreassignedFareProduct with values singleTip,  timeTimitedSingleTrip, dayReturnTrip, periodReturnTrip, multiStepTrip, dayPass,  periodPass, other.
-					 	 Add new  Atrribute   SupplementProductType to      SupplementProduct with values seatReservation,  dog, animal, bicycle, meal, wifi, other
-					Simplify Add new attribute   AmountOfPriceUnitType to     AmountOfPriceUnitFareProduct with values  tripCarnet, passCarnet, unitCoupons, other., 
+					 Add new  attribute     ProductType to      PreassignedFareProduct with values singleTip,  timeTimitedSingleTrip, dayReturnTrip, periodReturnTrip, multiStepTrip, dayPass,  periodPass, other.
+					 Add new  attribute   SupplementProductType to      SupplementProduct with values seatReservation,  dog, animal, bicycle, meal, wifi, other
+					Simplify Add new attribute     ProductType to     AmountOfPriceUnitt with values  tripCarnet, passCarnet, unitCoupons, other., 
+				</Date>
+				<Date>
+					<Modified>2019-04-03</Modified>Add new values to PreassignedFareProduct / ProductType shortTrip
+					Add new value  to   AmountOfPriceUnit  / ProductType storedValue
+										Add new values to   SupplementProductType penalty
+							Add new  attribute     ProductType to      UsageDiscountRight  with values  mileapoints, rebate
+							Add new  attribute     ProductType to      SaleDiscountRight with values  travelCard, payAsYouGoright,  statutoryRight other
+							Add  for ChargingMomentType   attribyute with   standard values :  _beforeTravel, onStartOfTravel, beforeEndOfTravel, onStartThenAdjustAtEndOfTravel, onStarThenAdjustAtEndOfFareDay, onStartThenAdjustAtEndOfChargePeriod, atEndOfTravel, atEndOfFareDay, atEndOfChargePeriod, free, other_.
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -186,6 +194,17 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
+	<xsd:simpleType name="SaleDiscountRightEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for  SDALE DISCOUNT RIGHT enumeration +v1.1</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="travelCard"/>
+			<xsd:enumeration value="payAsYouGoRight"/>
+			<xsd:enumeration value="statutoryRight"/>
+			<xsd:enumeration value="other"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<!-- ==== ENTITLEMENT PRODUCT==================================================== -->
 	<xsd:simpleType name="EntitlementProductIdType">
 		<xsd:annotation>
@@ -289,6 +308,16 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
+	<xsd:simpleType name="UsageDiscountRightEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for  USAGE DISCOUNT RIGHT enumeration +v1.1</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="mileagePoints"/>
+			<xsd:enumeration value="usageRebate"/>
+			<xsd:enumeration value="other"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<!-- ==== CAPPED  DISCOUNT RIGHT==================================================== -->
 	<xsd:simpleType name="CappedDiscountRightIdType">
 		<xsd:annotation>
@@ -392,12 +421,13 @@ Rail transport, Roads and Road transport
 	</xsd:complexType>
 	<xsd:simpleType name="AmountOfPriceUnitEnumeration">
 		<xsd:annotation>
-			<xsd:documentation>Allowed values for  PREASSIGNED FARE PRODUCT enumeration +v1.1</xsd:documentation>
+			<xsd:documentation>Allowed values for AMOUNT OF PRICE UNIT enumeration +v1.1</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:normalizedString">
 			<xsd:enumeration value="tripCarnet"/>
 			<xsd:enumeration value="passCarnet"/>
 			<xsd:enumeration value="unitCoupon"/>
+			<xsd:enumeration value="storedValue"/>
 			<xsd:enumeration value="other"/>
 		</xsd:restriction>
 	</xsd:simpleType>
@@ -429,10 +459,11 @@ Rail transport, Roads and Road transport
 	</xsd:complexType>
 	<xsd:simpleType name="PreassignedFareProductEnumeration">
 		<xsd:annotation>
-			<xsd:documentation>Allowed values for  PREASSIGNED FARE PRODUCT enumeration +v1.1</xsd:documentation>
+			<xsd:documentation>Allowed values for  PREASSIGNED FARE PRODUCT ProductType. +v1.1</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:normalizedString">
 			<xsd:enumeration value="singleTrip"/>
+			<xsd:enumeration value="shortTrip"/>
 			<xsd:enumeration value="timeLimitedSingleTrip"/>
 			<xsd:enumeration value="dayReturnTrip"/>
 			<xsd:enumeration value="periodReturnTrip"/>
@@ -471,7 +502,7 @@ Rail transport, Roads and Road transport
 	</xsd:complexType>
 	<xsd:simpleType name="SupplementProductEnumeration">
 		<xsd:annotation>
-			<xsd:documentation>Allowed values for SUPPLEMENT FARE PRODUCT enumeration +v1.1</xsd:documentation>
+			<xsd:documentation>Allowed values for SUPPLEMENT PRODUCT enumeration +v1.1</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:normalizedString">
 			<xsd:enumeration value="seatReservation"/>
@@ -481,6 +512,9 @@ Rail transport, Roads and Road transport
 			<xsd:enumeration value="meal"/>
 			<xsd:enumeration value="wifi"/>
 			<xsd:enumeration value="extraLuggage"/>
+			<xsd:enumeration value="penalty"/>
+			<xsd:enumeration value="upgrade"/>
+			<xsd:enumeration value="journeyExtension"/>
 			<xsd:enumeration value="other"/>
 		</xsd:restriction>
 	</xsd:simpleType>
@@ -604,6 +638,24 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Type for identifier of a CHARGING MOMENT. +v1.1</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="TypeOfValueIdType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="ChargingMomentEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for  ChargingMomentType. +v1.1</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="beforeTravel"/>
+			<xsd:enumeration value="onStartOfTravel"/>
+			<xsd:enumeration value="beforeEndOfTravel"/>
+			<xsd:enumeration value="onStartThenAdjustAtEndOfTravel"/>
+			<xsd:enumeration value="onStarThenAdjustAtEndOfFareDay"/>
+			<xsd:enumeration value="onStartThenAdjustAtEndOfChargePeriod"/>
+			<xsd:enumeration value="atEndOfTravel"/>
+			<xsd:enumeration value="atEndOfFareDay"/>
+			<xsd:enumeration value="atEndOfChargePeriod"/>
+			<xsd:enumeration value="free"/>
+			<xsd:enumeration value="other"/>
+		</xsd:restriction>
 	</xsd:simpleType>
 	<!-- ====TYPE OF FARE PRODUCT================================================== -->
 	<xsd:complexType name="typeOfFareProductRefs_RelStructure">

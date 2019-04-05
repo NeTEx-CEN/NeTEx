@@ -265,6 +265,11 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="ChargingMomentRef" minOccurs="0"/>
+			<xsd:element name="ChargingMomentType" type="ChargingMomentEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Enumeration of standardised Charging moment values _v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:choice minOccurs="0">
 				<xsd:element ref="TypeOfFareProductRef"/>
 				<xsd:element name="typesOfFareProduct" type="typeOfFareProductRefs_RelStructure">
@@ -273,8 +278,8 @@ Rail transport, Roads and Road transport
 					</xsd:annotation>
 				</xsd:element>
 			</xsd:choice>
+			<xsd:element ref="TransportOrganisationRef" minOccurs="0"/>
 			<xsd:element ref="ConditionSummary" minOccurs="0"/>
-			<xsd:element ref="OperatorRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:group name="FareProductValidityGroup">
@@ -426,7 +431,16 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Elements for a SALES DISCOUNT RIGHT.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:group ref="OtherProductGroup" minOccurs="0"/>
+			<xsd:element name="ProductType" type="SaleDiscountRightEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Classification of USAGE DISOCUNT RIGHT. +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:group ref="OtherProductGroup" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Other products to which SALE DISCONT applies to</xsd:documentation>
+				</xsd:annotation>
+			</xsd:group>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:group name="OtherProductGroup">
@@ -586,7 +600,13 @@ Rail transport, Roads and Road transport
 		<xsd:annotation>
 			<xsd:documentation>Elements for a USAGE DISCOUNT RIGHT.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:sequence/>
+		<xsd:sequence>
+			<xsd:element name="ProductType" type="UsageDiscountRightEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Classification of USAGE DISOCUNT RIGHT. +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
 	</xsd:group>
 	<!-- ==== CAPPED DISCOUNT RIGHT.=============================================== -->
 	<xsd:element name="CappedDiscountRight" abstract="false" substitutionGroup="FareProduct_">
@@ -727,7 +747,6 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Period with which capping accumulation is done. Default is 'day'. A USAGE VALIDITY PERIDO parameter can be used to add a more specific definition.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:group ref="CappingStartConstraintGroup"/>
 			<xsd:element ref="CappedDiscountRightRef" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="PreassignedFareProductRef" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="ValidableElementRef" minOccurs="0"/>
@@ -746,12 +765,12 @@ Rail transport, Roads and Road transport
 		<xsd:sequence>
 			<xsd:element name="CappingStartConstraintType" type="CappingPeriodStartConstraintTypeEnumeration" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Indicates if start of cappig period   is  variable  o nfixed.</xsd:documentation>
+					<xsd:documentation>Indicates if start of cappig period   is  variable  on fixed. +v1.1</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="startOnlyOn" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>If StartConstraintType is Fixed, then allowed days to start on can be indicated by a DAY TYPE, for example Monday, 1st of Month, Start of Quarter, etc</xsd:documentation>
+					<xsd:documentation>If StartConstraintType is Fixed, then allowed days to start on can be indicated by a DAY TYPE, for example Monday, 1st of Month, Start of Quarter, etc +v1.1</xsd:documentation>
 				</xsd:annotation>
 				<xsd:complexType>
 					<xsd:complexContent>
@@ -902,7 +921,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Elements for a PREASSIGNED FARE PRODUCT.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="PreassignedFareProductType" type="PreassignedFareProductEnumeration" minOccurs="0">
+			<xsd:element name="ProductType" type="PreassignedFareProductEnumeration" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Classification of PEEASSIGNED FARE PRODUCT. +v1.1</xsd:documentation>
 				</xsd:annotation>
@@ -963,12 +982,15 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Elements for a PREASSIGNED FARE PRODUCT.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="ProductType" type="SupplementProductEnumeration" minOccurs="0">
+			<xsd:element name="SupplementProductType" type="SupplementProductEnumeration" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Classification of SUPPLEMENT PRODUCT. +v1.1</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:choice>
+				<xsd:annotation>
+					<xsd:documentation>Optimised multipel choice</xsd:documentation>
+				</xsd:annotation>
 				<xsd:element name="SupplementToFareProductRef" type="FareProductRefStructure" minOccurs="0">
 					<xsd:annotation>
 						<xsd:documentation>FARE PRODUCT to which this SUPPLEMENT PRODUCT can be a a supplement.</xsd:documentation>
