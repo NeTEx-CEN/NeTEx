@@ -122,7 +122,6 @@ Concessionary passes are valid throughout from 0930-2300 Mon-Fri, and anytime at
 					</prerequisites>
 					<!--==== Pricing Parameters ====-->
 					<PricingParameterSet version="1.0" id="mb:Metrobus">
-					
 						<pricingRules>
 							<DiscountingRule version="1.0" id="mb:half_price">
 								<Name>Discount for child fares></Name>
@@ -133,12 +132,12 @@ Concessionary passes are valid throughout from 0930-2300 Mon-Fri, and anytime at
 								<DiscountAsPercentage>100</DiscountAsPercentage>
 							</DiscountingRule>
 						</pricingRules>
-			 <roundings>
-						<Rounding version="1.0" id="mb:split">
-								<Name>Split roundig to nearest </Name> 
+						<roundings>
+							<Rounding version="1.0" id="mb:split">
+								<Name>Split roundig to nearest </Name>
 								<RoundingMethod>split</RoundingMethod>
 							</Rounding>
-				</roundings>
+						</roundings>
 					</PricingParameterSet>
 					<!--==== Fare Structure ==== -->
 					<tariffs>
@@ -530,7 +529,16 @@ Concessionary passes are valid throughout from 0930-2300 Mon-Fri, and anytime at
 						<PreassignedFareProduct version="1.0" id="mb:Trip@single">
 							<Name> Single Ticket</Name>
 							<ChargingMomentRef version="fxc:v1.0" ref="fxc:prepayment"/>
+							<ChargingMomentType>beforeTravel</ChargingMomentType>
 							<TypeOfFareProductRef version="fxc:v1.0" ref="fxc:standard_product@trip@single"/>
+							<OperatorRef version="1.0" ref="noc:137122">METR</OperatorRef>
+							<ConditionSummary>
+								<FareStructureType>pointToPointFare</FareStructureType>
+								<TariffBasis>pointToPoint</TariffBasis>
+								<IsPersonal>true</IsPersonal>
+								<IsRefundable>true</IsRefundable>
+								<HasDiscountedFares>true</HasDiscountedFares>
+							</ConditionSummary>
 							<!--==== VALIDABLE ELEMENTs ==== -->
 							<validableElements>
 								<ValidableElement version="1.0" id="mb:Trip@single@travel">
@@ -548,6 +556,7 @@ Concessionary passes are valid throughout from 0930-2300 Mon-Fri, and anytime at
 									<ValidableElementRef version="1.0" ref="mb:Trip@single@travel"/>
 								</AccessRightInProduct>
 							</accessRightsInProduct>
+							<ProductType>singleTrip</ProductType>
 						</PreassignedFareProduct>
 						<!--==== Other Products ==== -->
 					</fareProducts>
@@ -760,28 +769,44 @@ Bewbush West (loop)
 							</columns>
 							<rows>
 								<FareTableRow version="1.0" id="mb:Trip@single-SOP@p-ticket@Line_1@adult@r1@Pease_Pottage" order="1">
-									<representing> <FareZoneRef version="1.0" ref="mb:fs@Pease_Pottage"/></representing> 
+									<representing>
+										<FareZoneRef version="1.0" ref="mb:fs@Pease_Pottage"/>
+									</representing>
 								</FareTableRow>
 								<FareTableRow version="1.0" id="mb:Trip@single-SOP@p-ticket@Line_1@adult@r2@Broadfield" order="2">
-									<representing> <FareZoneRef version="1.0" ref="mb:fs@Broadfield"/></representing> 
+									<representing>
+										<FareZoneRef version="1.0" ref="mb:fs@Broadfield"/>
+									</representing>
 								</FareTableRow>
 								<FareTableRow version="1.0" id="mb:Trip@single-SOP@p-ticket@Line_1@adult@r3@Southgate" order="3">
-									<representing> <FareZoneRef version="1.0" ref="mb:fs@Southgate"/></representing> 
+									<representing>
+										<FareZoneRef version="1.0" ref="mb:fs@Southgate"/>
+									</representing>
 								</FareTableRow>
 								<FareTableRow version="1.0" id="mb:Trip@single-SOP@p-ticket@Line_1@adult@r4@Southgate_Avenue" order="4">
-									<representing> <FareZoneRef version="1.0" ref="mb:fs@Southgate_Avenue"/></representing> 
+									<representing>
+										<FareZoneRef version="1.0" ref="mb:fs@Southgate_Avenue"/>
+									</representing>
 								</FareTableRow>
 								<FareTableRow version="1.0" id="mb:Trip@single-SOP@p-ticket@Line_1@adult@r5@Crawley" order="5">
-									<representing> <FareZoneRef version="1.0" ref="mb:fs@Crawley"/></representing> 
+									<representing>
+										<FareZoneRef version="1.0" ref="mb:fs@Crawley"/>
+									</representing>
 								</FareTableRow>
 								<FareTableRow version="1.0" id="mb:Trip@single-SOP@p-ticket@Line_1@adult@r6@West_Green" order="6">
-									<representing> <FareZoneRef version="1.0" ref="mb:fs@West_Green"/></representing> 
+									<representing>
+										<FareZoneRef version="1.0" ref="mb:fs@West_Green"/>
+									</representing>
 								</FareTableRow>
 								<FareTableRow version="1.0" id="mb:Trip@single-SOP@p-ticket@Line_1@adult@r7@Gossops_Green" order="7">
-									<representing> <FareZoneRef version="1.0" ref="mb:fs@Gossops_Green"/></representing> 
+									<representing>
+										<FareZoneRef version="1.0" ref="mb:fs@Gossops_Green"/>
+									</representing>
 								</FareTableRow>
 								<FareTableRow version="1.0" id="mb:Trip@single-SOP@p-ticket@Line_1@adult@r8@Bewbush" order="8">
-									<representing> <FareZoneRef version="1.0" ref="mb:fs@Bewbush"/></representing> 
+									<representing>
+										<FareZoneRef version="1.0" ref="mb:fs@Bewbush"/>
+									</representing>
 								</FareTableRow>
 							</rows>
 							<includes>
@@ -1724,14 +1749,13 @@ This Shows  sample Purchases
 											<SalesTransactionRef version="any" ref="mbt:Anon001@trans002@purchase_single"/>
 											<GeographicalIntervalPriceRef version="1.0" ref="mb:price_band_A@child"/>
 											<Amount>0.80</Amount>
-											
 											<ruleStepResults>
 												<RuleStepResult id="mbt:Anon001@trans002@purchase_single" order="1">
 													<GeographicalIntervalPriceRef version="1.0" ref="mb:price_band_A@adult"/>
-														<Amount>0.80</Amount>
-																<AdjustmentAmount>0.80</AdjustmentAmount>
-														<DiscountingRuleRef version="1.0" ref="mb:half_price"/>
-														<RoundingRef version="1.0" ref="mb:split"/> 
+													<Amount>0.80</Amount>
+													<AdjustmentAmount>0.80</AdjustmentAmount>
+													<DiscountingRuleRef version="1.0" ref="mb:half_price"/>
+													<RoundingRef version="1.0" ref="mb:split"/>
 													<Narrative>Child is half adult price</Narrative>
 												</RuleStepResult>
 											</ruleStepResults>

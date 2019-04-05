@@ -895,13 +895,16 @@ ______	______	______	_	|	______	______	______	______	______	______	________	|	__
 -->
 							<!--==== VALIDABLE ELEMENTs ==== -->
 							<ChargingMomentRef version="fxc:v1.0" ref="fxc:prepayment"/>
+							<ChargingMomentType>beforeTravel</ChargingMomentType>
 							<TypeOfFareProductRef version="fxc:v1.0" ref="fxc:standard_product@pass@period"/>
+							<OperatorRef version="1.0" ref="noc:137122">METR</OperatorRef>
 							<ConditionSummary>
+								<FareStructureType>zonalFare</FareStructureType>
+								<TariffBasis>zone</TariffBasis>
 								<IsPersonal>true</IsPersonal>
 								<IsRefundable>true</IsRefundable>
 								<HasDiscountedFares>true</HasDiscountedFares>
 							</ConditionSummary>
-							<OperatorRef version="1.0" ref="noc:137122">METR</OperatorRef>
 							<validableElements>
 								<ValidableElement version="1.0" id="mb:Pass@Metrorider@travel">
 									<Name>Unlimited rides available for specifed periods</Name>
@@ -944,17 +947,21 @@ ______	______	______	_	|	______	______	______	______	______	______	________	|	__
 									<ValidableElementRef version="1.0" ref="mb:Pass@Metrorider@travel"/>
 								</AccessRightInProduct>
 							</accessRightsInProduct>
+							<ProductType>periodPass</ProductType>
 						</PreassignedFareProduct>
 						<PreassignedFareProduct version="1.0" id="mb:Pass@Metrovoyager">
 							<Name>Metrovoyager Pass</Name>
 							<ChargingMomentRef version="fxc:v1.0" ref="fxc:prepayment"/>
+							<ChargingMomentType>beforeTravel</ChargingMomentType>
 							<TypeOfFareProductRef version="fxc:v1.0" ref="fxc:standard_product@pass@period"/>
+							<OperatorRef version="1.0" ref="noc:137122">METR</OperatorRef>
 							<ConditionSummary>
+								<FareStructureType>zonalFare</FareStructureType>
+								<TariffBasis>zone</TariffBasis>
 								<IsPersonal>true</IsPersonal>
 								<IsRefundable>true</IsRefundable>
 								<HasDiscountedFares>true</HasDiscountedFares>
 							</ConditionSummary>
-							<OperatorRef version="1.0" ref="noc:137122">METR</OperatorRef>
 							<!--
 							Metrovoyager 
 								https://www.metrobus.co.uk/metrovayger-adult-fares/
@@ -1008,6 +1015,7 @@ ______	______	______	_	|	______	______	______	______	______	______	________	|	__
 									<ValidableElementRef version="1.0" ref="mb:Pass@Metrovoyager@travel"/>
 								</AccessRightInProduct>
 							</accessRightsInProduct>
+							<ProductType>periodPass</ProductType>
 						</PreassignedFareProduct>
 					</fareProducts>
 					<!-- === SALES OFFER PACKAGES === -->
@@ -3075,14 +3083,17 @@ ______	______	______	_	|	______	______	______	______	______	______	________	|	__
 							<Name>Multitrip</Name>
 							<Description>Single journeys grouped onto the key to use one at a time.</Description>
 							<ChargingMomentRef version="fxc:v1.0" ref="fxc:prepayment"/>
+							<ChargingMomentType>beforeTravel</ChargingMomentType>
 							<TypeOfFareProductRef version="fxc:v1.0" ref="fxc:standard_product@carnet@trips"/>
+							<OperatorRef version="1.0" ref="noc:137122">METR</OperatorRef>
 							<ConditionSummary>
+								<FareStructureType>zonalFare</FareStructureType>
+								<TariffBasis>zone</TariffBasis>
 								<GoesOnCard>true</GoesOnCard>
 								<IsPersonal>false</IsPersonal>
 								<IsRefundable>true</IsRefundable>
 								<HasDiscountedFares>true</HasDiscountedFares>
 							</ConditionSummary>
-							<OperatorRef version="1.0" ref="noc:137122">METR</OperatorRef>
 							<validityParameterAssignments>
 								<GenericParameterAssignment version="1.0" id="mb:Trip@multitrip" order="1">
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_purchase"/>
@@ -3143,6 +3154,7 @@ ______	______	______	_	|	______	______	______	______	______	______	________	|	__
 									<ValidableElementRef version="1.0" ref="mb:Trip@multitrip@singleRide"/>
 								</AccessRightInProduct>
 							</accessRightsInProduct>
+							<ProductType>tripCarnet</ProductType>
 						</AmountOfPriceUnitProduct>
 					</fareProducts>
 					<salesOfferPackages>
@@ -3370,15 +3382,21 @@ ______	______	______	_	|
 												<Name>Gatwick Employeee</Name>
 												<Description>A special key smartcard is required to purchase a Gatwick Travelcard. To get yours, visit one of our Travel shops in Crawley or Redhill and now at our new Travel Shop at Gatwick South Terminal .
 											 If you are airport staff, you will need to show your airside or landside ID or a letter from your employer (with accompanying photographic ID) proving that you work at an approved company at Gatwick Airport. 
+											 
 											 If you work for an easitCRAWLEY member company, you will need to show your valid Easit_card - If you don't have an Easit_card click here to apply , or speak to your employer for further advice. 
 											If you work for one of the eligible City Place companies you will need to show your valid Staff ID card.</Description>
 											</CommercialProfile>
 											<EntitlementRequired version="1.0" id="mb:Gatwick_travelcard@EasitCrawley_holders">
-												<Name>easitCRAWLEY ccard holder</Name>
+												<Name>easitCRAWLEY card holder</Name>
 												<ThirdPartyProductRef ref="ezt:Discount@Easit_card" version="1.0"/>
-												<TypeOfTravelDocumentConstraint>sameSmartcard</TypeOfTravelDocumentConstraint>
+												<EntitlementConstraint>
+													<TypeOfTravelDocumentConstraint>sameSmartcard</TypeOfTravelDocumentConstraint>
+												</EntitlementConstraint>
 											</EntitlementRequired>
 										</limitations>
+										<validityParameters>
+											<TypeOfTravelDocumentRef version="1.0" ref="mb:special-key"/>
+										</validityParameters>
 									</GenericParameterAssignment>
 								</FareStructureElement>
 							</fareStructureElements>
@@ -3410,8 +3428,12 @@ Please note that Gatwick Travelcards are not transferable and can only be used b
 								<InfoLink typeOfInfoLink="info">https://www.metrobus.co.uk/gatwick-staff-travel/</InfoLink>
 							</documentLinks>
 							<ChargingMomentRef version="fxc:v1.0" ref="fxc:prepayment"/>
+							<ChargingMomentType>beforeTravel</ChargingMomentType>
 							<TypeOfFareProductRef version="fxc:v1.0" ref="fxc:standard_product@pass@period"/>
+							<OperatorRef version="1.0" ref="noc:137122">METR</OperatorRef>
 							<ConditionSummary>
+								<FareStructureType>zonalFare</FareStructureType>
+								<TariffBasis>zone</TariffBasis>
 								<IsPersonal>true</IsPersonal>
 								<RequiresEntitlement>true</RequiresEntitlement>
 							</ConditionSummary>
@@ -3447,6 +3469,7 @@ Please note that Gatwick Travelcards are not transferable and can only be used b
 									<ValidableElementRef version="1.0" ref="mb:Pass@Gatwick_travelcard@line_use"/>
 								</AccessRightInProduct>
 							</accessRightsInProduct>
+							<ProductType>periodPass</ProductType>
 						</PreassignedFareProduct>
 					</fareProducts>
 					<typesOfTravelDocuments>
@@ -3650,9 +3673,11 @@ Please note that Gatwick Travelcards are not transferable and can only be used b
 												<Name>Gatwick_travelcard</Name>
 												<DiscountingRuleRef ref="ezt:Tariff@Discount@Easit@Crawley@metrobus" version="1.0"/>
 												<PreassignedFareProductRef ref="mb:Pass@Gatwick_travelcard" version="1.0"/>
+												<EntitlementConstraint>
+													<TariffZoneConstraint>equivalent</TariffZoneConstraint>
+													<TypeOfTravelDocumentConstraint>sameSmartcard</TypeOfTravelDocumentConstraint>
+												</EntitlementConstraint>
 												<EntitlementType>purchaseAtDiscount</EntitlementType>
-												<TariffZoneConstraint>equivalent</TariffZoneConstraint>
-												<TypeOfTravelDocumentConstraint>sameSmartcard</TypeOfTravelDocumentConstraint>
 											</EntitlementGiven>
 										</limitations>
 									</GenericParameterAssignment>
@@ -3762,8 +3787,7 @@ Why does it take 2--3 weeks for the cards to arrive?
 easit is a small Social Enterprise and our aim is always to keep costs as low as possible.
 
 Can I get a discount if I include a PlusBus ticket?
-As our rail discounts are negotiated with the specific train company, for routes on their network, they cannot be combined with any other tickets.
- 
+As our rail discounts are negotiated with the specific train company, for routes on their network, they cannot be combined with any other tickets. 
  
 Who or what is The easitNETWORK
 easit is a trademark owned by Road Pals Ltd. It originally stood for East Area of Surrey Initiative for Transport but since spreading its wings it is now simply known as easit.
@@ -3774,13 +3798,15 @@ VAT registration number 822 1299 46
 
 Can I have the ticket on my phone or use Southern's Key
 Unfortunately not, the only type of ticket that can have the easitDISCOUNT applied to it is the traditional paper ticket. 
-
-
 .</Description>
 							<Url>https://www.easit.org.uk/easitcrawley</Url>
 							<ChargingMomentRef version="fxc:v1.0" ref="fxc:prepayment"/>
+							<ChargingMomentType>beforeTravel</ChargingMomentType>
 							<TypeOfFareProductRef version="fxc:v1.0" ref="fxc:standard_product@pass@period"/>
+							<OperatorRef version="1.0" ref="ezt:EASIT"/>
 							<ConditionSummary>
+								<FareStructureType>networkFlatFare</FareStructureType>
+								<TariffBasis>flat</TariffBasis>
 								<IsPersonal>true</IsPersonal>
 								<RequiresPhoto>true</RequiresPhoto>
 								<MustCarry>true</MustCarry>
@@ -3833,8 +3859,11 @@ Please log into your account on our site and follow the prompts to order a repla
 											<Name>Discount on gatwick travelcard </Name>
 											<DiscountingRuleRef ref="ezt:Tariff@Discount@Easit@Crawley@metrobus" version="1.0"/>
 											<PreassignedFareProductRef version="1.0" ref="mb:Pass@Gatwick_travelcard"/>
-											<TariffZoneConstraint>equivalent</TariffZoneConstraint>
-											<TypeOfTravelDocumentConstraint>sameSmartcard</TypeOfTravelDocumentConstraint>
+											<EntitlementConstraint>
+												<TariffZoneConstraint>equivalent</TariffZoneConstraint>
+												<TypeOfTravelDocumentConstraint>sameSmartcard</TypeOfTravelDocumentConstraint>
+											</EntitlementConstraint>
+											<EntitlementType>use</EntitlementType>
 										</EntitlementGiven>
 									</limitations>
 								</GenericParameterAssignment>
@@ -3854,7 +3883,9 @@ Unfortunately not. As our discounts are genuine discounts off of the cost of the
 											<Name>Discount Rail</Name>
 											<DiscountingRuleRef ref="ezt:Tariff@Discount@Easit@Crawley@rail" version="1.0"/>
 											<PreassignedFareProductRef versionRef="1.0" ref="mb:Trip@Rail"/>
-											<TariffZoneConstraint>within</TariffZoneConstraint>
+											<EntitlementConstraint>
+												<TariffZoneConstraint>within</TariffZoneConstraint>
+											</EntitlementConstraint>
 										</EntitlementGiven>
 									</limitations>
 									<validityParameters>
@@ -4146,6 +4177,27 @@ Metrobus Travel Shop, Crawley Bus Station, Marlborough Street, Crawley, BS1 3NU
 							</Address>
 							<PrimaryMode>bus</PrimaryMode>
 						</Operator>
+						<Operator version="1.0" id="ezt:EASIT">
+							<PublicCode>EASIT</PublicCode>
+							<CompanyNumber>04792280</CompanyNumber>
+							<Name>East Area of Surrey Initiative for Transport</Name>
+							<ShortName>easit</ShortName>
+							<TradingName>Road Pals Ltd.</TradingName>
+							<ContactDetails>
+								<Email>at info@easit.org.uk</Email>
+								<Phone>01293 449191</Phone>
+							</ContactDetails>
+							<OrganisationType>operator</OrganisationType>
+							<Address>
+								<BuildingName>easitHOUSE</BuildingName>
+								<AddressLine1>Old Water Yard</AddressLine1>
+								<Street>Curtis Road</Street>
+								<Town>Dorking</Town>
+								<PostCode>RH4 1DYA</PostCode>
+								<PostalRegion>Surrey</PostalRegion>
+							</Address>
+							<PrimaryMode>bus</PrimaryMode>
+						</Operator>
 					</organisations>
 				</ResourceFrame>
 			</frames>
@@ -4280,7 +4332,7 @@ Metrobus Travel Shop, Crawley Bus Station, Marlborough Street, Crawley, BS1 3NU
 						<!--==== Other Products ==== -->
 						<PreassignedFareProduct version="1.0" id="dsc:Pass@Discovery">
 							<Name>DIscovery Ticket</Name>
-							<!--
+							<Description>
 								The Discovery ticket is for you if you need to use the services of more than one bus company in a day
 								Discovery fares - one day tickets. Available from the driver.
 		From 1st May 2018 the prices will be:
@@ -4288,16 +4340,25 @@ Metrobus Travel Shop, Crawley Bus Station, Marlborough Street, Crawley, BS1 3NU
 Adult Discovery - £9
 Child Discovery - £7.20
 Family Discovery - £17.50 
-(up to 5 people with a minimum of 1 adult and a maximum of 2 adults).
-								(up to 5 people with a minimum of 1 adult and a maximum of 2 adults).
-								Discovery tickets will be issued and accepted by the following operators in West Sussex, East Sussex, Surrey, Brighton & Hove, East Hampshire, Kent & Medway (subject to exclusions at the bottom):
+(up to 5 people with a minimum of 1 adult and a maximum of 2 adults). 
+
+Discovery tickets will be issued and accepted by the following operators in West Sussex, East Sussex, Surrey, Brighton and Hove, East Hampshire, Kent and Medway (subject to exclusions at the bottom):
+		Abellio Surrey, Arriva, ASD Travel, Autocar, Brighton and Hove, Buses Excetera, Chalkwell, Compass Travel, Community Transport (Brighton, Hove and Area), County Connect Buses in Kent,
+Cuckmere Community Bus, Emsworth and District, Farleigh Coaches, Go-Coach, Metrobus, Nu-Venture, Regent Coaches, Renown Coaches, Safeguard Coaches, Seaford and District, Southdown PSV, Stagecoach, Sussex Coaches, The Big Lemon, Wealdlink, Xelabus
+								(# all KCC and Medway contracted local bus services will be required to accept the ticket.)
 								
-								Abellio Surrey, Arriva, ASD Travel, Autocar, Brighton & Hove, Buses Excetera, Chalkwell, Compass Travel, Community Transport (Brighton, Hove and Area), County Connect Buses in Kent,
-Cuckmere Community Bus, Emsworth & District, Farleigh Coaches, Go-Coach, Metrobus, Nu-Venture, Regent Coaches, Renown Coaches, Safeguard Coaches, Seaford & District, Southdown PSV, Stagecoach, Sussex Coaches, The Big Lemon, Wealdlink, Xelabus
-								(# all KCC & Medway contracted local bus services will be required to accept the ticket.)
-								
-								Excluded services: Services operated on behalf of Transport for London, City Sightseeing Brighton, Winchester Park & Ride, Guildford Park & Ride, Arriva route 802. Also occasional and special services including Ardingly showground specials, Goodwood Racecourse & Motor Racing specials, nightclub services and football services. Other exclusions may apply. Check with operator.	
--->
+Excluded services: Services operated on behalf of Transport for London, City Sightseeing Brighton, Winchester Park and Ride, Guildford Park and Ride, Arriva route 802. Also occasional and special services including Ardingly showground specials, Goodwood Racecourse  and Motor Racing specials, nightclub services and football services. Other exclusions may apply. Check with operator.</Description>
+							<ChargingMomentRef version="fxc:v1.0" ref="fxc:prepayment"/>
+							<ChargingMomentType>beforeTravel</ChargingMomentType>
+							<TypeOfFareProductRef version="fxc:v1.0" ref="fxc:standard_product@pass@period"/>
+							<OperatorRef version="1.0" ref="dsc:DSC"/>
+							<ConditionSummary>
+								<FareStructureType>zonalFare</FareStructureType>
+								<TariffBasis>zone</TariffBasis>
+								<IsPersonal>true</IsPersonal>
+								<IsRefundable>true</IsRefundable>
+								<HasDiscountedFares>true</HasDiscountedFares>
+							</ConditionSummary>
 							<!--==== VALIDABLE ELEMENTs ==== -->
 							<validableElements>
 								<ValidableElement version="1.0" id="dsc:Pass@Discovery@travel">
@@ -4329,6 +4390,7 @@ Cuckmere Community Bus, Emsworth & District, Farleigh Coaches, Go-Coach, Metrobu
 									<ValidableElementRef version="1.0" ref="dsc:Pass@Discovery@travel"/>
 								</AccessRightInProduct>
 							</accessRightsInProduct>
+							<ProductType>dayPass</ProductType>
 						</PreassignedFareProduct>
 					</fareProducts>
 					<!-- === SALES OFFER PACKAGES === -->
@@ -4632,7 +4694,7 @@ The £13 minimum fare restriction does not apply to PLUSBUS day ticket purchases.
  ** Saturday, Sunday, Bank Holidays any time.
 You must buy 2 tickets at the same time.					</Description>
 									<Url>http://www.plusbus.info/sites/default/files/Railcard%20discount%20restrictions%20for%20PLUSBUS.pdf</Url>
-									<FareDemandType>medium</FareDemandType>
+									<FareDemandType>middle</FareDemandType>
 								</FareDemandFactor>
 								<FareDemandFactor id="jsp:JSP@Tariff@PlusBus@Demand@off_peak@varies_by_region" version="01">
 									<!-- These conditions are ORed together -->
@@ -4658,7 +4720,7 @@ You must buy 2 tickets at the same time.					</Description>
  ** in the South East after the Monday to Friday morning peak period* (excluding Bank Holidays) for a journey wholly within the South East region.
  * times of off-peak services vary by route, but generally related to the availability of Off-Peak tickets.</Description>
 									<Url>http://www.plusbus.info/sites/default/files/Railcard%20discount%20restrictions%20for%20PLUSBUS.pdf</Url>
-									<FareDemandType>medium</FareDemandType>
+									<FareDemandType>middle</FareDemandType>
 								</FareDemandFactor>
 							</qualityStructureFactors>
 							<!-- ==FARE STRUCTURE ELEMENTS -->
@@ -4748,20 +4810,26 @@ You must buy 2 tickets at the same time.					</Description>
 											<EntitlementRequired id="jsp:Tariff@PlusBus@Day@prequisites@single_trip" version="01">
 												<Name>Must have a rail ticket pass</Name>
 												<FareProductRef ref="atc:ATOC@Products@Trip@single" versionRef="01">EXTERNAL -  have to have a rail  ticket for same day  to buy</FareProductRef>
-												<PeriodConstraint>sameDay</PeriodConstraint>
-												<TariffZoneConstraint>sameAsOriginOrDestination</TariffZoneConstraint>
+												<EntitlementConstraint>
+													<PeriodConstraint>sameDay</PeriodConstraint>
+													<TariffZoneConstraint>sameAsOriginOrDestination</TariffZoneConstraint>
+												</EntitlementConstraint>
 											</EntitlementRequired>
 											<EntitlementRequired id="jsp:Tariff@Trip@return" version="01">
 												<Name>Must have a rail ticket pass</Name>
 												<FareProductRef ref="atc:ATOC@Products@Trip@Return" versionRef="01">EXTERNAL -  have to have areturn for same day  to buy</FareProductRef>
-												<PeriodConstraint>sameDay</PeriodConstraint>
-												<TariffZoneConstraint>sameAsOriginOrDestination</TariffZoneConstraint>
+												<EntitlementConstraint>
+													<PeriodConstraint>sameDay</PeriodConstraint>
+													<TariffZoneConstraint>sameAsOriginOrDestination</TariffZoneConstraint>
+												</EntitlementConstraint>
 											</EntitlementRequired>
 											<EntitlementRequired id="jsp:Tariff@PlusBus@Day@prequisites" version="01">
 												<Name>Must have a rail ticket pass</Name>
 												<FareProductRef ref="atc:ATOC@Products@Pass@Day" versionRef="01">EXTERNAL -  have to have a rail  ticket for same day  to buy</FareProductRef>
-												<PeriodConstraint>sameDayOfReturn</PeriodConstraint>
-												<TariffZoneConstraint>sameAsOriginOrDestination</TariffZoneConstraint>
+												<EntitlementConstraint>
+													<PeriodConstraint>sameDayOfReturn</PeriodConstraint>
+													<TariffZoneConstraint>sameAsOriginOrDestination</TariffZoneConstraint>
+												</EntitlementConstraint>
 											</EntitlementRequired>
 										</limitations>
 									</GenericParameterAssignment>
@@ -4827,8 +4895,10 @@ You must buy 2 tickets at the same time.					</Description>
 											<EntitlementRequired id="jsp:Tariff@PlusBus@Season@prequisites" version="01">
 												<Name>Must have a rail seaon ticket </Name>
 												<FareProductRef ref="atc:ATOC@Products@Pass@Period" versionRef="01">EXTERNAL -  have to have a rail  season ticket for same period  to buy</FareProductRef>
-												<PeriodConstraint>withinSamePeriod</PeriodConstraint>
-												<TariffZoneConstraint>sameAsOriginOrDestination</TariffZoneConstraint>
+												<EntitlementConstraint>
+													<PeriodConstraint>withinSamePeriod</PeriodConstraint>
+													<TariffZoneConstraint>sameAsOriginOrDestination</TariffZoneConstraint>
+												</EntitlementConstraint>
 											</EntitlementRequired>
 											<!-- NB THis applies to prerequisite -->
 										</limitations>
@@ -4841,6 +4911,17 @@ You must buy 2 tickets at the same time.					</Description>
 					<fareProducts>
 						<SupplementProduct version="1.0" id="jsp:Pass@PlusBus@Day">
 							<Name>PlusBus Supplement - day pass</Name>
+							<ChargingMomentRef version="fxc:v1.0" ref="fxc:prepayment"/>
+							<ChargingMomentType>beforeTravel</ChargingMomentType>
+							<TypeOfFareProductRef version="fxc:v1.0" ref="fxc:standard_product@pass@day"/>
+							<OperatorRef version="1.0" ref="jsp:JSP"/>
+							<ConditionSummary>
+								<FareStructureType>zonalFare</FareStructureType>
+								<TariffBasis>zone</TariffBasis>
+								<IsPersonal>true</IsPersonal>
+								<IsRefundable>true</IsRefundable>
+								<HasDiscountedFares>true</HasDiscountedFares>
+							</ConditionSummary>
 							<!--==== VALIDABLE ELEMENTs ==== -->
 							<validableElements>
 								<ValidableElement version="1.0" id="jsp:Pass@PlusBus@Day@travel">
@@ -4879,6 +4960,8 @@ You must buy 2 tickets at the same time.					</Description>
 									<ValidableElementRef version="1.0" ref="jsp:Pass@PlusBus@Day@travel"/>
 								</AccessRightInProduct>
 							</accessRightsInProduct>
+							<ProductType>supplement</ProductType>
+							<SupplementProductType>journeyExtension</SupplementProductType>
 							<supplementTo>
 								<PreassignedFareProductRef versionRef="EXTERNAL" ref="atc:Rail@Single_trip"/>
 								<PreassignedFareProductRef versionRef="EXTERNAL" ref="atc:Rail@Return_trip"/>
@@ -4887,7 +4970,18 @@ You must buy 2 tickets at the same time.					</Description>
 							</supplementTo>
 						</SupplementProduct>
 						<SupplementProduct version="1.0" id="jsp:Pass@PlusBus@Season">
-							<Name>PlusBus Suplement</Name>
+							<Name>PlusBus Supplement for season pass</Name>
+							<ChargingMomentRef version="fxc:v1.0" ref="fxc:prepayment"/>
+							<ChargingMomentType>beforeTravel</ChargingMomentType>
+							<TypeOfFareProductRef version="fxc:v1.0" ref="fxc:standard_product@pass@period"/>
+							<OperatorRef version="1.0" ref="jsp:JSP"/>
+							<ConditionSummary>
+								<FareStructureType>zonalFare</FareStructureType>
+								<TariffBasis>zone</TariffBasis>
+								<IsPersonal>true</IsPersonal>
+								<IsRefundable>true</IsRefundable>
+								<HasDiscountedFares>false</HasDiscountedFares>
+							</ConditionSummary>
 							<!--==== VALIDABLE ELEMENTs ==== -->
 							<validableElements>
 								<ValidableElement version="1.0" id="jsp:Pass@PlusBus@Season@travel">
@@ -5884,6 +5978,17 @@ Metrobus (including Fastway services), Southdown PSV, Compass Travel
 						<PreassignedFareProduct version="1.0" id="ncs:Pass@Concessionary">
 							<!-- Concessionary passes are valid throughout from 0930-2300 Mon-Fri, and anytime at weekends and public holidays. -->
 							<Name>Concessionary pass</Name>
+							<ChargingMomentRef version="fxc:v1.0" ref="fxc:prepayment"/>
+							<ChargingMomentType>beforeTravel</ChargingMomentType>
+							<TypeOfFareProductRef version="fxc:v1.0" ref="fxc:standard_product@pass@period"/>
+							<OperatorRef version="1.0" ref="jsp:JSP"/>
+							<ConditionSummary>
+								<FareStructureType>zonalFare</FareStructureType>
+								<TariffBasis>zone</TariffBasis>
+								<IsPersonal>true</IsPersonal>
+								<IsRefundable>true</IsRefundable>
+								<HasDiscountedFares>false</HasDiscountedFares>
+							</ConditionSummary>
 							<!--==== VALIDABLE ELEMENTs ==== -->
 							<validableElements>
 								<ValidableElement version="1.0" id="ncs:Pass@Concessionary@travel">
@@ -5918,6 +6023,7 @@ Metrobus (including Fastway services), Southdown PSV, Compass Travel
 									<ValidableElementRef version="1.0" ref="ncs:Pass@Concessionary@travel"/>
 								</AccessRightInProduct>
 							</accessRightsInProduct>
+							<ProductType>periodPass</ProductType>
 						</PreassignedFareProduct>
 						<SaleDiscountRight version="1.0" id="ncs:Discount@student_fare_card">
 							<Name>Bus student fare card</Name>
@@ -5934,14 +6040,12 @@ It is valid from the date of issue until 31 August 2019 (for applications made a
 It is valid for home to school/college journeys that start and/or end within Surrey, only.
 If you also need to travel by train to complete your journey you can also apply for our train student fare card.
 
-How you can qualify
-Live in one of the 11 boroughs/districts making up Surrey
-attend a full-time education course,
-be aged between 16 and 18 (under 19 on 1 September in the year of application), and
-students can apply 28 days in advance of their 16th birthday and
-your journey must start and/finish in the 11 boroughs/districts making up Surrey.
-Eligible bus journeys
-A student fare card can only be used for travel to and from school or college and your journey must start or finish in the 11 boroughs/districts of Surrey.
+How you can qualify:
+	Live in one of the 11 boroughs/districts making up Surrey
+	attend a full-time education course,
+	be aged between 16 and 18 (under 19 on 1 September in the year of application), and students can apply 28 days in advance of their 16th birthday and your journey must start and/finish in the 11 boroughs/districts making up Surrey.
+	
+Eligible bus journeys: A student fare card can only be used for travel to and from school or college and your journey must start or finish in the 11 boroughs/districts of Surrey.
 
 If you also need to travel by train to complete your journey you can also apply for our train student fare card.
 , arge the under-16 rate for any journey which starts or finishes in the 11 boroughs/districts of Surrey, including evenings, weekends, and school/college holidays.
@@ -5959,8 +6063,8 @@ Students who use the routes below to travel to school or college can take advant
  
 
 E-mail: student.farecards@surreycc.gov.uk
- 
 .</Description>
+							<ProductType>travelCard</ProductType>
 						</SaleDiscountRight>
 					</fareProducts>
 					<typesOfTravelDocuments>

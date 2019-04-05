@@ -2,6 +2,7 @@
 <!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
 <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_usageParameterEntitlement_version">
 	<xsd:include schemaLocation="netex_usageParameterEntitlement_support.xsd"/>
+	<xsd:include schemaLocation="netex_usageParameterEligibility_support.xsd"/>
 	<xsd:include schemaLocation="netex_usageParameter_version.xsd"/>
 	<!-- ======================================================================= -->
 	<xsd:annotation>
@@ -20,7 +21,10 @@
 					<Modified>2011-02-05</Modified>Name Space changes 
 				</Date>
 				<Date>
-					<Modified>2019-03-12</Modified>UK-45 	Add support for constrints on dependent products 		
+					<Modified>2019-03-12</Modified>UK-45 	Add support for constraints on dependent products 		
+				 </Date>
+				<Date>
+					<Modified>2019-04-04</Modified>UK-45 	Add support for constraints on dependent products: revise Uer constraint
 				 </Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -66,7 +70,7 @@ Rail transport, Roads and Road transport
 	<!-- ====ENTITLEMENT GIVEN================================================= -->
 	<xsd:element name="EntitlementGiven" abstract="false" substitutionGroup="UsageParameter_">
 		<xsd:annotation>
-			<xsd:documentation>A right to a SERVICE ACCESS RIGHT igiven by a FARE  PRODUCT.</xsd:documentation>
+			<xsd:documentation>A right to a SERVICE ACCESS RIGHT is given by a FARE  PRODUCT.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -190,7 +194,7 @@ Rail transport, Roads and Road transport
 	</xsd:group>
 	<xsd:complexType name="EntitlementConstraintStructure">
 		<xsd:annotation>
-			<xsd:documentation>Entitlement constraints related product or offer..</xsd:documentation>
+			<xsd:documentation>Entitlement constraints related product or offe.  +v1.1.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:group ref="TimeRelativeConstraintGroup">
@@ -206,6 +210,11 @@ Rail transport, Roads and Road transport
 				</xsd:annotation>
 			</xsd:group>
 			<xsd:group ref="ServiceRelativeConstraintGroup"/>
+			<xsd:group ref="EligibilityRelativeConstraintGroup">
+				<xsd:annotation>
+					<xsd:documentation>Eligibility constraints on related product or offer..</xsd:documentation>
+				</xsd:annotation>
+			</xsd:group>
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:group name="TimeRelativeConstraintGroup">
@@ -250,7 +259,7 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Constraints on DIRECTION.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="OperatorConstraint" type="SameOperatorEnumeration" minOccurs="0">
+			<xsd:element name="OperatorConstraint" type="SameOperatorEnumeration" default="participating" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Constraints on OPERATOR.</xsd:documentation>
 				</xsd:annotation>
@@ -262,19 +271,14 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Service constraints on related product or offer..</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="TypeOfProductCategoryConstraint" type="SameTypeOfProductCategoryEnumeration" minOccurs="0">
+			<xsd:element name="TypeOfProductCategoryConstraint" type="SameTypeOfProductCategoryEnumeration" default="sameOrEquivalent" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Constraints on  TYPE OF PRODUCT CATEGORY</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="ClassOfUseConstraint" type="SameClassOfUseEnumeration" minOccurs="0">
+			<xsd:element name="ClassOfUseConstraint" type="SameClassOfUseEnumeration" default="sameOrEquivalent" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Constraints on CLASS OF USE.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="UserProfileConstraint" type="SameUserProfileEnumeration" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Constraints on  USER PROFILE.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="TypeOfTravelDocumentConstraint" type="SameTypeOfTravelDocumentEnumeration" minOccurs="0">
@@ -282,9 +286,26 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Constraints on  TYPE OF TRAVEL DOCUMENT</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="JourneyConstraint" type="SameJourneyEnumeration" minOccurs="0">
+			<xsd:element name="JourneyConstraint" type="SameJourneyEnumeration" default="same" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Constraints on   SERVICE JOURNEYs used</xsd:documentation>
+					<xsd:documentation>Constraints on   SERVICE JOURNEYs  to be used.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="EligibilityRelativeConstraintGroup">
+		<xsd:annotation>
+			<xsd:documentation>Service constraints on related product or offer..</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="UserConstraint" type="SameUserEnumeration" default="samePerson" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Constraints on  USER. Default is samePerson. </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="specificToProfiles" type="userProfileRefs_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>USER PROFILEs to which entitlement applies</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>

@@ -1191,23 +1191,31 @@ Tickets will be issued for the distance traveled by a single train and the conti
 										<limitations>
 											<EntitlementGiven id="tfc:TFC@Tariff@Trip@entitles@Seat_Reservation" version="01">
 												<SupplementProductRef ref="tfc:TFC@Trip_Supplement@Seat_Reservation" version="01"/>
+												<EntitlementConstraint>
+													<JourneyConstraint>same</JourneyConstraint>
+												</EntitlementConstraint>
 												<EntitlementType>purchase</EntitlementType>
-												<JourneyConstraint>same</JourneyConstraint>
 											</EntitlementGiven>
 											<EntitlementGiven id="tfc:TFC@Tariff@Trip@entitles@Bicycle" version="01">
 												<SupplementProductRef ref="tfc:TFC@Trip_Supplement@Bicycle" version="01"/>
+												<EntitlementConstraint>
+													<JourneyConstraint>same</JourneyConstraint>
+												</EntitlementConstraint>
 												<EntitlementType>purchase</EntitlementType>
-												<JourneyConstraint>same</JourneyConstraint>
 											</EntitlementGiven>
 											<EntitlementGiven id="tfc:TFC@Tariff@Trip@entitles@Baggage" version="01">
 												<SupplementProductRef ref="tfc:TFC@Trip_Supplement@Baggage" version="01"/>
+												<EntitlementConstraint>
+													<JourneyConstraint>same</JourneyConstraint>
+												</EntitlementConstraint>
 												<EntitlementType>purchase</EntitlementType>
-												<JourneyConstraint>same</JourneyConstraint>
 											</EntitlementGiven>
 											<EntitlementGiven id="tfc:TFC@Tariff@Trip@entitles@Dog" version="01">
 												<SupplementProductRef ref="tfc:TFC@Trip_Supplement@Dog" version="01"/>
+												<EntitlementConstraint>
+													<JourneyConstraint>same</JourneyConstraint>
+												</EntitlementConstraint>
 												<EntitlementType>purchase</EntitlementType>
-												<JourneyConstraint>same</JourneyConstraint>
 											</EntitlementGiven>
 										</limitations>
 									</GenericParameterAssignment>
@@ -1351,13 +1359,16 @@ Tickets will be issued for the distance traveled by a single train and the conti
 					<fareProducts>
 						<PreassignedFareProduct id="tfc:TFC@Trip_single" version="01">
 							<Name>Standard Single Fare</Name>
-							<ChargingMomentRef ref="eura:prepaid" version="any"/>
+							<ChargingMomentRef version="any" ref="eura:prepaid"/>
+							<ChargingMomentType>beforeTravel</ChargingMomentType>
 							<typesOfFareProduct>
 								<TypeOfFareProductRef version="any" ref="eura:standard_product@all_tocs"/>
 								<TypeOfFareProductRef version="any" ref="eura:product_type@single_trip"/>
 							</typesOfFareProduct>
+							<OperatorRef ref="uic:3181" version="any">TFC</OperatorRef>
 							<ConditionSummary>
 								<FareStructureType>pointToPointDistanceFare</FareStructureType>
+								<TariffBasis>distance</TariffBasis>
 								<HasOperatorRestrictions>specifiedOperatorOnly</HasOperatorRestrictions>
 								<HasTravelTimeRestrictions>false</HasTravelTimeRestrictions>
 								<HasRouteRestrictions>false</HasRouteRestrictions>
@@ -1381,17 +1392,20 @@ Tickets will be issued for the distance traveled by a single train and the conti
 									<ValidableElementRef ref="tfc:TFC@Trip_single@leg" version="01"/>
 								</AccessRightInProduct>
 							</accessRightsInProduct>
-							<PreassignedFareProductType>singleTrip</PreassignedFareProductType>
+							<ProductType>singleTrip</ProductType>
 						</PreassignedFareProduct>
 						<PreassignedFareProduct id="tfc:TFC@Trip_period_return" version="01">
 							<Name>Standard Return Fare</Name>
-							<ChargingMomentRef ref="eura:prepaid" version="any"/>
+							<ChargingMomentRef version="any" ref="eura:prepaid"/>
+							<ChargingMomentType>beforeTravel</ChargingMomentType>
 							<typesOfFareProduct>
 								<TypeOfFareProductRef version="any" ref="eura:standard_product@all_tocs"/>
 								<TypeOfFareProductRef version="any" ref="eura:product_type@return_trip"/>
 							</typesOfFareProduct>
+							<OperatorRef ref="uic:3181" version="any">TFC</OperatorRef>
 							<ConditionSummary>
 								<FareStructureType>pointToPointDistanceFare</FareStructureType>
+								<TariffBasis>distance</TariffBasis>
 								<HasOperatorRestrictions>specifiedOperatorOnly</HasOperatorRestrictions>
 								<HasTravelTimeRestrictions>false</HasTravelTimeRestrictions>
 								<HasRouteRestrictions>false</HasRouteRestrictions>
@@ -1423,7 +1437,7 @@ Tickets will be issued for the distance traveled by a single train and the conti
 									<ValidableElementRef ref="tfc:TFC@Trip_period_return@travel@back" version="01"/>
 								</AccessRightInProduct>
 							</accessRightsInProduct>
-							<PreassignedFareProductType>periodReturnTrip</PreassignedFareProductType>
+							<ProductType>periodReturnTrip</ProductType>
 						</PreassignedFareProduct>
 					</fareProducts>
 					<!-- ====SALES OFFER PACKAGE ========     -->
@@ -1608,16 +1622,20 @@ Tickets will be issued for the distance traveled by a single train and the conti
 											<EntitlementRequired id="tfc:TFC@Tariff@Trip@supplements@prerequisites@single" version="any">
 												<Name>Requires  Trip ticket</Name>
 												<PreassignedFareProductRef ref="tfc:TFC@Trip_single" version="01"/>
-												<JourneyConstraint>same</JourneyConstraint>
-												<OriginConstraint>sameAsOrigin</OriginConstraint>
-												<DestinationConstraint>sameAsDestination</DestinationConstraint>
+												<EntitlementConstraint>
+													<OriginConstraint>sameAsOrigin</OriginConstraint>
+													<DestinationConstraint>sameAsDestination</DestinationConstraint>
+													<JourneyConstraint>same</JourneyConstraint>
+												</EntitlementConstraint>
 											</EntitlementRequired>
 											<EntitlementRequired id="tfc:TFC@Tariff@Trip@supplements@prerequisites@return" version="any">
 												<Name>Requires  Trip ticket</Name>
 												<PreassignedFareProductRef ref="tfc:TFC@Trip_period_return" version="01"/>
-												<JourneyConstraint>same</JourneyConstraint>
-												<OriginConstraint>sameAsOrigin</OriginConstraint>
-												<DestinationConstraint>sameAsDestination</DestinationConstraint>
+												<EntitlementConstraint>
+													<OriginConstraint>sameAsDestination</OriginConstraint>
+													<DestinationConstraint>sameAsOrigin</DestinationConstraint>
+													<JourneyConstraint>same</JourneyConstraint>
+												</EntitlementConstraint>
 											</EntitlementRequired>
 										</limitations>
 									</GenericParameterAssignment>
@@ -1708,13 +1726,17 @@ Tickets will be issued for the distance traveled by a single train and the conti
 						<SupplementProduct id="tfc:TFC@Trip_Supplement@Seat_Reservation" version="01">
 							<Name lang="ro">Tichet de Rezervare</Name>
 							<Description>Seat reservation Clasa 1 and Casa 2</Description>
-							<ChargingMomentRef ref="eura:prepaid" version="any"/>
+							<ChargingMomentRef version="any" ref="eura:prepaid"/>
+							<ChargingMomentType>beforeTravel</ChargingMomentType>
 							<typesOfFareProduct>
 								<TypeOfFareProductRef version="any" ref="eura:standard_product@all_tocs"/>
 								<TypeOfFareProductRef version="any" ref="eura:product_type@trip_supplement"/>
 							</typesOfFareProduct>
+							<OperatorRef ref="uic:3181" version="any">TFC</OperatorRef>
 							<ConditionSummary>
-								<IsSupplement/>
+								<FareStructureType>networkFlatFare</FareStructureType>
+								<TariffBasis>flat</TariffBasis>
+								<IsSupplement>true</IsSupplement>
 								<RequiresReservation>true</RequiresReservation>
 								<HasReservationFee>true</HasReservationFee>
 							</ConditionSummary>
@@ -1836,16 +1858,21 @@ Dear travelers, we inform you that no reservations are made at this time. Thank 
 									<SupplementProductRef ref="tfc:TFC@Trip_Supplement@Seat_Reservation" version="01"/>
 								</FareProductPrice>
 							</prices>
+							<ProductType>supplement</ProductType>
 							<SupplementProductType>seatReservation</SupplementProductType>
 						</SupplementProduct>
 						<SupplementProduct id="tfc:TFC@Trip_Supplement@Bicycle" version="01">
 							<Name lang="ro">Tarif transport biciclete</Name>
 							<Description>Bicycle ticket</Description>
 							<InfoUrl>https://www.transferoviarcalatori.ro/tarife/tarife-tfc.html</InfoUrl>
-							<ChargingMomentRef ref="eura:prepaid" version="any"/>
+							<ChargingMomentRef version="any" ref="eura:prepaid"/>
+							<ChargingMomentType>beforeTravel</ChargingMomentType>
 							<TypeOfFareProductRef version="any" ref="eura:standard_product@all_tocs"/>
+							<OperatorRef ref="uic:3181" version="any">TFC</OperatorRef>
 							<ConditionSummary>
-								<IsSupplement/>
+								<FareStructureType>networkFlatFare</FareStructureType>
+								<TariffBasis>flat</TariffBasis>
+								<IsSupplement>true</IsSupplement>
 							</ConditionSummary>
 							<!--  === VALIDABLE ELEMENTs===  -->
 							<validableElements>
@@ -1870,16 +1897,21 @@ Dear travelers, we inform you that no reservations are made at this time. Thank 
 									<FareProductRef ref="tfc:TFC@Trip_Supplement@Bicycle" version="01"/>
 								</FareProductPrice>
 							</prices>
+							<ProductType>supplement</ProductType>
 							<SupplementProductType>bicycle</SupplementProductType>
 						</SupplementProduct>
 						<SupplementProduct id="tfc:TFC@Trip_Supplement@Baggage" version="01">
 							<Name lang="ro">tarif pentru transportul bagajelor insotite sau neinsotite</Name>
 							<Description>baggage ticket</Description>
 							<InfoUrl>https://www.transferoviarcalatori.ro/tarife/bagaje.html</InfoUrl>
-							<ChargingMomentRef ref="eura:prepaid" version="any"/>
+							<ChargingMomentRef version="any" ref="eura:prepaid"/>
+							<ChargingMomentType>beforeTravel</ChargingMomentType>
 							<TypeOfFareProductRef version="any" ref="eura:standard_product@all_tocs"/>
+							<OperatorRef ref="uic:3181" version="any">TFC</OperatorRef>
 							<ConditionSummary>
-								<IsSupplement/>
+								<FareStructureType>networkFlatFare</FareStructureType>
+								<TariffBasis>flat</TariffBasis>
+								<IsSupplement>true</IsSupplement>
 							</ConditionSummary>
 							<!--  === VALIDABLE ELEMENTs===  -->
 							<validableElements>
@@ -1904,16 +1936,21 @@ Dear travelers, we inform you that no reservations are made at this time. Thank 
 									<FareProductRef ref="tfc:TFC@Trip_Supplement@Baggage" version="01"/>
 								</FareProductPrice>
 							</prices>
+							<ProductType>supplement</ProductType>
 							<SupplementProductType>extraLuggage</SupplementProductType>
 						</SupplementProduct>
 						<SupplementProduct id="tfc:TFC@Trip_Supplement@Dog" version="01">
 							<Name lang="ro">tariful de transport a unui caine</Name>
 							<Description>Dogs travel half price 2nd class</Description>
 							<InfoUrl>https://www.transferoviarcalatori.ro/tarife/tarife-tfc.html</InfoUrl>
-							<ChargingMomentRef ref="eura:prepaid" version="any"/>
+							<ChargingMomentRef version="any" ref="eura:prepaid"/>
+							<ChargingMomentType>beforeTravel</ChargingMomentType>
 							<TypeOfFareProductRef version="any" ref="eura:standard_product@all_tocs"/>
+							<OperatorRef ref="uic:3181" version="any">TFC</OperatorRef>
 							<ConditionSummary>
-								<IsSupplement/>
+								<FareStructureType>networkFlatFare</FareStructureType>
+								<TariffBasis>flat</TariffBasis>
+								<IsSupplement>true</IsSupplement>
 							</ConditionSummary>
 							<!--  === VALIDABLE ELEMENTs===  -->
 							<validableElements>
@@ -1934,6 +1971,7 @@ Dear travelers, we inform you that no reservations are made at this time. Thank 
 									<FareProductRef ref="tfc:TFC@Trip_Supplement@Dog" version="01"/>
 								</FareProductPrice>
 							</prices>
+							<ProductType>supplement</ProductType>
 							<SupplementProductType>dog</SupplementProductType>
 						</SupplementProduct>
 					</fareProducts>
@@ -5645,10 +5683,13 @@ Dear travelers, we inform you that no reservations are made at this time. Thank 
 					<fareProducts>
 						<PreassignedFareProduct id="tfc:TFC@Season_pass" version="01">
 							<Name lang="ro">Tarif Abonament </Name>
-							<ChargingMomentRef ref="eura:prepaid" version="any"/>
+							<ChargingMomentRef version="any" ref="eura:prepaid"/>
+							<ChargingMomentType>beforeTravel</ChargingMomentType>
 							<TypeOfFareProductRef version="any" ref="eura:standard_product@all_tocs"/>
+							<OperatorRef ref="uic:3181" version="any">TFC</OperatorRef>
 							<ConditionSummary>
 								<FareStructureType>pointToPointDistanceFare</FareStructureType>
+								<TariffBasis>distance</TariffBasis>
 								<ProvidesCard>true</ProvidesCard>
 								<HasTravelTimeRestrictions>false</HasTravelTimeRestrictions>
 								<HasRouteRestrictions>false</HasRouteRestrictions>
@@ -5665,6 +5706,7 @@ Dear travelers, we inform you that no reservations are made at this time. Thank 
 									<ValidableElementRef ref="tfc:TFC@Season_pass@repeated_trip@train_p2p" version="01"/>
 								</AccessRightInProduct>
 							</accessRightsInProduct>
+							<ProductType>periodPass</ProductType>
 						</PreassignedFareProduct>
 					</fareProducts>
 					<salesOfferPackages>
@@ -6778,8 +6820,12 @@ State Secretariat for Revolutionary Issues in December 1989: : 12 free round tri
 	* a single attendant - only circulated in the presence of the holder,   
 	* family members - can circulate without a holder</Description>
 							<ChargingMomentRef ref="eura:prepaid@free" version="any"/>
+							<ChargingMomentType>free</ChargingMomentType>
 							<TypeOfFareProductRef version="any" ref="eura:standard_product@all_tocs"/>
+							<OperatorRef ref="uic:3181" version="any">TFC</OperatorRef>
 							<ConditionSummary>
+								<FareStructureType>other</FareStructureType>
+								<TariffBasis>discount</TariffBasis>
 								<ProvidesCard>false</ProvidesCard>
 								<IsPersonal>true</IsPersonal>
 								<HasTravelTimeRestrictions>false</HasTravelTimeRestrictions>
@@ -6800,6 +6846,7 @@ State Secretariat for Revolutionary Issues in December 1989: : 12 free round tri
 									<ValidableElementRef ref="tfc:TFC@Products@Discount@Statutory_Right+Travel@consume" version="01"/>
 								</AccessRightInProduct>
 							</accessRightsInProduct>
+							<ProductType>statutoryRight</ProductType>
 						</SaleDiscountRight>
 					</fareProducts>
 					<salesOfferPackages>
