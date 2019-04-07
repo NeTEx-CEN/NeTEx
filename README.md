@@ -39,6 +39,9 @@ There is also an Oxygen project file:
 ----
 # Change Log 
 
+Fix 2019.04.07 *Part1-IFOPT* NJSK Add back missing attribute to ___SanitaryEquipment  / NumberofToilets___. 
+   * _Updates to xml examples_: 
+   	* netex_passengerEquipment_version .xml
 
 ### 2019.04.07 FIX  *FARES* Tidy up - remodularise move TravelSpecifccation to be with CustomerPurchasePackage
 revise clasifcation types.
