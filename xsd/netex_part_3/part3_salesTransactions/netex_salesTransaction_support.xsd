@@ -2,7 +2,6 @@
 <!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
 <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_salesTransaction_support">
 	<xsd:include schemaLocation="netex_salesContract_support.xsd"/>
-	<xsd:include schemaLocation="../part3_fares/netex_accessRightParameter_support.xsd"/>
 	<!-- =============================================================== -->
 	<xsd:annotation>
 		<xsd:appinfo>
@@ -29,10 +28,12 @@
 					  Rename Type of Passenger Contract  to TypeOfFareContract. 	
 					  Adjust References in Dependent packages.				   
 				</Date>
-			<Date>
+				<Date>
 					<Modified>2019-10-15</Modified>Add list of refs to enable CustomerPurchasePackage improvements
-				</Date>				
-				
+				</Date>
+				<Date>
+					<Modified>2019-04-06</Modified>Align with TM6 Add new elements RequestedTravelSpecification and OfferedTravelSpecifcation 
+				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the SALES TRANSACTION types.</p>
@@ -107,65 +108,6 @@ Rail transport, Roads and Road transport
 				<xsd:attribute name="ref" type="SalesTransactionIdType" use="required">
 					<xsd:annotation>
 						<xsd:documentation>Identifier of a SALES TRANSACTION.</xsd:documentation>
-					</xsd:annotation>
-				</xsd:attribute>
-			</xsd:restriction>
-		</xsd:simpleContent>
-	</xsd:complexType>
-	<!-- ====TRAVEL SPECIFICATION.======================================================== -->
-	<xsd:complexType name="travelSpecificationRefs_RelStructure">
-		<xsd:annotation>
-			<xsd:documentation>Type for a collection of one or more references to a TRAVEL SPECIFICATION.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:complexContent>
-			<xsd:extension base="oneToManyRelationshipStructure">
-				<xsd:sequence>
-					<xsd:element ref="TravelSpecificationRef" maxOccurs="unbounded"/>
-				</xsd:sequence>
-			</xsd:extension>
-		</xsd:complexContent>
-	</xsd:complexType>
-	<xsd:simpleType name="TravelSpecificationIdType">
-		<xsd:annotation>
-			<xsd:documentation>Type for identifier of a TRAVEL SPECIFICATION.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="FareContractEntryIdType"/>
-	</xsd:simpleType>
-	<xsd:element name="TravelSpecificationRef" type="TravelSpecificationRefStructure" abstract="false" substitutionGroup="FareContractEntryRef">
-		<xsd:annotation>
-			<xsd:documentation>Reference to a TRAVEL SPECIFICATION.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:complexType name="TravelSpecificationRefStructure">
-		<xsd:annotation>
-			<xsd:documentation>Type for Reference to a TRAVEL SPECIFICATION.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:simpleContent>
-			<xsd:restriction base="FareContractEntryRefStructure">
-				<xsd:attribute name="ref" type="TravelSpecificationIdType" use="required">
-					<xsd:annotation>
-						<xsd:documentation>Identifier of a TRAVEL SPECIFICATION.</xsd:documentation>
-					</xsd:annotation>
-				</xsd:attribute>
-			</xsd:restriction>
-		</xsd:simpleContent>
-	</xsd:complexType>
-	<!-- === SPECIFIC PARAMETER====================================================== -->
-	<xsd:simpleType name="SpecificParameterAssignmentIdType">
-		<xsd:annotation>
-			<xsd:documentation>Type for identifier of a SPECIFIC PARAMETER.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="ValidityParameterAssignmentIdType"/>
-	</xsd:simpleType>
-	<xsd:complexType name="SpecificParameterAssignmentRefStructure">
-		<xsd:annotation>
-			<xsd:documentation>Type for Reference to a SPECIFIC PARAMETER.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:simpleContent>
-			<xsd:restriction base="ValidityParameterAssignmentRefStructure">
-				<xsd:attribute name="ref" type="SpecificParameterAssignmentIdType" use="required">
-					<xsd:annotation>
-						<xsd:documentation>Identifier of a SPECIFIC PARAMETER.</xsd:documentation>
 					</xsd:annotation>
 				</xsd:attribute>
 			</xsd:restriction>

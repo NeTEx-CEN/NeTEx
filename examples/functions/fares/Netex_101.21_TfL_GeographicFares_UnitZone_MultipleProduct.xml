@@ -3255,14 +3255,14 @@ Discounted travel for one adult travelling with the RailCard holder for the whol
 						<EntitlementGiven version="any" id="nr:RailCard">
 							<Name>GIVING ENTITLEMENT Gold card because has rail card</Name>
 							<SaleDiscountRightRef version="any" ref="nr:RailCard"/>
-							<EntitlementType>use</EntitlementType>
 							<MinimumQualificationPeriod>P1Y</MinimumQualificationPeriod>
+							<EntitlementType>use</EntitlementType>
 						</EntitlementGiven>
 						<EntitlementGiven version="any" id="tfl:AnnualPassGoldCard">
 							<Name>GIVING ENTITLEMENT Gold card because has annual passs</Name>
 							<SaleDiscountRightRef version="any" ref="tfl:GoldCard"/>
-							<EntitlementType>use</EntitlementType>
 							<MinimumQualificationPeriod>P1Y</MinimumQualificationPeriod>
+							<EntitlementType>use</EntitlementType>
 						</EntitlementGiven>
 						<!-- Entitlement from -->
 						<EntitlementRequired version="any" id="tfl:Oyster_PayAsYouGo_Right_holder">
@@ -3275,7 +3275,7 @@ Discounted travel for one adult travelling with the RailCard holder for the whol
 						</EntitlementRequired>
 						<EntitlementRequired version="any" id="tfl:Contactless_cardHolder">
 							<Name>Entitlement from having a Contactless card</Name>
-							<SaleDiscountRightRef version="any" ref="tfl:Contactless_card"/>
+							<SaleDiscountRightRef version="any" ref="tfl:PAYG_with contactless_card"/>
 						</EntitlementRequired>
 						<EntitlementRequired version="any" id="tfl:GoldCardHolder">
 							<Name>Entitlement from having a GoldCard</Name>
@@ -3493,19 +3493,21 @@ You need to activate within eight days</Description>
 					<!--- ====Fare Products======= -->
 					<!--- ==== Distribution CHannels ===== -->
 					<fareProducts>
-						<!---
-
-Goildcard  :>TravelCard 
-
-TravelCard_on_Oyster :>PayAsYouGo_trip
-
-Oyster_PayAsYouGo_right :>  PayAsYouGo_trip
-
--->
+					
 						<!--- ====Prepaid (CASH)  RIDE   ==== -->
 						<PreassignedFareProduct version="any" id="tfl:Prepaid_trip">
 							<Name>Cash Ride  Paid for before ride -</Name>
+							<Description>Can be made with
+	Goldcard  - TravelCard 
+TravelCard_on_Oyster  - PayAsYouGo_trip
+Oyster_PayAsYouGo_right -   PayAsYouGo_trip	
+							</Description>
 							<ChargingMomentRef version="any" ref="tfl:prepaid"/>
+							<ChargingMomentType>beforeTravel</ChargingMomentType>
+									<AuthorityRef version="any" ref="tfl:TfL"/>
+						<ConditionSummary>
+						<TariffBasis>zoneToZone</TariffBasis>
+						</ConditionSummary>
 							<validityParameterAssignments>
 								<GenericParameterAssignment version="any" order="1" id="tfl:Prepaid_trip">
 									<Name>Cant Break Metro journeys</Name>
@@ -3594,7 +3596,7 @@ Oyster_PayAsYouGo_right :>  PayAsYouGo_trip
 									<Description>from entry barrier to  exit barrier </Description>
 									<ValidableElementRef ref="nr:rail_trip" version="any"/>
 								</AccessRightInProduct>
-								<AccessRightInProduct order="3" id="tfl:Prepaid_trip@busOrTramTrip" version="any">
+								<AccessRightInProduct order="3" id="tfl:Prepaid_trip@bus_or_tram_trip" version="any">
 									<Name>Bus or tram trip  trip</Name>
 									<Description>from entry at door to exit from vehicle to  exit barrier </Description>
 									<ValidableElementRef version="any" ref="lbsl:bus_or_tram_trip"/>
@@ -3612,11 +3614,18 @@ Oyster_PayAsYouGo_right :>  PayAsYouGo_trip
 									<ValidableElementRef ref="ea:cableway_trip" version="any"/>
 								</AccessRightInProduct>
 							</accessRightsInProduct>
+							<ProductType>singleTrip</ProductType>
 						</PreassignedFareProduct>
 						<!--- ====Pay  as you go  RIDE   ==== -->
 						<PreassignedFareProduct version="any" id="tfl:PayAsYouGo_trip">
 							<Name>Cash Ride  Paid for before ride -</Name>
 							<ChargingMomentRef version="any" ref="tfl:payAsYouGo"/>
+							<ChargingMomentType>onStartThenAdjustAtEndOfChargePeriod</ChargingMomentType>
+									<AuthorityRef version="any" ref="tfl:TfL"/>
+									
+							<ConditionSummary>
+						<TariffBasis>pointToPoint</TariffBasis>
+						</ConditionSummary>
 							<validityParameterAssignments>
 								<GenericParameterAssignment version="any" order="1" id="tfl:PayAsYouGo_trip@Interchanging">
 									<Name>Can Break Rail  journeys</Name>
@@ -3643,17 +3652,22 @@ Oyster_PayAsYouGo_right :>  PayAsYouGo_trip
 							<accessRightsInProduct>
 								<AccessRightInProductRef order="1" ref="tfl:Prepaid_trip@metro_trip" version="any"/>
 								<AccessRightInProductRef order="2" ref="tfl:Prepaid_trip@railTrip" version="any"/>
-								<AccessRightInProductRef order="3" ref="tfl:Prepaid_trip@busOrTramTrip" version="any"/>
+								<AccessRightInProductRef order="3" ref="tfl:Prepaid_trip@bus_or_tram_trip" version="any"/>
 								<AccessRightInProductRef order="4" ref="tfl:Prepaid_trip@river_trip" version="any"/>
 								<AccessRightInProductRef order="5" ref="tfl:Prepaid_trip@river_hop_on_hop_off" version="any"/>
 								<AccessRightInProductRef order="6" ref="tfl:Prepaid_trip@cableway_trip" version="any"/>
 							</accessRightsInProduct>
+										<ProductType>singleTrip</ProductType>
 						</PreassignedFareProduct>
 						<!--- ====OYSTER TOP UP   ==== -->
-						<AmountOfPriceUnitProduct version="any" id="tfl:Oyster_Top_Up">
+						<SupplementProduct version="any" id="tfl:Oyster_Top_Up">
 							<Name>Cash Top up  Payment before ride -</Name>
 							<ChargingMomentRef version="any" ref="tfl:prepaid"/>
+							<ChargingMomentType>beforeTravel</ChargingMomentType>
+							<AuthorityRef version="any" ref="tfl:TfL"/>
+							
 							<ConditionSummary>
+							<TariffBasis>other</TariffBasis>
 								<ProvidesCard>false</ProvidesCard>
 								<GoesOnCard>true</GoesOnCard>
 								<RequiresEntitlement>true</RequiresEntitlement>
@@ -3674,7 +3688,9 @@ Oyster_PayAsYouGo_right :>  PayAsYouGo_trip
 									<RoundingRef ref="tfl:Top_Up_in_5_Pound_steps" version="any"/>
 								</FareProductPrice>
 							</prices>
-						</AmountOfPriceUnitProduct>
+							<ProductType>supplement</ProductType>
+							<SupplementProductType>topUp</SupplementProductType>
+						</SupplementProduct>
 						<!--- ====OYSTER  AUTO TOP UP   ==== -->
 						<SupplementProduct version="any" id="tfl:Oyster_Auto_Top_Up">
 							<Name>Auto Cash Top up  Payment before ride -</Name>
@@ -3704,7 +3720,9 @@ If you don't have an Oyster card, you can get one online and set up an Oyster on
 							
 							</Description>
 							<ChargingMomentRef version="any" ref="tfl:prepaid"/>
-							<ConditionSummary>
+							<AuthorityRef version="any" ref="tfl:TfL"/>
+							<ConditionSummary> 
+							<TariffBasis>free</TariffBasis>
 								<ProvidesCard>false</ProvidesCard>
 								<GoesOnCard>true</GoesOnCard>
 								<IsPersonal>true</IsPersonal>
@@ -3748,15 +3766,22 @@ If you don't have an Oyster card, you can get one online and set up an Oyster on
 									<RoundingRef ref="tfl:Top_Up_in_20_Pound_steps" version="any"/>
 								</FareProductPrice>
 							</prices>
+								<ProductType>storedValue</ProductType>
+									<SupplementProductType>topUp</SupplementProductType>
 						</SupplementProduct>
 						<!--  ==== TRAVEL CARD ==== -->
 						<PreassignedFareProduct version="any" id="tfl:TravelCard">
 							<Name>Travel card  Not On Oyster</Name>
 							<Description>Travelcards let you travel as often as you like on bus, Tube, tram, DLR, London Overground and National Rail services within the London travel zones. They are valid for either one or 7 days and are issued as paper tickets from the Visitor Shop.</Description>
 							<ChargingMomentRef version="any" ref="tfl:prepaid"/>
-							<ConditionSummary>
+							<ChargingMomentType>beforeTravel</ChargingMomentType>
+							<AuthorityRef version="any" ref="tfl:TfL"/>
+							<ConditionSummary> 
+							<FareStructureType>zonalFare</FareStructureType>
+							<TariffBasis>zone</TariffBasis>
 								<ProvidesCard>true</ProvidesCard>
 								<GivesEntitlement>true</GivesEntitlement>
+									<IsRefundable>true</IsRefundable>
 							</ConditionSummary>
 							<validityParameterAssignments>
 								<GenericParameterAssignment version="any" order="1" id="tfl:TravelCard@EntitlementGiven@TravelCard_Sale_discount">
@@ -3899,6 +3924,7 @@ If you don't have an Oyster card, you can get one online and set up an Oyster on
 									</limitations>
 								</GenericParameterAssignment>
 							</validityParameterAssignments>
+									<ProductType>periodPass</ProductType>
 						</PreassignedFareProduct>
 						<!--  ==== SALES DISCOUNT RIGHT FROM OWNING A TRAVEL CARD ==== -->
 						<SaleDiscountRight version="any" id="tfl:TravelCard_Sale_discount">
@@ -3919,7 +3945,10 @@ If you don't have an Oyster card, you can get one online and set up an Oyster on
 								</FareTable>
 							</fareTables>
 							<ChargingMomentRef version="any" ref="tfl:prepaid"/>
+							<ChargingMomentType>free</ChargingMomentType>
+							<AuthorityRef version="any" ref="tfl:TfL"/>
 							<ConditionSummary>
+							<TariffBasis>discount</TariffBasis>
 								<ProvidesCard>true</ProvidesCard>
 							</ConditionSummary>
 							<validityParameterAssignments>
@@ -3971,6 +4000,7 @@ If you don't have an Oyster card, you can get one online and set up an Oyster on
 									</limitations>
 								</GenericParameterAssignment>
 							</validityParameterAssignments>
+							<ProductType>travelCard</ProductType>
 						</SaleDiscountRight>
 						<!--  ==== TRAVEL CARD ON OYSTER ==== -->
 						<PreassignedFareProduct version="any" id="tfl:TravelCard_on_Oyster">
@@ -3987,7 +4017,11 @@ Day Travelcards for travel in London are not available on Oyster. However, if yo
 
 Oyster cards that have a Travelcard or Bus and Tram pass on it are non transferable. They cannot be used by anyone other than the registered owner. 
 </Description>
+<ChargingMomentType>beforeTravel</ChargingMomentType>
+<AuthorityRef version="any" ref="tfl:TfL"/>							
 							<ConditionSummary>
+							<FareStructureType>zonalFare</FareStructureType>
+							<TariffBasis>zone</TariffBasis>
 								<ProvidesCard>true</ProvidesCard>
 								<HasZoneRestrictions>true</HasZoneRestrictions>
 								<CanBreakJourney>true</CanBreakJourney>
@@ -4161,11 +4195,12 @@ Oyster cards that have a Travelcard or Bus and Tram pass on it are non transfera
 									</limitations>
 								</GenericParameterAssignment>
 							</validityParameterAssignments>
+							<ProductType>periodPass</ProductType>
 						</PreassignedFareProduct>
 						<!-- OYSTER PAY AS YOU GO CARD -->
 						<CappedDiscountRight version="any" id="tfl:Oyster_PayAsYouGo_right">
 							<Name>Oyster Pay as You go discount capped</Name>
-							<Description> right to purchas  e have fare capped at day pass rate </Description>
+							<Description> right to purchase have fare capped at day pass rate </Description>
 							<fareTables>
 								<FareTable version="any" id="tfl:Oyster@concession">
 									<Description>
@@ -4216,8 +4251,13 @@ Gold Card
 								</FareTable>
 							</fareTables>
 							<ChargingMomentRef version="any" ref="tfl:payAsYouGo"/>
+							<ChargingMomentType>onStarThenAdjustAtEndOfFareDay</ChargingMomentType>
+							<AuthorityRef version="any" ref="tfl:TfL"/>
 							<ConditionSummary>
+							<TariffBasis>flat</TariffBasis>
 								<ProvidesCard>true</ProvidesCard>
+								<IsPersonal>false</IsPersonal>
+								<IsRefundable>true</IsRefundable>
 							</ConditionSummary>
 							<validityParameterAssignments>
 								<GenericParameterAssignment version="any" order="1" id="tfl:Oyster_PayAsYouGo_right@entitlementsTo">
@@ -4353,6 +4393,7 @@ If your Oyster only has pay as you go credit at adult rate on it you can let som
 									<Amount>5.00</Amount>
 								</FareProductPrice>
 							</prices>
+							<ProductType>payAsYouGoRight</ProductType>
 							<cappingRules>
 								<CappingRule id="tfl:CappingRule:Oyster@rail" version="any">
 									<Name>Capping rule for Rail  Travel</Name>
@@ -4389,7 +4430,7 @@ If your Oyster only has pay as you go credit at adult rate on it you can let som
 									</validityParameterAssignments>
 								</CappingRule>
 								<CappingRule id="tfl:CappingRule:Oyster@metro" version="any">
-									<Name>Capping rule for Metro Travel</Name>
+									<Name>Capping rule for Metro Travel</Name> 
 									<fareTables>
 										<FareTable id="tfl:Oyster@metro" version="any">
 											<cells>
@@ -4499,6 +4540,7 @@ You can use Oyster pay as you go to pay for journeys on KPMG Thames Clipper rive
 									</validityParameterAssignments>
 								</CappingRule>
 							</cappingRules>
+							
 						</CappedDiscountRight>
 						<!--  GOLD CARD -->
 						<SaleDiscountRight version="any" id="tfl:GoldCard">
@@ -4507,6 +4549,8 @@ You can use Oyster pay as you go to pay for journeys on KPMG Thames Clipper rive
 
 When you buy an annual Travelcard on an Oyster card you are automatically issued with a separate printed Gold Record Card
 When you buy an annual season ticket at a station within the Network RailCard Area and the origin and/or destination are also in the Network RailCard Area, you are automatically issued with a Gold Card</Description>
+ <ChargingMomentType>beforeTravel</ChargingMomentType>
+		<OperatorRef version="any" ref="nr:National_Rail"/>
 							<ConditionSummary>
 								<ProvidesCard>true</ProvidesCard>
 							</ConditionSummary>
@@ -4526,13 +4570,16 @@ When you buy an annual season ticket at a station within the Network RailCard Ar
 									</validityParameters>
 								</GenericParameterAssignment>
 							</validityParameterAssignments>
+							<ProductType>travelCard</ProductType>
 						</SaleDiscountRight>
 						<!-- DISABLED PERSONS RAIL CARD -->
 						<SaleDiscountRight version="any" id="tfl:disabled_personsRailCard">
 							<Name>Disabled Persons Rail card</Name>
-							<Description>   Disabled Persons RailCard,  
-							 http://www.tfl.gov.uk/tickets/14416.aspx</Description>
+							<Url>http://www.tfl.gov.uk/tickets/14416.aspx</Url>  
+							<ChargingMomentType>onStartOfTravel</ChargingMomentType>
+							 		<OperatorRef version="any" ref="nr:National_Rail"/>
 							<ConditionSummary>
+							<TariffBasis>discount</TariffBasis>
 								<ProvidesCard>true</ProvidesCard>
 								<AllowCompanionDiscounts>true</AllowCompanionDiscounts>
 							</ConditionSummary>
@@ -4590,10 +4637,12 @@ Discounted travel for one adult travelling with the RailCard holder for the whol
 									<DiscountingRuleRef version="any" ref="tfl:34%"/>
 								</FareProductPrice>
 							</prices>
+							<ProductType>travelCard</ProductType>
 						</SaleDiscountRight>
 						<!-- FREEDOM PASS (OVer 60s)  -->
 						<SaleDiscountRight version="any" id="tfl:Freedom_pass">
 							<Name>Freedom Pass</Name>
+
 							<Description>    
 							 http://www.tfl.gov.uk/tickets/14305.aspx
 	You can get a Freedom Pass if your only or main home is in a London borough and:
@@ -4631,66 +4680,8 @@ On buses not showing this sign check with the driver - most will let you travel 
 You'll need to show your pass to the driver.
 
 No one else can use your pass. You can't use it on Tube, tram, DLR, London Overground or National Rail services.	
-
-							 
 							 </Description>
-							<fareTables>
-								<FareTable version="any" id="tfl:Freedom_pass@Londoner">
-									<Name>Freedom Pass prices for Londoners</Name>
-									<pricesFor>
-										<QualityStructureFactorRef version="any" ref="tfl:Resident"/>
-										<SaleDiscountRightRef version="any" ref="tfl:Freedom_pass"/>
-									</pricesFor>
-									<cells>
-										<ValidableElementPrice version="any" id="tfl:Freedom_pass@Londoner@bus">
-											<UsageParameterPriceRef version="any" ref="tfl:concession@free"/>
-											<ValidableElementRef version="any" ref="lbsl:bus_or_tram_trip"/>
-										</ValidableElementPrice>
-										<ValidableElementPrice version="any" id="tfl:Freedom_pass@Londoner@metro">
-											<UsageParameterPriceRef version="any" ref="tfl:concession@free"/>
-											<ValidableElementRef version="any" ref="lul:metro_trip"/>
-										</ValidableElementPrice>
-										<ValidableElementPrice version="any" id="tfl:Freedom_pass@Londoner@cableway">
-											<UsageParameterPriceRef version="any" ref="tfl:concession@34pct"/>
-											<ValidableElementRef version="any" ref="ea:cableway_trip"/>
-										</ValidableElementPrice>
-										<ValidableElementPrice version="any" id="tfl:Freedom_pass@Londoner@water">
-											<UsageParameterPriceRef version="any" ref="tfl:concession@34pct"/>
-											<ValidableElementRef version="any" ref="lrs:river_trip"/>
-										</ValidableElementPrice>
-										<ValidableElementPrice version="any" id="tfl:Freedom_pass@Londoner@overground">
-											<UsageParameterPriceRef version="any" ref="tfl:concession@free"/>
-											<ValidableElementRef version="any" ref="nr:suburban_rail_trip"/>
-										</ValidableElementPrice>
-										<ValidableElementPrice version="any" id="tfl:Freedom_pass@Londoner@nationalRail">
-											<UsageParameterPriceRef version="any" ref="tfl:concession@34pct"/>
-											<ValidableElementRef version="any" ref="nr:rail_trip"/>
-										</ValidableElementPrice>
-									</cells>
-								</FareTable>
-								<FareTable version="any" id="tfl:Freedom_pass@NonLondoner">
-									<Name>Freedom Pass prices for Non Londoners</Name>
-									<pricesFor>
-										<QualityStructureFactorRef version="any" ref="tfl:Non_resident"/>
-										<SaleDiscountRightRef version="any" ref="tfl:Freedom_pass"/>
-									</pricesFor>
-									<cells>
-										<ValidableElementPrice version="any" id="tfl:Freedom_pass@NonLondoner@bus">
-											<Name>Bus: Travel free at any time on buses in London showing this symbol</Name>
-											<UsageParameterPriceRef version="any" ref="tfl:concession@free"/>
-											<ValidableElementRef version="any" ref="lbsl:bus_or_tram_trip"/>
-										</ValidableElementPrice>
-										<ValidableElementPrice version="any" id="tfl:Freedom_pass@NonLondoner@cableway">
-											<UsageParameterPriceRef version="any" ref="tfl:concession@34pct"/>
-											<ValidableElementRef version="any" ref="ea:cableway_trip"/>
-										</ValidableElementPrice>
-										<ValidableElementPrice version="any" id="tfl:Freedom_pass@NonLondoner@water">
-											<UsageParameterPriceRef version="any" ref="tfl:concession@34pct"/>
-											<ValidableElementRef version="any" ref="lrs:river_trip"/>
-										</ValidableElementPrice>
-									</cells>
-								</FareTable>
-							</fareTables>
+						 			<AuthorityRef version="any" ref="tfl:TfL"/>
 							<ConditionSummary>
 								<ProvidesCard>true</ProvidesCard>
 								<AllowCompanionDiscounts>true</AllowCompanionDiscounts>
@@ -4920,12 +4911,15 @@ Southeastern high speed services to and from St Pancras International and Stratf
 								</GenericParameterAssignment>
 							</validityParameterAssignments>
 							<!--   ====== DISCOUNTS === -->
+									<ProductType>payAsYouGoRight</ProductType>
+									
 						</SaleDiscountRight>
 						<!-- === GROUP TICKET === -->
 						<PreassignedFareProduct version="any" id="tfl:Group_day_ticket">
 							<Name>Group Day Ticket -</Name>
 							<Description>For groups of 10 or more fare-paying passengers you can get Group Day Tickets. These allow unlimited travel at any time and on any day within the zones paid for.
 You can only get these as paper tickets, not on an Oyster card, and they must be purchased upon arrival in London.</Description>
+
 							<fareTables>
 								<FareTable version="any" id="tfl:Group@peak@adult">
 									<Name>Fare Prices  - Cash</Name>
@@ -4977,6 +4971,8 @@ You can only get these as paper tickets, not on an Oyster card, and they must be
 								</FareTable>
 							</fareTables>
 							<ChargingMomentRef version="any" ref="tfl:prepaid"/>
+							<ChargingMomentType>beforeTravel</ChargingMomentType>
+										<AuthorityRef version="any" ref="tfl:TfL"/>
 							<validityParameterAssignments>
 								<GenericParameterAssignment version="any" order="1" id="tfl:Group@Access">
 									<IncludesGroupingType>AND</IncludesGroupingType>
@@ -5011,6 +5007,7 @@ You can only get these as paper tickets, not on an Oyster card, and they must be
 									</includes>
 								</GenericParameterAssignment>
 							</validityParameterAssignments>
+							<ProductType>dayPass</ProductType>
 						</PreassignedFareProduct>
 						<!-- FAMILY DAY TRAVEL CARD -->
 						<PreassignedFareProduct version="any" id="tfl:FamilyDayTravelCard">
@@ -5020,6 +5017,11 @@ You can only get these as paper tickets, not on an Oyster card, and they must be
 													Network RailCard
 													Family and Friends RailCard
 													HM Forces RailCard</Description>
+													
+														
+																		<ChargingMomentRef version="any" ref="tfl:prepaid"/>
+									<ChargingMomentType>beforeTravel</ChargingMomentType>
+											<AuthorityRef version="any" ref="tfl:TfL"/>
 							<fareTables>
 								<FareTable version="any" id="tfl:FamilyDayTravelCard">
 									<pricesFor>
@@ -5033,7 +5035,7 @@ You can only get these as paper tickets, not on an Oyster card, and they must be
 									</cells>
 								</FareTable>
 							</fareTables>
-							<ChargingMomentRef version="any" ref="tfl:prepaid"/>
+					
 							<validityParameterAssignments>
 								<GenericParameterAssignment version="any" order="1" id="tfl:FamilyDayTravelCard@entitlementsFrom">
 									<Name>Right to a Family day Travel card</Name>
@@ -5107,12 +5109,17 @@ You can only get these as paper tickets, not on an Oyster card, and they must be
 									</limitations>
 								</GenericParameterAssignment>
 							</validityParameterAssignments>
+							<ProductType>dayPass</ProductType>
 						</PreassignedFareProduct>
 						<!--  CONTACTLESS  CARD -->
-						<SaleDiscountRight version="any" id="tfl:Contactless_card">
-							<Name>Payment by NFS credit card</Name>
+						<SaleDiscountRight version="any" id="tfl:PAYG_with contactless_card">
+							<Name>Pay as You Go wiith  NFS credit card</Name>
 							<Description> On card contactless </Description>
+							<ChargingMomentType>atEndOfChargePeriod</ChargingMomentType>
+									<AuthorityRef version="any" ref="tfl:TfL"/>
+									
 							<ConditionSummary>
+							<TariffBasis>discount</TariffBasis>
 								<ProvidesCard>true</ProvidesCard>
 							</ConditionSummary>
 							<validityParameterAssignments>
@@ -5152,11 +5159,12 @@ You can only get these as paper tickets, not on an Oyster card, and they must be
 								</GenericParameterAssignment>
 							</validityParameterAssignments>
 							<prices>
-								<FareProductPrice version="any" id="tfl:Contactless_card">
+								<FareProductPrice version="any" id="tfl:PAYG_with contactless_card">
 									<Amount>1.40</Amount>
 									<DiscountingRuleRef version="any" ref="tfl:20p"/>
 								</FareProductPrice>
 							</prices>
+							<ProductType>payAsYouGoRight</ProductType>
 						</SaleDiscountRight>
 					</fareProducts>
 					<distributionChannels>
@@ -5429,7 +5437,7 @@ You can only get these as paper tickets, not on an Oyster card, and they must be
 							<salesOfferPackageElements>
 								<SalesOfferPackageElement order="1" version="any" id="tfl:Contactless_card-SOP@Prepaid_trip">
 									<TypeOfTravelDocumentRef version="any" ref="tfl:nfc_payment_card"/>
-									<SaleDiscountRightRef version="any" ref="tfl:Contactless_card"/>
+									<SaleDiscountRightRef version="any" ref="tfl:PAYG_with contactless_card"/>
 								</SalesOfferPackageElement>
 								<SalesOfferPackageElement order="1" version="any" id="tfl:Contactless_card-SOP@PayAsYouGo_trip">
 									<TypeOfTravelDocumentRef version="any" ref="tfl:nfc_payment_card"/>
@@ -11996,8 +12004,15 @@ On 19 May the price of a 1-year RailCard will change from £28 to £30 and a 3-yea
 								</FareTable>
 							</fareTables>
 							<ChargingMomentRef version="any" ref="tfl:prepaid"/>
+							<ChargingMomentType>beforeTravel</ChargingMomentType>
+							 		<OperatorRef version="any" ref="nr:National_Rail"/>
 							<ConditionSummary>
+							<TariffBasis>flat</TariffBasis>
 								<ProvidesCard>true</ProvidesCard>
+								 		<IsPersonal>true</IsPersonal>	
+							
+							 		<RequiresPhoto>true</RequiresPhoto>
+		
 							</ConditionSummary>
 							<validityParameterAssignments>
 								<GenericParameterAssignment version="any" order="1" id="tfl:RailCard@entitlements_required">
@@ -12007,7 +12022,7 @@ On 19 May the price of a 1-year RailCard will change from £28 to £30 and a 3-yea
 									</limitations>
 								</GenericParameterAssignment>
 								<GenericParameterAssignment version="any" order="2" id="nr:RailCard@Usage_validity_period@periods">
-									<Name>Periof for which card is valid</Name>
+									<Name>Periofdfor which card is valid</Name>
 									<LimitationGroupingType>OR</LimitationGroupingType>
 									<limitations>
 										<UsageValidityPeriodRef ref="nr:RailCard_validity_period@1Y" version="any"/>
@@ -12015,14 +12030,29 @@ On 19 May the price of a 1-year RailCard will change from £28 to £30 and a 3-yea
 									</limitations>
 								</GenericParameterAssignment>
 							</validityParameterAssignments>
+							<ProductType>travelCard</ProductType>
 						</SaleDiscountRight>
 						<!--  16-15 RAIL CARD -->
 						<SaleDiscountRight version="any" id="nr:16-25RailCard">
 							<Name>Rail card</Name>
 							<Description> 16 to 25  RailCard,  </Description>
+						
 							<fareTables>
 								<FareTableRef version="any" ref="nr:Standard_RailCard@Cost"/>
 							</fareTables>
+														<ChargingMomentRef version="any" ref="tfl:prepaid"/>
+							<ChargingMomentType>beforeTravel</ChargingMomentType>
+							 		<OperatorRef version="any" ref="nr:National_Rail"/>
+							 		<ConditionSummary>
+							 				<TariffBasis>flat</TariffBasis>
+							 		<ProvidesCard>true</ProvidesCard>
+							 		 		
+							 		<IsPersonal>true</IsPersonal>	
+							
+							 		<RequiresPhoto>true</RequiresPhoto>
+		
+<IsRefundable>true</IsRefundable>				 		
+							 		</ConditionSummary>
 							<SaleDiscountRightRef ref="nr:RailCard" version="any"/>
 							<validityParameterAssignments>
 								<GenericParameterAssignment version="any" order="1" id="nr:Standard_RailCard@rail_discount">
@@ -12067,6 +12097,7 @@ On 19 May the price of a 1-year RailCard will change from £28 to £30 and a 3-yea
 									</limitations>
 								</GenericParameterAssignment>
 							</validityParameterAssignments>
+							<ProductType>travelCard</ProductType>
 						</SaleDiscountRight>
 						<!--  SENIOR RAIL CARD -->
 						<SaleDiscountRight version="any" id="nr:SeniorRailCard">
@@ -12074,7 +12105,21 @@ On 19 May the price of a 1-year RailCard will change from £28 to £30 and a 3-yea
 							<fareTables>
 								<FareTableRef version="any" ref="nr:Standard_RailCard@Cost"/>
 							</fareTables>
+														<ChargingMomentRef version="any" ref="tfl:prepaid"/>
+							<ChargingMomentType>beforeTravel</ChargingMomentType>
+							 		<OperatorRef version="any" ref="nr:National_Rail"/>
+							 		<ConditionSummary>
+							 				<TariffBasis>flat</TariffBasis>
+							 		<ProvidesCard>true</ProvidesCard>
+							 		 		
+							 		<IsPersonal>true</IsPersonal>	
+							
+							 		<RequiresPhoto>true</RequiresPhoto>
+		
+<IsRefundable>true</IsRefundable>				 		
+							 		</ConditionSummary>
 							<SaleDiscountRightRef ref="nr:RailCard" version="any"/>
+							
 							<validityParameterAssignments>
 								<GenericParameterAssignment version="any" order="1" id="nr:SeniorRailCard@rail_discount">
 									<Name>Gives discount on rail fares</Name>
@@ -12118,6 +12163,7 @@ On 19 May the price of a 1-year RailCard will change from £28 to £30 and a 3-yea
 									</limitations>
 								</GenericParameterAssignment>
 							</validityParameterAssignments>
+								<ProductType>travelCard</ProductType>
 						</SaleDiscountRight>
 						<!--  HM FORCES  RAIL CARD -->
 						<SaleDiscountRight version="any" id="nr:hm_forcesRailCard">
@@ -12183,6 +12229,7 @@ Please note that the railcard can only be used for non-duty (leisure) travel onl
 									<Amount>15.00</Amount>
 								</FareProductPrice>
 							</prices>
+								<ProductType>travelCard</ProductType>
 						</SaleDiscountRight>
 						<!--  DISABLED PERSONS   RAIL CARD -->
 						<SaleDiscountRight version="any" id="nr:DisabledRailCard">
@@ -12235,6 +12282,19 @@ Are buying or leasing a vehicle through the Motability scheme	A copy of the leas
 									</cells>
 								</FareTable>
 							</fareTables>
+									<ChargingMomentRef version="any" ref="tfl:prepaid"/>
+							<ChargingMomentType>beforeTravel</ChargingMomentType>
+							 		<OperatorRef version="any" ref="nr:National_Rail"/>
+							 		<ConditionSummary>
+							 				<TariffBasis>flat</TariffBasis>
+							 		<ProvidesCard>true</ProvidesCard>
+							 		 		
+							 		<IsPersonal>true</IsPersonal>	
+							
+							 		<RequiresPhoto>true</RequiresPhoto>
+		
+<IsRefundable>true</IsRefundable>				 		
+							 		</ConditionSummary>
 							<SaleDiscountRightRef ref="nr:RailCard" version="any"/>
 							<validityParameterAssignments>
 								<GenericParameterAssignment version="any" order="1" id="nr:DisabledRailCard@rail_discount">
@@ -12279,6 +12339,7 @@ Are buying or leasing a vehicle through the Motability scheme	A copy of the leas
 									</limitations>
 								</GenericParameterAssignment>
 							</validityParameterAssignments>
+								<ProductType>travelCard</ProductType>
 						</SaleDiscountRight>
 						<!--  NETWORK   RAIL CARD -->
 						<SaleDiscountRight version="any" id="nr:NetworkRailCard">
@@ -12286,6 +12347,19 @@ Are buying or leasing a vehicle through the Motability scheme	A copy of the leas
 							<fareTables>
 								<FareTableRef version="any" ref="nr:Standard_RailCard@Cost"/>
 							</fareTables>
+									<ChargingMomentRef version="any" ref="tfl:prepaid"/>
+							<ChargingMomentType>beforeTravel</ChargingMomentType>
+							 		<OperatorRef version="any" ref="nr:National_Rail"/>
+							 		<ConditionSummary>
+							 				<TariffBasis>flat</TariffBasis>
+							 		<ProvidesCard>true</ProvidesCard>
+							 		 		
+							 		<IsPersonal>true</IsPersonal>	
+							
+							 		<RequiresPhoto>true</RequiresPhoto>
+		
+<IsRefundable>true</IsRefundable>				 		
+							 		</ConditionSummary>
 							<SaleDiscountRightRef ref="nr:RailCard" version="any"/>
 							<validityParameterAssignments>
 								<GenericParameterAssignment version="any" order="1" id="nr:NetworkRailCard@rail_discount">
@@ -12330,6 +12404,7 @@ Are buying or leasing a vehicle through the Motability scheme	A copy of the leas
 									</limitations>
 								</GenericParameterAssignment>
 							</validityParameterAssignments>
+								<ProductType>travelCard</ProductType>
 						</SaleDiscountRight>
 						<!--  FAMILY AND FRIENDS    RAIL CARD -->
 						<SaleDiscountRight version="any" id="nr:family_and_friendsRailCard">
@@ -12337,6 +12412,19 @@ Are buying or leasing a vehicle through the Motability scheme	A copy of the leas
 							<fareTables>
 								<FareTableRef version="any" ref="nr:Standard_RailCard@Cost"/>
 							</fareTables>
+									<ChargingMomentRef version="any" ref="tfl:prepaid"/>
+							<ChargingMomentType>beforeTravel</ChargingMomentType>
+							 		<OperatorRef version="any" ref="nr:National_Rail"/>
+							 		<ConditionSummary>
+							 				<TariffBasis>flat</TariffBasis>
+							 		<ProvidesCard>true</ProvidesCard>
+							 		 		
+							 		<IsPersonal>true</IsPersonal>	
+							
+							 		<RequiresPhoto>true</RequiresPhoto>
+		
+<IsRefundable>true</IsRefundable>				 		
+							 		</ConditionSummary>
 							<SaleDiscountRightRef ref="nr:RailCard" version="any"/>
 							<validityParameterAssignments>
 								<GenericParameterAssignment version="any" order="1" id="nr:family_and_friendsRailCard@rail_discount">
@@ -12382,6 +12470,8 @@ Are buying or leasing a vehicle through the Motability scheme	A copy of the leas
 									</limitations>
 								</GenericParameterAssignment>
 							</validityParameterAssignments>
+							
+								<ProductType>travelCard</ProductType>
 						</SaleDiscountRight>
 					</fareProducts>
 				</FareFrame>
@@ -12669,6 +12759,20 @@ Find out more about using contactless payment cards on buses</Description>
 					<fareProducts>
 						<PreassignedFareProduct version="any" id="lbsl:TravelCard_on_Oyster@Bus">
 							<Name>Travel card  - Bus</Name>
+							
+	<ChargingMomentRef version="any" ref="tfl:prepaid"/>
+							<ChargingMomentType>beforeTravel</ChargingMomentType>
+							 		<OperatorRef version="any" ref="lbsl:LBSL"/>
+							<ConditionSummary>
+							<TariffBasis>zone</TariffBasis>
+								<ProvidesCard>true</ProvidesCard>
+								 		<IsPersonal>true</IsPersonal>	
+							
+							 		<RequiresPhoto>false</RequiresPhoto>
+		
+							</ConditionSummary>							
+							
+							
 							<validityParameterAssignments>
 								<GenericParameterAssignment version="any" order="1" id="tfl:TravelCard_on_Oyster@bus">
 									<Name>Travel card allows use of bus only</Name>
@@ -12680,6 +12784,7 @@ Find out more about using contactless payment cards on buses</Description>
 									</validityParameters>
 								</GenericParameterAssignment>
 							</validityParameterAssignments>
+							<ProductType>periodPass</ProductType>
 						</PreassignedFareProduct>
 					</fareProducts>
 				</FareFrame>
@@ -13854,6 +13959,18 @@ All other journeys on this service	£3.00	n/a	£2.00</Description>
 						<!--- ====River Rovers==== -->
 						<PreassignedFareProduct version="any" id="lrs:River_Rover">
 							<Name>Travel card  - River Rover</Name>
+							
+							
+								<ChargingMomentType>beforeTravel</ChargingMomentType>
+							 		<OperatorRef version="any" ref="lrs:River_operators"/>
+							<ConditionSummary>
+							<TariffBasis>zone</TariffBasis>
+								<ProvidesCard>false</ProvidesCard>
+								 		<IsPersonal>true</IsPersonal>	
+							
+							 		<RequiresPhoto>false</RequiresPhoto>
+		
+							</ConditionSummary>		
 							<validityParameterAssignments>
 								<GenericParameterAssignment version="any" order="1" id="lrs:River_Rover@eligible">
 									<TypeOfAccessRightAssignmentRef version="any" ref="tfl:eligible"/>
@@ -13875,6 +13992,7 @@ All other journeys on this service	£3.00	n/a	£2.00</Description>
 									<ValidableElementRef ref="lrs:river_hop_on_hop_off" version="any"/>
 								</AccessRightInProduct>
 							</accessRightsInProduct>
+							<ProductType>periodPass</ProductType>
 						</PreassignedFareProduct>
 						<PreassignedFareProduct version="any" id="lrs:River_Roamer">
 							<Name>Day Travel card  - River Ramer on River bus services</Name>
@@ -13898,11 +14016,21 @@ All other journeys on this service	£3.00	n/a	£2.00</Description>
 									<ValidableElementRef ref="lrs:river_hop_on_hop_off" version="any"/>
 								</AccessRightInProduct>
 							</accessRightsInProduct>
+							<ProductType>dayPass</ProductType>
 						</PreassignedFareProduct>
 						<!-- === GROUP TICKET === -->
 						<PreassignedFareProduct version="any" id="lrs:River_Family">
 							<Name>River Family Ticket Group Ticket -</Name>
 							<ChargingMomentRef version="any" ref="tfl:prepaid"/>
+							<ChargingMomentType>beforeTravel</ChargingMomentType>
+							 		<OperatorRef version="any" ref="lrs:River_operators"/>
+							<ConditionSummary>
+							<TariffBasis>zone</TariffBasis> 
+								 		<IsPersonal>false</IsPersonal>	
+							
+							 		<RequiresPhoto>false</RequiresPhoto>
+		
+							</ConditionSummary>		
 							<validityParameterAssignments>
 								<GenericParameterAssignment version="any" order="1" id="lrs:River_Family@eligible">
 									<TypeOfAccessRightAssignmentRef version="any" ref="tfl:eligible"/>
@@ -13932,11 +14060,22 @@ All other journeys on this service	£3.00	n/a	£2.00</Description>
 									<ValidableElementRef ref="lrs:river_hop_on_hop_off" version="any"/>
 								</AccessRightInProduct>
 							</accessRightsInProduct>
+									<ProductType>dayPass</ProductType>
 						</PreassignedFareProduct>
 						<!-- === River Cruise === -->
 						<PreassignedFareProduct version="any" id="lrs:River_cruise">
 							<Name>River Cruise -</Name>
-							<ChargingMomentRef version="any" ref="tfl:prepaid"/>
+							<ChargingMomentRef version="any" ref="tfl:prepaid"/> 
+							<ChargingMomentType>beforeTravel</ChargingMomentType>
+							 		<OperatorRef version="any" ref="lrs:River_operators"/>
+							<ConditionSummary>
+							<FareStructureType>lineFlatFare</FareStructureType>
+							<TariffBasis>flat</TariffBasis> 
+								 		<IsPersonal>false</IsPersonal>	
+							
+							 		<RequiresPhoto>false</RequiresPhoto>
+		
+							</ConditionSummary>	
 							<validityParameterAssignments>
 								<GenericParameterAssignment version="any" order="1" id="lrs:River_cruise@user_profile">
 									<includes>
@@ -13988,6 +14127,7 @@ All other journeys on this service	£3.00	n/a	£2.00</Description>
 									<ValidableElementRef ref="lrs:River_cruise" version="any"/>
 								</AccessRightInProduct>
 							</accessRightsInProduct>
+							<ProductType>multistepTrip</ProductType>
 						</PreassignedFareProduct>
 					</fareProducts>
 				</FareFrame>
@@ -14231,6 +14371,21 @@ Oyster card holders who want to travel on the Emirates Air Line as part of a 360
 You can buy a Multi-journey Boarding Pass from Emirates Air Line ticket offices. The Multi-journey Boarding Pass can be used for 10 single journeys and is valid for up to 12 months. The Multi-journey Boarding Pass works out at over 60 per cent cheaper per journey compared to the price of a single Emirates Air Line Boarding Pass.
 
 Multi-journey Boarding Passes are not transferable.</Description>
+
+
+	<ChargingMomentRef version="any" ref="tfl:prepaid"/> 
+							<ChargingMomentType>beforeTravel</ChargingMomentType>
+							 		<OperatorRef version="any" ref="lrs:LRS"/>
+							<ConditionSummary>
+							<FareStructureType>lineFlatFare</FareStructureType>
+							<TariffBasis>flat</TariffBasis> 
+								 		<IsPersonal>false</IsPersonal>	
+							
+							 		<RequiresPhoto>false</RequiresPhoto>
+		
+							</ConditionSummary>
+
+
 							<validityParameterAssignments>
 								<GenericParameterAssignment version="any" order="1" id="ea:Group@cableway">
 									<Name>Carnet for 20 single  ride on EA</Name>
@@ -14243,13 +14398,19 @@ Multi-journey Boarding Passes are not transferable.</Description>
 									<Units>10</Units>
 								</FareProductPrice>
 							</prices>
+							<ProductType>tripCarnet</ProductType>
 						</AmountOfPriceUnitProduct>
 						<!-- === GROUP TICKET === -->
 						<PreassignedFareProduct version="any" id="ea:Private_cabin">
 							<Name>Private Cabin Group Ticket -</Name>
 							<Description>Can book a whole cabin</Description>
 							<ChargingMomentRef version="any" ref="tfl:prepaid"/>
+														<ChargingMomentType>beforeTravel</ChargingMomentType>
+							 		<OperatorRef version="any" ref="tfl:Emirates"/>
+
 							<ConditionSummary>
+									<FareStructureType>lineFlatFare</FareStructureType>
+							<TariffBasis>flat</TariffBasis> 
 								<RequiresReservation>true</RequiresReservation>
 							</ConditionSummary>
 							<validityParameterAssignments>
@@ -14266,7 +14427,9 @@ Multi-journey Boarding Passes are not transferable.</Description>
 									<Name>Single  on Thames river</Name>
 									<ValidableElementRef version="any" ref="ea:cableway_trip"/>
 								</AccessRightInProduct>
+							
 							</accessRightsInProduct>
+							<ProductType>dayReturnTrip</ProductType>
 						</PreassignedFareProduct>
 					</fareProducts>
 				</FareFrame>
@@ -15339,7 +15502,7 @@ Gold Card
 							<PrimaryMode>rail</PrimaryMode>
 						</Operator>
 						<!--   River -->
-						<Operator version="any" id="tfl:lrs">
+						<Operator version="any" id="lrs:LRS">
 							<Name>London River Services</Name>
 							<OrganisationType>operator</OrganisationType>
 							<PrimaryMode>water</PrimaryMode>

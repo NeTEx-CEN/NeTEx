@@ -3,16 +3,16 @@
 <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_customerPurchasePackage_version">
 	<!-- ======================================================================= -->
 	<xsd:include schemaLocation="../part3_fares/netex_geographicStructureFactor_support.xsd"/>
-	<xsd:include schemaLocation="../part3_fares/netex_timeStructureFactor_support.xsd"/>
+	<xsd:include schemaLocation="../part3_PiQuery/netex_piRequest_support.xsd"/>
 	<xsd:include schemaLocation="../part3_fares/netex_fareStructureElement_support.xsd"/>
-	<xsd:include schemaLocation="netex_travelDocument_support.xsd"/>
 	<xsd:include schemaLocation="netex_customerPurchasePackage_support.xsd"/>
 	<xsd:include schemaLocation="netex_salesTransaction_support.xsd"/>
-	<xsd:include schemaLocation="netex_travelDocument_version.xsd"/>
-	<xsd:include schemaLocation="../../netex_framework/netex_responsibility/netex_alternativeText_version.xsd"/>
+	<xsd:include schemaLocation="../part3_fares/netex_validableElement_support.xsd"/>
 	<xsd:include schemaLocation="../part3_fares/netex_salesOfferPackage_version.xsd"/>
 	<xsd:include schemaLocation="netex_travelSpecificationSummary_version.xsd"/>
-	<xsd:include schemaLocation="../part3_fares/netex_salesOfferPackage_version.xsd"/>
+	<xsd:include schemaLocation="netex_salesContract_version.xsd"/>
+	<xsd:include schemaLocation="netex_travelSpecificationSummary_version.xsd"/>
+	<xsd:include schemaLocation="netex_travelDocument_version.xsd"/>
 	<!-- ======================================================================= -->
 	<xsd:annotation>
 		<xsd:appinfo>
@@ -43,6 +43,9 @@
 				</Date>
 				<Date>
 					<Modified>2019-03-26</Modified>EURA-(nk)  	  	Allow marking of use of CustomerPurchasePackage. Refine model: make blocking separate from status. Correct annotations.	 
+				</Date>
+				<Date>
+					<Modified>2019-04-06</Modified>TN6 distinguish between RequestedTravelSpoeifcation and Offered TravelSpecication.  	  Remodularise to separate out from Sales Transaction
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -110,6 +113,364 @@ Rail transport, Roads and Road transport
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
+	<xsd:complexType name="travelSpecificationsInFrame_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for containment in frame of SALES TRANSACTIONs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="frameContainmentStructure">
+				<xsd:sequence>
+					<xsd:element ref="TravelSpecification" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="PaymentAmountGroup">
+		<xsd:annotation>
+			<xsd:documentation>Amount Elements for a FARE PRICE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:group ref="FarePriceAmountWithDerivationGroup">
+				<xsd:annotation>
+					<xsd:documentation>Amount Elements Step Calculation</xsd:documentation>
+				</xsd:annotation>
+			</xsd:group>
+			<xsd:element name="PaymentMethod" type="PaymentMethodEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Method of payment used,</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="TypeOfPaymentMethodRef" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ==== TRAVEL SPECIFICATION  ================================================ -->
+	<xsd:complexType name="travelSpecifications_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of TRAVEL SPECIFICATIONs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element ref="TravelSpecificationRef"/>
+					<xsd:element ref="TravelSpecification_"/>
+				</xsd:choice>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="TravelSpecification_" type="DataManagedObjectStructure" substitutionGroup="FareContractEntry_">
+		<xsd:annotation>
+			<xsd:documentation>Dummy type for FARE CONTRACT ENTRY.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TravelSpecification" abstract="false" substitutionGroup="TravelSpecification_">
+		<xsd:annotation>
+			<xsd:documentation>The recording of a specification by a customer of parameters giving details of an intended consumption (e.g. origin and destination of a travel).</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="TravelSpecification_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="LogEntryGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="FareContractEntryGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="TravelSpecificationGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="TravelSpecificationIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="TravelSpecification_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for TRAVEL SPECIFICATION.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="FareContractEntry_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="TravelSpecificationGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="TravelSpecificationGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for TRAVEL SPECIFICATION.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="SalesTransactionRef" minOccurs="0"/>
+			<xsd:element ref="PassengerInformationRequestRef" minOccurs="0"/>
+			<xsd:group ref="TravelSpecificationPriceGroup">
+				<xsd:annotation>
+					<xsd:documentation>Price reference Elements for TRAVEL SPECIFICATION - this may be used to indicate the source of the price shown on the on the entity.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:group>
+			<xsd:element name="StartOfValidity" type="xsd:dateTime" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Start Validity of Purchased PRODUCT.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="EndOfValidity" type="xsd:dateTime" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>End Validity of Purchased PRODUCT.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="TravelSpecificationSummaryView" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Summary of key aspects of TRAVEL SPECIFICATION. +V1.1. This data should all be derivable from the detailed parameter assignments of the v+1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="specificParameterAssignments" type="specificParameterAssignments_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>SPECIFIC PARAMETER ASSIGNMENTS for  TRAVEL SPECIFICATION.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="noticeAssignments" type="noticeAssignments_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>NOTICE  ASSIGNMENTS  applying to TRAVEL SPECIFICATION.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="TravelSpecificationPriceGroup">
+		<xsd:annotation>
+			<xsd:documentation>Price lements for TRAVEL SPECIFICATION.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:choice minOccurs="0">
+				<xsd:element ref="FarePriceRef"/>
+				<xsd:element ref="CellRef_"/>
+			</xsd:choice>
+			<xsd:group ref="PaymentAmountGroup"/>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ====  REQUESTED TRAVEL SPECIFICATION  ================================================ -->
+	<xsd:element name="RequestedTravelSpecification" abstract="false" substitutionGroup="TravelSpecification_">
+		<xsd:annotation>
+			<xsd:documentation>The recording of a specification by a customer of parameters giving details of an intended consumption (e.g. origin and destination of a travel).</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="RequestedTravelSpecification_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="LogEntryGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="FareContractEntryGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="TravelSpecificationGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="RequestedTravelSpecificationGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="RequestedTravelSpecificationIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="RequestedTravelSpecification_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for REQUESTED TRAVEL SPECIFICATION.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="TravelSpecification_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="RequestedTravelSpecificationGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="RequestedTravelSpecificationGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for REQUESTED TRAVEL SPECIFICATION.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence/>
+	</xsd:group>
+	<!-- ====  OFFEREDTRAVEL SPECIFICATION  ================================================ -->
+	<xsd:complexType name="offeredTravelSpecifications_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of TRAVEL SPECIFICATIONs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element ref="OfferedTravelSpecificationRef"/>
+					<xsd:element ref="OfferedTravelSpecification"/>
+				</xsd:choice>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="OfferedTravelSpecification" abstract="false" substitutionGroup="TravelSpecification_">
+		<xsd:annotation>
+			<xsd:documentation>A set of parameters giving details of the intended  consumption of access rights associated with an offer or a purchase. (e.g. origin and destination of a travel, class of travel, etc.).
+.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="OfferedTravelSpecification_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="LogEntryGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="FareContractEntryGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="TravelSpecificationGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="OfferedTravelSpecificationGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="OfferedTravelSpecificationIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="OfferedTravelSpecification_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for OFFERED TRAVEL SPECIFICATION.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="TravelSpecification_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="OfferedTravelSpecificationGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="OfferedTravelSpecificationGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for OFFERED TRAVEL SPECIFICATION.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence/>
+	</xsd:group>
+	<!-- ==== SPECIFIC PARAMETER ASSIGNMENT=================================================== -->
+	<xsd:complexType name="specificParameterAssignments_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of SPECIFIC ACCESS RIGHT PARAMETERs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="SpecificParameterAssignment" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="SpecificParameterAssignment" abstract="false" substitutionGroup="AccessRightParameterAssignment_">
+		<xsd:annotation>
+			<xsd:documentation>A VALIDITY PARAMETER ASSIGNMENT specifying practical parameters during a TRAVEL SPECIFICATION, within a given fare structure (e.g. the origin or destination zone in a zone-counting system).</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="SpecificParameterAssignment_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:sequence>
+								<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+							</xsd:sequence>
+							<xsd:sequence>
+								<xsd:group ref="DataManagedObjectGroup"/>
+							</xsd:sequence>
+							<xsd:sequence>
+								<xsd:group ref="AssignmentGroup"/>
+							</xsd:sequence>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="AccessRightParameterAssignmentGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="ValidityParameterAssignmentGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="SpecificParameterAssignmentGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="SpecificParameterAssignmentIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="SpecificParameterAssignment_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for SPECIFIC PARAMETER ASSIGNMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="ValidityParameterAssignment_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="SpecificParameterAssignmentGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="SpecificParameterAssignmentGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for SPECIFIC PARAMETER ASSIGNMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="AccessNumber" type="xsd:positiveInteger" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Access number of this specific instance.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:group ref="SpecificParameterAssignmentIncludesGroup"/>
+			<xsd:element ref="DistributionAssignmentRef" minOccurs="0"/>
+			<xsd:element name="RetailingOrganizationRef" type="OrganisationRefStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Organizatio that sold product. instance.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="CollectionPointRef" type="PointRefStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Point at which to collect  travel document.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="SpecificParameterAssignmentIncludesGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for Compound SPECIFIC PARAMETER ASSIGNMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IncludesGroupingType" type="BooleanOperatorEnumeration" default="OR" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Operator for Grouping Scope Elements. Default is OR.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="includes" type="specificParameterAssignments_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Assignments Logically  included in this group. Groups are combined acording to the Operator.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ====CUSTOMER PURCHASE PACKAGE=================================================== -->
 	<xsd:complexType name="customerPurchasePackages_RelStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for containment in frame of CUSTOMER PURCHASE PACKAGE.</xsd:documentation>
@@ -123,7 +484,6 @@ Rail transport, Roads and Road transport
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<!-- ====CUSTOMER PURCHASE PACKAGE=================================================== -->
 	<xsd:element name="CustomerPurchasePackage" abstract="false" substitutionGroup="PriceableObject_">
 		<xsd:annotation>
 			<xsd:documentation>A purchase of a SALES OFFER PACKAGE by a CUSTOMER, giving access rights to one or several FARE PRODUCTs materialised as one or several TRAVEL DOCUMENTs.</xsd:documentation>
@@ -210,7 +570,7 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="TravelSpecificationSummaryView" minOccurs="0"/>
-			<xsd:element name="travelSpecifications" type="travelSpecificationRefs_RelStructure" minOccurs="0">
+			<xsd:element name="travelSpecifications" type="travelSpecifications_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>TRAVEL SPEECIFICATIONs for FARE CONTRACT.</xsd:documentation>
 				</xsd:annotation>

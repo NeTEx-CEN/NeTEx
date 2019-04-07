@@ -216,7 +216,7 @@ The £13 minimum fare restriction does not apply to PLUSBUS day ticket purchases.
  ** Saturday, Sunday, Bank Holidays any time.
 You must buy 2 tickets at the same time.					</Description>
 									<Url>http://www.plusbus.info/sites/default/files/Railcard%20discount%20restrictions%20for%20PLUSBUS.pdf</Url>
-									<FareDemandType>medium</FareDemandType>
+									<FareDemandType>middle</FareDemandType>
 								</FareDemandFactor>
 								<FareDemandFactor id="jsp:JSP@Tariff@PlusBus@Demand@off_peak@varies_by_region" version="1.0">
 									<!-- These conditions are ORed together -->
@@ -242,7 +242,7 @@ You must buy 2 tickets at the same time.					</Description>
  ** in the South East after the Monday to Friday morning peak period* (excluding Bank Holidays) for a journey wholly within the South East region.
  * times of off-peak services vary by route, but generally related to the availability of Off-Peak tickets.</Description>
 									<Url>http://www.plusbus.info/sites/default/files/Railcard%20discount%20restrictions%20for%20PLUSBUS.pdf</Url>
-									<FareDemandType>medium</FareDemandType>
+									<FareDemandType>middle</FareDemandType>
 								</FareDemandFactor>
 							</qualityStructureFactors>
 							<!-- ==== FARE STRUCTURE ELEMENTS ===== -->
@@ -413,20 +413,26 @@ Disabled Persons discounts are valid during the morning peak hours.
 											<EntitlementRequired id="jsp:Tariff@PlusBus@Day@prequisites@single_trip" version="1.0">
 												<Name>Must have a rai sile l ticket  </Name>
 												<PreassignedFareProductRef version="1.0" ref="atc:Rail@Single_trip"/>
-												<PeriodConstraint>sameDay</PeriodConstraint>
-												<TariffZoneConstraint>sameAsOriginOrDestination</TariffZoneConstraint>
+												<EntitlementConstraint>
+													<PeriodConstraint>sameDay</PeriodConstraint>
+													<TariffZoneConstraint>sameAsOriginOrDestination</TariffZoneConstraint>
+												</EntitlementConstraint>
 											</EntitlementRequired>
 											<EntitlementRequired id="jsp:Tariff@PlusBus@Day@prequisites@return_trip" version="1.0">
 												<Name>Must have a rai sile l ticket  </Name>
 												<PreassignedFareProductRef version="1.0" ref="atc:Rail@Return_trip"/>
-												<PeriodConstraint>sameDayOfReturn</PeriodConstraint>
-												<TariffZoneConstraint>sameAsOriginOrDestination</TariffZoneConstraint>
+												<EntitlementConstraint>
+													<PeriodConstraint>sameDayOfReturn</PeriodConstraint>
+													<TariffZoneConstraint>sameAsOriginOrDestination</TariffZoneConstraint>
+												</EntitlementConstraint>
 											</EntitlementRequired>
 											<EntitlementRequired id="jsp:Tariff@PlusBus@Day@prequisites@Period_pass" version="1.0">
 												<Name>Must have a rai sigle l ticket  </Name>
 												<PreassignedFareProductRef version="1.0" ref="atc:Rail@Period_pass"/>
-												<PeriodConstraint>withinSamePeriod</PeriodConstraint>
-												<TariffZoneConstraint>sameAsOriginOrDestination</TariffZoneConstraint>
+												<EntitlementConstraint>
+													<PeriodConstraint>withinSamePeriod</PeriodConstraint>
+													<TariffZoneConstraint>sameAsOriginOrDestination</TariffZoneConstraint>
+												</EntitlementConstraint>
 											</EntitlementRequired>
 										</limitations>
 									</GenericParameterAssignment>
@@ -515,8 +521,10 @@ Disabled Persons discounts are valid during the morning peak hours.
 											<EntitlementRequired id="jsp:Tariff@PlusBus@Season@prequisites@Period_pass" version="1.0">
 												<Name>Must have a rail season pass</Name>
 												<PreassignedFareProductRef version="1.0" ref="atc:Rail@Period_pass"/>
-												<PeriodConstraint>withinSamePeriod</PeriodConstraint>
-												<TariffZoneConstraint>sameAsOriginOrDestination</TariffZoneConstraint>
+												<EntitlementConstraint>
+													<PeriodConstraint>withinSamePeriod</PeriodConstraint>
+													<TariffZoneConstraint>sameAsOriginOrDestination</TariffZoneConstraint>
+												</EntitlementConstraint>
 											</EntitlementRequired>
 										</limitations>
 									</GenericParameterAssignment>
@@ -576,15 +584,17 @@ Avoid queuing - buy from all self-service machines at stations run by: Greater A
 Buy your tickets online from most rail websites.</Description>
 							<InfoUrl>http://www.plusbus.info/</InfoUrl>
 							<ChargingMomentRef version="fxc:v1.0" ref="fxc:prepayment@bundled"/>
+							<ChargingMomentType>beforeTravel</ChargingMomentType>
 							<TypeOfFareProductRef version="fxc:v1.0" ref="fxc:standard_product@pass@day"/>
+							<OperatorRef ref="jsp:JSP" version="1.0"/>
 							<ConditionSummary>
-								<FareStructureType>zonalFlatFare</FareStructureType>
+								<FareStructureType>zonalFare</FareStructureType>
+								<TariffBasis>zone</TariffBasis>
 								<IsSupplement>true</IsSupplement>
 								<CanBreakJourney>false</CanBreakJourney>
 								<IsRefundable>true</IsRefundable>
 								<RequiresReservation>false</RequiresReservation>
 							</ConditionSummary>
-							<OperatorRef ref="jsp:JSP" version="1.0"/>
 							<validityParameterAssignments>
 								<GenericParameterAssignment order="1" id="jsp:JSP@Pass@PlusBus@1day@railcard" version="1.0">
 									<Name>PlusBusRailcard discount</Name>
@@ -696,12 +706,14 @@ http://www.plusbus.info/faq/14-are-refunds-available-ltigtplusbusltigt-tickets
 									<ValidableElementRef ref="jsp:JSP@Pass@PlusBus@zone_pass@1day" version="1.0"/>
 								</AccessRightInProduct>
 							</accessRightsInProduct>
+							<ProductType>dayPass</ProductType>
+							<SupplementProductType>journeyAddOn</SupplementProductType>
 							<supplementTo>
 								<PreassignedFareProductRef version="1.0" ref="atc:Rail@Single_trip"/>
 								<PreassignedFareProductRef version="1.0" ref="atc:Rail@Return_trip"/>
 								<PreassignedFareProductRef version="1.0" ref="atc:Rail@Day_pass"/>
 								<PreassignedFareProductRef version="1.0" ref="atc:Rail@Period_pass"/>
-							</supplementTo>
+							</supplementTo>							
 						</SupplementProduct>
 						<SupplementProduct version="1.0" id="jsp:JSP@Pass@PlusBus@Season">
 							<Name>Plusbus Season Pass</Name>
@@ -717,15 +729,17 @@ Season tickets are available for specific periods only: 7 days (consecutive); a 
 The validity of your PlusBus season ticket does not have to match your rail season ticket validity, but your PlusBus ticket MUST expire either on the same date as your rail season ticket, or on a date before your rail season ticket expires.</Description>
 							<InfoUrl>http://www.plusbus.info/</InfoUrl>
 							<ChargingMomentRef version="fxc:v1.0" ref="fxc:prepayment@bundled"/>
+							<ChargingMomentType>beforeTravel</ChargingMomentType>
 							<TypeOfFareProductRef version="fxc:v1.0" ref="fxc:standard_product@pass@period"/>
+							<OperatorRef ref="jsp:JSP" version="1.0"/>
 							<ConditionSummary>
-								<FareStructureType>zonalFlatFare</FareStructureType>
+								<FareStructureType>zonalFare</FareStructureType>
+								<TariffBasis>zone</TariffBasis>
 								<IsSupplement>true</IsSupplement>
 								<CanBreakJourney>false</CanBreakJourney>
 								<IsRefundable>true</IsRefundable>
 								<RequiresReservation>false</RequiresReservation>
 							</ConditionSummary>
-							<OperatorRef ref="jsp:JSP" version="1.0"/>
 							<validityParameterAssignments>
 								<GenericParameterAssignment id="jsp:JSP@Pass@PlusBus@Season@eligibility@adult_only" version="1.0" order="1">
 									<Description>Adults only Can buy season ticket</Description>
@@ -782,7 +796,7 @@ http://www.plusbus.info/faq/14-are-refunds-available-ltigtplusbusltigt-tickets
 										<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@Day@modes"/>
 										<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@Season@durations"/>
 										<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@Season@access"/>
-										<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@Day@eligibility"/> 
+										<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@Day@eligibility"/>
 										<!--  Season Pass related -->
 										<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@Season@prerequisites">Must own season pass</FareStructureElementRef>
 									</fareStructureElements>
@@ -794,6 +808,8 @@ http://www.plusbus.info/faq/14-are-refunds-available-ltigtplusbusltigt-tickets
 									<ValidableElementRef ref="jsp:JSP@Pass@PlusBus@zone_pass@season" version="1.0"/>
 								</AccessRightInProduct>
 							</accessRightsInProduct>
+							<ProductType>periodPass</ProductType>
+							<SupplementProductType>journeyAddOn</SupplementProductType>
 							<SupplementToFareProductRef version="1.0" ref="atc:Rail@Period_pass"/>
 						</SupplementProduct>
 					</fareProducts>
@@ -1823,8 +1839,10 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 											<EntitlementGiven id="atc:Rail@Trip@gives_entitlements" version="1.0">
 												<Name>Must have valid ticket</Name>
 												<PreassignedFareProductRef version="1.0" ref="atc:Rail@Period_pass"/>
-												<PeriodConstraint>sameDay</PeriodConstraint>
-												<TariffZoneConstraint>sameAsOriginOrDestination</TariffZoneConstraint>
+												<EntitlementConstraint>
+													<PeriodConstraint>sameDay</PeriodConstraint>
+													<TariffZoneConstraint>sameAsOriginOrDestination</TariffZoneConstraint>
+												</EntitlementConstraint>
 											</EntitlementGiven>
 										</limitations>
 									</GenericParameterAssignment>
@@ -1837,18 +1855,22 @@ C2C, Chiltern Railways, Great Western Railway, Great Northern rail, London Midla
 						<PreassignedFareProduct version="1.0" id="atc:Rail@Single_trip">
 							<Name>Rail Single trip</Name>
 							<OperatorRef ref="uic_operator:1170" version="any">ATOC</OperatorRef>
+							<ProductType>singleTrip</ProductType>
 						</PreassignedFareProduct>
 						<PreassignedFareProduct version="1.0" id="atc:Rail@Return_trip">
 							<Name>Rail Return trip</Name>
 							<OperatorRef ref="uic_operator:1170" version="any">ATOC</OperatorRef>
+							<ProductType>periodReturnTrip</ProductType>
 						</PreassignedFareProduct>
 						<PreassignedFareProduct version="1.0" id="atc:Rail@Day_pass">
 							<Name>Rail Day Pass</Name>
 							<OperatorRef ref="uic_operator:1170" version="any">ATOC</OperatorRef>
+							<ProductType>dayPass</ProductType>
 						</PreassignedFareProduct>
 						<PreassignedFareProduct version="1.0" id="atc:Rail@Period_pass">
 							<Name>Rail Period Pass </Name>
 							<OperatorRef ref="uic_operator:1170" version="any">ATOC</OperatorRef>
+							<ProductType>periodPass</ProductType>
 						</PreassignedFareProduct>
 					</fareProducts>
 				</FareFrame>
@@ -2770,15 +2792,14 @@ http://www.nationalrail.co.uk/stations_destinations/44863.aspx
 								<!-- add others -->
 							</members>
 						</GroupOfDistanceMatrixElements>
-						
 						<!--   ===== -->
-								<GroupOfDistanceMatrixElements id="atc:ATOC@ODs@all" version="1.0">
+						<GroupOfDistanceMatrixElements id="atc:ATOC@ODs@all" version="1.0">
 							<Name>OD Pairs</Name>
 							<members>
-											<DistanceMatrixElementRef version="1.0" ref="atc:LST+TOM">London Liverpool Street to Tottenham Hale</DistanceMatrixElementRef>
+								<DistanceMatrixElementRef version="1.0" ref="atc:LST+TOM">London Liverpool Street to Tottenham Hale</DistanceMatrixElementRef>
 								<DistanceMatrixElementRef version="1.0" ref="atc:TOM+SSD">Tottenham Hale to Stansted Airport</DistanceMatrixElementRef>
 								<DistanceMatrixElementRef version="1.0" ref="atc:SSD+GYM">Stansted Airport to Great Yarmouth</DistanceMatrixElementRef>
-														<DistanceMatrixElementRef version="1.0" ref="atc:GYM+SSD"> Great Yarmouth to Stansted Airport</DistanceMatrixElementRef>
+								<DistanceMatrixElementRef version="1.0" ref="atc:GYM+SSD"> Great Yarmouth to Stansted Airport</DistanceMatrixElementRef>
 								<DistanceMatrixElementRef version="1.0" ref="atc:LST+SSD">London Liverpool Street to Stansted Airport</DistanceMatrixElementRef>
 								<DistanceMatrixElementRef version="1.0" ref="atc:LST+SNF">London Liverpool Street to Shenfield</DistanceMatrixElementRef>
 								<DistanceMatrixElementRef version="1.0" ref="atc:LST+IPS">London Liverpool Street to Shenfield</DistanceMatrixElementRef>
@@ -2787,11 +2808,9 @@ http://www.nationalrail.co.uk/stations_destinations/44863.aspx
 								<DistanceMatrixElementRef version="1.0" ref="atc:LST+NRW">London Liverpool Street to Norwich</DistanceMatrixElementRef>
 								<DistanceMatrixElementRef version="1.0" ref="atc:LST+SOV">London Liverpool Street to Southend Victoria</DistanceMatrixElementRef>
 								<DistanceMatrixElementRef version="1.0" ref="atc:LST+LWT">London Liverpool Street to Lowestoft</DistanceMatrixElementRef>
-								
 								<!-- TODO ADD ALL OTHER STATIONS -->
 							</members>
 						</GroupOfDistanceMatrixElements>
-						
 					</groupsOfDistanceMatrixElements>
 				</FareFrame>
 				<ServiceFrame id="atc:ATOC@Network@Lines" version="1.0" responsibilitySetRef="atc_products:NRE">

@@ -39,6 +39,28 @@ There is also an Oxygen project file:
 ----
 # Change Log 
 
+
+### 2019.04.07 FIX  *FARES* Tidy up - remodularise move TravelSpecifccation to be with CustomerPurchasePackage
+revise clasifcation types.
+* _Updates to xml schema_: 
+	* netex_fareStructureElement_support.xsd
+    	* netex_fareProduct_support.xsd
+  	* netex_fareProduct_version.xsd
+	* netex_fareConditionSummary_support.xsd
+	* netex_travelDocument_version.xsd
+	* netex_salesTransaction_support.xsd
+		* netex_salesTransaction_version.xsd
+	* netex_cusstomerPurchasePackage_support.xsd
+	* netex_customerPurchasePackage_version.xsd
+	* netex_travelSpecifcationSummary_version.xsd
+   * _Updates to xml examples_: 
+   	* uk_fxc_pass_Metrobus_metrorider.xml
+   	* netex_era_distance_ro.xml
+   	* netex_era_crossborder_de.xml
+    	* netex_era_toc_uk.xml
+ 	* uk_fxc_trip_First_York_Line26_stage-Z2Z_minimal1.xml 
+ 	* uk_fxc_trip_First_WoE_Line48_stage-distance_minimal1.xml
+	
 ### 2019.04.04  FIX *PART2*NJSK Fix: Add missing ConnectionCertainty element that is in doc
   * NJSK Review: Add new ___COnnectionCertainty___ attribute to ___Interchange___s per UML diagrams and doc to 
  with attributes __SuspensionPolicy, QualificationPeriod, QualificationPercent,  MinimumSuspensionPeriod, MaximumSuspensionPeriod, MaximumNumberOfSuspensionsPerTer
