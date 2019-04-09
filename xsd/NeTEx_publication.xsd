@@ -16,8 +16,9 @@
 				<Contributor>CEN TC278 WG3 SG9 Team.</Contributor>
 				<Coverage>Europe</Coverage>
 				<Creator>First Drafted for NeTEx version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.  mailto:schemer@netex.org.uk</Creator>
-				
-				
+							<Date>
+					<Modified>2019-04-10</Modified>Fix add constraints for ParkingProperties and ComoanionUserProfile/ParefRef
+				</Date>					
 				<Date>
 					<Modified>2019-03-25</Modified>Fix: Integrate fix by CD with other constraint changes: Add EquipmentPlace  to  Place_AnyVersionedKey.
 				</Date>
@@ -3522,6 +3523,30 @@
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
+		
+<!-- =====ParkingProperties============================== -->
+		<!-- =====ParkingProperties unique========================== -->
+		<xsd:unique name="ParkingProperties_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [ParkingProperties Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:ParkingProperties"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====ParkingProperties Key ========================== -->
+		<xsd:keyref name="ParkingProperties_KeyRef" refer="netex:ParkingProperties_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:ParkingPropertiesRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="ParkingProperties_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:ParkingProperties"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>		
+		
+		
 		<!-- =====ParkingCapacity============================== -->
 		<!-- =====ParkingCapacity unique========================== -->
 		<xsd:unique name="ParkingCapacity_UniqueBy_Id_Version">
@@ -8009,7 +8034,7 @@
 			<xsd:field xpath="@version"/>
 		</xsd:unique>
 		<xsd:keyref name="UserProfile_KeyRef" refer="netex:UserProfile_AnyVersionedKey">
-			<xsd:selector xpath=" .//netex:UserProfileRef | .//netex:BaseUserProfileRef"/>
+			<xsd:selector xpath=" .//netex:UserProfileRef | .//netex:BaseUserProfileRef  | .//netex:CompanionProfile/ParentRef"/>
 			<xsd:field xpath="@ref"/>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
