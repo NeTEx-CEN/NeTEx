@@ -70,6 +70,9 @@
 					Move TypeOfProductCategory amnd TypeOfService from netex_journey_version  to  Framework reusable components (netex_travelRights_version)  so they are visible from part 1	
 		  	Can  therefore drop include of netex_travelRights_version from  File netex_fareTable_version.xsd.
 				</Date>
+				<Date>
+					<Modified>2019-04-11</Modified>Internal change - use a structure for specifcs so as to make binding easier.. 
+				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the FARE TABLE types.</p>
@@ -228,6 +231,33 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
+	<xsd:complexType name="FareTableSpecificsStructure">
+		<xsd:annotation>
+			<xsd:documentation>Specific references for FARE TABLE</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:group ref="CellSpecificNetworkGroup">
+				<xsd:annotation>
+					<xsd:documentation>Network Aspects of a fare structure element for a CELL.Group.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:group>
+			<xsd:group ref="CellSpecificRoutingGroup">
+				<xsd:annotation>
+					<xsd:documentation>Routing Aspects of a fare structure element for a CELL.Group.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:group>
+			<xsd:group ref="CellSpecificServiceGroup">
+				<xsd:annotation>
+					<xsd:documentation>Service Aspects of a fare structure element for a CELL.Group.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:group>
+			<xsd:group ref="CellSpecificDistributionGroup">
+				<xsd:annotation>
+					<xsd:documentation>Distribution Aspects of a fare structure element for a CELL.Group.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:group>
+		</xsd:sequence>
+	</xsd:complexType>
 	<xsd:group name="FareTableReferencesGroup">
 		<xsd:annotation>
 			<xsd:documentation>Reference Elements for FARE TABLE.</xsd:documentation>
@@ -262,28 +292,9 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Common factors shared with all cells.</xsd:documentation>
 				</xsd:annotation>
 				<xsd:complexType>
-					<xsd:sequence>
-						<xsd:group ref="CellSpecificNetworkGroup">
-							<xsd:annotation>
-								<xsd:documentation>Network Aspects of a fare structure element for a CELL.Group.</xsd:documentation>
-							</xsd:annotation>
-						</xsd:group>
-						<xsd:group ref="CellSpecificRoutingGroup">
-							<xsd:annotation>
-								<xsd:documentation>Routing Aspects of a fare structure element for a CELL.Group.</xsd:documentation>
-							</xsd:annotation>
-						</xsd:group>
-						<xsd:group ref="CellSpecificServiceGroup">
-							<xsd:annotation>
-								<xsd:documentation>Service Aspects of a fare structure element for a CELL.Group.</xsd:documentation>
-							</xsd:annotation>
-						</xsd:group>
-						<xsd:group ref="CellSpecificDistributionGroup">
-							<xsd:annotation>
-								<xsd:documentation>Distribution Aspects of a fare structure element for a CELL.Group.</xsd:documentation>
-							</xsd:annotation>
-						</xsd:group>
-					</xsd:sequence>
+					<xsd:complexContent>
+						<xsd:extension base="FareTableSpecificsStructure"/>
+					</xsd:complexContent>
 				</xsd:complexType>
 			</xsd:element>
 		</xsd:sequence>
@@ -620,6 +631,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Network Aspects of a fare structure element for a CELL.Group.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
+			<xsd:element ref="OperatorRef" minOccurs="0"/>
 			<xsd:element ref="GroupOfLinesRef" minOccurs="0"/>
 			<xsd:element ref="LineRef" minOccurs="0"/>
 			<xsd:element ref="SiteRef" minOccurs="0"/>
