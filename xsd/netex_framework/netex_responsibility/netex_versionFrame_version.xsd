@@ -29,6 +29,9 @@
 				<Date>
 					<Modified>2019-03-11</Modified>UK-31 Change data type on ClassAttributeInFrame and ClassRelationshipnFrame  / Name attributes   from NCName to QNAME.
 				</Date>
+				<Date>
+					<Modified>2019-04-15</Modified>Fix Add missing typesO to enable type of Frame
+				</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines VERSION FRAME types.</p>
 				</Description>
@@ -129,11 +132,6 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Prerequisite VERSION FRAMEs containing elements  that this frame depends on.  +v1.1</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="layers" type="layerRefs_RelStructure" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>layers included in frame</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
 			<xsd:element name="traces" type="traces_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>TRACEs recording changes to ENTITIES in FRAME.</xsd:documentation>
@@ -144,6 +142,11 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Content VALIDITY CONDITION elements of a VERSION FRAME.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:group>
+			<xsd:element name="layers" type="layerRefs_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>layers included in frame</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:group name="VersionFrameValiditiesGroup">
@@ -256,7 +259,7 @@ Rail transport, Roads and Road transport
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<!-- ======================================================================= -->
+	<!-- ====== TypeofFrame ================================================ -->
 	<xsd:complexType name="typesOfFrame_RelStructure">
 		<xsd:annotation>
 			<xsd:documentation>A collection of one or more TYPEs OF VERSION FRAME.</xsd:documentation>
@@ -309,12 +312,12 @@ Rail transport, Roads and Road transport
 									<xsd:documentation>Required spatial coordinate system (srsName).  E.g.  WGS84 Value to use for   location elements using coordinates if not specified on individual elements.</xsd:documentation>
 								</xsd:annotation>
 							</xsd:element>
-							<xsd:element ref="LayerRef" minOccurs="0"/>
 							<xsd:element name="ModificationSet" type="ModificationSetEnumeration" minOccurs="0">
 								<xsd:annotation>
 									<xsd:documentation>Whether contained elements must be whole set or can be just a Delta.</xsd:documentation>
 								</xsd:annotation>
 							</xsd:element>
+							<xsd:element ref="LayerRef" minOccurs="0"/>
 						</xsd:sequence>
 					</xsd:sequence>
 					<xsd:attribute name="id" type="TypeOfFrameIdType">
@@ -367,10 +370,15 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Required spatial coordinate system (srsName).  E.g.  WGS84 Value to use for   location elements using coordinates if not specified on individual elements.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element ref="LayerRef" minOccurs="0"/>
 			<xsd:element name="ModificationSet" type="ModificationSetEnumeration" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Whether contained elements must be whole set or can be just a Delta.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="LayerRef" minOccurs="0"/>
+			<xsd:element name="typesOfEntity" type="typeOfEntityRefs_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>TYPES OF ENTITY to include in frame.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -388,7 +396,7 @@ Rail transport, Roads and Road transport
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<!-- ======================================================================= -->
+	<!-- ==== TypeOfValidity================================================ -->
 	<xsd:element name="TypeOfValidity" substitutionGroup="TypeOfValue">
 		<xsd:annotation>
 			<xsd:documentation>A classification of the validity of TYPEs OF FRAME. E.g. frames for schedules designed for DAY TYPEs, for specific OPERATING DAYs.</xsd:documentation>
@@ -452,7 +460,7 @@ Rail transport, Roads and Road transport
 	<!-- ==== Entity MetaClass =================================================================== -->
 	<xsd:element name="ClassInFrame" type="ClassInFrameStructure" abstract="false">
 		<xsd:annotation>
-			<xsd:documentation>Class of an entity in a frame This is a metaclass that allows services to specify whether a class must or must not be present.</xsd:documentation>
+			<xsd:documentation>Class of an entity in a VERSION FRAME. This is a metaclass that allows services to specify whether a class must or must not be present.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="ClassInFrameStructure">
