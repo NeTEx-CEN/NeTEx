@@ -30,9 +30,11 @@
 				<Date>
 					<Modified>2019-03-25</Modified>CR055 CD Change #52 Add Add new attribute  StopPlaceWeight  to  StopPlace  with values _international, national, regional, local_. 
 				</Date>
-				
-								<Date>
+				<Date>
 					<Modified>2019-04-09  Add  MODE and SUBMODE to Group of Stop Places - in doc but missing from schema</Modified>
+				</Date>
+				<Date>
+					<Modified>2019-04-13 Fix add misisng elements from VEHICLE STOPPING POSITION, fix restricted attributes in StopPlaceEntrance etc</Modified>
 				</Date>
 				<Description>
 					<Title>NeTEx Network Exchange - STOP PLACE types.</Title>
@@ -489,6 +491,18 @@ contained within its parent QUAY.</xsd:documentation>
 			</xsd:complexContent>
 		</xsd:complexType>
 	</xsd:element>
+	<xsd:complexType name="Quay_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for QUAY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="StopPlaceSpace_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="QuayGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 	<xsd:group name="QuayGroup">
 		<xsd:annotation>
 			<xsd:documentation>Elements of a QUAY.</xsd:documentation>
@@ -535,18 +549,6 @@ contained within its parent QUAY.</xsd:documentation>
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
-	<xsd:complexType name="Quay_VersionStructure">
-		<xsd:annotation>
-			<xsd:documentation>Type for QUAY.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:complexContent>
-			<xsd:extension base="StopPlaceSpace_VersionStructure">
-				<xsd:sequence>
-					<xsd:group ref="QuayGroup"/>
-				</xsd:sequence>
-			</xsd:extension>
-		</xsd:complexContent>
-	</xsd:complexType>
 	<xsd:group name="QuayIdentifierGroup">
 		<xsd:annotation>
 			<xsd:documentation>Alternative identifiers of a QUAY.</xsd:documentation>
@@ -932,13 +934,13 @@ contained within its parent QUAY.</xsd:documentation>
 				<xsd:restriction base="StopPlaceVehicleEntrance_VersionStructure">
 					<xsd:sequence>
 						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
 							<xsd:group ref="DataManagedObjectGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
 							<xsd:group ref="GroupOfEntitiesGroup"/>
-						</xsd:sequence>
-						<xsd:sequence>
-							<xsd:group ref="GroupOfPointsGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
 							<xsd:group ref="ZoneGroup"/>
@@ -1064,16 +1066,8 @@ contained within its parent QUAY.</xsd:documentation>
 			<xsd:documentation>Elements of a VEHICLE STOPPING PLACE.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="RelationToVehicle" type="RelationToVehicleEnumeration" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Relationship of position to VHEICLE.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="InfrastructureElementRef" type="InfrastructureLinkRefStructure" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Reference to ROAD ELEMENT or RAIL ELEMENT on which STOPPING POSITION resides.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
+			<xsd:element ref="InfrastructureLinkRef" minOccurs="0"/>
+			<xsd:element ref="InfrastructurePointRef" minOccurs="0"/>
 			<xsd:element name="vehicleStoppingPositions" type="vehicleStoppingPositions_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Designated Positions within a VEHICLE STOPPING PLACE for a VEHICLE to stop.</xsd:documentation>
@@ -1100,7 +1094,7 @@ contained within its parent QUAY.</xsd:documentation>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:element name="VehicleStoppingPosition" substitutionGroup="DataManagedObject">
+	<xsd:element name="VehicleStoppingPosition" substitutionGroup="SiteComponent">
 		<xsd:annotation>
 			<xsd:documentation>Designated Position within a VEHICLE STOPPING PLACE for a Vehicle to stop.</xsd:documentation>
 		</xsd:annotation>
@@ -1113,6 +1107,44 @@ contained within its parent QUAY.</xsd:documentation>
 						</xsd:sequence>
 						<xsd:sequence>
 							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="GroupOfEntitiesGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="ZoneGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:element name="placeTypes" type="typeOfPlaceRefs_RelStructure" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Classification of PLACE.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:element ref="AccessibilityAssessment" minOccurs="0"/>
+							<xsd:element name="AccessModes" type="AccessModeListOfEnumerations" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Allowed MODEs to access SITE ELEMENT.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:group ref="SiteElementNamesGroup"/>
+							<xsd:group ref="RelativeLocationGroup">
+								<xsd:annotation>
+									<xsd:documentation>Properties for naming element with respect to adjacent features.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:group>
+							<xsd:group ref="SiteElementPropertiesGroup">
+								<xsd:annotation>
+									<xsd:documentation>Elements of a SITE ELEMENT.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:group>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="SiteComponentGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="StopPlaceComponentPropertyGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
 							<xsd:group ref="VehicleStoppingPositionGroup"/>
@@ -1132,7 +1164,7 @@ contained within its parent QUAY.</xsd:documentation>
 			<xsd:documentation>Type for a VEHICLE STOPPING POSITION.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
-			<xsd:extension base="DataManagedObjectStructure">
+			<xsd:extension base="StopPlaceComponent_VersionStructure">
 				<xsd:sequence>
 					<xsd:group ref="VehicleStoppingPositionGroup"/>
 				</xsd:sequence>
@@ -1144,14 +1176,15 @@ contained within its parent QUAY.</xsd:documentation>
 			<xsd:documentation>Elements of a VEHICLE STOPPING POSITION.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="StoppingPositionName" type="MultilingualString" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Name of a VEHICLE STOPPING POSITION.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
+			<xsd:element ref="VehicleStoppingPlaceRef" minOccurs="0"/>
 			<xsd:element name="Label" type="MultilingualString" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Additional Label of a VEHICLE STOPPING POSITION.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="RelationToVehicle" type="RelationToVehicleEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Relationship of position to VHEICLE.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="Bearing" type="xsd:integer" minOccurs="0">
@@ -1188,6 +1221,9 @@ contained within its parent QUAY.</xsd:documentation>
 				<xsd:restriction base="VehicleQuayAlignment_VersionStructure">
 					<xsd:sequence>
 						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
 							<xsd:group ref="VersionedChildGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
@@ -1212,6 +1248,11 @@ contained within its parent QUAY.</xsd:documentation>
 				<xsd:sequence>
 					<xsd:group ref="VehicleQuayAlignmentGroup"/>
 				</xsd:sequence>
+				<xsd:attribute name="order" type="xsd:nonNegativeInteger">
+					<xsd:annotation>
+						<xsd:documentation>Order of element.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
@@ -1221,7 +1262,7 @@ contained within its parent QUAY.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="VehicleStoppingPlaceRef" minOccurs="0"/>
-			<xsd:element ref="QuayRef" minOccurs="0"/>
+			<xsd:element ref="QuayRef"/>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->
@@ -1246,10 +1287,17 @@ contained within its parent QUAY.</xsd:documentation>
 				<xsd:restriction base="VehiclePositionAlignment_VersionStructure">
 					<xsd:sequence>
 						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
 							<xsd:group ref="VersionedChildGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
-							<xsd:group ref="VehiclePositionAlignmentGroup"/>
+							<xsd:group ref="VehiclePositionAlignmentGroup">
+								<xsd:annotation>
+									<xsd:documentation>Elements of a VEHICLE POSITION ALIGNMENT.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:group>
 						</xsd:sequence>
 					</xsd:sequence>
 					<xsd:attribute name="id" type="VehiclePositionAlignmentIdType" use="optional">
@@ -1270,6 +1318,11 @@ contained within its parent QUAY.</xsd:documentation>
 				<xsd:sequence>
 					<xsd:group ref="VehiclePositionAlignmentGroup"/>
 				</xsd:sequence>
+				<xsd:attribute name="order" type="xsd:nonNegativeInteger">
+					<xsd:annotation>
+						<xsd:documentation>Order of attribute</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
@@ -1280,11 +1333,7 @@ contained within its parent QUAY.</xsd:documentation>
 		<xsd:sequence>
 			<xsd:element ref="VehicleStoppingPositionRef" minOccurs="0"/>
 			<xsd:element ref="BoardingPositionRef" minOccurs="0"/>
-			<xsd:element name="BoardingPositionEntranceRef" type="StopPlaceEntranceRefStructure" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Referece to a boarding position entrance  with which alignment is made.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
+			<xsd:element ref="StopPlaceEntranceRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->
