@@ -27,8 +27,11 @@
 					<Modified>2019-03-25</Modified>NL32 CD  change #61 Add new attribute VehicleAccessFacilityList to ServiceFacilitySet.
 					NJSK Review: Do not add SiteAccess facilitrie to vehicle, but rather add a new  VehicleAccessFacilityList
 				</Date>
-								<Date>
+				<Date>
 					<Modified>2019-04-05</Modified>Fix add FacilitySet as substitiution group for  SiteFacilitySet and ServcieFacilitySet
+				</Date>
+				<Date>
+					<Modified>2019-04-14</Modified>FIX ACCOMMODATION and onBOARD STAY add missing elements name, parent and use GROUP.   FIX TYPO on BoardingPermissione
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -345,7 +348,7 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>List of Accommodation FACILITies.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element ref="BoardingPermisssion" minOccurs="0"/>
+			<xsd:element ref="BoardingPermission" minOccurs="0"/>
 			<xsd:element ref="BookingProcessFacilityList" minOccurs="0"/>
 			<xsd:element ref="CouchetteFacilityList" minOccurs="0"/>
 			<xsd:element ref="GroupBookingFacility" minOccurs="0"/>
@@ -458,6 +461,11 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Facilities that apply to SITEs.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
+			<xsd:element ref="AccessFacilityList" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>List of ACCESS FACILITies. + v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element ref="EmergencyServiceList" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>List of EMERGENCY SERVICE FACILITies.</xsd:documentation>
@@ -491,11 +499,6 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="Staffing" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Classification of STAFFING.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element ref="AccessFacilityList" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>List of ACCESS FACILITies.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -575,42 +578,7 @@ Rail transport, Roads and Road transport
 							<xsd:group ref="VersionedChildGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
-							<xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
-							<xsd:element ref="FareClass" minOccurs="0">
-								<xsd:annotation>
-									<xsd:documentation>Fare class of Accommodation.</xsd:documentation>
-								</xsd:annotation>
-							</xsd:element>
-							<xsd:element ref="ClassOfUseRef" minOccurs="0"/>
-							<xsd:element ref="AccommodationFacility" minOccurs="0">
-								<xsd:annotation>
-									<xsd:documentation>Type of Accommodation . Default is seating.</xsd:documentation>
-								</xsd:annotation>
-							</xsd:element>
-							<xsd:element ref="CouchetteFacility" minOccurs="0">
-								<xsd:annotation>
-									<xsd:documentation>Type of Couchette.</xsd:documentation>
-								</xsd:annotation>
-							</xsd:element>
-							<xsd:element name="MaximumNumberOfBerths" type="xsd:integer" minOccurs="0"/>
-							<xsd:element ref="BerthFacility" minOccurs="0">
-								<xsd:annotation>
-									<xsd:documentation>Classification of BERTH FACILITY.</xsd:documentation>
-								</xsd:annotation>
-							</xsd:element>
-							<xsd:element name="ShowerFacility" type="SanitaryFacilityEnumeration" default="none" minOccurs="0">
-								<xsd:annotation>
-									<xsd:documentation>Shower facilities for accommodation.</xsd:documentation>
-								</xsd:annotation>
-							</xsd:element>
-							<xsd:element name="ToiletFacility" type="SanitaryFacilityEnumeration" default="none" minOccurs="0">
-								<xsd:annotation>
-									<xsd:documentation>Toilet facilities for accommodation.</xsd:documentation>
-								</xsd:annotation>
-							</xsd:element>
-							<xsd:element ref="GenderLimitation" minOccurs="0"/>
-							<xsd:element ref="NuisanceFacilityList" minOccurs="0"/>
-							<xsd:element ref="PassengerCommsFacilityList" minOccurs="0"/>
+							<xsd:group ref="AccommodationGroup"/>
 						</xsd:sequence>
 					</xsd:sequence>
 					<xsd:attribute name="id" type="AccommodationIdType" use="optional">
@@ -629,38 +597,7 @@ Rail transport, Roads and Road transport
 		<xsd:complexContent>
 			<xsd:extension base="VersionedChildStructure">
 				<xsd:sequence>
-					<xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
-					<xsd:element ref="FareClass" minOccurs="0">
-						<xsd:annotation>
-							<xsd:documentation>Fare class of ACCOMMODATION.</xsd:documentation>
-						</xsd:annotation>
-					</xsd:element>
-					<xsd:element ref="ClassOfUseRef" minOccurs="0"/>
-					<xsd:element ref="AccommodationFacility" minOccurs="0">
-						<xsd:annotation>
-							<xsd:documentation>Type of ACCOMMODATION. . Default is seating.</xsd:documentation>
-						</xsd:annotation>
-					</xsd:element>
-					<xsd:element ref="CouchetteFacility" minOccurs="0">
-						<xsd:annotation>
-							<xsd:documentation>Type of Couchette.</xsd:documentation>
-						</xsd:annotation>
-					</xsd:element>
-					<xsd:element name="MaximumNumberOfBerths" type="xsd:integer" minOccurs="0"/>
-					<xsd:element ref="BerthFacility" minOccurs="0">
-						<xsd:annotation>
-							<xsd:documentation>Classification of BERTH FACILITY.</xsd:documentation>
-						</xsd:annotation>
-					</xsd:element>
-					<xsd:element name="ShowerFacility" type="SanitaryFacilityEnumeration" default="none" minOccurs="0"/>
-					<xsd:element name="ToiletFacility" type="SanitaryFacilityEnumeration" default="none" minOccurs="0">
-						<xsd:annotation>
-							<xsd:documentation>Toilet facilities for ACCOMMODATION.</xsd:documentation>
-						</xsd:annotation>
-					</xsd:element>
-					<xsd:element ref="GenderLimitation" minOccurs="0"/>
-					<xsd:element ref="NuisanceFacilityList" minOccurs="0"/>
-					<xsd:element ref="PassengerCommsFacilityList" minOccurs="0"/>
+					<xsd:group ref="AccommodationGroup"/>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -670,41 +607,43 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Facilities that apply to SITEs.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element ref="EmergencyServiceList" minOccurs="0">
+			<xsd:element name="Name" type="MultilingualString" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>List of EMERGENCY SERVICE FACILITies.</xsd:documentation>
+					<xsd:documentation>Name of Accomodation _v1.1</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element ref="HireFacilityList" minOccurs="0">
+			<xsd:element ref="ServiceFacilitySetRef" minOccurs="0"/>
+			<xsd:element ref="FareClass" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>List of HIRE FACILITies.</xsd:documentation>
+					<xsd:documentation>Fare class of ACCOMMODATION.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element ref="LuggageLockerFacilityList" minOccurs="0">
+			<xsd:element ref="ClassOfUseRef" minOccurs="0"/>
+			<xsd:element ref="AccommodationFacility" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>List of LUGGAGE LOCKER FACILITies.</xsd:documentation>
+					<xsd:documentation>Type of ACCOMMODATION. . Default is seating.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element ref="LuggageServiceFacilityList" minOccurs="0">
+			<xsd:element ref="CouchetteFacility" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>List of LUGGAGE SERVICE FACILITies.</xsd:documentation>
+					<xsd:documentation>Type of Couchette.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element ref="MoneyFacilityList" minOccurs="0">
+			<xsd:element name="MaximumNumberOfBerths" type="xsd:integer" minOccurs="0"/>
+			<xsd:element ref="BerthFacility" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>List of MONEY FACILITies.</xsd:documentation>
+					<xsd:documentation>Classification of BERTH FACILITY.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element ref="ParkingFacilityList" minOccurs="0">
+			<xsd:element name="ShowerFacility" type="SanitaryFacilityEnumeration" default="none" minOccurs="0"/>
+			<xsd:element name="ToiletFacility" type="SanitaryFacilityEnumeration" default="none" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>List of PARKING FACILITies.</xsd:documentation>
+					<xsd:documentation>Toilet facilities for ACCOMMODATION.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element ref="Staffing" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Classification of STAFFING.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
+			<xsd:element ref="GenderLimitation" minOccurs="0"/>
+			<xsd:element ref="NuisanceFacilityList" minOccurs="0"/>
+			<xsd:element ref="PassengerCommsFacilityList" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ===ONBOARD STAY ====================================== -->
@@ -735,21 +674,7 @@ Rail transport, Roads and Road transport
 							<xsd:group ref="VersionedChildGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
-							<xsd:element ref="FareClass" minOccurs="0">
-								<xsd:annotation>
-									<xsd:documentation>Fare class to which Boarding permission applies.</xsd:documentation>
-								</xsd:annotation>
-							</xsd:element>
-							<xsd:element ref="BoardingPermisssion" minOccurs="0">
-								<xsd:annotation>
-									<xsd:documentation>Permissions for early boardiing and extended stays.</xsd:documentation>
-								</xsd:annotation>
-							</xsd:element>
-							<xsd:element name="Period" type="xsd:duration" minOccurs="0">
-								<xsd:annotation>
-									<xsd:documentation>Period allowed for boarding/ alighting before journey start /end.</xsd:documentation>
-								</xsd:annotation>
-							</xsd:element>
+							<xsd:group ref="OnboardStayGroup"/>
 						</xsd:sequence>
 					</xsd:sequence>
 					<xsd:attribute name="id" type="OnboardStayIdType" use="optional">
@@ -768,25 +693,40 @@ Rail transport, Roads and Road transport
 		<xsd:complexContent>
 			<xsd:extension base="VersionedChildStructure">
 				<xsd:sequence>
-					<xsd:element ref="FareClass" minOccurs="0">
-						<xsd:annotation>
-							<xsd:documentation>Fare class of Boarding permission.</xsd:documentation>
-						</xsd:annotation>
-					</xsd:element>
-					<xsd:element ref="BoardingPermisssion" minOccurs="0">
-						<xsd:annotation>
-							<xsd:documentation>Type of Accommodation . Default is seating.</xsd:documentation>
-						</xsd:annotation>
-					</xsd:element>
-					<xsd:element name="Period" type="xsd:duration" minOccurs="0">
-						<xsd:annotation>
-							<xsd:documentation>Period allowed for boarding/ alighting before journey start /end.</xsd:documentation>
-						</xsd:annotation>
-					</xsd:element>
+					<xsd:group ref="OnboardStayGroup"/>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
+	<xsd:group name="OnboardStayGroup">
+		<xsd:annotation>
+			<xsd:documentation>Facilities that apply to SITEs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Name" type="MultilingualString" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Name of ON BOARD STay +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="ServiceFacilitySetRef" minOccurs="0"/>
+			<xsd:element ref="FareClass" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Fare class of Boarding permission.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="ClassOfUseRef" minOccurs="0"/>
+			<xsd:element ref="BoardingPermission" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Type of Accommodation . Default is seating.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Period" type="xsd:duration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Period allowed for boarding/ alighting before journey start /end.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
 	<!-- ======================================== -->
 	<!-- === Site Access FACILITY====================================== -->
 	<xsd:element name="AccessFacility" type="AccessFacilityEnumeration" default="unknown">
@@ -914,7 +854,7 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 	</xsd:element>
 	<!-- === Booking FACILITY====================================== -->
-	<xsd:element name="BoardingPermisssion" type="BoardingPermissionEnumeration">
+	<xsd:element name="BoardingPermission" type="BoardingPermissionEnumeration">
 		<xsd:annotation>
 			<xsd:documentation>Classification of BOARDING PERMISSION - UIC 7161 Code list.</xsd:documentation>
 		</xsd:annotation>

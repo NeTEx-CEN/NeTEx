@@ -39,6 +39,15 @@ There is also an Oxygen project file:
 ----
 # Change Log 
 
+Fix 2019.04.15 *Part1-IFOPT* NJSK Fix add missing element to TypeOfpassengerInformationEquipment 
+   * _Updates to xml examples_: 
+   	* netex_passengerInformationEquipment_version .xml 
+
+Fix 2019.04.14 *Part1-IFOPT* NJSK Fix ACCOMODATION and ONBOARD STAY - add missing elements.
+ * Correct typo on BoardingPermission.
+   * _Updates to xml examples_: 
+   	* netex_passengerEquipment_version .xml
+
 Fix 2019.04.07 *Part1-IFOPT* NJSK Add back missing attribute to ___SanitaryEquipment  / NumberofToilets___. 
    * _Updates to xml examples_: 
    	* netex_passengerEquipment_version .xml

@@ -16,8 +16,11 @@
 				<Contributor>CEN TC278 WG3 SG9 Team.</Contributor>
 				<Coverage>Europe</Coverage>
 				<Creator>First Drafted for NeTEx version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.  mailto:schemer@netex.org.uk</Creator>
-							<Date>
-					<Modified>2019-04-10</Modified>Fix add constraints for ParkingProperties and ComoanionUserProfile/ParefRef
+				<Date>
+					<Modified>2019-04-14</Modified>Fix add constraints for VehicleStopingPosition  and VehicleQuayAlignment and VehiclePositionAlignment
+				</Date>
+				<Date>
+					<Modified>2019-04-10</Modified>Fix add constraints for ParkingProperties and CompanionUserProfile/ParentRef
 				</Date>					
 				<Date>
 					<Modified>2019-03-25</Modified>Fix: Integrate fix by CD with other constraint changes: Add EquipmentPlace  to  Place_AnyVersionedKey.
@@ -60,7 +63,7 @@
 				<Date>
 					<Modified>2018-01-07</Modified> Remove trailing blanks on names</Date>
 				<Date>
-					<Modified>2017-08-10</Modified> Align with TM6 
+					<Modified>2017-08-10</Modified>Align with TM6 
 					  Rename Passenger Contract   to FareContract. 
 					  Rename Passenger Contract Event to FareContractEntry. 	
 					  Rename Type of Passenger Contract  to TypeOfFareContract. 	
@@ -3354,6 +3357,76 @@
 			<xsd:selector xpath=".//netex:VehicleStoppingPlace"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====VehicleStoppingPosition============================== -->
+		<!-- =====VehicleStoppingPosition unique========================== -->
+		<xsd:unique name="VehicleStoppingPosition_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [VehicleStoppingPosition Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:VehicleStoppingPosition"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====VehicleStoppingPosition Key ========================== -->
+		<xsd:keyref name="VehicleStoppingPosition_KeyRef" refer="netex:VehicleStoppingPosition_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:VehicleStoppingPositionRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="VehicleStoppingPosition_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:VehicleStoppingPosition"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		
+		<!-- =====VehicleQuayAlignment============================== -->
+		<!-- =====VehicleQuayAlignment unique========================== -->
+		<xsd:unique name="VehicleQuayAlignment_UniqueBy_Id_Version_Order">
+			<xsd:annotation>
+				<xsd:documentation>Every [VehicleQuayAlignment Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:VehicleQuayAlignment"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+						<xsd:field xpath="@order"/>
+		</xsd:unique>
+		<!-- =====VehicleQuayAlignment Key ========================== -->
+		<xsd:keyref name="VehicleQuayAlignment_KeyRef" refer="netex:VehicleQuayAlignment_AnyVersionedKey_ordered">
+			<xsd:selector xpath=".//netex:VehicleQuayAlignmentRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+						<xsd:field xpath="@order"/>
+		</xsd:keyref>
+		<xsd:key name="VehicleQuayAlignment_AnyVersionedKey_ordered">
+			<xsd:selector xpath=".//netex:VehicleQuayAlignment"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+						<xsd:field xpath="@order"/>
+		</xsd:key>
+		<!-- =====VehiclePositionAlignment============================== -->
+		<!-- =====VehiclePositionAlignment unique========================== -->
+		<xsd:unique name="VehiclePositionAlignment_UniqueBy_Id_Version_Order">
+			<xsd:annotation>
+				<xsd:documentation>Every [VehiclePositionAlignment Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:VehiclePositionAlignment"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+						<xsd:field xpath="@order"/>
+		</xsd:unique>
+		<!-- =====VehiclePositionAlignment Key ========================== -->
+		<xsd:keyref name="VehiclePositionAlignment_KeyRef" refer="netex:VehiclePositionAlignment_AnyVersionedKey_ordered">
+			<xsd:selector xpath=".//netex:VehiclePositionAlignmentRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+						<xsd:field xpath="@order"/>
+		</xsd:keyref>
+		<xsd:key name="VehiclePositionAlignment_AnyVersionedKey_ordered">
+			<xsd:selector xpath=".//netex:VehiclePositionAlignment"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+						<xsd:field xpath="@order"/>
 		</xsd:key>
 		<!-- =====FlexibleStopPlace============================== -->
 		<!-- =====FlexibleStopPlace unique========================== -->
