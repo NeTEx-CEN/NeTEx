@@ -20,9 +20,11 @@
 				<Date>
 					<Modified>2014-03-31</Modified>
 				</Date>
-				<Date><Modified>2017-05-26</Modified> Fix GeneralGroupOfEntities in frame so that any type of group of entities allowed  
+				<Date>
+					<Modified>2017-05-26</Modified> Fix GeneralGroupOfEntities in frame so that any type of group of entities allowed  
 				</Date>
-				<Date><Modified>2017-10-01</Modified>CR0006 Add infolinks to  GroupOfEntities so can have links on timetable etc.
+				<Date>
+					<Modified>2017-10-01</Modified>CR0006 Add infolinks to  GroupOfEntities so can have links on timetable etc.
 				</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines GROUPING types.</p>
@@ -62,6 +64,18 @@ Rail transport, Roads and Road transport
 		<xsd:documentation>NeTEx: GROUPING types for NeTEx.</xsd:documentation>
 	</xsd:annotation>
 	<!-- =====GROUPING=============================================== -->
+	<xsd:complexType name="groupOfEntitiesInFrame_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for containment in frame of GROUP OF ENTITIes.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="GroupOfEntities" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 	<xsd:element name="GroupOfEntities" type="GroupOfEntities_VersionStructure" abstract="true" substitutionGroup="DataManagedObject">
 		<xsd:annotation>
 			<xsd:documentation>A grouping of ENTITies which will be commonly referenced for a specific purpose.</xsd:documentation>
@@ -118,18 +132,6 @@ Rail transport, Roads and Road transport
 		</xsd:sequence>
 	</xsd:group>
 	<!-- =====GROUPING=============================================== -->
-	<xsd:complexType name="groupOfEntitiesInFrame_RelStructure">
-		<xsd:annotation>
-			<xsd:documentation>Type for containment in frame of GROUP OF ENTITIes.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:complexContent>
-			<xsd:extension base="containmentAggregationStructure">
-				<xsd:sequence>
-					<xsd:element ref="GroupOfEntities" maxOccurs="unbounded"/>
-				</xsd:sequence>
-			</xsd:extension>
-		</xsd:complexContent>
-	</xsd:complexType>
 	<xsd:element name="GeneralGroupOfEntities" abstract="false" substitutionGroup="GroupOfEntities">
 		<xsd:annotation>
 			<xsd:documentation>A grouping of ENTITies which will be commonly referenced for a specific purpose.</xsd:documentation>
@@ -190,6 +192,7 @@ Rail transport, Roads and Road transport
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->
+	<!-- ===== PURPOSE OF ROUPING=============================================== -->
 	<xsd:element name="PurposeOfGrouping" substitutionGroup="TypeOfValue">
 		<xsd:annotation>
 			<xsd:documentation>Functional purpose for which GROUPs of elements are defined. The PURPOSE OF GROUPING may be restricted to one or more types of the given object.</xsd:documentation>
@@ -198,6 +201,9 @@ Rail transport, Roads and Road transport
 			<xsd:complexContent>
 				<xsd:restriction base="PurposeOfGrouping_ValueStructure">
 					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
 						<xsd:sequence>
 							<xsd:group ref="DataManagedObjectGroup"/>
 						</xsd:sequence>

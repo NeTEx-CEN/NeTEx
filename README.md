@@ -39,22 +39,66 @@ There is also an Oxygen project file:
 ----
 # Change Log 
 
-Fix 2019.04.15 *Part1-IFOPT* NJSK Fix add missing element to TypeOfpassengerInformationEquipment 
-   * _Updates to xml examples_: 
+### 2019.04.15 FIXDoc *Part1-TP* ___TimeDemandType___: Add missing ___OperationalCOntextRef___
+   * _Updates to xml schema_: 
+   	* netex_timedDemandType_version .xml 
+
+Add missing OperationalCOntextRef to TimeDemandType
+### 2019.04.15 FIXDoc *Part1-IFOPT* NJSK Fix ___TypeOfEntit__ descendants make visible.
+  * _Updates to xml schema_: 
+   * netex_organisation_version.xsd 
+   * netex_responsibilitySet_version.xsd 
+   * netex_place_version.xsd 
+   * netex_pointAndLink_version.xsd 
+   * netex_pointAndLinkSequence_version.xsd 
+   * netex_projection_version.xsd 
+   * netex_spatialFeature_version.xsd 
+   * netex_zone_version.xsd 
+   * netex_equipment_version.xsd 
+   * netex_facility_version.xsd 
+   * netex_notice_version.xsd 
+   * netex_securityList_version.xsd 
+   * netex_serviceRestrictions_version.xsd 
+   * netex_activation_version.xsd 
+   * netex_line_version.xsd 
+   * netex_journeyPattern_version.xsd 
+   * netex_timeDemandType_version.xsd 
+   * netex_ifopt_checkConstraint_version.xsd 
+   * netex_ifopt_serviceFeature_version.xsd 
+   * netex_flexibleService_version.xsd 
+   * netex_accessRightParameter_version.xsd 
+   * netex_fareStructureElement_version.xsd 
+   * netex_salesOfferPackage_version.xsd 
+   * netex_retailConsortium_version.xsd 
+   * netex_salesContract_version.xsd
+   * netex_coupledJourney_version.xsd 
+   * netex_usageParameter_version.xsd
+  
+### 2019.04.15 FIXDoc *netex_transportOperator_version .xml Part1-IFOPT* NJSK Fix ___Authority___: Add missing ___CountryRef___. 
+   * _Updates to xml schema_: 
+   	* netex_transportOperator_version .xml 
+   	
+### 2019.04.15 FIXDoc*Part1-IFOPT* NJSK Fix add missing ___TypeOfEntity___ to ___TypeOfPassengerInformationEquipment___ 
+   * _Updates to xml schema_: 
+      	* netex_responsibility.xml 
+   	* netex_typeOfFrame_version .xml 
+
+### 2019.04.15 FIXDoc *Part1-IFOPT* NJSK Fix add missing element to ___TypeOfPassengerInformationEquipment___
+   * _Updates to xml schema_: 
    	* netex_passengerInformationEquipment_version .xml 
 
-Fix 2019.04.14 *Part1-IFOPT* NJSK Fix ACCOMODATION and ONBOARD STAY - add missing elements.
+### 2019.04.14 FIXFIXDocPart1-RC* NJSK Fix ___Accommodation and OOnBoardStay___ - add missing elements.
  * Correct typo on BoardingPermission.
-   * _Updates to xml examples_: 
+   * _Updates to xml schema_: 
    	* netex_passengerEquipment_version .xml
-
-Fix 2019.04.07 *Part1-IFOPT* NJSK Add back missing attribute to ___SanitaryEquipment  / NumberofToilets___. 
-   * _Updates to xml examples_: 
+   	
+### 2019.04.07 FIX*Part1-IFOPT* NJSK Add back missing attribute to ___SanitaryEquipment  / NumberofToilets___. 
+   * _Updates to xml schema_: 
    	* netex_passengerEquipment_version .xml
 
 ### 2019.04.07 FIX  *FARES* Tidy up - remodularise move TravelSpecifccation to be with CustomerPurchasePackage
 revise clasifcation types.
-* _Updates to xml schema_: 
+   * _Updates to xml schema_: 
 	* netex_fareStructureElement_support.xsd
     	* netex_fareProduct_support.xsd
   	* netex_fareProduct_version.xsd
