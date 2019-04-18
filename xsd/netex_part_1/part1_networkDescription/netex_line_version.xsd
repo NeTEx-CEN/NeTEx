@@ -53,6 +53,9 @@
 				<Date>
 					<Modified>2019-03-12</Modified>EURA-84 (and GTFS)  Add default PaymentMethod, TypesOfPaymentMethods   and Payment Moments attribute to NETWORK, GROUP OF LINES and LINE   
 				</Date>
+				<Date>
+					<Modified>2019-04-18</Modified>Allow PRESENTATION on DestinationDIsplay  
+				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the LINE types.</p>
@@ -651,9 +654,9 @@ Rail transport, Roads and Road transport
 		<xsd:sequence>
 			<xsd:group ref="DestinationDisplayNameGroup"/>
 			<xsd:group ref="DestinationDisplayCodeGroup"/>
-			<xsd:element name="SecondaryName" type="SecondaryDestinationDisplayNameStructure" minOccurs="0">
+			<xsd:element name="Presentation" type="PresentationStructure" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Alternative name and Code to use in a specifc context. +V1.1</xsd:documentation>
+					<xsd:documentation>Preferred presentation attributes to use when rendering destiation on maps, etc. +v1.1</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="vias" type="vias_RelStructure" minOccurs="0">
@@ -663,7 +666,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element name="variants" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>constraint destination on DESTINATION DISPLAY.</xsd:documentation>
+					<xsd:documentation>DEITINATION DISPLAY VARIANT for DESTINATION DISPLAY. Variants may  be for use in a specifc context or on a specifc media, or a combination of both. </xsd:documentation>
 				</xsd:annotation>
 				<xsd:complexType>
 					<xsd:complexContent>
@@ -723,33 +726,6 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="PrivateCode" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
-	<xsd:complexType name="SecondaryDestinationDisplayNameStructure" abstract="false">
-		<xsd:annotation>
-			<xsd:documentation>Type for a DESTINATION DISPLAY. SECONDARY NAME  +v1.1</xsd:documentation>
-		</xsd:annotation>
-		<xsd:sequence>
-			<xsd:element name="Name" type="MultilingualString" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Secodnary Name of destination on DESTINATION DISPLAY.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="ShortName" type="MultilingualString" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Short Name on Secondary  DESTINATION DISPLAY.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="SecondaryNameContext" type="DestinationDisplayContextEnumeration" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Context in which to use thie secondary name</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="PublicCode" type="xsd:normalizedString" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Secondary Public code to show for Destination.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-		</xsd:sequence>
-	</xsd:complexType>
 	<!-- ======================================================================= -->
 	<xsd:complexType name="destinationDisplayVariants_RelStructure">
 		<xsd:annotation>
@@ -804,9 +780,14 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="DestinationDisplayRef" minOccurs="0"/>
-			<xsd:element name="DestinationDisplayVariantMediaType" type="DeliveryVariantTypeEnumeration">
+			<xsd:element name="DestinationDisplayContext" type="DestinationDisplayContextEnumeration" default="any" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Type of DESTINATION DISPLAY VARIANT.</xsd:documentation>
+					<xsd:documentation>Context in which to use thie secondary name.  Default is 'any'+v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DestinationDisplayVariantMediaType" type="DeliveryVariantTypeEnumeration" default="any">
+				<xsd:annotation>
+					<xsd:documentation>Type of DESTINATION DISPLAY VARIANT. Default is 'any'.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:group ref="DestinationDisplayNameGroup"/>
@@ -1107,11 +1088,6 @@ Rail transport, Roads and Road transport
 					<xsd:element ref="DestinationDisplayRef" minOccurs="0"/>
 					<xsd:group ref="DestinationDisplayNameGroup"/>
 					<xsd:group ref="DestinationDisplayCodeGroup"/>
-					<xsd:element name="SecondaryName" type="SecondaryDestinationDisplayNameStructure" minOccurs="0">
-						<xsd:annotation>
-							<xsd:documentation>Alternative name and Code to use in a specifc context. +V1.1</xsd:documentation>
-						</xsd:annotation>
-					</xsd:element>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
