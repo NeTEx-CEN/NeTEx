@@ -43,32 +43,34 @@ There is also an _Oxygen_  project file:
 ----
 # Change Log 
 
-
-### 2019.04.18 __CHECKPOINT__.
+### 2019.04.19 __CHECKPOINT__.
    - Revised  v1.1 versions of NeTEx UML diagrams, and revised draft NeTEx Part1, Part2 and Part3 documents correspond to this point.
-
    
-### 2019.04.18 FIX  *Parts3FARES3*: NJSK  Support Place to Place travel 
-  *  AccessRightParameterAdd AddressRef,  TopoographicPlaceRef and PlaceUseEnum.
-  *  Interchange rule a use of ServiceDesignator versus JourneyDesignator
+### 2019.04.19 FIX  *Parts3FARES3*: NJSK  Add missing __TypeOfFareTable__ element.
+  * _Updates to xml schema_:  
+	* netex_fareTable_version.xml   
+   
+### 2019.04.18 FIX  *Parts3FARES3*: NJSK  Support Place to Place travel. 
+  *  __AccessRightParameter__: Add __AddressRef__,  __TopoographicPlaceRef__ and __PlaceUseEnum__.
+  *  __InterchangeRule__   use of __ServiceDesignator__ versus __JourneyDesignator__
   * _Updates to xml schema_: 
 	* netex_accessRightParameter_support.xml  
 	* netex_accessRightParameter_version.xml  
 	* netex_travelSpecificationSummary_version.xml 
-	* 
 	
-### 2019.04.18 FIX  *Parts1,2,3*: NJSK  FIx tidy up Designators
-  *  AccessRightParameterAdd AddressRef,  TopoographicPlaceRef and PlaceUseEnum.
-  *  Modualrise Servcie and Journey designators. Add JourneyDesignator to InterchanegRule and GroupOfServiceJourneys member.
+### 2019.04.18 FIX  *Parts1,2,3*: NJSK  FIx Tdy up Designators.
+  * __AccessRightParameter: Add __AddressRef__,  __TopoographicPlaceRef__ and __PlaceUseEnum__.
+  * Modularise __ServiceDesignator__ and __JourneyDesignator__ (no functional change). 
+  * Add __JourneyDesignator__ to __InterchangeRule__ and __GroupOfServiceJourneysMember__.
   * _Updates to xml schema_: 	 
 	* netex_journeyDesignator_support.xml 
 	* netex_interchangeRuletravelSpecificationSummary_version.xml 
 	* netex_serviceJourney_version.xml 
 	
-### 2019.04.16 FIXDoc *Part1-IFOPT*: NJSK Parking correct dependencies.
+### 2019.04.16 FIXDoc *Part1-IFOPT*: NJSK __Parking__ - correct dependencies.
   * Drop __Parking / tariffs relationship__: __ParkingTariff__ can reference __Parking__ but not vice  versa.
   * Also add missing parents to __ParkingCapacity__. 
-  * NB this will break existing XML that uses __Parking /  charges__ relationship. 
+  * NB this will break existing XML that uses __Parking / charges__ relationship. 
   * _Updates to xml schema_: 
 	* netex_parking_version.xml
   * _Updates to xml examples_: 
@@ -150,7 +152,7 @@ There is also an _Oxygen_  project file:
    	* netex_passengerEquipment_version .xml
   * _Documentation Changes_:  [uml_diagram: ok], [doc-ok]
   
-### 2019.04.07 __FIX__   *FARES-ST*: NJSK Tidy up - remodularise: move __TravelSpecification__ to be with __CustomerPurchasePackage__.
+### 2019.04.07 __FIX__   *Part3FARES-ST*: NJSK Tidy up - remodularise: move __TravelSpecification__ to be with __CustomerPurchasePackage__.
   * Also revise __FareProduct__ classification types.
   * _Updates to xml schema_: 
 	* netex_fareStructureElement_support.xsd
