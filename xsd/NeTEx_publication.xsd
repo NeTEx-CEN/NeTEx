@@ -16,6 +16,11 @@
 				<Contributor>CEN TC278 WG3 SG9 Team.</Contributor>
 				<Coverage>Europe</Coverage>
 				<Creator>First Drafted for NeTEx version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.  mailto:schemer@netex.org.uk</Creator>
+								<Date>
+					<Modified>2019-04-24</Modified>Correctioons
+							(1) add constraints ref  for ParkingEntranceForVehicles and ParkingPasengerEANtrance
+							(2) DRop geneal ENtranceRef contraint
+						</Date>
 				<Date>
 					<Modified>2019-04-14</Modified>Fix add constraints for VehicleStopingPosition  and VehicleQuayAlignment and VehiclePositionAlignment
 				</Date>
@@ -91,11 +96,10 @@
 					<Modified>2017-03-27</Modified>Various 1.1 changes see CRS.   
 					              CR0038 revise constraints on ResponsibilityRole 				</Date>
 				<Date>
-					<Modified>2011-01-17</Modified>V0.94					<!-- Revised-->
+					<Modified>2011-01-17</Modified>V0.94 Revised
 				</Date>
 				<Date>
-					<Created>2010-09-04</Created>
-					<!-- Created from Siri.xsd -->
+					<Created>2010-09-04</Created>Created from Siri.xsd  
 				</Date>
 				<Description>
 					<p>netex Xml is an XML representation of the Transmodel model that can be used to exchange data objects between netex databases and other services.</p>. 
@@ -1017,17 +1021,18 @@
 			<xsd:field xpath="@version"/>
 			<xsd:field xpath="@order"/>
 		</xsd:key>
-		<!-- =====Zone============================== -->
-		<xsd:keyref name="Zone_AnyKeyRef" refer="netex:Zone_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:ZoneRef |   .//netex:ParentZoneRef | .//netex:ProjectedZoneRef | .//netex:ProjectToZoneRef  |.//netex:ProjectedObjectRef"/>
+		<!-- =====Zone============================== --> 
+ 	<xsd:keyref name="Zone_AnyKeyRef" refer="netex:Zone_AnyVersionedKey">
+
+			<xsd:selector xpath=" .//netex:ZoneRef |   .//netex:ParentZoneRef | .//netex:ProjectedZoneRef | .//netex:ProjectToZoneRef  |.//netex:ProjectedObjectRef"/>
 			<xsd:field xpath="@ref"/>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
 		<xsd:key name="Zone_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:Zone | .//netex:TariffZone | .//netex:FareZone | .//netex:RoutingConstraintZone | .//netex:ConnectionZone  | .//netex:PointOfInterest | .//netex:Parking | .//netex:ParkingArea | .//netex:ParkingBay | .//netex:TopographicPlace | .//netex:Quay | .//netex:AccessSpace | .//netex:PointOfInterestSpace | .//netex:StopPlace| .//netex:Garage| .//netex:EquipmentPlace | .//netex:FlexibleArea | .//netex:HailAndRideArea | .//netex:FlexibleQuay| .//netex:StopPlaceEntance | .//netex:Entrance | .//netex:PointOfInterestEntrance | .//netex:BoardingPosition | .//netex:VehicleStoppingPlace | .//netex:VehicleEntrance   | .//netex:TransportAdministrativeZone"/>
+			<xsd:selector xpath=".//netex:Zone | .//netex:TariffZone | .//netex:FareZone | .//netex:RoutingConstraintZone | .//netex:ConnectionZone  | .//netex:PointOfInterest | .//netex:Parking | .//netex:ParkingArea | .//netex:ParkingBay | .//netex:TopographicPlace | .//netex:Quay | .//netex:AccessSpace | .//netex:PointOfInterestSpace | .//netex:StopPlace| .//netex:Garage| .//netex:EquipmentPlace | .//netex:FlexibleArea | .//netex:HailAndRideArea | .//netex:FlexibleQuay| .//netex:StopPlaceEntrance |  .//netex:PointOfInterestEntrance |  .//netex:ParkingPassengerEntrance | .//netex:BoardingPosition | .//netex:VehicleStoppingPlace | .//netex:VehicleEntrance   | .//netex:TransportAdministrativeZone"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
-		</xsd:key>
+		</xsd:key>  
 		<!-- =====TariffZone============================== -->
 		<!-- =====TariffZone unique========================== -->
 		<xsd:unique name="TariffZone_UniqueBy_Id_Version">
@@ -1686,18 +1691,18 @@
 			<xsd:field xpath="@version"/>
 		</xsd:key>
 		<!-- =====EQUIPMENT Constraints========================= -->
-		<!-- =====Equipment unique========================== -->
-		<xsd:unique name="Equipment_UniqueBy_Id_Version">
+		<!-- ==== GENERAL)  Equipment unique========================== -->
+			<!-- <xsd:unique name="Equipment_UniqueBy_Id_Version">
 			<xsd:annotation>
 				<xsd:documentation>Every [Equipment Id + Version] must be unique within document.</xsd:documentation>
 			</xsd:annotation>
 			<xsd:selector xpath=".//netex:Equipment"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
-		</xsd:unique>
-		<!-- =====Equipment Key ========================== -->
-		<xsd:keyref name="Equipment_KeyRef" refer="netex:Equipment_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:EquipmentRef"/>
+		</xsd:unique>-->
+	   <!-- === (GENERAL) Equipment Key ========================== -->
+	 <!-- <xsd:keyref name="Equipment_KeyRef" refer="netex:Equipment_AnyVersionedKey">
+			 <xsd:selector xpath=".//netex:EquipmentRef"/>
 			<xsd:field xpath="@ref"/>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
@@ -1705,7 +1710,7 @@
 			<xsd:selector xpath=".//netex:Equipment | .//netex:PlaceEquipment | .//netex:InstalledEquipment | .//netex:ActualVehicleEquipment | .//netex:TicketValidatorEquipment | .//netex:TicketingEquipment   | .//netex:SanitaryEquipment  | .//netex:PassengerSafetyEquipment | .//netex:RubbishDisposalEquipment    |.//netex:PassengerInformationEquipment   | .//netex:EntranceEquipment  | .//netex:LiftEquipment |  .//netex:EscalatorEquipment | .//netex:TravelatorEquipment | .//netex:StaircaseEquipment | .//netex:RampEquipment  | .//netex:RoughSurface  | .//netex:PlaceLighting|  .//netex:PlaceSign |  .//netex:PlaceSign | .//netex:HeadingSign  | .//netex:GeneralSign   |.//netex:WaitingRoomEquipment   | .//netex:ShelterEquipment  | .//netex:SeatingEquipment | .//netex:TrolleyStandEquipment      | .//netex:LuggageLockerEquipment  |  .//netex:CycleParkingEquipment    |.//netex:AccessVehicleEquipment    |.//netex:WheelchairVehicleEquipment"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
-		</xsd:key>
+		</xsd:key> -->
 		<!-- =====TypeOfEquipment============================== -->
 		<!-- =====TypeOfEquipment unique========================== -->
 		<xsd:unique name="TypeOfEquipment_UniqueBy_Id_Version">
@@ -3157,17 +3162,17 @@
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====Entrance============================== -->
+		<!-- =====Entrance==============================  
 		<xsd:keyref name="Entrance_AnyKeyRef" refer="netex:Entrance_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:EntranceRef | .//netex:StopPlaceEntranceRef | .//netex:PointOfInterestEntranceRef"/>
 			<xsd:field xpath="@ref"/>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
 		<xsd:key name="Entrance_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:Entrance | .//netex:StopPlaceEntrance| .//netex:PointOfInterestEntrance"/>
+			<xsd:selector xpath="| .//netex:StopPlaceEntrance| .//netex:PointOfInterestEntrance |   .//netex:ParkingPassengerEntrance | .//netex:ParkingEntranceForVehicles"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
-		</xsd:key>
+		</xsd:key> -->
 		<!-- =====Level============================== -->
 		<!-- =====Level unique========================== -->
 		<xsd:unique name="Level_UniqueBy_Id_Version">
@@ -4022,7 +4027,7 @@
 		</xsd:unique>
 		<!-- =====RailwayJunction Key ========================== -->
 		<xsd:keyref name="RailwayJunction_KeyRef" refer="netex:RailwayJunction_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:RailwayJunctionRef | .//netex:RailwayPointRef | .//netex:RailwayElement/netex:FromPointRef | .//netex:RailwayElement/netex:ToPointRef"/>
+			<xsd:selector xpath=" .//netex:RailwayPointRef | .//netex:RailwayElement/netex:FromPointRef | .//netex:RailwayElement/netex:ToPointRef"/>
 			<xsd:field xpath="@ref"/>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
@@ -4064,7 +4069,7 @@
 		</xsd:unique>
 		<!-- =====WireJunction Key ========================== -->
 		<xsd:keyref name="WireJunction_KeyRef" refer="netex:WireJunction_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:WireJunctionRef |.//netex:WirePointRef | .//netex:WireElement/netex:FromPointRef | .//netex:WireElement/netex:ToPointRef"/>
+			<xsd:selector xpath=".//netex:WirePointRef | .//netex:WireElement/netex:FromPointRef | .//netex:WireElement/netex:ToPointRef"/>
 			<xsd:field xpath="@ref"/>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
