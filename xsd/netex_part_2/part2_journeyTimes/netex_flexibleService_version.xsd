@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2011 rel. 2 sp1 (x64) (http://www.altova.com) by Christophe Duquesne (Dryade) -->
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_flexibleService_version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_flexibleService_version">
 	<xsd:include schemaLocation="netex_flexibleService_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_part_1/part1_ifopt/netex_ifopt_flexibleStopPlace_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_part_1/part1_tacticalPlanning/netex_stopAssignment_support.xsd"/>
@@ -19,8 +19,10 @@
 					<Created>2010-09-04</Created>
 				</Date>
 				<Date>
-					<Modified>2011-02-05</Modified>
-					<!-- Name Space changes -->
+					<Modified>2011-02-05</Modified>Name Space changes
+				</Date>
+				<Date>
+					<Modified>2019-04-25</Modified>FIX - add reference to the journey for whiuch these are the properties !
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -38,7 +40,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2014</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -130,6 +132,16 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Elements for an individual FLEXIBLE SERVICE.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
+			<xsd:element ref="JourneyRef" minOccurs="0"/>
+			<xsd:group ref="FlexibleServiceCharacteristicsGroup"/>
+			<xsd:group ref="BookingArrangementsGroup"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="FlexibleServiceCharacteristicsGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements classifying an individual FLEXIBLE SERVICE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
 			<xsd:element ref="TypeOfFlexibleServiceRef" minOccurs="0"/>
 			<xsd:element name="FlexibleServiceType" type="FlexibleServiceEnumeration" minOccurs="0">
 				<xsd:annotation>
@@ -146,7 +158,6 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Whether the time of the service may be altered.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:group ref="BookingArrangementsGroup"/>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->
