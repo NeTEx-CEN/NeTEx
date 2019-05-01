@@ -43,6 +43,41 @@ There is also an _Oxygen_  project file:
 ----
 # Change Log 
 
+### 2019.05.01 FIX  *FRAMEWORK*: NJSK  Fix constraints  on __DefaultDataSourceRef__ and __DefaultResponsibilitySetRef__.
+  * ALso add EPIP draft profile metadata
+  * _Updates to xml schema_:  
+	* netex_production.xml  
+	* netex.spp 
+  * _Updates to xml examples_: 
+   	* uk_fxc_addon_HSP_plusbus.xml
+   	* Netex_era_toc_uk.xml
+   	* Netex_era_crossborder_de.xml
+   	* uk_fxc_pass_Metrobus_metrorider.xml
+   	* uk_fxc_trip_First_WoE_Line48_stage+Passes.xml
+   	* uk_fxc_trip_First_WoE_Line48_stage-distance_minimal1.xml
+   	* Netex_tap_tsi_tcvg_stations_1.xml
+   	* epip_common_profile.xml
+   	     	
+### 2019.04.29 FIX  *PART2:ND*: NJSK  Fix Constraints  on __JourneyPart__.
+  * _Updates to xml schema_:  
+	* netex_production.xml  
+	
+### 2019.04.28 FIX  *FRAMEWORK*: NJSK  Fix Constraints  on __ParkingPasengerEntrance__ and __VehicleEntranceForParking__.
+  * _Updates to xml schema_:  
+	* netex_production.xml	
+	* netex_parking_support.xml
+	* netex_parking_version.xml
+
+### 2019.05.01 FIX  *Parts2VS*: NJSK  Fix Add missing _ParentRef__ to __FlexibleService__.
+  * Also add missing flexble attributes to __SpecialService__
+  * _Updates to xml schema_:  
+	* netex_flexibleService.xml 
+	* netex_ServiceJourney.xml  
+	
+### 2019.04.29 FIX  *PART1:ND*: NJSK  Fix Dummy __TariffZone__ should be abstract.
+  * _Updates to xml schema_:   
+	* netex_zone_version.xml
+
 ### 2019.04.19 __CHECKPOINT__.
    - Revised  v1.1 versions of NeTEx UML diagrams, and revised draft NeTEx Part1, Part2 and Part3 documents correspond to this point.
    
