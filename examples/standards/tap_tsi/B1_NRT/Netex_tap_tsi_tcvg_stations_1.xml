@@ -32,11 +32,13 @@ The example is taken from ERA/TD/2009-04/INT: Annex B,1 of Tap TSI
 			<!--- =======FRAME DEFAULTS======== -->
 			<FrameDefaults>
 				<DefaultCodespaceRef ref="tap:tap"/>
-				<DefaultDataSourceRef ref="tap:1080" version="any"/>
 				<DefaultResponsibilitySetRef ref="tap:1080" version="any"/>
 			</FrameDefaults>
 			<frames>
-				<FareFrame id="tap:EXC01" version="any">
+				<FareFrame id="tap:EXC01" version="any" responsibilitySetRef="tap:1080" dataSourceRef="tap:db">
+					<FrameDefaults>
+						<DefaultDataSourceRef ref="tap:db" version="any"/>
+					</FrameDefaults>
 					<fareScheduledStopPoints>
 						<FareScheduledStopPoint id="15345" version="01">
 							<ValidBetween>
@@ -262,6 +264,9 @@ The example is taken from ERA/TD/2009-04/INT: Annex B,1 of Tap TSI
 					</fareScheduledStopPoints>
 				</FareFrame>
 				<ServiceFrame version="any" id="tap:EXC01">
+					<FrameDefaults>
+						<DefaultDataSourceRef ref="tap:db" version="any"/>
+					</FrameDefaults>
 					<tariffZones>
 						<TariffZone version="01" id="tap:11068">
 							<Name>Frankfurt (M)</Name>
@@ -283,6 +288,9 @@ The example is taken from ERA/TD/2009-04/INT: Annex B,1 of Tap TSI
 				<!-- ==== REUSABLE DEFINITIONS OF BORDER POINTS ===  -->
 				<FareFrame id="tap:fs02" version="any">
 					<Name>Tap COde  table b1.1.3 Border Points</Name>
+					<FrameDefaults>
+						<DefaultDataSourceRef ref="tap:uic" version="any"/>
+					</FrameDefaults>
 					<borderPoints>
 						<!-- === Example in b.1 ====    -->
 						<BorderPoint id="tap:19" version="01" dataSourceRef="tap:uic">
@@ -3396,6 +3404,14 @@ The example is taken from ERA/TD/2009-04/INT: Annex B,1 of Tap TSI
 				</FareFrame>
 				<!--- ========OPERATORS ========== -->
 				<ResourceFrame id="tap:EXC01" version="any">
+					<dataSources>
+						<DataSource id="tap:db" version="any">
+							<Name>DB</Name>
+						</DataSource>
+						<DataSource id="tap:uic" version="any">
+							<Name>DB</Name>
+						</DataSource>
+					</dataSources>
 					<responsibilitySets>
 						<ResponsibilitySet id="tap:1080" version="any">
 							<Name>Deutsche Bahn</Name>
