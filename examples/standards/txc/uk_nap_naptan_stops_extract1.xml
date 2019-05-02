@@ -104,8 +104,10 @@ The NaPTAN StopClassification and StopType can be used to determine how each typ
 			<TypeOfFrameRef ref="napt:UK_Stop_profile@composite" version="napt:v2.4"/>
 			<!-- ==== CODESPACES == -->
 			<codespaces>
-				<CodespaceRef ref="napt"/>
-				<CodespaceRef ref="nptg"/>
+				<CodespaceRef ref="napt_metadata"/>
+				<CodespaceRef ref="nptg_metadata"/>
+				<CodespaceRef ref="naptStop_data"/>
+				<CodespaceRef ref="naptArea_data"/>
 			</codespaces>
 			<frames>
 				<!---   STOP  AREAS   -->
@@ -114,7 +116,7 @@ The NaPTAN StopClassification and StopType can be used to determine how each typ
 					<Name>Stample STop and Stop Area data encoded NeTEx</Name>
 					<TypeOfFrameRef ref="napt:UK_Stop_profile@payload" version="napt:v2.4"/>
 					<FrameDefaults>
-						<DefaultCodespaceRef ref="napt"/>
+						<DefaultCodespaceRef ref="napt_metadata"/>
 						<DefaultDataSourceRef ref="napt:dft" version="napt:v2.4"/>
 						<DefaultResponsibilitySetRef ref="napt:stop_data" version="napt:v2.4"/>
 					</FrameDefaults>
@@ -226,15 +228,14 @@ The NaPTAN StopClassification and StopType can be used to determine how each typ
 								<!--	NaPTAN StopPoint.StopClassification  -->
 								<VehicleModes>bus</VehicleModes>
 								<!--	NaPTAN StopPoint.StopClassification  -->
-			 
 							</ScheduledStopPoint>
 							<StopPlace version="any" id="naptStop:260010966" responsibilitySetRef="nptgUkAdministrativeArea:060">
 								<Name>Netherley Road</Name>
 								<TopographicPlaceView>
-								 		<TopographicPlaceRef ref="nptgUkLocality:E0000004"/>
-								 			      <!--	NaPTAN StopPoint.Place. NptgLocalityRef  -->
-								 		<Name>Aberdeen</Name>
-								      <!--	NaPTAN StopPoint.Place. NptgLocalityName -->
+									<TopographicPlaceRef ref="nptgUkLocality:E0000004"/>
+									<!--	NaPTAN StopPoint.Place. NptgLocalityRef  -->
+									<Name>Aberdeen</Name>
+									<!--	NaPTAN StopPoint.Place. NptgLocalityName -->
 								</TopographicPlaceView>
 								<quays>
 									<Quay id="naptStop:260010966" version="1">
@@ -268,21 +269,16 @@ The NaPTAN StopClassification and StopType can be used to determine how each typ
 								<ShortStopCode type="napt:NaptanCode">kntgwjdg</ShortStopCode>
 								<!-- NAPT_<NaptanCode>  -->
 								<!-- NAPT_<Timingstatus>OTH  -->
-					 
 							</ScheduledStopPoint>
 							<StopPlace responsibilitySetRef="nptgUkAdministrativeArea:086" version="1" id="naptStop:2400100348@Place">
 								<Name>White Deer Park Nursing Home</Name>
 								<!-- NAPT_<NaptanCode>  -->
-								
-<TopographicPlaceView>
-								 		<TopographicPlaceRef ref="nptgUkLocality:E0015410"/>
-								 			      <!--	NaPTAN StopPoint.Place. NptgLocalityRef  -->
-								 		<Name>Somehwere TODO</Name>
-								      <!--	NaPTAN StopPoint.Place. NptgLocalityName -->
-								</TopographicPlaceView>								
-								
-								
-					
+								<TopographicPlaceView>
+									<TopographicPlaceRef ref="nptgUkLocality:E0015410"/>
+									<!--	NaPTAN StopPoint.Place. NptgLocalityRef  -->
+									<Name>Somehwere TODO</Name>
+									<!--	NaPTAN StopPoint.Place. NptgLocalityName -->
+								</TopographicPlaceView>
 								<AtCentre>false</AtCentre>
 								<!-- NAPT_<LocalityCentre>0 -->
 								<TransportMode>bus</TransportMode>
@@ -629,25 +625,25 @@ The NaPTAN StopClassification and StopType can be used to determine how each typ
 					<Description>This frame contains code  values used to validate NaPTAN data.</Description>
 					<TypeOfFrameRef ref="napt:UK_Stop_profile@resources" version="napt:v2.4"/>
 					<codespaces>
-						<Codespace id="napt">
+						<Codespace id="napt_metadata">
 							<Xmlns>napt</Xmlns>
 							<XmlnsUrl>http://www.naptan.org.uk</XmlnsUrl>
 							<Description>UK National Public Transport Access Nodes     codes</Description>
 						</Codespace>
 						<!-- A single napt: space could beused for codes, Napatn stops and Naptan stop areas (since th code  values do not overlap) ,  but we use more sepciic ones for clarity  -->
-						<Codespace id="naptStop">
+						<Codespace id="naptStop_data">
 							<Xmlns>naptStop</Xmlns>
 							<XmlnsUrl>http://www.naptan.org.uk/stops</XmlnsUrl>
 							<Description>UK National Public Transport Access Nodes: Stops.</Description>
 						</Codespace>
-						<Codespace id="naptArea">
+						<Codespace id="naptArea_data">
 							<Xmlns>naptArea</Xmlns>
 							<XmlnsUrl>http://www.naptan.org.uk/stopAreass</XmlnsUrl>
 							<Description>UK National Public Transport Access Nodes: Stops Areas.</Description>
 						</Codespace>
 					</codespaces>
 					<FrameDefaults>
-						<DefaultCodespaceRef ref="napt"/>
+						<DefaultCodespaceRef ref="napt_metadata"/>
 						<DefaultDataSourceRef ref="napt:dft" version="napt:v2.4"/>
 						<DefaultResponsibilitySetRef ref="napt:NaPTAN_metadata" version="napt:v2.4"/>
 					</FrameDefaults>
@@ -697,11 +693,10 @@ The NaPTAN StopClassification and StopType can be used to determine how each typ
 									<Name>UK Naptan Data </Name>
 									<FrameClassRef nameOfClass="CompositeFrame"/>
 									<LocatingSystemRef>WGS84</LocatingSystemRef>
-									
 								</TypeOfFrame>
 								<TypeOfFrame id="napt:UK_Stop_profile@data" version="napt:v2.4">
 									<Name>UK STop Data </Name>
-												<FrameClassRef nameOfClass="CompositeFrame"/>
+									<FrameClassRef nameOfClass="CompositeFrame"/>
 									<includes>
 										<TypeOfFrameRef version="napt:v2.4" ref="napt:UK_Stop_profile@payload"/>
 										<TypeOfFrameRef version="napt:v2.4" ref="napt:UK_Stop_profile@resources"/>
@@ -1219,9 +1214,8 @@ The NaPTAN StopClassification and StopType can be used to determine how each typ
 									<ModificationSet>all</ModificationSet>
 								</TypeOfFrame>
 								<TypeOfFrame version="napt:v2.4" id="napt:UK_Stop_profile@resources">
-							
 									<Name>NaPTAN Common fixed codes, etc</Name>
-											<FrameClassRef nameOfClass="ResourceFrame"/>
+									<FrameClassRef nameOfClass="ResourceFrame"/>
 									<ModificationSet>all</ModificationSet>
 								</TypeOfFrame>
 							</values>
@@ -1360,14 +1354,14 @@ The NaPTAN StopClassification and StopType can be used to determine how each typ
 					<Description>This frame contains code  valuesused to validate the NPTG  </Description>
 					<TypeOfFrameRef ref="nptg:UK_NPTG_profile_resources" version="nptg:v2.1"/>
 					<codespaces>
-						<Codespace id="nptg">
+						<Codespace id="nptg_metadata">
 							<Xmlns>nptg</Xmlns>
 							<XmlnsUrl>http://www.nptg.org.uk/nptg</XmlnsUrl>
 							<Description>UK National Public Transport gazetteer and NPTG codes.   .</Description>
 						</Codespace>
 					</codespaces>
 					<FrameDefaults>
-						<DefaultCodespaceRef ref="nptg"/>
+						<DefaultCodespaceRef ref="nptg_metadata"/>
 						<DefaultDataSourceRef ref="nptg:dft" version="nptg:v2.1"/>
 						<DefaultResponsibilitySetRef ref="nptg:NPTG_metadata" version="nptg:v2.1"/>
 					</FrameDefaults>
@@ -1424,7 +1418,7 @@ The NaPTAN StopClassification and StopType can be used to determine how each typ
 								</TypeOfFrame>
 								<TypeOfFrame version="nptg:v2.1" id="nptg:UK_NPTG_profile_payload">
 									<Name>NPTG Locations and  Tariff Zones Frame</Name>
-											<FrameClassRef nameOfClass="SiteeFrame"/>
+									<FrameClassRef nameOfClass="SiteeFrame"/>
 									<classes>
 										<ClassInFrame nameOfClass="TopographicPlace">
 											<!-- 	 TopographicPlace maps to  a NPTG Locality 
@@ -1891,7 +1885,7 @@ The NaPTAN StopClassification and StopType can be used to determine how each typ
 								</TypeOfFrame>
 								<TypeOfFrame version="nptg:v2.1" id="nptg:UK_NPTG_profile_resources">
 									<Name>NPTG Common fixed codes, etc</Name>
-									<FrameClassRef nameOfClass="ResourceFrame"/> 
+									<FrameClassRef nameOfClass="ResourceFrame"/>
 									<ModificationSet>all</ModificationSet>
 								</TypeOfFrame>
 							</values>
@@ -1964,7 +1958,6 @@ The NaPTAN StopClassification and StopType can be used to determine how each typ
 							<Name>Department for Transport</Name>
 						</GeneralOrganisation>
 					</organisations>
-		 
 				</ResourceFrame>
 			</frames>
 		</CompositeFrame>

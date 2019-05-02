@@ -41,7 +41,12 @@ There is an _Altova XMLSpy_ project file in the root directory  that provides an
 There is also an _Oxygen_  project file:
   - NeTEx.xpr
 ----
-# Change Log 
+# Change Log
+
+### 2019.05.02 FIX  *FRAMEWORK*: NJSK  Fix constraints  on __DefaultCodespaceRef__  
+  * Alos Corrections to  a lote of examples.
+  * _Updates to xml schema_:  
+	* netex_production.xml  
 
 ### 2019.05.01 FIX  *FRAMEWORK*: NJSK  Fix constraints  on __DefaultDataSourceRef__ and __DefaultResponsibilitySetRef__.
   * ALso add EPIP draft profile metadata
