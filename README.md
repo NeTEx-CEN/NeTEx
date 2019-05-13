@@ -1,4 +1,4 @@
-# NeTEx (Network Timetable EXchange) XML schema
+NumberOfSpacesWithRechargePoint# NeTEx (Network Timetable EXchange) XML schema
 (C) 2009-2019  NeTEx, CEN, Crown Copyright
 
 ## Core, Part 1 (Network),  Part 2 (Timetables), Part3 (Fares) Schemas
@@ -42,6 +42,10 @@ There is also an _Oxygen_  project file:
   - NeTEx.xpr
 ----
 # Change Log
+
+### 2019.05.14 EXMP  *FRAMEWORK*: NJSK  Add Serbia and Montenegro to country codes
+  * _Updates to xml schema_:  
+	* netex_countrySupport.xml  
 
 ### 2019.05.10 EXMP  *FRAMEWORK*: NJSK  Revise U exampls to have Profile data. 
  
