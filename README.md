@@ -43,22 +43,28 @@ There is also an _Oxygen_  project file:
 ----
 # Change Log
 
+### 2019.05.17 FIX  *PART3:FARES*: NJSK  __FarePointInPattern__Fix case on __isFareStage__ and __isForbidden__  
+  * _Updates to xml schema_:  
+	* netex_production.xml  
+
+### 2019.05.15 FIX  *PART1:ND*: NJSK  Add constraints  on __TypeOfLineRef__   
+  * _Updates to xml schema_:  
+	* netex_production.xml  
+
 ### 2019.05.14 EXMP  *FRAMEWORK*: NJSK  Add Serbia and Montenegro to country codes
   * _Updates to xml schema_:  
 	* netex_countrySupport.xml  
 
-### 2019.05.10 EXMP  *FRAMEWORK*: NJSK  Revise U exampls to have Profile data. 
- 
+### 2019.05.10 EXMP  *EXAMPLES*: NJSK  Revise UK examples to have UK Profile data. 
   * _Updates to xml examples:  Many 
 
-### 2019.05.19 FIX  *FRAMEWORK*: NJSK  Fix - remove empty value for CompassBearing enum
- 
+### 2019.05.19 FIX  *PART1:ND*: NJSK  Fix - remove empty value for CompassBearing enum
   * _Updates to xml schema_:  
 	* netex_locationTypes.xml  
 	* netex_routeInstructionVersion.xml  
 	 
 ### 2019.05.02 FIX  *FRAMEWORK*: NJSK  Fix constraints  on __DefaultCodespaceRef__  
-  * Alos Corrections to  a lote of examples.
+  * Also Corrections to a lot of examples.
   * _Updates to xml schema_:  
 	* netex_production.xml  
 
