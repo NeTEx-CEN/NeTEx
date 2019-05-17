@@ -217,6 +217,7 @@ At the end are shown some sample transactions showing the parameters that define
 						<FromDate>2017-01-01T00:00:00Z</FromDate>
 					</AvailabilityCondition>
 				</selectionValidityConditions>
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_NETWORK_FARE_OFFER:FXCP"/>
 				<NetworkFilterByValue>
 					<objectReferences>
 						<TopographicProjectionRef ref="nptgLocality:E0057699">Crawley</TopographicProjectionRef>
@@ -232,18 +233,20 @@ At the end are shown some sample transactions showing the parameters that define
 	<Description>Example of simple point to point fares.</Description>
 	<!-- =============== RESULTS =========== -->
 	<dataObjects>
-		<CompositeFrame version="1.0" id="mb:Metrobus@Pass@composite@Metrorider+Metrovoyager+Gatwick_card" dataSourceRef="mb:metrobus" responsibilitySetRef="mb:tariffs">
+		<CompositeFrame version="1.0" id="epd:UK:Metrobus:CompositeFrame_UK_PI_NETWORK_FARE_OFFER:Pass@Metrorider+Metrovoyager+Gatwick_card:mb" dataSourceRef="mb:metrobus" responsibilitySetRef="mb:tariffs">
 			<ValidBetween>
 				<FromDate>2017-01-01T00:00:00</FromDate>
 				<ToDate>2020-12-31T12:00:00</ToDate>
 			</ValidBetween>
 			<Name>MetroVoyager &amp; Metrorider - Fares Example</Name>
 			<Description>This is an example showing how one might encode part of the Metrovoyager fare table in NeTEx.</Description>
-			<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@composite"/>
+			<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_NETWORK_FARE_OFFER:FXCP"/>
 			<!--==== CODESPACEs ==== -->
 			<codespaces>
+				<CodespaceRef ref="epd_data"/>
+				<CodespaceRef ref="fxc_metadata"/>
 				<CodespaceRef ref="naptStop_data"/>
-				<CodespaceRef ref="nptgUkLocality_data"/>
+				<CodespaceRef ref="nptgLocality_data"/>
 				<CodespaceRef ref="noc_data"/>
 				<CodespaceRef ref="mb_data"/>
 			</codespaces>
@@ -251,27 +254,24 @@ At the end are shown some sample transactions showing the parameters that define
 			<FrameDefaults>
 				<!--- The default means that actually we could leave off all id s that belong to the mb: namespace. -->
 				<DefaultCodespaceRef ref="mb_data"/>
+				<DefaultDataSourceRef version="1.0" ref="mb:metrobus"/>
 				<DefaultResponsibilitySetRef version="1.0" ref="mb:tariffs"/>
 				<DefaultCurrency>GBP</DefaultCurrency>
 			</FrameDefaults>
 			<prerequisites>
-				<CompositeFrameRef version="1.0" ref="jsp:PlusBus@Pass@composite"/>
-				<CompositeFrameRef version="fxc:v1.0" ref="fxc:DfT@Generic"/>
+				<CompositeFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_METADATA_OFFER:FXCP:fxc"/>
 			</prerequisites>
 			<frames>
 				<!--==== FAREs ==== -->
 				<!-- Metrobus Pass  products -->
-				<FareFrame version="1.0" id="mb:Metrorider@Pass@network" responsibilitySetRef="mb:network_data">
+				<FareFrame version="1.0" id="epd:UK:Metrobus:FareFrame_UK_PI_FARE_NETWORK:Metrorider@pass:mb" responsibilitySetRef="mb:network_data">
 					<Name>Metrorider &amp; Metrovoyager fare network </Name>
-					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@fare_network"/>
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_FARE_NETWORK:FXCP"/>
 					<FrameDefaults>
-						<!--- The default means that actually we could leave off all id s that belong to the mb: namespace. -->
-						<DefaultCodespaceRef ref="mb_data"/>
 						<DefaultResponsibilitySetRef version="1.0" ref="mb:network_data"/>
 					</FrameDefaults>
 					<prerequisites>
-						<FareFrameRef version="fxc:v1.0" ref="fxc:Common_UK_Fare_Components"/>
-						<ResourceFrameRef version="1.0" ref="mb:Metrobus_resources"/>
+						<ResourceFrameRef version="1.0" ref="epd:UK:Metrobus:ResourceFrame_UK_PI_COMMON:Metrobus:mb"/>
 					</prerequisites>
 					<!--==== Fare zones === NB These are just a guess from the map s -->
 					<fareZones>
@@ -458,7 +458,7 @@ At the end are shown some sample transactions showing the parameters that define
 					<distributionChannels>
 						<DistributionChannel version="1.0" id="mb:travel_shop">
 							<Name>Metrobus travel shop</Name>
-							<OperatorRef version="1.0" ref="noc:137122">METR</OperatorRef>
+							<OperatorRef version="1.0" ref="noc:METR">137122</OperatorRef>
 							<distributionPoints>
 								<ScheduledStopPointRef ref="naptStop:9100GATWICK">EXTERNAL</ScheduledStopPointRef>
 								<RoadPointRef ref="mb:Metrobus_shop@Crawley">EXTERNAL</RoadPointRef>
@@ -467,17 +467,17 @@ At the end are shown some sample transactions showing the parameters that define
 						</DistributionChannel>
 					</distributionChannels>
 				</FareFrame>
-				<FareFrame version="1.0" id="mb:Metrorider@Pass@products" responsibilitySetRef="mb:tariffs">
+				<FareFrame version="1.0" id="epd:UK:Metrobus:FareFrame_UK_PI_FARE_PRODUCT:Metrorider@pass:mb" responsibilitySetRef="mb:tariffs">
 					<Name>Metrorider &amp; Metrovoyager fare products and  </Name>
-					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@products"/>
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_FARE_PRODUCT:FXCP"/>
 					<FrameDefaults>
 						<DefaultCodespaceRef ref="mb_data"/>
 						<DefaultResponsibilitySetRef version="1.0" ref="mb:tariffs"/>
 					</FrameDefaults>
 					<prerequisites>
-						<FareFrameRef version="1.0" ref="mb:Metrorider@Pass@network"/>
-						<SiteFrameRef version="1.0" ref="mb:Metrobus@Common_Resource@sales_network"/>
-						<ServiceCalendarFrameRef version="1.0" ref="mb:Metrobus@Service_Calendar"/>
+						<FareFrameRef version="1.0" ref="epd:UK:Metrobus:FareFrame_UK_PI_FARE_NETWORK:Metrorider@pass:mb"/>
+						<SiteFrameRef version="1.0" ref="epd:UK:Metrobus:SiteFrame_UK_PI_STOP:sale_pois:mb"/>
+						<ServiceCalendarFrameRef version="1.0" ref="epd:UK:Metrobus:ServiceCalendarFrame_UK_PI_CALENDAR:sale_pois:mb"/>
 					</prerequisites>
 					<!--==== Pricing Parameters ====-->
 					<PricingParameterSet version="1.0" id="mb:Pass@Metrorider">
@@ -522,7 +522,7 @@ At the end are shown some sample transactions showing the parameters that define
 							<documentLinks>
 								<InfoLink typeOfInfoLink="fareSheet">http://assets.goaheadbus.com/media/cms_page_media/3111/FARES%20CHART%20FOR%20WEB%20Jan%202017%20Proof%203.pdf</InfoLink>
 							</documentLinks>
-							<OperatorRef version="1.0" ref="noc:137122">METR</OperatorRef>
+							<OperatorRef version="1.0" ref="noc:METR">137122</OperatorRef>
 							<TypeOfTariffRef version="fxc:v1.0" ref="fxc:zonal"/>
 							<!--- ====Fare Structure======= -->
 							<geographicalIntervals>
@@ -791,7 +791,7 @@ At the end are shown some sample transactions showing the parameters that define
 							<documentLinks>
 								<InfoLink typeOfInfoLink="fareSheet">D</InfoLink>
 							</documentLinks>
-							<OperatorRef version="1.0" ref="noc:137122">METR</OperatorRef>
+							<OperatorRef version="1.0" ref="noc:METR">137122</OperatorRef>
 							<TypeOfTariffRef version="fxc:v1.0" ref="fxc:zonal"/>
 							<!--- ====Fare Structure======= -->
 							<geographicalIntervals>
@@ -897,7 +897,7 @@ ______	______	______	_	|	______	______	______	______	______	______	________	|	__
 							<ChargingMomentRef version="fxc:v1.0" ref="fxc:prepayment"/>
 							<ChargingMomentType>beforeTravel</ChargingMomentType>
 							<TypeOfFareProductRef version="fxc:v1.0" ref="fxc:standard_product@pass@period"/>
-							<OperatorRef version="1.0" ref="noc:137122">METR</OperatorRef>
+							<OperatorRef version="1.0" ref="noc:METR">137122</OperatorRef>
 							<ConditionSummary>
 								<FareStructureType>zonalFare</FareStructureType>
 								<TariffBasis>zone</TariffBasis>
@@ -954,7 +954,7 @@ ______	______	______	_	|	______	______	______	______	______	______	________	|	__
 							<ChargingMomentRef version="fxc:v1.0" ref="fxc:prepayment"/>
 							<ChargingMomentType>beforeTravel</ChargingMomentType>
 							<TypeOfFareProductRef version="fxc:v1.0" ref="fxc:standard_product@pass@period"/>
-							<OperatorRef version="1.0" ref="noc:137122">METR</OperatorRef>
+							<OperatorRef version="1.0" ref="noc:METR">137122</OperatorRef>
 							<ConditionSummary>
 								<FareStructureType>zonalFare</FareStructureType>
 								<TariffBasis>zone</TariffBasis>
@@ -1714,15 +1714,15 @@ ______	______	______	_	|	______	______	______	______	______	______	________	|	__
 						</GroupOfSalesOfferPackages>
 					</groupsOfSalesOfferPackages>
 				</FareFrame>
-				<FareFrame version="1.0" id="mb:Metrorider@Pass@prices" responsibilitySetRef="mb:tariffs">
+				<FareFrame version="1.0" id="epd:UK:Metrobus:FareFrame_UK_PI_FARE_PRICE:Metrorider@pass:mb" responsibilitySetRef="mb:tariffs">
 					<Name>Metrorider prices</Name>
-					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@prices"/>
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_FARE_PRICE:FXCP"/>
 					<FrameDefaults>
 						<DefaultCodespaceRef ref="mb_data"/>
 						<DefaultResponsibilitySetRef version="1.0" ref="mb:tariffs"/>
 					</FrameDefaults>
 					<prerequisites>
-						<FareFrameRef version="1.0" ref="mb:Metrorider@Pass@products"/>
+						<FareFrameRef version="1.0" ref="epd:UK:Metrobus:FareFrame_UK_PI_FARE_PRODUCT:Metrorider@pass:mb"/>
 					</prerequisites>
 					<fareTables>
 						<FareTable version="1.0" id="mb:Pass@metrorider">
@@ -2999,15 +2999,15 @@ ______	______	______	_	|	______	______	______	______	______	______	________	|	__
 					</fareTables>
 				</FareFrame>
 				<!-- Metrobus Carnet products -->
-				<FareFrame version="1.0" id="mb:Multitrip@Trip@products" responsibilitySetRef="mb:tariffs">
+				<FareFrame version="1.0" id="epd:UK:Metrobus:FareFrame_UK_PI_FARE_PRODUCT:Multitrip@trip:mb" responsibilitySetRef="mb:tariffs">
 					<Name>Multitrip product s</Name>
-					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@products"/>
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_FARE_PRODUCT:FXCP"/>
 					<FrameDefaults>
 						<DefaultCodespaceRef ref="mb_data"/>
 						<DefaultResponsibilitySetRef version="1.0" ref="mb:tariffs"/>
 					</FrameDefaults>
 					<prerequisites>
-						<FareFrameRef version="1.0" ref="mb:Metrorider@Pass@products"/>
+						<FareFrameRef version="1.0" ref="epd:UK:Metrobus:FareFrame_UK_PI_FARE_PRODUCT:Metrorider@pass:mb"/>
 					</prerequisites>
 					<!--====Tariff Structure ==== -->
 					<tariffs>
@@ -3023,7 +3023,7 @@ ______	______	______	_	|	______	______	______	______	______	______	________	|	__
 							<documentLinks>
 								<InfoLink typeOfInfoLink="fareSheet">http://assets.goaheadbus.com/media/cms_page_media/3111/FARES%20CHART%20FOR%20WEB%20Jan%202017%20Proof%203.pdf</InfoLink>
 							</documentLinks>
-							<OperatorRef version="1.0" ref="noc:137122">METR</OperatorRef>
+							<OperatorRef version="1.0" ref="noc:METR">137122</OperatorRef>
 							<TypeOfTariffRef version="fxc:v1.0" ref="fxc:point_to_point"/>
 							<!--- ====Fare Structure======= -->
 							<!-- ==FARE STRUCTURE ELEMENTS -->
@@ -3085,7 +3085,7 @@ ______	______	______	_	|	______	______	______	______	______	______	________	|	__
 							<ChargingMomentRef version="fxc:v1.0" ref="fxc:prepayment"/>
 							<ChargingMomentType>beforeTravel</ChargingMomentType>
 							<TypeOfFareProductRef version="fxc:v1.0" ref="fxc:standard_product@carnet@trips"/>
-							<OperatorRef version="1.0" ref="noc:137122">METR</OperatorRef>
+							<OperatorRef version="1.0" ref="noc:METR">137122</OperatorRef>
 							<ConditionSummary>
 								<FareStructureType>zonalFare</FareStructureType>
 								<TariffBasis>zone</TariffBasis>
@@ -3188,15 +3188,15 @@ ______	______	______	_	|	______	______	______	______	______	______	________	|	__
 						</SalesOfferPackage>
 					</salesOfferPackages>
 				</FareFrame>
-				<FareFrame version="1.0" id="mb:Multitrip@Trip@prices" responsibilitySetRef="mb:tariffs">
+				<FareFrame version="1.0" id="epd:UK:Metrobus:FareFrame_UK_PI_FARE_PRICE:Multitrip@trip:mb" responsibilitySetRef="mb:tariffs">
 					<Name>Multitrip product prices</Name>
-					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@prices"/>
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_FARE_PRICE:FXCP"/>
 					<FrameDefaults>
 						<DefaultCodespaceRef ref="mb_data"/>
 						<DefaultResponsibilitySetRef version="1.0" ref="mb:tariffs"/>
 					</FrameDefaults>
 					<prerequisites>
-						<FareFrameRef version="1.0" ref="mb:Multitrip@Trip@products"/>
+						<FareFrameRef version="1.0" ref="epd:UK:Metrobus:FareFrame_UK_PI_FARE_PRODUCT:Multitrip@trip:mb"/>
 					</prerequisites>
 					<!--====Tariff Structure ==== -->
 					<fareTables>
@@ -3324,12 +3324,13 @@ ______	______	______	_	|
 					</fareTables>
 				</FareFrame>
 				<!-- Metrobus Gatrwickarea  Pass -->
-				<FareFrame version="1.0" id="mb:Gatwick_travelcard@Pass@products" responsibilitySetRef="mb:tariffs">
+				<FareFrame version="1.0" id="epd:UK:Metrobus:FareFrame_UK_PI_FARE_PRODUCT:Gatwick_travelcard@Pass:mb" responsibilitySetRef="mb:tariffs">
 					<Name>Gatwick Travelcard</Name>
-					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@products"/>
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_FARE_PRODUCT:FXCP"/>
 					<prerequisites>
-						<ServiceFrameRef version="1.0" ref="mb:Gatwick_travelcard@Pass@network"/>
-						<FareFrameRef version="1.0" ref="mb:Metrorider@Pass@products"/>
+						<ServiceFrameRef version="1.0" ref="epd:UK:Metrobus:ServiceFrame_UK_PI_NETWORK:Gatwick_travelcard@Pass:mb"/>
+						<FareFrameRef version="1.0" ref="epd:UK:Metrobus:FareFrame_UK_PI_FARE_PRODUCT:Metrorider@pass:mb"/>
+						<FareFrameRef version="1.0" ref="epd:UK:Easit:FareFrame_UK_PI_FARE_PRODUCT:Easit@discount:ezt"/>
 					</prerequisites>
 					<!--====Tariff Structure ==== -->
 					<tariffs>
@@ -3343,7 +3344,7 @@ ______	______	______	_	|
 							<documentLinks>
 								<InfoLink typeOfInfoLink="resource">https://www.metrobus.co.uk/gatwick-staff-travel/</InfoLink>
 							</documentLinks>
-							<OperatorRef version="1.0" ref="noc:137122">METR</OperatorRef>
+							<OperatorRef version="1.0" ref="noc:METR">137122</OperatorRef>
 							<TypeOfTariffRef version="fxc:v1.0" ref="fxc:zonal"/>
 							<!--- ====Fare Structure======= -->
 							<timeIntervals>
@@ -3430,7 +3431,7 @@ Please note that Gatwick Travelcards are not transferable and can only be used b
 							<ChargingMomentRef version="fxc:v1.0" ref="fxc:prepayment"/>
 							<ChargingMomentType>beforeTravel</ChargingMomentType>
 							<TypeOfFareProductRef version="fxc:v1.0" ref="fxc:standard_product@pass@period"/>
-							<OperatorRef version="1.0" ref="noc:137122">METR</OperatorRef>
+							<OperatorRef version="1.0" ref="noc:METR">137122</OperatorRef>
 							<ConditionSummary>
 								<FareStructureType>zonalFare</FareStructureType>
 								<TariffBasis>zone</TariffBasis>
@@ -3499,15 +3500,15 @@ Please note that Gatwick Travelcards are not transferable and can only be used b
 						</SalesOfferPackage>
 					</salesOfferPackages>
 				</FareFrame>
-				<FareFrame version="1.0" id="mb:Gatwick_travelcard@Pass@prices" responsibilitySetRef="mb:tariffs">
+				<FareFrame version="1.0" id="epd:UK:Metrobus:FareFrame_UK_PI_FARE_PRICE:Gatwick_travelcard@Pass:mb" responsibilitySetRef="mb:tariffs">
 					<Name>Gatwick Travelcard prices</Name>
-					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@prices"/>
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_FARE_PRICE:FXCP"/>
 					<FrameDefaults>
 						<DefaultCodespaceRef ref="mb_data"/>
 						<DefaultResponsibilitySetRef version="1.0" ref="mb:tariffs"/>
 					</FrameDefaults>
 					<prerequisites>
-						<FareFrameRef version="1.0" ref="mb:Metrorider@Pass@products"/>
+						<FareFrameRef version="1.0" ref="epd:UK:Metrobus:FareFrame_UK_PI_FARE_PRODUCT:Gatwick_travelcard@Pass:mb"/>
 					</prerequisites>
 					<!--==== Fare Prices ==== -->
 					<fareTables>
@@ -3545,9 +3546,9 @@ Please note that Gatwick Travelcards are not transferable and can only be used b
 						</FareTable>
 					</fareTables>
 				</FareFrame>
-				<ServiceFrame version="1.0" id="mb:Gatwick_travelcard@Pass@network" responsibilitySetRef="mb:tariffs">
+				<ServiceFrame version="1.0" id="epd:UK:Metrobus:ServiceFrame_UK_PI_NETWORK:Gatwick_travelcard@Pass:mb" responsibilitySetRef="mb:tariffs">
 					<Name>Lines for Gatwick Travelcard</Name>
-					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@service_network"/>
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_NETWORK:FXCP"/>
 					<groupsOfLines>
 						<GroupOfLines id="mb:Gatwick_travelcard@included" version="1.0">
 							<Name>Lines for Gatwick Travelcard</Name>
@@ -3585,25 +3586,288 @@ Please note that Gatwick Travelcards are not transferable and can only be used b
 						</GroupOfLines>
 					</groupsOfLines>
 				</ServiceFrame>
-				<!-- Easit discount  Card -->
-				<FareFrame version="1.0" id="ezt:Easit@Discount@products" responsibilitySetRef="mb:tariffs">
-					<Name>easit cards</Name>
-					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@products"/>
+				<!-- ====== MB Operator resources -->
+				<SiteFrame version="1.0" id="epd:UK:Metrobus:SiteFrame_UK_PI_STOP:sale_pois:mb" responsibilitySetRef="mb:tariffs">
+					<Name>Common site elements for Metrobus</Name>
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_STOP:FXCP"/>
+					<FrameDefaults>
+						<DefaultCodespaceRef ref="mb_data"/>
+						<DefaultDataSourceRef ref="mb:metrobus" version="1.0"/>
+						<DefaultResponsibilitySetRef ref="mb:tariffs" version="1.0"/>
+					</FrameDefaults>
+					<pointsOfInterest>
+						<PointOfInterest version="1.0" id="mb:travel_shop@Crawley">
+							<validityConditions>
+								<AvailabilityCondition version="1.0" id="mb:travel_shop@Crawley">
+									<Name>Opening Hours</Name>
+									<Description>0830-1800 on Mondays to Fridays 0830-1700 on Saturdays 1030-1630 on Sundays &amp; Public Holidays.</Description>
+									<IsAvailable>true</IsAvailable>
+									<dayTypes>
+										<DayTypeRef version="1.0" ref="mb:travel_shop@Crawley@M-F"/>
+										<DayTypeRef version="1.0" ref="mb:travel_shop@Crawley@Sat"/>
+										<DayTypeRef version="1.0" ref="mb:travel_shop@Crawley@Sun"/>
+										<DayTypeRef version="1.0" ref="mb:travel_shop@Crawley@Public_Holiday"/>
+									</dayTypes>
+								</AvailabilityCondition>
+								<AvailabilityCondition version="1.0" id="mb:travel_shop@Crawley_holidays">
+									<Name>Closed Public Holidays</Name>
+									<IsAvailable>false</IsAvailable>
+									<dayTypes>
+										<DayTypeRef ref="mb:travel_shop@Public_holiday"> TODO</DayTypeRef>
+									</dayTypes>
+								</AvailabilityCondition>
+							</validityConditions>
+							<Name>First Travel Shop, Crawley Bus Station</Name>
+							<Description>Crawley	
+Metrobus Travel Shop, Crawley Bus Station, Marlborough Street, Crawley, BS1 3NU
+.</Description>
+							<Centroid>
+								<Location>
+									<gml:pos srsName="WGS84">12345 6789</gml:pos>
+								</Location>
+							</Centroid>
+							<Url>https://www.metrobus.co.uk/travel-shops/</Url>
+							<PostalAddress id="mb:travel_shop@Crawley@address" version="1.0">
+								<Name>Metrobus Travel Shop</Name>
+								<BuildingName>Crawley Bus Station</BuildingName>
+								<Street>Friary Way</Street>
+								<Town>Crawley</Town>
+								<PostCode>RH10 1HZ</PostCode>
+							</PostalAddress>
+							<SiteType>retail</SiteType>
+							<OperatorRef version="1.0" ref="noc:METR">137122</OperatorRef>
+							<classifications>
+								<PointOfInterestClassificationRef ref="fxc:operator_travel_shop" version="fxc:v1.0"/>
+							</classifications>
+						</PointOfInterest>
+					</pointsOfInterest>
+				</SiteFrame>
+				<ServiceCalendarFrame version="1.0" id="epd:UK:Metrobus:ServiceCalendarFrame_UK_PI_CALENDAR:sale_pois:mb" responsibilitySetRef="mb:tariffs">
+					<Name> Specific Calendar</Name>
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_CALENDAR:FXCP"/>
+					<FrameDefaults>
+						<DefaultCodespaceRef ref="mb_data"/>
+						<DefaultDataSourceRef ref="mb:metrobus" version="1.0"/>
+						<DefaultResponsibilitySetRef ref="mb:tariffs" version="1.0"/>
+					</FrameDefaults>
+					<dayTypes>
+						<FareDayType version="1.0" id="mb:travel_shop@Crawley@M-F">
+							<Name>Crawley Travel shop Working day</Name>
+							<Description>0830-1800 on Mondays to Fridays 0830-1700 on Saturdays 1030-1630 on Sundays &amp; Public Holidays.</Description>
+							<EarliestTime>09:30:00</EarliestTime>
+							<properties>
+								<PropertyOfDay>
+									<DaysOfWeek>Weekdays</DaysOfWeek>
+									<HolidayTypes>NotHoliday</HolidayTypes>
+								</PropertyOfDay>
+							</properties>
+							<timebands>
+								<Timeband version="1.0" id="mb:travel_shop@Crawley@M-F">
+									<StartTime>08:30:00</StartTime>
+									<EndTime>18:00:00</EndTime>
+								</Timeband>
+							</timebands>
+						</FareDayType>
+						<FareDayType version="1.0" id="mb:travel_shop@Crawley@Sat">
+							<Name>Crawley Travel shop Working day</Name>
+							<Description>00830-1700 on Saturdays.</Description>
+							<properties>
+								<PropertyOfDay>
+									<DaysOfWeek>Weekend</DaysOfWeek>
+									<HolidayTypes>NotHoliday</HolidayTypes>
+								</PropertyOfDay>
+							</properties>
+							<timebands>
+								<Timeband version="1.0" id="mb:travel_shop@Crawley@Sat">
+									<StartTime>08:30:00</StartTime>
+									<EndTime>17:00:00</EndTime>
+								</Timeband>
+							</timebands>
+						</FareDayType>
+						<FareDayType version="1.0" id="mb:travel_shop@Crawley@Sun">
+							<Name>Crawley Travel shop Sundays .</Name>
+							<Description>1030-1630 on Sundays .</Description>
+							<properties>
+								<PropertyOfDay>
+									<DaysOfWeek>Sunday</DaysOfWeek>
+									<HolidayTypes>AnyDay</HolidayTypes>
+								</PropertyOfDay>
+							</properties>
+							<timebands>
+								<Timeband version="1.0" id="mb:travel_shop@Crawley@Sun">
+									<StartTime>10:30:00</StartTime>
+									<EndTime>16:30:00</EndTime>
+								</Timeband>
+							</timebands>
+						</FareDayType>
+						<FareDayType version="1.0" id="mb:travel_shop@Crawley@Public_Holiday">
+							<Name>Crawley Travel shop Public Holidays.</Name>
+							<Description>1030-1630 on Public Holidays.</Description>
+							<properties>
+								<PropertyOfDay>
+									<DaysOfWeek>Everyday</DaysOfWeek>
+									<HolidayTypes>NationalHoliday</HolidayTypes>
+								</PropertyOfDay>
+							</properties>
+							<timebands>
+								<TimebandRef version="1.0" ref="mb:travel_shop@Crawley@Sun"/>
+							</timebands>
+						</FareDayType>
+						<FareDayType version="1.0" id="mb:anytime">
+							<Name>Anytime</Name>
+							<properties>
+								<PropertyOfDay>
+									<DaysOfWeek>Everyday</DaysOfWeek>
+									<HolidayTypes>AnyDay</HolidayTypes>
+								</PropertyOfDay>
+							</properties>
+						</FareDayType>
+					</dayTypes>
+				</ServiceCalendarFrame>
+				<ResourceFrame version="1.0" id="epd:UK:Metrobus:ResourceFrame_UK_PI_COMMON:Metrobus:mb" dataSourceRef="mb:metrobus" responsibilitySetRef="mb:network_data">
+					<Name>Operator specific common resources</Name>
+					<TypeOfFrameRef ref="fxc:UK:DFT:TypeOfFrame_UK_PI_COMMON:FXCP" version="fxc:v1.0"/>
 					<codespaces>
-						<Codespace id="ezt_data">
-							<Xmlns>ezt</Xmlns>
-							<XmlnsUrl>https://www.easit.org.uk/</XmlnsUrl>
-							<Description>Easit Network.</Description>
+						<Codespace id="mb_data">
+							<Xmlns>mb</Xmlns>
+							<XmlnsUrl>http://www.metrobus.co.uk/</XmlnsUrl>
+							<Description>Metrobus data.</Description>
 						</Codespace>
 					</codespaces>
 					<FrameDefaults>
 						<!--- The default means that actually we could leave off all id s that belong to the mb: namespace. -->
+						<DefaultCodespaceRef ref="mb_data"/>
+						<DefaultResponsibilitySetRef version="1.0" ref="mb:network_data"/>
+						<DefaultCurrency>GBP</DefaultCurrency>
+					</FrameDefaults>
+					<dataSources>
+						<DataSource id="mb:metrobus" version="1.0">
+							<Email>feedback@metrobus.co.uk</Email>
+						</DataSource>
+					</dataSources>
+					<!-- ========Responsibility Sets========== -->
+					<responsibilitySets>
+						<ResponsibilitySet version="1.0" id="mb:tariffs">
+							<Name>Operator tariff data</Name>
+							<roles>
+								<ResponsibilityRoleAssignment version="1.0" id="mb:tariff_data@creates">
+									<DataRoleType>creates</DataRoleType>
+									<StakeholderRoleType>FareManagement</StakeholderRoleType>
+									<ResponsibleOrganisationRef ref="noc:METR" version="1.0">METR</ResponsibleOrganisationRef>
+								</ResponsibilityRoleAssignment>
+							</roles>
+						</ResponsibilitySet>
+						<ResponsibilitySet version="1.0" id="mb:network_data">
+							<Name>Operator Network data</Name>
+							<roles>
+								<ResponsibilityRoleAssignment version="1.0" id="mb:network_data@creates">
+									<DataRoleType>creates</DataRoleType>
+									<StakeholderRoleType>Planning</StakeholderRoleType>
+									<ResponsibleOrganisationRef ref="noc:METR" version="1.0">METR</ResponsibleOrganisationRef>
+								</ResponsibilityRoleAssignment>
+							</roles>
+						</ResponsibilitySet>
+					</responsibilitySets>
+					<typesOfValue>
+						<ValueSet version="1.0" id="mb:Branding" classOfValues="Branding">
+							<Name>Operator Branding</Name>
+							<values>
+								<Branding version="1.0" id="mb:Metrobus@brand">
+									<Name>Metrobus</Name>
+									<Url>https://www.metrobus.co.uk/static/images/colorways/metrobus/logo.png</Url>
+								</Branding>
+							</values>
+						</ValueSet>
+						<ValueSet version="1.0" id="mb:TypeOfTravelDocument" nameOfClass="TypeOfTravelDocument">
+							<values>
+								<!--- ==== ClassOfUse========= -->
+								<TypeOfTravelDocument version="1.0" id="mb:cash-ticket">
+									<Name>Bought on the bus with Cash</Name>
+									<Description>Paper ticket.</Description>
+									<Url>https://www.metrobus.co.uk/cash-fares-detail/</Url>
+									<IsSmartCard>false</IsSmartCard>
+									<MediaType>paperTicket</MediaType>
+								</TypeOfTravelDocument>
+								<TypeOfTravelDocument version="1.0" id="mb:m-ticket">
+									<Name>Stored on your mobile phone as m-tickets</Name>
+									<Url>https://www.metrobus.co.uk/mobile-ticket-introduction/</Url>
+									<IsSmartCard>false</IsSmartCard>
+									<MediaType>mobileApp</MediaType>
+								</TypeOfTravelDocument>
+								<TypeOfTravelDocument version="1.0" id="mb:the-key">
+									<Name>loaded on opur smart card the key</Name>
+									<IsSmartCard>true</IsSmartCard>
+									<MediaType>smartCard</MediaType>
+									<MachineReadable>nfc</MachineReadable>
+								</TypeOfTravelDocument>
+							</values>
+						</ValueSet>
+						<ValueSet version="1.0" id="mb:accountTypes" classOfValues="TypeOfCustomerAccount">
+							<values>
+								<TypeOfCustomerAccount version="1.0" id="mb:m-ticket">
+									<Name>m-ticket</Name>
+								</TypeOfCustomerAccount>
+								<TypeOfCustomerAccount version="1.0" id="mb:the-key">
+									<Name>the Key</Name>
+								</TypeOfCustomerAccount>
+							</values>
+						</ValueSet>
+					</typesOfValue>
+					<organisations>
+						<!--==== Operators ==== -->
+					<Operator version="1.0" id="noc:METR">
+							<PublicCode>METR</PublicCode><PrivateCode type="nocn">nocn:137122</PrivateCode>
+							<Name>Metrobus</Name>
+							<ShortName>Metrobus</ShortName>
+							<TradingName>Metrobus Ltd</TradingName>
+							<ContactDetails>
+								<Phone>01293 449191</Phone>
+							</ContactDetails>
+							<OrganisationType>operator</OrganisationType>
+							<Address>
+								<Street>Wheatstone Close</Street>
+								<Town>Crawley</Town>
+								<PostCode>RH10 9UA</PostCode>
+								<PostalRegion>West Sussex</PostalRegion>
+							</Address>
+							<PrimaryMode>bus</PrimaryMode>
+						</Operator>
+					</organisations>
+				</ResourceFrame>
+			</frames>
+		</CompositeFrame>
+		<CompositeFrame version="1.0" id="epd:UK:Easit:CompositeFrame_UK_PI_NETWORK_FARE_OFFER:Pass@Easit:ezt" dataSourceRef="ezt:easit" responsibilitySetRef="ezt:tariffs">
+			<ValidBetween>
+				<FromDate>2018-01-01T00:00:00</FromDate>
+				<ToDate>2020-12-31T12:00:00</ToDate>
+			</ValidBetween>
+			<Name>Easit Third Party card  - Fares Example</Name>
+			<Description>This is an example showing how one might encode part of the EAsit card accepted on Metrobus in NeTEx.</Description>
+			<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_NETWORK_FARE_OFFER:FXCP"/>
+			<!--==== CODESPACEs ==== -->
+			<codespaces>
+				<CodespaceRef ref="epd_data"/>
+			</codespaces>
+			<!--==== FRAME DEFAULTS ==== -->
+			<FrameDefaults>
+				<DefaultCodespaceRef ref="ezt_data"/>
+				<DefaultDataSourceRef version="1.0" ref="ezt:easit"/>
+				<DefaultResponsibilitySetRef version="1.0" ref="ezt:tariffs"/>
+			</FrameDefaults>
+			<frames>
+				<!-- Easit discount  Card -->
+				<FareFrame version="1.0" id="epd:UK:Easit:FareFrame_UK_PI_FARE_PRODUCT:Easit@discount:ezt" responsibilitySetRef="ezt:tariffs">
+					<Name>easit cards</Name>
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_FARE_PRODUCT:FXCP"/>
+					<FrameDefaults>
+						<!--- The default means that actually we could leave off all id s that belong to the mb: namespace. -->
 						<DefaultCodespaceRef ref="ezt_data"/>
-						<DefaultResponsibilitySetRef version="1.0" ref="mb:tariffs"/>
+						<DefaultResponsibilitySetRef version="1.0" ref="ezt:tariffs"/>
 						<DefaultCurrency>GBP</DefaultCurrency>
 					</FrameDefaults>
 					<prerequisites>
-						<FareFrameRef version="fxc:v1.0" ref="fxc:Common_UK_Fare_Components"/>
+						<ResourceFrameRef version="1.0" ref="epd:UK:Easit:ResourceFrame_UK_PI_COMMON:Easit:ezt"/>
+						<FareFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:FareFrame_UK_PI_METADATA:FareXChange:fxc"/>
 					</prerequisites>
 					<PricingParameterSet version="1.0" id="ezt:Products@Discount@Easit">
 						<pricingRules>
@@ -3889,9 +4153,9 @@ Unfortunately not. As our discounts are genuine discounts off of the cost of the
 										</EntitlementGiven>
 									</limitations>
 									<validityParameters>
-										<OperatorRef ref="noc:GWR">EXTERNAL</OperatorRef>
-										<OperatorRef ref="noc:SWR">EXTERNAL</OperatorRef>
-										<OperatorRef ref="noc:Southern">EXTERNAL</OperatorRef>
+										<OperatorRef ref="atoc:GWR">EXTERNAL</OperatorRef>
+										<OperatorRef ref="atoc:SWR">EXTERNAL</OperatorRef>
+										<OperatorRef ref="atoc:Southern">EXTERNAL</OperatorRef>
 										<DistributionChannelRef ref="fxc:at_counter" version="fxc:v1.0"/>
 									</validityParameters>
 								</GenericParameterAssignment>
@@ -3928,255 +4192,54 @@ Unfortunately not. As our discounts are genuine discounts off of the cost of the
 						</SalesOfferPackage>
 					</salesOfferPackages>
 				</FareFrame>
-				<!-- ====== MB Operator resources -->
-				<SiteFrame version="1.0" id="mb:Metrobus@Common_Resource@sales_network" responsibilitySetRef="mb:tariffs">
-					<Name>Common site elements for Metrobus</Name>
-					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@site_network"/>
-					<FrameDefaults>
-						<DefaultCodespaceRef ref="mb_data"/>
-						<DefaultDataSourceRef ref="mb:metrobus" version="1.0"/>
-						<DefaultResponsibilitySetRef ref="mb:tariffs" version="1.0"/>
-					</FrameDefaults>
-					<pointsOfInterest>
-						<PointOfInterest version="1.0" id="mb:travel_shop@Crawley">
-							<validityConditions>
-								<AvailabilityCondition version="1.0" id="mb:travel_shop@Crawley">
-									<Name>Opening Hours</Name>
-									<Description>0830-1800 on Mondays to Fridays 0830-1700 on Saturdays 1030-1630 on Sundays &amp; Public Holidays.</Description>
-									<IsAvailable>true</IsAvailable>
-									<dayTypes>
-										<DayTypeRef version="1.0" ref="mb:travel_shop@Crawley@M-F"/>
-										<DayTypeRef version="1.0" ref="mb:travel_shop@Crawley@Sat"/>
-										<DayTypeRef version="1.0" ref="mb:travel_shop@Crawley@Sun"/>
-										<DayTypeRef version="1.0" ref="mb:travel_shop@Crawley@Public_Holiday"/>
-									</dayTypes>
-								</AvailabilityCondition>
-								<AvailabilityCondition version="1.0" id="mb:travel_shop@Crawley_holidays">
-									<Name>Closed Public Holidays</Name>
-									<IsAvailable>false</IsAvailable>
-									<dayTypes>
-										<DayTypeRef ref="mb:travel_shop@Public_holiday"> TODO</DayTypeRef>
-									</dayTypes>
-								</AvailabilityCondition>
-							</validityConditions>
-							<Name>First Travel Shop, Crawley Bus Station</Name>
-							<Description>Crawley	
-Metrobus Travel Shop, Crawley Bus Station, Marlborough Street, Crawley, BS1 3NU
-.</Description>
-							<Centroid>
-								<Location>
-									<gml:pos srsName="WGS84">12345 6789</gml:pos>
-								</Location>
-							</Centroid>
-							<Url>https://www.metrobus.co.uk/travel-shops/</Url>
-							<PostalAddress id="mb:travel_shop@Crawley@address" version="1.0">
-								<Name>Metrobus Travel Shop</Name>
-								<BuildingName>Crawley Bus Station</BuildingName>
-								<Street>Friary Way</Street>
-								<Town>Crawley</Town>
-								<PostCode>RH10 1HZ</PostCode>
-							</PostalAddress>
-							<SiteType>retail</SiteType>
-							<OperatorRef version="1.0" ref="noc:137122">METR</OperatorRef>
-							<classifications>
-								<PointOfInterestClassificationRef ref="fxc:operator_travel_shop" version="fxc:v1.0"/>
-							</classifications>
-						</PointOfInterest>
-					</pointsOfInterest>
-				</SiteFrame>
-				<ServiceCalendarFrame version="1.0" id="mb:Metrobus@Service_Calendar" responsibilitySetRef="mb:tariffs">
-					<Name> Specific Calendar</Name>
-					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@calendar"/>
-					<FrameDefaults>
-						<DefaultCodespaceRef ref="mb_data"/>
-						<DefaultDataSourceRef ref="mb:metrobus" version="1.0"/>
-						<DefaultResponsibilitySetRef ref="mb:tariffs" version="1.0"/>
-					</FrameDefaults>
-					<prerequisites>
-						<FareFrameRef version="fxc:v1.0" ref="fxc:Common_UK_Fare_Components"/>
-					</prerequisites>
-					<dayTypes>
-						<FareDayType version="1.0" id="mb:travel_shop@Crawley@M-F">
-							<Name>Crawley Travel shop Working day</Name>
-							<Description>0830-1800 on Mondays to Fridays 0830-1700 on Saturdays 1030-1630 on Sundays &amp; Public Holidays.</Description>
-							<EarliestTime>09:30:00</EarliestTime>
-							<properties>
-								<PropertyOfDay>
-									<DaysOfWeek>Weekdays</DaysOfWeek>
-									<HolidayTypes>NotHoliday</HolidayTypes>
-								</PropertyOfDay>
-							</properties>
-							<timebands>
-								<Timeband version="1.0" id="mb:travel_shop@Crawley@M-F">
-									<StartTime>08:30:00</StartTime>
-									<EndTime>18:00:00</EndTime>
-								</Timeband>
-							</timebands>
-						</FareDayType>
-						<FareDayType version="1.0" id="mb:travel_shop@Crawley@Sat">
-							<Name>Crawley Travel shop Working day</Name>
-							<Description>00830-1700 on Saturdays.</Description>
-							<properties>
-								<PropertyOfDay>
-									<DaysOfWeek>Weekend</DaysOfWeek>
-									<HolidayTypes>NotHoliday</HolidayTypes>
-								</PropertyOfDay>
-							</properties>
-							<timebands>
-								<Timeband version="1.0" id="mb:travel_shop@Crawley@Sat">
-									<StartTime>08:30:00</StartTime>
-									<EndTime>17:00:00</EndTime>
-								</Timeband>
-							</timebands>
-						</FareDayType>
-						<FareDayType version="1.0" id="mb:travel_shop@Crawley@Sun">
-							<Name>Crawley Travel shop Sundays .</Name>
-							<Description>1030-1630 on Sundays .</Description>
-							<properties>
-								<PropertyOfDay>
-									<DaysOfWeek>Sunday</DaysOfWeek>
-									<HolidayTypes>AnyDay</HolidayTypes>
-								</PropertyOfDay>
-							</properties>
-							<timebands>
-								<Timeband version="1.0" id="mb:travel_shop@Crawley@Sun">
-									<StartTime>10:30:00</StartTime>
-									<EndTime>16:30:00</EndTime>
-								</Timeband>
-							</timebands>
-						</FareDayType>
-						<FareDayType version="1.0" id="mb:travel_shop@Crawley@Public_Holiday">
-							<Name>Crawley Travel shop Public Holidays.</Name>
-							<Description>1030-1630 on Public Holidays.</Description>
-							<properties>
-								<PropertyOfDay>
-									<DaysOfWeek>Everyday</DaysOfWeek>
-									<HolidayTypes>NationalHoliday</HolidayTypes>
-								</PropertyOfDay>
-							</properties>
-							<timebands>
-								<TimebandRef version="1.0" ref="mb:travel_shop@Crawley@Sun"/>
-							</timebands>
-						</FareDayType>
-						<FareDayType version="1.0" id="mb:anytime">
-							<Name>Anytime</Name>
-							<properties>
-								<PropertyOfDay>
-									<DaysOfWeek>Everyday</DaysOfWeek>
-									<HolidayTypes>AnyDay</HolidayTypes>
-								</PropertyOfDay>
-							</properties>
-						</FareDayType>
-					</dayTypes>
-				</ServiceCalendarFrame>
-				<ResourceFrame version="1.0" id="mb:Metrobus_resources" dataSourceRef="mb:metrobus" responsibilitySetRef="mb:network_data">
+				<ResourceFrame version="1.0" id="epd:UK:Easit:ResourceFrame_UK_PI_COMMON:Easit:ezt" dataSourceRef="ezt:easit" responsibilitySetRef="ezt:tariffs">
 					<Name>Operator specific common resources</Name>
-					<TypeOfFrameRef ref="fxc:UK_Bus_tariff_profile@operator_resources" version="fxc:v1.0"/>
+					<TypeOfFrameRef ref="fxc:UK:DFT:TypeOfFrame_UK_PI_COMMON:FXCP" version="fxc:v1.0"/>
 					<codespaces>
-						<Codespace id="mb_data">
-							<Xmlns>mb</Xmlns>
-							<XmlnsUrl>http://www.metrobus.co.uk/</XmlnsUrl>
-							<Description>Metrobus data.</Description>
+						<Codespace id="ezt_data">
+							<Xmlns>ezt</Xmlns>
+							<XmlnsUrl>https://www.easit.org.uk//</XmlnsUrl>
+							<Description>Easit data.</Description>
 						</Codespace>
 					</codespaces>
 					<FrameDefaults>
 						<!--- The default means that actually we could leave off all id s that belong to the mb: namespace. -->
 						<DefaultCodespaceRef ref="ezt_data"/>
-						<DefaultResponsibilitySetRef version="1.0" ref="mb:network_data"/>
+						<DefaultDataSourceRef version="1.0" ref="ezt:easit"/>
+						<DefaultResponsibilitySetRef version="1.0" ref="ezt:tariffs"/>
 						<DefaultCurrency>GBP</DefaultCurrency>
 					</FrameDefaults>
 					<dataSources>
-						<DataSource id="mb:metrobus" version="1.0">
-							<Email>feedback@metrobus.co.uk</Email>
+						<DataSource id="ezt:easit" version="1.0">
+							<Email>info@easit.org.uk</Email>
 						</DataSource>
 					</dataSources>
 					<!-- ========Responsibility Sets========== -->
 					<responsibilitySets>
-						<ResponsibilitySet version="1.0" id="mb:tariffs">
+						<ResponsibilitySet version="1.0" id="ezt:tariffs">
 							<Name>Operator tariff data</Name>
 							<roles>
-								<ResponsibilityRoleAssignment version="1.0" id="mb:tariff_data@creates">
+								<ResponsibilityRoleAssignment version="1.0" id="ezt:tariff_data@creates">
 									<DataRoleType>creates</DataRoleType>
 									<StakeholderRoleType>FareManagement</StakeholderRoleType>
-									<ResponsibleOrganisationRef ref="noc:137122" version="1.0">METR</ResponsibleOrganisationRef>
-								</ResponsibilityRoleAssignment>
-							</roles>
-						</ResponsibilitySet>
-						<ResponsibilitySet version="1.0" id="mb:network_data">
-							<Name>Operator Network data</Name>
-							<roles>
-								<ResponsibilityRoleAssignment version="1.0" id="mb:network_data@creates">
-									<DataRoleType>creates</DataRoleType>
-									<StakeholderRoleType>Planning</StakeholderRoleType>
-									<ResponsibleOrganisationRef ref="noc:137122" version="1.0">METR</ResponsibleOrganisationRef>
+									<ResponsibleOrganisationRef ref="ezt:EASIT" version="1.0">METR</ResponsibleOrganisationRef>
 								</ResponsibilityRoleAssignment>
 							</roles>
 						</ResponsibilitySet>
 					</responsibilitySets>
 					<typesOfValue>
-						<ValueSet version="1.0" id="mb:Branding" classOfValues="Branding">
+						<ValueSet version="1.0" id="ezt:Branding" classOfValues="Branding">
 							<Name>Operator Branding</Name>
 							<values>
-								<Branding version="1.0" id="mb:Metrobus@brand">
-									<Name>Metrobus</Name>
-									<Url>https://www.metrobus.co.uk/static/images/colorways/metrobus/logo.png</Url>
+								<Branding version="1.0" id="ezt:Easit@brand">
+									<Name>EAsit</Name>
+									<Url>https://www.easit.org.uk/logo.png</Url>
 								</Branding>
-							</values>
-						</ValueSet>
-						<ValueSet version="1.0" id="mb:TypeOfTravelDocument" nameOfClass="TypeOfTravelDocument">
-							<values>
-								<!--- ==== ClassOfUse========= -->
-								<TypeOfTravelDocument version="1.0" id="mb:cash-ticket">
-									<Name>Bought on the bus with Cash</Name>
-									<Description>Paper ticket.</Description>
-									<Url>https://www.metrobus.co.uk/cash-fares-detail/</Url>
-									<IsSmartCard>false</IsSmartCard>
-									<MediaType>paperTicket</MediaType>
-								</TypeOfTravelDocument>
-								<TypeOfTravelDocument version="1.0" id="mb:m-ticket">
-									<Name>Stored on your mobile phone as m-tickets</Name>
-									<Url>https://www.metrobus.co.uk/mobile-ticket-introduction/</Url>
-									<IsSmartCard>false</IsSmartCard>
-									<MediaType>mobileApp</MediaType>
-								</TypeOfTravelDocument>
-								<TypeOfTravelDocument version="1.0" id="mb:the-key">
-									<Name>loaded on opur smart card the key</Name>
-									<IsSmartCard>true</IsSmartCard>
-									<MediaType>smartCard</MediaType>
-									<MachineReadable>nfc</MachineReadable>
-								</TypeOfTravelDocument>
-							</values>
-						</ValueSet>
-						<ValueSet version="1.0" id="mb:accountTypes" classOfValues="TypeOfCustomerAccount">
-							<values>
-								<TypeOfCustomerAccount version="1.0" id="mb:m-ticket">
-									<Name>m-ticket</Name>
-								</TypeOfCustomerAccount>
-								<TypeOfCustomerAccount version="1.0" id="mb:the-key">
-									<Name>the Key</Name>
-								</TypeOfCustomerAccount>
 							</values>
 						</ValueSet>
 					</typesOfValue>
 					<organisations>
 						<!--==== Operators ==== -->
-						<Operator version="1.0" id="noc:137122">
-							<PublicCode>METR</PublicCode>
-							<Name>Metrobus</Name>
-							<ShortName>Metrobus</ShortName>
-							<TradingName>Metrobus Ltd</TradingName>
-							<ContactDetails>
-								<Phone>01293 449191</Phone>
-							</ContactDetails>
-							<OrganisationType>operator</OrganisationType>
-							<Address>
-								<Street>Wheatstone Close</Street>
-								<Town>Crawley</Town>
-								<PostCode>RH10 9UA</PostCode>
-								<PostalRegion>West Sussex</PostalRegion>
-							</Address>
-							<PrimaryMode>bus</PrimaryMode>
-						</Operator>
 						<Operator version="1.0" id="ezt:EASIT">
 							<PublicCode>EASIT</PublicCode>
 							<CompanyNumber>04792280</CompanyNumber>
@@ -4202,14 +4265,14 @@ Metrobus Travel Shop, Crawley Bus Station, Marlborough Street, Crawley, BS1 3NU
 				</ResourceFrame>
 			</frames>
 		</CompositeFrame>
-		<CompositeFrame version="1.0" id="dsc:Discovery@Pass@composite"  dataSourceRef="dsc:example" responsibilitySetRef="dsc:products:DSC">
+		<CompositeFrame version="1.0" id="epd:UK:Discovery:CompositeFrame_UK_PI_NETWORK_FARE_OFFER:DiscoveryNetwork:dsc" dataSourceRef="dsc:example" responsibilitySetRef="dsc:products">
 			<ValidBetween>
 				<FromDate>2017-01-01T00:00:00</FromDate>
 				<ToDate>2020-12-31T12:00:00</ToDate>
 			</ValidBetween>
 			<Name>Discovery Passes - Fares Example</Name>
 			<Description>This is an example showing how one might encode part of the Discovery fare table in NeTEx.</Description>
-			<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@composite"/>
+			<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_NETWORK_FARE_OFFER:FXCP"/>
 			<!--- ======= CODESPACEs======== -->
 			<codespaces>
 				<CodespaceRef ref="nptg_metadata"/>
@@ -4218,17 +4281,17 @@ Metrobus Travel Shop, Crawley Bus Station, Marlborough Street, Crawley, BS1 3NU
 			<FrameDefaults>
 				<DefaultCodespaceRef ref="dsc_data"/>
 				<DefaultDataSourceRef ref="dsc:example" version="1.0"/>
-				<DefaultResponsibilitySetRef ref="dsc:products:DSC" version="1.0"/>
+				<DefaultResponsibilitySetRef ref="dsc:products" version="1.0"/>
 				<DefaultCurrency>GBP</DefaultCurrency>
 			</FrameDefaults>
 			<frames>
-				<FareFrame version="1.0" id="dsc:Discovery@Pass@products">
+				<FareFrame version="1.0" id="epd:UK:Discovery:FareFrame_UK_PI_FARE_PRODUCT:DiscoveryNetwork@pass:dsc" responsibilitySetRef="dsc:products">
 					<Name>Other Passes</Name>
 					<Description>Access rights are to a listof operators, rather than a network.</Description>
-					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@products"/>
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_FARE_PRODUCT:FXCP"/>
 					<prerequisites>
-						<FareFrameRef version="fxc:v1.0" ref="fxc:Common_UK_Fare_Components"/>
-						<ResourceFrameRef version="1.0" ref="dsc:Discovery@Common_Resources"/>
+						<FareFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:FareFrame_UK_PI_METADATA:FareXChange:fxc"/>
+						<ResourceFrameRef version="1.0" ref="epd:UK:Discovery:ResourceFrame_UK_PI_COMMON:DiscoveryNetwork:dsc"/>
 					</prerequisites>
 					<!--==== TARIFFS ==== -->
 					<tariffs>
@@ -4415,11 +4478,11 @@ Excluded services: Services operated on behalf of Transport for London, City Sig
 						</SalesOfferPackage>
 					</salesOfferPackages>
 				</FareFrame>
-				<FareFrame version="v1.0" id="dsc:Discovery@Pass@prices" responsibilitySetRef="dsc:products:DSC">
+				<FareFrame version="1.0" id="epd:UK:Discovery:FareFrame_UK_PI_FARE_PRICE:DiscoveryNetwork@pass:dsc" responsibilitySetRef="dsc:products">
 					<Name>Discovery Pass Prices</Name>
-					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@prices"/>
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_FARE_PRICE:FXCP"/>
 					<prerequisites>
-						<FareFrameRef version="1.0" ref="dsc:Discovery@Pass@products"/>
+						<FareFrameRef version="1.0" ref="epd:UK:Discovery:FareFrame_UK_PI_FARE_PRODUCT:DiscoveryNetwork@pass:dsc"/>
 					</prerequisites>
 					<priceGroups>
 						<PriceGroup version="1.0" id="dsc:Pass@Discovery@prices">
@@ -4498,9 +4561,9 @@ Family (up to 5 people with a minimum of 1 adult and a maximum of 2 adults).
 						</FareTable>
 					</fareTables>
 				</FareFrame>
-				<ResourceFrame version="1.0" id="dsc:Discovery@Common_Resources" responsibilitySetRef="dsc:products:DSC">
+				<ResourceFrame version="1.0" id="epd:UK:Discovery:ResourceFrame_UK_PI_COMMON:DiscoveryNetwork:dsc" responsibilitySetRef="dsc:products">
 					<Name>Discovery Pass Specific code values</Name>
-					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@operator_resources"/>
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_COMMON:FXCP"/>
 					<!--- ======= CODESPACEs======== -->
 					<codespaces>
 						<Codespace id="dsc_data">
@@ -4512,7 +4575,7 @@ Family (up to 5 people with a minimum of 1 adult and a maximum of 2 adults).
 					<FrameDefaults>
 						<DefaultCodespaceRef ref="dsc_data"/>
 						<DefaultDataSourceRef ref="dsc:example" version="1.0"/>
-						<DefaultResponsibilitySetRef ref="dsc:products:DSC" version="1.0"/>
+						<DefaultResponsibilitySetRef ref="dsc:products" version="1.0"/>
 					</FrameDefaults>
 					<dataSources>
 						<DataSource id="dsc:example" version="1.0">
@@ -4520,7 +4583,7 @@ Family (up to 5 people with a minimum of 1 adult and a maximum of 2 adults).
 						</DataSource>
 					</dataSources>
 					<responsibilitySets>
-						<ResponsibilitySet version="1.0" id="dsc:products:DSC">
+						<ResponsibilitySet version="1.0" id="dsc:products">
 							<Name>Discovery PassProducts</Name>
 							<roles>
 								<ResponsibilityRoleAssignment version="1.0" id="dsc:products">
@@ -4582,7 +4645,7 @@ Cuckmere Community Bus, Emsworth & District, Farleigh Coaches, Go-Coach, Metrobu
 								<OperatorRef versionRef="any" ref="noc:Emsworth_and_District"/>
 								<OperatorRef versionRef="any" ref="noc:Farleigh_Coaches"/>
 								<OperatorRef versionRef="any" ref="noc:Go-Coach"/>
-								<OperatorRef version="1.0" ref="noc:137122">METR</OperatorRef>
+								<OperatorRef version="1.0" ref="noc:METR">137122</OperatorRef>
 								<OperatorRef versionRef="any" ref="noc:Nu-Venture"/>
 								<OperatorRef versionRef="any" ref="noc: Regent_Coaches"/>
 								<OperatorRef versionRef="any" ref="noc:Renown_Coaches"/>
@@ -4612,14 +4675,14 @@ Cuckmere Community Bus, Emsworth & District, Farleigh Coaches, Go-Coach, Metrobu
 				</ResourceFrame>
 			</frames>
 		</CompositeFrame>
-		<CompositeFrame version="1.0" id="jsp:PlusBus@Pass@composite"  dataSourceRef="jsp:example"  responsibilitySetRef="jsp:products:JSP">
+		<CompositeFrame version="1.0" id="epd:UK:JSP:CompositeFrame_UK_PI_NETWORK_FARE_OFFER:Pass@PlusBus:jsp" dataSourceRef="jsp:example" responsibilitySetRef="jsp:products">
 			<ValidBetween>
 				<FromDate>2017-01-01T00:00:00</FromDate>
 				<ToDate>2020-12-31T12:00:00</ToDate>
 			</ValidBetween>
 			<Name>PlusBus Passes - Fares Example</Name>
 			<Description>This is an example showing how one might encode part of the PlusBus fare table for the Crawley Area in NeTEx.</Description>
-			<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@composite"/>
+			<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_NETWORK_FARE_OFFER:FXCP"/>
 			<!--- ======= CODESPACEs======== -->
 			<codespaces>
 				<CodespaceRef ref="nptg_metadata"/>
@@ -4633,11 +4696,10 @@ Cuckmere Community Bus, Emsworth & District, Farleigh Coaches, Go-Coach, Metrobu
 				<DefaultCurrency>GBP</DefaultCurrency>
 			</FrameDefaults>
 			<prerequisites>
-				<CompositeFrameRef version="1.0" ref="jsp:PlusBus@Pass@composite"/>
-				<CompositeFrameRef version="fxc:v1.0" ref="fxc:DfT@Generic"/>
+				<CompositeFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_METADATA_OFFER:FXCP:fxc"/>
 			</prerequisites>
 			<frames>
-				<FareFrame version="1.0" id="jsp:PlusBus@Pass@products">
+				<FareFrame version="1.0" id="epd:UK:JSP:FareFrame_UK_PI_FARE_PRODUCT:PlusBus@Pass:jsp">
 					<Name>Plus Bus   Passes</Name>
 					<Description>Generic definition - assumes a separate 
 					 NetworkRef  ref="nptg:PlusBus 
@@ -4645,10 +4707,10 @@ Cuckmere Community Bus, Emsworth & District, Farleigh Coaches, Go-Coach, Metrobu
 					GroupOfOperatorsRef  jsp:PlusBus@excluded_operators 
 						GroupOfLinesRef  jsp:PlusBus@excluded_lines
 					 </Description>
-					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@products"/>
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_FARE_PRODUCT:FXCP"/>
 					<prerequisites>
-						<FareFrameRef version="fxc:v1.0" ref="fxc:Common_UK_Fare_Components"/>
-						<ServiceCalendarFrameRef version="1.0" ref="jsp:PlusBus@Service_Calendar"/>
+						<FareFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:FareFrame_UK_PI_METADATA:FareXChange:fxc"/>
+						<ServiceCalendarFrameRef version="1.0" ref="epd:UK:JSP:ServiceCalendarFrame_UK_PI_CALENDAR:PlusBus:jsp"/>
 					</prerequisites>
 					<tariffs>
 						<Tariff version="1.0" id="jsp:Tariff@PlusBus@Day">
@@ -5108,13 +5170,13 @@ You must buy 2 tickets at the same time.					</Description>
 						</SalesOfferPackage>
 					</salesOfferPackages>
 				</FareFrame>
-				<FareFrame version="1.0" id="jsp:PlusBus@Pass@prices@Crawley">
+				<FareFrame version="1.0" id="epd:UK:JSP:FareFrame_UK_PI_FARE_PRICE:PlusBus@Pass@Crawley:jsp">
 					<Name>Plus Bus Crawley Prices</Name>
-					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@prices"/>
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_FARE_PRICE:FXCP"/>
 					<prerequisites>
-						<ResourceFrameRef version="1.0" ref="jsp:PlusBus@Pass@resources@Crawley"/>
-						<ServiceFrameRef version="1.0" ref="jsp:PlusBus@Pass@network@Crawley"/>
-						<FareFrameRef version="1.0" ref="jsp:PlusBus@Pass@products"/>
+						<ResourceFrameRef version="1.0" ref="epd:UK:JSP:ResourceFrame_UK_PI_COMMON:PlusBus@Pass@Crawley"/>
+						<ServiceFrameRef version="1.0" ref="epd:UK:JSP:ServiceFrame_UK_PI_NETWORK:PlusBus@Pass@Crawley:jsp"/>
+						<FareFrameRef version="1.0" ref="epd:UK:JSP:FareFrame_UK_PI_FARE_PRODUCT:PlusBus@Pass:jsp"/>
 					</prerequisites>
 					<!--==== Fare Prices ==== -->
 					<fareTables>
@@ -5426,11 +5488,11 @@ Annual	£440.00	£1.83 Child discount: half adult season ticket prices.
 						</FareTable>
 					</fareTables>
 				</FareFrame>
-				<ServiceFrame version="1.0" id="jsp:PlusBus@Pass@network@Crawley">
+				<ServiceFrame version="1.0" id="epd:UK:JSP:ServiceFrame_UK_PI_NETWORK:PlusBus@Pass@Crawley:jsp">
 					<Name>Plus Bus Crawley zones</Name>
-					<TypeOfFrameRef version="fxc:v1.0" ref="nptg:UK_general_profile@tariff_zones"/>
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_NETWORK:FXCP"/>
 					<prerequisites>
-						<FareFrameRef version="fxc:v1.0" ref="fxc:Common_UK_Fare_Components"/>
+						<FareFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:FareFrame_UK_PI_METADATA:FareXChange:fxc"/>
 					</prerequisites>
 					<Network version="any" id="jsp:PlusBus@zones">
 						<Name>Plusbus network - Crawley</Name>
@@ -5514,7 +5576,7 @@ Metrobus (including Fastway services), Southdown PSV, Compass Travel
 							</gml:Polygon>
 							<projections>
 								<TopographicProjection>
-									<CountryRef ref="uk" refPrincipality="ENG"/>
+									<CountryRef ref="uk" refPrincipality="iso3166-2:GB-ENG"/>
 								</TopographicProjection>
 								<TopographicProjection>
 									<TopographicPlaceRef ref="nptgLocality:E0026643">Three Bridges</TopographicPlaceRef>
@@ -5524,16 +5586,15 @@ Metrobus (including Fastway services), Southdown PSV, Compass Travel
 						</TariffZone>
 					</tariffZones>
 				</ServiceFrame>
-				<ServiceCalendarFrame version="1.0" id="jsp:PlusBus@Service_Calendar" dataSourceRef="jsp:example" responsibilitySetRef="jsp:products:JSP">
+				<ServiceCalendarFrame version="1.0" id="epd:UK:JSP:ServiceCalendarFrame_UK_PI_CALENDAR:PlusBus:jsp" dataSourceRef="jsp:example" responsibilitySetRef="jsp:products:JSP">
 					<Name>Plusbus Specific Calendar</Name>
-					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@calendar"/>
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_CALENDAR:FXCP"/>
 					<FrameDefaults>
 						<DefaultCodespaceRef ref="jsp_data"/>
 						<DefaultDataSourceRef ref="jsp:example" version="1.0"/>
 						<DefaultResponsibilitySetRef ref="jsp:products:JSP" version="1.0"/>
 					</FrameDefaults>
 					<prerequisites>
-						<FareFrameRef version="fxc:v1.0" ref="fxc:Common_UK_Fare_Components"/>
 						<ServiceCalendarFrameRef versionRef="EXTERNAL-ATOC1.0" ref="atc:ATOC@Service_Calendar"/>
 					</prerequisites>
 					<contentValidityConditions>
@@ -5606,25 +5667,25 @@ Metrobus (including Fastway services), Southdown PSV, Compass Travel
 						</FareDayType>
 					</dayTypes>
 				</ServiceCalendarFrame>
-				<ResourceFrame version="1.0" id="jsp:PlusBus@Pass@resources@Crawley" dataSourceRef="jsp:example" responsibilitySetRef="jsp:products:JSP">
+				<ResourceFrame version="1.0" id="epd:UK:JSP:ResourceFrame_UK_PI_COMMON:PlusBus@Pass@Crawley" dataSourceRef="jsp:example" responsibilitySetRef="jsp:products:JSP">
 					<Name>Plus Bus Specific  values for Crawley</Name>
-					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@operator_resources"/>
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_COMMON:FXCP"/>
 					<FrameDefaults>
 						<DefaultCodespaceRef ref="jsp_data"/>
 						<DefaultDataSourceRef ref="jsp:example" version="1.0"/>
 						<DefaultResponsibilitySetRef ref="jsp:products:JSP" version="1.0"/>
 					</FrameDefaults>
 					<prerequisites>
-						<ResourceFrameRef version="1.0" ref="jsp:PlusBus@Common_Resources"/>
+						<ResourceFrameRef version="1.0" ref="epd:UK:JSP:ResourceFrame_UK_PI_COMMON:PlusBus:jsp"/>
 					</prerequisites>
 					<groupsOfOperators>
 						<GroupOfOperators version="any" id="jsp:PlusBus@included_operators">
 							<Name>Operators participating in PlusBus pass</Name>
 							<!-- Participating operators: Metrobus (including 'Fastway' services), Southdown PSV, Compass Travel  -->
 							<members>
-								<OperatorRef versionRef="EXTERNAL" ref="noc:136005">Compass Travel (Sussex) Ltd</OperatorRef>
-								<OperatorRef version="1.0" ref="noc:137122">METR</OperatorRef>
-								<OperatorRef versionRef="EXTERNAL" ref="noc:137709">Southdown Psv Ltd</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="noc:COMT">Compass Travel (Sussex) Ltd nocn:136005</OperatorRef>
+								<OperatorRef version="1.0" ref="noc:METR">137122</OperatorRef>
+								<OperatorRef versionRef="EXTERNAL" ref="noc:SPSV">Southdown Psv Ltd nocn:137709</OperatorRef>
 							</members>
 						</GroupOfOperators>
 						<GroupOfOperators version="any" id="jsp:PlusBus@excluded_operators">
@@ -5633,9 +5694,9 @@ Metrobus (including Fastway services), Southdown PSV, Compass Travel
 						</GroupOfOperators>
 					</groupsOfOperators>
 				</ResourceFrame>
-				<ResourceFrame version="1.0" id="jsp:PlusBus@Common_Resources" dataSourceRef="jsp:example" responsibilitySetRef="jsp:products:JSP">
+				<ResourceFrame version="1.0" id="epd:UK:JSP:ResourceFrame_UK_PI_COMMON:PlusBus:jsp" dataSourceRef="jsp:example" responsibilitySetRef="jsp:products:JSP">
 					<Name>Plus Bus Generic code values</Name>
-					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@operator_resources"/>
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_COMMON:FXCP"/>
 					<!--- ======= CODESPACEs======== -->
 					<codespaces>
 						<Codespace id="jsp_data">
@@ -5714,13 +5775,13 @@ Metrobus (including Fastway services), Southdown PSV, Compass Travel
 				</ResourceFrame>
 			</frames>
 		</CompositeFrame>
-		<CompositeFrame version="1.0" id="ncs:Concessionary@Pass@composite" dataSourceRef="ncs:example" responsibilitySetRef="ncs:products">
+		<CompositeFrame version="1.0" id="epd:UK:NCS:CompositeFrame_UK_PI_NETWORK_FARE_OFFER:Pass@Concessionary:ncs" dataSourceRef="ncs:example" responsibilitySetRef="ncs:products">
 			<ValidBetween>
 				<FromDate>2017-01-01T00:00:00</FromDate>
 				<ToDate>2020-12-31T12:00:00</ToDate>
 			</ValidBetween>
 			<Name>English National Concession scheme bus fares</Name>
-			<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@composite"/>
+			<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_NETWORK_FARE_OFFER:FXCP"/>
 			<!--- ======= CODESPACEs======== -->
 			<codespaces>
 				<CodespaceRef ref="nptg_metadata"/>
@@ -5733,13 +5794,13 @@ Metrobus (including Fastway services), Southdown PSV, Compass Travel
 				<DefaultCurrency>GBP</DefaultCurrency>
 			</FrameDefaults>
 			<frames>
-				<ServiceFrame version="1.0" id="ncs:Concessionary@Pass@network">
+				<ServiceFrame version="1.0" id="epd:UK:NCS:ServiceFrame_UK_PI_NETWORK:Pass@Concessionary:ncs">
 					<Name>Network elemenst for concessionary passes</Name>
-					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@service_network"/>
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_NETWORK:FXCP"/>
 					<prerequisites>
-						<FareFrameRef version="fxc:v1.0" ref="fxc:Common_UK_Fare_Components"/>
-						<ServiceCalendarFrameRef version="1.0" ref="ncs:Concessionary@Service_Calendar"/>
-						<ResourceFrameRef version="1.0" ref="ncs:Concessionary@Common_Resources"/>
+						<FareFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:FareFrame_UK_PI_METADATA:FareXChange:fxc"/>
+						<ServiceCalendarFrameRef version="1.0" ref="epd:UK:NCS:ServiceCalendarFrame_UK_PI_CALENDAR:Pass@Concessionary:ncs"/>
+						<ResourceFrameRef version="1.0" ref="epd:UK:NCS:ResourceFrame_UK_PI_COMMON:Concessionary:ncs"/>
 					</prerequisites>
 					<Network version="1.0" id="ncs:Concessionary">
 						<tariffZones>
@@ -5775,12 +5836,12 @@ Metrobus (including Fastway services), Southdown PSV, Compass Travel
 						</TariffZone>
 					</tariffZones>
 				</ServiceFrame>
-				<FareFrame version="1.0" id="ncs:Concessionary@Pass@products">
+				<FareFrame version="1.0" id="epd:UK:NCS:FareFrame_UK_PI_FARE_PRODUCT:Pass@Concessionary:ncs">
 					<Name>Other Passes</Name>
-					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@products"/>
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_FARE_PRODUCT:FXCP"/>
 					<prerequisites>
-						<ServiceFrameRef version="1.0" ref="ncs:Concessionary@Pass@network"/>
-						<ServiceCalendarFrameRef version="1.0" ref="ncs:Concessionary@Service_Calendar"/>
+						<ServiceFrameRef version="1.0" ref="epd:UK:NCS:ServiceFrame_UK_PI_NETWORK:Pass@Concessionary:ncs"/>
+						<ServiceCalendarFrameRef version="1.0" ref="epd:UK:NCS:ServiceCalendarFrame_UK_PI_CALENDAR:Pass@Concessionary:ncs"/>
 					</prerequisites>
 					<!--====Tariff Structure ==== -->
 					<tariffs>
@@ -6127,9 +6188,9 @@ E-mail: student.farecards@surreycc.gov.uk
 						<!-- TODO ADD PACKAGES FOR OUTHE BOROUGHS/COUNCILS -->
 					</salesOfferPackages>
 				</FareFrame>
-				<ServiceCalendarFrame version="1.0" id="ncs:Concessionary@Service_Calendar" responsibilitySetRef="ncs:products">
+				<ServiceCalendarFrame version="1.0" id="epd:UK:NCS:ServiceCalendarFrame_UK_PI_CALENDAR:Pass@Concessionary:ncs" responsibilitySetRef="ncs:products">
 					<Name>Concessionary Pass Specific Calendar</Name>
-					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@calendar"/>
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_CALENDAR:FXCP"/>
 					<FrameDefaults>
 						<DefaultCodespaceRef ref="ncs_data"/>
 						<DefaultDataSourceRef ref="ncs:example" version="1.0"/>
@@ -6195,9 +6256,9 @@ E-mail: student.farecards@surreycc.gov.uk
 						</FareDayType>
 					</dayTypes>
 				</ServiceCalendarFrame>
-				<ResourceFrame version="1.0" id="ncs:Concessionary@Common_Resources" responsibilitySetRef="ncs:products">
+				<ResourceFrame version="1.0" id="epd:UK:NCS:ResourceFrame_UK_PI_COMMON:Concessionary:ncs" responsibilitySetRef="ncs:products">
 					<Name>The National Bus Travel Concession Scheme for Older and Disabled Person</Name>
-					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@operator_resources"/>
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_COMMON:FXCP"/>
 					<!--- ======= CODESPACEs======== -->
 					<codespaces>
 						<Codespace id="ncs_data">
@@ -6247,17 +6308,18 @@ E-mail: student.farecards@surreycc.gov.uk
 		<CompositeFrame id="mbt:pass_transaction_examples" version="1.0" responsibilitySetRef="mb:transaction_data" dataSourceRef="mb:metrobus">
 			<!-- ===============
 This Shows sample Purchases 
- Sales Transactions would normally be exchanged separately from the reference data on whoich they are based  -->
+ Sales Transactions would normally be exchanged separately from the reference data on whoich they are based  --> 
 			<prerequisites>
-				<CompositeFrameRef version="1.0" ref="mb:Metrobus@Pass@composite@Metrorider+Metrovoyager+Gatwick_card"/>
-				<CompositeFrameRef version="1.0" ref="dsc:Discovery@Pass@composite"/>
-				<CompositeFrameRef version="1.0" ref="jsp:PlusBus@Pass@composite"/>
-				<CompositeFrameRef version="1.0" ref="ncs:Concessionary@Pass@composite"/>
+				<CompositeFrameRef version="1.0" ref="epd:UK:Metrobus:CompositeFrame_UK_PI_NETWORK_FARE_OFFER:Pass@Metrorider+Metrovoyager+Gatwick_card:mb"/>
+				<CompositeFrameRef version="1.0" ref="epd:UK:Easit:CompositeFrame_UK_PI_NETWORK_FARE_OFFER:Pass@Easit:ezt"/>
+				<CompositeFrameRef version="1.0" ref="epd:UK:Discovery:CompositeFrame_UK_PI_NETWORK_FARE_OFFER:DiscoveryNetwork:dsc"/>
+				<CompositeFrameRef version="1.0" ref="epd:UK:JSP:CompositeFrame_UK_PI_NETWORK_FARE_OFFER:Pass@PlusBus:jsp"/>
+				<CompositeFrameRef version="1.0" ref="epd:UK:NCS:CompositeFrame_UK_PI_NETWORK_FARE_OFFER:Pass@Concessionary:ncs"/>
 			</prerequisites>
 			<frames>
 				<SalesTransactionFrame version="1.2" id="mbt:SampleTransactions">
 					<Name> Sample Transactions</Name>
-					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@transactions"/>
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_FARE_TRANSACTIONS:FXCP"/>
 					<codespaces>
 						<CodespaceRef ref="mb_data"/>
 						<Codespace id="mb_transactions">
@@ -6267,7 +6329,7 @@ This Shows sample Purchases
 						</Codespace>
 					</codespaces>
 					<FrameDefaults>
-					<DefaultCodespaceRef ref="mb_transactions"/>
+						<DefaultCodespaceRef ref="mb_transactions"/>
 					</FrameDefaults>
 					<fareContracts>
 						<FareContract version="any" id="mbt:Anon001@trans002">
@@ -6282,7 +6344,7 @@ This Shows sample Purchases
 									<Amount>4.90</Amount>
 									<PaymentMethod>cash</PaymentMethod>
 									<travelSpecifications>
-										<TravelSpecification version="any" id="mbt:Anon001@trans002@purchase_pass">
+										<OfferedTravelSpecification version="any" id="mbt:Anon001@trans002@purchase_pass">
 											<Date>2017-07-08T01:07:00</Date>
 											<TypeOfFareContractEntryRef version="fxc:v1.0" ref="fxc:on_board_purchase"/>
 											<SalesTransactionRef version="any" ref="mbt:Anon001@trans002@purchase_pass"/>
@@ -6300,7 +6362,7 @@ This Shows sample Purchases
 														<UserProfileRef version="1.0" ref="mb:adult"/>
 													</limitations>
 													<validityParameters>
-														<OperatorRef version="1.0" ref="noc:137122">METR</OperatorRef>
+														<OperatorRef version="1.0" ref="noc:METR">137122</OperatorRef>
 														<TypeOfFareProductRef version="fxc:v1.0" ref="fxc:standard_product@pass@day"/>
 														<TariffZoneRef version="1.0" ref="mb:metrorider@Crawley"/>
 														<DistributionChannelRef version="fxc:v1.0" ref="fxc:on_board"/>
@@ -6309,7 +6371,7 @@ This Shows sample Purchases
 													<TimeIntervalRef version="1.0" ref="mb:Tariff@Metrorider@1day"/>
 												</SpecificParameterAssignment>
 											</specificParameterAssignments>
-										</TravelSpecification>
+										</OfferedTravelSpecification>
 									</travelSpecifications>
 									<travelDocuments>
 										<TravelDocumentRef versionRef="EXTERNAL" ref="mbt:T97656452"/>
@@ -6334,13 +6396,13 @@ This Shows sample Purchases
 										<RuleStepResult>
 											<Amount>10.10</Amount>
 											<AdjustmentAmount>10.10</AdjustmentAmount>
-											<DiscountingRuleRef ref=""/>
+											<DiscountingRuleRef version="1.0" ref="mb:half_price"/>
 											<Narrative>Child fare is half adult fare</Narrative>
 										</RuleStepResult>
 									</ruleStepResults>
 									<PaymentMethod>creditCard</PaymentMethod>
 									<travelSpecifications>
-										<TravelSpecification version="any" id="mbt:User121@ctr002@purchase_pass">
+										<OfferedTravelSpecification version="any" id="mbt:User121@ctr002@purchase_pass">
 											<Date>2017-07-08T01:07:00</Date>
 											<SalesTransactionRef version="any" ref="mbt:User121@ctr002@purchase_pass"/>
 											<TimeIntervalPriceRef version="1.0" ref="mb:metrovoyager@m-ticket@child@3day"/>
@@ -6357,7 +6419,7 @@ This Shows sample Purchases
 														<UserProfileRef version="1.0" ref="mb:child"/>
 													</limitations>
 													<validityParameters>
-														<OperatorRef version="1.0" ref="noc:137122">METR</OperatorRef>
+														<OperatorRef version="1.0" ref="noc:METR">137122</OperatorRef>
 														<TypeOfFareProductRef version="fxc:v1.0" ref="fxc:standard_product@pass@period"/>
 														<TariffZoneRef version="1.0" ref="mb:metrovoyager"/>
 														<DistributionChannelRef version="fxc:v1.0" ref="fxc:online"/>
@@ -6367,7 +6429,7 @@ This Shows sample Purchases
 													<TimeIntervalRef version="1.0" ref="mb:Tariff@Metrorider@3day"/>
 												</SpecificParameterAssignment>
 											</specificParameterAssignments>
-										</TravelSpecification>
+										</OfferedTravelSpecification>
 									</travelSpecifications>
 									<customerPurchasePackages>
 										<CustomerPurchasePackage version="1.0" id="mbt:User121@CPP234@pass">
@@ -6382,7 +6444,7 @@ This Shows sample Purchases
 													<TariffZoneRef version="1.0" ref="mb:metrovoyager"/>
 												</Destination>
 												<Duration>P3D</Duration>
-												<OperatorRef version="1.0" ref="noc:137122">METR</OperatorRef>
+												<OperatorRef version="1.0" ref="noc:METR">137122</OperatorRef>
 												<TypeOfFareProductRef version="fxc:v1.0" ref="fxc:standard_product@pass@period"/>
 											</TravelSpecificationSummaryView>
 											<customerPurchasePackageElements>
@@ -6399,7 +6461,7 @@ This Shows sample Purchases
 																<UserProfileRef version="1.0" ref="mb:child"/>
 															</limitations>
 															<validityParameters>
-																<OperatorRef version="1.0" ref="noc:137122">METR</OperatorRef>
+																<OperatorRef version="1.0" ref="noc:METR">137122</OperatorRef>
 																<TypeOfFareProductRef version="fxc:v1.0" ref="fxc:standard_product@pass@period"/>
 																<TariffZoneRef version="1.0" ref="mb:metrovoyager"/>
 																<DistributionChannelRef version="fxc:v1.0" ref="fxc:online"/>
@@ -6441,7 +6503,7 @@ This Shows sample Purchases
 									<Amount>390</Amount>
 									<PaymentMethod>creditCard</PaymentMethod>
 									<travelSpecifications>
-										<TravelSpecification version="any" id="mbt:Smartcard522@ctr003@purchase_pass">
+										<OfferedTravelSpecification version="any" id="mbt:Smartcard522@ctr003@purchase_pass">
 											<Date>2017-07-08T01:07:00</Date>
 											<SalesTransactionRef version="any" ref="mbt:Smartcard522@ctr003@purchase_pass"/>
 											<TimeIntervalPriceRef version="1.0" ref="mb:metrorider@smartcard@student@1year"/>
@@ -6457,7 +6519,7 @@ This Shows sample Purchases
 														<UserProfileRef version="1.0" ref="mb:student"/>
 													</limitations>
 													<validityParameters>
-														<OperatorRef version="1.0" ref="noc:137122">METR</OperatorRef>
+														<OperatorRef version="1.0" ref="noc:METR">137122</OperatorRef>
 														<TypeOfFareProductRef version="fxc:v1.0" ref="fxc:standard_product@pass@period"/>
 														<TariffZoneRef version="1.0" ref="mb:metrorider@Horsham"/>
 														<DistributionChannelRef ref="mb:travel_shop" version="1.0"/>
@@ -6466,16 +6528,22 @@ This Shows sample Purchases
 													<TimeIntervalRef version="1.0" ref="mb:Tariff@Metrorider@1year"/>
 												</SpecificParameterAssignment>
 											</specificParameterAssignments>
-										</TravelSpecification>
+										</OfferedTravelSpecification>
 									</travelSpecifications>
+									
+										<travelDocuments>
+											<TravelDocument version="any" id="mbt:Smartcard522">
+													<TypeOfTravelDocumentRef version="1.0" ref="mb:m-ticket"/>
+												</TravelDocument>
+											</travelDocuments>
 								</SalesTransaction>
 							</fareContractEntries>
 						</FareContract>
-						<FareContract version="any" id="mbt:Anon002@trans004">
+						<FareContract version="any" id="mbt:Smartcard967@trans004">
 							<Name>10 ticket carnet on the Key</Name>
 							<CustomerRef ref="mbt:Anon"/>
 							<fareContractEntries>
-								<SalesTransaction version="any" id="mbt:Anon002@trans004@purchaseCarnet">
+								<SalesTransaction version="any" id="mbt:Smartcard967@trans004@purchaseCarnet">
 									<Name>Buy 10 tickets on smart card Cash ticket</Name>
 									<Description>Reigate and Redhill Carnet Metrorider.</Description>
 									<Date>2017-07-08T01:07:00</Date>
@@ -6483,14 +6551,14 @@ This Shows sample Purchases
 									<Amount>21.00</Amount>
 									<PaymentMethod>creditCard</PaymentMethod>
 									<travelSpecifications>
-										<TravelSpecification version="any" id="mbt:Anon002@trans004@purchaseCarnet">
+										<OfferedTravelSpecification version="any" id="mbt:Smartcard967@trans004@purchaseCarnet">
 											<Date>2017-07-08T01:07:00</Date>
-											<SalesTransactionRef version="any" ref="mbt:Anon002@trans004@purchaseCarnet"/>
+											<SalesTransactionRef version="any" ref="mbt:Smartcard967@trans004@purchaseCarnet"/>
 											<UsageParameterPriceRef version="1.0" ref="mb:Tariff@multitrip@10@adult"/>
 											<Amount>21.00</Amount>
 											<StartOfValidity>2017-07-08T01:07:00</StartOfValidity>
 											<specificParameterAssignments>
-												<SpecificParameterAssignment version="any" order="1" id="mbt:Anon002@trans004@purchaseCarnet@RedhillAndReigate">
+												<SpecificParameterAssignment version="any" order="1" id="mbt:Smartcard967@trans004@purchaseCarnet@RedhillAndReigate">
 													<Name>10 ticket carnet on the Key Redhill &amp; Reigate</Name>
 													<ValidableElementRef version="1.0" ref="mb:Trip@multitrip@singleRide"/>
 													<AmountOfPriceUnitProductRef version="1.0" ref="mb:Trip@multitrip"/>
@@ -6500,7 +6568,7 @@ This Shows sample Purchases
 														<UserProfileRef version="1.0" ref="mb:adult"/>
 													</limitations>
 													<validityParameters>
-														<OperatorRef version="1.0" ref="noc:137122">METR</OperatorRef>
+														<OperatorRef version="1.0" ref="noc:METR">137122</OperatorRef>
 														<TypeOfFareProductRef version="fxc:v1.0" ref="fxc:standard_product@carnet@trips"/>
 														<TariffZoneRef version="1.0" ref="mb:metrorider@RedhillAndReigate"/>
 														<DistributionChannelRef version="fxc:v1.0" ref="fxc:online"/>
@@ -6509,8 +6577,13 @@ This Shows sample Purchases
 													<QualityStructureFactorRef version="1.0" ref="mb:Tariff@multitrip@10"/>
 												</SpecificParameterAssignment>
 											</specificParameterAssignments>
-										</TravelSpecification>
+										</OfferedTravelSpecification>
 									</travelSpecifications>
+											<travelDocuments>
+											<TravelDocument version="any" id="mbt:Smartcard967">
+													<TypeOfTravelDocumentRef version="1.0" ref="mb:m-ticket"/>
+												</TravelDocument>
+											</travelDocuments>
 								</SalesTransaction>
 							</fareContractEntries>
 						</FareContract>
@@ -6519,31 +6592,158 @@ This Shows sample Purchases
 			</frames>
 		</CompositeFrame>
 		<!--   === COMMON UK FARE RESOURCES===  -->
-		<CompositeFrame id="fxc:DfT@Generic" version="fxc:v1.0" responsibilitySetRef="fxc:FXC_metadata" dataSourceRef="fxc:common">
+		<CompositeFrame id="fxc:UK:DFT:TypeOfFrame_UK_PI_METADATA_OFFER:FXCP:fxc" version="fxc:v1.0" responsibilitySetRef="fxc:FXC_metadata" dataSourceRef="fxc:dft">
 			<ValidBetween>
-				<FromDate>2018-02-01T00:00:00</FromDate>
-				<ToDate>2020-12-31T12:00:00</ToDate>
+				<FromDate>2019-05-01T00:00:00</FromDate>
+				<ToDate>2022-12-31T12:00:00</ToDate>
 			</ValidBetween>
-			<Name>UK Bus Profile common resources</Name>
-			<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@UK_common_resources_composite"/>
+			<Name>UK FXCP Passenger Information Profile common resources</Name>
+			<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_METADATA_OFFER:FXCP:fxc"/>
+			<codespaces>
+				<Codespace id="naptStop_data">
+					<Xmlns>naptStop</Xmlns>
+					<XmlnsUrl>http://www.naptan.org.uk/stops</XmlnsUrl>
+					<Description>UK National Public Transport Access Nodes: Stops.</Description>
+				</Codespace>
+				<Codespace id="noc_data">
+					<Xmlns>noc</Xmlns>
+					<XmlnsUrl>http://www.traveline.co.uk/noc</XmlnsUrl>
+					<Description>UK national operator codes</Description>
+				</Codespace>
+			</codespaces>
 			<FrameDefaults>
 				<DefaultCodespaceRef ref="fxc_metadata"/>
-				<DefaultDataSourceRef ref="fxc:common" version="fxc:v1.0"/>
+				<DefaultDataSourceRef ref="fxc:dft" version="fxc:v1.0"/>
 				<DefaultResponsibilitySetRef ref="fxc:FXC_metadata" version="fxc:v1.0"/>
 			</FrameDefaults>
 			<frames>
-				<!--  ==== NPTG Data for COMMON UK Bus Fare RESOURCEs======== -->
-				<!-- ====COMMON UK Bus Fare RESOURCEs======== -->
-				<FareFrame id="fxc:Common_UK_Fare_Components" version="fxc:v1.0" responsibilitySetRef="fxc:FXC_metadata">
-					<Name>Common Country independent fare component</Name>
+				<!-- ====COMMON UK PI Profile  RESOURCEs:  META DATA - COULD BE EXTERNALISED ===== ============ -->
+				<!-- === Profile Frame Types ===  -->
+				<ResourceFrame id="fxc:UK:DFT:ResourceFrame_UK_PI_METADATA_FRAMES:FXCP:fxc" version="fxc:v1.0" responsibilitySetRef="fxc:FXC_metadata" dataSourceRef="fxc:dft">
+					<Name>UKFXCP  Frame types</Name>
+					<codespaces>
+						<Codespace id="epd_data">
+							<Xmlns>epd</Xmlns>
+							<XmlnsUrl>http://fnetex-cen.eu/epd</XmlnsUrl>
+							<Description>European Passenger Information profile data -use for UK frame names</Description>
+						</Codespace>
+					</codespaces>
+					<typesOfValue>
+						<!-- ======== TYPE S OF   FRAME========= -->
+						<ValueSet version="fxc:1.0" id="fxc:Types_of_Specific_Frame_Basic" classOfValues="TypeOfFrame">
+							<Name>Types of FXC Specific  Frame Basic </Name>
+							<values>
+								<!-- === ANCILLARY  ==== -->
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_COMMON:FXCP">
+									<Name>UK FXCP  common Local resources</Name>
+									<FrameClassRef nameOfClass="ResourceFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_CALENDAR:FXCP">
+									<Name>UK FXCP  Service calendar</Name>
+									<FrameClassRef nameOfClass="ServiceCalendarFrame"/>
+								</TypeOfFrame>
+								<!-- === PAYLOAD  ==== -->
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_STOP:FXCP">
+									<Name>UK FXCP Stops: NapTAN Stop Place  and NPTG Locations Frame</Name>
+									<FrameClassRef nameOfClass="SiteFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_NETWORK:FXCP">
+									<Name>UK FXCP Network</Name>
+									<FrameClassRef nameOfClass="ServiceFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_TIMETABLE:FXCP">
+									<Name>UK FXCP Tietable: N</Name>
+									<FrameClassRef nameOfClass="TimetableFrame"/>
+								</TypeOfFrame>
+								<!-- === METADATA   ==== -->
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_METADATA:FXCP">
+									<Name>UK Bus Profile common resources</Name>
+									<FrameClassRef nameOfClass="ResourceFrame"/>
+								</TypeOfFrame>
+							</values>
+						</ValueSet>
+						<ValueSet version="fxc::v2.4" id="fxc:Types_of_Offer_Frame_Basic" classOfValues="TypeOfFrame">
+							<Name>Types of UK Offer Frame</Name>
+							<values>
+								<!-- === COMPOSITE ====  -->
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_STOP_OFFER:FXCP">
+									<Name>UK FXCP   composite container STOP OFFER</Name>
+									<FrameClassRef nameOfClass="CompositeFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_LINE_OFFER:FXCP">
+									<Name>UK FXCP   composite container LINE OFFER</Name>
+									<FrameClassRef nameOfClass="CompositeFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_NETWORK_OFFER:FXCP">
+									<Name>UK FXCP   composite container LINE OFFER</Name>
+									<FrameClassRef nameOfClass="CompositeFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_METADATA_OFFER:FXCP:fxc">
+									<Name>UK FXCP composite used to group other UKmetadta</Name>
+									<FrameClassRef nameOfClass="CompositeFrame"/>
+								</TypeOfFrame>
+							</values>
+						</ValueSet>
+						<!-- ======== TYPE S OF   FRAME========= -->
+						<ValueSet version="fxc:1.0" id="fxc:Types_of_Specific_Frame_for_Fares" classOfValues="TypeOfFrame">
+							<Name>Types of FXC Specific  Frame</Name>
+							<values>
+								<!-- === PAYLOAD  ==== -->
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_FARE_COMMON:FXCP">
+									<Name>UK Bus Profile fare common paramaters</Name>
+									<FrameClassRef nameOfClass="FareFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_FARE_NETWORK:FXCP">
+									<Name>UK Bus Profile fare network</Name>
+									<FrameClassRef nameOfClass="ServiceFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_FARE_PRODUCT:FXCP">
+									<Name>UK FXCP Fare Porducts Frame</Name>
+									<FrameClassRef nameOfClass="FareFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_FARE_PRICE:FXCP">
+									<Name>UK FXCP Fare Prices Frame</Name>
+									<FrameClassRef nameOfClass="FareFrame"/>
+								</TypeOfFrame>
+							</values>
+						</ValueSet>
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_Offer_Frame_for_Fares" classOfValues="TypeOfFrame">
+							<Name>Types of UK Offer Frame</Name>
+							<values>
+								<!-- === COMPOSITE ====  -->
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_STOP_FARE_OFFER:FXCP">
+									<Name>UK FXCP   composite container STOP OFFER</Name>
+									<FrameClassRef nameOfClass="CompositeFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_LINE_FARE_OFFER:FXCP">
+									<Name>UK FXCP   composite container LINE OFFER</Name>
+									<FrameClassRef nameOfClass="CompositeFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_NETWORK_FARE_OFFER:FXCP">
+									<Name>UK FXCP   composite container NETWORK OFFER</Name>
+									<FrameClassRef nameOfClass="CompositeFrame"/>
+								</TypeOfFrame>
+							</values>
+						</ValueSet>
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_Transaction_Frame" classOfValues="TypeOfFrame">
+							<Name>Types of UK Trasnaction  Frame</Name>
+							<values>
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_FARE_TRANSACTIONS:FXCP">
+									<Name>UK Bus Profile Operator sample transactions</Name>
+									<FrameClassRef nameOfClass="SalesTransactionFrame"/>
+								</TypeOfFrame>
+							</values>
+						</ValueSet>
+					</typesOfValue>
+				</ResourceFrame>
+				<!-- === FareXchange  Common fixed definitions  ===  -->
+				<FareFrame id="fxc:UK:DFT:FareFrame_UK_PI_METADATA:FareXChange:fxc" version="fxc:v1.0" responsibilitySetRef="fxc:FXC_metadata" dataSourceRef="fxc:dft">
+					<Name>FXCP Values for Farexchange</Name>
 					<FrameDefaults>
 						<DefaultCodespaceRef ref="fxc_metadata"/>
-						<DefaultDataSourceRef ref="fxc:common" version="fxc:v1.0"/>
+						<DefaultDataSourceRef ref="fxc:dft" version="fxc:v1.0"/>
 						<DefaultResponsibilitySetRef ref="fxc:FXC_metadata" version="fxc:v1.0"/>
 					</FrameDefaults>
-					<prerequisites>
-						<ResourceFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_Tariffs@Common_Resources"/>
-					</prerequisites>
 					<PricingParameterSet id="fxc:Common_Resources" version="fxc:v1.0">
 						<priceUnits>
 							<PriceUnit id="fxc:GBP" version="fxc:v1.0">
@@ -6574,6 +6774,8 @@ This Shows sample Purchases
 						<UserProfile version="fxc:v1.0" id="fxc:adult">
 							<Name>Adult</Name>
 							<TypeOfConcessionRef version="fxc:v1.0" ref="fxc:none"/>
+							<UserType>adult</UserType>
+							<DiscountBasis>none</DiscountBasis>
 							<companionProfiles>
 								<CompanionProfile version="fxc:v1.0" id="fxc:adult@infant">
 									<UserProfileRef ref="fxc:infant" version="fxc:v1.0"/>
@@ -6585,6 +6787,7 @@ This Shows sample Purchases
 						<UserProfile version="fxc:v1.0" id="fxc:child">
 							<Name>Child</Name>
 							<TypeOfConcessionRef version="fxc:v1.0" ref="fxc:child"/>
+							<UserType>child</UserType>
 							<MinimumAge>5</MinimumAge>
 							<MaximumAge>15</MaximumAge>
 						</UserProfile>
@@ -6597,8 +6800,10 @@ This Shows sample Purchases
 								</UsageParameterPrice>
 							</prices>
 							<TypeOfConcessionRef version="fxc:v1.0" ref="fxc:infant"/>
+							<UserType>infant</UserType>
 							<MinimumAge>0</MinimumAge>
 							<MaximumAge>4</MaximumAge>
+							<DiscountBasis>free</DiscountBasis>
 							<companionProfiles>
 								<CompanionProfile id="fxc:infant@adult" version="fxc:v1.0">
 									<UserProfileRef ref="fxc:adult" version="fxc:v1.0"/>
@@ -6611,6 +6816,7 @@ This Shows sample Purchases
 						<UserProfile version="fxc:v1.0" id="fxc:student">
 							<Name>Student</Name>
 							<TypeOfConcessionRef version="fxc:v1.0" ref="fxc:student"/>
+							<UserType>student</UserType>
 							<ProofRequired>membershipCard</ProofRequired>
 							<DiscountBasis>discount</DiscountBasis>
 						</UserProfile>
@@ -6826,58 +7032,28 @@ This Shows sample Purchases
 						</TypeOfTravelDocument>
 					</typesOfTravelDocuments>
 				</FareFrame>
-				<ResourceFrame id="fxc:UK_Bus_Tariffs@Common_Resources" version="fxc:v1.0" responsibilitySetRef="fxc:FXC_metadata" dataSourceRef="fxc:common">
-					<Name>NaBT Common Country independent code values</Name>
+				<ResourceFrame id="fxc:UK:DFT:ResourceFrame_UK_PI_METADATA:FareXChange:fxc" version="fxc:v1.0" responsibilitySetRef="fxc:FXC_metadata" dataSourceRef="fxc:dft">
+					<Name>FXCP - Fare metadata</Name>
 					<codespaces>
 						<Codespace id="fxc_metadata">
 							<Xmlns>fxc</Xmlns>
-							<XmlnsUrl>http://farexchange.org.uk/fxc</XmlnsUrl>
-							<Description>National Bus Tariff Profile metadata</Description>
-						</Codespace>
-						<Codespace id="napt_metadata">
-							<Xmlns>napt</Xmlns>
-							<XmlnsUrl>http://naptan.org.uk/napt</XmlnsUrl>
-							<Description>NaPTAN metadata</Description>
-						</Codespace>
-						<Codespace id="naptStop_data">
-							<Xmlns>naptStop"></Xmlns>
-							<XmlnsUrl>http://naptan.org.uk/stops</XmlnsUrl>
-							<Description>T stop data</Description>
-						</Codespace>
-						<Codespace id="nptg_metadata">
-							<Xmlns>nptg</Xmlns>
-							<XmlnsUrl>http://nptg.org.uk/</XmlnsUrl>
-							<Description>National Public Transport gazetteer</Description>
-						</Codespace>
-						<Codespace id="nptgUkLocality_data">
-							<Xmlns>nptgUkLocality</Xmlns>
-							<XmlnsUrl>http://nptg.org.uk/locations</XmlnsUrl>
-							<Description>National Public Transport gazetteer locations</Description>
-						</Codespace>
-						<Codespace id="nptgTariffZone_data">
-							<Xmlns>nptgTariffZone</Xmlns>
-							<XmlnsUrl>http://nptg.org.uk/tariffZones</XmlnsUrl>
-							<Description>National Public Transport gazetteer plus bus zones</Description>
-						</Codespace>
-						<Codespace id="nptgUkAdministrativeArea_data">
-							<Xmlns>nptgUkAdministrativeArea</Xmlns>
-							<XmlnsUrl>http://www.nptg.org.uk/adminAreas</XmlnsUrl>
-							<Description>UK National Public Transport gazetteer. Codes of administrative areas, are unique within the UK.</Description>
-						</Codespace>
-						<Codespace id="noc_data">
-							<Xmlns>noc</Xmlns>
-							<XmlnsUrl>http://www.traveline.co.uk/noc</XmlnsUrl>
-							<Description>UK national operator codes</Description>
+							<XmlnsUrl>netex.org.uk/fxc</XmlnsUrl>
+							<Description>UK FareXChange Profile metadata</Description>
 						</Codespace>
 						<Codespace id="nrn_data">
 							<Xmlns>nrn</Xmlns>
 							<XmlnsUrl>http://www.nationalrail.co.uk/</XmlnsUrl>
 							<Description>UK national rail network</Description>
 						</Codespace>
+						<Codespace id="iso3166-2_data">
+							<Xmlns>iso3166-2</Xmlns>
+							<XmlnsUrl>http://www.iso.org/country_codes/</XmlnsUrl>
+							<Description>ISO 316602 3 character Principality &amp; county codes. Use to subdivide IANA countries, e.g. gb:ENG, gb:WLS </Description>
+						</Codespace>
 					</codespaces>
 					<FrameDefaults>
 						<DefaultCodespaceRef ref="fxc_metadata"/>
-						<DefaultDataSourceRef ref="fxc:common" version="fxc:v1.0"/>
+						<DefaultDataSourceRef ref="fxc:dft" version="fxc:v1.0"/>
 						<DefaultResponsibilitySetRef ref="fxc:FXC_metadata" version="fxc:v1.0"/>
 						<DefaultLocale>
 							<TimeZoneOffset>0</TimeZoneOffset>
@@ -6892,13 +7068,13 @@ This Shows sample Purchases
 					</FrameDefaults>
 					<versions>
 						<Version id="fxc:v1.0" version="any">
-							<Description>NPTG version 2.1</Description>
+							<Description>FXC version 2.1</Description>
 							<VersionType>baseline</VersionType>
 						</Version>
 					</versions>
 					<dataSources>
-						<DataSource id="fxc:common" version="fxc:v1.0">
-							<Email>standards@nptg.org.uk</Email>
+						<DataSource id="fxc:dft" version="fxc:v1.0">
+							<Email>standards@netex.org.uk</Email>
 						</DataSource>
 					</dataSources>
 					<!-- ========Responsibility Sets========== -->
@@ -6915,80 +7091,9 @@ This Shows sample Purchases
 							</roles>
 						</ResponsibilitySet>
 					</responsibilitySets>
-					<!-- ======== Code sets ========= -->
 					<typesOfValue>
-						<ValueSet version="fxc:v1.0" id="fxc:TypeOfFrame" classOfValues="TypeOfFrame">
-							<Name>Types of UK Frame</Name>
-							<values>
-								<TypeOfFrame version="fxc:v1.0" id="nptg:UK_general_profile@locations">
-									<Name>NPTG Locations Frame</Name>
-								</TypeOfFrame>
-								<TypeOfFrame version="fxc:v1.0" id="nptg:UK_general_profile@tariff_zones">
-									<Name>NPTG Locations Frame</Name>
-								</TypeOfFrame>
-								<!-- COntents -->
-								<TypeOfFrame version="fxc:v1.0" id="fxc:UK_Bus_tariff_profile@fare_network">
-									<Name>UK Bus Profile fare network</Name>
-								</TypeOfFrame>
-								<TypeOfFrame version="fxc:v1.0" id="fxc:UK_Bus_tariff_profile@service_network">
-									<Name>UK Bus Profile service network</Name>
-									<FrameClassRef nameOfClass="ServiceFrame"/>
-								</TypeOfFrame>
-								<TypeOfFrame version="fxc:v1.0" id="fxc:UK_Bus_tariff_profile@service_network@line">
-									<Name>UK Bus Profile service network</Name>
-									<FrameClassRef nameOfClass="ServiceFrame"/>
-								</TypeOfFrame>
-								<TypeOfFrame version="fxc:v1.0" id="fxc:UK_Bus_tariff_profile@site_network">
-									<Name>UK Bus Profile site network</Name>
-									<FrameClassRef nameOfClass="SiteFrame"/>
-								</TypeOfFrame>
-								<TypeOfFrame version="fxc:v1.0" id="fxc:UK_Bus_tariff_profile@products">
-									<Name>UK Bus Profile products</Name>
-									<FrameClassRef nameOfClass="FareFrame"/>
-								</TypeOfFrame>
-								<TypeOfFrame version="fxc:v1.0" id="fxc::UK_Bus_tariff_profile@products@by_line">
-									<Name>UK Bus Profile tariff by line</Name>
-								</TypeOfFrame>
-								<TypeOfFrame version="fxc:v1.0" id="fxc:UK_Bus_tariff_profile@prices">
-									<Name>UK Bus Profile prices</Name>
-									<FrameClassRef nameOfClass="FareFrame"/>
-								</TypeOfFrame>
-								<TypeOfFrame version="fxc:v1.0" id="fxc:UK_Bus_tariff_profile@calendar">
-									<Name>UK Bus Profile Operator calendar</Name>
-									<FrameClassRef nameOfClass="ServiceCalendarFrame"/>
-								</TypeOfFrame>
-								<TypeOfFrame version="fxc:v1.0" id="fxc:UK_Bus_tariff_profile@operator_resources">
-									<Name>UK Bus Profile Operator resources</Name>
-									<FrameClassRef nameOfClass="ResourceFrame"/>
-								</TypeOfFrame>
-								<TypeOfFrame version="fxc:v1.0" id="fxc:UK_Bus_tariff_profile@operator_fare_resources">
-									<Name>UK Bus Profile Operator resources</Name>
-									<FrameClassRef nameOfClass="FareFrame"/>
-								</TypeOfFrame>
-								<TypeOfFrame version="fxc:v1.0" id="fxc:UK_Bus_tariff_profile@transactions">
-									<Name>UK Bus Profile Operator sample transactions</Name>
-									<FrameClassRef nameOfClass="SalesTransactionFrame"/>
-								</TypeOfFrame>
-								<TypeOfFrame version="fxc:v1.0" id="fxc:UK_Bus_tariff_profile@transactions_composite">
-									<Name>UK Bus Profile Operator sample transactions - container</Name>
-									<FrameClassRef nameOfClass="SalesTransactionFrame"/>
-								</TypeOfFrame>
-								<TypeOfFrame version="fxc:v1.0" id="fxc:UK_Bus_tariff_profile@composite">
-									<Name>UK Bus Profile coposite used to group other UK bus tariff frames</Name>
-									<FrameClassRef nameOfClass="CompositeFrame"/>
-								</TypeOfFrame>
-								<!--- for fixed elements -->
-								<TypeOfFrame version="fxc:v1.0" id="fxc:UK_Bus_tariff_profile@UK_common_resources">
-									<Name>UK Bus Profile common resources</Name>
-									<FrameClassRef nameOfClass="ResourceFrame"/>
-								</TypeOfFrame>
-								<TypeOfFrame version="fxc:v1.0" id="fxc:UK_Bus_tariff_profile@UK_common_resources_composite">
-									<Name>UK Bus Profile common resources composite container</Name>
-									<FrameClassRef nameOfClass="CompositeFrame"/>
-								</TypeOfFrame>
-							</values>
-						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:PointOfInterestClassification" classOfValues="PointOfInterestClassification">
+						<!-- ======== Code sets ========= -->
+						<ValueSet version="fxc:v1.0" id="fxc:PointsOfInterest_Classifications" classOfValues="PointOfInterestClassification">
 							<Name>Types of POI</Name>
 							<values>
 								<!--- ====Type of Product category ========= -->
@@ -7000,7 +7105,7 @@ This Shows sample Purchases
 								</PointOfInterestClassification>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:TypesOfFareZone" classOfValues="TypeOfZone">
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareZone" classOfValues="TypeOfZone">
 							<Name>Types of Fare Zone</Name>
 							<values>
 								<!--- ====Type of Product category ========= -->
@@ -7015,7 +7120,7 @@ This Shows sample Purchases
 								</TypeOfZone>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:TypesOfProductCategory" classOfValues="TypeOfProductCategory">
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_ProductCategory" classOfValues="TypeOfProductCategory">
 							<Name>Types of Product Category</Name>
 							<values>
 								<!--- ====Type of Product category ========= -->
@@ -7035,7 +7140,7 @@ This Shows sample Purchases
 							<values>
 								<!--- ====Type of Product category ========= -->
 								<PurposeOfGrouping version="fxc:v1.0" id="fxc:route_exclusion">
-									<Name>Routes to be ommited</Name>
+									<Name>Routes to be ommitted</Name>
 								</PurposeOfGrouping>
 							</values>
 						</ValueSet>
@@ -7060,7 +7165,7 @@ This Shows sample Purchases
 								</ChargingMoment>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:TypesOfFareProduct@trip" classOfValues="TypeOfFareProduct">
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareProduct@trip" classOfValues="TypeOfFareProduct">
 							<Name>Types Of Fare Product - Trip</Name>
 							<values>
 								<TypeOfFareProduct version="fxc:v1.0" id="fxc:standard_product@trip@short_hop">
@@ -7081,7 +7186,7 @@ This Shows sample Purchases
 								</TypeOfFareProduct>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:TypesOfFareProduct@pass" classOfValues="TypeOfFareProduct">
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareProduct@pass" classOfValues="TypeOfFareProduct">
 							<Name>Types Of Fare Product - Pass</Name>
 							<values>
 								<TypeOfFareProduct version="fxc:v1.0" id="fxc:standard_product@pass@day">
@@ -7095,7 +7200,7 @@ This Shows sample Purchases
 								</TypeOfFareProduct>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:TypesOfFareProduct@carnet" classOfValues="TypeOfFareProduct">
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareProduct@carnet" classOfValues="TypeOfFareProduct">
 							<Name>Types Of Fare Product - Pass</Name>
 							<values>
 								<TypeOfFareProduct version="fxc:v1.0" id="fxc:standard_product@carnet@trips">
@@ -7106,7 +7211,7 @@ This Shows sample Purchases
 								</TypeOfFareProduct>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:TypesOfFareProduct@discount" classOfValues="TypeOfFareProduct">
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareProduct@discount" classOfValues="TypeOfFareProduct">
 							<Name>Types Of Fare Product - Pass</Name>
 							<values>
 								<TypeOfFareProduct version="fxc:v1.0" id="fxc:standard_product@discount@sales">
@@ -7117,7 +7222,7 @@ This Shows sample Purchases
 								</TypeOfFareProduct>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:TypesOfFareProduct@stored_value" classOfValues="TypeOfFareProduct">
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareProduct@stored_value" classOfValues="TypeOfFareProduct">
 							<Name>Types Of Fare Product - Epurse</Name>
 							<values>
 								<TypeOfFareProduct version="fxc:v1.0" id="fxc:standard_product@stored_value@epurse">
@@ -7125,11 +7230,11 @@ This Shows sample Purchases
 								</TypeOfFareProduct>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:TypesOfSalesOfferPackage" classOfValues="TypeOfSalesOfferPackage">
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_SalesOfferPackage" classOfValues="TypeOfSalesOfferPackage">
 							<Name>Types Of Sales Offer Product</Name>
 							<values>
 								<TypeOfSalesOfferPackage version="fxc:v1.0" id="fxc:standard_product@all_operators">
-									<Name>Product is standrad and supported by all operators</Name>
+									<Name>Product is standard and supported by all operators</Name>
 								</TypeOfSalesOfferPackage>
 								<TypeOfSalesOfferPackage version="fxc:v1.0" id="fxc:standard_product@multi_operator">
 									<Name>Product is standrad and supported by all operators</Name>
@@ -7154,8 +7259,8 @@ This Shows sample Purchases
 								</ClassOfUse>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:TypesOfProjection" classOfValues="TypeOfProjection">
-							<Name>TypesOf Projection</Name>
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_Projection" classOfValues="TypeOfProjection">
+							<Name>Types of Projection</Name>
 							<values>
 								<!--- ====ClassOfUse ========= -->
 								<TypeOfProjection version="fxc:v1.0" id="fxc:tariff_zone_border">
@@ -7163,7 +7268,7 @@ This Shows sample Purchases
 								</TypeOfProjection>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:TypesOfFareContractEntry" classOfValues="TypeOfFareContractEntry">
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareContractEntry" classOfValues="TypeOfFareContractEntry">
 							<Name>Types of fare contract entry</Name>
 							<values>
 								<!--- ====TypeOfFareContractEntry ========= -->
@@ -7181,7 +7286,7 @@ This Shows sample Purchases
 								</TypeOfFareContractEntry>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:TypesOfConcession" classOfValues="TypeOfConcession">
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_Concession" classOfValues="TypeOfConcession">
 							<Name>Types of concession</Name>
 							<values>
 								<!--- ====TypeOfConcession method========= -->
@@ -7223,8 +7328,8 @@ This Shows sample Purchases
 								</TypeOfConcession>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:TypesOfTariff" classOfValues="TypeOfTariff">
-							<Name>Types of Tariff</Name>
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_Tariff" classOfValues="TypeOfTariff">
+							<Name>Spatial Types of Tariff</Name>
 							<values>
 								<!--- ====Types OfTariff ========= -->
 								<TypeOfTariff version="fxc:v1.0" id="fxc:Distance_kilometers">
@@ -7251,6 +7356,9 @@ This Shows sample Purchases
 								<TypeOfTariff version="fxc:v1.0" id="fxc:stored_value">
 									<Name>Stored value</Name>
 								</TypeOfTariff>
+								<TypeOfTariff version="fxc:v1.0" id="fxc:discount">
+									<Name>Discount value</Name>
+								</TypeOfTariff>
 								<TypeOfTariff version="fxc:v1.0" id="fxc:multitrip">
 									<Name>Multitrip carnet</Name>
 								</TypeOfTariff>
@@ -7259,7 +7367,7 @@ This Shows sample Purchases
 								</TypeOfTariff>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:TypesOfAccessRightAssignment" classOfValues="TypeOfAccessRightAssignment">
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_AccessRightAssignment" classOfValues="TypeOfAccessRightAssignment">
 							<Name>Types of Access Right Assignment</Name>
 							<values>
 								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:eligible">
@@ -7325,6 +7433,9 @@ This Shows sample Purchases
 								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:quota_applies">
 									<Name>Quota applies</Name>
 								</TypeOfAccessRightAssignment>
+								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:promotion_applies">
+									<Name>Promotion applies</Name>
+								</TypeOfAccessRightAssignment>
 								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:validity_chaining">
 									<Name>Quota applies</Name>
 								</TypeOfAccessRightAssignment>
@@ -7347,7 +7458,7 @@ This Shows sample Purchases
 								<FromDate>2001-01-01T00:00:00Z</FromDate>
 								<ToDate>2020-01-01T00:00:00Z</ToDate>
 							</ValidityPeriod>
-							<CountryRef ref="uk" refPrincipality="GB-UKM"/>
+							<CountryRef ref="uk" refPrincipality="iso3166-2:GB-UKM"/>
 						</Operator>
 						<Operator version="fxc:v1.0" id="uicStation_Management:0070">
 							<PublicCode>NR</PublicCode>
@@ -7357,23 +7468,637 @@ This Shows sample Purchases
 								<FromDate>2003-09-22T00:00:00Z</FromDate>
 								<ToDate>2020-01-01T00:00:00Z</ToDate>
 							</ValidityPeriod>
-							<CountryRef ref="uk" refPrincipality="GB-UKM"/>
+							<CountryRef ref="uk" refPrincipality="iso3166-2:GB-UKM"/>
 						</Operator>
 					</organisations>
 					<groupsOfEntities>
-						<Layer version="fxc:v1.0" id="fxc:fareNetwork_fareProducts_farePrices">
+						<Layer version="fxc:v1.0" id="fxc:fare_network+fare_products+fare_prices">
 							<Name>Fares and fare prices</Name>
 						</Layer>
-						<Layer version="fxc:v1.0" id="fxc:fareNetwork">
+						<Layer version="fxc:v1.0" id="fxc:fare_network">
 							<Name>Fares networks</Name>
 						</Layer>
-						<Layer version="fxc:v1.0" id="fxc:fareProducts">
+						<Layer version="fxc:v1.0" id="fxc:fare_products">
 							<Name>Fares ad fare prices</Name>
 						</Layer>
-						<Layer version="fxc:v1.0" id="fxc:farePrices">
+						<Layer version="fxc:v1.0" id="fxc:fare_prices">
 							<Name>Fares and fare prices</Name>
 						</Layer>
 					</groupsOfEntities>
+				</ResourceFrame>
+				<ResourceFrame version="nptg:v2.1" id="fxc:UK:DFT:ResourceFrame_UK_PI_METADATA:NPTG:nptg" responsibilitySetRef="nptg:NPTG_metadata" dataSourceRef="nptg:dft">
+					<ValidBetween>
+						<FromDate>2004-01-01T00:00:00</FromDate>
+					</ValidBetween>
+					<Name>Static code values for UK NPTG data</Name>
+					<Description>This frame contains code  valuesused to validate the NPTG  </Description>
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_METADATA:FXCP"/>
+					<codespaces>
+						<Codespace id="nptg_metadata">
+							<Xmlns>nptg</Xmlns>
+							<XmlnsUrl>http://www.nptg.org.uk/nptg</XmlnsUrl>
+							<Description>UK National Public Transport gazetteer     fixed codes.   .</Description>
+						</Codespace>
+						<Codespace id="nptgLocality_data">
+							<Xmlns>nptgLocality</Xmlns>
+							<XmlnsUrl>http://nptg.org.uk/locations</XmlnsUrl>
+							<Description>National Public Transport gazetteer locations</Description>
+						</Codespace>
+						<Codespace id="nptgTariffZone_data">
+							<Xmlns>nptgTariffZone</Xmlns>
+							<XmlnsUrl>http://nptg.org.uk/tariffZones</XmlnsUrl>
+							<Description>National Public Transport gazetteer plus bus zones</Description>
+						</Codespace>
+						<Codespace id="nptgAdminArea_data">
+							<Xmlns>nptgAdminArea</Xmlns>
+							<XmlnsUrl>http://www.nptg.org.uk/adminAreas</XmlnsUrl>
+							<Description>UK National Public Transport gazetteer. Codes of administrative areas, are unique within the UK.</Description>
+						</Codespace>
+					</codespaces>
+					<FrameDefaults>
+						<DefaultCodespaceRef ref="nptg_metadata"/>
+						<DefaultDataSourceRef ref="nptg:dft" version="nptg:v2.1"/>
+						<DefaultResponsibilitySetRef ref="nptg:NPTG_metadata" version="nptg:v2.1"/>
+					</FrameDefaults>
+					<versions>
+						<Version id="nptg:v2.1" version="any">
+							<Description>NPTG version 2.1</Description>
+							<VersionType>baseline</VersionType>
+						</Version>
+					</versions>
+					<dataSources>
+						<DataSource id="nptg:dft" version="nptg:v2.1">
+							<Email>standards@nptg.org.uk</Email>
+						</DataSource>
+					</dataSources>
+					<!-- ========Responsibility Sets========== -->
+					<responsibilitySets>
+						<ResponsibilitySet version="nptg:v2.1" id="nptg:NPTG_metadata">
+							<Name>Common</Name>
+							<roles>
+								<ResponsibilityRoleAssignment version="nptg:v2.1" id="nptg:NPTG_metadata">
+									<DataRoleType>creates distributes</DataRoleType>
+									<StakeholderRoleType>DataRegistrar</StakeholderRoleType>
+									<ResponsibleOrganisationRef ref="nptg:DfT" version="nptg:v2.1"/>
+									<ResponsibleAreaRef ref="nptgUkRegion:GB" nameOfRefClass="TransportAdministrativeZone" versionRef="0" xsi:type="TransportAdministrativeZoneRefStructure">UK</ResponsibleAreaRef>
+								</ResponsibilityRoleAssignment>
+							</roles>
+						</ResponsibilitySet>
+						<ResponsibilitySet version="nptg:v2.1" id="nptg:NPTG_data">
+							<Name>Common</Name>
+							<roles>
+								<ResponsibilityRoleAssignment version="nptg:v2.1" id="nptg:NPTG_data">
+									<DataRoleType>creates distributes</DataRoleType>
+									<StakeholderRoleType>EntityLegalOwnership</StakeholderRoleType>
+									<ResponsibleOrganisationRef ref="nptg:DfT" version="nptg:v2.1"/>
+									<ResponsibleAreaRef ref="nptg:UK">TODO</ResponsibleAreaRef>
+								</ResponsibilityRoleAssignment>
+							</roles>
+						</ResponsibilitySet>
+					</responsibilitySets>
+					<!-- ==== Fixed values == -->
+					<typesOfValue>
+						<!-- ====Frame Types   TODO MERGE FRAME TYPES INTO FXC PI frame types== -->
+						<ValueSet version="nptg:v2.1" id="nptg:UK_NPTG_profile@Types_of_frame" classOfValues="TypeOfFrame">
+							<Name>Types of frame for UK NKTG profile</Name>
+							<values>
+								<TypeOfFrame version="nptg:v2.1" id="nptg:UK_NPTG_profile_payload">
+									<Name>NPTG Locations and  Tariff Zones Frame</Name>
+									<FrameClassRef nameOfClass="SiteeFrame"/>
+									<classes>
+										<ClassInFrame nameOfClass="TopographicPlace">
+											<!-- 	 TopographicPlace maps to  a NPTG Locality 
+<NptgLocality Status="active" Modification="delete" DataRightRef="DR01" CreationDateTime="2001-12-17T09:30:47Z" BaselineVersion="1" ModificationDateTime="2001-12-17T09:30:47Z" id="E0000003"  RevisionNumber="1">
+			<NptgLocalityCode>E0000003</NptgLocalityCode>
+			<Descriptor Modification="delete" Status="active" DataRightRef="DR01" CreationDateTime="2001-12-17T09:30:47Z" ModificationDateTime="2001-12-17T09:30:47Z" BaselineVersion="1" id="E0000001-1"  RevisionNumber="1">
+				<LocalityName>Locality Three</LocalityName>
+				<ShortName>Locality 3</ShortName>
+				<Qualify>
+					<QualifierName>Loc 22 </QualifierName>
+					<NptgLocalityRef>E0000022</NptgLocalityRef>
+				</Qualify>
+			</Descriptor> 
+			<ParentNptgLocalityRef Status="pending" CreationDateTime="2001-12-17T09:30:47Z" ModificationDateTime="2001-12-17T09:30:47Z" BaselineVersion="1" RevisionNumber="1">E0000022</ParentNptgLocalityRef>
+			<AdministrativeAreaRef>101</AdministrativeAreaRef>
+			<NptgDistrictRef>111</NptgDistrictRef>
+			<AdjacentLocalities>
+				<NptgLocalityRef Status="active" CreationDateTime="2001-12-17T09:30:47Z" ModificationDateTime="2001-12-17T09:30:47Z" BaselineVersion="1" RevisionNumber="1">E0000001</NptgLocalityRef>
+			</AdjacentLocalities>
+			<SourceLocalityType> Pa</SourceLocalityType>
+			<LocalityClassification> village</LocalityClassification>
+			<Location id="NMTOKEN" Precision="10m">
+				<GridType>UKOS</GridType>
+				<Easting>999999</Easting>
+				<Northing>1999999</Northing>
+			</Location> 
+		</NptgLocality>			-->
+											<Mandatory>required</Mandatory>
+											<attributes>
+												<ClassAttributeInFrame name="_id">
+													<!--  NptgLocality.NptgLocalityCode-->
+													<Mandatory>required</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="_version">
+													<!--  NptgLocality.RevisionNumber-->
+													<Mandatory>required</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="_created">
+													<!--  NptgLocality.CreationDateTime  -->
+													<Mandatory>required</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="_changed">
+													<!--  NptgLocality.ModificationDateTime  -->
+													<Mandatory>required</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="_modification">
+													<!--  NptgLocality.Modification -->
+													<Mandatory>optional</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="_status">
+													<!--  NptgLocality.Status -->
+													<Mandatory>optional</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="Name">
+													<!--  NptgLocality.Descriptor.LocalityName -->
+													<Mandatory>required</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="Name.lang">
+													<!--  NptgLocality.Descriptor.Name.Lang-->
+													<Mandatory>optional</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="Centroid.Location.Longitude">
+													<!--  NptgLocality.Location.Longitude -->
+													<Mandatory>optional</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="Centroid.Location.Latitude">
+													<!--  NptgLocality.Location.Latitude -->
+													<Mandatory>optional</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="Centroid.Location.gml.pos">
+													<!-- NptgLocality.Location.GridType .  NptgLocality.Location.Easting,    NptgLocality.Location.Northing>  -->
+													<Mandatory>optional</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="Centroid.Location.Precision">
+													<!-- NptgLocality.Location.Precision.    -->
+													<Mandatory>optional</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="Descriptor.Name">
+													<!--  NptgLocality.Descriptor.LocalityName -->
+													<Mandatory>required</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="Descriptor.Name._lang">
+													<!--  NptgLocality.Descriptor.LocalityName.Lang-->
+													<Mandatory>optional</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="Descriptor.ShortName">
+													<!--  NptgLocality.Descriptor.ShortName -->
+													<Mandatory>optional</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="Descriptor.ShortName._lang">
+													<!--  NptgLocality.Descriptor.ShortName.Lang-->
+													<Mandatory>optional</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="Descriptor.Qualifier">
+													<!--  NptgLocality.Descriptor.Qualify.QualifierName -->
+													<Mandatory>optional</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="Descriptor.Qualifier.Name._lang">
+													<!--  NptgLocality.Descriptor.Qualify.QualifierName.Lang-->
+													<Mandatory>optional</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="TypeOfTopographicPlace">
+													<!--  NptgLocality.LocalityClassification -->
+													<Mandatory>optional</Mandatory>
+												</ClassAttributeInFrame>
+											</attributes>
+											<relationships>
+												<ClassRelationshipInFrame name="responsibilitySet">
+													<!--  NptgLocality.AdministrativeAreaRef -->
+													<RelationshipRef nameOfClass="ResponsibilitySetRef"/>
+													<Mandatory>required</Mandatory>
+													<Containment>byReference</Containment>
+												</ClassRelationshipInFrame>
+												<ClassRelationshipInFrame name="parentZone">
+													<RelationshipRef nameOfClass="ParentZoneRef"/>
+													<!--  NptgLocality.NptgDistrictRef-->
+													<Mandatory>optional</Mandatory>
+													<Containment>byVersionedReference</Containment>
+												</ClassRelationshipInFrame>
+												<ClassRelationshipInFrame name="placeTypes">
+													<RelationshipRef nameOfClass="TypeOfPlaceRef"/>
+													<!--  NptgLocality.SourceLocalityType -->
+													<Mandatory>required</Mandatory>
+													<Containment>byVersionedReference</Containment>
+												</ClassRelationshipInFrame>
+												<ClassRelationshipInFrame name="country">
+													<RelationshipRef nameOfClass="CountryRef"/>
+													<Mandatory>optional</Mandatory>
+													<Containment>byReference</Containment>
+												</ClassRelationshipInFrame>
+												<ClassRelationshipInFrame name="parentTopographicPlace">
+													<RelationshipRef nameOfClass="ParentTopographicPlaceRef"/>
+													<!--  NptgLocality.ParentNptgLocalityRef -->
+													<Mandatory>optional</Mandatory>
+													<Containment>byVersionedReference</Containment>
+												</ClassRelationshipInFrame>
+												<ClassRelationshipInFrame name="alternativeDescriptors">
+													<!--  NB Only coccasionally  actually populated in current data set -->
+													<RelationshipRef nameOfClass="TopographicPlaceDescriptior"/>
+													<!--   NptgLocality.alternativeDeiscriptors.Descriptor -->
+													<Mandatory>optional</Mandatory>
+													<Containment>byVersionedReference</Containment>
+												</ClassRelationshipInFrame>
+												<ClassRelationshipInFrame name="adjacentLocalities">
+													<!--  NB Only coccasionally  actually populated in current data set -->
+													<RelationshipRef nameOfClass="TopographicPlaceRef"/>
+													<!--   NptgLocality.AdjacentLocalities.NptgLocalityRef -->
+													<Mandatory>optional</Mandatory>
+													<Containment>byVersionedReference</Containment>
+												</ClassRelationshipInFrame>
+												<ClassRelationshipInFrame name="containedIn">
+													<!--  NB Not  actually populated in current data set ? -->
+													<RelationshipRef nameOfClass="TopographicPlaceRef"/>
+													<!--   NptgLocality.Descriptor.Qualify.NptgLocalityRef -->
+													<Mandatory>optional</Mandatory>
+													<Containment>byVersionedReference</Containment>
+												</ClassRelationshipInFrame>
+											</relationships>
+										</ClassInFrame>
+										<ClassInFrame nameOfClass="TopographicDescriptor">
+											<!-- 	 TopographicPlace maps to  a NPTG Locality. 		lternativeDescriptors.Descrip  -->
+											<Mandatory>required</Mandatory>
+											<attributes>
+												<ClassAttributeInFrame name="_id">
+													<!--  NptgLocality.AlternativeDescriptors.Descriptor.NptgLocalityCode-->
+													<Mandatory>required</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="_version">
+													<!--  NptgLocality.AlternativeDescriptors.Descriptor.RevisionNumber-->
+													<Mandatory>required</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="_created">
+													<!--  NptgLocality.AlternativeDescriptors.Descriptor.CreationDateTime  -->
+													<Mandatory>required</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="_changed">
+													<!--  NptgLocality.AlternativeDescriptors.Descriptor.ModificationDateTime  -->
+													<Mandatory>required</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="_modification">
+													<!--  NptgLocality.AlternativeDescriptors.Descriptor.Modification -->
+													<Mandatory>optional</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="Name">
+													<!-- NptgLocality.AlternativeDescriptors.Descriptor.LocalityName -->
+													<Mandatory>required</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="ShortName">
+													<!--  NptgLocality.AlternativeDescriptors.Descriptor.ShortName -->
+													<Mandatory>optional</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="Qualifier">
+													<!--  NptgLocality.AlternativeDescriptors.Descriptor.Qualify.QualifierName -->
+													<Mandatory>optional</Mandatory>
+												</ClassAttributeInFrame>
+											</attributes>
+											<relationships>
+												<ClassRelationshipInFrame name="responsibilitySet">
+													<!--  NptgLocality.AdministrativeAreaRef -->
+													<RelationshipRef nameOfClass="ResponsibilitySetRef"/>
+													<Mandatory>required</Mandatory>
+													<Containment>byReference</Containment>
+												</ClassRelationshipInFrame>
+												<ClassRelationshipInFrame name="containedIn">
+													<!--  NB Not  actually populated in current data set ? -->
+													<RelationshipRef nameOfClass="TopographicPlaceRef"/>
+													<!--   NptgLocality.AlternativeDescriptors.Descriptor.Qualify.NptgLocalityRef -->
+													<Mandatory>optional</Mandatory>
+													<Containment>byVersionedReference</Containment>
+												</ClassRelationshipInFrame>
+											</relationships>
+										</ClassInFrame>
+										<!-- Classes for Plus Bus Zone -->
+										<ClassInFrame nameOfClass="TariffZone">
+											<!-- 	 TariffZone  maps to  a NPTG PlusBuzSOne -->
+											<Mandatory>required</Mandatory>
+											<attributes>
+												<ClassAttributeInFrame name="_id">
+													<!--  NptgPlusBusZone.PlusBusZoneCode-->
+													<Mandatory>required</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="_version">
+													<!--  NptgPlusBusZone.RevisionNumber-->
+													<Mandatory>required</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="_created">
+													<!--  NptgPlusBusZone.CreationDateTime  -->
+													<Mandatory>required</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="_changed">
+													<!--  NptgPlusBusZone.ModificationDateTime  -->
+													<Mandatory>required</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="_modification">
+													<!--  NptgPlusBusZone.Modification -->
+													<Mandatory>optional</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="Name">
+													<!--  NptgPlusBusZone.Name-->
+													<Mandatory>required</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="Name._lang">
+													<!--  NptgPlusBusZone.Name.Lang-->
+													<Mandatory>optional</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="PrivateCode">
+													<!--  NptgPlusBusZone.PlusBusZoneCode-->
+													<Mandatory>required</Mandatory>
+												</ClassAttributeInFrame>
+											</attributes>
+											<relationships>
+												<ClassRelationshipInFrame name="types">
+													<!--  Fixed    -->
+													<RelationshipRef nameOfClass="TypeOfZoneRef"/>
+													<Mandatory>required</Mandatory>
+													<Containment>byVersionedReference</Containment>
+												</ClassRelationshipInFrame>
+												<ClassRelationshipInFrame name="country">
+													<!--  NptgPlusBusZone.Country-->
+													<RelationshipRef nameOfClass="CountryRef"/>
+													<Mandatory>optional</Mandatory>
+													<Containment>byReference</Containment>
+												</ClassRelationshipInFrame>
+												<ClassRelationshipInFrame name="projection">
+													<!--  NptgPlusBusZone.Mapping  ..  <Location><Easting>  .. <Northing>  -->
+													<RelationshipRef nameOfClass="Polygon"/>
+													<Mandatory>required</Mandatory>
+													<Containment>inline</Containment>
+												</ClassRelationshipInFrame>
+											</relationships>
+										</ClassInFrame>
+										<ClassInFrame nameOfClass="Polygon">
+											<!-- 	 gml:Polygon  maps to  a NPTG PlusBusZone.Mapping  -->
+											<Mandatory>required</Mandatory>
+											<attributes>
+												<ClassAttributeInFrame name="_gml.id">
+													<!--  NptgPlusBusZone.Mapping.PlusBusZoneCode -->
+													<Mandatory>required</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="_srsName">
+													<!-- NptgPlusBusZone.Mapping.GridType -->
+													<Mandatory>required</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="gml.exterior.LinearRIng.pos">
+													<!-- NptgPlusBusZone.Mapping.GridType.Easting  NptgPlusBusZone.Mapping.GridType.Northng  -->
+													<Mandatory>optional</Mandatory>
+												</ClassAttributeInFrame>
+											</attributes>
+										</ClassInFrame>
+									</classes>
+									<ModificationSet>all</ModificationSet>
+								</TypeOfFrame>
+								<TypeOfFrame version="nptg:v2.1" id="nptg:UK_NPTG_profile_admin_context">
+									<Name>NPTG Admin areas for NPTG </Name>
+									<classes>
+										<ClassInFrame nameOfClass="GeneralOrganisation">
+											<!--  Fixed    -->
+											<Mandatory>required</Mandatory>
+											<attributes>
+												<ClassAttributeInFrame name="Name">
+													<Mandatory>required</Mandatory>
+												</ClassAttributeInFrame>
+											</attributes>
+											<relationships>
+												<ClassRelationshipInFrame name="parts">
+													<!--  NPTG Region    -->
+													<RelationshipRef nameOfClass="OrganisationPart"/>
+													<Mandatory>required</Mandatory>
+													<Containment>inline</Containment>
+												</ClassRelationshipInFrame>
+											</relationships>
+										</ClassInFrame>
+										<ClassInFrame nameOfClass="OrganisationPart">
+											<Mandatory>required</Mandatory>
+											<attributes>
+												<ClassAttributeInFrame name="Name">
+													<Mandatory>required</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="PublicCode">
+													<Mandatory>required</Mandatory>
+												</ClassAttributeInFrame>
+											</attributes>
+											<relationships>
+												<ClassRelationshipInFrame name="administrativeZones">
+													<RelationshipRef nameOfClass="TransportAdministrativeZone"/>
+													<Mandatory>required</Mandatory>
+													<Containment>inline</Containment>
+												</ClassRelationshipInFrame>
+											</relationships>
+										</ClassInFrame>
+										<ClassInFrame nameOfClass="TransportAdministrativeZone">
+											<!-- Maps some aspects of  NPTG Admin Area								
+	<AdministrativeArea Modification="new" Status="active" DataRightRef="DR01" CreationDateTime="2001-12-17T09:30:47Z" ModificationDateTime="2001-12-17T09:30:47Z" BaselineVersion="1"   RevisionNumber="1" >
+					<AdministrativeAreaCode>101</AdministrativeAreaCode>
+					<AtcoAreaCode>001</AtcoAreaCode>
+					<Name>Nptg Admin area 101</Name>
+					<ShortName>Nptg Admin area 101 short Name</ShortName>
+
+
+
+		<MaximumLengthForShortNames>24</MaximumLengthForShortNames>   USE KEY LIST FOR MAPPING
+					<National>false</National>       represent by TypeOf 
+					<NaptanPrefixes>   <CodespaceAssignment><CodePrefix>
+						<AlphaPrefix>333</AlphaPrefix>
+					</NaptanPrefixes>
+					<CleardownRange>   
+						<CleardownStart>2</CleardownStart>   <CodespaceAssignment><StartValue>
+						<CleardownEnd>4</CleardownEnd>  <CodespaceAssignment><EndValue>
+					</CleardownRange>
+
+  -->
+											<Mandatory>required</Mandatory>
+											<attributes>
+												<ClassAttributeInFrame name="_id">
+													<!--  Nptg AdministrativeArea.AdministrativeAreaCode -->
+													<Mandatory>required</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="_version">
+													<!--  Nptg AdministrativeArea.RevisionNumber-->
+													<Mandatory>required</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="_created">
+													<!--  Nptg AdministrativeArea.CreationDateTime  -->
+													<Mandatory>required</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="_changed">
+													<!--  Nptg AdministrativeArea.ModificationDateTime  -->
+													<Mandatory>required</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="_modification">
+													<!--  Nptg AdministrativeArea.Modification -->
+													<Mandatory>optional</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="Name">
+													<!--  Nptg AdministrativeArea.Name -->
+													<Mandatory>required</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="ShortName">
+													<!--  Nptg AdministrativeArea.ShortName -->
+													<Mandatory>required</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="PrivateCode">
+													<!--  N ptg AdministrativeArea.AtcoAreaCode>  -->
+													<Mandatory>required</Mandatory>
+												</ClassAttributeInFrame>
+											</attributes>
+											<relationships>
+												<ClassRelationshipInFrame name="types">
+													<!--  N ptg AdministrativeArea.National>  -->
+													<RelationshipRef nameOfClass="TypeOfZoneRef"/>
+													<Mandatory>required</Mandatory>
+													<Containment>byVersionedReference</Containment>
+												</ClassRelationshipInFrame>
+												<ClassRelationshipInFrame name="projections">
+													<RelationshipRef nameOfClass="TopographicProjection"/>
+													<Mandatory>optional</Mandatory>
+													<Containment>inline</Containment>
+												</ClassRelationshipInFrame>
+												<ClassRelationshipInFrame name="subzones">
+													<RelationshipRef nameOfClass="TransportAdministrativeZone"/>
+													<Mandatory>optional</Mandatory>
+													<Containment>inline</Containment>
+												</ClassRelationshipInFrame>
+												<ClassRelationshipInFrame name="codespaceAssignments">
+													<!--  N ptg AdministrativeArea.NaptanPrefixes>  -->
+													<RelationshipRef nameOfClass="CodespaceAssignment"/>
+													<Mandatory>optional</Mandatory>
+													<Containment>inline</Containment>
+												</ClassRelationshipInFrame>
+											</relationships>
+										</ClassInFrame>
+										<ClassInFrame nameOfClass="CodespaceAssignment">
+											<!--   NPTG  <AdministrativeArea 	 
+							........
+					<NaptanPrefixes>   <CodespaceAssignment><CodePrefix>
+						<AlphaPrefix>333</AlphaPrefix>
+					</NaptanPrefixes>
+					<CleardownRange>   
+						<CleardownStart>2</CleardownStart>   <CodespaceAssignment><StartValue>
+						<CleardownEnd>4</CleardownEnd>  <CodespaceAssignment><EndValue>
+					</CleardownRange> -->
+											<Mandatory>optional</Mandatory>
+											<attributes>
+												<ClassAttributeInFrame name="_id">
+													<!--  Nptg AdministrativeArea.AdministrativeAreaCode  + prefix -->
+													<Mandatory>required</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="_version">
+													<!--  Nptg AdministrativeArea.RevisionNumber-->
+													<Mandatory>required</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="CodePrefix">
+													<!--  Nptg AdministrativeArea.AtcoCode  -->
+													<!--  Nptg AdministrativeArea.NaptanPrefixes.AlphaPrefix   -->
+													<Mandatory>optional</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="StartValue">
+													<!--  Nptg AdministrativeArea.CleardownRange.Start  -->
+													<Mandatory>optional</Mandatory>
+												</ClassAttributeInFrame>
+												<ClassAttributeInFrame name="EndValue">
+													<!--  Nptg AdministrativeArea.CleardownRange.End -->
+													<Mandatory>optional</Mandatory>
+												</ClassAttributeInFrame>
+											</attributes>
+											<relationships>
+												<ClassRelationshipInFrame name="codespace">
+													<RelationshipRef nameOfClass="CodespaceRef"/>
+													<Mandatory>required</Mandatory>
+													<Containment>byReference</Containment>
+												</ClassRelationshipInFrame>
+												<ClassRelationshipInFrame name="typeOfCodespaceAssignment">
+													<!--  Nptg AdministrativeArea.AtcoCode -->
+													<!--  Nptg AdministrativeArea.NaptanPrefixes -->
+													<!--  Nptg AdministrativeArea.CleardownRange -->
+													<RelationshipRef nameOfClass="TypeOfCodespaceAssignmentRef"/>
+													<Mandatory>required</Mandatory>
+													<Containment>byVersionedReference</Containment>
+												</ClassRelationshipInFrame>
+											</relationships>
+										</ClassInFrame>
+									</classes>
+									<ModificationSet>all</ModificationSet>
+								</TypeOfFrame>
+							</values>
+						</ValueSet>
+						<!-- ==== Fixed values == -->
+						<ValueSet version="nptg:v2.1" id="nptg:UK_NPTG_profile@Place_types" classOfValues="TypeOfPlace">
+							<Name>NPTG Place Types   s</Name>
+							<values>
+								<TypeOfPlace version="nptg:v2.1" id="nptg:SourceLocalityType@Lo">
+									<Name>NPTG Source Loc  = Lo</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="nptg:v2.1" id="nptg:SourceLocalityType@Co">
+									<Name>NPTG Source Loc  = Co</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="nptg:v2.1" id="nptg:SourceLocalityType@Pa">
+									<Name>NPTG Source Loc  = Pa</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="nptg:v2.1" id="nptg:SourceLocalityType@ar">
+									<Name>NPTG Source Loc  = ar</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="nptg:v2.1" id="nptg:SourceLocalityType@Add">
+									<Name>NPTG Source Loc  = Add</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="nptg:v2.1" id="nptg:SourceLocalityType@U">
+									<Name>NPTG Source Loc  = U</Name>
+								</TypeOfPlace>
+							</values>
+						</ValueSet>
+						<ValueSet version="nptg:v2.1" id="nptg:UK_NPTG_profile@Organisation_part_types" classOfValues="TypeOfZone">
+							<Name>NPTG Organisation Part Types   s</Name>
+							<values>
+								<TypeOfZone version="nptg:v2.1" id="nptg:UkRegion">
+									<Name>An NPTG Region</Name>
+								</TypeOfZone>
+								<TypeOfZone version="nptg:v2.1" id="nptg:AdministrativeArea@National">
+									<Name>An NPTG Administrative Area with National scope (e.g. 910, 920 etc)</Name>
+								</TypeOfZone>
+								<TypeOfZone version="nptg:v2.1" id="nptg:AdministrativeArea@Local">
+									<Name>An NPTG Administrative Area with Local scope</Name>
+								</TypeOfZone>
+								<TypeOfZone version="nptg:v2.1" id="nptg:UkDistrict">
+									<Name>An NPTG District</Name>
+								</TypeOfZone>
+								<TypeOfZone version="nptg:v2.1" id="nptg:UkLocality">
+									<Name>An NPTG Locality</Name>
+								</TypeOfZone>
+								<TypeOfZone version="nptg:v2.1" id="nptg:PlusBusZone">
+									<Name>An PlusBus Tariff Zone</Name>
+								</TypeOfZone>
+							</values>
+						</ValueSet>
+						<ValueSet version="nptg:v2.1" id="nptg:UK_NPTG_profile@Sms_codes" classOfValues="TypeOfCodespaceAssignment">
+							<Name>NPTG Codespace Assignment Types</Name>
+							<values>
+								<TypeOfCodespaceAssignment version="nptg:v2.1" id="nptg:naptan_prefix">
+									<Name>NPTG Stop prefix</Name>
+								</TypeOfCodespaceAssignment>
+								<TypeOfCodespaceAssignment version="nptg:v2.1" id="nptg:naptan_sms">
+									<Name>NPTG  Stop SMS prefix</Name>
+								</TypeOfCodespaceAssignment>
+								<TypeOfCodespaceAssignment version="nptg:v2.1" id="nptg:naptan_cleardown">
+									<Name>NPTG  stop cleardown range  </Name>
+								</TypeOfCodespaceAssignment>
+							</values>
+						</ValueSet>
+					</typesOfValue>
+					<organisations>
+						<!---  DFT  -->
+						<GeneralOrganisation id="nptg:DfT" modification="new" status="active" responsibilitySetRef="nptg:NPTG" version="nptg:v2.1">
+							<Name>Department for Transport</Name>
+						</GeneralOrganisation>
+					</organisations>
 				</ResourceFrame>
 			</frames>
 		</CompositeFrame>

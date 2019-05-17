@@ -3118,6 +3118,14 @@ A credit or debit card to pay the £10 fee
 							<MinimumAge>60</MinimumAge>
 							<MonthDayOnWhichAgeApplies>--04-06</MonthDayOnWhichAgeApplies>
 							<LocalResident>true</LocalResident>
+							<resides>
+								<ResidentialQualification version="any" id="tfl@London_resident">
+									<MustReside>true</MustReside>
+									<TopographicPlaceRef versionRef="EXTERNAL" ref="tfl:Greater_London"/>
+									<ResidenceType>live</ResidenceType>
+									<MinimumDuration>P1M</MinimumDuration>
+								</ResidentialQualification>
+							</resides>
 						</UserProfile>
 						<UserProfile version="any" id="tfl:senior_non_resident">
 							<Name>Eligible for  non london  Freedom Pass Fare</Name>
@@ -4866,8 +4874,7 @@ Southeastern high speed services to and from St Pancras International and Stratf
 										<GenericParameterAssignment version="any" order="1" id="tfl:Freedom_pass@NonLondoner@bus">
 											<Description>Bus: Travel free at any time on buses in London showing this symbol  TODO</Description>
 											<ChargingBasis>free</ChargingBasis>
-											<limitations>
-												<EntitlementRequiredRef ref=""/>
+											<limitations> 
 												<UserProfileRef version="any" ref="tfl:senior_non_resident"/>
 											</limitations>
 											<validityParameters>
@@ -4886,7 +4893,7 @@ Southeastern high speed services to and from St Pancras International and Stratf
 									</includes>
 								</GenericParameterAssignment>
 								<GenericParameterAssignment version="any" order="4" id="tfl:Freedom_pass@user_profile">
-									<Name>Right to a frredom passcard</Name>
+									<Name>Right to a freedom passcard</Name>
 									<TypeOfAccessRightAssignmentRef version="any" ref="tfl:eligible"/>
 									<LimitationGroupingType>OR</LimitationGroupingType>
 									<limitations>
@@ -5368,7 +5375,7 @@ You can only get these as paper tickets, not on an Oyster card, and they must be
 							<salesOfferPackageElements>
 								<SalesOfferPackageElement order="1" version="any" id="tfl:Oyster_Top_Up-SOP@Prepaid_trip@Oyster_Top_Up">
 									<TypeOfTravelDocumentRef version="any" ref="tfl:smartcard"/>
-									<SupplementProductRef  version="any" ref="tfl:Oyster_Top_Up"/>
+									<SupplementProductRef version="any" ref="tfl:Oyster_Top_Up"/>
 								</SalesOfferPackageElement>
 							</salesOfferPackageElements>
 						</SalesOfferPackage>
@@ -5383,8 +5390,6 @@ You can only get these as paper tickets, not on an Oyster card, and they must be
 								<SalesOfferPackageElement order="1" version="any" id="tfl:Oyster_Auto_Top_Up-SOP@Prepaid_trip@Oyster_Top_Up">
 									<TypeOfTravelDocumentRef version="any" ref="tfl:smartcard"/>
 									<SupplementProductRef version="any" ref="tfl:Oyster_Auto_Top_Up"/>
-									
-									
 								</SalesOfferPackageElement>
 							</salesOfferPackageElements>
 						</SalesOfferPackage>
@@ -14383,6 +14388,18 @@ Multi-journey Boarding Passes are not transferable.</Description>
 				<!-- ===== THESE ARE EXAMPLE TRANSACTIONS     -->
 				<SalesTransactionFrame version="any" id="xpl:Sample_Transactions">
 					<Name>Sample Transactions</Name>
+					<codespaces>
+						<Codespace id="cdb_data">
+							<Xmlns>cdb</Xmlns>
+							<XmlnsUrl>tfl.gov.uk/cdb</XmlnsUrl>
+							<Description>Customer data </Description>
+						</Codespace>
+						<Codespace id="xmpl_tranactions">
+							<Xmlns>xpl</Xmlns>
+							<XmlnsUrl>tfl.gov.uk/transactions</XmlnsUrl>
+							<Description>Tranaction data </Description>
+						</Codespace>
+					</codespaces>
 					<retailConsortiums>
 						<RetailConsortium version="any" id="tfl:Oyster">
 							<Name>Oyster plc</Name>
@@ -14406,40 +14423,65 @@ Multi-journey Boarding Passes are not transferable.</Description>
 					</retailConsortiums>
 					<!---  CUSTOMERS -->
 					<customers>
-						<Customer version="any" id="tfl:122222">
+						<Customer version="any" id="cdb:122222">
 							<Surname>Johnson</Surname>
 							<FirstName>Boris</FirstName>
 							<Title>Mr</Title>
 							<Gender>male</Gender>
 							<Height>180</Height>
 							<customerEligibilities>
-								<UserProfileEligibility version="any" id="tfl:122222-up">
+								<UserProfileEligibility version="any" id="cdb:122222@adult">
 									<UserProfileRef version="any" ref="tfl:adult"/>
 								</UserProfileEligibility>
+								<ResidentialQualificationEligibility version="any" id="cdb:122222@londoner">
+									<ResidentialQualificationRef version="any" ref="tfl@London_resident"/>
+									<ResidencyType>live</ResidencyType>
+									<StartDate>1980-05-01</StartDate>
+								</ResidentialQualificationEligibility>
 							</customerEligibilities>
 							<customerAccounts>
-								<CustomerAccount id="tfl:122222-1" version="any">
+								<CustomerAccount id="cdb:122222-1" version="any">
 									<StartDate>2013-07-08T01:07:00</StartDate>
 									<TypeOfCustomerAccountRef version="any" ref="tfl:Oyster"/>
+									<CustomerAccountStatusType>active</CustomerAccountStatusType>
+									<customerPurchasePackages>
+										<CustomerPurchasePackageRef ref="cdb:Oyster-57460123" version="any"/>
+									</customerPurchasePackages>
 								</CustomerAccount>
 							</customerAccounts>
 						</Customer>
-						<Customer version="any" id="tfl:122242">
+						<Customer version="any" id="cdb:122242">
 							<Surname>Livingstone</Surname>
 							<FirstName>Ken</FirstName>
 							<Title>Mr</Title>
+							<DateOfBirth>1945-01-01</DateOfBirth>
 							<Gender>male</Gender>
 							<Height>150</Height>
 							<customerEligibilities>
-								<UserProfileEligibility version="any" id="tfl:122242-up">
+								<UserProfileEligibility version="any" id="cdb:122242@senior">
+									<ValidBetween>
+										<FromDate>2005-01-01T00:00:00Z</FromDate>
+									</ValidBetween>
 									<UserProfileRef version="any" ref="tfl:senior"/>
 								</UserProfileEligibility>
+								<UserProfileEligibility version="any" id="cdb:122242@seniorResident">
+									<ValidBetween>
+										<FromDate>2005-01-01T00:00:00Z</FromDate>
+									</ValidBetween>
+									<UserProfileRef version="any" ref="tfl:seniorResident"/>
+								</UserProfileEligibility>
+								<ResidentialQualificationEligibility version="any" id="cdb:122242@londoner">
+									<ResidentialQualificationRef version="any" ref="tfl@London_resident"/>
+									<ResidencyType>live</ResidencyType>
+									<StartDate>1945-01-01</StartDate>
+								</ResidentialQualificationEligibility>
 							</customerEligibilities>
 							<customerAccounts>
-								<CustomerAccount id="tfl:122242-1" version="any">
+								<CustomerAccount id="cdb:122242-1" version="any">
 									<StartDate>2002-07-08T01:07:00</StartDate>
 								</CustomerAccount>
 							</customerAccounts>
+					 
 						</Customer>
 					</customers>
 					<fareContracts>
@@ -14452,41 +14494,43 @@ Multi-journey Boarding Passes are not transferable.</Description>
 									<Description> £ 4.50 cash    </Description>
 									<Date>2013-07-08T01:07:00</Date>
 									<Amount>4.50</Amount>
+									<travelSpecifications>
+										<OfferedTravelSpecification version="any" id="xpl:Anon001@trans001@purchase_ticket@Ticket">
+											<Name>Singel fare zone 1</Name>
+											<Date>2013-07-08T01:07:00</Date>
+											<TypeOfFareContractEntryRef version="any" ref="tfl:purchase"/>
+											<SalesTransactionRef version="any" ref="xpl:Anon001@trans001@purchase_ticket@Ticket"/>
+											<Amount>4.50</Amount>
+											<StartOfValidity>2013-07-08T01:07:00</StartOfValidity>
+											<specificParameterAssignments>
+												<SpecificParameterAssignment version="any" order="1" id="xpl:Anon001@trans001@purchase_ticket@Ticket@Zone_1_only">
+													<Name>Fare  zones 1 only</Name>
+													<Description> in this case schedule stop point means   station of purchase?</Description>
+													<TypeOfAccessRightAssignmentRef version="any" ref="tfl:product_purchase"/>
+													<FareStructureElementRef version="any" ref="tfl:Zone_1_only"/>
+													<SalesOfferPackageRef version="any" ref="tfl:Ticket-SOP"/>
+													<limitations>
+														<FrequencyOfUseRef version="any" ref="tfl:one_trip"/>
+														<UserProfileRef version="any" ref="tfl:adult"/>
+													</limitations>
+													<validityParameters>
+														<ScheduledStopPointRef ref="tfl:Kings_Cross" version="any"/>
+														<DistributionChannelRef version="any" ref="tfl:self_service_machine"/>
+													</validityParameters>
+													<FareDemandFactorRef version="any" ref="tfl:anyTime"/>
+												</SpecificParameterAssignment>
+												<SpecificParameterAssignment version="any" order="2" id="xpl:Anon001@trans001@purchase_ticket@Ticket@metro_trip">
+													<Name>Metro trip can be made up of multiple steps</Name>
+													<ValidableElementRef version="any" ref="lul:metro_trip"/>
+													<FareStructureElementRef version="any" ref="tfl:metro_trip"/>
+													<limitations>
+														<RoundTripRef version="any" ref="tfl:single"/>
+													</limitations>
+												</SpecificParameterAssignment>
+											</specificParameterAssignments>
+										</OfferedTravelSpecification>
+									</travelSpecifications>
 								</SalesTransaction>
-								<TravelSpecification version="any" id="xpl:Anon001@trans001@purchase_ticket@Ticket">
-									<Name>Singel fare zone 1</Name>
-									<Date>2013-07-08T01:07:00</Date>
-									<TypeOfFareContractEntryRef version="any" ref="tfl:purchase"/>
-									<SalesTransactionRef version="any" ref="xpl:Anon001@trans001@purchase_ticket@Ticket"/>
-									<Amount>4.50</Amount>
-									<StartOfValidity>2013-07-08T01:07:00</StartOfValidity>
-									<specificParameterAssignments>
-										<SpecificParameterAssignment version="any" order="1" id="xpl:Anon001@trans001@purchase_ticket@Ticket@Zone_1_only">
-											<Name>Fare  zones 1 only</Name>
-											<Description> in this case schedule stop point means   station of purchase?</Description>
-											<TypeOfAccessRightAssignmentRef version="any" ref="tfl:product_purchase"/>
-											<FareStructureElementRef version="any" ref="tfl:Zone_1_only"/>
-											<SalesOfferPackageRef version="any" ref="tfl:Ticket-SOP"/>
-											<limitations>
-												<FrequencyOfUseRef version="any" ref="tfl:one_trip"/>
-												<UserProfileRef version="any" ref="tfl:adult"/>
-											</limitations>
-											<validityParameters>
-												<ScheduledStopPointRef ref="tfl:Kings_Cross" version="any"/>
-												<DistributionChannelRef version="any" ref="tfl:self_service_machine"/>
-											</validityParameters>
-											<FareDemandFactorRef version="any" ref="tfl:anyTime"/>
-										</SpecificParameterAssignment>
-										<SpecificParameterAssignment version="any" order="2" id="xpl:Anon001@trans001@purchase_ticket@Ticket@metro_trip">
-											<Name>Metro trip can be made up of multiple steps</Name>
-											<ValidableElementRef version="any" ref="lul:metro_trip"/>
-											<FareStructureElementRef version="any" ref="tfl:metro_trip"/>
-											<limitations>
-												<RoundTripRef version="any" ref="tfl:single"/>
-											</limitations>
-										</SpecificParameterAssignment>
-									</specificParameterAssignments>
-								</TravelSpecification>
 							</fareContractEntries>
 						</FareContract>
 						<!--  Example Day Group Paper Ticket -->
@@ -14498,57 +14542,59 @@ Multi-journey Boarding Passes are not transferable.</Description>
 									<Description>  4 @£ 4.50 each + 10@  £ 1.70 each    </Description>
 									<Date>2013-07-08T01:07:15</Date>
 									<Amount>28.70</Amount>
+									<travelSpecifications>
+										<OfferedTravelSpecification version="any" id="xpl:Anon002@trans001@purchase_ticket@Group_day_ticket@Adult">
+											<Name>Adults on Day ticket</Name>
+											<Date>2013-07-08T01:09:15</Date>
+											<TypeOfFareContractEntryRef version="any" ref="tfl:purchase"/>
+											<Amount>4.50</Amount>
+											<Units>4</Units>
+											<specificParameterAssignments>
+												<SpecificParameterAssignment version="any" order="1" id="xpl:Anon002@trans001@purchase_ticket@Group_day_ticket@Adult@Zones_1-6">
+													<Name>Fare  zones 1-6</Name>
+													<Description> in this case schedule stop point means starting station?</Description>
+													<TypeOfAccessRightAssignmentRef version="any" ref="tfl:product_purchase"/>
+													<FareStructureElementRef version="any" ref="tfl:Zones_1-6"/>
+													<SalesOfferPackageRef version="any" ref="tfl:Group_day_ticket-SOP"/>
+													<limitations>
+														<GroupTicketRef version="any" ref="tfl:Group_day_ticket"/>
+														<UserProfileRef version="any" ref="tfl:adult"/>
+													</limitations>
+													<validityParameters>
+														<ScheduledStopPointRef ref="tfl:Kings_Cross" version="any"/>
+														<DistributionChannelRef version="any" ref="tfl:Tube_Station_Ticket_Offices"/>
+													</validityParameters>
+													<FareDemandFactorRef version="any" ref="tfl:anyTime"/>
+												</SpecificParameterAssignment>
+											</specificParameterAssignments>
+										</OfferedTravelSpecification>
+										<OfferedTravelSpecification version="any" id="xpl:Anon002@trans001@purchase_ticket@Group_day_ticket@Child">
+											<Name>Children on  on Day ticket</Name>
+											<Date>2013-07-08T01:07:15</Date>
+											<TypeOfFareContractEntryRef version="any" ref="tfl:purchase"/>
+											<SalesTransactionRef version="any" ref="xpl:Anon002@trans001@purchase_ticket@Group_day_ticket"/>
+											<Amount>1.70</Amount>
+											<Units>10</Units>
+											<specificParameterAssignments>
+												<SpecificParameterAssignment version="any" order="1" id="xpl:Anon002@trans001@purchase_ticket@Group_day_ticket@Child@Zones_1-6">
+													<Name>Fare  zones 1-6</Name>
+													<TypeOfAccessRightAssignmentRef version="any" ref="tfl:product_purchase"/>
+													<FareStructureElementRef version="any" ref="tfl:Zones_1-6"/>
+													<SalesOfferPackageRef version="any" ref="tfl:Group_day_ticket-SOP"/>
+													<limitations>
+														<GroupTicketRef version="any" ref="tfl:Group_day_ticket"/>
+														<UserProfileRef version="any" ref="tfl:child"/>
+													</limitations>
+													<validityParameters>
+														<ScheduledStopPointRef ref="tfl:Kings_Cross" version="any"/>
+														<DistributionChannelRef version="any" ref="tfl:Tube_Station_Ticket_Offices"/>
+													</validityParameters>
+													<FareDemandFactorRef version="any" ref="tfl:anyTime"/>
+												</SpecificParameterAssignment>
+											</specificParameterAssignments>
+										</OfferedTravelSpecification>
+									</travelSpecifications>
 								</SalesTransaction>
-								<TravelSpecification version="any" id="xpl:Anon002@trans001@purchase_ticket@Group_day_ticket@Adult">
-									<Name>Adults on Day ticket</Name>
-									<Date>2013-07-08T01:09:15</Date>
-									<TypeOfFareContractEntryRef version="any" ref="tfl:purchase"/>
-									<Amount>4.50</Amount>
-									<Units>4</Units>
-									<specificParameterAssignments>
-										<SpecificParameterAssignment version="any" order="1" id="xpl:Anon002@trans001@purchase_ticket@Group_day_ticket@Adult@Zones_1-6">
-											<Name>Fare  zones 1-6</Name>
-											<Description> in this case schedule stop point means starting station?</Description>
-											<TypeOfAccessRightAssignmentRef version="any" ref="tfl:product_purchase"/>
-											<FareStructureElementRef version="any" ref="tfl:Zones_1-6"/>
-											<SalesOfferPackageRef version="any" ref="tfl:Group_day_ticket-SOP"/>
-											<limitations>
-												<GroupTicketRef version="any" ref="tfl:Group_day_ticket"/>
-												<UserProfileRef version="any" ref="tfl:adult"/>
-											</limitations>
-											<validityParameters>
-												<ScheduledStopPointRef ref="tfl:Kings_Cross" version="any"/>
-												<DistributionChannelRef version="any" ref="tfl:Tube_Station_Ticket_Offices"/>
-											</validityParameters>
-											<FareDemandFactorRef version="any" ref="tfl:anyTime"/>
-										</SpecificParameterAssignment>
-									</specificParameterAssignments>
-								</TravelSpecification>
-								<TravelSpecification version="any" id="xpl:Anon002@trans001@purchase_ticket@Group_day_ticket@Child">
-									<Name>Children on  on Day ticket</Name>
-									<Date>2013-07-08T01:07:15</Date>
-									<TypeOfFareContractEntryRef version="any" ref="tfl:purchase"/>
-									<SalesTransactionRef version="any" ref="xpl:Anon002@trans001@purchase_ticket@Group_day_ticket"/>
-									<Amount>1.70</Amount>
-									<Units>10</Units>
-									<specificParameterAssignments>
-										<SpecificParameterAssignment version="any" order="1" id="xpl:Anon002@trans001@purchase_ticket@Group_day_ticket@Child@Zones_1-6">
-											<Name>Fare  zones 1-6</Name>
-											<TypeOfAccessRightAssignmentRef version="any" ref="tfl:product_purchase"/>
-											<FareStructureElementRef version="any" ref="tfl:Zones_1-6"/>
-											<SalesOfferPackageRef version="any" ref="tfl:Group_day_ticket-SOP"/>
-											<limitations>
-												<GroupTicketRef version="any" ref="tfl:Group_day_ticket"/>
-												<UserProfileRef version="any" ref="tfl:child"/>
-											</limitations>
-											<validityParameters>
-												<ScheduledStopPointRef ref="tfl:Kings_Cross" version="any"/>
-												<DistributionChannelRef version="any" ref="tfl:Tube_Station_Ticket_Offices"/>
-											</validityParameters>
-											<FareDemandFactorRef version="any" ref="tfl:anyTime"/>
-										</SpecificParameterAssignment>
-									</specificParameterAssignments>
-								</TravelSpecification>
 							</fareContractEntries>
 						</FareContract>
 						<FareContract version="any" id="xpl:Anon003">
@@ -14559,40 +14605,42 @@ Multi-journey Boarding Passes are not transferable.</Description>
 									<Description> £ 3.70 cash    </Description>
 									<Date>2013-07-08T01:07:00</Date>
 									<Amount>3.70</Amount>
+									<travelSpecifications>
+										<OfferedTravelSpecification version="any" id="xpl:Anon003@trans001@purchase_ticket@Ticket">
+											<Name>Singel fare River RB2 Millbank to Bankside</Name>
+											<Date>2013-07-08T01:07:00</Date>
+											<TypeOfFareContractEntryRef version="any" ref="tfl:purchase"/>
+											<SalesTransactionRef version="any" ref="xpl:Anon003@trans001@purchase_ticket@Ticket"/>
+											<Amount>3.70</Amount>
+											<StartOfValidity>2013-07-08T01:07:00</StartOfValidity>
+											<specificParameterAssignments>
+												<SpecificParameterAssignment version="any" order="1" id="xpl:Anon003@trans001@purchase_ticket@Ticket@Millbank+Bankside">
+													<Name>Millbank to Bankside</Name>
+													<Description> in this case schedule stop point means   station of purchase?</Description>
+													<TypeOfAccessRightAssignmentRef version="any" ref="tfl:product_purchase"/>
+													<ValidableElementRef version="any" ref="lrs:river_trip"/>
+													<FareStructureElementRef version="any" ref="lrs:RB2"/>
+													<DistanceMatrixElementRef ref="lrs:RB2@Millbank+Bankside" version="any"/>
+													<SalesOfferPackageRef version="any" ref="tfl:Ticket-SOP"/>
+													<limitations>
+														<FrequencyOfUseRef version="any" ref="tfl:one_trip"/>
+														<RoundTripRef version="any" ref="tfl:single"/>
+														<UserProfileRef version="any" ref="tfl:adult"/>
+													</limitations>
+													<validityParameters>
+														<LineRef version="any" ref="lrs:RB2"/>
+														<ScheduledStopPointRef ref="lrs:Millbank" version="any"/>
+														<DistributionChannelRef version="any" ref="tfl:self_service_machine"/>
+													</validityParameters>
+													<FareDemandFactorRef version="any" ref="tfl:anyTime"/>
+												</SpecificParameterAssignment>
+											</specificParameterAssignments>
+										</OfferedTravelSpecification>
+									</travelSpecifications>
 								</SalesTransaction>
-								<TravelSpecification version="any" id="xpl:Anon003@trans001@purchase_ticket@Ticket">
-									<Name>Singel fare River RB2 Millbank to Bankside</Name>
-									<Date>2013-07-08T01:07:00</Date>
-									<TypeOfFareContractEntryRef version="any" ref="tfl:purchase"/>
-									<SalesTransactionRef version="any" ref="xpl:Anon003@trans001@purchase_ticket@Ticket"/>
-									<Amount>3.70</Amount>
-									<StartOfValidity>2013-07-08T01:07:00</StartOfValidity>
-									<specificParameterAssignments>
-										<SpecificParameterAssignment version="any" order="1" id="xpl:Anon003@trans001@purchase_ticket@Ticket@Millbank+Bankside">
-											<Name>Millbank to Bankside</Name>
-											<Description> in this case schedule stop point means   station of purchase?</Description>
-											<TypeOfAccessRightAssignmentRef version="any" ref="tfl:product_purchase"/>
-											<ValidableElementRef version="any" ref="lrs:river_trip"/>
-											<FareStructureElementRef version="any" ref="lrs:RB2"/>
-											<DistanceMatrixElementRef ref="lrs:RB2@Millbank+Bankside" version="any"/>
-											<SalesOfferPackageRef version="any" ref="tfl:Ticket-SOP"/>
-											<limitations>
-												<FrequencyOfUseRef version="any" ref="tfl:one_trip"/>
-												<RoundTripRef version="any" ref="tfl:single"/>
-												<UserProfileRef version="any" ref="tfl:adult"/>
-											</limitations>
-											<validityParameters>
-												<LineRef version="any" ref="lrs:RB2"/>
-												<ScheduledStopPointRef ref="lrs:Millbank" version="any"/>
-												<DistributionChannelRef version="any" ref="tfl:self_service_machine"/>
-											</validityParameters>
-											<FareDemandFactorRef version="any" ref="tfl:anyTime"/>
-										</SpecificParameterAssignment>
-									</specificParameterAssignments>
-								</TravelSpecification>
 							</fareContractEntries>
 						</FareContract>
-						<!--  Example Use of an Oyster Card -->
+						<!--  Example Use of an Anonymous Oyster Card -->
 						<FareContract version="any" id="xpl:Oyster-12345">
 							<Name>Anonymous Oyster card Oyster-12345 with Transactions</Name>
 							<fareContractEntries>
@@ -14602,75 +14650,85 @@ Multi-journey Boarding Passes are not transferable.</Description>
 									<Description> Card 5.00  deposit  + Pass @  £30.40     </Description>
 									<Date>2013-07-08T01:07:00</Date>
 									<Amount>35.40</Amount>
+									<travelSpecifications>
+										<OfferedTravelSpecification version="any" id="xpl:Oyster-12345@trans001@purchase_new_card@Adult_OysterCard">
+											<Name>Adult Oyste Card</Name>
+											<Date>2013-07-08T01:07:00</Date>
+											<TypeOfFareContractEntryRef version="any" ref="tfl:purchase"/>
+											<SalesTransactionRef version="any" ref="xpl:Oyster-12345@trans001@purchase_new_card"/>
+											<Amount>5.00</Amount>
+											<StartOfValidity>2013-07-08T01:07:00</StartOfValidity>
+											<specificParameterAssignments>
+												<SpecificParameterAssignment version="any" order="1" id="xpl:Oyster-12345@trans001@purchase_new_card@Adult_OysterCard@Adult">
+													<Name>Adult card</Name>
+													<TypeOfAccessRightAssignmentRef version="any" ref="tfl:product_purchase"/>
+													<SalesOfferPackageRef version="any" ref="tfl:Adult_OysterCard-SOP"/>
+													<limitations>
+														<UserProfileRef version="any" ref="tfl:adult"/>
+													</limitations>
+													<validityParameters>
+														<DistributionChannelRef version="any" ref="tfl:Tube_Station_Ticket_Offices"/>
+													</validityParameters>
+												</SpecificParameterAssignment>
+											</specificParameterAssignments>
+										</OfferedTravelSpecification>
+										<OfferedTravelSpecification version="any" id="xpl:Oyster-12345@trans001@purchase_new_card@TravelCard_on_Oyster">
+											<Name>TravelCard_on_Oyster  7 Day      Travel card for zones 1 and 2</Name>
+											<Date>2013-07-08T01:07:00</Date>
+											<TypeOfFareContractEntryRef version="any" ref="tfl:purchase"/>
+											<SalesTransactionRef version="any" ref="xpl:Oyster-12345@trans001@purchase_new_card"/>
+											<Amount>30.40</Amount>
+											<specificParameterAssignments>
+												<SpecificParameterAssignment version="any" order="1" id="xpl:Oyster-12345@trans001@purchase_new_card@TravelCard_on_Oyster@Zones_1-2">
+													<Name>Fare  zones 1 and2  	Adult</Name>
+													<TypeOfAccessRightAssignmentRef version="any" ref="tfl:product_purchase"/>
+													<FareStructureElementRef version="any" ref="tfl:Zones_1-2"/>
+													<SalesOfferPackageRef version="any" ref="tfl:TravelCard_on_Oyster-SOP"/>
+													<limitations>
+														<UserProfileRef version="any" ref="tfl:adult"/>
+													</limitations>
+												</SpecificParameterAssignment>
+												<SpecificParameterAssignment version="any" order="2" id="xpl:Oyster-12345@trans001@purchase_new_card@TravelCard_on_Oyster@1Week_pass">
+													<Name>Fare  zones 1 and2</Name>
+													<TypeOfAccessRightAssignmentRef version="any" ref="tfl:product_purchase"/>
+													<FareStructureElementRef version="any" ref="tfl:1Week_pass"/>
+												</SpecificParameterAssignment>
+											</specificParameterAssignments>
+										</OfferedTravelSpecification>
+									</travelSpecifications>
+									<travelDocuments>
+										<TravelDocumentRef versionRef="EXTERNAL" ref="cdb:Oyster-12345"/>
+									</travelDocuments>
 								</SalesTransaction>
-								<TravelSpecification version="any" id="xpl:Oyster-12345@trans001@purchase_new_card@Adult_OysterCard">
-									<Name>Adult Oyste Card</Name>
-									<Date>2013-07-08T01:07:00</Date>
-									<TypeOfFareContractEntryRef version="any" ref="tfl:purchase"/>
-									<SalesTransactionRef version="any" ref="xpl:Oyster-12345@trans001@purchase_new_card"/>
-									<Amount>5.00</Amount>
-									<StartOfValidity>2013-07-08T01:07:00</StartOfValidity>
-									<specificParameterAssignments>
-										<SpecificParameterAssignment version="any" order="1" id="xpl:Oyster-12345@trans001@purchase_new_card@Adult_OysterCard@Adult">
-											<Name>Adult card</Name>
-											<TypeOfAccessRightAssignmentRef version="any" ref="tfl:product_purchase"/>
-											<SalesOfferPackageRef version="any" ref="tfl:Adult_OysterCard-SOP"/>
-											<limitations>
-												<UserProfileRef version="any" ref="tfl:adult"/>
-											</limitations>
-											<validityParameters>
-												<DistributionChannelRef version="any" ref="tfl:Tube_Station_Ticket_Offices"/>
-											</validityParameters>
-										</SpecificParameterAssignment>
-									</specificParameterAssignments>
-								</TravelSpecification>
-								<TravelSpecification version="any" id="xpl:Oyster-12345@trans001@purchase_new_card@TravelCard_on_Oyster">
-									<Name>TravelCard_on_Oyster  7 Day      Travel card for zones 1 and 2</Name>
-									<Date>2013-07-08T01:07:00</Date>
-									<TypeOfFareContractEntryRef version="any" ref="tfl:purchase"/>
-									<SalesTransactionRef version="any" ref="xpl:Oyster-12345@trans001@purchase_new_card"/>
-									<Amount>30.40</Amount>
-									<specificParameterAssignments>
-										<SpecificParameterAssignment version="any" order="1" id="xpl:Oyster-12345@trans001@purchase_new_card@TravelCard_on_Oyster@Zones_1-2">
-											<Name>Fare  zones 1 and2  	Adult</Name>
-											<TypeOfAccessRightAssignmentRef version="any" ref="tfl:product_purchase"/>
-											<FareStructureElementRef version="any" ref="tfl:Zones_1-2"/>
-											<SalesOfferPackageRef version="any" ref="tfl:TravelCard_on_Oyster-SOP"/>
-											<limitations>
-												<UserProfileRef version="any" ref="tfl:adult"/>
-											</limitations>
-										</SpecificParameterAssignment>
-										<SpecificParameterAssignment version="any" order="2" id="xpl:Oyster-12345@trans001@purchase_new_card@TravelCard_on_Oyster@1Week_pass">
-											<Name>Fare  zones 1 and2</Name>
-											<TypeOfAccessRightAssignmentRef version="any" ref="tfl:product_purchase"/>
-											<FareStructureElementRef version="any" ref="tfl:1Week_pass"/>
-										</SpecificParameterAssignment>
-									</specificParameterAssignments>
-								</TravelSpecification>
 								<!--  	Prepay £10 O N an Travel Card Oyster Card  with  -->
 								<SalesTransaction version="any" id="xpl:Oyster-12345@trans002@Oyster_Top_Up">
 									<Name>Top up Oyster card with £10</Name>
 									<Description>   £10     </Description>
 									<Date>2013-07-08T01:07:10</Date>
 									<Amount>10.00</Amount>
+									<travelSpecifications>
+										<OfferedTravelSpecification version="any" id="xpl:Oyster-12345@trans002@Oyster_Top_Up@Oyster_Top_Up">
+											<Name>Add 10 Pay as you go</Name>
+											<Date>2013-07-08T01:07:10</Date>
+											<TypeOfFareContractEntryRef version="any" ref="tfl:purchase"/>
+											<SalesTransactionRef version="any" ref="xpl:Oyster-12345@trans002@Oyster_Top_Up"/>
+											<Amount>10</Amount>
+											<specificParameterAssignments>
+												<SpecificParameterAssignment version="any" order="1" id="xpl:Oyster-12345@trans002@Oyster_Top_Up@distribution_channel">
+													<Name>Touch in  at Kings Cross</Name>
+													<TypeOfAccessRightAssignmentRef version="any" ref="tfl:product_purchase"/>
+													<SalesOfferPackageRef version="any" ref="tfl:Oyster_Top_Up-SOP"/>
+													<validityParameters>
+														<DistributionChannelRef version="any" ref="tfl:self_service_machine"/>
+													</validityParameters>
+												</SpecificParameterAssignment>
+											</specificParameterAssignments>
+										</OfferedTravelSpecification>
+									</travelSpecifications>
+									<travelDocuments>
+										<TravelDocumentRef versionRef="EXTERNAL" ref="cdb:Oyster-12345"/>
+									</travelDocuments>
 								</SalesTransaction>
-								<TravelSpecification version="any" id="xpl:Oyster-12345@trans002@Oyster_Top_Up@Oyster_Top_Up">
-									<Name>Add 10 Pay as you go</Name>
-									<Date>2013-07-08T01:07:10</Date>
-									<TypeOfFareContractEntryRef version="any" ref="tfl:purchase"/>
-									<SalesTransactionRef version="any" ref="xpl:Oyster-12345@trans002@Oyster_Top_Up"/>
-									<Amount>10</Amount>
-									<specificParameterAssignments>
-										<SpecificParameterAssignment version="any" order="1" id="xpl:Oyster-12345@trans002@Oyster_Top_Up@distribution_channel">
-											<Name>Touch in  at Kings Cross</Name>
-											<TypeOfAccessRightAssignmentRef version="any" ref="tfl:product_purchase"/>
-											<SalesOfferPackageRef version="any" ref="tfl:Oyster_Top_Up-SOP"/>
-											<validityParameters>
-												<DistributionChannelRef version="any" ref="tfl:self_service_machine"/>
-											</validityParameters>
-										</SpecificParameterAssignment>
-									</specificParameterAssignments>
-								</TravelSpecification>
 								<!--  	Start a peak time   trip inside travel zone   -->
 								<SalesTransaction version="any" id="xpl:Oyster-12345@trans003@touch_in">
 									<Name>Oyster Touch in  in a zone inside  travel card</Name>
@@ -14678,30 +14736,35 @@ Multi-journey Boarding Passes are not transferable.</Description>
 									<Date>2013-07-08T01:09:00</Date>
 									<TypeOfFareContractEntryRef version="any" ref="tfl:yellow_touch_in"/>
 									<Amount>8.40</Amount>
+									<travelSpecifications>
+										<OfferedTravelSpecification version="any" id="xpl:Oyster-12345@trans003@touch_in@touch_in">
+											<Name>Add Max fare</Name>
+											<Date>2013-07-08T01:08:50</Date>
+											<TypeOfFareContractEntryRef version="any" ref="tfl:yellow_touch_in"/>
+											<SalesTransactionRef version="any" ref="xpl:Oyster-12345@trans003@touch_in"/>
+											<Amount>8.40</Amount>
+											<specificParameterAssignments>
+												<SpecificParameterAssignment version="any" order="1" id="xpl:Oyster-12345@trans003@touch_in@Adult">
+													<Name>Touch in  at Kings Cross</Name>
+													<TypeOfAccessRightAssignmentRef version="any" ref="tfl:validation"/>
+													<FareStructureElementRef version="any" ref="tfl:Zone_1_only"/>
+													<SalesOfferPackageRef version="any" ref="tfl:PayAsYouGo_trip-SOP"/>
+													<limitations>
+														<UserProfileRef version="any" ref="tfl:adult"/>
+													</limitations>
+													<validityParameters>
+														<ScheduledStopPointRef ref="tfl:Kings_Cross" version="any"/>
+														<DistributionChannelRef version="any" ref="tfl:Validator"/>
+													</validityParameters>
+													<FareDemandFactorRef version="any" ref="tfl:peak"/>
+												</SpecificParameterAssignment>
+											</specificParameterAssignments>
+										</OfferedTravelSpecification>
+									</travelSpecifications>
+									<travelDocuments>
+										<TravelDocumentRef versionRef="EXTERNAL" ref="cdb:Oyster-12345"/>
+									</travelDocuments>
 								</SalesTransaction>
-								<TravelSpecification version="any" id="xpl:Oyster-12345@trans003@touch_in@touch_in">
-									<Name>Add Max fare</Name>
-									<Date>2013-07-08T01:08:50</Date>
-									<TypeOfFareContractEntryRef version="any" ref="tfl:yellow_touch_in"/>
-									<SalesTransactionRef version="any" ref="xpl:Oyster-12345@trans003@touch_in"/>
-									<Amount>8.40</Amount>
-									<specificParameterAssignments>
-										<SpecificParameterAssignment version="any" order="1" id="xpl:Oyster-12345@trans003@touch_in@Adult">
-											<Name>Touch in  at Kings Cross</Name>
-											<TypeOfAccessRightAssignmentRef version="any" ref="tfl:validation"/>
-											<FareStructureElementRef version="any" ref="tfl:Zone_1_only"/>
-											<SalesOfferPackageRef version="any" ref="tfl:PayAsYouGo_trip-SOP"/>
-											<limitations>
-												<UserProfileRef version="any" ref="tfl:adult"/>
-											</limitations>
-											<validityParameters>
-												<ScheduledStopPointRef ref="tfl:Kings_Cross" version="any"/>
-												<DistributionChannelRef version="any" ref="tfl:Validator"/>
-											</validityParameters>
-											<FareDemandFactorRef version="any" ref="tfl:peak"/>
-										</SpecificParameterAssignment>
-									</specificParameterAssignments>
-								</TravelSpecification>
 								<!--  	End a peak time   trip inside travel zone covered by card   -->
 								<SalesTransaction version="any" id="xpl:Oyster-12345@trans004@purchase">
 									<Name>Oyster Touch out  in a zone inside  travel card</Name>
@@ -14709,38 +14772,43 @@ Multi-journey Boarding Passes are not transferable.</Description>
 									<Date>2013-07-08T01:09:10</Date>
 									<TypeOfFareContractEntryRef version="any" ref="tfl:yellow_touch_in"/>
 									<Amount>-8.40</Amount>
+									<travelSpecifications>
+										<OfferedTravelSpecification version="any" id="xpl:Oyster-12345@trans004@purchase@yellow_touch_out">
+											<Name>Touch out to complete Fare within zone</Name>
+											<Date>2013-07-08T01:09:10</Date>
+											<TypeOfFareContractEntryRef version="any" ref="tfl:yellow_touch_out"/>
+											<SalesTransactionRef version="any" ref="xpl:Oyster-12345@trans004@purchase"/>
+											<Amount>0.00</Amount>
+											<specificParameterAssignments>
+												<SpecificParameterAssignment version="any" order="1" id="xpl:Oyster-12345@trans004@touch_out@Adult">
+													<Name>Touch out at Oxford Circus  .</Name>
+													<Description>Counts as Peak because joruney started befroe 9.00</Description>
+													<TypeOfAccessRightAssignmentRef version="any" ref="tfl:product_purchase"/>
+													<FareStructureElementRef version="any" ref="tfl:Zone_1_only"/>
+													<SalesOfferPackageRef version="any" ref="tfl:PayAsYouGo_trip-SOP"/>
+													<limitations>
+														<UserProfileRef version="any" ref="tfl:adult"/>
+													</limitations>
+													<FareDemandFactorRef version="any" ref="tfl:peak"/>
+												</SpecificParameterAssignment>
+												<SpecificParameterAssignment version="any" order="2" id="xpl:Oyster-12345@trans004@touch_out@metro_trip">
+													<Name>Touch out at Oxford Circus  .</Name>
+													<TypeOfAccessRightAssignmentRef version="any" ref="tfl:product_purchase"/>
+													<FareStructureElementRef version="any" ref="tfl:metro_trip"/>
+													<limitations>
+														<RoundTripRef version="any" ref="tfl:single"/>
+													</limitations>
+													<validityParameters>
+														<ScheduledStopPointRef ref="tfl:Oxford_Circus" version="any"/>
+													</validityParameters>
+												</SpecificParameterAssignment>
+											</specificParameterAssignments>
+										</OfferedTravelSpecification>
+									</travelSpecifications>
+									<travelDocuments>
+										<TravelDocumentRef versionRef="EXTERNAL" ref="cdb:Oyster-12345"/>
+									</travelDocuments>
 								</SalesTransaction>
-								<TravelSpecification version="any" id="xpl:Oyster-12345@trans004@purchase@yellow_touch_out">
-									<Name>Touch out to complete Fare within zone</Name>
-									<Date>2013-07-08T01:09:10</Date>
-									<TypeOfFareContractEntryRef version="any" ref="tfl:yellow_touch_out"/>
-									<SalesTransactionRef version="any" ref="xpl:Oyster-12345@trans004@purchase"/>
-									<Amount>0.00</Amount>
-									<specificParameterAssignments>
-										<SpecificParameterAssignment version="any" order="1" id="xpl:Oyster-12345@trans004@touch_out@Adult">
-											<Name>Touch out at Oxford Circus  .</Name>
-											<Description>Counts as Peak because joruney started befroe 9.00</Description>
-											<TypeOfAccessRightAssignmentRef version="any" ref="tfl:product_purchase"/>
-											<FareStructureElementRef version="any" ref="tfl:Zone_1_only"/>
-											<SalesOfferPackageRef version="any" ref="tfl:PayAsYouGo_trip-SOP"/>
-											<limitations>
-												<UserProfileRef version="any" ref="tfl:adult"/>
-											</limitations>
-											<FareDemandFactorRef version="any" ref="tfl:peak"/>
-										</SpecificParameterAssignment>
-										<SpecificParameterAssignment version="any" order="2" id="xpl:Oyster-12345@trans004@touch_out@metro_trip">
-											<Name>Touch out at Oxford Circus  .</Name>
-											<TypeOfAccessRightAssignmentRef version="any" ref="tfl:product_purchase"/>
-											<FareStructureElementRef version="any" ref="tfl:metro_trip"/>
-											<limitations>
-												<RoundTripRef version="any" ref="tfl:single"/>
-											</limitations>
-											<validityParameters>
-												<ScheduledStopPointRef ref="tfl:Oxford_Circus" version="any"/>
-											</validityParameters>
-										</SpecificParameterAssignment>
-									</specificParameterAssignments>
-								</TravelSpecification>
 								<!--  	Start an off peak trip outside  travel zone   -->
 								<SalesTransaction version="any" id="xpl:Oyster-12345@trans005@touch_in">
 									<Name>Oyster Touch in</Name>
@@ -14748,158 +14816,179 @@ Multi-journey Boarding Passes are not transferable.</Description>
 									<Date>2013-07-08T01:12:00</Date>
 									<TypeOfFareContractEntryRef version="any" ref="tfl:yellow_touch_in"/>
 									<Amount>8.40</Amount>
+									<travelSpecifications>
+										<OfferedTravelSpecification version="any" id="xpl:Oyster-12345@trans005@touch_in@">
+											<Name>Tuoch out in out of xpme</Name>
+											<Date>2013-07-08T01:12:00</Date>
+											<TypeOfFareContractEntryRef version="any" ref="tfl:yellow_touch_in"/>
+											<SalesTransactionRef version="any" ref="xpl:Oyster-12345@trans005@touch_in"/>
+											<specificParameterAssignments>
+												<SpecificParameterAssignment version="any" order="1" id="xpl:Oyster-12345@trans006@touch_in@Adult">
+													<Name>Touch in at Highgate t</Name>
+													<TypeOfAccessRightAssignmentRef version="any" ref="tfl:validation"/>
+													<FareStructureElementRef version="any" ref="tfl:Zone_3_only"/>
+													<SalesOfferPackageRef version="any" ref="tfl:PayAsYouGo_trip-SOP"/>
+													<limitations>
+														<RoundTripRef version="any" ref="tfl:single"/>
+														<!-- max travel times -->
+														<UsageValidityPeriodRef version="any" ref="tfl:Travel_time_70M"/>
+														<UserProfileRef version="any" ref="tfl:adult"/>
+													</limitations>
+													<validityParameters>
+														<ScheduledStopPointRef ref="tfl:Highgate" version="any"/>
+													</validityParameters>
+													<FareDemandFactorRef version="any" ref="tfl:offPeak"/>
+												</SpecificParameterAssignment>
+												<SpecificParameterAssignment version="any" order="2" id="xpl:Oyster-12345@trans006@touch_in@metro">
+													<FareStructureElementRef version="any" ref="tfl:metro_trip"/>
+												</SpecificParameterAssignment>
+											</specificParameterAssignments>
+										</OfferedTravelSpecification>
+									</travelSpecifications>
+									<travelDocuments>
+										<TravelDocumentRef versionRef="EXTERNAL" ref="cdb:Oyster-12345"/>
+									</travelDocuments>
 								</SalesTransaction>
-								<TravelSpecification version="any" id="xpl:Oyster-12345@trans005@touch_in@">
-									<Name>Tuoch out in out of xpme</Name>
-									<Date>2013-07-08T01:12:00</Date>
-									<TypeOfFareContractEntryRef version="any" ref="tfl:yellow_touch_in"/>
-									<SalesTransactionRef version="any" ref="xpl:Oyster-12345@trans005@touch_in"/>
-									<specificParameterAssignments>
-										<SpecificParameterAssignment version="any" order="1" id="xpl:Oyster-12345@trans006@touch_in@Adult">
-											<Name>Touch in at Highgate t</Name>
-											<TypeOfAccessRightAssignmentRef version="any" ref="tfl:validation"/>
-											<FareStructureElementRef version="any" ref="tfl:Zone_3_only"/>
-											<SalesOfferPackageRef version="any" ref="tfl:PayAsYouGo_trip-SOP"/>
-											<limitations>
-												<RoundTripRef version="any" ref="tfl:single"/>
-												<!-- max travel times -->
-												<UsageValidityPeriodRef version="any" ref="tfl:Travel_time_70M"/>
-												<UserProfileRef version="any" ref="tfl:adult"/>
-											</limitations>
-											<validityParameters>
-												<ScheduledStopPointRef ref="tfl:Highgate" version="any"/>
-											</validityParameters>
-											<FareDemandFactorRef version="any" ref="tfl:offPeak"/>
-										</SpecificParameterAssignment>
-										<SpecificParameterAssignment version="any" order="2" id="xpl:Oyster-12345@trans006@touch_in@metro">
-											<FareStructureElementRef version="any" ref="tfl:metro_trip"/>
-										</SpecificParameterAssignment>
-									</specificParameterAssignments>
-								</TravelSpecification>
 								<!--  	Oyster Touch out   in zone outside -->
 								<SalesTransaction version="any" id="xpl:Oyster-12345@trans006@touch_out">
 									<Name>Oyster Touch out  n a zone outside traval card</Name>
 									<Description> Max 8.40  - actusl £2.40   = -£6.00</Description>
 									<Date>2013-07-08T01:12:30</Date>
 									<Amount>-6.0</Amount>
+									<travelSpecifications>
+										<OfferedTravelSpecification version="any" id="xpl:Oyster-12345@trans006@touch_out">
+											<Name>Pay as you go Fare  zone 3-4  (End at Finchley Central)</Name>
+											<Date>2013-07-08T01:12:30</Date>
+											<TypeOfFareContractEntryRef version="any" ref="tfl:purchase"/>
+											<SalesTransactionRef version="any" ref="xpl:Oyster-12345@trans006@touch_out"/>
+											<Amount>1.60</Amount>
+											<specificParameterAssignments>
+												<SpecificParameterAssignment version="any" order="1" id="xpl:Oyster-12345@trans006@touch_out@Adult">
+													<Name>Touch out at Highgate</Name>
+													<TypeOfAccessRightAssignmentRef version="any" ref="tfl:product_purchase"/>
+													<FareStructureElementRef version="any" ref="tfl:Zones_3-4"/>
+													<SalesOfferPackageRef version="any" ref="tfl:PayAsYouGo_trip-SOP"/>
+													<limitations>
+														<RoundTripRef version="any" ref="tfl:single"/>
+														<UsageValidityPeriodRef version="any" ref="tfl:Travel_time_70M"/>
+														<UserProfileRef version="any" ref="tfl:adult"/>
+													</limitations>
+													<validityParameters>
+														<ScheduledStopPointRef ref="tfl:Finchley_Central" version="any"/>
+													</validityParameters>
+													<FareDemandFactorRef version="any" ref="tfl:offPeak"/>
+												</SpecificParameterAssignment>
+											</specificParameterAssignments>
+										</OfferedTravelSpecification>
+									</travelSpecifications>
+									<travelDocuments>
+										<TravelDocumentRef versionRef="EXTERNAL" ref="cdb:Oyster-12345"/>
+									</travelDocuments>
 								</SalesTransaction>
-								<TravelSpecification version="any" id="xpl:Oyster-12345@trans006@touch_out">
-									<Name>Pay as you go Fare  zone 3-4  (End at Finchley Central)</Name>
-									<Date>2013-07-08T01:12:30</Date>
-									<TypeOfFareContractEntryRef version="any" ref="tfl:purchase"/>
-									<SalesTransactionRef version="any" ref="xpl:Oyster-12345@trans006@touch_out"/>
-									<Amount>1.60</Amount>
-									<specificParameterAssignments>
-										<SpecificParameterAssignment version="any" order="1" id="xpl:Oyster-12345@trans006@touch_out@Adult">
-											<Name>Touch out at Highgate</Name>
-											<TypeOfAccessRightAssignmentRef version="any" ref="tfl:product_purchase"/>
-											<FareStructureElementRef version="any" ref="tfl:Zones_3-4"/>
-											<SalesOfferPackageRef version="any" ref="tfl:PayAsYouGo_trip-SOP"/>
-											<limitations>
-												<RoundTripRef version="any" ref="tfl:single"/>
-												<UsageValidityPeriodRef version="any" ref="tfl:Travel_time_70M"/>
-												<UserProfileRef version="any" ref="tfl:adult"/>
-											</limitations>
-											<validityParameters>
-												<ScheduledStopPointRef ref="tfl:Finchley_Central" version="any"/>
-											</validityParameters>
-											<FareDemandFactorRef version="any" ref="tfl:offPeak"/>
-										</SpecificParameterAssignment>
-									</specificParameterAssignments>
-								</TravelSpecification>
 								<!--  	Sign up for Auto top up  -->
 								<SalesTransaction version="any" id="xpl:Oyster-12345@trans007@Oyster_Auto_Top_Up@signup">
 									<Name>Top up Oyster card with £10</Name>
 									<Description> Put  £10  on card to trigger    </Description>
 									<Date>2013-07-08T01:07:10</Date>
 									<Amount>10.00</Amount>
+									<travelSpecifications>
+										<OfferedTravelSpecification version="any" id="xpl:Oyster-12345@trans007@Oyster_Auto_Top_Up@signup">
+											<Name>Add 10 Pay as you go</Name>
+											<Date>2013-07-08T01:07:10</Date>
+											<TypeOfFareContractEntryRef version="any" ref="tfl:purchase"/>
+											<SalesTransactionRef version="any" ref="xpl:Oyster-12345@trans007@Oyster_Auto_Top_Up@signup"/>
+											<Amount>0</Amount>
+											<specificParameterAssignments>
+												<SpecificParameterAssignment version="any" order="1" id="xpl:Oyster-12345@trans007@Oyster_Auto_Top_Up@signup@distribution_channel">
+													<Name>Collect at Kings Cross</Name>
+													<TypeOfAccessRightAssignmentRef version="any" ref="tfl:product_purchase"/>
+													<SalesOfferPackageRef version="any" ref="tfl:Oyster_Auto_Top_Up-SOP"/>
+													<validityParameters>
+														<ScheduledStopPointRef ref="tfl:Kings_Cross" version="any"/>
+														<DistributionChannelRef version="any" ref="tfl:Validator"/>
+													</validityParameters>
+												</SpecificParameterAssignment>
+											</specificParameterAssignments>
+										</OfferedTravelSpecification>
+										<OfferedTravelSpecification version="any" id="xpl:Oyster-12345@trans007@Oyster_Auto_Top_Up@online_Order">
+											<Name>Add 10 Pay as you go</Name>
+											<Date>2013-07-08T01:07:10</Date>
+											<TypeOfFareContractEntryRef version="any" ref="tfl:online_Order"/>
+											<SalesTransactionRef version="any" ref="xpl:Oyster-12345@trans007@Oyster_Auto_Top_Up@signup"/>
+											<Amount>10</Amount>
+											<specificParameterAssignments>
+												<SpecificParameterAssignment version="any" order="1" id="xpl:Oyster-12345@trans008@Oyster_Auto_Top_Up@signup@distribution_channel">
+													<Name>To be Collected at Kings Cross</Name>
+													<TypeOfAccessRightAssignmentRef version="any" ref="tfl:order_product"/>
+													<SalesOfferPackageRef version="any" ref="tfl:Oyster_Auto_Top_Up-SOP"/>
+													<validityParameters>
+														<ScheduledStopPointRef ref="tfl:Kings_Cross" version="any"/>
+														<DistributionChannelRef version="any" ref="tfl:Oyster_Online"/>
+														<FulfilmentMethodRef version="any" ref="tfl:ElectronicCollection"/>
+													</validityParameters>
+												</SpecificParameterAssignment>
+											</specificParameterAssignments>
+										</OfferedTravelSpecification>
+									</travelSpecifications>
+									<travelDocuments>
+										<TravelDocumentRef versionRef="EXTERNAL" ref="cdb:Oyster-12345"/>
+									</travelDocuments>
 								</SalesTransaction>
-								<TravelSpecification version="any" id="xpl:Oyster-12345@trans007@Oyster_Auto_Top_Up@signup">
-									<Name>Add 10 Pay as you go</Name>
-									<Date>2013-07-08T01:07:10</Date>
-									<TypeOfFareContractEntryRef version="any" ref="tfl:purchase"/>
-									<SalesTransactionRef version="any" ref="xpl:Oyster-12345@trans007@Oyster_Auto_Top_Up@signup"/>
-									<Amount>0</Amount>
-									<specificParameterAssignments>
-										<SpecificParameterAssignment version="any" order="1" id="xpl:Oyster-12345@trans007@Oyster_Auto_Top_Up@signup@distribution_channel">
-											<Name>Collect at Kings Cross</Name>
-											<TypeOfAccessRightAssignmentRef version="any" ref="tfl:product_purchase"/>
-											<SalesOfferPackageRef version="any" ref="tfl:Oyster_Auto_Top_Up-SOP"/>
-											<validityParameters>
-												<ScheduledStopPointRef ref="tfl:Kings_Cross" version="any"/>
-												<DistributionChannelRef version="any" ref="tfl:Validator"/>
-											</validityParameters>
-										</SpecificParameterAssignment>
-									</specificParameterAssignments>
-								</TravelSpecification>
-								<TravelSpecification version="any" id="xpl:Oyster-12345@trans007@Oyster_Auto_Top_Up@online_Order">
-									<Name>Add 10 Pay as you go</Name>
-									<Date>2013-07-08T01:07:10</Date>
-									<TypeOfFareContractEntryRef version="any" ref="tfl:online_Order"/>
-									<SalesTransactionRef version="any" ref="xpl:Oyster-12345@trans007@Oyster_Auto_Top_Up@signup"/>
-									<Amount>10</Amount>
-									<specificParameterAssignments>
-										<SpecificParameterAssignment version="any" order="1" id="xpl:Oyster-12345@trans008@Oyster_Auto_Top_Up@signup@distribution_channel">
-											<Name>To be Collected at Kings Cross</Name>
-											<TypeOfAccessRightAssignmentRef version="any" ref="tfl:order_product"/>
-											<SalesOfferPackageRef version="any" ref="tfl:Oyster_Auto_Top_Up-SOP"/>
-											<validityParameters>
-												<ScheduledStopPointRef ref="tfl:Kings_Cross" version="any"/>
-												<DistributionChannelRef version="any" ref="tfl:Oyster_Online"/>
-												<FulfilmentMethodRef version="any" ref="tfl:ElectronicCollection"/>
-											</validityParameters>
-										</SpecificParameterAssignment>
-									</specificParameterAssignments>
-								</TravelSpecification>
 								<!--  	Activate  up for Auto top up  -->
 								<SalesTransaction version="any" id="xpl:Oyster-12345@trans008@Oyster_Auto_Top_Up@activate">
 									<Name>Top up Oyster card with £10</Name>
 									<Description> Put  £10  on card to trigger    </Description>
 									<Date>2013-07-08T01:07:10</Date>
 									<Amount>10.00</Amount>
+									<travelSpecifications>
+										<OfferedTravelSpecification version="any" id="xpl:Oyster-12345@trans008@Oyster_Auto_Top_Up@activate">
+											<Name>Add 10 Pay as you go</Name>
+											<Date>2013-07-08T01:07:10</Date>
+											<TypeOfFareContractEntryRef version="any" ref="tfl:purchase"/>
+											<SalesTransactionRef version="any" ref="xpl:Oyster-12345@trans008@Oyster_Auto_Top_Up@activate"/>
+											<Amount>0</Amount>
+											<specificParameterAssignments>
+												<SpecificParameterAssignment version="any" order="1" id="xpl:Oyster-12345@trans008@Oyster_Top_Up@activate@distribution_channel">
+													<Name>Collect at Kings Cross</Name>
+													<TypeOfAccessRightAssignmentRef version="any" ref="tfl:activation"/>
+													<SalesOfferPackageRef version="any" ref="tfl:Oyster_Auto_Top_Up-SOP"/>
+													<validityParameters>
+														<ScheduledStopPointRef ref="tfl:Kings_Cross" version="any"/>
+														<DistributionChannelRef version="any" ref="tfl:Validator"/>
+													</validityParameters>
+												</SpecificParameterAssignment>
+											</specificParameterAssignments>
+										</OfferedTravelSpecification>
+										<OfferedTravelSpecification version="any" id="xpl:Oyster-12345@trans008@Oyster_Auto_Top_Up@purchase">
+											<Name>Add 10 Pay as you go</Name>
+											<Date>2013-07-08T01:07:10</Date>
+											<TypeOfFareContractEntryRef version="any" ref="tfl:purchase"/>
+											<SalesTransactionRef version="any" ref="xpl:Oyster-12345@trans008@Oyster_Auto_Top_Up@activate"/>
+											<Amount>10</Amount>
+											<specificParameterAssignments>
+												<SpecificParameterAssignment version="any" order="1" id="xpl:Oyster-12345@trans008@Oyster_Top_Up@purchase@distribution_channel">
+													<Name>Collect at Kings Cross</Name>
+													<TypeOfAccessRightAssignmentRef version="any" ref="tfl:product_purchase"/>
+													<SalesOfferPackageRef version="any" ref="tfl:Oyster_Top_Up-SOP"/>
+													<validityParameters>
+														<ScheduledStopPointRef ref="tfl:Kings_Cross" version="any"/>
+														<DistributionChannelRef version="any" ref="tfl:Validator"/>
+													</validityParameters>
+												</SpecificParameterAssignment>
+											</specificParameterAssignments>
+										</OfferedTravelSpecification>
+									</travelSpecifications>
+									<travelDocuments>
+										<TravelDocumentRef versionRef="EXTERNAL" ref="cdb:Oyster-12345"/>
+									</travelDocuments>
 								</SalesTransaction>
-								<TravelSpecification version="any" id="xpl:Oyster-12345@trans008@Oyster_Auto_Top_Up@activate">
-									<Name>Add 10 Pay as you go</Name>
-									<Date>2013-07-08T01:07:10</Date>
-									<TypeOfFareContractEntryRef version="any" ref="tfl:purchase"/>
-									<SalesTransactionRef version="any" ref="xpl:Oyster-12345@trans008@Oyster_Auto_Top_Up@activate"/>
-									<Amount>0</Amount>
-									<specificParameterAssignments>
-										<SpecificParameterAssignment version="any" order="1" id="xpl:Oyster-12345@trans008@Oyster_Top_Up@activate@distribution_channel">
-											<Name>Collect at Kings Cross</Name>
-											<TypeOfAccessRightAssignmentRef version="any" ref="tfl:activation"/>
-											<SalesOfferPackageRef version="any" ref="tfl:Oyster_Auto_Top_Up-SOP"/>
-											<validityParameters>
-												<ScheduledStopPointRef ref="tfl:Kings_Cross" version="any"/>
-												<DistributionChannelRef version="any" ref="tfl:Validator"/>
-											</validityParameters>
-										</SpecificParameterAssignment>
-									</specificParameterAssignments>
-								</TravelSpecification>
-								<TravelSpecification version="any" id="xpl:Oyster-12345@trans008@Oyster_Auto_Top_Up@purchase">
-									<Name>Add 10 Pay as you go</Name>
-									<Date>2013-07-08T01:07:10</Date>
-									<TypeOfFareContractEntryRef version="any" ref="tfl:purchase"/>
-									<SalesTransactionRef version="any" ref="xpl:Oyster-12345@trans008@Oyster_Auto_Top_Up@activate"/>
-									<Amount>10</Amount>
-									<specificParameterAssignments>
-										<SpecificParameterAssignment version="any" order="1" id="xpl:Oyster-12345@trans008@Oyster_Top_Up@purchase@distribution_channel">
-											<Name>Collect at Kings Cross</Name>
-											<TypeOfAccessRightAssignmentRef version="any" ref="tfl:product_purchase"/>
-											<SalesOfferPackageRef version="any" ref="tfl:Oyster_Top_Up-SOP"/>
-											<validityParameters>
-												<ScheduledStopPointRef ref="tfl:Kings_Cross" version="any"/>
-												<DistributionChannelRef version="any" ref="tfl:Validator"/>
-											</validityParameters>
-										</SpecificParameterAssignment>
-									</specificParameterAssignments>
-								</TravelSpecification>
 							</fareContractEntries>
 						</FareContract>
-						<!--  Example Use of an Oyster Card -->
+						<!--  Example Use of an Personal Oyster Card -->
 						<FareContract version="any" id="xpl:Oyster-12222">
 							<Name>Registered Oyster card Oyster-122222 with Transactions</Name>
-							<CustomerRef version="any" ref="tfl:122222"/>
+							<CustomerRef version="any" ref="cdb:122222"/>
+							<CustomerAccountRef version="any" ref="cdb:122222-1"/>
 							<fareContractEntries>
 								<!--  	By new Oyster card with Trave card on it   -->
 								<SalesTransaction version="any" id="xpl:Oyster-122222@trans001@purchase_new_card">
@@ -14907,46 +14996,51 @@ Multi-journey Boarding Passes are not transferable.</Description>
 									<Description> Card 5.00  deposit  + Pass @  £20   </Description>
 									<Date>2013-07-08T01:07:00</Date>
 									<Amount>25.00</Amount>
+									<travelSpecifications>
+										<OfferedTravelSpecification version="any" id="xpl:Oyster-122222@trans001@purchase_new_card@Adult_OysterCard">
+											<Name>Adult Oyste Card</Name>
+											<Date>2013-07-08T01:07:00</Date>
+											<TypeOfFareContractEntryRef version="any" ref="tfl:purchase"/>
+											<SalesTransactionRef version="any" ref="xpl:Oyster-122222@trans001@purchase_new_card"/>
+											<Amount>5.00</Amount>
+											<StartOfValidity>2013-07-08T01:07:00</StartOfValidity>
+											<specificParameterAssignments>
+												<SpecificParameterAssignment version="any" order="1" id="xpl:Oyster-122222@trans001@purchase_new_card@Adult_OysterCard@Adult">
+													<Name>Adult card</Name>
+													<TypeOfAccessRightAssignmentRef version="any" ref="tfl:product_purchase"/>
+													<SalesOfferPackageRef version="any" ref="tfl:Adult_OysterCard-SOP"/>
+													<limitations>
+														<UserProfileRef version="any" ref="tfl:adult"/>
+													</limitations>
+													<validityParameters>
+														<DistributionChannelRef version="any" ref="tfl:Tube_Station_Ticket_Offices"/>
+													</validityParameters>
+												</SpecificParameterAssignment>
+											</specificParameterAssignments>
+										</OfferedTravelSpecification>
+										<!--  	Prepay £10 O N an Travel Card Oyster Card  with  -->
+										<OfferedTravelSpecification version="any" id="xpl:Oyster-122222@trans001@Oyster_Top_Up">
+											<Name>Add £10 Pay as you go</Name>
+											<Date>2013-07-08T01:07:10</Date>
+											<TypeOfFareContractEntryRef version="any" ref="tfl:purchase"/>
+											<SalesTransactionRef version="any" ref="xpl:Oyster-122222@trans001@purchase_new_card"/>
+											<Amount>20</Amount>
+											<specificParameterAssignments>
+												<SpecificParameterAssignment version="any" order="1" id="xpl:Oyster-122222@trans002@Oyster_Top_Up@distribution_channel">
+													<Name>Touch in  at Kings Cross</Name>
+													<TypeOfAccessRightAssignmentRef version="any" ref="tfl:product_purchase"/>
+													<SalesOfferPackageRef version="any" ref="tfl:Oyster_Top_Up-SOP"/>
+													<validityParameters>
+														<DistributionChannelRef version="any" ref="tfl:self_service_machine"/>
+													</validityParameters>
+												</SpecificParameterAssignment>
+											</specificParameterAssignments>
+										</OfferedTravelSpecification>
+									</travelSpecifications>
+									<travelDocuments>
+										<TravelDocumentRef versionRef="EXTERNAL" ref="cdb:Oyster-57460123"/>
+									</travelDocuments>
 								</SalesTransaction>
-								<TravelSpecification version="any" id="xpl:Oyster-122222@trans001@purchase_new_card@Adult_OysterCard">
-									<Name>Adult Oyste Card</Name>
-									<Date>2013-07-08T01:07:00</Date>
-									<TypeOfFareContractEntryRef version="any" ref="tfl:purchase"/>
-									<SalesTransactionRef version="any" ref="xpl:Oyster-122222@trans001@purchase_new_card"/>
-									<Amount>5.00</Amount>
-									<StartOfValidity>2013-07-08T01:07:00</StartOfValidity>
-									<specificParameterAssignments>
-										<SpecificParameterAssignment version="any" order="1" id="xpl:Oyster-122222@trans001@purchase_new_card@Adult_OysterCard@Adult">
-											<Name>Adult card</Name>
-											<TypeOfAccessRightAssignmentRef version="any" ref="tfl:product_purchase"/>
-											<SalesOfferPackageRef version="any" ref="tfl:Adult_OysterCard-SOP"/>
-											<limitations>
-												<UserProfileRef version="any" ref="tfl:adult"/>
-											</limitations>
-											<validityParameters>
-												<DistributionChannelRef version="any" ref="tfl:Tube_Station_Ticket_Offices"/>
-											</validityParameters>
-										</SpecificParameterAssignment>
-									</specificParameterAssignments>
-								</TravelSpecification>
-								<!--  	Prepay £10 O N an Travel Card Oyster Card  with  -->
-								<TravelSpecification version="any" id="xpl:Oyster-122222@trans001@Oyster_Top_Up">
-									<Name>Add £10 Pay as you go</Name>
-									<Date>2013-07-08T01:07:10</Date>
-									<TypeOfFareContractEntryRef version="any" ref="tfl:purchase"/>
-									<SalesTransactionRef version="any" ref="xpl:Oyster-122222@trans001@purchase_new_card"/>
-									<Amount>20</Amount>
-									<specificParameterAssignments>
-										<SpecificParameterAssignment version="any" order="1" id="xpl:Oyster-122222@trans002@Oyster_Top_Up@distribution_channel">
-											<Name>Touch in  at Kings Cross</Name>
-											<TypeOfAccessRightAssignmentRef version="any" ref="tfl:product_purchase"/>
-											<SalesOfferPackageRef version="any" ref="tfl:Oyster_Top_Up-SOP"/>
-											<validityParameters>
-												<DistributionChannelRef version="any" ref="tfl:self_service_machine"/>
-											</validityParameters>
-										</SpecificParameterAssignment>
-									</specificParameterAssignments>
-								</TravelSpecification>
 								<!--  	Start an off peak trip o e   -->
 								<SalesTransaction version="any" id="xpl:Oyster-122222@trans005@touch_in">
 									<Name>Oyster Touch in</Name>
@@ -14954,65 +15048,75 @@ Multi-journey Boarding Passes are not transferable.</Description>
 									<Date>2013-07-08T01:12:00</Date>
 									<TypeOfFareContractEntryRef version="any" ref="tfl:yellow_touch_in"/>
 									<Amount>8.40</Amount>
+									<travelSpecifications>
+										<OfferedTravelSpecification version="any" id="xpl:Oyster-122222@trans005@touch_in@">
+											<Name>Tuoch out in out of xpme</Name>
+											<Date>2013-07-08T01:12:00</Date>
+											<TypeOfFareContractEntryRef version="any" ref="tfl:yellow_touch_in"/>
+											<SalesTransactionRef version="any" ref="xpl:Oyster-122222@trans005@touch_in"/>
+											<specificParameterAssignments>
+												<SpecificParameterAssignment version="any" order="1" id="xpl:Oyster-122222@trans006@touch_in@Adult">
+													<Name>Touch in at Highgate t</Name>
+													<TypeOfAccessRightAssignmentRef version="any" ref="tfl:validation"/>
+													<FareStructureElementRef version="any" ref="tfl:Zone_3_only"/>
+													<SalesOfferPackageRef version="any" ref="tfl:PayAsYouGo_trip-SOP"/>
+													<limitations>
+														<RoundTripRef version="any" ref="tfl:single"/>
+														<!-- max travel times -->
+														<UsageValidityPeriodRef version="any" ref="tfl:Travel_time_70M"/>
+														<UserProfileRef version="any" ref="tfl:adult"/>
+													</limitations>
+													<validityParameters>
+														<ScheduledStopPointRef ref="tfl:Highgate" version="any"/>
+													</validityParameters>
+													<FareDemandFactorRef version="any" ref="tfl:offPeak"/>
+												</SpecificParameterAssignment>
+												<SpecificParameterAssignment version="any" order="2" id="xpl:Oyster-122222@trans006@touch_in@metro">
+													<FareStructureElementRef version="any" ref="tfl:metro_trip"/>
+												</SpecificParameterAssignment>
+											</specificParameterAssignments>
+										</OfferedTravelSpecification>
+									</travelSpecifications>
+									<travelDocuments>
+										<TravelDocumentRef versionRef="EXTERNAL" ref="cdb:Oyster-57460123"/>
+									</travelDocuments>
 								</SalesTransaction>
-								<TravelSpecification version="any" id="xpl:Oyster-122222@trans005@touch_in@">
-									<Name>Tuoch out in out of xpme</Name>
-									<Date>2013-07-08T01:12:00</Date>
-									<TypeOfFareContractEntryRef version="any" ref="tfl:yellow_touch_in"/>
-									<SalesTransactionRef version="any" ref="xpl:Oyster-122222@trans005@touch_in"/>
-									<specificParameterAssignments>
-										<SpecificParameterAssignment version="any" order="1" id="xpl:Oyster-122222@trans006@touch_in@Adult">
-											<Name>Touch in at Highgate t</Name>
-											<TypeOfAccessRightAssignmentRef version="any" ref="tfl:validation"/>
-											<FareStructureElementRef version="any" ref="tfl:Zone_3_only"/>
-											<SalesOfferPackageRef version="any" ref="tfl:PayAsYouGo_trip-SOP"/>
-											<limitations>
-												<RoundTripRef version="any" ref="tfl:single"/>
-												<!-- max travel times -->
-												<UsageValidityPeriodRef version="any" ref="tfl:Travel_time_70M"/>
-												<UserProfileRef version="any" ref="tfl:adult"/>
-											</limitations>
-											<validityParameters>
-												<ScheduledStopPointRef ref="tfl:Highgate" version="any"/>
-											</validityParameters>
-											<FareDemandFactorRef version="any" ref="tfl:offPeak"/>
-										</SpecificParameterAssignment>
-										<SpecificParameterAssignment version="any" order="2" id="xpl:Oyster-122222@trans006@touch_in@metro">
-											<FareStructureElementRef version="any" ref="tfl:metro_trip"/>
-										</SpecificParameterAssignment>
-									</specificParameterAssignments>
-								</TravelSpecification>
 								<!--  	Oyster Touch out   in zone outside -->
 								<SalesTransaction version="any" id="xpl:Oyster-122222@trans006@touch_out">
 									<Name>Oyster Touch out  n a zone outside traval card</Name>
 									<Description> Max 8.40  - actusl £2.40   = -£6.00</Description>
 									<Date>2013-07-08T01:12:30</Date>
 									<Amount>-6.0</Amount>
+									<travelSpecifications>
+										<OfferedTravelSpecification version="any" id="xpl:Oyster-122222@trans006@touch_out">
+											<Name>Pay as you go Fare  zone 3-4  (End at Finchley Central)</Name>
+											<Date>2013-07-08T01:12:30</Date>
+											<TypeOfFareContractEntryRef version="any" ref="tfl:purchase"/>
+											<SalesTransactionRef version="any" ref="xpl:Oyster-122222@trans006@touch_out"/>
+											<Amount>1.60</Amount>
+											<specificParameterAssignments>
+												<SpecificParameterAssignment version="any" order="1" id="xpl:Oyster-122222@trans006@touch_out@Adult">
+													<Name>Touch out at Highgate</Name>
+													<TypeOfAccessRightAssignmentRef version="any" ref="tfl:product_purchase"/>
+													<FareStructureElementRef version="any" ref="tfl:Zones_3-4"/>
+													<SalesOfferPackageRef version="any" ref="tfl:PayAsYouGo_trip-SOP"/>
+													<limitations>
+														<RoundTripRef version="any" ref="tfl:single"/>
+														<UsageValidityPeriodRef version="any" ref="tfl:Travel_time_70M"/>
+														<UserProfileRef version="any" ref="tfl:adult"/>
+													</limitations>
+													<validityParameters>
+														<ScheduledStopPointRef ref="tfl:Finchley_Central" version="any"/>
+													</validityParameters>
+													<FareDemandFactorRef version="any" ref="tfl:offPeak"/>
+												</SpecificParameterAssignment>
+											</specificParameterAssignments>
+										</OfferedTravelSpecification>
+									</travelSpecifications>
+									<travelDocuments>
+										<TravelDocumentRef versionRef="EXTERNAL" ref="cdb:Oyster-57460123"/>
+									</travelDocuments>
 								</SalesTransaction>
-								<TravelSpecification version="any" id="xpl:Oyster-122222@trans006@touch_out">
-									<Name>Pay as you go Fare  zone 3-4  (End at Finchley Central)</Name>
-									<Date>2013-07-08T01:12:30</Date>
-									<TypeOfFareContractEntryRef version="any" ref="tfl:purchase"/>
-									<SalesTransactionRef version="any" ref="xpl:Oyster-122222@trans006@touch_out"/>
-									<Amount>1.60</Amount>
-									<specificParameterAssignments>
-										<SpecificParameterAssignment version="any" order="1" id="xpl:Oyster-122222@trans006@touch_out@Adult">
-											<Name>Touch out at Highgate</Name>
-											<TypeOfAccessRightAssignmentRef version="any" ref="tfl:product_purchase"/>
-											<FareStructureElementRef version="any" ref="tfl:Zones_3-4"/>
-											<SalesOfferPackageRef version="any" ref="tfl:PayAsYouGo_trip-SOP"/>
-											<limitations>
-												<RoundTripRef version="any" ref="tfl:single"/>
-												<UsageValidityPeriodRef version="any" ref="tfl:Travel_time_70M"/>
-												<UserProfileRef version="any" ref="tfl:adult"/>
-											</limitations>
-											<validityParameters>
-												<ScheduledStopPointRef ref="tfl:Finchley_Central" version="any"/>
-											</validityParameters>
-											<FareDemandFactorRef version="any" ref="tfl:offPeak"/>
-										</SpecificParameterAssignment>
-									</specificParameterAssignments>
-								</TravelSpecification>
 							</fareContractEntries>
 						</FareContract>
 					</fareContracts>
@@ -15040,11 +15144,66 @@ Multi-journey Boarding Passes are not transferable.</Description>
 							<Name>Valid_accounts</Name>
 							<securityListings>
 								<CustomerAccountSecurityListing version="any" id="tfl:Valid_accounts@Oyster-12222" order="1">
-									<CustomerAccountRef version="any" ref="tfl:122222-1"/>
+									<CustomerAccountRef version="any" ref="cdb:122222-1"/>
 								</CustomerAccountSecurityListing>
 							</securityListings>
 						</Whitelist>
 					</whitelists>
+					<travelDocuments>
+						<TravelDocument id="cdb:Oyster-12345" version="any">
+							<Name>Oyster card Anonymous</Name>
+							<CustomerPurchasePackageRef ref="cdb:Oyster-12345" version="any"/>
+							<MarkedAs>activated</MarkedAs>
+						</TravelDocument>
+						<TravelDocument id="cdb:Oyster-57460123" version="any">
+							<Name>Oyster card for B.Johnson</Name>
+							<CustomerPurchasePackageRef ref="cdb:Oyster-57460123" version="any"/>
+							<MarkedAs>activated</MarkedAs>
+						</TravelDocument>
+					</travelDocuments>
+					<customerPurchasePackages>
+						<CustomerPurchasePackage id="cdb:Oyster-12345" version="any">
+							<CustomerRef version="any" ref="cdb:122222"/>
+							<CustomerAccountRef version="any" ref="cdb:122222-1"/>
+							<FareContractRef version="any" ref="xpl:Oyster-12345"/>
+			 
+							<salesTransactions>
+								<SalesTransactionRef version="any" ref="xpl:Oyster-12345@trans001@purchase_new_card"/>
+								<SalesTransactionRef version="any" ref="xpl:Oyster-12345@trans002@Oyster_Top_Up"/>
+								<SalesTransactionRef version="any" ref="xpl:Oyster-12345@trans003@touch_in"/>
+								<SalesTransactionRef version="any" ref="xpl:Oyster-12345@trans004@purchase"/>
+								<SalesTransactionRef version="any" ref="xpl:Oyster-12345@trans005@touch_in"/>
+								<SalesTransactionRef version="any" ref="xpl:Oyster-12345@trans006@touch_out"/>
+								<SalesTransactionRef version="any" ref="xpl:Oyster-12345@trans007@Oyster_Auto_Top_Up@signup"/>
+								<SalesTransactionRef version="any" ref="xpl:Oyster-12345@trans008@Oyster_Auto_Top_Up@activate"/>
+							</salesTransactions>
+					 
+							<travelDocuments>
+								<TravelDocumentRef ref="cdb:Oyster-57460123" version="any"/>
+							</travelDocuments>
+						</CustomerPurchasePackage>
+						<CustomerPurchasePackage id="cdb:Oyster-57460123" version="any">
+							<CustomerRef version="any" ref="cdb:122222"/>
+							<CustomerAccountRef version="any" ref="cdb:122222-1"/>
+							<FareContractRef version="any" ref="xpl:Oyster-12222"/>
+							<travelSpecifications>
+								<OfferedTravelSpecificationRef ref=""/>
+							</travelSpecifications>
+							<salesTransactions>
+								<SalesTransactionRef version="any" ref="xpl:Oyster-12345@trans001@purchase_new_card"/>
+								<SalesTransactionRef version="any" ref="xpl:Oyster-12345@trans002@Oyster_Top_Up"/>
+								<SalesTransactionRef version="any" ref="xpl:Oyster-12345@trans003@touch_in"/>
+								<SalesTransactionRef version="any" ref="xpl:Oyster-12345@trans004@purchase"/>
+								<SalesTransactionRef version="any" ref="xpl:Oyster-12345@trans005@touch_in"/>
+								<SalesTransactionRef version="any" ref="xpl:Oyster-12345@trans006@touch_out"/>
+								<SalesTransactionRef version="any" ref="xpl:Oyster-12345@trans007@Oyster_Auto_Top_Up@signup"/>
+								<SalesTransactionRef version="any" ref="xpl:Oyster-12345@trans008@Oyster_Auto_Top_Up@activate"/>
+							</salesTransactions>
+							<travelDocuments>
+								<TravelDocumentRef ref="cdb:Oyster-57460123" version="any"/>
+							</travelDocuments>
+						</CustomerPurchasePackage>
+					</customerPurchasePackages>
 				</SalesTransactionFrame>
 				<ServiceCalendarFrame version="any" id="tfl:TfL_Example">
 					<Name>TfL Example - code values-</Name>

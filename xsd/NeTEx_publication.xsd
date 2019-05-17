@@ -16,6 +16,10 @@
 				<Contributor>CEN TC278 WG3 SG9 Team.</Contributor>
 				<Coverage>Europe</Coverage>
 				<Creator>First Drafted for NeTEx version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.  mailto:schemer@netex.org.uk</Creator>
+							<Date>	
+						<Modified>2019-05-15</Modified>Corrections
+						 Add TypeOfLine constraint
+				</Date>		
 				<Date>	
 						<Modified>2019-05-02</Modified>Corrections
 						 Add missing constraint selectors    for DefaultResponsibilitySetRef and DefaultDataSourceRef
@@ -23,12 +27,12 @@
 				</Date>					 					 
 				<Date>
 					<Modified>2019-04-24</Modified>Corrections
-						Aadd missing constraints ref  forJ ourneyPart/MainPartRef to JourneyPartCOuple   
+						Aadd missing constraints ref  for JourneyPart/MainPartRef to JourneyPartCOuple   
 				</Date>
 				<Date>
 					<Modified>2019-04-24</Modified>Corrections
 							(1)Add constraints ref  for ParkingEntranceForVehicles and ParkingPasengerEntrance
-							(2) Drop general ENtranceRef constraint
+							(2) Drop general EntranceRef constraint
 				</Date>
 				<Date>
 					<Modified>2019-04-14</Modified>Fix add constraints for VehicleStopingPosition  and VehicleQuayAlignment and VehiclePositionAlignment
@@ -4407,6 +4411,27 @@
 		</xsd:keyref>
 		<xsd:key name="GroupOfLines_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:GroupOfLines |.//netex:Network"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====TypeOfLine============================== -->
+		<!-- =====TypeOfLine unique========================== -->
+		<xsd:unique name="TypeOfLine_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [TypeOfLine Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:TypeOfLine"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====TypeOfLine Key ========================== -->
+		<xsd:keyref name="TypeOfLine_KeyRef" refer="netex:TypeOfLine_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:TypeOfLineRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="TypeOfLine_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:TypeOfLine"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>

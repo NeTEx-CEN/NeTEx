@@ -110,7 +110,7 @@ Changes
    2010.06.24  Add More EQUIPMENT types.
    2010.05.01 V.01 Create as example to accompany Wimbledon paper 
 
-(C) Crown Copyright 2010, 2011    NJSK v1
+(C) Crown Copyright 2010, 2019    NJSK v1
 -->
 <PublicationDelivery xmlns="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gml="http://www.opengis.net/gml/3.2" version="1.0" xsi:schemaLocation="http://www.netex.org.uk/netex ../../../xsd/NeTEx_publication.xsd">
 	<PublicationTimestamp>2001-12-17T09:30:47.0Z</PublicationTimestamp>
@@ -121,74 +121,47 @@ Changes
 		<ParticipantRef>SYS002</ParticipantRef>
 		<topics>
 			<NetworkFrameTopic>
+			<Description>Get Wimbledon parking data</Description>
 				<Current/>
-				<NetworkFilterByValue>
-					<!--- ==Get Wimbledon data -->
+				<NetworkFilterByValue> 
+					<LayerRef versionRef="any" ref="tbd:parking"/>
 					<places>
-						<TopographicPlaceRef ref="nptgLocality:E0034695">REQUEST</TopographicPlaceRef>
+						<TopographicPlaceRef versionRef="any"  ref="nptgLocality:E0034695">REQUEST</TopographicPlaceRef>
+					<StopPlaceRef versionRef="any"  ref="naptStop:910GWIMBLDN"/>
 					</places>
+				
 				</NetworkFilterByValue>
 			</NetworkFrameTopic>
 		</topics>
 	</PublicationRequest>
 	<PublicationRefreshInterval>P3M</PublicationRefreshInterval>
-	<Description>Wimbledon complex Station Example </Description>
+	<Description>Stop Place with Parking  Example </Description>
 	<!--- =============== RESULTS =========== -->
 	<dataObjects>
-		<CompositeFrame version="1" id="nptg:CF01">
-			<validityConditions>
-				<AvailabilityCondition version="any" id="nptg:CF01">
+		<CompositeFrame version="1" id="epd:UK:TBD:CompositeFrame_Other:WIMBLD-parking:tbd">
+			<ValidBetween>
 					<FromDate>2010-12-17T09:30:47.0Z</FromDate>
 					<ToDate>2011-12-17T09:30:47.0Z</ToDate>
-				</AvailabilityCondition>
-			</validityConditions>
+</ValidBetween>
 			<!-- ==  CODESPACEs = -->
 			<codespaces>
-				<Codespace id="napt_metadata">
-					<Xmlns>napt</Xmlns>
-					<XmlnsUrl>http://www.naptan.org.uk/naptan</XmlnsUrl>
-					<Description>UK NaPTAN Stop Place codes</Description>
-				</Codespace>
-				<Codespace id="naptStop_data">
-					<Xmlns>naptStop</Xmlns>
-					<XmlnsUrl>http://www.naptan.org.uk/stops</XmlnsUrl>
-					<Description>UK NaPTAN Stop Place codes</Description>
-				</Codespace>
-						<Codespace id="naptStopArea_data">
-					<Xmlns>naptStopArea</Xmlns>
-					<XmlnsUrl>http://www.naptan.org.uk/stop_areas</XmlnsUrl>
-					<Description>UK NaPTAN Stop Area codes</Description>
-				</Codespace>
-				<Codespace id="nptg_metadata">
-					<Xmlns>nptg</Xmlns>
-					<XmlnsUrl>http://www.nptg.org.uk/nptg</XmlnsUrl>
-					<Description>NPTG TMetadta  &amp;  Admin codes </Description>
-				</Codespace>
-				<Codespace id="nptgLocality_data">
-					<Xmlns>naptLocality</Xmlns>
-					<XmlnsUrl>http://www.naptan.org.uk/localities</XmlnsUrl>
-					<Description>NPTG Locality </Description>
-				</Codespace>
-		
-				<Codespace id="tbd">
-					<Xmlns>tbd</Xmlns>
-					<XmlnsUrl>http://www.intdata.co.uk/data</XmlnsUrl>
-					<Description>Other interchange DATA SOURCE </Description>
-				</Codespace>
-				<Codespace id="iso3166-2">
-					<Xmlns>iso3166-2</Xmlns>
-					<XmlnsUrl>http://www.iso.org/country_codes/</XmlnsUrl>
-					<Description>ISO 316602 3 character Principality &amp; county codes. Use to subdivide IANA countries, e.g. gb:ENG, gb:WLS </Description>
-				</Codespace>
+				<CodespaceRef ref="epd_data"/>
+				<CodespaceRef ref="napt_metadata"/>
+				<CodespaceRef ref="naptStop_data"/>
+				<CodespaceRef ref="nptg_metadata"/>
+				<CodespaceRef ref="nptgLocality_data"/>
+				<CodespaceRef ref="iso3166-2_data"/>
+				 
 			</codespaces>
 			<!--- =======FRAME DEFAULTS======== -->
 			<FrameDefaults>
-				<DefaultCodespaceRef ref="tbd"/>
+				<DefaultCodespaceRef ref="tbd_data"/>
 			</FrameDefaults>
 			<frames>
-				<ServiceCalendarFrame version="any" id="nptg:SVC01">
+				<ServiceCalendarFrame version="1.0" id="epd:UK:TBD:ServiceCalendarFrame_UK_PI_CALENDAR:WIMBLD:tbd">
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_CALENDAR:FXCP"/>
 					<dayTypes>
-						<DayType version="any" id="nptg:DT001Open_MF">
+						<DayType version="any" id="tbd:DT001Open_MF">
 							<Name>Monday to Friday</Name>
 							<properties>
 								<PropertyOfDay>
@@ -197,13 +170,13 @@ Changes
 								</PropertyOfDay>
 							</properties>
 							<timebands>
-								<Timeband version="any" id="nptg:DT001Open_MF_01">
+								<Timeband version="any" id="tbd:DT001Open_MF_01">
 									<StartTime>05:00:00</StartTime>
 									<Duration>PT19H30M</Duration>
 								</Timeband>
 							</timebands>
 						</DayType>
-						<DayType version="any" id="nptg:DT002Open_Sat">
+						<DayType version="any" id="tbd:DT002Open_Sat">
 							<Name>Saturday opening hours 6am to 12:30 pm</Name>
 							<properties>
 								<PropertyOfDay>
@@ -212,13 +185,13 @@ Changes
 								</PropertyOfDay>
 							</properties>
 							<timebands>
-								<Timeband version="any" id="nptg:DT002Open_Sat_01">
+								<Timeband version="any" id="tbd:DT002Open_Sat_01">
 									<StartTime>06:00:00</StartTime>
 									<Duration>PT18H30M</Duration>
 								</Timeband>
 							</timebands>
 						</DayType>
-						<DayType version="any" id="nptg:DT003Open_Sun">
+						<DayType version="any" id="tbd:DT003Open_Sun">
 							<Name>Sunday opening hours</Name>
 							<properties>
 								<PropertyOfDay>
@@ -226,13 +199,13 @@ Changes
 								</PropertyOfDay>
 							</properties>
 							<timebands>
-								<Timeband version="any" id="nptg:DT003Open_Sun">
+								<Timeband version="any" id="tbd:DT003Open_Sun">
 									<StartTime>08:00:00</StartTime>
 									<Duration>PT15H30M</Duration>
 								</Timeband>
 							</timebands>
 						</DayType>
-						<DayType version="any" id="nptg:DT004Open_MFS">
+						<DayType version="any" id="tbd:DT004Open_MFS">
 							<properties>
 								<PropertyOfDay>
 									<DaysOfWeek>Monday Tuesday Wednesday Thursday Friday Saturday</DaysOfWeek>
@@ -240,13 +213,13 @@ Changes
 								</PropertyOfDay>
 							</properties>
 							<timebands>
-								<Timeband version="any" id="nptg:DT004Open_MFS">
+								<Timeband version="any" id="tbd:DT004Open_MFS">
 									<StartTime>08:30:00</StartTime>
 									<EndTime>20:00:00</EndTime>
 								</Timeband>
 							</timebands>
 						</DayType>
-						<DayType version="any" id="nptg:DT006Rush_MF">
+						<DayType version="any" id="tbd:DT006Rush_MF">
 							<properties>
 								<PropertyOfDay>
 									<DaysOfWeek>Monday Tuesday Wednesday Thursday Friday</DaysOfWeek>
@@ -254,20 +227,20 @@ Changes
 								</PropertyOfDay>
 							</properties>
 							<timebands>
-								<Timeband version="any" id="nptg:DT004Open_MF">
+								<Timeband version="any" id="tbd:DT004Open_MF">
 									<StartTime>08:30:00</StartTime>
 									<EndTime>09:30:00</EndTime>
 								</Timeband>
 							</timebands>
 						</DayType>
-						<DayType version="any" id="nptg:DT005Open_Sun">
+						<DayType version="any" id="tbd:DT005Open_Sun">
 							<properties>
 								<PropertyOfDay>
 									<DaysOfWeek>Sunday</DaysOfWeek>
 								</PropertyOfDay>
 							</properties>
 							<timebands>
-								<Timeband version="any" id="nptg:DT005Open_Sun">
+								<Timeband version="any" id="tbd:DT005Open_Sun">
 									<StartTime>10:30:00</StartTime>
 									<EndTime>18:00:00</EndTime>
 								</Timeband>
@@ -275,238 +248,110 @@ Changes
 						</DayType>
 					</dayTypes>
 				</ServiceCalendarFrame>
-				<ResourceFrame version="any" id="nptg:SVC01">
-					<!-- ==  For each NPTG Admin area a responsibility  is created : = -->
+					<ResourceFrame version="1.0" id="epd:UK:TBD:ResourceFrame_UK_PI_COMMON:WIMBLD:tbd" dataSourceRef="tbd:accessibility_data" responsibilitySetRef="nptgAdminArea:082">
+					<Name>Provider of Accessibility data</Name>
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_COMMON:FXCP"/>
+					<codespaces>
+						<Codespace id="tbd_data">
+							<Xmlns>tbd</Xmlns>
+							<XmlnsUrl>http://www.intdata.co.uk/data</XmlnsUrl>
+							<Description>Other acecssibility  DATA SOURCE </Description>
+						</Codespace>
+						<Codespace id="tfl_data">
+							<Xmlns>tfl</Xmlns>
+							<XmlnsUrl>http://www.tfl.gov.uk/data</XmlnsUrl>
+							<Description>TfL data  </Description>
+						</Codespace>
+					</codespaces>
+					<FrameDefaults>
+						<DefaultCodespaceRef ref="tbd_data"/>
+						<DefaultDataSourceRef ref="tbd:accessibility_data" version="1.0"/>
+						<DefaultResponsibilitySetRef ref="nptgAdminArea:082" version="nptg:v2.1"/>
+					</FrameDefaults>
 					<dataSources>
-						<DataSource version="any" id="nptg:NaPTAN">
-							<Name>DfT Naptan database </Name>
-						</DataSource>
-						<DataSource version="any" id="nptg:Xtra_accessibility_data">
-							<Name>Additional accessibility Data </Name>
+						<DataSource id="tbd:accessibility_data" version="1.0">
+							<Email>data@accessibiity.org.uk</Email>
 						</DataSource>
 					</dataSources>
-					<!-- ==  RESPONSIBILITY SETS = -->
-					<responsibilitySets>
-						<!-- Generalisation of NPTG ability to associate data with an area and Equivalent to NPTG areas = -->
-						<ResponsibilitySet version="001" created="2010-05-17T09:30:47Z" modification="revise" changed="2010-05-17T09:30:47Z" responsibilitySetRef="napt:RS_nptg" id="napt:RS_82">
-							<Name>Londoin collects london data</Name>
-							<roles>
-								<ResponsibilityRoleAssignment version="001" created="2010-05-17T09:30:47Z" id="napt:RS_82_01">
-									<Description>490 London - Managed centrally</Description>
-									<DataRoleType>collects</DataRoleType>
-									<ResponsibleOrganisationRef version="any" ref="nptg:Org_TL001"/>
-									<ResponsibleAreaRef version="any" ref="nptg:Administrative_Zone@82"/>
-								</ResponsibilityRoleAssignment>
-							</roles>
-						</ResponsibilitySet>
-						<ResponsibilitySet version="001" created="2010-05-17T09:30:47Z" responsibilitySetRef="napt:RS_nptg" id="napt:RS_110">
-							<roles>
-								<ResponsibilityRoleAssignment version="001" created="2010-05-17T09:30:47Z" id="napt:RS_110_01">
-									<Description>910 UK Rail - Managed centrally</Description>
-									<DataRoleType>collects</DataRoleType>
-									<ResponsibleOrganisationRef version="any" ref="nptg:Org_TD002"/>
-									<ResponsibleAreaRef version="any" ref="nptg:Administrative_Zone@110"/>
-								</ResponsibilityRoleAssignment>
-							</roles>
-						</ResponsibilitySet>
-						<ResponsibilitySet version="001" created="2010-05-17T09:30:47Z" responsibilitySetRef="napt:RS_147" id="napt:RS_147">
-							<roles>
-								<ResponsibilityRoleAssignment version="001" created="2010-05-17T09:30:47Z" id="napt:RS_147_01">
-									<Description>940 UK Tram - Managed centrally</Description>
-									<DataRoleType>collects</DataRoleType>
-									<ResponsibleOrganisationRef version="any" ref="nptg:Org_TL001"/>
-									<ResponsibleAreaRef version="any" ref="nptg:Administrative_Zone@147"/>
-								</ResponsibilityRoleAssignment>
-							</roles>
-						</ResponsibilitySet>
-						<ResponsibilitySet version="001" created="2010-05-17T09:30:47Z" responsibilitySetRef="napt:RS_nptg" id="napt:RS_nptg">
-							<roles>
-								<ResponsibilityRoleAssignment version="001" created="2010-05-17T09:30:47Z" id="napt:RS_nptg">
-									<Description>NPTG Coordination of area codes UK  </Description>
-									<DataRoleType>collects validates distributes</DataRoleType>
-									<StakeholderRoleType>Operation</StakeholderRoleType>
-									<ResponsibleOrganisationRef version="any" ref="nptg:Org_TD002"/>
-									<ResponsibleAreaRef version="any" ref="nptg:Administrative_Zone@UK"/>
-								</ResponsibilityRoleAssignment>
-							</roles>
-						</ResponsibilitySet>
-						<ResponsibilitySet version="001" created="2010-05-17T09:30:47Z" responsibilitySetRef="nptg:RS_123" id="napt:RS_de">
-							<roles>
-								<ResponsibilityRoleAssignment version="001" created="2010-05-17T09:30:47Z" id="napt:RS_123_01">
-									<Description>Extra STOP PLACE data </Description>
-									<DataRoleType>all</DataRoleType>
-									<ResponsibleOrganisationRef version="any" ref="nptg:Org_TD002"/>
-								</ResponsibilityRoleAssignment>
-							</roles>
-						</ResponsibilitySet>
-					</responsibilitySets>
 					<typesOfValue>
-						<!--- =====NaPTAnN Stop Types===== -->
-						<ValueSet version="any" id="napt:Stop_types">
-							<Name>UK NaptAN Stop Types</Name>
-							<values>
-								<TypeOfZone version="any" id="napt:Type_of_zone@TMU">
-									<Name>Tram or Metro  stop</Name>
-								</TypeOfZone>
-								<TypeOfZone version="any" id="napt:Type_of_zone@RSE">
-									<Name>Rail Station Entrance</Name>
-								</TypeOfZone>
-								<TypeOfZone version="any" id="napt:Type_of_zone@BCT">
-									<Name>On Street Bus</Name>
-								</TypeOfZone>
-							</values>
-						</ValueSet>
-						<ValueSet version="any" id="napt:Bus_Stop_types">
-							<Name>UK NaptAN Bus Stop Types</Name>
-							<values>
-								<TypeOfZone version="any" id="napt:Type_of_zone@MKD">
-									<Name>On Street Bus</Name>
-								</TypeOfZone>
-							</values>
-						</ValueSet>
-						<ValueSet version="any" id="nptg:Locality_types">
-							<Name>UK NPTG Locality Types</Name>
-							<values>
-								<TypeOfZone version="any" id="nptg:Type_of_zone@Lo">
-									<Name>Locality</Name>
-								</TypeOfZone>
-								<TypeOfZone version="any" id="nptg:Type_of_zone@Add">
-									<Name>Locality</Name>
-								</TypeOfZone>
-							</values>
-						</ValueSet>
-						<!--- =====NaPTAN Stop AreaTypes===== -->
-						<ValueSet version="any" id="napt:Stop_Area_types">
-							<Name>UK NaptAN Stop Types</Name>
-							<values>
-								<TypeOfZone version="any" id="napt:Type_of_zone@GTMU">
-									<Name>Tram or Metro  station</Name>
-								</TypeOfZone>
-								<TypeOfZone version="any" id="napt:Type_of_zone@GRLS">
-									<Name>Rail Station  </Name>
-								</TypeOfZone>
-								<TypeOfZone version="any" id="napt:Type_of_zone@GPBS">
-									<Name>Par of Bus stros</Name>
-								</TypeOfZone>
-								<TypeOfZone version="any" id="napt:Type_of_zone@GCLS">
-									<Name>Bus stop cluster</Name>
-								</TypeOfZone>
-							</values>
-						</ValueSet>
-						<ValueSet version="any" id="nptg:TypeOfEquipment">
+						<ValueSet version="any" id="tbd:Types_of_Equipment" classOfValues="TypeOfEquipment">
 							<Name>Operator Z  Equipoment Types</Name>
 							<values>
-								<TypeOfEquipment version="any" id="nptg:toe_10">
+								<TypeOfEquipment version="any" id="tbd:toe_10">
 									<Name>Card Operated Barrier</Name>
 								</TypeOfEquipment>
-								<TypeOfEquipment version="any" id="nptg:toe_21">
+								<TypeOfEquipment version="any" id="tbd:toe_21">
 									<Name>Oyster Barrier Gate</Name>
 								</TypeOfEquipment>
 							</values>
 						</ValueSet>
 					</typesOfValue>
 					<organisations>
-						<GeneralOrganisation version="any" id="nptg:Org_TL001">
-							<Name>Travellne</Name>
+						<Authority version="any" id="tfl:TfL">
+							<Name>NPTG organisation data </Name>
 							<parts>
-								<OrganisationPart version="any" id="nptg:GL">
+								<OrganisationPart version="any" id="tfl:GL">
 									<Name>Greater London</Name>
 									<administrativeZones>
-										<TransportAdministrativeZone version="any" id="nptg:Administrative_Zone@82">
+										<TransportAdministrativeZone version="any" id="nptgAdminArea:082">
 											<Name>Greater London</Name>
 											<codespaceAssignments>
 												<CodespaceAssignment>
-													<CodespaceRef ref="napt_metadata"/>
+													<CodespaceRef ref="nptgAtcoPrefix_data"/>
 													<CodePrefix>490</CodePrefix>
 													<Description>Boroughs of Greater London </Description>
 												</CodespaceAssignment>
 											</codespaceAssignments>
 										</TransportAdministrativeZone>
 									</administrativeZones>
+									<ownResponsibilitySets>
+										<!-- Generalisation of NPTG ability to associate data with an area and Equivalent to NPTG areas = -->
+										<ResponsibilitySet version="nptg:v2.1" created="2010-05-17T09:30:47Z" modification="revise" changed="2010-05-17T09:30:47Z" responsibilitySetRef="nptg:NPTG_data" id="nptgAdminArea:082">
+											<Name>Londoin collects london data</Name>
+											<roles>
+												<ResponsibilityRoleAssignment version="nptg:v2." created="2010-05-17T09:30:47Z" id="nptgAdminArea:082_01">
+													<Description>490 London - Managed centrally</Description>
+													<DataRoleType>collects</DataRoleType>
+													<ResponsibleAreaRef version="any" ref="nptgAdminArea:082"/>
+												</ResponsibilityRoleAssignment>
+											</roles>
+										</ResponsibilitySet>
+									</ownResponsibilitySets>
 								</OrganisationPart>
 							</parts>
-						</GeneralOrganisation>
-						<GeneralOrganisation version="any" id="nptg:Org_TD002">
-							<Name>Dft</Name>
-							<parts>
-								<OrganisationPart version="any" id="nptg:Org_TD002_1">
-									<Name>Transport Direct</Name>
-									<administrativeZones>
-										<TransportAdministrativeZone version="any" id="nptg:Administrative_Zone@UK">
-											<Name>UK NPTG Admin Area codes </Name>
-											<codespaceAssignments>
-												<CodespaceAssignment id="nptg:NA_UK_01">
-													<CodespaceRef ref="nptg_metadata"/>
-													<Description>UK NPTG Admin Area codes  </Description>
-												</CodespaceAssignment>
-											</codespaceAssignments>
-										</TransportAdministrativeZone>
-										<TransportAdministrativeZone version="any" id="nptg:Administrative_Zone@110">
-											<Name>UK Rail </Name>
-											<codespaceAssignments>
-												<CodespaceAssignment id="nptg:NA_110_01">
-													<CodespaceRef ref="napt_metadata"/>
-													<CodePrefix>910</CodePrefix>
-													<Description>UK Rail  </Description>
-												</CodespaceAssignment>
-											</codespaceAssignments>
-										</TransportAdministrativeZone>
-										<TransportAdministrativeZone version="any" id="nptg:Administrative_Zone@144">
-											<Name>UK Rail</Name>
-											<codespaceAssignments>
-												<CodespaceAssignment id="nptg:NA_144_01">
-													<CodespaceRef ref="napt_metadata"/>
-													<CodePrefix>910</CodePrefix>
-													<Description>UK Rail Alias</Description>
-												</CodespaceAssignment>
-											</codespaceAssignments>
-										</TransportAdministrativeZone>
-										<TransportAdministrativeZone version="any" id="nptg:Administrative_Zone@147">
-											<Name>UK Metro</Name>
-											<codespaceAssignments>
-												<CodespaceAssignment id="nptg:NA_147_01">
-													<CodespaceRef ref="napt_metadata"/>
-													<CodePrefix>940</CodePrefix>
-													<Description>UK Metro and Tram</Description>
-												</CodespaceAssignment>
-											</codespaceAssignments>
-										</TransportAdministrativeZone>
-									</administrativeZones>
-								</OrganisationPart>
-							</parts>
-						</GeneralOrganisation>
-						<Authority version="any" id="nptg:Org_Tfl">
-							<Name>Transport For London</Name>
-							<ShortName>TfL</ShortName>
-							<OrganisationType>authority</OrganisationType>
 						</Authority>
-						<GeneralOrganisation version="any" id="nptg:Org_Nr">
+						<Operator version="any" id="noc:LULD">
+							<Name>London Underground (Transport For London)</Name>
+							<ShortName>LUL</ShortName>
+							<OrganisationType>operator</OrganisationType>
+						</Operator>
+						<GeneralOrganisation version="any" id="ntr:Network_Rail">
 							<Name>Network Rail</Name>
 							<OrganisationType>facilityOperator</OrganisationType>
 						</GeneralOrganisation>
 					</organisations>
 					<!-- == Schematic Maps ========== -->
 					<schematicMaps>
-						<SchematicMap version="001" created="2001-12-17T09:30:47Z" id="nptg:WimMap_001">
+						<SchematicMap version="001" created="2001-12-17T09:30:47Z" id="tbd:WimMap_001">
 							<Name>Map of Wimbledon Station - Upper Level</Name>
 							<ImageUri>http://www.tbde.com/Wimbledonplan1.jpg</ImageUri>
 							<DepictedObjectRef nameOfRefClass="StopPlace" ref="naptStop:910GWIMBLDN"/>
 							<members>
-								<SchematicMapMember id="nptg:WimMap_001_01">
+								<SchematicMapMember id="tbd:WimMap_001@01">
 									<Name>Entrance</Name>
-									<SchematicMapMemberRef nameOfRefClass="StopPlaceEntrance" ref="nptg:9100WIMBLDN_A1-EE1"/>
+									<SchematicMapMemberRef nameOfRefClass="StopPlaceEntrance" ref="tbd:9100WIMBLDN@A1-EE1"/>
 									<x>0123</x>
 									<y>346</y>
 								</SchematicMapMember>
-								<SchematicMapMember id="nptg:WimMap_001_02">
+								<SchematicMapMember id="tbd:WimMap_001@02">
 									<Name>Side Entrance</Name>
-									<SchematicMapMemberRef nameOfRefClass="StopPlaceEntrance" ref="nptg:9100WIMBLDN_A4-EE1"/>
+									<SchematicMapMemberRef nameOfRefClass="StopPlaceEntrance" ref="tbd:9100WIMBLDN@A4-EE1"/>
 									<x>014</x>
 									<y>344</y>
 								</SchematicMapMember>
-								<SchematicMapMember id="nptg:WimMap_001_03">
+								<SchematicMapMember id="tbd:WimMap_001@03">
 									<Name>Men and Women's Toilets</Name>
-									<SchematicMapMemberRef nameOfRefClass="SanitaryEquipment" ref="nptg:9100WIMBLDN_A2-Eq-WC1"/>
+									<SchematicMapMemberRef nameOfRefClass="SanitaryEquipment" ref="tbd:9100WIMBLDN@A2-Eq-WC1"/>
 									<x>0145</x>
 									<y>365</y>
 								</SchematicMapMember>
@@ -514,23 +359,34 @@ Changes
 						</SchematicMap>
 					</schematicMaps>
 				</ResourceFrame>
-				<SiteFrame version="any" id="nptg:SVC01">
+		
+				<SiteFrame version="1.0" id="epd:UK:TBD:SiteFrame_UK_PI_STOP:WIMBLD-parking:tbd">
+				<Name>Parking data fro Wimbledon tation area</Name>
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_STOP:FXCP"/>
+					<codespaces>
+						<CodespaceRef ref="napt_metadata"/>
+						<CodespaceRef ref="naptStop_data"/>
+					</codespaces>
+					<prerequisites>
+						<ServiceCalendarFrameRef version="1.0" ref="epd:UK:TBD:ServiceCalendarFrame_UK_PI_CALENDAR:WIMBLD:tbd"/>
+						<ResourceFrameRef version="1.0" ref="epd:UK:TBD:ResourceFrame_UK_PI_COMMON:WIMBLD:tbd"/>
+					</prerequisites>
 					<contentValidityConditions>
-						<AvailabilityCondition version="any" id="nptg:AC_01_Main_Opening">
+						<AvailabilityCondition version="any" id="tbd:AC_01_Main_Opening">
 							<dayTypes>
-								<DayTypeRef version="any" ref="nptg:DT004Open_MFS"/>
-								<DayTypeRef version="any" ref="nptg:DT005Open_Sun"/>
+								<DayTypeRef version="any" ref="tbd:DT004Open_MFS"/>
+								<DayTypeRef version="any" ref="tbd:DT005Open_Sun"/>
 							</dayTypes>
 						</AvailabilityCondition>
-						<AvailabilityCondition version="any" id="nptg:AC_02_CC_Opening">
+						<AvailabilityCondition version="any" id="tbd:AC_02_CC_Opening">
 							<dayTypes>
-								<DayTypeRef version="any" ref="nptg:DT004Open_MFS"/>
-								<DayTypeRef version="any" ref="nptg:DT005Open_Sun"/>
+								<DayTypeRef version="any" ref="tbd:DT004Open_MFS"/>
+								<DayTypeRef version="any" ref="tbd:DT005Open_Sun"/>
 							</dayTypes>
 						</AvailabilityCondition>
-						<AvailabilityCondition version="any" id="nptg:AC_03_RushHourMF">
+						<AvailabilityCondition version="any" id="tbd:AC_03_RushHourMF">
 							<dayTypes>
-								<DayTypeRef version="any" ref="nptg:DT006Rush_MF"/>
+								<DayTypeRef version="any" ref="tbd:DT006Rush_MF"/>
 							</dayTypes>
 						</AvailabilityCondition>
 					</contentValidityConditions>
@@ -547,7 +403,7 @@ Changes
 								</Qualify>
 							</Descriptor>
 							<TopographicPlaceType>region</TopographicPlaceType>
-							<CountryRef ref="gb">ENG</CountryRef>
+							<CountryRef ref="uk" refPrincipality="iso3166-2:GB-ENG"/>
 						</TopographicPlace>
 						<!-- ===TOPOGRAPHIC PLACEs - equivalent to NPTG Districts == -->
 						<TopographicPlace version="001" created="2005-10-05T10:52:25" changed="2005-10-05T10:52:25" responsibilitySetRef="napt:RS_nptg" id="nptg:District@307">
@@ -562,7 +418,7 @@ Changes
 								</Qualify>
 							</Descriptor>
 							<TopographicPlaceType>district</TopographicPlaceType>
-							<CountryRef ref="gb">ENG</CountryRef>
+							<CountryRef ref="uk" refPrincipality="iso3166-2:GB-ENG"/>
 						</TopographicPlace>
 						<TopographicPlace version="001" created="2005-10-05T10:52:25" changed="2005-10-05T10:52:25" responsibilitySetRef="napt:RS_nptg" id="nptg:District@299">
 							<Name lang="en">Merton</Name>
@@ -584,15 +440,15 @@ Changes
 			<NptgDistrictRef>299</NptgDistrictRef>
 			<SourceLocalityType>Lo</SourceLocalityType>   -->
 							<Name lang="en">Wimbledon</Name>
-							<types>
-								<TypeOfZoneRef version="any" ref="nptg:Type_of_zone@Lo"/>
-							</types>
 							<Centroid>
 								<Location srsName="OSGrid">
 									<gml:pos srsName="UKOS">524700  170700</gml:pos>
 								</Location>
 							</Centroid>
 							<ParentZoneRef version="001" ref="nptg:District@299"/>
+							<placeTypes>
+								<TypeOfPlaceRef version="nptg:v2.1" ref="nptg:SourceLocalityType@Lo"/>
+							</placeTypes>
 							<Descriptor>
 								<Name lang="en">Wimbledon</Name>
 								<Qualify>
@@ -601,7 +457,7 @@ Changes
 								</Qualify>
 							</Descriptor>
 							<TopographicPlaceType>suburb</TopographicPlaceType>
-							<CountryRef ref="gb">ENG</CountryRef>
+							<CountryRef ref="uk" refPrincipality="iso3166-2:GB-ENG"/>
 						</TopographicPlace>
 						<TopographicPlace version="001" responsibilitySetRef="napt:RS_nptg" id="nptgLocality:E0034696">
 							<!--   
@@ -610,15 +466,15 @@ Changes
 			<SourceLocalityType>Lo</SourceLocalityType>
  -->
 							<Name lang="en">Wimbledon Park</Name>
-							<types>
-								<TypeOfZoneRef version="any" ref="nptg:Type_of_zone@Lo"/>
-							</types>
 							<Centroid>
 								<Location srsName="OSGrid">
 									<gml:pos srsName="UKOS">525300  172200</gml:pos>
 								</Location>
 							</Centroid>
 							<ParentZoneRef version="001" ref="nptg:District@299"/>
+							<placeTypes>
+								<TypeOfPlaceRef version="nptg:v2.1" ref="nptg:SourceLocalityType@Lo"/>
+							</placeTypes>
 							<Descriptor>
 								<Name lang="en">Wimbledon Park</Name>
 								<Qualify>
@@ -635,15 +491,15 @@ Changes
 			<SourceLocalityType>Lo</SourceLocalityType>
 -->
 							<Name lang="en">South Wimbledon</Name>
-							<types>
-								<TypeOfZoneRef version="any" ref="nptg:Type_of_zone@Lo"/>
-							</types>
 							<Centroid>
 								<Location srsName="OSGrid">
 									<gml:pos srsName="UKOS">525700  170500</gml:pos>
 								</Location>
 							</Centroid>
 							<ParentZoneRef version="001" ref="nptg:District@299"/>
+							<placeTypes>
+								<TypeOfPlaceRef version="nptg:v2.1" ref="nptg:SourceLocalityType@Lo"/>
+							</placeTypes>
 							<Descriptor>
 								<Name lang="en">South Wimbledon</Name>
 								<Qualify>
@@ -660,15 +516,15 @@ Changes
 			<SourceLocalityType>Lo</SourceLocalityType>
 -->
 							<Name lang="en">Summerstown</Name>
-							<types>
-								<TypeOfZoneRef version="any" ref="nptg:Type_of_zone@Lo"/>
-							</types>
 							<Centroid>
 								<Location srsName="OSGrid">
 									<gml:pos srsName="UKOS">526200  172300</gml:pos>
 								</Location>
 							</Centroid>
 							<ParentZoneRef version="001" ref="nptg:District@307"/>
+							<placeTypes>
+								<TypeOfPlaceRef version="nptg:v2.1" ref="nptg:SourceLocalityType@Lo"/>
+							</placeTypes>
 							<Descriptor>
 								<Name lang="en">Summerstown</Name>
 								<Qualify>
@@ -685,15 +541,15 @@ Changes
 			<SourceLocalityType>Lo</SourceLocalityType>
 -->
 							<Name lang="en">Tooting</Name>
-							<types>
-								<TypeOfZoneRef version="any" ref="nptg:Type_of_zone@Lo"/>
-							</types>
 							<Centroid>
 								<Location srsName="OSGrid">
 									<gml:pos srsName="UKOS">527750  171180</gml:pos>
 								</Location>
 							</Centroid>
 							<ParentZoneRef version="001" ref="nptg:District@307"/>
+							<placeTypes>
+								<TypeOfPlaceRef version="nptg:v2.1" ref="nptg:SourceLocalityType@Lo"/>
+							</placeTypes>
 							<Descriptor>
 								<Name lang="en">Tooting</Name>
 								<Qualify>
@@ -710,15 +566,15 @@ Changes
 			<SourceLocalityType>Add</SourceLocalityType>
 -->
 							<Name lang="en">Merton</Name>
-							<types>
-								<TypeOfZoneRef version="any" ref="nptg:Type_of_zone@Add"/>
-							</types>
 							<Centroid>
 								<Location srsName="OSGrid">
 									<gml:pos srsName="UKOS">525800  170000</gml:pos>
 								</Location>
 							</Centroid>
 							<ParentZoneRef version="001" ref="nptg:District@299"/>
+							<placeTypes>
+								<TypeOfPlaceRef version="nptg:v2.1" ref="nptg:SourceLocalityType@Add"/>
+							</placeTypes>
 							<Descriptor>
 								<Name lang="en">Merton</Name>
 								<Qualify>
@@ -735,15 +591,15 @@ Changes
 			<SourceLocalityType>Add</SourceLocalityType>
 -->
 							<Name lang="en">Merton Park</Name>
-							<types>
-								<TypeOfZoneRef version="any" ref="nptg:Type_of_zone@Add"/>
-							</types>
 							<Centroid>
 								<Location srsName="OSGrid">
 									<gml:pos srsName="UKOS">525300  169000</gml:pos>
 								</Location>
 							</Centroid>
 							<ParentZoneRef version="001" ref="nptg:District@299"/>
+							<placeTypes>
+								<TypeOfPlaceRef version="nptg:v2.1" ref="nptg:SourceLocalityType@Add"/>
+							</placeTypes>
 							<Descriptor>
 								<Name lang="en">Merton Park</Name>
 								<Qualify>
@@ -760,15 +616,15 @@ Changes
 			<SourceLocalityType>Add</SourceLocalityType>
 -->
 							<Name lang="en">Tooting Broadway</Name>
-							<types>
-								<TypeOfZoneRef version="any" ref="nptg:Type_of_zone@Add"/>
-							</types>
 							<Centroid>
 								<Location srsName="OSGrid">
 									<gml:pos srsName="UKOS">527454  171472</gml:pos>
 								</Location>
 							</Centroid>
 							<ParentZoneRef version="001" ref="nptg:District@307"/>
+							<placeTypes>
+								<TypeOfPlaceRef version="nptg:v2.1" ref="nptg:SourceLocalityType@Add"/>
+							</placeTypes>
 							<Descriptor>
 								<Name lang="en">Tooting Broadway</Name>
 								<Qualify>
@@ -788,7 +644,7 @@ Changes
 							<ShortName>Wimbledon Station</ShortName>
 							<PrivateCode>86738</PrivateCode>
 							<types>
-								<TypeOfZoneRef version="any" ref="napt:Type_of_zone@GRLS"/>
+								<TypeOfZoneRef version="napt:v2.1" ref="napt:StopAreaType@GRLS"/>
 							</types>
 							<Centroid>
 								<Location>
@@ -886,7 +742,7 @@ Changes
 								<TopographicPlaceRef version="001" ref="nptgLocality:E0034695"/>
 							</TopographicPlaceView>
 							<OperatingOrganisationView>
-								<GeneralOrganisationRef version="any" ref="nptg:Org_Nr"/>
+								<GeneralOrganisationRef version="any" ref="ntr:Network_Rail"/>
 								<Name>Network Rail</Name>
 							</OperatingOrganisationView>
 							<!-- ============LEVELS ===================- -->
@@ -910,13 +766,13 @@ Changes
 								<!-- === ENTRANCES: Ticket hall A1 & Upper Concourse A2 ===-->
 								<StopPlaceEntrance version="001" created="2010-05-17T09:30:47Z" id="nptg:9100WIMBLDN_A1-EE1">
 									<validityConditions>
-										<AvailabilityConditionRef version="any" ref="nptg:AC_01_Main_Opening"/>
+										<AvailabilityConditionRef version="any" ref="tbd:AC_01_Main_Opening"/>
 									</validityConditions>
 									<Name>External Entrance to  Ticket Hall</Name>
-									<types>
-										<TypeOfZoneRef version="any" ref="napt:Type_of_zone@RSE"/>
-									</types>
 									<ParentZoneRef version="001" ref="nptg:9100WIMBLDN_A1"/>
+									<placeTypes>
+										<TypeOfPlaceRef version="napt:v2.1" ref="napt:StopClassification@RSE"/>
+									</placeTypes>
 									<AccessibilityAssessment version="any" id="nptg:9100WIMBLDN_A1-EE1">
 										<MobilityImpairedAccess>true</MobilityImpairedAccess>
 										<limitations>
@@ -940,7 +796,7 @@ Changes
 									<LevelRef version="001" ref="nptg:9100WIMBLDN_Lvl_G0"/>
 									<placeEquipments>
 										<EntranceEquipment version="any" id="nptg:9100WIMBLDN_A2-EI1_B1">
-											<TypeOfEquipmentRef version="any" ref="nptg:toe_10">card Operated barrier</TypeOfEquipmentRef>
+											<TypeOfEquipmentRef version="any" ref="tbd:toe_10">card Operated barrier</TypeOfEquipmentRef>
 											<Width>0.5</Width>
 											<NumberOfGates>6</NumberOfGates>
 											<Staffing>fullTime</Staffing>
@@ -949,7 +805,7 @@ Changes
 											<WheelchairPassable>false</WheelchairPassable>
 										</EntranceEquipment>
 										<EntranceEquipment version="any" id="nptg:9100WIMBLDN_A2-EI1_B2">
-											<TypeOfEquipmentRef version="any" ref="nptg:toe_21">barrier Gate</TypeOfEquipmentRef>
+											<TypeOfEquipmentRef version="any" ref="tbd:toe_21">barrier Gate</TypeOfEquipmentRef>
 											<Width>2</Width>
 											<NumberOfGates>1</NumberOfGates>
 											<Staffing>fullTime</Staffing>
@@ -1121,13 +977,14 @@ Changes
 								<!-- === ENTRANCES: Centre Court ticket hall  Concourse ===-->
 								<StopPlaceEntrance version="001" created="2010-05-17T09:30:47Z" id="nptg:9100WIMBLDN_A4-EE1">
 									<validityConditions>
-										<AvailabilityConditionRef version="any" ref="nptg:AC_01_Main_Opening"/>
+										<AvailabilityConditionRef version="any" ref="tbd:AC_01_Main_Opening"/>
 									</validityConditions>
 									<Name>External Entrance to  Centre Court Ticket Hall from Centre Court</Name>
-									<types>
-										<TypeOfZoneRef version="any" ref="napt:Type_of_zone@RSE"/>
-									</types>
+								
 									<ParentZoneRef version="001" ref="nptg:9100WIMBLDN_A3"/>
+										<placeTypes>
+										<TypeOfPlaceRef version="napt:v2.1" ref="napt:StopClassification@RSE"/>
+									</placeTypes>
 									<LevelRef version="001" ref="nptg:9100WIMBLDN_Lvl_G0"/>
 									<placeEquipments>
 										<EntranceEquipment version="any" id="nptg:9100WIMBLDN_A4-EE1">
@@ -1953,7 +1810,7 @@ Changes
 										</CheckConstraint>
 										<CheckConstraint version="any" id="nptg:9100WIMBLDN_A1_Ck002" order="2">
 											<validityConditions>
-												<AvailabilityConditionRef version="any" ref="nptg:AC_01_Main_Opening"/>
+												<AvailabilityConditionRef version="any" ref="tbd:AC_01_Main_Opening"/>
 											</validityConditions>
 											<Name>Ticket Collection at counter out of rush hour</Name>
 											<CheckProcess>ticketCollection</CheckProcess>
@@ -1969,7 +1826,7 @@ Changes
 										</CheckConstraint>
 										<CheckConstraint version="any" id="nptg:9100WIMBLDN_A1_Ck003" order="2">
 											<validityConditions>
-												<AvailabilityConditionRef version="any" ref="nptg:AC_03_RushHourMF"/>
+												<AvailabilityConditionRef version="any" ref="tbd:AC_03_RushHourMF"/>
 											</validityConditions>
 											<Name>Ticket Collection in rush hour</Name>
 											<CheckProcess>ticketCollection</CheckProcess>
@@ -2581,7 +2438,7 @@ Changes
 									<checkConstraints>
 										<CheckConstraint version="any" id="naptStop:9100WIMBLDN_5n6-EL1pl" order="1">
 											<validityConditions>
-												<AvailabilityCondition version="001" created="2010-05-17T09:30:47Z" id="nptg:AC_01_Main_Opening">
+												<AvailabilityCondition version="001" created="2010-05-17T09:30:47Z" id="tbd:AC_01_Main_Opening">
 													<Description>Normal openign hours</Description>
 												</AvailabilityCondition>
 											</validityConditions>
@@ -2647,7 +2504,7 @@ Changes
 									<checkConstraints>
 										<CheckConstraint version="any" id="nptg:9100WIMBLDN_5n6-EL1pl_chk1" order="1">
 											<validityConditions>
-												<AvailabilityConditionRef version="any" ref="nptg:AC_01_Main_Opening"/>
+												<AvailabilityConditionRef version="any" ref="tbd:AC_01_Main_Opening"/>
 											</validityConditions>
 											<CheckProcess>none</CheckProcess>
 											<CheckService>anyService</CheckService>
@@ -4726,9 +4583,10 @@ Changes
 							<!-- 		<StopAreaCode>940GZZLUWIM</StopAreaCode> -->
 							<Name>Wimbledon Underground Station </Name>
 							<ShortName>Wimbledon</ShortName>
+											
 							<PrivateCode>86286</PrivateCode>
 							<types>
-								<TypeOfZoneRef version="any" ref="napt:Type_of_zone@GTMU"/>
+								<TypeOfZoneRef version="napt:v2.1" ref="napt:StopAreaType@GTMU"/>
 							</types>
 							<Centroid>
 								<Location>
@@ -5786,7 +5644,7 @@ Changes
 							<ShortName>Wimbledon</ShortName>
 							<PrivateCode>20026</PrivateCode>
 							<types>
-								<TypeOfZoneRef version="any" ref="napt:Type_of_zone@GTMU"/>
+								<TypeOfZoneRef version="napt:v2.1" ref="napt:StopAreaType@GTMU"/>
 							</types>
 							<Centroid>
 								<Location>
@@ -5822,7 +5680,7 @@ Changes
 							<!-- 		<StopAreaCode>490G00272P</StopAreaCode> -->
 							<Name>Wimbledon</Name>
 							<types>
-								<TypeOfZoneRef version="any" ref="napt:Type_of_zone@GCLS"/>
+								<TypeOfZoneRef version="napt:v2.1" ref="napt:StopAreaType@GCLS"/>
 							</types>
 							<Centroid>
 								<Location>
@@ -5841,7 +5699,7 @@ Changes
 								<TopographicPlaceRef version="001" ref="nptgLocality:E0034695"/>
 							</TopographicPlaceView>
 							<OperatingOrganisationView>
-								<OrganisationRef version="any" ref="nptg:Org_Tfl"/>
+								<AuthorityRef version="any" ref="tfl:TfL"/>
 								<Name>Transport for London</Name>
 							</OperatingOrganisationView>
 							<ParentSiteRef version="001" xsi:type="StopPlaceRefStructure" ref="naptStop:910GWIMBLDN"/>
@@ -5852,16 +5710,16 @@ Changes
 									<Name>Wimbledon, Stop P</Name>
 									<ShortName>Wimbledon</ShortName>
 									<Description>Stop P  is paired with Stop C outside the station </Description>
-									<types>
-										<TypeOfZoneRef version="any" ref="napt:Type_of_zone@BCT"/>
-										<TypeOfZoneRef version="any" ref="napt:Type_of_zone@MKD"/>
-									</types>
 									<Centroid>
 										<Location>
 											<Longitude>-0.2068758371</Longitude>
 											<Latitude>51.4207729447</Latitude>
 										</Location>
 									</Centroid>
+									<placeTypes>
+										<TypeOfPlaceRef version="napt:v2.1" ref="napt:StopClassification@BCT"/>
+										<TypeOfPlaceRef version="napt:v2.1" ref="napt:StopType@MKD"/>
+									</placeTypes>
 									<RoadAddress version="any" id="nptg:Rd_Addr_03">
 										<RoadName>Wimbledon Bridge</RoadName>
 										<BearingCompass>W</BearingCompass>
@@ -5898,16 +5756,16 @@ Changes
 									<Name>Wimbledon, Stop C</Name>
 									<ShortName>Wimbledon</ShortName>
 									<Description>Stop P  is paired with Stop C outside the station </Description>
-									<types>
-										<TypeOfZoneRef version="any" ref="napt:Type_of_zone@BCT"/>
-										<TypeOfZoneRef version="any" ref="napt:Type_of_zone@MKD"/>
-									</types>
 									<Centroid>
 										<Location>
 											<Longitude>-0.2068758371</Longitude>
 											<Latitude>51.4207729447</Latitude>
 										</Location>
 									</Centroid>
+									<placeTypes>
+										<TypeOfPlaceRef version="napt:v2.1" ref="napt:StopClassification@BCT"/>
+										<TypeOfPlaceRef version="napt:v2.1" ref="napt:StopType@MKD"/>
+									</placeTypes>
 									<RoadAddress version="any" id="nptg:Rd_Addr_033">
 										<RoadName>Wimbledon Bridge</RoadName>
 										<BearingCompass>E</BearingCompass>
@@ -5944,16 +5802,16 @@ Changes
 									<Name>Wimbledon, Stop D</Name>
 									<ShortName>Wimbledon</ShortName>
 									<Description>Stop D  is on the Broadway</Description>
-									<types>
-										<TypeOfZoneRef version="any" ref="napt:Type_of_zone@BCT"/>
-										<TypeOfZoneRef version="any" ref="napt:Type_of_zone@MKD"/>
-									</types>
 									<Centroid>
 										<Location>
 											<Longitude>-0.2053489629</Longitude>
 											<Latitude>51.4208305065</Latitude>
 										</Location>
 									</Centroid>
+									<placeTypes>
+										<TypeOfPlaceRef version="napt:v2.1" ref="napt:StopClassification@BCT"/>
+										<TypeOfPlaceRef version="napt:v2.1" ref="napt:StopType@MKD"/>
+									</placeTypes>
 									<RoadAddress version="any" id="nptg:Rd_Addr_05">
 										<RoadName>Wimbledon Bridge</RoadName>
 										<BearingCompass>E</BearingCompass>
@@ -5990,16 +5848,16 @@ Changes
 									<Name>Wimbledon, Stop L</Name>
 									<ShortName>Wimbledon</ShortName>
 									<Description>Stop L  is along the street on Hartfield road</Description>
-									<types>
-										<TypeOfZoneRef version="any" ref="napt:Type_of_zone@BCT"/>
-										<TypeOfZoneRef version="any" ref="napt:Type_of_zone@MKD"/>
-									</types>
 									<Centroid>
 										<Location>
 											<Longitude>-0.2065926189</Longitude>
 											<Latitude>51.4202919914</Latitude>
 										</Location>
 									</Centroid>
+									<placeTypes>
+										<TypeOfPlaceRef version="napt:v2.1" ref="napt:StopClassification@BCT"/>
+										<TypeOfPlaceRef version="napt:v2.1" ref="napt:StopType@MKD"/>
+									</placeTypes>
 									<RoadAddress version="any" id="nptg:Rd_Addr_06">
 										<RoadName>Wimbledon Bridge</RoadName>
 										<BearingCompass>E</BearingCompass>
@@ -6572,7 +6430,7 @@ Changes
 							<Name>St George's Road (SW19)</Name>
 							<ShortName>Wimbledon </ShortName>
 							<types>
-								<TypeOfZoneRef version="any" ref="napt:Type_of_zone@GPBS"/>
+								<TypeOfZoneRef version="napt:v2.1" ref="napt:StopAreaType@GPBS"/>
 							</types>
 							<Centroid>
 								<Location>
@@ -6590,7 +6448,7 @@ Changes
 								<TopographicPlaceRef version="001" ref="nptgLocality:E0034695"/>
 							</TopographicPlaceView>
 							<OperatingOrganisationView>
-								<OrganisationRef version="any" ref="nptg:Org_Tfl"/>
+								<AuthorityRef version="any" ref="tfl:TfL"/>
 								<Name>Transport for London</Name>
 							</OperatingOrganisationView>
 							<ParentSiteRef version="001" xsi:type="StopPlaceRefStructure" ref="naptStop:490G00272P"/>
@@ -6603,16 +6461,16 @@ Changes
 								<Quay version="001" created="2010-04-17T09:30:47Z" dataSourceRef="nptg:NaPTAN" responsibilitySetRef="nptg:082" id="naptStop:490014734A">
 									<Name>Alexandra Road, Stop A</Name>
 									<ShortName>Alexandra Road</ShortName>
-									<types>
-										<TypeOfZoneRef version="any" ref="napt:Type_of_zone@BCT"/>
-										<TypeOfZoneRef version="any" ref="napt:Type_of_zone@MKD"/>
-									</types>
 									<Centroid>
 										<Location>
 											<Longitude>-0.2067466166</Longitude>
 											<Latitude>51.4222367962</Latitude>
 										</Location>
 									</Centroid>
+									<placeTypes>
+										<TypeOfPlaceRef version="napt:v2.1" ref="napt:StopClassification@BCT"/>
+										<TypeOfPlaceRef version="napt:v2.1" ref="napt:StopType@MKD"/>
+									</placeTypes>
 									<RoadAddress version="any" id="nptg:Rd_Addr_08">
 										<RoadName>Alexandra Road</RoadName>
 										<BearingCompass>N</BearingCompass>
@@ -6639,16 +6497,16 @@ Changes
 								<Quay version="001" created="2010-04-17T09:30:47Z" dataSourceRef="nptg:NaPTAN" responsibilitySetRef="nptg:082" id="naptStop:490014734B">
 									<Name>Alexandra Road, Stop B</Name>
 									<ShortName>Alexandra Road</ShortName>
-									<types>
-										<TypeOfZoneRef version="any" ref="napt:Type_of_zone@BCT"/>
-										<TypeOfZoneRef version="any" ref="napt:Type_of_zone@MKD"/>
-									</types>
 									<Centroid>
 										<Location>
 											<Longitude>-0.2071397147</Longitude>
 											<Latitude>51.4217482061</Latitude>
 										</Location>
 									</Centroid>
+									<placeTypes>
+										<TypeOfPlaceRef version="napt:v2.1" ref="napt:StopClassification@BCT"/>
+										<TypeOfPlaceRef version="napt:v2.1" ref="napt:StopType@MKD"/>
+									</placeTypes>
 									<RoadAddress version="any" id="nptg:Rd_Addr_09">
 										<RoadName>Alexandra Road</RoadName>
 										<BearingCompass>S</BearingCompass>
@@ -6708,7 +6566,7 @@ Changes
 							<Name>Stop L</Name>
 							<ShortName>Wimbledon </ShortName>
 							<types>
-								<TypeOfZoneRef version="any" ref="napt:Type_of_zone@GPBS"/>
+								<TypeOfZoneRef version="napt:v2.1" ref="napt:StopAreaType@GPBS"/>
 							</types>
 							<Centroid>
 								<Location>
@@ -6726,7 +6584,7 @@ Changes
 								<TopographicPlaceRef version="001" ref="nptgLocality:E0034695"/>
 							</TopographicPlaceView>
 							<OperatingOrganisationView>
-								<OrganisationRef version="any" ref="nptg:Org_Tfl"/>
+								<AuthorityRef version="any" ref="tfl:TfL"/>
 								<Name>Transport for London</Name>
 							</OperatingOrganisationView>
 							<ParentSiteRef version="001" xsi:type="StopPlaceRefStructure" ref="naptStop:490G00272P"/>
@@ -6736,16 +6594,16 @@ Changes
 								<Quay version="001" created="2010-04-17T09:30:47Z" dataSourceRef="nptg:NaPTAN" responsibilitySetRef="nptg:082" id="naptStop:490G00272L@quay">
 									<Name>Harffield Road, Stop L</Name>
 									<ShortName>Harffield Road</ShortName>
-									<types>
-										<TypeOfZoneRef version="any" ref="napt:Type_of_zone@BCT"/>
-										<TypeOfZoneRef version="any" ref="napt:Type_of_zone@MKD"/>
-									</types>
 									<Centroid>
 										<Location>
 											<Longitude>-0.2067466166</Longitude>
 											<Latitude>51.4222367962</Latitude>
 										</Location>
 									</Centroid>
+									<placeTypes>
+										<TypeOfPlaceRef version="napt:v2.1" ref="napt:StopClassification@BCT"/>
+										<TypeOfPlaceRef version="napt:v2.1" ref="napt:StopType@MKD"/>
+									</placeTypes>
 									<RoadAddress version="any" id="nptg:490G00272L-Q`">
 										<RoadName>Harffield Road</RoadName>
 										<BearingCompass>N</BearingCompass>
@@ -6848,7 +6706,10 @@ Changes
 						</Parking>
 					</parkings>
 				</SiteFrame>
-				<ServiceFrame version="any" id="nptg:SVC01">
+				<ServiceFrame version="1.0" id="epd:UK:TBD:ServiceFrame_UK_PI_NETWORK:WIMBLDN">
+					<prerequisites>
+						<SiteFrameRef version="1.0" ref="epd:UK:TBD:SiteFrame_UK_PI_STOP:WIMBLD-parking:tbd"/>
+					</prerequisites>
 					<scheduledStopPoints>
 						<!-- Scheduled stop ponts -->
 						<ScheduledStopPoint version="any" id="naptStop:9100WIMBLDN">
@@ -6917,7 +6778,7 @@ Changes
 						</ScheduledStopPoint>
 					</scheduledStopPoints>
 					<stopAreas>
-						<StopArea version="any" id="naptStopArea:490G00272P">
+						<StopArea version="any" id="naptStop:490G00272P">
 							<Name>Wimbledon Bus</Name>
 							<members>
 								<ScheduledStopPointRef version="any" ref="naptStop:490000272P"/>
@@ -6926,34 +6787,34 @@ Changes
 								<ScheduledStopPointRef version="any" ref="naptStop:490000272L"/>
 							</members>
 							<PublicCode>13456</PublicCode>
-							<ParentStopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV02"/>
+							<ParentStopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV02"/>
 						</StopArea>
-						<StopArea version="any" id="naptStopArea:940GZZCRWIM">
+						<StopArea version="any" id="naptStop:940GZZCRWIM">
 							<Name>Wimbledon Tube</Name>
 							<members>
 								<ScheduledStopPointRef version="any" ref="naptStop:9400ZZLUWIM"/>
 							</members>
-							<ParentStopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV02"/>
+							<ParentStopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV02"/>
 						</StopArea>
-						<StopArea version="any" id="naptStopArea:9100WIMBLDN-MDV02">
+						<StopArea version="any" id="naptStop:9100WIMBLDN-MDV02">
 							<Name>Wimbledon Rail Area for MDV</Name>
 							<members>
 								<ScheduledStopPointRef version="any" ref="naptStop:9100WIMBLDN10"/>
 							</members>
 						</StopArea>
-						<StopArea version="any" id="naptStopArea:9100WIMBLDN-MDV03">
+						<StopArea version="any" id="naptStop:9100WIMBLDN-MDV03">
 							<Name>Wimbledon Rail Area for MDV</Name>
 						</StopArea>
-						<StopArea version="any" id="naptStopArea:9100WIMBLDN-MDV04">
+						<StopArea version="any" id="naptStop:9100WIMBLDN-MDV04">
 							<Name>Wimbledon Rail Area for MDV</Name>
 						</StopArea>
-						<StopArea version="any" id="naptStopArea:9100WIMBLDN-MDV05">
+						<StopArea version="any" id="naptStop:9100WIMBLDN-MDV05">
 							<Name>Wimbledon Rail Area for MDV</Name>
 						</StopArea>
-						<StopArea version="any" id="naptStopArea:9100WIMBLDN-MDV06">
+						<StopArea version="any" id="naptStop:9100WIMBLDN-MDV06">
 							<Name>Wimbledon Rail Area for MDV</Name>
 						</StopArea>
-						<StopArea version="any" id="naptStopArea:9100WIMBLDN-MDV07">
+						<StopArea version="any" id="naptStop:9100WIMBLDN-MDV07">
 							<Name>Wimbledon Rail Area for MDV</Name>
 						</StopArea>
 					</stopAreas>
@@ -7071,13 +6932,13 @@ Changes
 							<BothWays>true</BothWays>
 							<From>
 								<TransportMode>bus</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:490G00272P"/>
+								<StopAreaRef version="any" ref="naptStop:490G00272P"/>
 								<StopPlaceRef version="001" ref="naptStop:910GWIMBLDN"/>
 								<Label>Bus / 0</Label>
 							</From>
 							<To>
 								<TransportMode>bus</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:490G00272P"/>
+								<StopAreaRef version="any" ref="naptStop:490G00272P"/>
 								<StopPlaceRef version="001" ref="naptStop:910GWIMBLDN"/>
 								<Label>Bus / 0</Label>
 							</To>
@@ -7112,13 +6973,13 @@ Changes
 							<BothWays>true</BothWays>
 							<From>
 								<TransportMode>bus</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:490G00272P"/>
+								<StopAreaRef version="any" ref="naptStop:490G00272P"/>
 								<StopPlaceRef version="001" ref="naptStop:910GWIMBLDN"/>
 								<Label>Bus / 0</Label>
 							</From>
 							<To>
 								<TransportMode>tram</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:940GZZCRWIM"/>
+								<StopAreaRef version="any" ref="naptStop:940GZZCRWIM"/>
 								<ScheduledStopPointRef version="any" ref="naptStop:9400ZZCRWIM"/>
 								<StopPlaceRef version="001" ref="naptStop:940GZZCRWIM"/>
 								<Label>Tram / -1</Label>
@@ -7154,13 +7015,13 @@ Changes
 							<BothWays>true</BothWays>
 							<From>
 								<TransportMode>bus</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:490G00272P"/>
+								<StopAreaRef version="any" ref="naptStop:490G00272P"/>
 								<StopPlaceRef version="001" ref="naptStop:910GWIMBLDN"/>
 								<Label>Bus / 0</Label>
 							</From>
 							<To>
 								<TransportMode>rail</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV03"/>
+								<StopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV03"/>
 								<StopPlaceRef version="001" ref="naptStop:910GWIMBLDN"/>
 								<AccessSpaceRef version="001" ref="nptg:9100WIMBLDN_A2"/>
 								<Label>MAIN / 0</Label>
@@ -7196,13 +7057,13 @@ Changes
 							<BothWays>true</BothWays>
 							<From>
 								<TransportMode>bus</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:490G00272P"/>
+								<StopAreaRef version="any" ref="naptStop:490G00272P"/>
 								<StopPlaceRef version="001" ref="naptStop:910GWIMBLDN"/>
 								<Label>Bus / 0</Label>
 							</From>
 							<To>
 								<TransportMode>metro</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV04"/>
+								<StopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV04"/>
 								<ScheduledStopPointRef version="any" ref="naptStop:9400ZZLUWIM"/>
 								<StopPlaceRef version="001" ref="naptStop:940GZZLUWIM"/>
 								<Label>Under / -1</Label>
@@ -7238,13 +7099,13 @@ Changes
 							<BothWays>true</BothWays>
 							<From>
 								<TransportMode>bus</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:490G00272P"/>
+								<StopAreaRef version="any" ref="naptStop:490G00272P"/>
 								<StopPlaceRef version="001" ref="naptStop:910GWIMBLDN"/>
 								<Label>Bus / 0</Label>
 							</From>
 							<To>
 								<TransportMode>rail</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV05"/>
+								<StopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV05"/>
 								<StopPlaceRef version="001" ref="naptStop:910GWIMBLDN"/>
 								<AccessSpaceRef version="001" ref="nptg:9100WIMBLDN_A1"/>
 								<Label>BookH / 0</Label>
@@ -7280,13 +7141,13 @@ Changes
 							<BothWays>true</BothWays>
 							<From>
 								<TransportMode>bus</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:490G00272P"/>
+								<StopAreaRef version="any" ref="naptStop:490G00272P"/>
 								<StopPlaceRef version="001" ref="naptStop:910GWIMBLDN"/>
 								<Label>Bus / 0</Label>
 							</From>
 							<To>
 								<TransportMode>rail</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV06"/>
+								<StopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV06"/>
 								<ScheduledStopPointRef version="any" ref="naptStop:9100WIMBLDN"/>
 								<StopPlaceRef version="001" ref="naptStop:910GWIMBLDN"/>
 								<Label>RPL-R / -1</Label>
@@ -7322,12 +7183,12 @@ Changes
 							<BothWays>true</BothWays>
 							<From>
 								<TransportMode>bus</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:490G00272P"/>
+								<StopAreaRef version="any" ref="naptStop:490G00272P"/>
 								<StopPlaceRef version="001" ref="naptStop:910GWIMBLDN"/>
 							</From>
 							<To>
 								<TransportMode>rail</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV07"/>
+								<StopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV07"/>
 								<ScheduledStopPointRef version="any" ref="naptStop:9100WIMBLDN"/>
 								<StopPlaceRef version="001" ref="naptStop:910GWIMBLDN"/>
 								<Label>RPL-S / -1</Label>
@@ -7363,7 +7224,7 @@ Changes
 							<BothWays>true</BothWays>
 							<From>
 								<TransportMode>bus</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:490G00272P"/>
+								<StopAreaRef version="any" ref="naptStop:490G00272P"/>
 								<StopPlaceRef version="001" ref="naptStop:910GWIMBLDN"/>
 								<Label>Bus / 0</Label>
 							</From>
@@ -7404,14 +7265,14 @@ Changes
 							<BothWays>true</BothWays>
 							<From>
 								<TransportMode>tram</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:940GZZCRWIM"/>
+								<StopAreaRef version="any" ref="naptStop:940GZZCRWIM"/>
 								<ScheduledStopPointRef version="any" ref="naptStop:9400ZZCRWIM"/>
 								<StopPlaceRef version="001" ref="naptStop:940GZZCRWIM"/>
 								<Label>Tram / -1</Label>
 							</From>
 							<To>
 								<TransportMode>tram</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:940GZZCRWIM"/>
+								<StopAreaRef version="any" ref="naptStop:940GZZCRWIM"/>
 								<ScheduledStopPointRef version="any" ref="naptStop:9400ZZCRWIM"/>
 								<StopPlaceRef version="001" ref="naptStop:940GZZCRWIM"/>
 								<Label>Tram / -1</Label>
@@ -7447,14 +7308,14 @@ Changes
 							<BothWays>true</BothWays>
 							<From>
 								<TransportMode>tram</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:940GZZCRWIM"/>
+								<StopAreaRef version="any" ref="naptStop:940GZZCRWIM"/>
 								<ScheduledStopPointRef version="any" ref="naptStop:9400ZZCRWIM"/>
 								<StopPlaceRef version="001" ref="naptStop:940GZZCRWIM"/>
 								<Label>Tram / -1</Label>
 							</From>
 							<To>
 								<TransportMode>rail</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV03"/>
+								<StopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV03"/>
 								<StopPlaceRef version="001" ref="naptStop:910GWIMBLDN"/>
 								<AccessSpaceRef version="001" ref="nptg:9100WIMBLDN_A2"/>
 								<Label>MAIN / 0</Label>
@@ -7490,14 +7351,14 @@ Changes
 							<BothWays>true</BothWays>
 							<From>
 								<TransportMode>tram</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:940GZZCRWIM"/>
+								<StopAreaRef version="any" ref="naptStop:940GZZCRWIM"/>
 								<ScheduledStopPointRef version="any" ref="naptStop:9400ZZCRWIM"/>
 								<StopPlaceRef version="001" ref="naptStop:940GZZCRWIM"/>
 								<Label>Tram / -1</Label>
 							</From>
 							<To>
 								<TransportMode>metro</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV04"/>
+								<StopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV04"/>
 								<ScheduledStopPointRef version="any" ref="naptStop:9400ZZLUWIM"/>
 								<StopPlaceRef version="001" ref="naptStop:940GZZLUWIM"/>
 								<Label>Under / -1</Label>
@@ -7533,14 +7394,14 @@ Changes
 							<BothWays>true</BothWays>
 							<From>
 								<TransportMode>tram</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:940GZZCRWIM"/>
+								<StopAreaRef version="any" ref="naptStop:940GZZCRWIM"/>
 								<ScheduledStopPointRef version="any" ref="naptStop:9400ZZCRWIM"/>
 								<StopPlaceRef version="001" ref="naptStop:940GZZCRWIM"/>
 								<Label>Tram / -1</Label>
 							</From>
 							<To>
 								<TransportMode>rail</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV05"/>
+								<StopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV05"/>
 								<StopPlaceRef version="001" ref="naptStop:910GWIMBLDN"/>
 								<AccessSpaceRef version="001" ref="nptg:9100WIMBLDN_A1"/>
 								<Label>BookH/ 0</Label>
@@ -7576,14 +7437,14 @@ Changes
 							<BothWays>true</BothWays>
 							<From>
 								<TransportMode>tram</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:940GZZCRWIM"/>
+								<StopAreaRef version="any" ref="naptStop:940GZZCRWIM"/>
 								<ScheduledStopPointRef version="any" ref="naptStop:9400ZZCRWIM"/>
 								<StopPlaceRef version="001" ref="naptStop:940GZZCRWIM"/>
 								<Label>Tram / -1</Label>
 							</From>
 							<To>
 								<TransportMode>rail</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV06"/>
+								<StopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV06"/>
 								<ScheduledStopPointRef version="any" ref="naptStop:9100WIMBLDN"/>
 								<StopPlaceRef version="001" ref="naptStop:910GWIMBLDN"/>
 								<AccessSpaceRef version="001" ref="nptg:9100WIMBLDN_A1"/>
@@ -7620,14 +7481,14 @@ Changes
 							<BothWays>true</BothWays>
 							<From>
 								<TransportMode>tram</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:940GZZCRWIM"/>
+								<StopAreaRef version="any" ref="naptStop:940GZZCRWIM"/>
 								<ScheduledStopPointRef version="any" ref="naptStop:9400ZZCRWIM"/>
 								<StopPlaceRef version="001" ref="naptStop:940GZZCRWIM"/>
 								<Label>Tram / -1</Label>
 							</From>
 							<To>
 								<TransportMode>rail</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV07"/>
+								<StopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV07"/>
 								<ScheduledStopPointRef version="any" ref="naptStop:9100WIMBLDN"/>
 								<StopPlaceRef version="001" ref="naptStop:910GWIMBLDN"/>
 								<AccessSpaceRef version="001" ref="nptg:9100WIMBLDN_A1"/>
@@ -7664,7 +7525,7 @@ Changes
 							<BothWays>true</BothWays>
 							<From>
 								<TransportMode>tram</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:940GZZCRWIM"/>
+								<StopAreaRef version="any" ref="naptStop:940GZZCRWIM"/>
 								<ScheduledStopPointRef version="any" ref="naptStop:9400ZZCRWIM"/>
 								<StopPlaceRef version="001" ref="naptStop:940GZZCRWIM"/>
 								<Label>Tram / -1</Label>
@@ -7711,14 +7572,14 @@ Changes
 							<BothWays>true</BothWays>
 							<From>
 								<TransportMode>rail</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV03"/>
+								<StopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV03"/>
 								<StopPlaceRef version="001" ref="naptStop:910GWIMBLDN"/>
 								<AccessSpaceRef version="001" ref="nptg:9100WIMBLDN_A2"/>
 								<Label>MAIN / 0</Label>
 							</From>
 							<To>
 								<TransportMode>metro</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV04"/>
+								<StopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV04"/>
 								<ScheduledStopPointRef version="any" ref="naptStop:9400ZZLUWIM"/>
 								<StopPlaceRef version="001" ref="naptStop:940GZZLUWIM"/>
 								<Label>Under / -1</Label>
@@ -7754,14 +7615,14 @@ Changes
 							<BothWays>true</BothWays>
 							<From>
 								<TransportMode>rail</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV03"/>
+								<StopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV03"/>
 								<StopPlaceRef version="001" ref="naptStop:910GWIMBLDN"/>
 								<AccessSpaceRef version="001" ref="nptg:9100WIMBLDN_A2"/>
 								<Label>MAIN / 0</Label>
 							</From>
 							<To>
 								<TransportMode>rail</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV05"/>
+								<StopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV05"/>
 								<StopPlaceRef version="001" ref="naptStop:910GWIMBLDN"/>
 								<AccessSpaceRef version="001" ref="nptg:9100WIMBLDN_A1"/>
 								<Label>BookH/ 0</Label>
@@ -7797,14 +7658,14 @@ Changes
 							<BothWays>true</BothWays>
 							<From>
 								<TransportMode>rail</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV03"/>
+								<StopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV03"/>
 								<StopPlaceRef version="001" ref="naptStop:910GWIMBLDN"/>
 								<AccessSpaceRef version="001" ref="nptg:9100WIMBLDN_A2"/>
 								<Label>MAIN / 0</Label>
 							</From>
 							<To>
 								<TransportMode>rail</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV06"/>
+								<StopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV06"/>
 								<ScheduledStopPointRef version="any" ref="naptStop:9100WIMBLDN"/>
 								<StopPlaceRef version="001" ref="naptStop:910GWIMBLDN"/>
 								<AccessSpaceRef version="001" ref="nptg:9100WIMBLDN_A1"/>
@@ -7841,14 +7702,14 @@ Changes
 							<BothWays>true</BothWays>
 							<From>
 								<TransportMode>rail</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV03"/>
+								<StopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV03"/>
 								<StopPlaceRef version="001" ref="naptStop:910GWIMBLDN"/>
 								<AccessSpaceRef version="001" ref="nptg:9100WIMBLDN_A2"/>
 								<Label>MAIN / 0</Label>
 							</From>
 							<To>
 								<TransportMode>rail</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV07"/>
+								<StopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV07"/>
 								<ScheduledStopPointRef version="any" ref="naptStop:9100WIMBLDN"/>
 								<StopPlaceRef version="001" ref="naptStop:910GWIMBLDN"/>
 								<AccessSpaceRef version="001" ref="nptg:9100WIMBLDN_A1"/>
@@ -7885,7 +7746,7 @@ Changes
 							<BothWays>true</BothWays>
 							<From>
 								<TransportMode>rail</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV03"/>
+								<StopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV03"/>
 								<StopPlaceRef version="001" ref="naptStop:910GWIMBLDN"/>
 								<AccessSpaceRef version="001" ref="nptg:9100WIMBLDN_A2"/>
 								<Label>MAIN / 0</Label>
@@ -7927,14 +7788,14 @@ Changes
 							<BothWays>true</BothWays>
 							<From>
 								<TransportMode>metro</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV04"/>
+								<StopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV04"/>
 								<ScheduledStopPointRef version="any" ref="naptStop:9400ZZLUWIM"/>
 								<StopPlaceRef version="001" ref="naptStop:940GZZLUWIM"/>
 								<Label>Under / -1</Label>
 							</From>
 							<To>
 								<TransportMode>metro</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV04"/>
+								<StopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV04"/>
 								<ScheduledStopPointRef version="any" ref="naptStop:9400ZZLUWIM"/>
 								<StopPlaceRef version="001" ref="naptStop:940GZZLUWIM"/>
 								<Label>Under / -1</Label>
@@ -7970,14 +7831,14 @@ Changes
 							<BothWays>true</BothWays>
 							<From>
 								<TransportMode>metro</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV04"/>
+								<StopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV04"/>
 								<ScheduledStopPointRef version="any" ref="naptStop:9100WIMBLDN"/>
 								<StopPlaceRef version="001" ref="naptStop:940GZZLUWIM"/>
 								<Label>Under / -1</Label>
 							</From>
 							<To>
 								<TransportMode>rail</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV05"/>
+								<StopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV05"/>
 								<StopPlaceRef version="001" ref="naptStop:910GWIMBLDN"/>
 								<AccessSpaceRef version="001" ref="nptg:9100WIMBLDN_A1"/>
 								<Label>BookH/ 0</Label>
@@ -8018,14 +7879,14 @@ Changes
 							<BothWays>true</BothWays>
 							<From>
 								<TransportMode>metro</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV04"/>
+								<StopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV04"/>
 								<ScheduledStopPointRef version="any" ref="naptStop:9100WIMBLDN"/>
 								<StopPlaceRef version="001" ref="naptStop:940GZZLUWIM"/>
 								<Label>Under / -1</Label>
 							</From>
 							<To>
 								<TransportMode>rail</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV06"/>
+								<StopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV06"/>
 								<ScheduledStopPointRef version="any" ref="naptStop:9100WIMBLDN"/>
 								<StopPlaceRef version="001" ref="naptStop:910GWIMBLDN"/>
 								<AccessSpaceRef version="001" ref="nptg:9100WIMBLDN_A1"/>
@@ -8062,14 +7923,14 @@ Changes
 							<BothWays>true</BothWays>
 							<From>
 								<TransportMode>metro</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV04"/>
+								<StopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV04"/>
 								<ScheduledStopPointRef version="any" ref="naptStop:9100WIMBLDN"/>
 								<StopPlaceRef version="001" ref="naptStop:940GZZLUWIM"/>
 								<Label>Under / -1</Label>
 							</From>
 							<To>
 								<TransportMode>rail</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV07"/>
+								<StopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV07"/>
 								<ScheduledStopPointRef version="any" ref="naptStop:9100WIMBLDN"/>
 								<StopPlaceRef version="001" ref="naptStop:910GWIMBLDN"/>
 								<AccessSpaceRef version="001" ref="nptg:9100WIMBLDN_A1"/>
@@ -8106,7 +7967,7 @@ Changes
 							<BothWays>true</BothWays>
 							<From>
 								<TransportMode>metro</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV04"/>
+								<StopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV04"/>
 								<ScheduledStopPointRef version="any" ref="naptStop:9100WIMBLDN"/>
 								<StopPlaceRef version="001" ref="naptStop:940GZZLUWIM"/>
 								<Label>Under / -1</Label>
@@ -8153,14 +8014,14 @@ Changes
 							<BothWays>true</BothWays>
 							<From>
 								<TransportMode>rail</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV05"/>
+								<StopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV05"/>
 								<StopPlaceRef version="001" ref="naptStop:910GWIMBLDN"/>
 								<AccessSpaceRef version="001" ref="nptg:9100WIMBLDN_A1"/>
 								<Label>BookH/ 0</Label>
 							</From>
 							<To>
 								<TransportMode>rail</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV06"/>
+								<StopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV06"/>
 								<ScheduledStopPointRef version="any" ref="naptStop:9100WIMBLDN"/>
 								<StopPlaceRef version="001" ref="naptStop:910GWIMBLDN"/>
 								<AccessSpaceRef version="001" ref="nptg:9100WIMBLDN_A1"/>
@@ -8197,14 +8058,14 @@ Changes
 							<BothWays>true</BothWays>
 							<From>
 								<TransportMode>rail</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV05"/>
+								<StopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV05"/>
 								<StopPlaceRef version="001" ref="naptStop:910GWIMBLDN"/>
 								<AccessSpaceRef version="001" ref="nptg:9100WIMBLDN_A1"/>
 								<Label>BookH/ 0</Label>
 							</From>
 							<To>
 								<TransportMode>rail</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV07"/>
+								<StopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV07"/>
 								<ScheduledStopPointRef version="any" ref="naptStop:9100WIMBLDN"/>
 								<StopPlaceRef version="001" ref="naptStop:910GWIMBLDN"/>
 								<AccessSpaceRef version="001" ref="nptg:9100WIMBLDN_A1"/>
@@ -8241,7 +8102,7 @@ Changes
 							<BothWays>true</BothWays>
 							<From>
 								<TransportMode>rail</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV05"/>
+								<StopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV05"/>
 								<StopPlaceRef version="001" ref="naptStop:910GWIMBLDN"/>
 								<AccessSpaceRef version="001" ref="nptg:9100WIMBLDN_A1"/>
 								<Label>BookH/ 0</Label>
@@ -8283,7 +8144,7 @@ Changes
 							<BothWays>true</BothWays>
 							<From>
 								<TransportMode>rail</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV06"/>
+								<StopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV06"/>
 								<ScheduledStopPointRef version="any" ref="naptStop:9100WIMBLDN"/>
 								<StopPlaceRef version="001" ref="naptStop:910GWIMBLDN"/>
 								<AccessSpaceRef version="001" ref="nptg:9100WIMBLDN_A1"/>
@@ -8291,7 +8152,7 @@ Changes
 							</From>
 							<To>
 								<TransportMode>rail</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV06"/>
+								<StopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV06"/>
 								<ScheduledStopPointRef version="any" ref="naptStop:9100WIMBLDN"/>
 								<StopPlaceRef version="001" ref="naptStop:910GWIMBLDN"/>
 								<AccessSpaceRef version="001" ref="nptg:9100WIMBLDN_A1"/>
@@ -8328,14 +8189,14 @@ Changes
 							<BothWays>true</BothWays>
 							<From>
 								<TransportMode>rail</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV05"/>
+								<StopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV05"/>
 								<StopPlaceRef version="001" ref="naptStop:910GWIMBLDN"/>
 								<AccessSpaceRef version="001" ref="nptg:9100WIMBLDN_A1"/>
 								<Label>BookH/ 0</Label>
 							</From>
 							<To>
 								<TransportMode>rail</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV07"/>
+								<StopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV07"/>
 								<ScheduledStopPointRef version="any" ref="naptStop:9100WIMBLDN"/>
 								<StopPlaceRef version="001" ref="naptStop:910GWIMBLDN"/>
 								<AccessSpaceRef version="001" ref="nptg:9100WIMBLDN_A1"/>
@@ -8372,7 +8233,7 @@ Changes
 							<BothWays>true</BothWays>
 							<From>
 								<TransportMode>rail</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV05"/>
+								<StopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV05"/>
 								<StopPlaceRef version="001" ref="naptStop:910GWIMBLDN"/>
 								<AccessSpaceRef version="001" ref="nptg:9100WIMBLDN_A1"/>
 								<Label>BookH/ 0</Label>
@@ -8419,7 +8280,7 @@ Changes
 							<BothWays>true</BothWays>
 							<From>
 								<TransportMode>rail</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV07"/>
+								<StopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV07"/>
 								<ScheduledStopPointRef version="any" ref="naptStop:9100WIMBLDN"/>
 								<StopPlaceRef version="001" ref="naptStop:910GWIMBLDN"/>
 								<AccessSpaceRef version="001" ref="nptg:9100WIMBLDN_A1"/>
@@ -8427,7 +8288,7 @@ Changes
 							</From>
 							<To>
 								<TransportMode>rail</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV07"/>
+								<StopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV07"/>
 								<ScheduledStopPointRef version="any" ref="naptStop:9100WIMBLDN"/>
 								<StopPlaceRef version="001" ref="naptStop:910GWIMBLDN"/>
 								<AccessSpaceRef version="001" ref="nptg:9100WIMBLDN_A1"/>
@@ -8464,7 +8325,7 @@ Changes
 							<BothWays>true</BothWays>
 							<From>
 								<TransportMode>rail</TransportMode>
-								<StopAreaRef version="any" ref="naptStopArea:9100WIMBLDN-MDV07"/>
+								<StopAreaRef version="any" ref="naptStop:9100WIMBLDN-MDV07"/>
 								<ScheduledStopPointRef version="any" ref="naptStop:9100WIMBLDN"/>
 								<StopPlaceRef version="001" ref="naptStop:910GWIMBLDN"/>
 								<AccessSpaceRef version="001" ref="nptg:9100WIMBLDN_A1"/>
@@ -8574,6 +8435,611 @@ Changes
 						</PassengerStopAssignment>
 					</stopAssignments>
 				</ServiceFrame>
+					</frames>
+		</CompositeFrame>
+				<!--   === COMMON UK FARE RESOURCES===  -->
+		<CompositeFrame id="fxc:UK:DFT:TypeOfFrame_UK_PI_METADATA_OFFER:FXCP:fxc" version="fxc:v1.0" responsibilitySetRef="fxc:FXC_metadata" dataSourceRef="fxc:dft">
+			<ValidBetween>
+				<FromDate>2019-05-01T00:00:00</FromDate>
+				<ToDate>2022-12-31T12:00:00</ToDate>
+			</ValidBetween>
+			<Name>UK FXCP Passenger Information Profile common resources</Name>
+			<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_METADATA_OFFER:FXCP:fxc"/>
+			<FrameDefaults>
+				<DefaultCodespaceRef ref="fxc_metadata"/>
+				<DefaultDataSourceRef ref="fxc:dft" versionRef="fxc:v1.0"/>
+				<DefaultResponsibilitySetRef ref="fxc:FXC_metadata" version="fxc:v1.0"/>
+			</FrameDefaults>
+			<frames>
+				<!-- ====COMMON UK PI Profile  RESOURCEs:  META DATA - COULD BE EXTERNALISED ===== ============ -->
+					<!-- === Profile Frame Types ===  -->
+				<ResourceFrame id="fxc:UK:DFT:ResourceFrame_UK_PI_METADATA_FRAMES:FXCP:fxc" version="fxc:v1.0" responsibilitySetRef="fxc:FXC_metadata" dataSourceRef="fxc:dft">
+					<Name>UK FXCP  Fare profile Frame types and codepaces</Name>
+					<codespaces>
+						<Codespace id="fxc_metadata">
+							<Xmlns>fxc</Xmlns>
+							<XmlnsUrl>netex.org.uk/fxc</XmlnsUrl>
+							<Description>UK FareXChange Profile metadata</Description>
+						</Codespace>
+						<Codespace id="epd_data">
+							<Xmlns>epd</Xmlns>
+							<XmlnsUrl>http://fnetex-cen.eu/epd</XmlnsUrl>
+							<Description>European Passenger Information profile data -use for UK frame names</Description>
+						</Codespace>
+					</codespaces>
+					<dataSources>
+						<DataSource id="fxc:dft" version="fxc:v1.0">
+							<Email>standards@netex.org.uk</Email>
+						</DataSource>
+					</dataSources>
+					<!-- ========Responsibility Sets========== -->
+					<responsibilitySets>
+						<ResponsibilitySet version="fxc:v1.0" id="fxc:FXC_metadata">
+							<Name>Common</Name>
+							<roles>
+								<ResponsibilityRoleAssignment version="fxc:v1.0" id="fxc:FXC_metadata:DfT">
+									<DataRoleType>creates distributes</DataRoleType>
+									<StakeholderRoleType>DataRegistrar</StakeholderRoleType>
+									<ResponsibleOrganisationRef ref="nptg:DfT" versionRef="nptg:v2.1"/>
+									<ResponsibleAreaRef ref="nptgUkRegion:GB"   versionRef="nptg:v2.1"/>
+								</ResponsibilityRoleAssignment>
+							</roles>
+						</ResponsibilitySet>
+					</responsibilitySets>
+					<typesOfValue>
+						<!-- ======== TYPE S OF   FRAME========= -->
+						<ValueSet version="fxc:1.0" id="fxc:Types_of_Specific_Frame_Basic" classOfValues="TypeOfFrame">
+							<Name>Types of FXC Specific  Frame Basic </Name>
+							<values>
+								<!-- === ANCILLARY  ==== -->
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_COMMON:FXCP">
+									<Name>UK FXCP  common Local resources</Name>
+									<FrameClassRef nameOfClass="ResourceFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_CALENDAR:FXCP">
+									<Name>UK FXCP  Service calendar</Name>
+									<FrameClassRef nameOfClass="ServiceCalendarFrame"/>
+								</TypeOfFrame>
+								<!-- === PAYLOAD  ==== -->
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_STOP:FXCP">
+									<Name>UK FXCP Stops: NapTAN Stop Place  and NPTG Locations Frame</Name>
+									<FrameClassRef nameOfClass="SiteFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_NETWORK:FXCP">
+									<Name>UK FXCP Network</Name>
+									<FrameClassRef nameOfClass="ServiceFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_TIMETABLE:FXCP">
+									<Name>UK FXCP Tietable: N</Name>
+									<FrameClassRef nameOfClass="TimetableFrame"/>
+								</TypeOfFrame>
+								<!-- === METADATA   ==== -->
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_METADATA:FXCP">
+									<Name>UK Bus Profile common resources</Name>
+									<FrameClassRef nameOfClass="ResourceFrame"/>
+								</TypeOfFrame>
+							</values>
+						</ValueSet>
+						<ValueSet version="fxc::v2.4" id="fxc:Types_of_Offer_Frame_Basic" classOfValues="TypeOfFrame">
+							<Name>Types of UK Offer Frame</Name>
+							<values>
+								<!-- === COMPOSITE ====  -->
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_STOP_OFFER:FXCP">
+									<Name>UK FXCP   composite container STOP OFFER</Name>
+									<FrameClassRef nameOfClass="CompositeFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_LINE_OFFER:FXCP">
+									<Name>UK FXCP   composite container LINE OFFER</Name>
+									<FrameClassRef nameOfClass="CompositeFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_NETWORK_OFFER:FXCP">
+									<Name>UK FXCP   composite container LINE OFFER</Name>
+									<FrameClassRef nameOfClass="CompositeFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_METADATA_OFFER:FXCP:fxc">
+									<Name>UK FXCP composite used to group other UKmetadta</Name>
+									<FrameClassRef nameOfClass="CompositeFrame"/>
+								</TypeOfFrame>
+							</values>
+						</ValueSet>
+						<!-- ======== TYPE S OF   FRAME========= -->
+						<ValueSet version="fxc:1.0" id="fxc:Types_of_Specific_Frame_for_Fares" classOfValues="TypeOfFrame">
+							<Name>Types of FXC Specific  Frame</Name>
+							<values>
+								<!-- === PAYLOAD  ==== -->
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_FARE_COMMON:FXCP">
+									<Name>UK Bus Profile fare common paramaters</Name>
+									<FrameClassRef nameOfClass="FareFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_FARE_NETWORK:FXCP">
+									<Name>UK Bus Profile fare network</Name>
+									<FrameClassRef nameOfClass="ServiceFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_FARE_PRODUCT:FXCP">
+									<Name>UK FXCP Fare Porducts Frame</Name>
+									<FrameClassRef nameOfClass="FareFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_FARE_PRICE:FXCP">
+									<Name>UK FXCP Fare Prices Frame</Name>
+									<FrameClassRef nameOfClass="FareFrame"/>
+								</TypeOfFrame>
+							</values>
+						</ValueSet>
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_Offer_Frame_for_Fares" classOfValues="TypeOfFrame">
+							<Name>Types of UK Offer Frame</Name>
+							<values>
+								<!-- === COMPOSITE ====  -->
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_STOP_FARE_OFFER:FXCP">
+									<Name>UK FXCP   composite container STOP OFFER</Name>
+									<FrameClassRef nameOfClass="CompositeFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_LINE_FARE_OFFER:FXCP">
+									<Name>UK FXCP   composite container LINE OFFER</Name>
+									<FrameClassRef nameOfClass="CompositeFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_NETWORK_FARE_OFFER:FXCP">
+									<Name>UK FXCP   composite container NETWORK OFFER</Name>
+									<FrameClassRef nameOfClass="CompositeFrame"/>
+								</TypeOfFrame>
+							</values>
+						</ValueSet>
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_Transaction_Frame" classOfValues="TypeOfFrame">
+							<Name>Types of UK Trasnaction  Frame</Name>
+							<values>
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_FARE_TRANSACTIONS:FXCP">
+									<Name>UK Bus Profile Operator sample transactions</Name>
+									<FrameClassRef nameOfClass="SalesTransactionFrame"/>
+								</TypeOfFrame>
+							</values>
+						</ValueSet>
+					</typesOfValue>
+		 
+				</ResourceFrame>
+				<!-- === NaPTAN Common fixed definitions  ===  -->
+					<!-- === NaPTAN Common fixed definitions  ===  -->
+				<ResourceFrame version="napt:v2.4" id="fxc:UK:DFT:ResourceFrame_UK_PI_METADATA:NaPTAN:napt" responsibilitySetRef="napt:NaPTAN_metadata" dataSourceRef="napt:dft">
+					<ValidBetween>
+						<FromDate>2005-01-01T00:00:00</FromDate>
+					</ValidBetween>
+					<Name>Static Naptan  code values</Name>
+					<Description>This frame contains code  values used to validate NaPTAN data.</Description>
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_METADATA:FXCP"/>
+					<codespaces>
+						<Codespace id="napt_metadata">
+							<Xmlns>napt</Xmlns>
+							<XmlnsUrl>http://www.naptan.org.uk</XmlnsUrl>
+							<Description>UK National Public Transport Access Nodes     codes</Description>
+						</Codespace>
+						<!-- A single napt: space could be used for codes, Napatn stops and Naptan stop areas (since th code  values do not overlap) ,  but we separate meta data and data for clarity  -->
+						<Codespace id="naptStop_data">
+							<Xmlns>naptStop</Xmlns>
+							<XmlnsUrl>http://www.naptan.org.uk/stops</XmlnsUrl>
+							<Description>UK National Public Transport Access Nodes: Stops.</Description>
+						</Codespace>
+						<Codespace id="naptPoi_data">
+							<Xmlns>naptPoi</Xmlns>
+							<XmlnsUrl>http://www.naptan.org.uk/pois</XmlnsUrl>
+							<Description>UK NaPTAN Points Of Interest</Description>
+						</Codespace>
+					</codespaces>
+					<FrameDefaults>
+						<DefaultCodespaceRef ref="napt_metadata"/>
+						<DefaultDataSourceRef ref="napt:dft" version="napt:v2.4"/>
+						<DefaultResponsibilitySetRef ref="napt:NaPTAN_metadata" version="napt:v2.4"/>
+					</FrameDefaults>
+					<versions>
+						<Version id="napt:v2.4" version="any">
+							<Description>NaPTAN  version 2.4</Description>
+							<VersionType>baseline</VersionType>
+						</Version>
+					</versions>
+					<dataSources>
+						<DataSource id="napt:dft" version="napt:v2.4">
+							<Email>standards@naptan.org.uk</Email>
+						</DataSource>
+					</dataSources>
+					<!-- ========Responsibility Sets========== -->
+					<responsibilitySets>
+						<ResponsibilitySet version="napt:v2.4" id="napt:NaPTAN_metadata">
+							<Name>Common</Name>
+							<roles>
+								<ResponsibilityRoleAssignment version="napt:v2.4" id="napt:NaPTAN_metadata">
+									<DataRoleType>creates distributes</DataRoleType>
+									<StakeholderRoleType>DataRegistrar</StakeholderRoleType>
+									<ResponsibleOrganisationRef ref="nptg:DfT" version="nptg:v2.1"/>
+									<ResponsibleAreaRef ref="nptgUkRegion:GB" nameOfRefClass="TransportAdministrativeZone" versionRef="0" xsi:type="TransportAdministrativeZoneRefStructure">UK</ResponsibleAreaRef>
+								</ResponsibilityRoleAssignment>
+							</roles>
+						</ResponsibilitySet>
+						<ResponsibilitySet version="napt:v2.4" id="napt:stop_data">
+							<Name>Common</Name>
+							<roles>
+								<ResponsibilityRoleAssignment version="napt:v2.4" id="napt:naptan_data">
+									<DataRoleType>creates distributes</DataRoleType>
+									<StakeholderRoleType>Other</StakeholderRoleType>
+									<ResponsibleOrganisationRef ref="nptg:DfT" version="nptg:v2.1"/>
+									<ResponsibleAreaRef ref="nptgUkRegion:GB" nameOfRefClass="TransportAdministrativeZone" versionRef="0" xsi:type="TransportAdministrativeZoneRefStructure">UK</ResponsibleAreaRef>
+								</ResponsibilityRoleAssignment>
+							</roles>
+						</ResponsibilitySet>
+					</responsibilitySets>
+					<!-- ==== Fixed values == -->
+					<typesOfValue>
+						<!-- ==== Fixed values == -->
+						<ValueSet version="napt:v2.4" id="napt:NaPTAN_Stop_Classifications_StopPlace" classOfValues="TypeOfPlace">
+							<Name>NaPTan Stop StopClassifications</Name>
+							<values>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopClassification@BST">
+									<Name> Bus Station Access ARea.</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopClassification@AIR">
+									<Name>Airport.</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopClassification@FER">
+									<Name>Ferry Terminal.</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopClassification@RLY">
+									<Name>Rail Station  </Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopClassification@MET">
+									<Name>Metro Station</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.4" id="napt:StopClassification@LCB">
+									<Name>Lift Station</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.5" id="napt:StopClassification@POI">
+									<Name>Point of Interest Interest</Name>
+								</TypeOfPlace>
+							</values>
+						</ValueSet>
+						<ValueSet version="napt:v2.4" id="napt:NaPTAN_Stop_Classifications_StopPlaceEntrance" classOfValues="TypeOfPlace">
+							<Name>NaPTan Stop StopClassifications</Name>
+							<values>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopClassification@BSE">
+									<Name>Bus Station Entrance</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopClassification@FTD">
+									<Name>Ferry Terminal   Entrance </Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopClassification@RSE">
+									<Name>Rail Station Entrance</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopClassification@TMU">
+									<Name>Metro Station Entrance</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.4" id="napt:StopClassification@LSE">
+									<Name>Lift Station Entrance</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.5" id="napt:StopClassification@PIE">
+									<Name>Point of Interest Interest Entrance</Name>
+								</TypeOfPlace>
+							</values>
+						</ValueSet>
+						<ValueSet version="napt:v2.4" id="napt:NaPTAN_Stop_Classifications_Quay" classOfValues="TypeOfPlace">
+							<Name>NaPTan Stop StopClassifications</Name>
+							<values>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopClassification@BCT">
+									<Name>Naptan Bus COach Tram stop on street </Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopClassification@BCS">
+									<Name> Bus / Coach bay / stand / stance within Bus / Coach Stations.</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopClassification@BCQ">
+									<Name> Variabel Bay.</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopClassification@GAT">
+									<Name>Airside Gate </Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopClassification@FBT">
+									<Name>Ferry Berth</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopClassification@RPL">
+									<Name>Rail Platform</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopClassification@PLT">
+									<Name>Metro Platform</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.4" id="napt:StopClassification@LPL">
+									<Name>Lift Station  Platform</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopClassification@TXR">
+									<Name>Taxi Rank</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopClassification@STR">
+									<Name>Shared Taxi Rank</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.4" id="napt:StopClassification@SDA">
+									<Name>Set Down Area</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.4" id="napt:StopClassification@PSP">
+									<Name>Point of Interest Interest end area</Name>
+								</TypeOfPlace>
+							</values>
+						</ValueSet>
+						<ValueSet version="napt:v2.4" id="napt:NaPTAN_Bus_Stop_Types" classOfValues="TypeOfPlace">
+							<Name>NapTAn STope Types   s</Name>
+							<values>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopType@MKD">
+									<Name>Marked stopr</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopType@HAR">
+									<Name>Hail and Ride</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopType@CUS">
+									<Name>stom (unmarked, or only marked on road).</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopType@FLX">
+									<Name>Unmarked stop </Name>
+								</TypeOfPlace>
+							</values>
+						</ValueSet>
+						<ValueSet version="napt:v2.4" id="napt:NaPTAN_StopArea_Classifications" classOfValues="TypeOfZone">
+							<Name>NaPTan Stop StopClassifications</Name>
+							<values>
+								<TypeOfZone version="napt:v2.1" id="napt:StopAreaType@GPBS">
+									<Name>Paired on-street Bus / Coach / Tram stops.</Name>
+								</TypeOfZone>
+								<TypeOfZone version="napt:v2.1" id="napt:StopAreaType@GCLS">
+									<Name>Clustered on-street Bus / Coach / Tram stops.</Name>
+								</TypeOfZone>
+								<TypeOfZone version="napt:v2.1" id="napt:StopAreaType@GAIR">
+									<Name>Airport Building.</Name>
+								</TypeOfZone>
+								<TypeOfZone version="napt:v2.1" id="napt:StopAreaType@GBCS">
+									<Name>Bus / Coach Station.</Name>
+								</TypeOfZone>
+								<TypeOfZone version="napt:v2.1" id="napt:StopAreaType@GFTD">
+									<Name>Ferry Terminal / Dock Building.</Name>
+								</TypeOfZone>
+								<TypeOfZone version="napt:v2.1" id="napt:StopAreaType@GTMU">
+									<Name>Tram / Metro / Underground Station.</Name>
+								</TypeOfZone>
+								<TypeOfZone version="napt:v2.1" id="napt:StopAreaType@GRLS">
+									<Name>Railway station.</Name>
+								</TypeOfZone>
+								<TypeOfZone version="napt:v2.1" id="napt:StopAreaType@GMLT">
+									<Name>Multimode Interchange.</Name>
+								</TypeOfZone>
+								<TypeOfZone version="napt:v2.1" id="napt:StopAreaType@GOTH">
+									<Name>Other Structure.</Name>
+								</TypeOfZone>
+								<TypeOfZone version="napt:v2.1" id="napt:StopAreaType@GCCH">
+									<Name>Coach Service Coverage.</Name>
+								</TypeOfZone>
+								<TypeOfZone version="napt:v2.4" id="napt:StopAreaType@GLCB">
+									<Name> Lift or Cablecar station (+NaPT v2.4)</Name>
+								</TypeOfZone>
+							</values>
+						</ValueSet>
+					</typesOfValue>
+				</ResourceFrame>
+				 	<SiteFrame version="nptg:v2.1" id="fxc:UK:DFT:ResourceFrame_UK_PI_METADATA:UKM:nptg" responsibilitySetRef="nptg:NPTG_metadata" dataSourceRef="nptg:dft">
+					<Name>NPTG GB countrie and principalities</Name>
+					<codespaces>
+						<Codespace id="iso3166-2_data">
+							<Xmlns>iso3166-2</Xmlns>
+							<XmlnsUrl>http://www.iso.org/country_codes/</XmlnsUrl>
+							<Description>ISO 316602 3 character Principality &amp; county codes. Use to subdivide IANA countries, e.g. gb:ENG, gb:WLS </Description>
+						</Codespace>
+					</codespaces>
+					<countries>
+						<Country id="uk" principality="iso3166-2:GB-UKM" version="nptg:v2.1">
+							<Name>United Kingdom</Name>
+						</Country>
+						<Country id="uk" principality="iso3166-2:GB-EAW" version="nptg:v2.1">
+							<Name>England and Wales</Name>
+						</Country>
+						<Country id="uk" principality="iso3166-2:GB-EWN" version="nptg:v2.1">
+							<Name>England and Wales and norther ireland</Name>
+						</Country>
+						<Country id="uk" principality="iso3166-2:GB-ENG" version="nptg:v2.1">
+							<Name>England</Name>
+						</Country>
+						<Country id="uk" principality="iso3166-2:GB-NIR" version="nptg:v2.1">
+							<Name>Norther Ireland</Name>
+						</Country>
+						<Country id="uk" principality="iso3166-2:GB-SCT" version="nptg:v2.1">
+							<Name>Scotland</Name>
+						</Country>
+						<Country id="uk" principality="iso3166-2:GB-WLS" version="nptg:v2.1">
+							<Name>Wales</Name>
+						</Country>
+					</countries>
+				</SiteFrame>
+			
+				<ResourceFrame version="nptg:v2.1" id="fxc:UK:DFT:ResourceFrame_UK_PI_METADATA:NPTG:nptg" responsibilitySetRef="nptg:NPTG_metadata" dataSourceRef="nptg:dft">
+					<ValidBetween>
+						<FromDate>2004-01-01T00:00:00</FromDate>
+					</ValidBetween>
+					<Name>Static code values for UK NPTG data</Name>
+					<Description>This frame contains code  valuesused to validate the NPTG  </Description>
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_METADATA:FXCP"/>
+					<codespaces>
+						<Codespace id="nptg_metadata">
+							<Xmlns>nptg</Xmlns>
+							<XmlnsUrl>http://www.nptg.org.uk/nptg</XmlnsUrl>
+							<Description>UK National Public Transport gazetteer     fixed codes.   .</Description>
+						</Codespace>
+						<Codespace id="nptgLocality_data">
+							<Xmlns>nptgLocality</Xmlns>
+							<XmlnsUrl>http://nptg.org.uk/locations</XmlnsUrl>
+							<Description>National Public Transport gazetteer locations</Description>
+						</Codespace>
+						<Codespace id="nptgTariffZone_data">
+							<Xmlns>nptgTariffZone</Xmlns>
+							<XmlnsUrl>http://nptg.org.uk/tariffZones</XmlnsUrl>
+							<Description>National Public Transport gazetteer plus bus zones</Description>
+						</Codespace>
+						<Codespace id="nptgAdminArea_data">
+							<Xmlns>nptgAdminArea</Xmlns>
+							<XmlnsUrl>http://www.nptg.org.uk/adminAreas</XmlnsUrl>
+							<Description>UK National Public Transport gazetteer. Codes of administrative areas, are unique within the UK.</Description>
+						</Codespace>
+								<Codespace id="nptgAtcoPrefix_data">
+							<Xmlns>nptgAtco</Xmlns>
+							<XmlnsUrl>http://www.nptg.org.uk/atcoAreas</XmlnsUrl>
+							<Description>UK National Public Transport gazetteer. Codes of Atco prefixes are unique within the UK.</Description>
+						</Codespace>
+					</codespaces>
+					<FrameDefaults>
+						<DefaultCodespaceRef ref="nptg_metadata"/>
+						<DefaultDataSourceRef ref="nptg:dft" version="nptg:v2.1"/>
+						<DefaultResponsibilitySetRef ref="nptg:NPTG_metadata" version="nptg:v2.1"/>
+					</FrameDefaults>
+					<versions>
+						<Version id="nptg:v2.1" version="any">
+							<Description>NPTG version 2.1</Description>
+							<VersionType>baseline</VersionType>
+						</Version>
+					</versions>
+					<dataSources>
+						<DataSource id="nptg:dft" version="nptg:v2.1">
+							<Email>standards@nptg.org.uk</Email>
+						</DataSource>
+					</dataSources>
+					<!-- ==== Fixed values == -->
+					<typesOfValue>
+			 				<!-- ==== Fixed values == -->
+						<ValueSet version="nptg:v2.1" id="nptg:UK_NPTG_profile@Place_types" classOfValues="TypeOfPlace">
+							<Name>NPTG Place Types   s</Name>
+							<values>
+								<TypeOfPlace version="nptg:v2.1" id="nptg:SourceLocalityType@Lo">
+									<Name>NPTG Source Loc  = Lo</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="nptg:v2.1" id="nptg:SourceLocalityType@Co">
+									<Name>NPTG Source Loc  = Co</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="nptg:v2.1" id="nptg:SourceLocalityType@Pa">
+									<Name>NPTG Source Loc  = Pa</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="nptg:v2.1" id="nptg:SourceLocalityType@ar">
+									<Name>NPTG Source Loc  = ar</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="nptg:v2.1" id="nptg:SourceLocalityType@Add">
+									<Name>NPTG Source Loc  = Add</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="nptg:v2.1" id="nptg:SourceLocalityType@U">
+									<Name>NPTG Source Loc  = U</Name>
+								</TypeOfPlace>
+							</values>
+						</ValueSet>
+						<ValueSet version="nptg:v2.1" id="nptg:UK_NPTG_profile@Organisation_part_types" classOfValues="TypeOfZone">
+							<Name>NPTG Organisation Part Types   s</Name>
+							<values>
+								<TypeOfZone version="nptg:v2.1" id="nptg:UkRegion">
+									<Name>An NPTG Region</Name>
+								</TypeOfZone>
+								<TypeOfZone version="nptg:v2.1" id="nptg:AdministrativeArea@National">
+									<Name>An NPTG Administrative Area with National scope (e.g. 910, 920 etc)</Name>
+								</TypeOfZone>
+								<TypeOfZone version="nptg:v2.1" id="nptg:AdministrativeArea@Local">
+									<Name>An NPTG Administrative Area with Local scope</Name>
+								</TypeOfZone>
+								<TypeOfZone version="nptg:v2.1" id="nptg:UkDistrict">
+									<Name>An NPTG District</Name>
+								</TypeOfZone>
+								<TypeOfZone version="nptg:v2.1" id="nptg:UkLocality">
+									<Name>An NPTG Locality</Name>
+								</TypeOfZone>
+								<TypeOfZone version="nptg:v2.1" id="nptg:PlusBusZone">
+									<Name>An PlusBus Tariff Zone</Name>
+								</TypeOfZone>
+							</values>
+						</ValueSet>
+						<ValueSet version="nptg:v2.1" id="nptg:UK_NPTG_profile@Sms_codes" classOfValues="TypeOfCodespaceAssignment">
+							<Name>NPTG Codespace Assignment Types</Name>
+							<values>
+								<TypeOfCodespaceAssignment version="nptg:v2.1" id="nptg:naptan_prefix">
+									<Name>NPTG Stop prefix</Name>
+								</TypeOfCodespaceAssignment>
+								<TypeOfCodespaceAssignment version="nptg:v2.1" id="nptg:naptan_sms">
+									<Name>NPTG  Stop SMS prefix</Name>
+								</TypeOfCodespaceAssignment>
+								<TypeOfCodespaceAssignment version="nptg:v2.1" id="nptg:naptan_cleardown">
+									<Name>NPTG  stop cleardown range  </Name>
+								</TypeOfCodespaceAssignment>
+							</values>
+						</ValueSet>
+					</typesOfValue>
+					<organisations>
+						<!---  DFT  -->
+						<GeneralOrganisation version="nptg:v2.1" id="nptg:DfT" responsibilitySetRef="nptg:NPTG">
+							<Name>Department for Transport</Name>
+							<ShortName>DfT</ShortName>
+							<parts>
+								<OrganisationPart version="any" id="nptg:DfT">
+									<Name>Transport Direct</Name>
+									<administrativeZones>
+										<TransportAdministrativeZone version="nptg:v2.1" id="nptgAdminArea:UK">
+											<Name>UK NPTG Admin Area  - entire UK administrative zone  </Name>
+											<codespaceAssignments>
+												<CodespaceAssignment id="tbd:NA_000@01">
+													<CodespaceRef ref="nptgAtcoPrefix_data"/>
+													<Description>UK NPTG Admin Area codes  </Description>
+												</CodespaceAssignment>
+											</codespaceAssignments>
+										</TransportAdministrativeZone>
+										<TransportAdministrativeZone version="nptg:v2.1" id="nptgAdminArea:110">
+											<Name>UK Rail  - entire UK administrative zone   </Name>
+											<codespaceAssignments>
+												<CodespaceAssignment id="tbd:NA_110@01">
+													<CodespaceRef ref="nptgAtcoPrefix_data"/>
+													<CodePrefix>910</CodePrefix>
+													<Description>UK Rail  </Description>
+												</CodespaceAssignment>
+											</codespaceAssignments>
+										</TransportAdministrativeZone>
+										<TransportAdministrativeZone version="nptg:v2.1" id="nptgAdminArea:144">
+											<Name>UK Rail  - entire UK administrative zone  </Name>
+											<codespaceAssignments>
+												<CodespaceAssignment id="tbd:NA_144@01">
+													<CodespaceRef ref="nptgAtcoPrefix_data"/>
+													<CodePrefix>910</CodePrefix>
+													<Description>UK Rail Alias</Description>
+												</CodespaceAssignment>
+											</codespaceAssignments>
+										</TransportAdministrativeZone>
+										<TransportAdministrativeZone version="nptg:v2.1" id="nptgAdminArea:147">
+											<Name>UK Metro  - entire UK administrative zone  </Name>
+											<codespaceAssignments>
+												<CodespaceAssignment id="tbd:NA_147@01">
+													<CodespaceRef ref="nptgAtcoPrefix_data"/>
+													<CodePrefix>940</CodePrefix>
+													<Description>UK Metro and Tram</Description>
+												</CodespaceAssignment>
+											</codespaceAssignments>
+										</TransportAdministrativeZone>
+									</administrativeZones>
+									<ownResponsibilitySets>
+										<!-- ========Responsibility Sets========== -->
+										<ResponsibilitySet version="nptg:v2.1" created="2010-05-17T09:30:47Z" id="nptg:NPTG_metadata">
+											<Name>Common</Name>
+											<roles>
+												<ResponsibilityRoleAssignment version="nptg:v2.1" id="nptg:NPTG_metadata">
+													<DataRoleType>creates distributes</DataRoleType>
+													<StakeholderRoleType>DataRegistrar</StakeholderRoleType>
+													<ResponsibleOrganisationRef ref="nptg:DfT" version="nptg:v2.1"/>
+													<ResponsibleAreaRef ref="nptgUkRegion:GB" nameOfRefClass="TransportAdministrativeZone" versionRef="0" xsi:type="TransportAdministrativeZoneRefStructure">UK</ResponsibleAreaRef>
+												</ResponsibilityRoleAssignment>
+											</roles>
+										</ResponsibilitySet>
+										<ResponsibilitySet version="nptg:v2.1" id="nptg:NPTG_data">
+											<Name>Common</Name>
+											<roles>
+												<ResponsibilityRoleAssignment version="nptg:v2.1" id="nptg:NPTG_data">
+													<DataRoleType>creates distributes</DataRoleType>
+													<StakeholderRoleType>EntityLegalOwnership</StakeholderRoleType>
+													<ResponsibleOrganisationRef ref="nptg:DfT" version="nptg:v2.1"/>
+													<ResponsibleAreaRef ref="nptg:UK">TODO</ResponsibleAreaRef>
+												</ResponsibilityRoleAssignment>
+											</roles>
+										</ResponsibilitySet>
+									</ownResponsibilitySets>
+								</OrganisationPart>
+							</parts>
+						</GeneralOrganisation>
+					</organisations>
+				</ResourceFrame>
 			</frames>
 		</CompositeFrame>
 	</dataObjects>
