@@ -313,11 +313,11 @@ At the end are shown some sample transactions showing the parameters that define
 					<XmlnsUrl>http://www.traveline.co.uk/noc</XmlnsUrl>
 					<Description>UK national operator codes</Description>
 				</Codespace>
-									<Codespace id="nrn_data">
-							<Xmlns>nrn</Xmlns>
-							<XmlnsUrl>http://www.nationalrail.co.uk/</XmlnsUrl>
-							<Description>UK national rail network</Description>
-						</Codespace>
+				<Codespace id="nrn_data">
+					<Xmlns>nrn</Xmlns>
+					<XmlnsUrl>http://www.nationalrail.co.uk/</XmlnsUrl>
+					<Description>UK national rail network</Description>
+				</Codespace>
 				<CodespaceRef ref="frst_data"/>
 			</codespaces>
 			<!--==== FRAME DEFAULTS ==== -->
@@ -1566,6 +1566,7 @@ At the end are shown some sample transactions showing the parameters that define
 						<FareZone version="1.0" id="frst:WoE@Bristol@48@outbound">
 							<Name>Bristol Line 48 outbound</Name>
 							<Description>Rupert Street to Emersons Green</Description>
+								<ScopingMethod>explicitStops</ScopingMethod>
 							<fareSections>
 								<FareSection id="frst:WoE@Bristol@48@outbound@1" version="1">
 									<Name>Rupert Street_to_Brigstocke Road</Name>
@@ -1739,10 +1740,12 @@ At the end are shown some sample transactions showing the parameters that define
 									</pointsOnSection>
 								</FareSection>
 							</fareSections>
+						
 						</FareZone>
 						<FareZone version="1.0" id="frst:WoE@Bristol@48@inbound">
 							<Name>Bristol Line 48 inbound</Name>
 							<Description>Emersons Green to Ruperstreet</Description>
+							<ScopingMethod>explicitStops</ScopingMethod>
 							<fareSections>
 								<FareSection id="frst:WoE@Bristol@48@inbound@1" version="1">
 									<Name>Emersons Green_to_Meadgate</Name>
@@ -1913,6 +1916,7 @@ At the end are shown some sample transactions showing the parameters that define
 									</pointsOnSection>
 								</FareSection>
 							</fareSections>
+							
 						</FareZone>
 					</fareZones>
 					<seriesConstraints>
@@ -2084,9 +2088,10 @@ At the end are shown some sample transactions showing the parameters that define
 							<!--- ====Fare Structure======= -->
 							<!-- ==FARE STRUCTURE ELEMENTS -->
 							<fareStructureElements>
-								<FareStructureElement id="frst:Tariff@WoE_Distance@Trip@modes" version="1.0">
+								<FareStructureElement id="frst:Tariff@WoE_Distance@Trip@access_modes" version="1.0">
 									<Name>Available modes</Name>
-									<GenericParameterAssignment order="1" id="frst:Tariff@WoE_Distance@Trip@modes" version="1.0">
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:access"/>
+									<GenericParameterAssignment order="1" id="frst:Tariff@WoE_Distance@Trip@access_modes" version="1.0">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 										<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
 										<validityParameters>
@@ -2095,9 +2100,10 @@ At the end are shown some sample transactions showing the parameters that define
 										</validityParameters>
 									</GenericParameterAssignment>
 								</FareStructureElement>
-								<FareStructureElement id="frst:Tariff@WoE_Distance@Trip@zones" version="1.0">
+								<FareStructureElement id="frst:Tariff@WoE_Distance@Trip@access_zones" version="1.0">
 									<Name>Available zones</Name>
 									<Description>Trip may start in a city zone and continue to distance section</Description>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:access"/>
 									<GenericParameterAssignment version="1.0" id="frst:Tariff@WoE_Distance@Trip@from_zone" order="1">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 										<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
@@ -2118,6 +2124,7 @@ If you travel in 1-3 mile long sections it'll be £2.50, 3-6 mile long sections w
 Here is an example route and some of the fares along it: Emersons Green, Sainsbury's to Long Close would be £2.50 as you are travelling in three sections (numbers 1, 2 and 3, Long Close is classed as section 3 in this example as it's where you are getting off the bus). 
 Long Close to Narroways Road would be £3.50 as you are travelling in four sections (4, 5, 6, 7, Long Close is counted as section 4 in this example as it's your boarding point). Blackberry Hospital to Downend, 
 The Leap would be £3.50 as you are travelling in four sections (5, 4, 3, 2).</Description>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:intervals"/>
 									<geographicalIntervals>
 										<GeographicalIntervalRef version="1.0" ref="frst:Tariff@WoE_Distance@00_to_03"/>
 										<GeographicalIntervalRef version="1.0" ref="frst:Tariff@WoE_Distance@03_to_06"/>
@@ -2128,6 +2135,7 @@ The Leap would be £3.50 as you are travelling in four sections (5, 4, 3, 2).</De
 								</FareStructureElement>
 								<FareStructureElement version="1.0" id="frst:Tariff@WoE_Distance@Trip@eligibility">
 									<Name>eligible user types</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:eligibility"/>
 									<GenericParameterAssignment order="1" id="frst:Tariff@WoE_Distance@eligibility" version="1.0">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:eligible"/>
 										<LimitationGroupingType>XOR</LimitationGroupingType>
@@ -2145,6 +2153,7 @@ The Leap would be £3.50 as you are travelling in four sections (5, 4, 3, 2).</De
 								<FareStructureElement version="1.0" id="frst:Tariff@WoE_Distance@Trip@steps">
 									<Name>Overall journey steps</Name>
 									<Description>Journey is potentially made up of two steps</Description>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:steps"/>
 									<fareStructureElementsInSequence>
 										<FareStructureElementInSequence version="1.0" id="frst:Tariff@WoE_Distance@Trip@from_zone" order="1">
 											<Name>Optional fisrt leg in inner zone</Name>
@@ -2152,7 +2161,7 @@ The Leap would be £3.50 as you are travelling in four sections (5, 4, 3, 2).</De
 Flat fare to the border of the zone, then rounded up to £2.50, £3.50, £4.50 or £5.50 depending on the distance travelled thereafter.</Description>
 											<IsFirstInSequence>true</IsFirstInSequence>
 											<AccessNumberIsLimited>true</AccessNumberIsLimited>
-											<FareStructureElementRef ref="frst:Tariff@WoE_Distance@Trip@zones" version="1.0"/>
+											<FareStructureElementRef ref="frst:Tariff@WoE_Distance@Trip@access_zones" version="1.0"/>
 										</FareStructureElementInSequence>
 										<FareStructureElementInSequence version="1.0" id="frst:Tariff@WoE_Distance@Trip@sections" order="2">
 											<Name>Unit stage count</Name>
@@ -2199,7 +2208,7 @@ Over 12 miles (within West of England area) 		£6.50
 								<ValidableElement version="1.0" id="frst:WoE_Distance@Trip@travel">
 									<Name>Unlimited rides available for specifed periods</Name>
 									<fareStructureElements>
-										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Distance@Trip@modes"/>
+										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Distance@Trip@access_modes"/>
 										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Distance@Trip@geographic_intervals"/>
 										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Distance@Trip@eligibility"/>
 										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Distance@Trip@steps"/>
@@ -2585,9 +2594,10 @@ Over 12 miles (within West of England area) 	£ 6.50		|	£ 3.30	|	£ 4.50	|
 							<TypeOfTariffRef version="fxc:v1.0" ref="fxc:zonal"/>
 							<!-- ==FARE STRUCTURE ELEMENTS -->
 							<fareStructureElements>
-								<FareStructureElement id="frst:Tariff@WoE_Zone@Short_hop@modes" version="1.0">
+								<FareStructureElement id="frst:Tariff@WoE_Zone@Short_hop@access_modes" version="1.0">
 									<Name>Permitted modes</Name>
-									<GenericParameterAssignment order="1" id="frst:Tariff@WoE_Zone@Short_hop@modes" version="1.0">
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:access"/>
+									<GenericParameterAssignment order="1" id="frst:Tariff@WoE_Zone@Short_hop@access_modes" version="1.0">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 										<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
 										<validityParameters>
@@ -2595,9 +2605,10 @@ Over 12 miles (within West of England area) 	£ 6.50		|	£ 3.30	|	£ 4.50	|
 										</validityParameters>
 									</GenericParameterAssignment>
 								</FareStructureElement>
-								<FareStructureElement version="1.0" id="frst:Tariff@WoE_Zone@Short_hop@operators">
+								<FareStructureElement version="1.0" id="frst:Tariff@WoE_Zone@Short_hop@access_operators">
 									<Name>Permitted operaror</Name>
-									<GenericParameterAssignment id="frst:Tariff@WoE_Zone@Short_hop@operators" version="1.0" order="1">
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:accepted_by"/>
+									<GenericParameterAssignment id="frst:Tariff@WoE_Zone@Short_hop@access_operators" version="1.0" order="1">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 										<ValidityParameterGroupingType>XOR</ValidityParameterGroupingType>
 										<validityParameters>
@@ -2605,11 +2616,12 @@ Over 12 miles (within West of England area) 	£ 6.50		|	£ 3.30	|	£ 4.50	|
 										</validityParameters>
 									</GenericParameterAssignment>
 								</FareStructureElement>
-								<FareStructureElement version="1.0" id="frst:Tariff@WoE_Zone@Short_hop@zones">
+								<FareStructureElement version="1.0" id="frst:Tariff@WoE_Zone@Short_hop@access_zones">
 									<Name>Permitted Short Hop zones</Name>
 									<Description>Single zone</Description>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:access"/>
 									<validityParameterAssignments>
-										<GenericParameterAssignment id="frst:Tariff@WoE_Zone@Short_hop@zones" version="1.0" order="1">
+										<GenericParameterAssignment id="frst:Tariff@WoE_Zone@Short_hop@access_zones" version="1.0" order="1">
 											<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 											<ValidityParameterGroupingType>XOR</ValidityParameterGroupingType>
 											<validityParameters>
@@ -2875,6 +2887,7 @@ Over 12 miles (within West of England area) 	£ 6.50		|	£ 3.30	|	£ 4.50	|
 								</FareStructureElement>
 								<FareStructureElement version="1.0" id="frst:Tariff@WoE_Zone@Short_hop@eligibility">
 									<Name>Eligible user types</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:eligibility"/>
 									<GenericParameterAssignment order="1" id="frst:Tariff@WoE_Zone@Short_hop@eligibility" version="1.0">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:eligible"/>
 										<LimitationGroupingType>XOR</LimitationGroupingType>
@@ -2911,9 +2924,9 @@ Over 12 miles (within West of England area) 	£ 6.50		|	£ 3.30	|	£ 4.50	|
 								<ValidableElement version="1.0" id="frst:WoE_Zone@Trip@Short_hop@travel">
 									<Name>Single ride Three stops</Name>
 									<fareStructureElements>
-										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Zone@Short_hop@modes"/>
-										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Zone@Short_hop@operators"/>
-										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Zone@Short_hop@zones"/>
+										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Zone@Short_hop@access_modes"/>
+										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Zone@Short_hop@access_operators"/>
+										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Zone@Short_hop@access_zones"/>
 										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Zone@Short_hop@eligibility"/>
 									</fareStructureElements>
 									<validityParameterAssignments>
@@ -3121,9 +3134,10 @@ Bristol 1 trip short hop						1.20 0.60 0.60		£0.90	 	|
 							<TypeOfTariffRef version="fxc:v1.0" ref="fxc:zonal"/>
 							<!-- ==FARE STRUCTURE ELEMENTS -->
 							<fareStructureElements>
-								<FareStructureElement id="frst:Tariff@WoE_Zone@Trip@modes" version="1.0">
+								<FareStructureElement id="frst:Tariff@WoE_Zone@Trip@access_modes" version="1.0">
 									<Name>Permitted modes</Name>
-									<GenericParameterAssignment order="1" id="frstTariff@WoE_Zone@Trip@modes" version="1.0">
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:access"/>
+									<GenericParameterAssignment order="1" id="frstTariff@WoE_Zone@Trip@access_modes" version="1.0">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 										<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
 										<validityParameters>
@@ -3131,9 +3145,10 @@ Bristol 1 trip short hop						1.20 0.60 0.60		£0.90	 	|
 										</validityParameters>
 									</GenericParameterAssignment>
 								</FareStructureElement>
-								<FareStructureElement version="1.0" id="frst:Tariff@WoE_Zone@Trip@zones">
+								<FareStructureElement version="1.0" id="frst:Tariff@WoE_Zone@Trip@access_zones">
 									<Name>Permitted Zones for Single Trip</Name>
-									<GenericParameterAssignment id="frst:Tariff@WoE_Zone@Trip@zones" version="1.0" order="1">
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:access"/>
+									<GenericParameterAssignment id="frst:Tariff@WoE_Zone@Trip@access_zones" version="1.0" order="1">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 										<ValidityParameterGroupingType>XOR</ValidityParameterGroupingType>
 										<validityParameters>
@@ -3146,6 +3161,7 @@ Bristol 1 trip short hop						1.20 0.60 0.60		£0.90	 	|
 								</FareStructureElement>
 								<FareStructureElement version="1.0" id="frst:Tariff@WoE_Zone@Trip@eligibility">
 									<Name>Eligible user types for Single Trip</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:eligibility"/>
 									<GenericParameterAssignment order="1" id="frst:Tariff@WoE_Zone@Trip@eligibility" version="1.0">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:eligible"/>
 										<LimitationGroupingType>XOR</LimitationGroupingType>
@@ -3185,8 +3201,8 @@ Bristol 1 trip short hop						1.20 0.60 0.60		£0.90	 	|
 								<ValidableElement version="1.0" id="frst:WoE_Zone@Trip@Single@travel">
 									<Name>Single Zone Unlimited rides available for specifed periods</Name>
 									<fareStructureElements>
-										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Zone@Trip@modes"/>
-										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Zone@Trip@zones"/>
+										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Zone@Trip@access_modes"/>
+										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Zone@Trip@access_zones"/>
 										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Zone@Trip@eligibility"/>
 									</fareStructureElements>
 									<validityParameterAssignments>
@@ -3524,6 +3540,7 @@ West_of_England					|	£3.59		£2.53		£1.82	|
 								<FareStructureElement version="1.0" id="frst:Tariff@Multitrip@units">
 									<Name>Multitrip - Available units</Name>
 									<Description>Number of units single ride within a single zone</Description>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:carnet_units"/>
 									<qualityStructureFactors>
 										<QualityStructureFactor version="1.0" id="frst:Tariff@Multitrip@5">
 											<Value>5</Value>
@@ -3533,11 +3550,12 @@ West_of_England					|	£3.59		£2.53		£1.82	|
 										</QualityStructureFactor>
 									</qualityStructureFactors>
 								</FareStructureElement>
-								<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Zone@Trip@modes"/>
-								<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Zone@Trip@zones"/>
+								<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Zone@Trip@access_modes"/>
+								<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Zone@Trip@access_zones"/>
 								<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Zone@Trip@eligibility"/>
 								<FareStructureElement version="1.0" id="frst:Tariff@Multitrip@validity">
 									<Name>Conditions: validity</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:validity"/>
 									<GenericParameterAssignment id="frst:Tariff@WoE_Zone@Multitrip@validity" version="1.0" order="1">
 										<Name>Can use for up to a year</Name>
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access_when"/>
@@ -3577,8 +3595,8 @@ West_of_England					|	£3.59		£2.53		£1.82	|
 									<Description>Five single journey tickets to go anywhere in the West of England Zone whenever you like. Valid for 12 months from the date of issue.</Description>
 									<fareStructureElements>
 										<FareStructureElementRef version="1.0" ref="frst:Tariff@Multitrip@units"/>
-										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Zone@Trip@modes"/>
-										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Zone@Trip@zones"/>
+										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Zone@Trip@access_modes"/>
+										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Zone@Trip@access_zones"/>
 										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Zone@Trip@eligibility"/>
 										<FareStructureElementRef version="1.0" ref="frst:Tariff@Multitrip@validity"/>
 									</fareStructureElements>
@@ -3637,7 +3655,7 @@ West_of_England					|	£3.59		£2.53		£1.82	|
 							<Name>First Multitrip carne on smartcard</Name>
 							<Description>Carnet of Journeys.</Description>
 							<validityParameterAssignments>
-								<GenericParameterAssignment version="1.0" id="frst:WoE_Zone@Trip@Multitrip-SOP@carnet@smartcard@zones" order="1">
+								<GenericParameterAssignment version="1.0" id="frst:WoE_Zone@Trip@Multitrip-SOP@carnet@smartcard@access_zones" order="1">
 									<Name>Permitted zones</Name>
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 									<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
@@ -3816,9 +3834,9 @@ West of Englad	(mticketOnlY)			£17.50 				8.75 12.25
 				<!-- First WoE Zone Pass Products -->
 				<FareFrame version="1.0" id="epd:UK:FBRI:FareFrame_UK_PI_FARE_PRODUCT:WoE_Zone@Pass:frst">
 					<Name>First West ^amp; Bristol products and prices for Zone Period Passes</Name>
-					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_FARE_PRODUCT:FXCP"/> 
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_FARE_PRODUCT:FXCP"/>
 					<prerequisites>
-					<FareFrameRef version="1.0" ref="epd:UK:FBRI:FareFrame_UK_PI_FARE_NETWORK:WoE_Zone:frst"/>
+						<FareFrameRef version="1.0" ref="epd:UK:FBRI:FareFrame_UK_PI_FARE_NETWORK:WoE_Zone:frst"/>
 					</prerequisites>
 					<!--====Tariff Structure ==== -->
 					<tariffs>
@@ -3859,9 +3877,10 @@ West of Englad	(mticketOnlY)			£17.50 				8.75 12.25
 							</timeIntervals>
 							<!-- ==FARE STRUCTURE ELEMENTS -->
 							<fareStructureElements>
-								<FareStructureElement version="1.0" id="frst:Tariff@WoE_Zone@Pass@operators">
+								<FareStructureElement version="1.0" id="frst:Tariff@WoE_Zone@Pass@access_operators">
 									<Name>Permitted operators</Name>
-									<GenericParameterAssignment id="frst:Tariff@WoE_Zone@Pass@operators" version="1.0" order="1">
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:accepted_by"/>
+									<GenericParameterAssignment id="frst:Tariff@WoE_Zone@Pass@access_operators" version="1.0" order="1">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 										<ValidityParameterGroupingType>XOR</ValidityParameterGroupingType>
 										<validityParameters>
@@ -3869,9 +3888,10 @@ West of Englad	(mticketOnlY)			£17.50 				8.75 12.25
 										</validityParameters>
 									</GenericParameterAssignment>
 								</FareStructureElement>
-								<FareStructureElement id="frst:Tariff@WoE_Zone@Pass@modes" version="1.0">
+								<FareStructureElement id="frst:Tariff@WoE_Zone@Pass@access_modes" version="1.0">
 									<Name>Permitted modes</Name>
-									<GenericParameterAssignment order="1" id="frp:Tariff@WoE_Zone@Pass@modes" version="1.0">
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:access"/>
+									<GenericParameterAssignment order="1" id="frp:Tariff@WoE_Zone@Pass@access_modes" version="1.0">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 										<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
 										<validityParameters>
@@ -3879,9 +3899,9 @@ West of Englad	(mticketOnlY)			£17.50 				8.75 12.25
 										</validityParameters>
 									</GenericParameterAssignment>
 								</FareStructureElement>
-								<FareStructureElement version="1.0" id="frst:Tariff@WoE_Zone@Pass@zones">
-									<Name>Permitted  zones</Name>
-									<GenericParameterAssignment id="frst:Tariff@WoE_Zone@Pass@zones" version="1.0" order="1">
+								<FareStructureElement version="1.0" id="frst:Tariff@WoE_Zone@Pass@access_zones">
+									<Name>Permitted  zones</Name> 	<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:access"/>
+									<GenericParameterAssignment id="frst:Tariff@WoE_Zone@Pass@access_zones" version="1.0" order="1">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 										<ValidityParameterGroupingType>XOR</ValidityParameterGroupingType>
 										<validityParameters>
@@ -3894,6 +3914,7 @@ West of Englad	(mticketOnlY)			£17.50 				8.75 12.25
 								</FareStructureElement>
 								<FareStructureElement version="1.0" id="frst:Tariff@WoE_Zone@Pass@eligibility">
 									<Name>Eligible user types</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:eligibility"/>
 									<GenericParameterAssignment order="1" id="frst:Tariff@WoE_Zone@Pass@eligibility" version="1.0">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:eligible"/>
 										<LimitationGroupingType>XOR</LimitationGroupingType>
@@ -3908,6 +3929,7 @@ West of Englad	(mticketOnlY)			£17.50 				8.75 12.25
 								</FareStructureElement>
 								<FareStructureElement version="1.0" id="frst:Tariff@WoE_Zone@Pass@groups">
 									<Name>Available Group Tickets</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:groups"/>
 									<GenericParameterAssignment id="frst:Tariff@WoE_Zone@Pass@groups" version="1.0" order="1">
 										<Name>First West of England zone pass - Grpup tickets, Only available for day pass.</Name>
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access_when"/>
@@ -3963,6 +3985,7 @@ West of Englad	(mticketOnlY)			£17.50 				8.75 12.25
 								</FareStructureElement>
 								<FareStructureElement version="1.0" id="frst:Tariff@WoE_Zone@Pass@durations">
 									<Name>Permitted durations</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:durations"/>
 									<timeIntervals>
 										<TimeIntervalRef version="1.0" ref="frst:Tariff@WoE_Zone@Pass@1night"/>
 										<TimeIntervalRef version="1.0" ref="frst:Tariff@WoE_Zone@Pass@1day"/>
@@ -3974,6 +3997,7 @@ West of Englad	(mticketOnlY)			£17.50 				8.75 12.25
 								<!-- the following are used to limite purchase options -->
 								<FareStructureElement version="1.0" id="frst:Tariff@WoE_Zone@Pass@channel_durations@1D_1W_1M_1Y">
 									<Name>Permitted durations for distribution channels</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:durations"/>
 									<timeIntervals>
 										<TimeIntervalRef version="1.0" ref="frst:Tariff@WoE_Zone@Pass@1day"/>
 										<TimeIntervalRef version="1.0" ref="frst:Tariff@WoE_Zone@Pass@1week"/>
@@ -3983,6 +4007,7 @@ West of Englad	(mticketOnlY)			£17.50 				8.75 12.25
 								</FareStructureElement>
 								<FareStructureElement version="1.0" id="frst:Tariff@WoE_Zone@Pass@channel_durations@1D_1W_1M">
 									<Name>Permitted durations for distribution channels</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:durations"/>
 									<timeIntervals>
 										<TimeIntervalRef version="1.0" ref="frst:Tariff@WoE_Zone@Pass@1day"/>
 										<TimeIntervalRef version="1.0" ref="frst:Tariff@WoE_Zone@Pass@1week"/>
@@ -3998,6 +4023,7 @@ West of Englad	(mticketOnlY)			£17.50 				8.75 12.25
 								</FareStructureElement>
 								<FareStructureElement version="1.0" id="frst:Tariff@WoE_Zone@Trip@payment_schedules">
 									<Name>Payment options</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:payment_schedules"/>
 									<qualityStructureFactors>
 										<QualityStructureFactor version="1.0" id="frst:Tariff@WoE_Zone@Pass@payment_schedules@one_off">
 											<Name>Single payment</Name>
@@ -4027,18 +4053,21 @@ West of Englad	(mticketOnlY)			£17.50 				8.75 12.25
 							</timeIntervals>
 							<!-- ==FARE STRUCTURE ELEMENTS -->
 							<fareStructureElements>
-								<FareStructureElement version="1.0" id="frst:Tariff@WoE_Zone_Plus@Pass@operators">
+								<FareStructureElement version="1.0" id="frst:Tariff@WoE_Zone_Plus@Pass@access_operators">
 									<Name>Permitted operators</Name>
-									<GenericParameterAssignment id="frst:Tariff@WoE_Zone_Plus@Pass@operators" version="1.0" order="1">
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:accepted_by"/>
+									<GenericParameterAssignment id="frst:Tariff@WoE_Zone_Plus@Pass@access_operators" version="1.0" order="1">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 										<ValidityParameterGroupingType>XOR</ValidityParameterGroupingType>
 									</GenericParameterAssignment>
 								</FareStructureElement>
-								<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Zone@Trip@modes"/>
-								<FareStructureElement version="1.0" id="frst:Tariff@WoE_Zone_Plus@Pass@zones">
+								<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Zone@Trip@access_modes"/>
+								<FareStructureElement version="1.0" id="frst:Tariff@WoE_Zone_Plus@Pass@access_zones">
 									<Name>Permitted zones</Name>
 									<Description>Period Zone pass. Available for Day, Week, 31 day and 1 year.</Description>
-									<GenericParameterAssignment id="frst:Tariff@WoE_Zone_Plus@Pass@zones" version="1.0" order="1">
+									
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:access"/>
+									<GenericParameterAssignment id="frst:Tariff@WoE_Zone_Plus@Pass@access_zones" version="1.0" order="1">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 										<ValidityParameterGroupingType>XOR</ValidityParameterGroupingType>
 										<validityParameters>
@@ -4048,6 +4077,7 @@ West of Englad	(mticketOnlY)			£17.50 				8.75 12.25
 								</FareStructureElement>
 								<FareStructureElement version="1.0" id="frst:Tariff@WoE_Zone_Plus@Pass@eligibility">
 									<Name>Eligible user types</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:eligibility"/>
 									<GenericParameterAssignment order="1" id="frst:Tariff@WoE_Zone_Plus@Pass@eligibility" version="1.0">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:eligible"/>
 										<LimitationGroupingType>XOR</LimitationGroupingType>
@@ -4060,6 +4090,7 @@ West of Englad	(mticketOnlY)			£17.50 				8.75 12.25
 								</FareStructureElement>
 								<FareStructureElement version="1.0" id="frst:Tariff@WoE_Zone_Plus@Pass@groups">
 									<Name>Available Group Tickets</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:groups"/>
 									<GenericParameterAssignment id="frst:Tariff@WoE_Zone_Plus@Pass@groups@day_group" version="1.0" order="1">
 										<Name>Day Group Ticket</Name>
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:eligible"/>
@@ -4075,6 +4106,7 @@ West of Englad	(mticketOnlY)			£17.50 				8.75 12.25
 								</FareStructureElement>
 								<FareStructureElement version="1.0" id="frst:Tariff@WoE_Zone_Plus@Pass@durations">
 									<Name>Permitted durations</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:durations"/>
 									<timeIntervals>
 										<TimeIntervalRef version="1.0" ref="frst:Tariff@WoE_Zone@Pass@1day"/>
 									</timeIntervals>
@@ -4105,8 +4137,8 @@ West of Englad	(mticketOnlY)			£17.50 				8.75 12.25
 								<ValidableElement version="1.0" id="frst:WoE_Zone@Pass@travel">
 									<Name>Unlimited rides available for specifed periods</Name>
 									<fareStructureElements>
-										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Zone@Pass@modes"/>
-										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Zone@Pass@zones"/>
+										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Zone@Pass@access_modes"/>
+										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Zone@Pass@access_zones"/>
 										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Zone@Pass@eligibility"/>
 										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Zone@Pass@groups"/>
 										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Zone@Pass@durations"/>
@@ -4193,9 +4225,9 @@ This is so customers do not wrongly believe they have an additional full day's t
 								<ValidableElement version="1.0" id="frst:WoE_Zone_Plus@Pass@travel">
 									<Name>Unlimited rides available for specifed periods</Name>
 									<fareStructureElements>
-										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Zone_Plus@Pass@operators"/>
-										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Zone@Trip@modes"/>
-										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Zone_Plus@Pass@zones"/>
+										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Zone_Plus@Pass@access_operators"/>
+										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Zone@Trip@access_modes"/>
+										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Zone_Plus@Pass@access_zones"/>
 										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Zone_Plus@Pass@eligibility"/>
 										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Zone_Plus@Pass@groups"/>
 										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Zone_Plus@Pass@durations"/>
@@ -4230,7 +4262,7 @@ This is so customers do not wrongly believe they have an additional full day's t
 							<Name>Bath Pass - p-ticket</Name>
 							<Description>Bath period pass. Available for Day, Week, 31 day and 1 year.</Description>
 							<validityParameterAssignments>
-								<GenericParameterAssignment version="1.0" id="frst:WoE_Zone@Pass-SOP@p-ticket@Bath@zones" order="1">
+								<GenericParameterAssignment version="1.0" id="frst:WoE_Zone@Pass-SOP@p-ticket@Bath@access_zones" order="1">
 									<Name>Go anywhere in Bath</Name>
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 									<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
@@ -4246,7 +4278,7 @@ This is so customers do not wrongly believe they have an additional full day's t
 							<Name>Bristol Pass - p-ticket</Name>
 							<Description>Bristol period pass. Available for Day, Week, 31 day and 1 year.</Description>
 							<validityParameterAssignments>
-								<GenericParameterAssignment version="1.0" id="frst:WoE_Zone@Pass-SOP@p-ticket@Bristol@zones" order="1">
+								<GenericParameterAssignment version="1.0" id="frst:WoE_Zone@Pass-SOP@p-ticket@Bristol@access_zones" order="1">
 									<Name>Go anywhere in Bristol</Name>
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 									<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
@@ -4262,7 +4294,7 @@ This is so customers do not wrongly believe they have an additional full day's t
 							<Name>Weston-super-mare pass - p-ticket</Name>
 							<Description>Weston-super-mare period pass. Available for Day, Week, 31 day and 1 year.</Description>
 							<validityParameterAssignments>
-								<GenericParameterAssignment version="1.0" id="frst:WoE_Zone@Pass-SOP@p-ticket@Weston_super_mare@zones" order="1">
+								<GenericParameterAssignment version="1.0" id="frst:WoE_Zone@Pass-SOP@p-ticket@Weston_super_mare@access_zones" order="1">
 									<Name>Go anywhere in Weston-super-Mare Zone</Name>
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 									<validityParameters>
@@ -4277,7 +4309,7 @@ This is so customers do not wrongly believe they have an additional full day's t
 							<Name>West of England Past - p-ticket</Name>
 							<Description>West of England period pass. Available for Day, Week, 31 day and 1 year.</Description>
 							<validityParameterAssignments>
-								<GenericParameterAssignment version="1.0" id="frst:WoE_Zone@Pass-SOP@p-ticket@West_of_England@zones" order="1">
+								<GenericParameterAssignment version="1.0" id="frst:WoE_Zone@Pass-SOP@p-ticket@West_of_England@access_zones" order="1">
 									<Name>Go anywhere in West of England</Name>
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 									<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
@@ -4294,7 +4326,7 @@ This is so customers do not wrongly believe they have an additional full day's t
 							<Name>Bath Pass - m-ticket</Name>
 							<Description>Bath period pass. Available for Day, Week, 31 day and 1 year.</Description>
 							<validityParameterAssignments>
-								<GenericParameterAssignment version="1.0" id="frst:WoE_Zone@Pass-SOP@m-ticket@Bath@zones" order="1">
+								<GenericParameterAssignment version="1.0" id="frst:WoE_Zone@Pass-SOP@m-ticket@Bath@access_zones" order="1">
 									<Name>Go anywhere in Bath</Name>
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 									<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
@@ -4310,7 +4342,7 @@ This is so customers do not wrongly believe they have an additional full day's t
 							<Name>Bristol Pass - m-ticket</Name>
 							<Description>Bristol period pass. Available for Day, Week, 31 day and 1 year.</Description>
 							<validityParameterAssignments>
-								<GenericParameterAssignment version="1.0" id="frst:WoE_Zone@Pass-SOP@m-ticket@Bristol@zones" order="1">
+								<GenericParameterAssignment version="1.0" id="frst:WoE_Zone@Pass-SOP@m-ticket@Bristol@access_zones" order="1">
 									<Name>Go anywhere in Bristol</Name>
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 									<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
@@ -4326,7 +4358,7 @@ This is so customers do not wrongly believe they have an additional full day's t
 							<Name>Weston-super-mare pass - m-ticket</Name>
 							<Description>West super-mare period pass. Available for Day, Week, 31 day and 1 year.</Description>
 							<validityParameterAssignments>
-								<GenericParameterAssignment version="1.0" id="frst:WoE_Zone@Pass-SOP@m-ticket@Weston_super_mare@zones" order="1">
+								<GenericParameterAssignment version="1.0" id="frst:WoE_Zone@Pass-SOP@m-ticket@Weston_super_mare@access_zones" order="1">
 									<Name>Go anywhere in Weston-super-Mare Town Zone</Name>
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 									<validityParameters>
@@ -4341,7 +4373,7 @@ This is so customers do not wrongly believe they have an additional full day's t
 							<Name>West of England pass - p-ticket</Name>
 							<Description>West West_of_England period pass. Available for Day, Week, 31 day and 1 year.</Description>
 							<validityParameterAssignments>
-								<GenericParameterAssignment version="1.0" id="frst:WoE_Zone@Pass-SOP@m-ticket@West_of_England@zones" order="1">
+								<GenericParameterAssignment version="1.0" id="frst:WoE_Zone@Pass-SOP@m-ticket@West_of_England@access_zones" order="1">
 									<Name>Go anywhere in Bristol</Name>
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 									<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
@@ -4358,7 +4390,7 @@ This is so customers do not wrongly believe they have an additional full day's t
 							<Name>Bristol Pass - smartcard</Name>
 							<Description>Bristol period pass. Available for Day, Week, 31 day and 1 year.</Description>
 							<validityParameterAssignments>
-								<GenericParameterAssignment version="1.0" id="frst:WoE_Zone@Pass-SOP@smartcard@Bristol@zones" order="1">
+								<GenericParameterAssignment version="1.0" id="frst:WoE_Zone@Pass-SOP@smartcard@Bristol@access_zones" order="1">
 									<Name>Go anywhere in Bristol</Name>
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 									<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
@@ -4374,7 +4406,7 @@ This is so customers do not wrongly believe they have an additional full day's t
 							<Name>Bath Pass - smartcard</Name>
 							<Description>Bath period pass. Available for Day, Week, 31 day and 1 year.</Description>
 							<validityParameterAssignments>
-								<GenericParameterAssignment version="1.0" id="frst:WoE_Zone@Pass-SOP@smartcard@Bath@zones" order="1">
+								<GenericParameterAssignment version="1.0" id="frst:WoE_Zone@Pass-SOP@smartcard@Bath@access_zones" order="1">
 									<Name>Go anywhere in Bath</Name>
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 									<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
@@ -4390,7 +4422,7 @@ This is so customers do not wrongly believe they have an additional full day's t
 							<Name>Weston-super-mare pass - p-ticket</Name>
 							<Description>West super-mare period pass. Available for Day, Week, 31 day and 1 year.</Description>
 							<validityParameterAssignments>
-								<GenericParameterAssignment version="1.0" id="frst:WoE_Zone@Pass-SOP@smartcard@Weston_super_mare@zones" order="1">
+								<GenericParameterAssignment version="1.0" id="frst:WoE_Zone@Pass-SOP@smartcard@Weston_super_mare@access_zones" order="1">
 									<Name>Go anywhere in Weston-super-Mare  Zone</Name>
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 									<validityParameters>
@@ -4405,7 +4437,7 @@ This is so customers do not wrongly believe they have an additional full day's t
 							<Name>West of England pass - p-ticket</Name>
 							<Description>West_of_England period pass. Available for Day, Week, 31 day and 1 year.</Description>
 							<validityParameterAssignments>
-								<GenericParameterAssignment version="1.0" id="frst:WoE_Zone@Pass-SOP@smartcard@West_of_England@zones" order="1">
+								<GenericParameterAssignment version="1.0" id="frst:WoE_Zone@Pass-SOP@smartcard@West_of_England@access_zones" order="1">
 									<Name>Go anywhere in West of England zone</Name>
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 									<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
@@ -4422,7 +4454,7 @@ This is so customers do not wrongly believe they have an additional full day's t
 							<Name>Bath Unlimited (Subscription) - m-ticket</Name>
 							<Description>Our best value monthly ticket. Receive your ticket via our mTicket app every month and pay by direct debit. Sign up at www.firstgroup.com/unlimited..</Description>
 							<validityParameterAssignments>
-								<GenericParameterAssignment version="1.0" id="frst:WoE_Zone@Pass_unlimited-SOP@m-ticket@Bath@zones" order="1">
+								<GenericParameterAssignment version="1.0" id="frst:WoE_Zone@Pass_unlimited-SOP@m-ticket@Bath@access_zones" order="1">
 									<Name>Go anywhere in Bath Town Zone</Name>
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 									<validityParameters>
@@ -4437,7 +4469,7 @@ This is so customers do not wrongly believe they have an additional full day's t
 							<Name>Bristol Unlimited  (Subscription)  - m-ticket</Name>
 							<Description>Our best value monthly ticket. Receive your ticket via our mTicket app every month and pay by direct debit. Sign up at www.firstgroup.com/unlimited..</Description>
 							<validityParameterAssignments>
-								<GenericParameterAssignment version="1.0" id="frst:WoE_Zone@Pass_unlimited-SOP@m-ticket@Bristol@zones" order="1">
+								<GenericParameterAssignment version="1.0" id="frst:WoE_Zone@Pass_unlimited-SOP@m-ticket@Bristol@access_zones" order="1">
 									<Name>Go anywhere in BristolZone</Name>
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 									<validityParameters>
@@ -4452,7 +4484,7 @@ This is so customers do not wrongly believe they have an additional full day's t
 							<Name>Weston-super-mare Unlimited (Subscription) - m-ticket</Name>
 							<Description>Our best value monthly ticket. Receive your ticket via our mTicket app every month and pay by direct debit. Sign up at www.firstgroup.com/unlimited..</Description>
 							<validityParameterAssignments>
-								<GenericParameterAssignment version="1.0" id="frst:WoE_Zone@Pass_unlimited-GSOP@m-ticket@Weston_super_mare@zones" order="1">
+								<GenericParameterAssignment version="1.0" id="frst:WoE_Zone@Pass_unlimited-GSOP@m-ticket@Weston_super_mare@access_zones" order="1">
 									<Name>Go anywhere in Weston-super-Mare  Zone</Name>
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 									<validityParameters>
@@ -4467,7 +4499,7 @@ This is so customers do not wrongly believe they have an additional full day's t
 							<Name>West of England Unlimited (Subscription) - m-ticket</Name>
 							<Description>Our best value monthly ticket. Receive your ticket via our mTicket app every month and pay by direct debit. Sign up at www.firstgroup.com/unlimited..</Description>
 							<validityParameterAssignments>
-								<GenericParameterAssignment version="1.0" id="frst:WoE_Zone@Pass_unlimited-GSOP@m-ticket@West_of_England@zones" order="1">
+								<GenericParameterAssignment version="1.0" id="frst:WoE_Zone@Pass_unlimited-GSOP@m-ticket@West_of_England@access_zones" order="1">
 									<Name>Go anywhere in West of England  Zone</Name>
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 									<validityParameters>
@@ -4483,7 +4515,7 @@ This is so customers do not wrongly believe they have an additional full day's t
 							<Name>West of England Plus - p-ticket</Name>
 							<Description>West of England multioperator period pass - paper ticket.</Description>
 							<validityParameterAssignments>
-								<GenericParameterAssignment version="1.0" id="frst:WoE_Zone_Plus@Pass-SOP@p-ticket@West_of_England@zones" order="1">
+								<GenericParameterAssignment version="1.0" id="frst:WoE_Zone_Plus@Pass-SOP@p-ticket@West_of_England@access_zones" order="1">
 									<Name>Go anywhere in West of England zone.</Name>
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 									<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
@@ -6307,6 +6339,7 @@ ______	______	________	|	Adult		Child	 	Student		| Family	| 	Group 	||	Adult		Ch
 							</Presentation>
 							<ParentFareZoneRef ref="frst:WoE@Bath"/>
 							<ZoneTopology>nested</ZoneTopology>
+							<ScopingMethod>explicitPeripheryStops</ScopingMethod>
 							<fareSections>
 								<!-- Bath Three stop hop exclusions -->
 								<FareSection id="frst:WoE@Bath@Twerton_Fork#The_Globe" version="1.0">
@@ -6554,6 +6587,7 @@ ______	______	________	|	Adult		Child	 	Student		| Family	| 	Group 	||	Adult		Ch
 							</Presentation>
 							<ParentFareZoneRef ref="frst:WoE@Bristol"/>
 							<ZoneTopology>nested</ZoneTopology>
+							<ScopingMethod>explicitStops</ScopingMethod>
 						</FareZone>
 						<!--- -->
 						<FareZone version="1.0" id="frst:WoE@Weston_super_mare">
@@ -6587,6 +6621,7 @@ ______	______	________	|	Adult		Child	 	Student		| Family	| 	Group 	||	Adult		Ch
 									<InfoLink typeOfInfoLink="map">https://www.firstgroup.com/uploads/node_images/WSM%20Zone%20Map%20V1%20logo.png</InfoLink>
 								</infoLinks>
 							</Presentation>
+							<ScopingMethod>explicitPeripheryStops</ScopingMethod>
 						</FareZone>
 						<FareZone version="1.0" id="frst:WoE@West_of_England">
 							<Name>West of England Zone</Name>
@@ -7196,9 +7231,10 @@ Young people aged 16-21 and students get up to 30% OFF all singles, day and seas
 							<!--- ====Time Intervals======= -->
 							<!-- ==FARE STRUCTURE ELEMENTS -->
 							<fareStructureElements>
-								<FareStructureElement version="1.0" id="frst:Tariff@WoE@Photo_id@operators">
+								<FareStructureElement version="1.0" id="frst:Tariff@WoE@Photo_id@access_operators">
 									<Name>Allowed operaror</Name>
-									<GenericParameterAssignment id="frst:Tariff@WoE@Photo_id@operators" version="1.0" order="1">
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:accepted_by"/>
+									<GenericParameterAssignment id="frst:Tariff@WoE@Photo_id@access_operators" version="1.0" order="1">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 										<ValidityParameterGroupingType>XOR</ValidityParameterGroupingType>
 										<validityParameters>
@@ -7208,6 +7244,7 @@ Young people aged 16-21 and students get up to 30% OFF all singles, day and seas
 								</FareStructureElement>
 								<FareStructureElement version="1.0" id="frst:Tariff@WoE@Photo_id@eligibility">
 									<Name>Allowed operaror</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:eligibility"/>
 									<GenericParameterAssignment version="1.0" id=":Tariff@WoE@Photo_id@eligibility" order="1">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:eligible"/>
 										<limitations>
@@ -7309,7 +7346,7 @@ BS5 0DZ or email your details to ticketssww@firstgroup</Description>
 								<ValidableElement version="1.0" id="frst:WoE@Photo_id@travel">
 									<Name>Unlimited rides available for specifed periods</Name>
 									<fareStructureElements>
-										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE@Photo_id@operators"/>
+										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE@Photo_id@access_operators"/>
 										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE@Photo_id@eligibility"/>
 									</fareStructureElements>
 								</ValidableElement>
@@ -7505,12 +7542,11 @@ BS5 0DZ or email your details to ticketssww@firstgroup</Description>
 				<FareFrame version="1.0" id="epd:UK:TRW:FareFrame_UK_PI_FARE_PRODUCT:TW_Rider@Pass:trw">
 					<Name>Travelwest Avon, Bath, Bristol and Weston Rider products</Name>
 					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_FARE_PRODUCT:FXCP"/>
-				
 					<FrameDefaults>
 						<DefaultCodespaceRef ref="trw_data"/>
 						<DefaultCurrency>GBP</DefaultCurrency>
 					</FrameDefaults>
-							<prerequisites>
+					<prerequisites>
 						<FareFrameRef version="1.0" ref="epd:UK:TRW:FareFrame_UK_PI_FARE_COMMON:Travelwest:trw"/>
 					</prerequisites>
 					<!--====Tariff Structure ==== -->
@@ -7542,9 +7578,10 @@ BS5 0DZ or email your details to ticketssww@firstgroup</Description>
 							</timeIntervals>
 							<!-- ==FARE STRUCTURE ELEMENTS -->
 							<fareStructureElements>
-								<FareStructureElement id="trw:Tariff@TW_Rider@Pass@modes" version="1.0">
+								<FareStructureElement version="1.0" id="trw:Tariff@TW_Rider@Pass@access_modes">
 									<Name>Available modes</Name>
-									<GenericParameterAssignment order="1" id="trw:Tariff@TW_Rider@Pass@modes" version="1.0">
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:access"/>
+									<GenericParameterAssignment order="1" id="trw:Tariff@TW_Rider@Pass@access_modes" version="1.0">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 										<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
 										<validityParameters>
@@ -7552,9 +7589,10 @@ BS5 0DZ or email your details to ticketssww@firstgroup</Description>
 										</validityParameters>
 									</GenericParameterAssignment>
 								</FareStructureElement>
-								<FareStructureElement version="1.0" id="trw:Tariff@TW_Rider@Pass@zones">
+								<FareStructureElement version="1.0" id="trw:Tariff@TW_Rider@Pass@access_zones">
 									<Name>Rider zones Passes</Name>
-									<GenericParameterAssignment id="trw:Tariff@TW_Rider@Pass@zones" version="1.0" order="1">
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:access"/>
+									<GenericParameterAssignment id="trw:Tariff@TW_Rider@Pass@access_zones" version="1.0" order="1">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 										<ValidityParameterGroupingType>XOR</ValidityParameterGroupingType>
 										<validityParameters>
@@ -7565,9 +7603,10 @@ BS5 0DZ or email your details to ticketssww@firstgroup</Description>
 										</validityParameters>
 									</GenericParameterAssignment>
 								</FareStructureElement>
-								<FareStructureElement version="1.0" id="trw:Tariff@TW_Rider@Pass@operators">
+								<FareStructureElement version="1.0" id="trw:Tariff@TW_Rider@Pass@access_operators">
 									<Name>Rider zones Passes</Name>
-									<GenericParameterAssignment id="trw:Tariff@TW_Rider@Pass@operators" version="1.0" order="1">
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:accepted_by"/>
+									<GenericParameterAssignment id="trw:Tariff@TW_Rider@Pass@access_operators" version="1.0" order="1">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 										<ValidityParameterGroupingType>XOR</ValidityParameterGroupingType>
 										<includes>
@@ -7608,6 +7647,7 @@ BS5 0DZ or email your details to ticketssww@firstgroup</Description>
 								</FareStructureElement>
 								<FareStructureElement version="1.0" id="trw:Tariff@TW_Rider@Pass@eligibility">
 									<Name>eligible user types</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:eligibility"/>
 									<GenericParameterAssignment order="1" id="trw:Tariff@TW_Rider@Pass@eligibility" version="1.0">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:eligible"/>
 										<LimitationGroupingType>XOR</LimitationGroupingType>
@@ -7621,6 +7661,7 @@ BS5 0DZ or email your details to ticketssww@firstgroup</Description>
 								</FareStructureElement>
 								<FareStructureElement version="1.0" id="trw:Tariff@TW_Rider@Pass@durations">
 									<Name>WoE pass durations</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:durations"/>
 									<timeIntervals>
 										<TimeIntervalRef version="1.0" ref="trw:Tariff@TW_Rider@Pass@1day"/>
 										<TimeIntervalRef version="1.0" ref="trw:Tariff@TW_Rider@Pass@1week"/>
@@ -7670,9 +7711,9 @@ Student/child Rider Tickets are not available on travelcards.
 								<ValidableElement version="1.0" id="trw:Pass@TW_Rider@travel">
 									<Name>Unlimited rides available for specifed periods</Name>
 									<fareStructureElements>
-										<FareStructureElementRef version="1.0" ref="trw:Tariff@TW_Rider@Pass@modes"/>
-										<FareStructureElementRef version="1.0" ref="trw:Tariff@TW_Rider@Pass@zones"/>
-										<FareStructureElementRef version="1.0" ref="trw:Tariff@TW_Rider@Pass@operators"/>
+										<FareStructureElementRef version="1.0" ref="trw:Tariff@TW_Rider@Pass@access_modes"/>
+										<FareStructureElementRef version="1.0" ref="trw:Tariff@TW_Rider@Pass@access_zones"/>
+										<FareStructureElementRef version="1.0" ref="trw:Tariff@TW_Rider@Pass@access_operators"/>
 										<FareStructureElementRef version="1.0" ref="trw:Tariff@TW_Rider@Pass@eligibility"/>
 										<FareStructureElementRef version="1.0" ref="trw:Tariff@TW_Rider@Pass@durations"/>
 									</fareStructureElements>
@@ -7715,7 +7756,7 @@ Student/child Rider Tickets are not available on travelcards.
 							<BrandingRef version="1.0" ref="trw:TRW@brand"/>
 							<Name>Bristol Rider Pass</Name>
 							<validityParameterAssignments>
-								<GenericParameterAssignment version="1.0" id="trw:Pass@TW_Rider-SOP@p-ticket@Bristol@zones" order="1">
+								<GenericParameterAssignment version="1.0" id="trw:Pass@TW_Rider-SOP@p-ticket@Bristol@access_zones" order="1">
 									<Name>Go anywhere in Bristol Multi operator</Name>
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 									<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
@@ -7730,7 +7771,7 @@ Student/child Rider Tickets are not available on travelcards.
 							<BrandingRef version="1.0" ref="trw:TRW@brand"/>
 							<Name>Bath Rider Pass</Name>
 							<validityParameterAssignments>
-								<GenericParameterAssignment version="1.0" id="trw:Pass@TW_Rider-SOP@p-ticket@Bath@zones" order="1">
+								<GenericParameterAssignment version="1.0" id="trw:Pass@TW_Rider-SOP@p-ticket@Bath@access_zones" order="1">
 									<Name>Go anywhere in Bath Multi operator</Name>
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 									<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
@@ -7746,7 +7787,7 @@ Student/child Rider Tickets are not available on travelcards.
 							<Name>WestonRider</Name>
 							<Description>Go anywhere in Weston Multi operator</Description>
 							<validityParameterAssignments>
-								<GenericParameterAssignment version="1.0" id="trw:Pass@TW_Rider-SOP@p-ticket@Weston_super_mare@zones" order="1">
+								<GenericParameterAssignment version="1.0" id="trw:Pass@TW_Rider-SOP@p-ticket@Weston_super_mare@access_zones" order="1">
 									<Name>Go anywhere in Weston-super-Mare Zone</Name>
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 									<validityParameters>
@@ -7761,7 +7802,7 @@ Student/child Rider Tickets are not available on travelcards.
 							<Name>AvonRider</Name>
 							<Description>Go anywhere in Avon Multi operator</Description>
 							<validityParameterAssignments>
-								<GenericParameterAssignment version="1.0" id="trw:Pass@TW_Rider-SOP@p-ticket@Avon@zones" order="1">
+								<GenericParameterAssignment version="1.0" id="trw:Pass@TW_Rider-SOP@p-ticket@Avon@access_zones" order="1">
 									<Name>Go anywhere in Bristol</Name>
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 									<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
@@ -7777,7 +7818,7 @@ Student/child Rider Tickets are not available on travelcards.
 							<BrandingRef version="1.0" ref="trw:TRW@brand"/>
 							<Name>Bristol Rider Pass</Name>
 							<validityParameterAssignments>
-								<GenericParameterAssignment version="1.0" id="trw:Pass@TW_Rider-SOP@smartcard@Bristol@zones" order="1">
+								<GenericParameterAssignment version="1.0" id="trw:Pass@TW_Rider-SOP@smartcard@Bristol@access_zones" order="1">
 									<Name>Go anywhere in Bristol Multi operator</Name>
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 									<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
@@ -7792,7 +7833,7 @@ Student/child Rider Tickets are not available on travelcards.
 							<BrandingRef version="1.0" ref="trw:TRW@brand"/>
 							<Name>Bath Rider Pass</Name>
 							<validityParameterAssignments>
-								<GenericParameterAssignment version="1.0" id="trw:Pass@TW_Rider-SOP@smartcard@Bath@zones" order="1">
+								<GenericParameterAssignment version="1.0" id="trw:Pass@TW_Rider-SOP@smartcard@Bath@access_zones" order="1">
 									<Name>Go anywhere in Bath Multi operator</Name>
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 									<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
@@ -7808,7 +7849,7 @@ Student/child Rider Tickets are not available on travelcards.
 							<Name>WestonRider</Name>
 							<Description>Go anywhere in Weston Multi operator</Description>
 							<validityParameterAssignments>
-								<GenericParameterAssignment version="1.0" id="trw:Pass@TW_Rider-SOP@smartcard@Weston_super_mare@zones" order="1">
+								<GenericParameterAssignment version="1.0" id="trw:Pass@TW_Rider-SOP@smartcard@Weston_super_mare@access_zones" order="1">
 									<Name>Go anywhere in Weston-super-Mare Zone</Name>
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 									<validityParameters>
@@ -7823,7 +7864,7 @@ Student/child Rider Tickets are not available on travelcards.
 							<Name>AvonRider</Name>
 							<Description>Go anywhere in Avon Multi operator</Description>
 							<validityParameterAssignments>
-								<GenericParameterAssignment version="1.0" id="trw:Pass@TW_Rider-SOP@smartcard@Avon@zones" order="1">
+								<GenericParameterAssignment version="1.0" id="trw:Pass@TW_Rider-SOP@smartcard@Avon@access_zones" order="1">
 									<Name>Go anywhere in Bristol</Name>
 									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 									<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
@@ -7859,13 +7900,13 @@ Student/child Rider Tickets are not available on travelcards.
 											<includes>
 												<GenericParameterAssignment version="1.0" id="trw:Pass@TW_Rider-GSOP@p-ticket@channels@on_board@day" order="1">
 													<Name>Where you can buy a pass of given duration</Name>
-													<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_purchase"/>
+													<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_purchase_as"/>
 													<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
 													<TimeIntervalRef version="1.0" ref="trw:Tariff@TW_Rider@Pass@1day"/>
 												</GenericParameterAssignment>
 												<GenericParameterAssignment version="1.0" id="trw:Pass@TW_Rider-GSOP@p-ticket@channels@on_board@1week" order="2">
 													<Name>Where you can buy a pass of given duration</Name>
-													<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_purchase"/>
+													<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_purchase_as"/>
 													<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
 													<TimeIntervalRef version="1.0" ref="trw:Tariff@TW_Rider@Pass@1week"/>
 												</GenericParameterAssignment>
@@ -7927,13 +7968,13 @@ Student/child Rider Tickets are not available on travelcards.
 											<includes>
 												<GenericParameterAssignment version="1.0" id="trw:Pass@TW_Rider-GSOP@smartcard@channels@on_board@day" order="1">
 													<Name>Where you can buy a pass of given duration</Name>
-													<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_purchase"/>
+													<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_purchase_as"/>
 													<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
 													<TimeIntervalRef version="1.0" ref="trw:Tariff@TW_Rider@Pass@1day"/>
 												</GenericParameterAssignment>
 												<GenericParameterAssignment version="1.0" id="trw:Pass@TW_Rider-GSOP@smartcard@channels@on_board@1week" order="2">
 													<Name>Where you can buy a pass of given duration</Name>
-													<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_purchase"/>
+													<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_purchase_as"/>
 													<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
 													<TimeIntervalRef version="1.0" ref="trw:Tariff@TW_Rider@Pass@1week"/>
 												</GenericParameterAssignment>
@@ -7976,8 +8017,7 @@ Student/child Rider Tickets are not available on travelcards.
 				<FareFrame version="1.0" id="epd:UK:TRW:FareFrame_UK_PI_FARE_PRICE:TW_Rider@Pass:trw">
 					<Name>Travelwest Multioperator Zonal Pass Product Prices prices</Name>
 					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_FARE_PRICE:FXCP"/>
-					
-						<prerequisites>
+					<prerequisites>
 						<FareFrameRef version="1.0" ref="epd:UK:TRW:FareFrame_UK_PI_FARE_PRODUCT:TW_Rider@Pass:trw"/>
 					</prerequisites>
 					<fareTables>
@@ -8222,11 +8262,10 @@ WestonRider |	 £4.00	 |	£3.00 			 	||	18.00 	| 	13.50 	|
 				<FareFrame version="1.0" id="epd:UK:TRW:FareFrame_UK_PI_FARE_PRODUCT:TW_Smartcard@Pass:trw">
 					<Name>Travel WesPAYG SMartcard Avon, Bath, Bristol and Weston Rider products</Name>
 					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_FARE_PRODUCT:FXCP"/>
-							
 					<FrameDefaults>
 						<DefaultCodespaceRef ref="trw_data"/>
 					</FrameDefaults>
-						<prerequisites>
+					<prerequisites>
 						<FareFrameRef version="1.0" ref="epd:UK:TRW:FareFrame_UK_PI_FARE_COMMON:Travelwest:trw"/>
 					</prerequisites>
 					<!--====Tariff Structure ==== -->
@@ -8240,9 +8279,10 @@ WestonRider |	 £4.00	 |	£3.00 			 	||	18.00 	| 	13.50 	|
 							<TypeOfTariffRef version="fxc:v1.0" ref="fxc:stored_value"/>
 							<!-- ==FARE STRUCTURE ELEMENTS -->
 							<fareStructureElements>
-								<FareStructureElement version="1.0" id="trw:Tariff@TW_Smartcard@PAYG_epurse@operators">
+								<FareStructureElement version="1.0" id="trw:Tariff@TW_Smartcard@PAYG_epurse@access_operators">
 									<Name>Operators accepting PAYG</Name>
-									<GenericParameterAssignment id="trw:Tariff@TW_Smartcard@PAYG_epurse@operators" version="1.0" order="1">
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:accepted_by"/>
+									<GenericParameterAssignment id="trw:Tariff@TW_Smartcard@PAYG_epurse@access_operators" version="1.0" order="1">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 										<ValidityParameterGroupingType>XOR</ValidityParameterGroupingType>
 										<validityParameters>
@@ -8256,6 +8296,7 @@ WestonRider |	 £4.00	 |	£3.00 			 	||	18.00 	| 	13.50 	|
 								</FareStructureElement>
 								<FareStructureElement version="1.0" id="trw:Tariff@TW_Smartcard@PAYG_epurse@eligibility">
 									<Name>eligible user types</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:eligibility"/>
 									<GenericParameterAssignment order="1" id="trw:Tariff@TW_Smartcard@PAYG_epurse@eligibility" version="1.0">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:eligible"/>
 										<LimitationGroupingType>XOR</LimitationGroupingType>
@@ -8304,7 +8345,7 @@ Some bus operators even offer special 'smart' discounts for customers using Pay-
 								<ValidableElement version="1.0" id="trw:TW_Smartcard@Stored_value@PAYG_epurse@travel">
 									<Name>Unlimited rides available for specifed periods</Name>
 									<fareStructureElements>
-										<FareStructureElementRef version="1.0" ref="trw:Tariff@TW_Smartcard@PAYG_epurse@operators"/>
+										<FareStructureElementRef version="1.0" ref="trw:Tariff@TW_Smartcard@PAYG_epurse@access_operators"/>
 										<FareStructureElementRef version="1.0" ref="trw:Tariff@TW_Smartcard@PAYG_epurse@eligibility"/>
 									</fareStructureElements>
 									<validityParameterAssignments>
@@ -8375,7 +8416,7 @@ Some bus operators even offer special 'smart' discounts for customers using Pay-
 				<FareFrame version="1.0" id="epd:UK:TRW:FareFrame_UK_PI_FARE_COMMON:Travelwest:trw">
 					<Name>West of England common parameters</Name>
 					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_FARE_COMMON:FXCP"/>
-					 	<prerequisites>
+					<prerequisites>
 						<ResourceFrameRef version="1.0" ref="epd:UK:TRW:ResourceFrame_UK_PI_COMMON:Travelwest:trw"/>
 					</prerequisites>
 					<!--==== Pricing Parameters ====-->
@@ -8523,6 +8564,7 @@ For Terms and Conditions and details of PayPoint agents see link or contact cust
 							</Presentation>
 							<ParentFareZoneRef ref="trw:TW_Rider@Avon"/>
 							<ZoneTopology>nested</ZoneTopology>
+							<ScopingMethod>explicitStops</ScopingMethod>
 						</FareZone>
 						<!--- -->
 						<FareZone version="1.0" id="trw:TravelwestRider@Weston_super_mare">
@@ -8547,6 +8589,7 @@ For Terms and Conditions and details of PayPoint agents see link or contact cust
 									<InfoLink typeOfInfoLink="map">https://Travelwest.info/bus/fares/rider-ticket-information/westonrider</InfoLink>
 								</infoLinks>
 							</Presentation>
+							<ScopingMethod>implicitSpatialProjection</ScopingMethod>
 						</FareZone>
 						<FareZone version="1.0" id="trw:TravelwestRider@Avon">
 							<Name>AvonRider</Name>
@@ -8568,6 +8611,7 @@ For Terms and Conditions and details of PayPoint agents see link or contact cust
 									<InfoLink typeOfInfoLink="info">https://Travelwest.info/bus/fares/rider-ticket-information/avonrider</InfoLink>
 								</infoLinks>
 							</Presentation>
+							<ScopingMethod>implicitSpatialProjection</ScopingMethod>
 						</FareZone>
 					</fareZones>
 				</FareFrame>
@@ -8779,9 +8823,10 @@ For Terms and Conditions and details of PayPoint agents see link or contact cust
 							</timeIntervals>
 							<!-- ==FARE STRUCTURE ELEMENTS -->
 							<fareStructureElements>
-								<FareStructureElement id="frp:Tariff@Freedom@Pass@modes" version="1.0">
+								<FareStructureElement id="frp:Tariff@Freedom@Pass@access_modes" version="1.0">
 									<Name>Available modes</Name>
-									<GenericParameterAssignment order="1" id="frp:Tariff@Freedom@Pass@modes" version="1.0">
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:access"/>
+									<GenericParameterAssignment order="1" id="frp:Tariff@Freedom@Pass@access_modes" version="1.0">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 										<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
 										<validityParameters>
@@ -8791,9 +8836,10 @@ For Terms and Conditions and details of PayPoint agents see link or contact cust
 										</validityParameters>
 									</GenericParameterAssignment>
 								</FareStructureElement>
-								<FareStructureElement version="1.0" id="frp:Tariff@Freedom@Pass@zones">
+								<FareStructureElement version="1.0" id="frp:Tariff@Freedom@Pass@access_zones">
 									<Name>Available  zones </Name>
-									<GenericParameterAssignment id="frp:Tariff@Freedom@Pass@zones" version="1.0" order="1">
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:access"/>
+									<GenericParameterAssignment id="frp:Tariff@Freedom@Pass@access_zones" version="1.0" order="1">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 										<ValidityParameterGroupingType>XOR</ValidityParameterGroupingType>
 										<validityParameters>
@@ -8816,9 +8862,10 @@ For Terms and Conditions and details of PayPoint agents see link or contact cust
 										</includes>
 									</GenericParameterAssignment>
 								</FareStructureElement>
-								<FareStructureElement version="1.0" id="frp:Tariff@Freedom@Pass@operators">
+								<FareStructureElement version="1.0" id="frp:Tariff@Freedom@Pass@access_operators">
 									<Name>Permitted operators</Name>
-									<GenericParameterAssignment id="frp:Tariff@Freedom@Pass@operators" version="1.0" order="1">
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:accepted_by"/>
+									<GenericParameterAssignment id="frp:Tariff@Freedom@Pass@access_operators" version="1.0" order="1">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 										<ValidityParameterGroupingType>XOR</ValidityParameterGroupingType>
 										<validityParameters>
@@ -8828,6 +8875,7 @@ For Terms and Conditions and details of PayPoint agents see link or contact cust
 								</FareStructureElement>
 								<FareStructureElement version="1.0" id="frp:Tariff@Freedom@Pass@eligibility">
 									<Name>Eligible user types</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:eligibility"/>
 									<GenericParameterAssignment order="1" id="frp:Tariff@Freedom@Pass@eligibility" version="1.0">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:eligible"/>
 										<LimitationGroupingType>XOR</LimitationGroupingType>
@@ -8839,6 +8887,7 @@ For Terms and Conditions and details of PayPoint agents see link or contact cust
 								</FareStructureElement>
 								<FareStructureElement version="1.0" id="frp:Tariff@Freedom@Pass@durations">
 									<Name>Available pass durations</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:durations"/>
 									<timeIntervals>
 										<TimeIntervalRef version="1.0" ref="frp:Tariff@Freedom@Pass@1day"/>
 										<TimeIntervalRef version="1.0" ref="frp:Tariff@Freedom@Pass@1week"/>
@@ -8879,9 +8928,9 @@ A photocard is required for the monthly Freedom Travelpass
 								<ValidableElement version="1.0" id="frp:Pass@Freedom@travel">
 									<Name>Unlimited rides available for specifed periods</Name>
 									<fareStructureElements>
-										<FareStructureElementRef version="1.0" ref="frp:Tariff@Freedom@Pass@modes"/>
-										<FareStructureElementRef version="1.0" ref="frp:Tariff@Freedom@Pass@zones"/>
-										<FareStructureElementRef version="1.0" ref="frp:Tariff@Freedom@Pass@operators"/>
+										<FareStructureElementRef version="1.0" ref="frp:Tariff@Freedom@Pass@access_modes"/>
+										<FareStructureElementRef version="1.0" ref="frp:Tariff@Freedom@Pass@access_zones"/>
+										<FareStructureElementRef version="1.0" ref="frp:Tariff@Freedom@Pass@access_operators"/>
 										<FareStructureElementRef version="1.0" ref="frp:Tariff@Freedom@Pass@eligibility"/>
 										<FareStructureElementRef version="1.0" ref="frp:Tariff@Freedom@Pass@durations"/>
 									</fareStructureElements>
@@ -8946,13 +8995,13 @@ A photocard is required for the monthly Freedom Travelpass
 											<includes>
 												<GenericParameterAssignment version="1.0" id="frp:Pass@Freedom-GSOP@p-ticket@channels@on_board@day" order="1">
 													<Name>Where you can buy a pass of given duration</Name>
-													<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_purchase"/>
+													<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_purchase_as"/>
 													<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
 													<TimeIntervalRef version="1.0" ref="frp:Tariff@Freedom@Pass@1day"/>
 												</GenericParameterAssignment>
 												<GenericParameterAssignment version="1.0" id="frp:Pass@Freedom-GSOP@p-ticket@channels@on_board@1week" order="2">
 													<Name>Where you can buy a pass of given duration</Name>
-													<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_purchase"/>
+													<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_purchase_as"/>
 													<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
 													<TimeIntervalRef version="1.0" ref="frp:Tariff@Freedom@Pass@1week"/>
 												</GenericParameterAssignment>
@@ -10057,6 +10106,7 @@ Zone A B C D: Bristol, Bath &amp; Weston-super-Mare | £ 18.00 	|	£ 76.00 	|	290.
 							</types>
 							<ParentFareZoneRef version="1.0" ref="frp:Freedom"/>
 							<ZoneTopology>honeycomb</ZoneTopology>
+							<ScopingMethod>explicitStops</ScopingMethod>
 							<fareSections>
 								<!-- Weston-super-mare to Yate -->
 								<FareSectionRef ref="nrn:rail@D@Weston_super_mare#Weston_Milton">Weston-super-mare to Weston_Milton</FareSectionRef>
@@ -10153,6 +10203,7 @@ Zone A B C D: Bristol, Bath &amp; Weston-super-Mare | £ 18.00 	|	£ 76.00 	|	290.
 							</types>
 							<ParentFareZoneRef ref="frp:Freedom@ABCD-Bath_Bristol_Weston"/>
 							<ZoneTopology>tiled</ZoneTopology>
+							<ScopingMethod>explicitStops</ScopingMethod>
 							<fareSections>
 								<FareSectionRef ref="nrn:rail@A@Keynsham#Bristol_Temple_Meads">Keynsham to Bristol_Temple_Meads</FareSectionRef>
 								<FareSectionRef ref="nrn:rail@A@St_Andrews_Road#Avonmouth">St_Andrews_Road to Avonmouth</FareSectionRef>
@@ -10205,6 +10256,7 @@ Zone A B C D: Bristol, Bath &amp; Weston-super-Mare | £ 18.00 	|	£ 76.00 	|	290.
 							</types>
 							<ParentFareZoneRef ref="frp:Freedom@ABCD-Bath_Bristol_Weston"/>
 							<ZoneTopology>tiled</ZoneTopology>
+							<ScopingMethod>explicitStops</ScopingMethod>
 							<fareSections>
 								<FareSectionRef ref="nrn:rail@B@Yatton#Nailsea_and_Blackwall">Yatton to Nailsea_and_Blackwall</FareSectionRef>
 								<!-- inverses -->
@@ -10231,6 +10283,7 @@ Zone A B C D: Bristol, Bath &amp; Weston-super-Mare | £ 18.00 	|	£ 76.00 	|	290.
 							</types>
 							<ParentFareZoneRef ref="frp:Freedom@ABCD-Bath_Bristol_Weston"/>
 							<ZoneTopology>tiled</ZoneTopology>
+							<ScopingMethod>explicitStops</ScopingMethod>
 							<fareSections>
 								<FareSectionRef ref="nrn:rail@C@Oldfield_Park#Bath_Spa">Oldfield_Park to Bath_Spa</FareSectionRef>
 								<FareSectionRef ref="nrn:rail@C@Bath_Spa#Freshford">Bath_Spa to Freshford</FareSectionRef>
@@ -10257,6 +10310,7 @@ Zone A B C D: Bristol, Bath &amp; Weston-super-Mare | £ 18.00 	|	£ 76.00 	|	290.
 							</types>
 							<ParentFareZoneRef ref="frp:Freedom@ABCD-Bath_Bristol_Weston"/>
 							<ZoneTopology>tiled</ZoneTopology>
+							<ScopingMethod>explicitStops</ScopingMethod>
 							<fareSections>
 								<FareSectionRef ref="nrn:rail@D@Weston_super_mare#Weston_Milton">Weston-super-mare to Weston Milton</FareSectionRef>
 								<FareSectionRef ref="nrn:rail@D@Weston_Milton#Worle">Weston Miltone to Worle</FareSectionRef>
@@ -10276,6 +10330,7 @@ Zone A B C D: Bristol, Bath &amp; Weston-super-Mare | £ 18.00 	|	£ 76.00 	|	290.
 							</types>
 							<ParentZoneRef ref="frp:Freedom@ABCD-Bath_Bristol_Weston"/>
 							<ZoneTopology>overlapping</ZoneTopology>
+							<ScopingMethod>explicitStops</ScopingMethod>
 							<fareSections>
 								<!-- Weston-super-mare to Yate -->
 								<FareSectionRef ref="nrn:rail@A@Parson_Street#Bedminster">Parson_Street to Bedminster</FareSectionRef>
@@ -10342,6 +10397,7 @@ Zone A B C D: Bristol, Bath &amp; Weston-super-Mare | £ 18.00 	|	£ 76.00 	|	290.
 							</types>
 							<ParentZoneRef ref="frp:Freedom@ABCD-Bath_Bristol_Weston"/>
 							<ZoneTopology>overlapping</ZoneTopology>
+							<ScopingMethod>explicitStops</ScopingMethod>
 							<fareSections>
 								<!-- Weston-super-mare to Yate -->
 								<FareSectionRef ref="nrn:rail@B@Yatton#Nailsea_and_Blackwall">Yatton to Nailsea_and_Blackwall</FareSectionRef>
@@ -10400,6 +10456,7 @@ Zone A B C D: Bristol, Bath &amp; Weston-super-Mare | £ 18.00 	|	£ 76.00 	|	290.
 							</types>
 							<ParentZoneRef ref="frp:Freedom@ABCD-Bath_Bristol_Weston"/>
 							<ZoneTopology>overlapping</ZoneTopology>
+							<ScopingMethod>explicitStops</ScopingMethod>
 							<fareSections>
 								<!-- Weston-super-mare to Yate -->
 								<FareSectionRef ref="nrn:rail@B@Yatton#Nailsea_and_Blackwall">Yatton to Nailsea_and_Blackwall</FareSectionRef>
@@ -10487,6 +10544,7 @@ Zone A B C D: Bristol, Bath &amp; Weston-super-Mare | £ 18.00 	|	£ 76.00 	|	290.
 							</projections>
 							<ParentZoneRef ref="frp:Freedom@ABCD-Bath_Bristol_Weston"/>
 							<ZoneTopology>overlapping</ZoneTopology>
+							<ScopingMethod>implicitSpatialProjection</ScopingMethod>
 							<fareSections>
 								<!-- Weston-super-mare to Yate -->
 								<FareSectionRef ref="nrn:rail@D@Weston_super_mare#Weston_Milton">Weston-super-mare to Weston_Milton</FareSectionRef>
@@ -10815,15 +10873,40 @@ This Shows sample Purchases as they might be logged to refernce the specific pro
 			<frames>
 				<!-- ====COMMON UK PI Profile  RESOURCEs:  META DATA - COULD BE EXTERNALISED ===== ============ -->
 				<!-- === Profile Frame Types ===  -->
+					<!-- === Profile Frame Types ===  -->
 				<ResourceFrame id="fxc:UK:DFT:ResourceFrame_UK_PI_METADATA_FRAMES:FXCP:fxc" version="fxc:v1.0" responsibilitySetRef="fxc:FXC_metadata" dataSourceRef="fxc:dft">
-					<Name>UKFXCP  Frame types</Name>
+					<Name>UK FXCP  Fare profile Frame types and codepaces</Name>
 					<codespaces>
+						<Codespace id="fxc_metadata">
+							<Xmlns>fxc</Xmlns>
+							<XmlnsUrl>netex.org.uk/fxc</XmlnsUrl>
+							<Description>UK FareXChange Profile metadata</Description>
+						</Codespace>
 						<Codespace id="epd_data">
 							<Xmlns>epd</Xmlns>
 							<XmlnsUrl>http://fnetex-cen.eu/epd</XmlnsUrl>
 							<Description>European Passenger Information profile data -use for UK frame names</Description>
 						</Codespace>
 					</codespaces>
+					<dataSources>
+						<DataSource id="fxc:dft" version="fxc:v1.0">
+							<Email>standards@netex.org.uk</Email>
+						</DataSource>
+					</dataSources>
+					<!-- ========Responsibility Sets========== -->
+					<responsibilitySets>
+						<ResponsibilitySet version="fxc:v1.0" id="fxc:FXC_metadata">
+							<Name>Common</Name>
+							<roles>
+								<ResponsibilityRoleAssignment version="fxc:v1.0" id="fxc:FXC_metadata:DfT">
+									<DataRoleType>creates distributes</DataRoleType>
+									<StakeholderRoleType>DataRegistrar</StakeholderRoleType>
+									<ResponsibleOrganisationRef ref="nptg:DfT" versionRef="nptg:v2.1"/>
+									<ResponsibleAreaRef ref="nptgUkRegion:GB" versionRef="nptg:v2.1"/>
+								</ResponsibilityRoleAssignment>
+							</roles>
+						</ResponsibilitySet>
+					</responsibilitySets>
 					<typesOfValue>
 						<!-- ======== TYPE S OF   FRAME========= -->
 						<ValueSet version="fxc:1.0" id="fxc:Types_of_Specific_Frame_Basic" classOfValues="TypeOfFrame">
@@ -10932,7 +11015,7 @@ This Shows sample Purchases as they might be logged to refernce the specific pro
 						</ValueSet>
 					</typesOfValue>
 				</ResourceFrame>
-				<!-- === FareXchange  Common fixed definitions  ===  -->
+		<!-- === FareXChange  Common fixed definitions  ===  -->
 				<FareFrame id="fxc:UK:DFT:FareFrame_UK_PI_METADATA:FareXChange:fxc" version="fxc:v1.0" responsibilitySetRef="fxc:FXC_metadata" dataSourceRef="fxc:dft">
 					<Name>FXCP Values for Farexchange</Name>
 					<FrameDefaults>
@@ -11015,6 +11098,12 @@ This Shows sample Purchases as they might be logged to refernce the specific pro
 							<UserType>student</UserType>
 							<ProofRequired>membershipCard</ProofRequired>
 							<DiscountBasis>discount</DiscountBasis>
+						</UserProfile>
+						<UserProfile version="fxc:v1.0" id="fxc:senior">
+							<Name>Senior</Name>
+							<TypeOfConcessionRef version="fxc:v1.0" ref="fxc:child"/>
+							<UserType>senior</UserType>
+							<MinimumAge>60</MinimumAge>
 						</UserProfile>
 					</usageParameters>
 					<!-- ====CHANNELS -->
@@ -11229,16 +11318,7 @@ This Shows sample Purchases as they might be logged to refernce the specific pro
 					</typesOfTravelDocuments>
 				</FareFrame>
 				<ResourceFrame id="fxc:UK:DFT:ResourceFrame_UK_PI_METADATA:FareXChange:fxc" version="fxc:v1.0" responsibilitySetRef="fxc:FXC_metadata" dataSourceRef="fxc:dft">
-					<Name>FXCP - Fare metadata</Name>
-					<codespaces>
-						<Codespace id="fxc_metadata">
-							<Xmlns>fxc</Xmlns>
-							<XmlnsUrl>netex.org.uk/fxc</XmlnsUrl>
-							<Description>UK FareXChange Profile metadata</Description>
-						</Codespace>
-
-				 
-					</codespaces>
+					<Name>FXCP - Fare profile  metadata</Name>
 					<FrameDefaults>
 						<DefaultCodespaceRef ref="fxc_metadata"/>
 						<DefaultDataSourceRef ref="fxc:dft" version="fxc:v1.0"/>
@@ -11256,29 +11336,13 @@ This Shows sample Purchases as they might be logged to refernce the specific pro
 					</FrameDefaults>
 					<versions>
 						<Version id="fxc:v1.0" version="any">
+							<ValidBetween>
+								<FromDate>2019-01-01T01:01:01Z</FromDate>
+							</ValidBetween>
 							<Description>FXC version 2.1</Description>
 							<VersionType>baseline</VersionType>
 						</Version>
 					</versions>
-					<dataSources>
-						<DataSource id="fxc:dft" version="fxc:v1.0">
-							<Email>standards@netex.org.uk</Email>
-						</DataSource>
-					</dataSources>
-					<!-- ========Responsibility Sets========== -->
-					<responsibilitySets>
-						<ResponsibilitySet version="fxc:v1.0" id="fxc:FXC_metadata">
-							<Name>Common</Name>
-							<roles>
-								<ResponsibilityRoleAssignment version="fxc:v1.0" id="fxc:FXC_metadata:DfT">
-									<DataRoleType>creates distributes</DataRoleType>
-									<StakeholderRoleType>DataRegistrar</StakeholderRoleType>
-									<ResponsibleOrganisationRef ref="fxc:DfT" version="fxc:v1.0"/>
-									<ResponsibleAreaRef ref="fxc:UK">TODO</ResponsibleAreaRef>
-								</ResponsibilityRoleAssignment>
-							</roles>
-						</ResponsibilitySet>
-					</responsibilitySets>
 					<typesOfValue>
 						<!-- ======== Code sets ========= -->
 						<ValueSet version="fxc:v1.0" id="fxc:PointsOfInterest_Classifications" classOfValues="PointOfInterestClassification">
@@ -11294,7 +11358,7 @@ This Shows sample Purchases as they might be logged to refernce the specific pro
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareZone" classOfValues="TypeOfZone">
-							<Name>Types of Fare Zone</Name>
+							<Name>Types of FARE ZONE</Name>
 							<values>
 								<!--- ====Type of Product category ========= -->
 								<TypeOfZone version="fxc:v1.0" id="fxc:fare_zone@operator">
@@ -11309,7 +11373,7 @@ This Shows sample Purchases as they might be logged to refernce the specific pro
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_ProductCategory" classOfValues="TypeOfProductCategory">
-							<Name>Types of Product Category</Name>
+							<Name>Types of PRODUCT CATEGORY</Name>
 							<values>
 								<!--- ====Type of Product category ========= -->
 								<TypeOfProductCategory version="fxc:v1.0" id="fxc:urban_bus">
@@ -11333,7 +11397,7 @@ This Shows sample Purchases as they might be logged to refernce the specific pro
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:ChargingMoments" classOfValues="ChargingMoment">
-							<Name>Charging Moments</Name>
+							<Name>Types of CHARGING MOMENT</Name>
 							<values>
 								<!--- ==== TypeOfChargingMoment ========= -->
 								<ChargingMoment version="fxc:v1.0" id="fxc:prepayment">
@@ -11349,12 +11413,15 @@ This Shows sample Purchases as they might be logged to refernce the specific pro
 									<Name>Prepaid - free issue</Name>
 								</ChargingMoment>
 								<ChargingMoment version="fxc:v1.0" id="fxc::post_payment">
-									<Name>Prepaid</Name>
+									<Name>Postpaid</Name>
+								</ChargingMoment>
+								<ChargingMoment version="fxc:v1.0" id="fxc::post_payment_periodic">
+									<Name>Postpaid</Name>
 								</ChargingMoment>
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareProduct@trip" classOfValues="TypeOfFareProduct">
-							<Name>Types Of Fare Product - Trip</Name>
+							<Name>Types of FARE PRODUCT - Trip</Name>
 							<values>
 								<TypeOfFareProduct version="fxc:v1.0" id="fxc:standard_product@trip@short_hop">
 									<Name>Short hop fare</Name>
@@ -11375,7 +11442,7 @@ This Shows sample Purchases as they might be logged to refernce the specific pro
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareProduct@pass" classOfValues="TypeOfFareProduct">
-							<Name>Types Of Fare Product - Pass</Name>
+							<Name>Types of FARE PRODUCT - Pass</Name>
 							<values>
 								<TypeOfFareProduct version="fxc:v1.0" id="fxc:standard_product@pass@day">
 									<Name>day pass - till end of fare day</Name>
@@ -11389,7 +11456,7 @@ This Shows sample Purchases as they might be logged to refernce the specific pro
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareProduct@carnet" classOfValues="TypeOfFareProduct">
-							<Name>Types Of Fare Product - Pass</Name>
+							<Name>Types Of FARE PRODUC- Pass</Name>
 							<values>
 								<TypeOfFareProduct version="fxc:v1.0" id="fxc:standard_product@carnet@trips">
 									<Name>Carnet of trips.</Name>
@@ -11400,7 +11467,7 @@ This Shows sample Purchases as they might be logged to refernce the specific pro
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareProduct@discount" classOfValues="TypeOfFareProduct">
-							<Name>Types Of Fare Product - Pass</Name>
+							<Name>Types Of FARE PRODUCT - Pass</Name>
 							<values>
 								<TypeOfFareProduct version="fxc:v1.0" id="fxc:standard_product@discount@sales">
 									<Name>Sales discount righty</Name>
@@ -11411,7 +11478,7 @@ This Shows sample Purchases as they might be logged to refernce the specific pro
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareProduct@stored_value" classOfValues="TypeOfFareProduct">
-							<Name>Types Of Fare Product - Epurse</Name>
+							<Name>Types of FARE PRODUCT - Epurse</Name>
 							<values>
 								<TypeOfFareProduct version="fxc:v1.0" id="fxc:standard_product@stored_value@epurse">
 									<Name>Epurse</Name>
@@ -11419,7 +11486,7 @@ This Shows sample Purchases as they might be logged to refernce the specific pro
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_SalesOfferPackage" classOfValues="TypeOfSalesOfferPackage">
-							<Name>Types Of Sales Offer Product</Name>
+							<Name>Types of SALES OFFER PACKAGE.</Name>
 							<values>
 								<TypeOfSalesOfferPackage version="fxc:v1.0" id="fxc:standard_product@all_operators">
 									<Name>Product is standard and supported by all operators</Name>
@@ -11435,8 +11502,8 @@ This Shows sample Purchases as they might be logged to refernce the specific pro
 								</TypeOfSalesOfferPackage>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:ClassesOfUse" classOfValues="ClassOfUse">
-							<Name>Classes of Use</Name>
+						<ValueSet version="fxc:v1.0" id="fxc:Classes_of_Use" classOfValues="ClassOfUse">
+							<Name>Types of CLASS OF USE.</Name>
 							<values>
 								<!--- ====ClassOfUse ========= -->
 								<ClassOfUse version="fxc:v1.0" id="fxc:first">
@@ -11448,7 +11515,7 @@ This Shows sample Purchases as they might be logged to refernce the specific pro
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_Projection" classOfValues="TypeOfProjection">
-							<Name>Types of Projection</Name>
+							<Name>Types of PROJECTION</Name>
 							<values>
 								<!--- ====ClassOfUse ========= -->
 								<TypeOfProjection version="fxc:v1.0" id="fxc:tariff_zone_border">
@@ -11457,7 +11524,7 @@ This Shows sample Purchases as they might be logged to refernce the specific pro
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareContractEntry" classOfValues="TypeOfFareContractEntry">
-							<Name>Types of fare contract entry</Name>
+							<Name>Types of FARE CONTRACT ENTRY</Name>
 							<values>
 								<!--- ====TypeOfFareContractEntry ========= -->
 								<TypeOfFareContractEntry version="fxc:v1.0" id="fxc:product_purchase">
@@ -11475,7 +11542,7 @@ This Shows sample Purchases as they might be logged to refernce the specific pro
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_Concession" classOfValues="TypeOfConcession">
-							<Name>Types of concession</Name>
+							<Name>Types of CONCESSION</Name>
 							<values>
 								<!--- ====TypeOfConcession method========= -->
 								<TypeOfConcession version="fxc:v1.0" id="fxc:none">
@@ -11555,6 +11622,62 @@ This Shows sample Purchases as they might be logged to refernce the specific pro
 								</TypeOfTariff>
 							</values>
 						</ValueSet>
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareStructureElement" classOfValues="TypeOfFareStructureElement">
+							<Name>FXCP: Types of FARE STRUCTURE ELEMENT.</Name>
+							<values>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:access">
+									<Name>Access rights</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:access_when">
+									<Name>Fare demand :peak /off peak etc access rights to use or travel during some period</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:accepted_by">
+									<Name>Accepted by operator</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:eligibility">
+									<Name>Eligibility to purchase</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:groups">
+									<Name>Group tickets available</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:durations">
+									<Name>Time intervals</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:intervals">
+									<Name>Time intervals</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:prerequisites">
+									<Name>Defines required entitlements</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:entitles">
+									<Name>Gives right to other products</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:sale_conditions">
+									<Name>Defines a condition or restriction on purchase</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:travel_conditions">
+									<Name>Condition on use</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:validity">
+									<Name>Validity</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:carnet_units">
+									<Name>Specifies units for purchase</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:outlets">
+									<Name>Specifies where a purchase can be made</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:quotas">
+									<Name>Quotas</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:steps">
+									<Name>Steps in sequence</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:payment_schedules">
+									<Name>Payment Schedules</Name>
+								</TypeOfFareStructureElement>
+							</values>
+						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_AccessRightAssignment" classOfValues="TypeOfAccessRightAssignment">
 							<Name>Types of Access Right Assignment</Name>
 							<values>
@@ -11585,7 +11708,7 @@ This Shows sample Purchases as they might be logged to refernce the specific pro
 								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:condition_of_sale">
 									<Name>Defines a condition or restriction on purchase</Name>
 								</TypeOfAccessRightAssignment>
-								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:can_purchase">
+								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:can_purchase_as">
 									<Name>Gives right to purchase</Name>
 								</TypeOfAccessRightAssignment>
 								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:can_purchase_when">
@@ -11606,7 +11729,7 @@ This Shows sample Purchases as they might be logged to refernce the specific pro
 								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:can_use_to_pay_for">
 									<Name>Gives ability to purchase automatically using</Name>
 								</TypeOfAccessRightAssignment>
-								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:payment_schedule">
+								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:payment_schedules">
 									<Name>Specifices if subscription or single payment</Name>
 								</TypeOfAccessRightAssignment>
 								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:reservation_condition">
@@ -11615,7 +11738,7 @@ This Shows sample Purchases as they might be logged to refernce the specific pro
 								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:distribution_channel_restriction">
 									<Name>Constrains availability for distribution by a channel</Name>
 								</TypeOfAccessRightAssignment>
-								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:takes_properties_from_group">
+								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:use_before">
 									<Name>Takes properties from group package</Name>
 								</TypeOfAccessRightAssignment>
 								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:quota_applies">

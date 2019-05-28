@@ -217,7 +217,7 @@ At the end are shown some sample transactions showing the parameters that define
 						<FromDate>2017-01-01T00:00:00Z</FromDate>
 					</AvailabilityCondition>
 				</selectionValidityConditions>
-					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_NETWORK_FARE_OFFER:FXCP"/>
+				<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_NETWORK_FARE_OFFER:FXCP"/>
 				<NetworkFilterByValue>
 					<objectReferences>
 						<TopographicProjectionRef ref="nptgLocality:E0057699">Crawley</TopographicProjectionRef>
@@ -309,6 +309,7 @@ At the end are shown some sample transactions showing the parameters that define
 								<TextColourName>Black</TextColourName>
 							</Presentation>
 							<ZoneTopology>nested</ZoneTopology>
+							<ScopingMethod>implicitSpatialProjection</ScopingMethod>
 						</FareZone>
 						<FareZone version="1.0" id="mb:metrorider@Crawley">
 							<Name>Crawley</Name>
@@ -399,6 +400,7 @@ At the end are shown some sample transactions showing the parameters that define
 							</Presentation>
 							<ParentFareZoneRef ref="mb:metrovoyager"/>
 							<ZoneTopology>nested</ZoneTopology>
+							<ScopingMethod>explicitStops</ScopingMethod>
 						</FareZone>
 						<FareZone version="1.0" id="mb:metrorider@Horsham">
 							<Name>Horsham</Name>
@@ -426,6 +428,7 @@ At the end are shown some sample transactions showing the parameters that define
 							</Presentation>
 							<ParentFareZoneRef ref="mb:metrovoyager"/>
 							<ZoneTopology>nested</ZoneTopology>
+							<ScopingMethod>explicitStops</ScopingMethod>
 						</FareZone>
 						<FareZone version="1.0" id="mb:metrorider@RedhillAndReigate">
 							<Name>Redhill &amp; Reigate</Name>
@@ -453,6 +456,7 @@ At the end are shown some sample transactions showing the parameters that define
 							</Presentation>
 							<ParentFareZoneRef ref="mb:metrovoyager"/>
 							<ZoneTopology>nested</ZoneTopology>
+							<ScopingMethod>explicitStops</ScopingMethod>
 						</FareZone>
 					</fareZones>
 					<distributionChannels>
@@ -584,12 +588,36 @@ At the end are shown some sample transactions showing the parameters that define
 							</timeIntervals>
 							<!-- ==FARE STRUCTURE ELEMENTS -->
 							<fareStructureElements>
-								<FareStructureElement version="1.0" id="mb:Tariff@Metrorider@zones">
+								<FareStructureElement version="1.0" id="mb:Tariff@Metrorider@access_zones">
 									<Name>Availablel zones</Name>
 									<Description>single zone.</Description>
-									<GenericParameterAssignment id="mb:Tariff@Metrorider@zones" version="1.0" order="1">
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:access"/>
+									
+										<distanceMatrixElements>
+										<!--   We define DISTANCE MATRIX ELEMENTS so we can assign a price to each indvidal Zone -->
+										<DistanceMatrixElement version="1.0" id="mb:metrorider@Crawley+">
+											<StartTariffZoneRef version="1.0" ref="mb:metrorider@Crawley"/>
+											<EndTariffZoneRef version="1.0" ref="mb:metrorider@Crawley"/>
+										</DistanceMatrixElement>
+						 
+											<DistanceMatrixElement version="1.0" id="mb:metrorider@Horsham+">
+											<StartTariffZoneRef version="1.0" ref="mb:metrorider@Horsham"/>
+											<EndTariffZoneRef version="1.0" ref="mb:metrorider@Horsham"/>
+										</DistanceMatrixElement>
+												<DistanceMatrixElement version="1.0" id="mb:metrorider@RedhillAndReigate+">
+											<StartTariffZoneRef version="1.0" ref="mb:metrorider@RedhillAndReigate"/>
+											<EndTariffZoneRef version="1.0" ref="mb:metrorider@RedhillAndReigate"/>
+										</DistanceMatrixElement>
+									</distanceMatrixElements>	
+									
+									<GenericParameterAssignment id="mb:Tariff@Metrorider@access_zones" version="1.0" order="1">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
-										<ValidityParameterGroupingType>XOR</ValidityParameterGroupingType>
+								
+										
+										
+									
+										
+												<ValidityParameterGroupingType>XOR</ValidityParameterGroupingType>
 										<validityParameters>
 											<FareZoneRef version="1.0" ref="mb:metrorider@Crawley"/>
 											<FareZoneRef version="1.0" ref="mb:metrorider@Horsham"/>
@@ -599,6 +627,7 @@ At the end are shown some sample transactions showing the parameters that define
 								</FareStructureElement>
 								<FareStructureElement version="1.0" id="mb:Tariff@Metrorider@eligibility">
 									<Name>Eligible user types</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:eligibility"/>
 									<GenericParameterAssignment order="1" id="mb:Tariff@Metrorider@eligibility" version="1.0">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:eligible"/>
 										<LimitationGroupingType>XOR</LimitationGroupingType>
@@ -653,6 +682,7 @@ At the end are shown some sample transactions showing the parameters that define
 								<FareStructureElement version="1.0" id="mb:Tariff@Metrorider@groups">
 									<Name>Available group tickets</Name>
 									<Description>Family ticket only for 1 day, cash or m-ticket.</Description>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:groups"/>
 									<GenericParameterAssignment id="mb:Tariff@Metrorider@groups" version="1.0" order="1">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:eligible"/>
 										<LimitationGroupingType>XOR</LimitationGroupingType>
@@ -699,6 +729,7 @@ At the end are shown some sample transactions showing the parameters that define
 								<FareStructureElement version="1.0" id="mb:Tariff@Metrorider@durations@1D_1W_with_Evening">
 									<Name>Available duration combination-  - with evening fare</Name>
 									<Description>All periods allowed, 60 mins, and no evening - used in for some p-ticket, single metrorider zone.</Description>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:durations"/>
 									<timeIntervals>
 										<TimeIntervalRef version="1.0" ref="mb:Tariff@Metrorider@1day"/>
 										<TimeIntervalRef version="1.0" ref="mb:Tariff@Metrorider@1week"/>
@@ -708,6 +739,7 @@ At the end are shown some sample transactions showing the parameters that define
 								<FareStructureElement version="1.0" id="mb:Tariff@Metrorider@durations@1D_1W_no_Evening">
 									<Name>Available duration combination- </Name>
 									<Description>Day and week only - single zone, used for p=ticket.</Description>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:durations"/>
 									<timeIntervals>
 										<TimeIntervalRef version="1.0" ref="mb:Tariff@Metrorider@1day"/>
 										<TimeIntervalRef version="1.0" ref="mb:Tariff@Metrorider@1week"/>
@@ -716,6 +748,7 @@ At the end are shown some sample transactions showing the parameters that define
 								<FareStructureElement version="1.0" id="mb:Tariff@Metrorider@durations@1D_2D_3D_1W_4W_60min_with_Evening">
 									<Name>Available duration combination- </Name>
 									<Description>All periods allowed, 60 mins, and no evening - used in for some mticket, single metrorider zone.</Description>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:durations"/>
 									<timeIntervals>
 										<TimeIntervalRef version="1.0" ref="mb:Tariff@Metrorider@60minutes"/>
 										<TimeIntervalRef version="1.0" ref="mb:Tariff@Metrorider@1day"/>
@@ -729,6 +762,7 @@ At the end are shown some sample transactions showing the parameters that define
 								<FareStructureElement version="1.0" id="mb:Tariff@Metrorider@durations@1D_2D_3D_1W_4W_60min_no_Evening">
 									<Name>Available duration combination- </Name>
 									<Description>All periods allowed, 60 mins, but no evening - used in for some mticket, single metrorider zone.</Description>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:durations"/>
 									<timeIntervals>
 										<TimeIntervalRef version="1.0" ref="mb:Tariff@Metrorider@60minutes"/>
 										<TimeIntervalRef version="1.0" ref="mb:Tariff@Metrorider@1day"/>
@@ -741,6 +775,7 @@ At the end are shown some sample transactions showing the parameters that define
 								<FareStructureElement version="1.0" id="mb:Tariff@Metrorider@durations@1D_1W_4W_13W_1Y_no_60min_with_Evening">
 									<Name>Available duration combination- </Name>
 									<Description>All periods allowed, evening but no 60 mins - used in for some smartcard , single zone.</Description>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:durations"/>
 									<timeIntervals>
 										<TimeIntervalRef version="1.0" ref="mb:Tariff@Metrorider@1day"/>
 										<TimeIntervalRef version="1.0" ref="mb:Tariff@Metrorider@1week"/>
@@ -753,6 +788,7 @@ At the end are shown some sample transactions showing the parameters that define
 								<FareStructureElement version="1.0" id="mb:Tariff@Metrorider@durations@1D_1W_4W_13W_1Y_no_60min_no_Evening">
 									<Name>Available duration combination- </Name>
 									<Description>All periods allowed, no evening no 60 mins - used in for some smartcard , single zone.</Description>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:durations"/>
 									<timeIntervals>
 										<TimeIntervalRef version="1.0" ref="mb:Tariff@Metrorider@1day"/>
 										<TimeIntervalRef version="1.0" ref="mb:Tariff@Metrorider@1week"/>
@@ -764,6 +800,7 @@ At the end are shown some sample transactions showing the parameters that define
 								<FareStructureElement version="1.0" id="mb:Tariff@Metrorider@durations@1D_2D_3D_1W_4W_13W_1Y">
 									<Name>Available duration combination- </Name>
 									<Description>All periods no , 60 mins, and no evening - used in for some channelse.</Description>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:durations"/>
 									<timeIntervals>
 										<TimeIntervalRef version="1.0" ref="mb:Tariff@Metrorider@1day"/>
 										<TimeIntervalRef version="1.0" ref="mb:Tariff@Metrorider@2day"/>
@@ -812,9 +849,19 @@ At the end are shown some sample transactions showing the parameters that define
 							</timeIntervals>
 							<!-- ==FARE STRUCTURE ELEMENTS -->
 							<fareStructureElements>
-								<FareStructureElement version="1.0" id="mb:Tariff@Metrovoyager@zones">
+								<FareStructureElement version="1.0" id="mb:Tariff@Metrovoyager@access_zones">
 									<Name>Metrovoyager zone</Name>
-									<GenericParameterAssignment id="mb:Tariff@Metrovoyager@zones" version="1.0" order="1">
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:access"/>
+									<distanceMatrixElements>
+										<!--   We define DISTANCE MATRIX ELEMENTS so we can assign a price to each indvidal Zone -->
+										<DistanceMatrixElement version="1.0" id="mb:metrovoyager">
+											<StartTariffZoneRef version="1.0" ref="mb:metrovoyager"/>
+											<EndTariffZoneRef version="1.0" ref="mb:metrovoyager"/>
+										</DistanceMatrixElement>
+						 
+										 
+									</distanceMatrixElements>	
+									<GenericParameterAssignment id="mb:Tariff@Metrovoyager@access_zones" version="1.0" order="1">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 										<ValidityParameterGroupingType>XOR</ValidityParameterGroupingType>
 										<validityParameters>
@@ -826,6 +873,7 @@ At the end are shown some sample transactions showing the parameters that define
 								<FareStructureElement version="1.0" id="mb:Tariff@Metrovoyager@groups">
 									<Name>Metrorider</Name>
 									<Description>Family ticket only for 1 day, only o cash and m-ticket.</Description>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:groups"/>
 									<GenericParameterAssignment id="mb:Tariff@Metrovoyager@groups" version="1.0" order="1">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:eligible"/>
 										<LimitationGroupingType>AND</LimitationGroupingType>
@@ -844,6 +892,7 @@ At the end are shown some sample transactions showing the parameters that define
 								<FareStructureElementRef version="1.0" ref="mb:Tariff@Metrorider@durations@1D_1W_no_Evening"/>
 								<FareStructureElement version="1.0" id="mb:Tariff@Metrovoyager@durations@1D_2D_3D_1W_4W_13W_">
 									<Name>Metrovoyager - on mobile app</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:durations"/>
 									<timeIntervals>
 										<TimeIntervalRef version="1.0" ref="mb:Tariff@Metrorider@1day"/>
 										<TimeIntervalRef version="1.0" ref="mb:Tariff@Metrorider@2day"/>
@@ -909,7 +958,7 @@ ______	______	______	_	|	______	______	______	______	______	______	________	|	__
 								<ValidableElement version="1.0" id="mb:Pass@Metrorider@travel">
 									<Name>Unlimited rides available for specifed periods</Name>
 									<fareStructureElements>
-										<FareStructureElementRef version="1.0" ref="mb:Tariff@Metrorider@zones"/>
+										<FareStructureElementRef version="1.0" ref="mb:Tariff@Metrorider@access_zones"/>
 										<FareStructureElementRef version="1.0" ref="mb:Tariff@Metrorider@eligibility"/>
 										<FareStructureElementRef version="1.0" ref="mb:Tariff@Metrorider@durations@1D_1W_with_Evening"/>
 										<FareStructureElementRef version="1.0" ref="mb:Tariff@Metrorider@durations@1D_1W_no_Evening"/>
@@ -990,7 +1039,7 @@ ______	______	______	_	|	______	______	______	______	______	______	________	|	__
 								<ValidableElement version="1.0" id="mb:Pass@Metrovoyager@travel">
 									<Name>Unlimited rides available for specifed periods</Name>
 									<fareStructureElements>
-										<FareStructureElementRef version="1.0" ref="mb:Tariff@Metrovoyager@zones"/>
+										<FareStructureElementRef version="1.0" ref="mb:Tariff@Metrovoyager@access_zones"/>
 										<FareStructureElementRef version="1.0" ref="mb:Tariff@Metrorider@eligibility"/>
 										<FareStructureElementRef version="1.0" ref="mb:Tariff@Metrorider@durations@1D_1W_no_Evening"/>
 										<FareStructureElementRef version="1.0" ref="mb:Tariff@Metrovoyager@durations@1D_2D_3D_1W_4W_13W_"/>
@@ -3031,6 +3080,7 @@ ______	______	______	_	|	______	______	______	______	______	______	________	|	__
 								<FareStructureElement version="1.0" id="mb:Tariff@multitrip@units">
 									<Name>Metrorider - single ride</Name>
 									<Description>Number of units single ride within a single zone.</Description>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:carnet_units"/>
 									<geographicalIntervals>
 										<GeographicalIntervalRef version="1.0" ref="mb:Tariff@Metrorider@1zone"/>
 									</geographicalIntervals>
@@ -3046,9 +3096,10 @@ ______	______	______	_	|	______	______	______	______	______	______	________	|	__
 										</QualityStructureFactor>
 									</qualityStructureFactors>
 								</FareStructureElement>
-								<FareStructureElement version="1.0" id="mb:Tariff@multitrip@zones">
+								<FareStructureElement version="1.0" id="mb:Tariff@multitrip@access_zones">
 									<Name>Multitrip - zones</Name>
 									<Description>Zones for which may be bought.</Description>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:access"/>
 									<GenericParameterAssignment version="1.0" id="mb:Trip@multitrip-SOP@smartcard@Crawley" order="1">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 										<ValidityParameterGroupingType>XOR</ValidityParameterGroupingType>
@@ -3061,6 +3112,7 @@ ______	______	______	_	|	______	______	______	______	______	______	________	|	__
 								</FareStructureElement>
 								<FareStructureElement version="1.0" id="mb:Tariff@multitrip@eligibility">
 									<Name>eligible user types</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:eligibility"/>
 									<GenericParameterAssignment order="1" id="mb:Tariff@multitrip@eligibility" version="1.0">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:eligible"/>
 										<LimitationGroupingType>XOR</LimitationGroupingType>
@@ -3094,37 +3146,13 @@ ______	______	______	_	|	______	______	______	______	______	______	________	|	__
 								<IsRefundable>true</IsRefundable>
 								<HasDiscountedFares>true</HasDiscountedFares>
 							</ConditionSummary>
-							<validityParameterAssignments>
-								<GenericParameterAssignment version="1.0" id="mb:Trip@multitrip" order="1">
-									<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_purchase"/>
-									<ValidityParameterGroupingType>AND</ValidityParameterGroupingType>
-									<validityParameters>
-										<TypeOfTravelDocumentRef version="1.0" ref="mb:the-key"/>
-									</validityParameters>
-									<IncludesGroupingType>XOR</IncludesGroupingType>
-									<includes>
-										<GenericParameterAssignment version="1.0" id="mb:Trip@multitrip@5" order="1">
-											<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_purchase"/>
-											<QualityStructureFactorRef ref="mb:Tariff@multitrip@5" version="1.0"/>
-										</GenericParameterAssignment>
-										<GenericParameterAssignment version="1.0" id="mb:Trip@multitrip@10" order="1">
-											<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_purchase"/>
-											<QualityStructureFactorRef ref="mb:Tariff@multitrip@10" version="1.0"/>
-										</GenericParameterAssignment>
-										<GenericParameterAssignment version="1.0" id="mb:Trip@multitrip@25" order="1">
-											<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_purchase"/>
-											<QualityStructureFactorRef ref="mb:Tariff@multitrip@25" version="1.0"/>
-										</GenericParameterAssignment>
-									</includes>
-								</GenericParameterAssignment>
-							</validityParameterAssignments>
-							<!--==== VALIDABLE ELEMENTs ==== -->
+													<!--==== VALIDABLE ELEMENTs ==== -->
 							<validableElements>
 								<ValidableElement version="1.0" id="mb:Trip@multitrip@singleRide">
 									<Name>Single ride</Name>
 									<fareStructureElements>
 										<FareStructureElementRef version="1.0" ref="mb:Tariff@multitrip@units"/>
-										<FareStructureElementRef version="1.0" ref="mb:Tariff@multitrip@zones"/>
+										<FareStructureElementRef version="1.0" ref="mb:Tariff@multitrip@access_zones"/>
 										<FareStructureElementRef version="1.0" ref="mb:Tariff@multitrip@eligibility"/>
 									</fareStructureElements>
 									<validityParameterAssignments>
@@ -3356,16 +3384,18 @@ ______	______	______	_	|
 							<fareStructureElements>
 								<FareStructureElement version="1.0" id="mb:Tariff@Gatwick_travelcard@durations">
 									<Name>Gatwick Travel card pass durations</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:durations"/>
 									<timeIntervals>
 										<TimeIntervalRef version="1.0" ref="mb:Tariff@Metrorider@1week"/>
 										<TimeIntervalRef version="1.0" ref="mb:Tariff@Metrorider@4week"/>
 										<TimeIntervalRef version="1.0" ref="mb:Tariff@Metrorider@1year"/>
 									</timeIntervals>
 								</FareStructureElement>
-								<FareStructureElement version="1.0" id="mb:Tariff@Gatwick_travelcard@lines">
+								<FareStructureElement version="1.0" id="mb:Tariff@Gatwick_travelcard@access_lines">
 									<Name>Multitrip - zones</Name>
 									<Description>Zones for which may be bought.</Description>
-									<GenericParameterAssignment version="1.0" id="mb:Trip@Gatwick_travelcard@lines" order="1">
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:access"/>
+									<GenericParameterAssignment version="1.0" id="mb:Trip@Gatwick_travelcard@access_lines" order="1">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 										<ValidityParameterGroupingType>XOR</ValidityParameterGroupingType>
 										<validityParameters>
@@ -3375,6 +3405,7 @@ ______	______	______	_	|
 								</FareStructureElement>
 								<FareStructureElement version="1.0" id="mb:Tariff@Gatwick_travelcard@eligibility">
 									<Name>eligible user types</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:eligibility"/>
 									<GenericParameterAssignment order="1" id="mb:Tariff@Gatwick_travelcard@eligibility" version="1.0">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:eligible"/>
 										<LimitationGroupingType>XOR</LimitationGroupingType>
@@ -3444,7 +3475,7 @@ Please note that Gatwick Travelcards are not transferable and can only be used b
 									<Name>Single ride</Name>
 									<fareStructureElements>
 										<FareStructureElementRef version="1.0" ref="mb:Tariff@Gatwick_travelcard@durations"/>
-										<FareStructureElementRef version="1.0" ref="mb:Tariff@Gatwick_travelcard@lines"/>
+										<FareStructureElementRef version="1.0" ref="mb:Tariff@Gatwick_travelcard@access_lines"/>
 										<FareStructureElementRef version="1.0" ref="mb:Tariff@Gatwick_travelcard@eligibility"/>
 									</fareStructureElements>
 									<validityParameterAssignments>
@@ -3815,8 +3846,9 @@ Metrobus Travel Shop, Crawley Bus Station, Marlborough Street, Crawley, BS1 3NU
 					</typesOfValue>
 					<organisations>
 						<!--==== Operators ==== -->
-					<Operator version="1.0" id="noc:METR">
-							<PublicCode>METR</PublicCode><PrivateCode type="nocn">nocn:137122</PrivateCode>
+						<Operator version="1.0" id="noc:METR">
+							<PublicCode>METR</PublicCode>
+							<PrivateCode type="nocn">nocn:137122</PrivateCode>
 							<Name>Metrobus</Name>
 							<ShortName>Metrobus</ShortName>
 							<TradingName>Metrobus Ltd</TradingName>
@@ -3899,11 +3931,13 @@ Metrobus Travel Shop, Crawley Bus Station, Marlborough Street, Crawley, BS1 3NU
 							<!-- ==FARE STRUCTURE ELEMENTS -->
 							<fareStructureElements>
 								<FareStructureElement version="1.0" id="ezt:Tariff@Easit_card@durations">
-									<Name>PlusBus single zone</Name>
+									<Name>Dusration of Easit card</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:durations"/>
 									<TimeIntervalRef version="1.0" ref="ezt:Tariff@Easit_card@1year"/>
 								</FareStructureElement>
-								<FareStructureElement version="1.0" id="ezt:Tariff@Easit_card@organisations">
-									<Name>PlusBus single zone</Name>
+								<FareStructureElement version="1.0" id="ezt:Tariff@Easit_card@access_network">
+									<Name>Network for easit card </Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:access"/>
 									<validityParameterAssignments>
 										<GenericParameterAssignment version="1.0" id="ezt:Tariff@Easit_card@schemes" order="1">
 											<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
@@ -3916,6 +3950,7 @@ Metrobus Travel Shop, Crawley Bus Station, Marlborough Street, Crawley, BS1 3NU
 								</FareStructureElement>
 								<FareStructureElement version="1.0" id="ezt:Tariff@Easit_card@eligibility">
 									<Name>eligible user types</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:eligibility"/>
 									<GenericParameterAssignment order="1" id="ezt:Tariff@Easit_card@eligibility" version="1.0">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:eligible"/>
 										<LimitationGroupingType>XOR</LimitationGroupingType>
@@ -3928,7 +3963,8 @@ Metrobus Travel Shop, Crawley Bus Station, Marlborough Street, Crawley, BS1 3NU
 									</GenericParameterAssignment>
 								</FareStructureElement>
 								<FareStructureElement version="1.0" id="ezt:Tariff@Easit_card@entitlements">
-									<Name>eligible user types</Name>
+									<Name>Gives entitlements</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:entitles"/>
 									<GenericParameterAssignment order="1" id="ezt:Tariff@Easit_card@entitlements" version="1.0">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_purchase"/>
 										<LimitationGroupingType>XOR</LimitationGroupingType>
@@ -4309,7 +4345,7 @@ Unfortunately not. As our discounts are genuine discounts off of the cost of the
 							<documentLinks>
 								<InfoLink typeOfInfoLink="fareSheet">https://www.metrobus.co.uk/discovery-tickets/</InfoLink>
 							</documentLinks>
-							<GroupOfOperatorsRef ref="dsc:Discovery@operators"/>
+							<GroupOfOperatorsRef ref="dsc:Discovery@access_operators"/>
 							<TypeOfTariffRef version="fxc:v1.0" ref="fxc:zonal"/>
 							<!--- ====Fare Structure======= -->
 							<timeIntervals>
@@ -4322,23 +4358,25 @@ Unfortunately not. As our discounts are genuine discounts off of the cost of the
 							<fareStructureElements>
 								<FareStructureElement version="1.0" id="dsc:Tariff@Discovery@durations">
 									<Name>discovery pass durations</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:durations"/>
 									<TimeIntervalRef version="1.0" ref="dsc:Tariff@Discovery@1day"/>
 								</FareStructureElement>
-								<FareStructureElement version="1.0" id="dsc:Tariff@Discovery@operators">
+								<FareStructureElement version="1.0" id="dsc:Tariff@Discovery@access_operators">
 									<Name>discovery single zone</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:access"/>
 									<validityParameterAssignments>
-										<GenericParameterAssignment version="1.0" id="dsc:Tariff@Discovery@operators" order="1">
+										<GenericParameterAssignment version="1.0" id="dsc:Tariff@Discovery@access_operators" order="1">
 											<!--Discovery tickets will be issued and accepted by the following operators in West Sussex, East Sussex, Surrey, Brighton & Hove, East Hampshire, Kent & Medway (subject to exclusions at the bottom): -->
 											<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 											<IncludesGroupingType>AND</IncludesGroupingType>
 											<includes>
-												<GenericParameterAssignment version="1.0" id="dsc:Tariff@Discovery@operators@included" order="1">
+												<GenericParameterAssignment version="1.0" id="dsc:Tariff@Discovery@access_operators@included" order="1">
 													<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 													<validityParameters>
 														<GroupOfOperatorsRef version="1.0" ref="dsc:discovery@included"/>
 													</validityParameters>
 												</GenericParameterAssignment>
-												<GenericParameterAssignment version="1.0" id="dsc:Tariff@Discovery@operators@excluded" order="2">
+												<GenericParameterAssignment version="1.0" id="dsc:Tariff@Discovery@access_operators@excluded" order="2">
 													<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 													<ValidityParameterAssignmentType>NE</ValidityParameterAssignmentType>
 													<validityParameters>
@@ -4351,6 +4389,7 @@ Unfortunately not. As our discounts are genuine discounts off of the cost of the
 								</FareStructureElement>
 								<FareStructureElement version="1.0" id="dsc:Tariff@Discovery@eligibility">
 									<Name>eligible user types</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:eligibility"/>
 									<GenericParameterAssignment order="1" id="dsc:Tariff@Discovery@eligibility" version="1.0">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:eligible"/>
 										<LimitationGroupingType>XOR</LimitationGroupingType>
@@ -4363,6 +4402,7 @@ Unfortunately not. As our discounts are genuine discounts off of the cost of the
 								</FareStructureElement>
 								<FareStructureElement version="1.0" id="dsc:Tariff@Discovery@groups">
 									<Name>eligible user types</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:groups"/>
 									<GenericParameterAssignment order="1" id="dsc:Tariff@Discovery@groups" version="1.0">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:eligible"/>
 										<LimitationGroupingType>XOR</LimitationGroupingType>
@@ -4427,7 +4467,7 @@ Excluded services: Services operated on behalf of Transport for London, City Sig
 								<ValidableElement version="1.0" id="dsc:Pass@Discovery@travel">
 									<Name>Ride in Zone</Name>
 									<fareStructureElements>
-										<FareStructureElementRef version="1.0" ref="dsc:Tariff@Discovery@operators"/>
+										<FareStructureElementRef version="1.0" ref="dsc:Tariff@Discovery@access_operators"/>
 										<FareStructureElementRef version="1.0" ref="dsc:Tariff@Discovery@eligibility"/>
 										<FareStructureElementRef version="1.0" ref="dsc:Tariff@Discovery@groups"/>
 										<FareStructureElementRef version="1.0" ref="dsc:Tariff@Discovery@durations"/>
@@ -4716,7 +4756,7 @@ Cuckmere Community Bus, Emsworth & District, Farleigh Coaches, Go-Coach, Metrobu
 						<Tariff version="1.0" id="jsp:Tariff@PlusBus@Day">
 							<Name>Plusbus -Tariff</Name>
 							<OperatorRef ref="jsp:JSP" version="1.0"/>
-							<NetworkRef version="any" ref="jsp:PlusBus@zones"/>
+							<NetworkRef version="any" ref="jsp:PlusBus@access_zones"/>
 							<TypeOfTariffRef version="fxc:v1.0" ref="fxc:zonal"/>
 							<!--- ====Fare Structure======= -->
 							<timeIntervals>
@@ -4787,8 +4827,9 @@ You must buy 2 tickets at the same time.					</Description>
 							</qualityStructureFactors>
 							<!-- ==FARE STRUCTURE ELEMENTS -->
 							<fareStructureElements>
-								<FareStructureElement version="1.0" id="jsp:Tariff@PlusBus@modes">
+								<FareStructureElement version="1.0" id="jsp:Tariff@PlusBus@access_modes">
 									<Name>Available modes</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:access"/>
 									<GenericParameterAssignment version="1.0" id="jsp:Tariff@Pass@PlusBus@modes@bus" order="1">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 										<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
@@ -4798,20 +4839,21 @@ You must buy 2 tickets at the same time.					</Description>
 										</validityParameters>
 									</GenericParameterAssignment>
 								</FareStructureElement>
-								<FareStructureElement version="1.0" id="jsp:Tariff@PlusBus@access">
+								<FareStructureElement version="1.0" id="jsp:Tariff@PlusBus@access_zones">
 									<Name>PlusBus access rights -  zone</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:access"/>
 									<validityParameterAssignments>
-										<GenericParameterAssignment version="1.0" id="jsp:Tariff@PlusBus@access" order="1">
+										<GenericParameterAssignment version="1.0" id="jsp:Tariff@PlusBus@access_zones" order="1">
 											<!-- A Crawley, Gatwick, Horley or Three Bridges PLUSBUS ticket gives you unlimited bus travel on participating operators services, around the whole urban area of Crawley, Gatwick, Horley, and Three Bridges, 
  -->
 											<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 											<ValidityParameterGroupingType>AND</ValidityParameterGroupingType>
 											<validityParameters>
-												<NetworkRef version="any" ref="jsp:PlusBus@zones"/>
+												<NetworkRef version="any" ref="jsp:PlusBus@access_zones"/>
 											</validityParameters>
 											<IncludesGroupingType>AND</IncludesGroupingType>
 											<includes>
-												<GenericParameterAssignment version="1.0" id="jsp:Tariff@PlusBus@access@included@operators" order="1">
+												<GenericParameterAssignment version="1.0" id="jsp:Tariff@PlusBus@access@included@access_operators" order="1">
 													<!-- A Crawley, Gatwick, Horley or Three Bridges PLUSBUS ticket gives you unlimited bus travel on participating operators services, around the whole urban area of Crawley, Gatwick, Horley, and Three Bridges, 
  -->
 													<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
@@ -4820,7 +4862,7 @@ You must buy 2 tickets at the same time.					</Description>
 														<GroupOfOperatorsRef version="any" ref="jsp:PlusBus@included_operators"/>
 													</validityParameters>
 												</GenericParameterAssignment>
-												<GenericParameterAssignment version="1.0" id="jsp:Tariff@PlusBus@access@excluded@operators" order="2">
+												<GenericParameterAssignment version="1.0" id="jsp:Tariff@PlusBus@access@excluded@access_operators" order="2">
 													<!-- A Crawley, Gatwick, Horley or Three Bridges PLUSBUS ticket gives you unlimited bus travel on participating operators services, around the whole urban area of Crawley, Gatwick, Horley, and Three Bridges, 
  -->
 													<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:cannot_access"/>
@@ -4844,6 +4886,7 @@ You must buy 2 tickets at the same time.					</Description>
 								</FareStructureElement>
 								<FareStructureElement version="1.0" id="jsp:Tariff@PlusBus@Day@eligibility">
 									<Name>eligible user types</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:eligibility"/>
 									<GenericParameterAssignment order="1" id="jsp:Tariff@PlusBus@Day@eligibility" version="1.0">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:eligible"/>
 										<LimitationGroupingType>XOR</LimitationGroupingType>
@@ -4857,6 +4900,7 @@ You must buy 2 tickets at the same time.					</Description>
 								</FareStructureElement>
 								<FareStructureElement version="1.0" id="jsp:Tariff@PlusBus@Day@durations">
 									<Name>PlusBus pass durations</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:durations"/>
 									<timeIntervals>
 										<TimeIntervalRef version="1.0" ref="jsp:Tariff@PlusBus@Day@1day"/>
 									</timeIntervals>
@@ -4864,6 +4908,7 @@ You must buy 2 tickets at the same time.					</Description>
 								<!-- Sales related -->
 								<FareStructureElement version="1.0" id="jsp:Tariff@PlusBus@Day@prerequisites">
 									<Name>Prerequisites for Plusbus day ticket</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:prerequisites"/>
 									<GenericParameterAssignment version="01" id="jsp:Tariff@PlusBus@Day@prerequisites" order="1">
 										<Name>Only available as Add on to rail ticket</Name>
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:prerequisites"/>
@@ -4901,7 +4946,7 @@ You must buy 2 tickets at the same time.					</Description>
 						<Tariff version="1.0" id="jsp:Tariff@PlusBus@Season">
 							<Name>plusbus - Fares</Name>
 							<OperatorRef ref="jsp:JSP" version="1.0"/>
-							<NetworkRef version="any" ref="jsp:PlusBus@zones"/>
+							<NetworkRef version="any" ref="jsp:PlusBus@access_zones"/>
 							<TypeOfTariffRef version="fxc:v1.0" ref="fxc:zonal"/>
 							<!--- ====Fare Structure======= -->
 							<timeIntervals>
@@ -4924,10 +4969,11 @@ You must buy 2 tickets at the same time.					</Description>
 							</timeIntervals>
 							<!-- ==FARE STRUCTURE ELEMENTS -->
 							<fareStructureElements>
-								<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@modes"/>
-								<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@access"/>
+								<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@access_modes"/>
+								<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@access_zones"/>
 								<FareStructureElement version="1.0" id="jsp:Tariff@PlusBus@Season@eligibility">
 									<Name>eligible user types</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:eligibility"/>
 									<GenericParameterAssignment order="1" id="jsp:Tariff@PlusBus@Season@eligibility" version="1.0">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:eligible"/>
 										<LimitationGroupingType>XOR</LimitationGroupingType>
@@ -4939,6 +4985,7 @@ You must buy 2 tickets at the same time.					</Description>
 								</FareStructureElement>
 								<FareStructureElement version="1.0" id="jsp:Tariff@PlusBus@Season@durations">
 									<Name>PlusBus season pass durations</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:durations"/>
 									<timeIntervals>
 										<TimeIntervalRef version="1.0" ref="jsp:Tariff@PlusBus@Season@1week"/>
 										<TimeIntervalRef version="1.0" ref="jsp:Tariff@PlusBus@Season@1month"/>
@@ -4949,6 +4996,7 @@ You must buy 2 tickets at the same time.					</Description>
 								<!-- Sales related -->
 								<FareStructureElement version="1.0" id="jsp:Tariff@PlusBus@Season@prerequisites">
 									<Name>Prerequisites for Plusbus day ticket</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:prerequisites"/>
 									<GenericParameterAssignment version="01" id="jsp:Tariff@PlusBus@Season@prerequisites" order="1">
 										<Name>Only available as Add on to rail season pass</Name>
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:prerequisites"/>
@@ -4989,8 +5037,8 @@ You must buy 2 tickets at the same time.					</Description>
 								<ValidableElement version="1.0" id="jsp:Pass@PlusBus@Day@travel">
 									<Name>Rid e in Zone</Name>
 									<fareStructureElements>
-										<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@modes"/>
-										<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@access"/>
+										<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@access_modes"/>
+										<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@access_zones"/>
 										<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@Day@eligibility"/>
 										<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@Day@durations"/>
 										<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@Day@prerequisites"/>
@@ -5049,8 +5097,8 @@ You must buy 2 tickets at the same time.					</Description>
 								<ValidableElement version="1.0" id="jsp:Pass@PlusBus@Season@travel">
 									<Name>Rid e in Zone</Name>
 									<fareStructureElements>
-										<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@modes"/>
-										<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@access"/>
+										<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@access_modes"/>
+										<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@access_zones"/>
 										<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@Season@eligibility"/>
 										<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@Season@durations"/>
 										<FareStructureElementRef version="1.0" ref="jsp:Tariff@PlusBus@Season@prerequisites"/>
@@ -5494,7 +5542,7 @@ Annual	£440.00	£1.83 Child discount: half adult season ticket prices.
 					<prerequisites>
 						<FareFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:FareFrame_UK_PI_METADATA:FareXChange:fxc"/>
 					</prerequisites>
-					<Network version="any" id="jsp:PlusBus@zones">
+					<Network version="any" id="jsp:PlusBus@access_zones">
 						<Name>Plusbus network - Crawley</Name>
 						<Description>
 Crawley, Gatwick Airport, Horley, and Three Bridges PLUSBUS
@@ -5882,14 +5930,16 @@ Metrobus (including Fastway services), Southdown PSV, Compass Travel
 							<fareStructureElements>
 								<FareStructureElement version="1.0" id="ncs:Tariff@Concessionary@durations">
 									<Name>discovery pass durations</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:durations"/>
 									<timeIntervals>
 										<TimeIntervalRef version="1.0" ref="ncs:Tariff@Concessionary@5year"/>
 									</timeIntervals>
 								</FareStructureElement>
-								<FareStructureElement version="1.0" id="ncs:Tariff@Concessionary@zones">
+								<FareStructureElement version="1.0" id="ncs:Tariff@Concessionary@access_zones">
 									<Name>Multitrip - zones</Name>
 									<Description>Zones for which may be bought.</Description>
-									<GenericParameterAssignment version="1.0" id="ncs:Trip@Concessionary@zones" order="1">
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:access"/>
+									<GenericParameterAssignment version="1.0" id="ncs:Trip@Concessionary@access_zones" order="1">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 										<ValidityParameterGroupingType>XOR</ValidityParameterGroupingType>
 										<validityParameters>
@@ -5899,6 +5949,7 @@ Metrobus (including Fastway services), Southdown PSV, Compass Travel
 								</FareStructureElement>
 								<FareStructureElement version="1.0" id="ncs:Tariff@Concessionary@eligibility">
 									<Name>eligible user types</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:eligibility"/>
 									<GenericParameterAssignment order="1" id="ncs:Tariff@Concessionary@eligibility" version="1.0">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:eligible"/>
 										<LimitationGroupingType>XOR</LimitationGroupingType>
@@ -5969,6 +6020,8 @@ Metrobus (including Fastway services), Southdown PSV, Compass Travel
 								<FareStructureElement version="1.0" id="ncs:Tariff@Concessionary@restrictions">
 									<Name>Conceassionary pass travel times</Name>
 									<Description>It's valid 24/7 for journeys in or from Surrey, and between 9.30am and 11pm for journeys starting outside Surrey.</Description>
+									
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:access_when"/>
 									<GenericParameterAssignment version="1.0" id="ncs:Trip@Concessionary@restrictions" order="1">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access_when"/>
 										<IncludesGroupingType>XOR</IncludesGroupingType>
@@ -6014,6 +6067,7 @@ Metrobus (including Fastway services), Southdown PSV, Compass Travel
 							<fareStructureElements>
 								<FareStructureElement version="1.0" id="encTariff@Student_fare_Card@eligibility">
 									<Name>eligible user types</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:eligibility"/>
 									<GenericParameterAssignment order="1" id="ncs:Tariff@Student_fare_Card@eligibility" version="1.0">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:eligible"/>
 										<LimitationGroupingType>XOR</LimitationGroupingType>
@@ -6061,7 +6115,7 @@ Metrobus (including Fastway services), Southdown PSV, Compass Travel
 									<Name>Use of Zone</Name>
 									<fareStructureElements>
 										<FareStructureElementRef version="1.0" ref="ncs:Tariff@Concessionary@durations"/>
-										<FareStructureElementRef version="1.0" ref="ncs:Tariff@Concessionary@zones"/>
+										<FareStructureElementRef version="1.0" ref="ncs:Tariff@Concessionary@access_zones"/>
 										<FareStructureElementRef version="1.0" ref="ncs:Tariff@Concessionary@eligibility"/>
 										<FareStructureElementRef version="1.0" ref="ncs:Tariff@Concessionary@restrictions"/>
 									</fareStructureElements>
@@ -6308,7 +6362,7 @@ E-mail: student.farecards@surreycc.gov.uk
 		<CompositeFrame id="mbt:pass_transaction_examples" version="1.0" responsibilitySetRef="mb:transaction_data" dataSourceRef="mb:metrobus">
 			<!-- ===============
 This Shows sample Purchases 
- Sales Transactions would normally be exchanged separately from the reference data on whoich they are based  --> 
+ Sales Transactions would normally be exchanged separately from the reference data on whoich they are based  -->
 			<prerequisites>
 				<CompositeFrameRef version="1.0" ref="epd:UK:Metrobus:CompositeFrame_UK_PI_NETWORK_FARE_OFFER:Pass@Metrorider+Metrovoyager+Gatwick_card:mb"/>
 				<CompositeFrameRef version="1.0" ref="epd:UK:Easit:CompositeFrame_UK_PI_NETWORK_FARE_OFFER:Pass@Easit:ezt"/>
@@ -6530,12 +6584,11 @@ This Shows sample Purchases
 											</specificParameterAssignments>
 										</OfferedTravelSpecification>
 									</travelSpecifications>
-									
-										<travelDocuments>
-											<TravelDocument version="any" id="mbt:Smartcard522">
-													<TypeOfTravelDocumentRef version="1.0" ref="mb:m-ticket"/>
-												</TravelDocument>
-											</travelDocuments>
+									<travelDocuments>
+										<TravelDocument version="any" id="mbt:Smartcard522">
+											<TypeOfTravelDocumentRef version="1.0" ref="mb:m-ticket"/>
+										</TravelDocument>
+									</travelDocuments>
 								</SalesTransaction>
 							</fareContractEntries>
 						</FareContract>
@@ -6579,11 +6632,11 @@ This Shows sample Purchases
 											</specificParameterAssignments>
 										</OfferedTravelSpecification>
 									</travelSpecifications>
-											<travelDocuments>
-											<TravelDocument version="any" id="mbt:Smartcard967">
-													<TypeOfTravelDocumentRef version="1.0" ref="mb:m-ticket"/>
-												</TravelDocument>
-											</travelDocuments>
+									<travelDocuments>
+										<TravelDocument version="any" id="mbt:Smartcard967">
+											<TypeOfTravelDocumentRef version="1.0" ref="mb:m-ticket"/>
+										</TravelDocument>
+									</travelDocuments>
 								</SalesTransaction>
 							</fareContractEntries>
 						</FareContract>
@@ -6617,17 +6670,41 @@ This Shows sample Purchases
 				<DefaultResponsibilitySetRef ref="fxc:FXC_metadata" version="fxc:v1.0"/>
 			</FrameDefaults>
 			<frames>
-				<!-- ====COMMON UK PI Profile  RESOURCEs:  META DATA - COULD BE EXTERNALISED ===== ============ -->
+		
 				<!-- === Profile Frame Types ===  -->
 				<ResourceFrame id="fxc:UK:DFT:ResourceFrame_UK_PI_METADATA_FRAMES:FXCP:fxc" version="fxc:v1.0" responsibilitySetRef="fxc:FXC_metadata" dataSourceRef="fxc:dft">
-					<Name>UKFXCP  Frame types</Name>
+					<Name>UK FXCP  Fare profile Frame types and codepaces</Name>
 					<codespaces>
+						<Codespace id="fxc_metadata">
+							<Xmlns>fxc</Xmlns>
+							<XmlnsUrl>netex.org.uk/fxc</XmlnsUrl>
+							<Description>UK FareXChange Profile metadata</Description>
+						</Codespace>
 						<Codespace id="epd_data">
 							<Xmlns>epd</Xmlns>
 							<XmlnsUrl>http://fnetex-cen.eu/epd</XmlnsUrl>
 							<Description>European Passenger Information profile data -use for UK frame names</Description>
 						</Codespace>
 					</codespaces>
+					<dataSources>
+						<DataSource id="fxc:dft" version="fxc:v1.0">
+							<Email>standards@netex.org.uk</Email>
+						</DataSource>
+					</dataSources>
+					<!-- ========Responsibility Sets========== -->
+					<responsibilitySets>
+						<ResponsibilitySet version="fxc:v1.0" id="fxc:FXC_metadata">
+							<Name>Common</Name>
+							<roles>
+								<ResponsibilityRoleAssignment version="fxc:v1.0" id="fxc:FXC_metadata:DfT">
+									<DataRoleType>creates distributes</DataRoleType>
+									<StakeholderRoleType>DataRegistrar</StakeholderRoleType>
+									<ResponsibleOrganisationRef ref="nptg:DfT" versionRef="nptg:v2.1"/>
+									<ResponsibleAreaRef ref="nptgUkRegion:GB" versionRef="nptg:v2.1"/>
+								</ResponsibilityRoleAssignment>
+							</roles>
+						</ResponsibilitySet>
+					</responsibilitySets>
 					<typesOfValue>
 						<!-- ======== TYPE S OF   FRAME========= -->
 						<ValueSet version="fxc:1.0" id="fxc:Types_of_Specific_Frame_Basic" classOfValues="TypeOfFrame">
@@ -6736,7 +6813,8 @@ This Shows sample Purchases
 						</ValueSet>
 					</typesOfValue>
 				</ResourceFrame>
-				<!-- === FareXchange  Common fixed definitions  ===  -->
+				<!-- ====COMMON UK PI Profile  RESOURCEs:  META DATA - COULD BE EXTERNALISED ===== ============ -->
+				<!-- === FareXChange  Common fixed definitions  ===  -->
 				<FareFrame id="fxc:UK:DFT:FareFrame_UK_PI_METADATA:FareXChange:fxc" version="fxc:v1.0" responsibilitySetRef="fxc:FXC_metadata" dataSourceRef="fxc:dft">
 					<Name>FXCP Values for Farexchange</Name>
 					<FrameDefaults>
@@ -6813,12 +6891,20 @@ This Shows sample Purchases
 								</CompanionProfile>
 							</companionProfiles>
 						</UserProfile>
+						
 						<UserProfile version="fxc:v1.0" id="fxc:student">
 							<Name>Student</Name>
 							<TypeOfConcessionRef version="fxc:v1.0" ref="fxc:student"/>
 							<UserType>student</UserType>
 							<ProofRequired>membershipCard</ProofRequired>
 							<DiscountBasis>discount</DiscountBasis>
+						</UserProfile>
+						
+									<UserProfile version="fxc:v1.0" id="fxc:senior">
+							<Name>Senior</Name>
+							<TypeOfConcessionRef version="fxc:v1.0" ref="fxc:child"/>
+							<UserType>senior</UserType>
+							<MinimumAge>60</MinimumAge> 
 						</UserProfile>
 					</usageParameters>
 					<!-- ====CHANNELS -->
@@ -7033,24 +7119,7 @@ This Shows sample Purchases
 					</typesOfTravelDocuments>
 				</FareFrame>
 				<ResourceFrame id="fxc:UK:DFT:ResourceFrame_UK_PI_METADATA:FareXChange:fxc" version="fxc:v1.0" responsibilitySetRef="fxc:FXC_metadata" dataSourceRef="fxc:dft">
-					<Name>FXCP - Fare metadata</Name>
-					<codespaces>
-						<Codespace id="fxc_metadata">
-							<Xmlns>fxc</Xmlns>
-							<XmlnsUrl>netex.org.uk/fxc</XmlnsUrl>
-							<Description>UK FareXChange Profile metadata</Description>
-						</Codespace>
-						<Codespace id="nrn_data">
-							<Xmlns>nrn</Xmlns>
-							<XmlnsUrl>http://www.nationalrail.co.uk/</XmlnsUrl>
-							<Description>UK national rail network</Description>
-						</Codespace>
-						<Codespace id="iso3166-2_data">
-							<Xmlns>iso3166-2</Xmlns>
-							<XmlnsUrl>http://www.iso.org/country_codes/</XmlnsUrl>
-							<Description>ISO 316602 3 character Principality &amp; county codes. Use to subdivide IANA countries, e.g. gb:ENG, gb:WLS </Description>
-						</Codespace>
-					</codespaces>
+					<Name>FXCP - Fare profile  metadata</Name>
 					<FrameDefaults>
 						<DefaultCodespaceRef ref="fxc_metadata"/>
 						<DefaultDataSourceRef ref="fxc:dft" version="fxc:v1.0"/>
@@ -7068,29 +7137,13 @@ This Shows sample Purchases
 					</FrameDefaults>
 					<versions>
 						<Version id="fxc:v1.0" version="any">
+							<ValidBetween>
+								<FromDate>2019-01-01T01:01:01Z</FromDate>
+							</ValidBetween>
 							<Description>FXC version 2.1</Description>
 							<VersionType>baseline</VersionType>
 						</Version>
 					</versions>
-					<dataSources>
-						<DataSource id="fxc:dft" version="fxc:v1.0">
-							<Email>standards@netex.org.uk</Email>
-						</DataSource>
-					</dataSources>
-					<!-- ========Responsibility Sets========== -->
-					<responsibilitySets>
-						<ResponsibilitySet version="fxc:v1.0" id="fxc:FXC_metadata">
-							<Name>Common</Name>
-							<roles>
-								<ResponsibilityRoleAssignment version="fxc:v1.0" id="fxc:FXC_metadata:DfT">
-									<DataRoleType>creates distributes</DataRoleType>
-									<StakeholderRoleType>DataRegistrar</StakeholderRoleType>
-									<ResponsibleOrganisationRef ref="fxc:DfT" version="fxc:v1.0"/>
-									<ResponsibleAreaRef ref="fxc:UK">TODO</ResponsibleAreaRef>
-								</ResponsibilityRoleAssignment>
-							</roles>
-						</ResponsibilitySet>
-					</responsibilitySets>
 					<typesOfValue>
 						<!-- ======== Code sets ========= -->
 						<ValueSet version="fxc:v1.0" id="fxc:PointsOfInterest_Classifications" classOfValues="PointOfInterestClassification">
@@ -7106,7 +7159,7 @@ This Shows sample Purchases
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareZone" classOfValues="TypeOfZone">
-							<Name>Types of Fare Zone</Name>
+							<Name>Types of FARE ZONE</Name>
 							<values>
 								<!--- ====Type of Product category ========= -->
 								<TypeOfZone version="fxc:v1.0" id="fxc:fare_zone@operator">
@@ -7121,7 +7174,7 @@ This Shows sample Purchases
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_ProductCategory" classOfValues="TypeOfProductCategory">
-							<Name>Types of Product Category</Name>
+							<Name>Types of PRODUCT CATEGORY</Name>
 							<values>
 								<!--- ====Type of Product category ========= -->
 								<TypeOfProductCategory version="fxc:v1.0" id="fxc:urban_bus">
@@ -7145,7 +7198,7 @@ This Shows sample Purchases
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:ChargingMoments" classOfValues="ChargingMoment">
-							<Name>Charging Moments</Name>
+							<Name>Types of CHARGING MOMENT</Name>
 							<values>
 								<!--- ==== TypeOfChargingMoment ========= -->
 								<ChargingMoment version="fxc:v1.0" id="fxc:prepayment">
@@ -7161,12 +7214,15 @@ This Shows sample Purchases
 									<Name>Prepaid - free issue</Name>
 								</ChargingMoment>
 								<ChargingMoment version="fxc:v1.0" id="fxc::post_payment">
-									<Name>Prepaid</Name>
+									<Name>Postpaid</Name>
+								</ChargingMoment>
+									<ChargingMoment version="fxc:v1.0" id="fxc::post_payment_periodic">
+									<Name>Postpaid</Name>
 								</ChargingMoment>
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareProduct@trip" classOfValues="TypeOfFareProduct">
-							<Name>Types Of Fare Product - Trip</Name>
+							<Name>Types of FARE PRODUCT - Trip</Name>
 							<values>
 								<TypeOfFareProduct version="fxc:v1.0" id="fxc:standard_product@trip@short_hop">
 									<Name>Short hop fare</Name>
@@ -7187,7 +7243,7 @@ This Shows sample Purchases
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareProduct@pass" classOfValues="TypeOfFareProduct">
-							<Name>Types Of Fare Product - Pass</Name>
+							<Name>Types of FARE PRODUCT - Pass</Name>
 							<values>
 								<TypeOfFareProduct version="fxc:v1.0" id="fxc:standard_product@pass@day">
 									<Name>day pass - till end of fare day</Name>
@@ -7201,7 +7257,7 @@ This Shows sample Purchases
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareProduct@carnet" classOfValues="TypeOfFareProduct">
-							<Name>Types Of Fare Product - Pass</Name>
+							<Name>Types Of FARE PRODUC- Pass</Name>
 							<values>
 								<TypeOfFareProduct version="fxc:v1.0" id="fxc:standard_product@carnet@trips">
 									<Name>Carnet of trips.</Name>
@@ -7212,7 +7268,7 @@ This Shows sample Purchases
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareProduct@discount" classOfValues="TypeOfFareProduct">
-							<Name>Types Of Fare Product - Pass</Name>
+							<Name>Types Of FARE PRODUCT - Pass</Name>
 							<values>
 								<TypeOfFareProduct version="fxc:v1.0" id="fxc:standard_product@discount@sales">
 									<Name>Sales discount righty</Name>
@@ -7223,7 +7279,7 @@ This Shows sample Purchases
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareProduct@stored_value" classOfValues="TypeOfFareProduct">
-							<Name>Types Of Fare Product - Epurse</Name>
+							<Name>Types of FARE PRODUCT - Epurse</Name>
 							<values>
 								<TypeOfFareProduct version="fxc:v1.0" id="fxc:standard_product@stored_value@epurse">
 									<Name>Epurse</Name>
@@ -7231,7 +7287,7 @@ This Shows sample Purchases
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_SalesOfferPackage" classOfValues="TypeOfSalesOfferPackage">
-							<Name>Types Of Sales Offer Product</Name>
+							<Name>Types of SALES OFFER PACKAGE.</Name>
 							<values>
 								<TypeOfSalesOfferPackage version="fxc:v1.0" id="fxc:standard_product@all_operators">
 									<Name>Product is standard and supported by all operators</Name>
@@ -7247,8 +7303,8 @@ This Shows sample Purchases
 								</TypeOfSalesOfferPackage>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:ClassesOfUse" classOfValues="ClassOfUse">
-							<Name>Classes of Use</Name>
+						<ValueSet version="fxc:v1.0" id="fxc:Classes_of_Use" classOfValues="ClassOfUse">
+							<Name>Types of CLASS OF USE.</Name>
 							<values>
 								<!--- ====ClassOfUse ========= -->
 								<ClassOfUse version="fxc:v1.0" id="fxc:first">
@@ -7260,7 +7316,7 @@ This Shows sample Purchases
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_Projection" classOfValues="TypeOfProjection">
-							<Name>Types of Projection</Name>
+							<Name>Types of PROJECTION</Name>
 							<values>
 								<!--- ====ClassOfUse ========= -->
 								<TypeOfProjection version="fxc:v1.0" id="fxc:tariff_zone_border">
@@ -7269,7 +7325,7 @@ This Shows sample Purchases
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareContractEntry" classOfValues="TypeOfFareContractEntry">
-							<Name>Types of fare contract entry</Name>
+							<Name>Types of FARE CONTRACT ENTRY</Name>
 							<values>
 								<!--- ====TypeOfFareContractEntry ========= -->
 								<TypeOfFareContractEntry version="fxc:v1.0" id="fxc:product_purchase">
@@ -7287,7 +7343,7 @@ This Shows sample Purchases
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_Concession" classOfValues="TypeOfConcession">
-							<Name>Types of concession</Name>
+							<Name>Types of CONCESSION</Name>
 							<values>
 								<!--- ====TypeOfConcession method========= -->
 								<TypeOfConcession version="fxc:v1.0" id="fxc:none">
@@ -7367,6 +7423,58 @@ This Shows sample Purchases
 								</TypeOfTariff>
 							</values>
 						</ValueSet>
+						
+									<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareStructureElement" classOfValues="TypeOfFareStructureElement">
+							<Name>FXCP: Types of FARE STRUCTURE ELEMENT.</Name>
+							<values>
+											<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:access">
+									<Name>Access rights</Name>
+								</TypeOfFareStructureElement>
+								 <TypeOfFareStructureElement version="fxc:v1.0" id="fxc:access_when">
+									<Name>Fare demand :peak /off peak etc access rights to use or travel during some period</Name>
+								</TypeOfFareStructureElement>
+									<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:accepted_by">
+									<Name>Accepted by operator</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:eligibility"> 
+									<Name>Eligibility to purchase</Name>
+								</TypeOfFareStructureElement>
+											<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:groups">
+									<Name>Group tickets available</Name>
+								</TypeOfFareStructureElement>
+				
+								
+								
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:durations">
+									<Name>Time intervals</Name>
+								</TypeOfFareStructureElement>
+					
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:prerequisites">
+									<Name>Defines required entitlements</Name>
+								</TypeOfFareStructureElement> 
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:entitles">
+									<Name>Gives right to other products</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:sale_conditions">
+									<Name>Defines a condition or restriction on purchase</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:travel_conditions">
+									<Name>Condition on use</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:carnet_units">
+									<Name>Specifies units for purchase</Name>
+								</TypeOfFareStructureElement>
+								
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:outlets">
+									<Name>Specifies where a purchase can be made</Name>
+								</TypeOfFareStructureElement>
+					
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:quotas">
+									<Name>Quota applies</Name>
+								</TypeOfFareStructureElement>
+								 
+							</values>
+						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_AccessRightAssignment" classOfValues="TypeOfAccessRightAssignment">
 							<Name>Types of Access Right Assignment</Name>
 							<values>
@@ -7418,7 +7526,7 @@ This Shows sample Purchases
 								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:can_use_to_pay_for">
 									<Name>Gives ability to purchase automatically using</Name>
 								</TypeOfAccessRightAssignment>
-								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:payment_schedule">
+								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:payment_schedules">
 									<Name>Specifices if subscription or single payment</Name>
 								</TypeOfAccessRightAssignment>
 								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:reservation_condition">
@@ -7427,7 +7535,7 @@ This Shows sample Purchases
 								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:distribution_channel_restriction">
 									<Name>Constrains availability for distribution by a channel</Name>
 								</TypeOfAccessRightAssignment>
-								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:takes_properties_from_group">
+								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:use_before">
 									<Name>Takes properties from group package</Name>
 								</TypeOfAccessRightAssignment>
 								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:quota_applies">
@@ -7486,6 +7594,7 @@ This Shows sample Purchases
 						</Layer>
 					</groupsOfEntities>
 				</ResourceFrame>
+				<!-- === NPTG Common fixed definitions  ===  -->
 				<ResourceFrame version="nptg:v2.1" id="fxc:UK:DFT:ResourceFrame_UK_PI_METADATA:NPTG:nptg" responsibilitySetRef="nptg:NPTG_metadata" dataSourceRef="nptg:dft">
 					<ValidBetween>
 						<FromDate>2004-01-01T00:00:00</FromDate>

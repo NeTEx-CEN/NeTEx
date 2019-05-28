@@ -103,7 +103,6 @@ Concessionary passes are valid throughout from 0930-2300 Mon-Fri, and anytime at
 				<CodespaceRef ref="noc_data"/>
 				<CodespaceRef ref="mb_data"/>
 			</codespaces>
-			
 			<!--==== FRAME DEFAULTS ==== -->
 			<FrameDefaults>
 				<!---  The default means that actually we could leave off all id s that belong to the mb: namespace. -->
@@ -111,9 +110,9 @@ Concessionary passes are valid throughout from 0930-2300 Mon-Fri, and anytime at
 				<DefaultDataSourceRef ref="mb:metrobus" version="1.0"/>
 				<DefaultCurrency>GBP</DefaultCurrency>
 			</FrameDefaults>
-				<prerequisites>
-						<CompositeFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_METADATA_OFFER:FXCP:fxc"/>   
-					</prerequisites>
+			<prerequisites>
+				<CompositeFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_METADATA_OFFER:FXCP:fxc"/>
+			</prerequisites>
 			<frames>
 				<!--==== FAREs ==== -->
 				<FareFrame version="1.0" id="epd:UK:METR:FareFrame_UK_PI_FARE_PRODUCT:Trip@Line_1:mb" dataSourceRef="mb:metrobus" responsibilitySetRef="mb:tariffs">
@@ -124,25 +123,6 @@ Concessionary passes are valid throughout from 0930-2300 Mon-Fri, and anytime at
 						<FareFrameRef version="1.0" ref="epd:UK:METR:FareFrame_UK_PI_FARE_NETWORK:Line_1:mb"/>
 						<SiteFrameRef version="1.0" ref="epd:UK:METR:SiteFrame_UK_PI_NETWORK:Crawley:nptg"/>
 					</prerequisites>
-					<!--==== Pricing Parameters ====-->
-					<PricingParameterSet version="1.0" id="mb:Metrobus">
-						<pricingRules>
-							<DiscountingRule version="1.0" id="mb:half_price">
-								<Name>Discount for child fares></Name>
-								<DiscountAsPercentage>50</DiscountAsPercentage>
-							</DiscountingRule>
-							<DiscountingRule version="1.0" id="mb:free">
-								<Name>Free for infants, etc></Name>
-								<DiscountAsPercentage>100</DiscountAsPercentage>
-							</DiscountingRule>
-						</pricingRules>
-						<roundings>
-							<Rounding version="1.0" id="mb:split">
-								<Name>Split roundig to nearest </Name>
-								<RoundingMethod>split</RoundingMethod>
-							</Rounding>
-						</roundings>
-					</PricingParameterSet>
 					<!--==== Fare Structure ==== -->
 					<tariffs>
 						<Tariff version="1.0" id="mb:Tariff@single@Line_1">
@@ -164,6 +144,7 @@ Concessionary passes are valid throughout from 0930-2300 Mon-Fri, and anytime at
 							<fareStructureElements>
 								<FareStructureElement version="1.0" id="mb:Tariff@single@access">
 									<Name>O/d pairs for Line 1</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:access"/>
 									<!--Here we encode the actual fare triangle elements
 
 							Bewbush West (loop)
@@ -448,6 +429,7 @@ Concessionary passes are valid throughout from 0930-2300 Mon-Fri, and anytime at
 								</FareStructureElement>
 								<FareStructureElement id="mb:Tariff@single@eligibility" version="1.0">
 									<Name>eligible user types</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:eligibility"/>
 									<GenericParameterAssignment order="1" id="mb:Tariff@single@eligibility" version="1.0">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:eligible"/>
 										<LimitationGroupingType>XOR</LimitationGroupingType>
@@ -463,29 +445,15 @@ Concessionary passes are valid throughout from 0930-2300 Mon-Fri, and anytime at
 													</CompanionProfile>
 												</companionProfiles>
 											</UserProfile>
-											<UserProfile version="1.0" id="mb:Trip@child_with_adult">
+											<UserProfile version="1.0" id="mb:child_with_adult">
 												<Name>Child</Name>
 												<Description>5-13 year olds are normally charged half adult fare on singles and returns. Discounts are available on Metrorider and Metrovoyager ticktes. 14 &amp;  15 year olds may travel at child rate on any Metrobus service, if one of the advertised proofs of age is supplied.</Description>
-												<prices>
-													<UsageParameterPrice version="1.0" id="mb:adult"> 
-												</UsageParameterPrice>
-													<UsageParameterPrice version="1.0" id="mb:Trip@child_with_adult">
-														<UsageParameterPriceRef version="1.0" ref="mb:adult"/>
-														<DiscountingRuleRef version="1.0" ref="mb:half_price"/>
-													</UsageParameterPrice>
-												</prices>
 												<MinimumAge>5</MinimumAge>
 												<MaximumAge>15</MaximumAge>
 											</UserProfile>
 											<UserProfile version="1.0" id="mb:infant">
 												<Name>Infant</Name>
 												<Description>Up to three children under 5 years of age, accompanied by a fare paying adult or child passenger, and not occupying a seat, may travel free of charge on the Company&#x2019;s services.</Description>
-												<prices>
-													<UsageParameterPrice version="1.0" id="mb:infant">
-														<Amount>0</Amount>
-														<DiscountingRuleRef version="1.0" ref="mb:free"/>
-													</UsageParameterPrice>
-												</prices>
 												<MinimumAge>0</MinimumAge>
 												<MaximumAge>4</MaximumAge>
 												<companionProfiles>
@@ -500,7 +468,8 @@ Concessionary passes are valid throughout from 0930-2300 Mon-Fri, and anytime at
 									</GenericParameterAssignment>
 								</FareStructureElement>
 								<FareStructureElement id="mb:Tariff@single@conditions_of_travel" version="1.0">
-									<Name>eligible user types</Name>
+									<Name>Conditions on travel</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:travel_conditions"/>
 									<GenericParameterAssignment version="1.0" order="1" id="mb:Tariff@single@conditions_of_travel">
 										<Name>Conditions of travel</Name>
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:condition_of_use"/>
@@ -608,6 +577,25 @@ Concessionary passes are valid throughout from 0930-2300 Mon-Fri, and anytime at
 					<prerequisites>
 						<FareFrameRef version="1.0" ref="epd:UK:METR:FareFrame_UK_PI_FARE_PRODUCT:Trip@Line_1:mb"/>
 					</prerequisites>
+					<!--==== Pricing Parameters ====-->
+					<PricingParameterSet version="1.0" id="mb:Metrobus">
+						<pricingRules>
+							<DiscountingRule version="1.0" id="mb:half_price">
+								<Name>Discount for child fares></Name>
+								<DiscountAsPercentage>50</DiscountAsPercentage>
+							</DiscountingRule>
+							<DiscountingRule version="1.0" id="mb:free">
+								<Name>Free for infants, etc></Name>
+								<DiscountAsPercentage>100</DiscountAsPercentage>
+							</DiscountingRule>
+						</pricingRules>
+						<roundings>
+							<Rounding version="1.0" id="mb:split">
+								<Name>Split roundig to nearest </Name>
+								<RoundingMethod>split</RoundingMethod>
+							</Rounding>
+						</roundings>
+					</PricingParameterSet>
 					<!--==== Notices ==== -->
 					<noticeAssignments>
 						<NoticeAssignment version="1.0" id="mb:Metrobus@Products@Trip@prices@Line_1@Footnote" order="1">
@@ -625,6 +613,26 @@ Concessionary passes are valid throughout from 0930-2300 Mon-Fri, and anytime at
 					</noticeAssignments>
 					<!--==== Fare Prices ==== -->
 					<priceGroups>
+						<PriceGroup version="1.0" id="mb:pricingA">
+							<members>
+								<UsageParameterPrice version="1.0" id="mb:Trip@adult">
+									<Name>Adult ful fare</Name>
+									<UserProfileRef version="1.0" ref="mb:adult"/>
+								</UsageParameterPrice>
+								<UsageParameterPrice version="1.0" id="mb:Trip@child_with_adult">
+									<Name>Child fare half adult</Name>
+									<UsageParameterPriceRef version="1.0" ref="mb:Trip@adult"/>
+									<DiscountingRuleRef version="1.0" ref="mb:half_price"/>
+									<UserProfileRef version="1.0" ref="mb:child_with_adult"/>
+								</UsageParameterPrice>
+								<UsageParameterPrice version="1.0" id="mb:Trip@infant">
+									<Name>Infant fare  free</Name>
+									<Amount>0</Amount>
+									<DiscountingRuleRef version="1.0" ref="mb:free"/>
+									<UserProfileRef version="1.0" ref="mb:infant"/>
+								</UsageParameterPrice>
+							</members>
+						</PriceGroup>
 						<!--  === PRICE BANDS  === -->
 						<PriceGroup version="1.0" id="mb:price_band_A">
 							<members>
@@ -1421,8 +1429,7 @@ Bewbush West (loop)
 				<SiteFrame version="1.0" id="epd:UK:METR:SiteFrame_UK_PI_NETWORK:Crawley:nptg" responsibilitySetRef="nptg:data" dataSourceRef="nptg:dft">
 					<Name>NPTG localities used by Metrobus 1</Name>
 					<Description>This frame contains the NPTG locality definitions used by the stops  the service. It could also be exchanged separately.</Description>
-					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_STOP:FXCP"  />
-					 
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_STOP:FXCP"/>
 					<topographicPlaces>
 						<TopographicPlace responsibilitySetRef="nptgAdminArea:106" created="2005-10-05T10:45:19Z" changed="2005-10-05T10:45:19Z" version="0" id="nptgLocality:E0026633">
 							<!--  responsibilitySetRef: NPTG_<AdministrativeAreaRef>  -->
@@ -1657,8 +1664,9 @@ Bewbush West (loop)
 					</typesOfValue>
 					<organisations>
 						<!-- ==== ORGANISATIONS ==== -->
-					<Operator version="1.0" id="noc:METR">
-							<PublicCode>METR</PublicCode><PrivateCode type="nocn">nocn:137122</PrivateCode>
+						<Operator version="1.0" id="noc:METR">
+							<PublicCode>METR</PublicCode>
+							<PrivateCode type="nocn">nocn:137122</PrivateCode>
 							<Name>Metrobus</Name>
 							<ShortName>Metrobus</ShortName>
 							<TradingName>Metrobus Ltd</TradingName>
@@ -1801,7 +1809,7 @@ This Shows  sample Purchases
 												</Destination>
 												<Duration>PT1H</Duration>
 												<OperatorRef version="1.0" ref="noc:METR">137122</OperatorRef>
-												<UserProfileRef version="1.0" ref="mb:Trip@child_with_adult"/>
+												<UserProfileRef version="1.0" ref="mb:child_with_adult"/>
 											</TravelSpecificationSummaryView>
 											<specificParameterAssignments>
 												<SpecificParameterAssignment version="any" order="1" id="mbt:Anon001@trans002@purchase_single">
@@ -1812,7 +1820,7 @@ This Shows  sample Purchases
 													<DistanceMatrixElementRef version="1.0" ref="mb:Gossops_Green+West_Green"/>
 													<SalesOfferPackageRef version="1.0" ref="mb:Trip@single-SOP@p-ticket"/>
 													<limitations>
-														<UserProfileRef version="1.0" ref="mb:Trip@child_with_adult"/>
+														<UserProfileRef version="1.0" ref="mb:child_with_adult"/>
 													</limitations>
 													<validityParameters>
 														<OperatorRef version="1.0" ref="noc:METR">137122</OperatorRef>
@@ -1841,11 +1849,7 @@ This Shows  sample Purchases
 				</SalesTransactionFrame>
 			</frames>
 		</CompositeFrame>
-	
-		
-		
-		
-<!--   === COMMON UK FARE RESOURCES===  -->
+		<!--   === COMMON UK FARE RESOURCES===  -->
 		<CompositeFrame id="fxc:UK:DFT:TypeOfFrame_UK_PI_METADATA_OFFER:FXCP:fxc" version="fxc:v1.0" responsibilitySetRef="fxc:FXC_metadata" dataSourceRef="fxc:dft">
 			<ValidBetween>
 				<FromDate>2019-05-01T00:00:00</FromDate>
@@ -1853,8 +1857,6 @@ This Shows  sample Purchases
 			</ValidBetween>
 			<Name>UK FXCP Passenger Information Profile common resources</Name>
 			<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_METADATA_OFFER:FXCP:fxc"/>
-			
-			
 			<codespaces>
 				<Codespace id="naptStop_data">
 					<Xmlns>naptStop</Xmlns>
@@ -2099,6 +2101,12 @@ This Shows  sample Purchases
 							<UserType>student</UserType>
 							<ProofRequired>membershipCard</ProofRequired>
 							<DiscountBasis>discount</DiscountBasis>
+						</UserProfile>
+						<UserProfile version="fxc:v1.0" id="fxc:senior">
+							<Name>Senior</Name>
+							<TypeOfConcessionRef version="fxc:v1.0" ref="fxc:child"/>
+							<UserType>senior</UserType>
+							<MinimumAge>60</MinimumAge>
 						</UserProfile>
 					</usageParameters>
 					<!-- ====CHANNELS -->
@@ -2353,7 +2361,7 @@ This Shows  sample Purchases
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareZone" classOfValues="TypeOfZone">
-							<Name>Types of Fare Zone</Name>
+							<Name>Types of FARE ZONE</Name>
 							<values>
 								<!--- ====Type of Product category ========= -->
 								<TypeOfZone version="fxc:v1.0" id="fxc:fare_zone@operator">
@@ -2368,7 +2376,7 @@ This Shows  sample Purchases
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_ProductCategory" classOfValues="TypeOfProductCategory">
-							<Name>Types of Product Category</Name>
+							<Name>Types of PRODUCT CATEGORY</Name>
 							<values>
 								<!--- ====Type of Product category ========= -->
 								<TypeOfProductCategory version="fxc:v1.0" id="fxc:urban_bus">
@@ -2392,7 +2400,7 @@ This Shows  sample Purchases
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:ChargingMoments" classOfValues="ChargingMoment">
-							<Name>Charging Moments</Name>
+							<Name>Types of CHARGING MOMENT</Name>
 							<values>
 								<!--- ==== TypeOfChargingMoment ========= -->
 								<ChargingMoment version="fxc:v1.0" id="fxc:prepayment">
@@ -2408,12 +2416,15 @@ This Shows  sample Purchases
 									<Name>Prepaid - free issue</Name>
 								</ChargingMoment>
 								<ChargingMoment version="fxc:v1.0" id="fxc::post_payment">
-									<Name>Prepaid</Name>
+									<Name>Postpaid</Name>
+								</ChargingMoment>
+								<ChargingMoment version="fxc:v1.0" id="fxc::post_payment_periodic">
+									<Name>Postpaid</Name>
 								</ChargingMoment>
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareProduct@trip" classOfValues="TypeOfFareProduct">
-							<Name>Types Of Fare Product - Trip</Name>
+							<Name>Types of FARE PRODUCT - Trip</Name>
 							<values>
 								<TypeOfFareProduct version="fxc:v1.0" id="fxc:standard_product@trip@short_hop">
 									<Name>Short hop fare</Name>
@@ -2434,7 +2445,7 @@ This Shows  sample Purchases
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareProduct@pass" classOfValues="TypeOfFareProduct">
-							<Name>Types Of Fare Product - Pass</Name>
+							<Name>Types of FARE PRODUCT - Pass</Name>
 							<values>
 								<TypeOfFareProduct version="fxc:v1.0" id="fxc:standard_product@pass@day">
 									<Name>day pass - till end of fare day</Name>
@@ -2448,7 +2459,7 @@ This Shows  sample Purchases
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareProduct@carnet" classOfValues="TypeOfFareProduct">
-							<Name>Types Of Fare Product - Pass</Name>
+							<Name>Types Of FARE PRODUC- Pass</Name>
 							<values>
 								<TypeOfFareProduct version="fxc:v1.0" id="fxc:standard_product@carnet@trips">
 									<Name>Carnet of trips.</Name>
@@ -2459,7 +2470,7 @@ This Shows  sample Purchases
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareProduct@discount" classOfValues="TypeOfFareProduct">
-							<Name>Types Of Fare Product - Pass</Name>
+							<Name>Types Of FARE PRODUCT - Pass</Name>
 							<values>
 								<TypeOfFareProduct version="fxc:v1.0" id="fxc:standard_product@discount@sales">
 									<Name>Sales discount righty</Name>
@@ -2470,7 +2481,7 @@ This Shows  sample Purchases
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareProduct@stored_value" classOfValues="TypeOfFareProduct">
-							<Name>Types Of Fare Product - Epurse</Name>
+							<Name>Types of FARE PRODUCT - Epurse</Name>
 							<values>
 								<TypeOfFareProduct version="fxc:v1.0" id="fxc:standard_product@stored_value@epurse">
 									<Name>Epurse</Name>
@@ -2478,7 +2489,7 @@ This Shows  sample Purchases
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_SalesOfferPackage" classOfValues="TypeOfSalesOfferPackage">
-							<Name>Types Of Sales Offer Product</Name>
+							<Name>Types of SALES OFFER PACKAGE.</Name>
 							<values>
 								<TypeOfSalesOfferPackage version="fxc:v1.0" id="fxc:standard_product@all_operators">
 									<Name>Product is standard and supported by all operators</Name>
@@ -2494,8 +2505,8 @@ This Shows  sample Purchases
 								</TypeOfSalesOfferPackage>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:ClassesOfUse" classOfValues="ClassOfUse">
-							<Name>Classes of Use</Name>
+						<ValueSet version="fxc:v1.0" id="fxc:Classes_of_Use" classOfValues="ClassOfUse">
+							<Name>Types of CLASS OF USE.</Name>
 							<values>
 								<!--- ====ClassOfUse ========= -->
 								<ClassOfUse version="fxc:v1.0" id="fxc:first">
@@ -2507,7 +2518,7 @@ This Shows  sample Purchases
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_Projection" classOfValues="TypeOfProjection">
-							<Name>Types of Projection</Name>
+							<Name>Types of PROJECTION</Name>
 							<values>
 								<!--- ====ClassOfUse ========= -->
 								<TypeOfProjection version="fxc:v1.0" id="fxc:tariff_zone_border">
@@ -2516,7 +2527,7 @@ This Shows  sample Purchases
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareContractEntry" classOfValues="TypeOfFareContractEntry">
-							<Name>Types of fare contract entry</Name>
+							<Name>Types of FARE CONTRACT ENTRY</Name>
 							<values>
 								<!--- ====TypeOfFareContractEntry ========= -->
 								<TypeOfFareContractEntry version="fxc:v1.0" id="fxc:product_purchase">
@@ -2534,7 +2545,7 @@ This Shows  sample Purchases
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_Concession" classOfValues="TypeOfConcession">
-							<Name>Types of concession</Name>
+							<Name>Types of CONCESSION</Name>
 							<values>
 								<!--- ====TypeOfConcession method========= -->
 								<TypeOfConcession version="fxc:v1.0" id="fxc:none">
@@ -2614,6 +2625,50 @@ This Shows  sample Purchases
 								</TypeOfTariff>
 							</values>
 						</ValueSet>
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareStructureElement" classOfValues="TypeOfFareStructureElement">
+							<Name>FXCP: Types of FARE STRUCTURE ELEMENT.</Name>
+							<values>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:access">
+									<Name>Access rights</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:access_when">
+									<Name>Fare demand :peak /off peak etc access rights to use or travel during some period</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:accepted_by">
+									<Name>Accepted by operator</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:eligibility">
+									<Name>Eligibility to purchase</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:groups">
+									<Name>Group tickets available</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:durations">
+									<Name>Time intervals</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:prerequisites">
+									<Name>Defines required entitlements</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:entitles">
+									<Name>Gives right to other products</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:sale_conditions">
+									<Name>Defines a condition or restriction on purchase</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:travel_conditions">
+									<Name>Condition on use</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:carnet_units">
+									<Name>Specifies units for purchase</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:outlets">
+									<Name>Specifies where a purchase can be made</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:quotas">
+									<Name>Quota applies</Name>
+								</TypeOfFareStructureElement>
+							</values>
+						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_AccessRightAssignment" classOfValues="TypeOfAccessRightAssignment">
 							<Name>Types of Access Right Assignment</Name>
 							<values>
@@ -2665,7 +2720,7 @@ This Shows  sample Purchases
 								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:can_use_to_pay_for">
 									<Name>Gives ability to purchase automatically using</Name>
 								</TypeOfAccessRightAssignment>
-								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:payment_schedule">
+								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:payment_schedules">
 									<Name>Specifices if subscription or single payment</Name>
 								</TypeOfAccessRightAssignment>
 								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:reservation_condition">
@@ -2674,7 +2729,7 @@ This Shows  sample Purchases
 								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:distribution_channel_restriction">
 									<Name>Constrains availability for distribution by a channel</Name>
 								</TypeOfAccessRightAssignment>
-								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:takes_properties_from_group">
+								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:use_before">
 									<Name>Takes properties from group package</Name>
 								</TypeOfAccessRightAssignment>
 								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:quota_applies">
@@ -2733,9 +2788,7 @@ This Shows  sample Purchases
 						</Layer>
 					</groupsOfEntities>
 				</ResourceFrame>
-			
-	
- 				<ResourceFrame version="nptg:v2.1" id="fxc:UK:DFT:ResourceFrame_UK_PI_METADATA:NPTG:nptg" responsibilitySetRef="nptg:NPTG_metadata" dataSourceRef="nptg:dft">
+				<ResourceFrame version="nptg:v2.1" id="fxc:UK:DFT:ResourceFrame_UK_PI_METADATA:NPTG:nptg" responsibilitySetRef="nptg:NPTG_metadata" dataSourceRef="nptg:dft">
 					<ValidBetween>
 						<FromDate>2004-01-01T00:00:00</FromDate>
 					</ValidBetween>
@@ -2929,8 +2982,6 @@ This Shows  sample Purchases
 					</organisations>
 				</ResourceFrame>
 			</frames>
-		</CompositeFrame>		
-		
-		
+		</CompositeFrame>
 	</dataObjects>
 </PublicationDelivery>

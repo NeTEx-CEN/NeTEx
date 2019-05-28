@@ -1441,7 +1441,7 @@ At the end are shown some sample transactions showing the parameters that define
 						</JourneyPattern>
 					</journeyPatterns>
 				</ServiceFrame>
-				<!-- First WoE Distance Products -->
+		
 				<FareFrame version="1.0" id="epd:UK:FBRI:FareFrame_UK_PI_FARE_NETWORK:WoE_Distance@Trip@Bristol@48:frst">
 					<Name>First West ^amp; Bristol Distance Nased Fares</Name>
 					<Description>This is an example showing how one might encode a sectioj n ("Distance") of the First West and Bristol Stage fare table</Description>
@@ -1546,6 +1546,8 @@ At the end are shown some sample transactions showing the parameters that define
 					</seriesConstraints>
 					<!--====Tariff Structure ==== -->
 				</FareFrame>
+				
+						<!-- First WoE Distance Products -->
 				<FareFrame version="1.0" id="epd:UK:FBRI:FareFrame_UK_PI_FARE_PRODUCT:WoE_Distance@Trip:frst">
 					<Name>First West ^amp; Bristol section ("Distance" Based) fares</Name>
 					<Description>This is an example showing how one might encode the prduct part of the First West and Bristol section fare table in NeTEx.</Description>
@@ -1620,9 +1622,10 @@ At the end are shown some sample transactions showing the parameters that define
 							<!--- ====Fare Structure======= -->
 							<!-- ==FARE STRUCTURE ELEMENTS -->
 							<fareStructureElements>
-								<FareStructureElement id="frst:Tariff@WoE_Distance@Trip@modes" version="1.0">
+								<FareStructureElement id="frst:Tariff@WoE_Distance@Trip@access_modes" version="1.0">
 									<Name>Available modes</Name>
-									<GenericParameterAssignment order="1" id="frst:Tariff@WoE_Distance@Trip@modes" version="1.0">
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:access"/>
+									<GenericParameterAssignment order="1" id="frst:Tariff@WoE_Distance@Trip@access_modes" version="1.0">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 										<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
 										<validityParameters>
@@ -1631,9 +1634,10 @@ At the end are shown some sample transactions showing the parameters that define
 										</validityParameters>
 									</GenericParameterAssignment>
 								</FareStructureElement>
-								<FareStructureElement id="frst:Tariff@WoE_Distance@Trip@zones" version="1.0">
+								<FareStructureElement id="frst:Tariff@WoE_Distance@Trip@access_zones" version="1.0">
 									<Name>Available zones</Name>
 									<Description>Trip may start in a city zone and continue to distance section</Description>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:access"/>
 									<GenericParameterAssignment version="1.0" id="frst:Tariff@WoE_Distance@Trip@from_zone" order="1">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 										<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
@@ -1654,6 +1658,7 @@ If you travel in 1-3 mile long sections it'll be £2.50, 3-6 mile long sections w
 Here is an example route and some of the fares along it: Emersons Green, Sainsbury's to Long Close would be £2.50 as you are travelling in three sections (numbers 1, 2 and 3, Long Close is classed as section 3 in this example as it's where you are getting off the bus). 
 Long Close to Narroways Road would be £3.50 as you are travelling in four sections (4, 5, 6, 7, Long Close is counted as section 4 in this example as it's your boarding point). Blackberry Hospital to Downend, 
 The Leap would be £3.50 as you are travelling in four sections (5, 4, 3, 2).</Description>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:intervals"/>
 									<geographicalIntervals>
 										<GeographicalIntervalRef version="1.0" ref="frst:Tariff@WoE_Distance@00_to_03"/>
 										<GeographicalIntervalRef version="1.0" ref="frst:Tariff@WoE_Distance@03_to_06"/>
@@ -1661,9 +1666,12 @@ The Leap would be £3.50 as you are travelling in four sections (5, 4, 3, 2).</De
 										<GeographicalIntervalRef version="1.0" ref="frst:Tariff@WoE_Distance@09_to_12"/>
 										<GeographicalIntervalRef version="1.0" ref="frst:Tariff@WoE_Distance@12_plus"/>
 									</geographicalIntervals>
+									
+										 
 								</FareStructureElement>
 								<FareStructureElement version="1.0" id="frst:Tariff@WoE_Distance@Trip@eligibility">
 									<Name>eligible user types</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:eligibility"/>
 									<GenericParameterAssignment order="1" id="frst:Tariff@WoE_Distance@eligibility" version="1.0">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:eligible"/>
 										<LimitationGroupingType>XOR</LimitationGroupingType>
@@ -1679,8 +1687,9 @@ The Leap would be £3.50 as you are travelling in four sections (5, 4, 3, 2).</De
 								</FareStructureElement>
 								<!-- ==  -->
 								<FareStructureElement version="1.0" id="frst:Tariff@WoE_Distance@Trip@steps">
-									<Name>Overall jjourney steps</Name>
+									<Name>Overall journey steps</Name>
 									<Description>Journey is potentially made up of two steps</Description>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:steps"/>
 									<fareStructureElementsInSequence>
 										<FareStructureElementInSequence version="1.0" id="frst:Tariff@WoE_Distance@Trip@from_zone" order="1">
 											<Name>Optional firstt leg in inner zone</Name>
@@ -1688,7 +1697,7 @@ The Leap would be £3.50 as you are travelling in four sections (5, 4, 3, 2).</De
 Flat fare to the border of the zone, then rounded up to £2.50, £3.50, £4.50 or £5.50 depending on the distance travelled thereafter.</Description>
 											<IsFirstInSequence>true</IsFirstInSequence>
 											<AccessNumberIsLimited>true</AccessNumberIsLimited>
-											<FareStructureElementRef ref="frst:Tariff@WoE_Distance@Trip@zones" version="1.0"/>
+											<FareStructureElementRef ref="frst:Tariff@WoE_Distance@Trip@access_zones" version="1.0"/>
 										</FareStructureElementInSequence>
 										<FareStructureElementInSequence version="1.0" id="frst:Tariff@WoE_Distance@Trip@sections" order="2">
 											<Name>Unit stage count</Name>
@@ -1735,7 +1744,7 @@ Over 12 miles (within West of England area) 		£6.50
 								<ValidableElement version="1.0" id="frst:WoE_Distance@Trip@travel">
 									<Name>Unlimited rides available for specifed periods</Name>
 									<fareStructureElements>
-										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Distance@Trip@modes"/>
+										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Distance@Trip@access_modes"/>
 										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Distance@Trip@geographic_intervals"/>
 										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Distance@Trip@eligibility"/>
 										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Distance@Trip@steps"/>
@@ -2187,9 +2196,10 @@ Young people aged 16-21 and students get up to 30% OFF all singles, day and seas
 							<!--- ====Time Intervals======= -->
 							<!-- ==FARE STRUCTURE ELEMENTS -->
 							<fareStructureElements>
-								<FareStructureElement version="1.0" id="frst:Tariff@WoE@Photo_id@operators">
-									<Name>Allowed operaror</Name>
-									<GenericParameterAssignment id="frst:Tariff@WoE@Photo_id@operators" version="1.0" order="1">
+								<FareStructureElement version="1.0" id="frst:Tariff@WoE@Photo_id@access_operators">
+									<Name>Allowed operators</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:accepted_by"/>
+									<GenericParameterAssignment id="frst:Tariff@WoE@Photo_id@access_operators" version="1.0" order="1">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 										<ValidityParameterGroupingType>XOR</ValidityParameterGroupingType>
 										<validityParameters>
@@ -2199,6 +2209,7 @@ Young people aged 16-21 and students get up to 30% OFF all singles, day and seas
 								</FareStructureElement>
 								<FareStructureElement version="1.0" id="frst:Tariff@WoE@Photo_id@eligibility">
 									<Name>Allowed operaror</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:eligibility"/>
 									<GenericParameterAssignment version="1.0" id=":Tariff@WoE@Photo_id@eligibility" order="1">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:eligible"/>
 										<limitations>
@@ -2300,7 +2311,7 @@ BS5 0DZ or email your details to ticketssww@firstgroup</Description>
 								<ValidableElement version="1.0" id="frst:WoE@Photo_id@travel">
 									<Name>Unlimited rides available for specifed periods</Name>
 									<fareStructureElements>
-										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE@Photo_id@operators"/>
+										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE@Photo_id@access_operators"/>
 										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE@Photo_id@eligibility"/>
 									</fareStructureElements>
 								</ValidableElement>
@@ -2448,7 +2459,8 @@ BS5 0DZ or email your details to ticketssww@firstgroup</Description>
 					<organisations>
 						<!--==== Operators ==== -->
 						<Operator version="1.0" id="noc:FBRI">
-							<PublicCode>FBRI</PublicCode><PrivateCode type="nocn">nocn:136361</PrivateCode>
+							<PublicCode>FBRI</PublicCode>
+							<PrivateCode type="nocn">nocn:136361</PrivateCode>
 							<Name>First Bristol Limited</Name>
 							<ShortName>First</ShortName>
 							<TradingName>First Bristol, Bath &amp; the West</TradingName>
@@ -2619,15 +2631,40 @@ This  frame Shows  sample Purchases
 			<frames>
 				<!-- ====COMMON UK PI Profile  RESOURCEs:  META DATA - COULD BE EXTERNALISED ===== ============ -->
 				<!-- === Profile Frame Types ===  -->
+					<!-- === Profile Frame Types ===  -->
 				<ResourceFrame id="fxc:UK:DFT:ResourceFrame_UK_PI_METADATA_FRAMES:FXCP:fxc" version="fxc:v1.0" responsibilitySetRef="fxc:FXC_metadata" dataSourceRef="fxc:dft">
-					<Name>UKFXCP  Frame types</Name>
+					<Name>UK FXCP  Fare profile Frame types and codepaces</Name>
 					<codespaces>
+						<Codespace id="fxc_metadata">
+							<Xmlns>fxc</Xmlns>
+							<XmlnsUrl>netex.org.uk/fxc</XmlnsUrl>
+							<Description>UK FareXChange Profile metadata</Description>
+						</Codespace>
 						<Codespace id="epd_data">
 							<Xmlns>epd</Xmlns>
 							<XmlnsUrl>http://fnetex-cen.eu/epd</XmlnsUrl>
 							<Description>European Passenger Information profile data -use for UK frame names</Description>
 						</Codespace>
 					</codespaces>
+					<dataSources>
+						<DataSource id="fxc:dft" version="fxc:v1.0">
+							<Email>standards@netex.org.uk</Email>
+						</DataSource>
+					</dataSources>
+					<!-- ========Responsibility Sets========== -->
+					<responsibilitySets>
+						<ResponsibilitySet version="fxc:v1.0" id="fxc:FXC_metadata">
+							<Name>Common</Name>
+							<roles>
+								<ResponsibilityRoleAssignment version="fxc:v1.0" id="fxc:FXC_metadata:DfT">
+									<DataRoleType>creates distributes</DataRoleType>
+									<StakeholderRoleType>DataRegistrar</StakeholderRoleType>
+									<ResponsibleOrganisationRef ref="nptg:DfT" versionRef="nptg:v2.1"/>
+									<ResponsibleAreaRef ref="nptgUkRegion:GB" versionRef="nptg:v2.1"/>
+								</ResponsibilityRoleAssignment>
+							</roles>
+						</ResponsibilitySet>
+					</responsibilitySets>
 					<typesOfValue>
 						<!-- ======== TYPE S OF   FRAME========= -->
 						<ValueSet version="fxc:1.0" id="fxc:Types_of_Specific_Frame_Basic" classOfValues="TypeOfFrame">
@@ -2736,7 +2773,7 @@ This  frame Shows  sample Purchases
 						</ValueSet>
 					</typesOfValue>
 				</ResourceFrame>
-				<!-- === FareXchange  Common fixed definitions  ===  -->
+		<!-- === FareXchange  Common fixed definitions  ===  -->
 				<FareFrame id="fxc:UK:DFT:FareFrame_UK_PI_METADATA:FareXChange:fxc" version="fxc:v1.0" responsibilitySetRef="fxc:FXC_metadata" dataSourceRef="fxc:dft">
 					<Name>FXCP Values for Farexchange</Name>
 					<FrameDefaults>
@@ -3033,24 +3070,7 @@ This  frame Shows  sample Purchases
 					</typesOfTravelDocuments>
 				</FareFrame>
 				<ResourceFrame id="fxc:UK:DFT:ResourceFrame_UK_PI_METADATA:FareXChange:fxc" version="fxc:v1.0" responsibilitySetRef="fxc:FXC_metadata" dataSourceRef="fxc:dft">
-					<Name>FXCP - Fare metadata</Name>
-					<codespaces>
-						<Codespace id="fxc_metadata">
-							<Xmlns>fxc</Xmlns>
-							<XmlnsUrl>netex.org.uk/fxc</XmlnsUrl>
-							<Description>UK FareXChange Profile metadata</Description>
-						</Codespace>
-						<Codespace id="nrn_data">
-							<Xmlns>nrn</Xmlns>
-							<XmlnsUrl>http://www.nationalrail.co.uk/</XmlnsUrl>
-							<Description>UK national rail network</Description>
-						</Codespace>
-						<Codespace id="iso3166-2_data">
-							<Xmlns>iso3166-2</Xmlns>
-							<XmlnsUrl>http://www.iso.org/country_codes/</XmlnsUrl>
-							<Description>ISO 316602 3 character Principality &amp; county codes. Use to subdivide IANA countries, e.g. gb:ENG, gb:WLS </Description>
-						</Codespace>
-					</codespaces>
+					<Name>FXCP - Fare profile  metadata</Name>
 					<FrameDefaults>
 						<DefaultCodespaceRef ref="fxc_metadata"/>
 						<DefaultDataSourceRef ref="fxc:dft" version="fxc:v1.0"/>
@@ -3068,29 +3088,13 @@ This  frame Shows  sample Purchases
 					</FrameDefaults>
 					<versions>
 						<Version id="fxc:v1.0" version="any">
+							<ValidBetween>
+								<FromDate>2019-01-01T01:01:01Z</FromDate>
+							</ValidBetween>
 							<Description>FXC version 2.1</Description>
 							<VersionType>baseline</VersionType>
 						</Version>
 					</versions>
-					<dataSources>
-						<DataSource id="fxc:dft" version="fxc:v1.0">
-							<Email>standards@netex.org.uk</Email>
-						</DataSource>
-					</dataSources>
-					<!-- ========Responsibility Sets========== -->
-					<responsibilitySets>
-						<ResponsibilitySet version="fxc:v1.0" id="fxc:FXC_metadata">
-							<Name>Common</Name>
-							<roles>
-								<ResponsibilityRoleAssignment version="fxc:v1.0" id="fxc:FXC_metadata:DfT">
-									<DataRoleType>creates distributes</DataRoleType>
-									<StakeholderRoleType>DataRegistrar</StakeholderRoleType>
-									<ResponsibleOrganisationRef ref="fxc:DfT" version="fxc:v1.0"/>
-									<ResponsibleAreaRef ref="fxc:UK">TODO</ResponsibleAreaRef>
-								</ResponsibilityRoleAssignment>
-							</roles>
-						</ResponsibilitySet>
-					</responsibilitySets>
 					<typesOfValue>
 						<!-- ======== Code sets ========= -->
 						<ValueSet version="fxc:v1.0" id="fxc:PointsOfInterest_Classifications" classOfValues="PointOfInterestClassification">
@@ -3106,7 +3110,7 @@ This  frame Shows  sample Purchases
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareZone" classOfValues="TypeOfZone">
-							<Name>Types of Fare Zone</Name>
+							<Name>Types of FARE ZONE</Name>
 							<values>
 								<!--- ====Type of Product category ========= -->
 								<TypeOfZone version="fxc:v1.0" id="fxc:fare_zone@operator">
@@ -3121,7 +3125,7 @@ This  frame Shows  sample Purchases
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_ProductCategory" classOfValues="TypeOfProductCategory">
-							<Name>Types of Product Category</Name>
+							<Name>Types of PRODUCT CATEGORY</Name>
 							<values>
 								<!--- ====Type of Product category ========= -->
 								<TypeOfProductCategory version="fxc:v1.0" id="fxc:urban_bus">
@@ -3145,7 +3149,7 @@ This  frame Shows  sample Purchases
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:ChargingMoments" classOfValues="ChargingMoment">
-							<Name>Charging Moments</Name>
+							<Name>Types of CHARGING MOMENT</Name>
 							<values>
 								<!--- ==== TypeOfChargingMoment ========= -->
 								<ChargingMoment version="fxc:v1.0" id="fxc:prepayment">
@@ -3161,12 +3165,15 @@ This  frame Shows  sample Purchases
 									<Name>Prepaid - free issue</Name>
 								</ChargingMoment>
 								<ChargingMoment version="fxc:v1.0" id="fxc::post_payment">
-									<Name>Prepaid</Name>
+									<Name>Postpaid</Name>
+								</ChargingMoment>
+								<ChargingMoment version="fxc:v1.0" id="fxc::post_payment_periodic">
+									<Name>Postpaid</Name>
 								</ChargingMoment>
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareProduct@trip" classOfValues="TypeOfFareProduct">
-							<Name>Types Of Fare Product - Trip</Name>
+							<Name>Types of FARE PRODUCT - Trip</Name>
 							<values>
 								<TypeOfFareProduct version="fxc:v1.0" id="fxc:standard_product@trip@short_hop">
 									<Name>Short hop fare</Name>
@@ -3187,7 +3194,7 @@ This  frame Shows  sample Purchases
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareProduct@pass" classOfValues="TypeOfFareProduct">
-							<Name>Types Of Fare Product - Pass</Name>
+							<Name>Types of FARE PRODUCT - Pass</Name>
 							<values>
 								<TypeOfFareProduct version="fxc:v1.0" id="fxc:standard_product@pass@day">
 									<Name>day pass - till end of fare day</Name>
@@ -3201,7 +3208,7 @@ This  frame Shows  sample Purchases
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareProduct@carnet" classOfValues="TypeOfFareProduct">
-							<Name>Types Of Fare Product - Pass</Name>
+							<Name>Types Of FARE PRODUC- Pass</Name>
 							<values>
 								<TypeOfFareProduct version="fxc:v1.0" id="fxc:standard_product@carnet@trips">
 									<Name>Carnet of trips.</Name>
@@ -3212,7 +3219,7 @@ This  frame Shows  sample Purchases
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareProduct@discount" classOfValues="TypeOfFareProduct">
-							<Name>Types Of Fare Product - Pass</Name>
+							<Name>Types Of FARE PRODUCT - Pass</Name>
 							<values>
 								<TypeOfFareProduct version="fxc:v1.0" id="fxc:standard_product@discount@sales">
 									<Name>Sales discount righty</Name>
@@ -3223,7 +3230,7 @@ This  frame Shows  sample Purchases
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareProduct@stored_value" classOfValues="TypeOfFareProduct">
-							<Name>Types Of Fare Product - Epurse</Name>
+							<Name>Types of FARE PRODUCT - Epurse</Name>
 							<values>
 								<TypeOfFareProduct version="fxc:v1.0" id="fxc:standard_product@stored_value@epurse">
 									<Name>Epurse</Name>
@@ -3231,7 +3238,7 @@ This  frame Shows  sample Purchases
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_SalesOfferPackage" classOfValues="TypeOfSalesOfferPackage">
-							<Name>Types Of Sales Offer Product</Name>
+							<Name>Types of SALES OFFER PACKAGE.</Name>
 							<values>
 								<TypeOfSalesOfferPackage version="fxc:v1.0" id="fxc:standard_product@all_operators">
 									<Name>Product is standard and supported by all operators</Name>
@@ -3247,8 +3254,8 @@ This  frame Shows  sample Purchases
 								</TypeOfSalesOfferPackage>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:ClassesOfUse" classOfValues="ClassOfUse">
-							<Name>Classes of Use</Name>
+						<ValueSet version="fxc:v1.0" id="fxc:Classes_of_Use" classOfValues="ClassOfUse">
+							<Name>Types of CLASS OF USE.</Name>
 							<values>
 								<!--- ====ClassOfUse ========= -->
 								<ClassOfUse version="fxc:v1.0" id="fxc:first">
@@ -3260,7 +3267,7 @@ This  frame Shows  sample Purchases
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_Projection" classOfValues="TypeOfProjection">
-							<Name>Types of Projection</Name>
+							<Name>Types of PROJECTION</Name>
 							<values>
 								<!--- ====ClassOfUse ========= -->
 								<TypeOfProjection version="fxc:v1.0" id="fxc:tariff_zone_border">
@@ -3269,7 +3276,7 @@ This  frame Shows  sample Purchases
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareContractEntry" classOfValues="TypeOfFareContractEntry">
-							<Name>Types of fare contract entry</Name>
+							<Name>Types of FARE CONTRACT ENTRY</Name>
 							<values>
 								<!--- ====TypeOfFareContractEntry ========= -->
 								<TypeOfFareContractEntry version="fxc:v1.0" id="fxc:product_purchase">
@@ -3287,7 +3294,7 @@ This  frame Shows  sample Purchases
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_Concession" classOfValues="TypeOfConcession">
-							<Name>Types of concession</Name>
+							<Name>Types of CONCESSION</Name>
 							<values>
 								<!--- ====TypeOfConcession method========= -->
 								<TypeOfConcession version="fxc:v1.0" id="fxc:none">
@@ -3367,6 +3374,59 @@ This  frame Shows  sample Purchases
 								</TypeOfTariff>
 							</values>
 						</ValueSet>
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareStructureElement" classOfValues="TypeOfFareStructureElement">
+							<Name>FXCP: Types of FARE STRUCTURE ELEMENT.</Name>
+							<values>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:access">
+									<Name>Access rights</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:access_when">
+									<Name>Fare demand :peak /off peak etc access rights to use or travel during some period</Name>
+								</TypeOfFareStructureElement>
+									<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:accepted_by">
+									<Name>Accepted by operator</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:eligibility">
+									<Name>Eligibility to purchase</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:groups">
+									<Name>Group tickets available</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:durations">
+									<Name>Time intervals</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:intervals">
+									<Name>Time intervals</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:prerequisites">
+									<Name>Defines required entitlements</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:entitles">
+									<Name>Gives right to other products</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:sale_conditions">
+									<Name>Defines a condition or restriction on purchase</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:travel_conditions">
+									<Name>Condition on use</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:carnet_units">
+									<Name>Specifies units for purchase</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:outlets">
+									<Name>Specifies where a purchase can be made</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:quotas">
+									<Name>Quotas</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:steps">
+									<Name>Steps in sequence</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:payment_schedules">
+									<Name>Payment Schedules</Name>
+								</TypeOfFareStructureElement>
+							</values>
+						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:Types_of_AccessRightAssignment" classOfValues="TypeOfAccessRightAssignment">
 							<Name>Types of Access Right Assignment</Name>
 							<values>
@@ -3418,7 +3478,7 @@ This  frame Shows  sample Purchases
 								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:can_use_to_pay_for">
 									<Name>Gives ability to purchase automatically using</Name>
 								</TypeOfAccessRightAssignment>
-								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:payment_schedule">
+								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:payment_schedules">
 									<Name>Specifices if subscription or single payment</Name>
 								</TypeOfAccessRightAssignment>
 								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:reservation_condition">
@@ -3427,7 +3487,7 @@ This  frame Shows  sample Purchases
 								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:distribution_channel_restriction">
 									<Name>Constrains availability for distribution by a channel</Name>
 								</TypeOfAccessRightAssignment>
-								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:takes_properties_from_group">
+								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:use_before">
 									<Name>Takes properties from group package</Name>
 								</TypeOfAccessRightAssignment>
 								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:quota_applies">
