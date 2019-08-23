@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:core="http://www.govtalk.gov.uk/core" xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_layer_support">
-	<xsd:include schemaLocation="../netex_responsibility/netex_relationship.xsd"/>
+	<xsd:include schemaLocation="netex_grouping_support.xsd"/>
 	<xsd:annotation>
 		<xsd:appinfo>
 			<Metadata xmlns="http://www.govtalk.gov.uk/CM/gms-xs">
@@ -14,6 +14,12 @@
 				<Date>
 					<Modified>2014-03-31</Modified>
 				</Date>
+				<Date>
+					<Modified>2019-02-20</Modified>FIX Correct data type of LayerId and ref
+				</Date>
+				<Date>
+					<Modified>2019-03-10</Modified>UK-8 add LayerRef toVersionFrame and to TypeOfFrame.
+				</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines GROUPING types.</p>
 				</Description>
@@ -26,7 +32,7 @@
 				<Language>[ISO 639-2/B] ENG</Language>
 				<Publisher>Kizoom Software Ltd, 16 High Holborn, London WC1V 6BX</Publisher>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2014</Copyright>
+ <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -52,13 +58,25 @@ Rail transport, Roads and Road transport
 		<xsd:documentation>NeTEx: LAYER identifier types for NeTEx.</xsd:documentation>
 	</xsd:annotation>
 	<!-- ===== Layer=============================================== -->
+	<xsd:complexType name="layerRefs_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of references to a LAYER</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="oneToManyRelationshipStructure">
+				<xsd:sequence>
+					<xsd:element ref="LayerRef" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 	<xsd:simpleType name="LayerIdType">
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of a LAYER.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="ObjectIdType"/>
+		<xsd:restriction base="GroupOfEntitiesIdType"/>
 	</xsd:simpleType>
-	<xsd:element name="LayerRef" type="LayerRefStructure" substitutionGroup="OrderedVersionOfObjectRef">
+	<xsd:element name="LayerRef" type="LayerRefStructure" substitutionGroup="GroupOfEntitiesRef_">
 		<xsd:annotation>
 			<xsd:documentation>Reference to a LAYER.</xsd:documentation>
 		</xsd:annotation>
@@ -68,7 +86,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Type for a versioned reference to a NeTEx Object.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:simpleContent>
-			<xsd:restriction base="OrderedVersionOfObjectRefStructure">
+			<xsd:restriction base="GroupOfEntitiesRefStructure">
 				<xsd:attribute name="ref" type="LayerIdType" use="required">
 					<xsd:annotation>
 						<xsd:documentation>Identifier of referenced entity.</xsd:documentation>

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
 <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_trainElement">
 	<xsd:include schemaLocation="netex_vehicleType_version.xsd"/>
 	<xsd:include schemaLocation="netex_trainElement_support.xsd"/>
@@ -37,11 +36,19 @@
 					<Created>2010-09-04</Created>
 				</Date>
 				<Date>
-					<Modified>2011-02-05</Modified>
-					<!-- Name Space changes -->
+					<Modified>2011-02-05</Modified>Name Space changes
 				</Date>
 				<Date>
-					<Modified>2017-04-27 1.1 CR0039 Add Width to TRAIN ELEMENT</Modified>
+					<Modified>2017-04-27</Modified>1.1 CR0039 Add Width to TRAIN ELEMENT
+				</Date>
+				<Date>
+					<Modified>2019-02-21</Modified>Make ValidityCondition etc visible on TrainElement
+				</Date>
+				<Date>
+					<Modified>2019-03-27</Modified>Fix add missing TrainSize attribute to TrainElement
+				</Date>
+				<Date>
+					<Modified>2019-04-18</Modified>Fix add missing orientation to  TrainComponent
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -59,7 +66,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2017</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -82,8 +89,9 @@ Rail transport, Roads and Road transport
 				<Type>Standard</Type>
 			</Metadata>
 		</xsd:appinfo>
+		<xsd:documentation>NeTEx Train specifcation</xsd:documentation>
 	</xsd:annotation>
-	<!-- ===ENTIITY IN VERSION IN FRAME====(Used in SERVICE FRAME)=================================================== -->
+	<!-- ===ENTIITY IN VERSION IN FRAME====(Used in SERVICE FRAME)======================= -->
 	<xsd:group name="VehicleTypeInFrameGroup">
 		<xsd:annotation>
 			<xsd:documentation>Elements for a VEHICLE TYPEs in frame.</xsd:documentation>
@@ -302,6 +310,9 @@ Rail transport, Roads and Road transport
 				<xsd:restriction base="TrainElement_VersionStructure">
 					<xsd:sequence>
 						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
 							<xsd:group ref="DataManagedObjectGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
@@ -366,6 +377,7 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>The width of a TRAIN ELEMENT.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element ref="TrainSize" minOccurs="0"/>
 			<xsd:element name="facilities" type="serviceFacilitySets_RelStructure" minOccurs="0"/>
 			<xsd:element name="equipments" type="equipments_RelStructure" minOccurs="0">
 				<xsd:annotation>
@@ -456,6 +468,11 @@ Rail transport, Roads and Road transport
 				</xsd:element>
 				<xsd:element ref="TrainElement"/>
 			</xsd:choice>
+			<xsd:element name="OperationalOrientation" type="VehicleOrientationEnumeration" default="forwards" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Orientation of the  TRAIN ELEMENT within the TRAIN. +v1.1. </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->
@@ -519,14 +536,19 @@ Rail transport, Roads and Road transport
 				</xsd:element>
 				<xsd:element ref="Train"/>
 			</xsd:choice>
-			<xsd:element name="ReversedOrientation" type="xsd:boolean" default="false" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Whether the component order of the TRAIN IN COMPOUND TRAIN is reversed compared to the order in the TRAIN.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
 			<xsd:element name="Label" type="MultilingualString" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Label for TRAIN IN COMPOUND TRAIN.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="OperationalOrientation" type="VehicleOrientationEnumeration" default="forwards" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Orientation of the  TRAIN IN COMPOUND TRAIN</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ReversedOrientation" type="xsd:boolean" default="false" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether the component order of the TRAIN IN COMPOUND TRAIN is reversed compared to the order in the TRAIN.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2009 sp1 (http://www.altova.com) by Nicholas Knowles (Kizoom) -->
 <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:core="http://www.govtalk.gov.uk/core" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_relationship_support">
 	<xsd:include schemaLocation="netex_version_support.xsd"/>
 	<xsd:annotation>
@@ -19,8 +18,11 @@
 					<Modified>2010-11-05</Modified>
 				</Date>
 				<Date>
-					<Modified>2017-03-28 CR0012 Add VersionRef for external version refs.  
-																			 Add modifcation to version refs to support delta exchange.</Modified>
+					<Modified>2017-03-28</Modified>CR0012 Add VersionRef for external version refs.  
+							 Add 'modification' value  to version refs to support delta exchange.
+				</Date>
+				<Date>
+					<Modified>2019-06-14</Modified>Add TYPE OF VERSION
 				</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines version attribute base types.</p>
@@ -34,7 +36,7 @@
 				<Language>[ISO 639-2/B] ENG</Language>
 				<Publisher>Kizoom Software Ltd, 16 High Holborn, London WC1V 6BX</Publisher>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2017</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -154,7 +156,7 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
-	<!--====Data SOurce =======================================================================-->
+	<!--==== DATA SOURCE  =======================================================================-->
 	<xsd:element name="DataSourceRef" type="DataSourceRefStructure" substitutionGroup="VersionOfObjectRef">
 		<xsd:annotation>
 			<xsd:documentation>Reference  to a DATA SOURCE.</xsd:documentation>
@@ -172,6 +174,42 @@ Rail transport, Roads and Road transport
 					</xsd:annotation>
 				</xsd:attribute>
 			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!--==== DATA SOURCE =======================================================================-->
+	<xsd:element name="TypeOfVersionRef" type="TypeOfVersionRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a TYPE OF VERSION. +v1.1</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="TypeOfVersionRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a TYPE OF VERSION.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="ObjectIdType">
+				<xsd:attribute name="nameOfRefClass" type="NameOfClass" use="optional">
+					<xsd:annotation>
+						<xsd:documentation>Name of Class of the referenced entity. Allows reflection. Fixed for each entity type.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attributeGroup ref="ReferenceModificationDetailsGroup"/>
+				<xsd:attribute name="modification" type="ModificationEnumeration" use="optional">
+					<xsd:annotation>
+						<xsd:documentation>Nature of last modification: new, revise, delete, undchanged;</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="ref" type="ObjectIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Identifier of referenced entity.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="versionRef" type="VersionIdType" use="optional">
+					<xsd:annotation>
+						<xsd:documentation>Identifier of version of  eferenced entity. For use when refenece is External and a specific version is required. Mutually exclusive with version</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
 		</xsd:simpleContent>
 	</xsd:complexType>
 	<!--====External Obect Reference =======================================================================-->
