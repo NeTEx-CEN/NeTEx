@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2010 rel. 3 sp1 (http://www.altova.com) by Nicholas Knowles (Kizoom) -->
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_ifopt_equipmentAccess_version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_ifopt_equipmentAccess_version">
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_facility_support.xsd"/>
 	<xsd:include schemaLocation="netex_ifopt_equipmentAccess_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_equipmentPlace_version.xsd"/>
@@ -21,8 +21,40 @@
 				<Date>
 					<Modified>2011-12-16</Modified>
 				</Date>
-				<Date><Modified>2017-05-25</Modified> Integrate NPR documentation correction to lift passable
+				<Date>
+					<Modified>2017-05-25</Modified> Integrate NPR documentation correction to lift passable
 				</Date>
+				<Date>
+					<Modified>2019-03-25</Modified>FR49 CD #65  Accessibility changes
+					CD add new attribute NecessaryForceEnumeration with values noForce, lightForce, mediumForce,  heavyForce, unknown
+					CD add new attributeLightingMethod  to PlaceLighting with values movementDetector, stepDetector, switchOnTheWall, atDoorOpening, onlyAtNight, other
+						NJSK Review:  correct typo on stepDetector
+					CD Add new attribute to AccessEquipmene; SafeForGuideDog.
+					CD Add new attribute to StairEquipment; WithoutRiser.
+						  NJSK Review:  move order  to be with other  step properties
+					CD  Add new attribute to EscalatorEquipment;  EscalatorWithLanding
+					CD  Add new attributes to TravellatorEquipment; Length, Slope and IntegratesAnEscalatorPart  
+							 NJSK Review:  correct  name of IntegratesAnEscalatorPart
+					CD Add new attributs  to EscalatorEquipment: MagneticInductionLoop, GroundMarkAlignedWithButton, TactileGroundFloorButton ExternalFloorSelection
+								 NJSK Review:  correct  name of GroundMarkAlignedWithButton
+								 NJSK Review:  drop ButtonsHeigt as all ready covered  by CallButtonHeight
+								 NJSK Review: change order to group with like properties
+					CD Add new attributes  to EntranceEquipment: AudioOrVideoIntercom, Airlock, DoorstepMark AudioPassthroughIndicator, OpeningNecessaryForce
+								 NJSK Review: change order to group with like properties
+								  NJSK Review: NB AudioOrVideoIntercom overlap with EntranceAttention								  
+					CD Add new attributes  to QueuingEquipment:  DisabledPriority QueuingSeatedPossible.
+ 				</Date>
+				<Date>
+					<Modified>2019-05-27</Modified>Fix add missing DropKerbOutside value to Entrance Eqeuipment
+					Rename Slope to Gradient to be conistent
+					Move WIthoutRaiser to be specifc to Staircase.
+				</Date>
+				<Date>
+					<Modified>2019-05-27</Modified>Doc tidy up 
+					Rename Accoustic(six)  to AUdio 
+					Correct comments
+				</Date>				
+				
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines EQUIPMENT base types.</p>
 				</Description>
@@ -35,7 +67,7 @@
 				<Language>[ISO 639-2/B] ENG</Language>
 				<Publisher>Kizoom Software Ltd, 16 High Holborn, London WC1V 6BX</Publisher>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2014</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -140,6 +172,11 @@ Rail transport, Roads and Road transport
 			<xsd:element name="RelativeWeighting" type="xsd:integer" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Relative weighting to be given to this item of EQUIPMENT.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="SafeForGuideDog" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether the access is safe for a guide dog. +v1.1</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -280,6 +317,11 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Whether Place is always lit.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="LightingOnMethod" type="LightingOnMethodEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Method by which lighting is switched on. v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->
@@ -417,17 +459,22 @@ Rail transport, Roads and Road transport
 		<xsd:sequence>
 			<xsd:element name="TactileActuators" type="xsd:boolean" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Whether Stairs have a tactile actuator.</xsd:documentation>
+					<xsd:documentation>Whether ESCALATOR has a tactile actuator.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="EnergySaving" type="xsd:boolean" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Whether escalator is Energy Saving.</xsd:documentation>
+					<xsd:documentation>Whether ESCALATOR is Energy Saving.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="DogsMustBeCarried" type="xsd:boolean" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Whether dogs must be carried on escalatot.</xsd:documentation>
+					<xsd:documentation>Whether dogs must be carried on ESCALATOR. +v1.1 </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="EscalatorWithLanding" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether ESCALATOR has a landing. +v1.1</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -485,6 +532,11 @@ Rail transport, Roads and Road transport
 			<xsd:element name="ContinuousHandrail" type="xsd:boolean" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Whether Handrail is continuous across staircase.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="WithoutRiser" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether openwork stairs (no riser). +v1.1</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="SpiralStair" type="xsd:boolean" minOccurs="0">
@@ -650,6 +702,21 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Speed of travelator.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="Length" type="LengthType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Length (integer in meters).+v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Gradient" type="xsd:decimal" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Slope (integer in meters) for inclined moving walks.+v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IntegratesAnEscalatorPart" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether the moving walk has an escalator part. +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->
@@ -754,7 +821,7 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Maximum load in Kilos.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="WheelchairPasssable" type="xsd:boolean" minOccurs="0">
+			<xsd:element name="WheelchairPassable" type="xsd:boolean" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Whether lift is judged wheelchair passable.</xsd:documentation>
 				</xsd:annotation>
@@ -783,7 +850,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element name="DirectionButtonHeight" type="LengthType" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Height of call button from ground.</xsd:documentation>
+					<xsd:documentation>Height of direction call button from ground.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="RaisedButtons" type="xsd:boolean" minOccurs="0">
@@ -794,6 +861,16 @@ Rail transport, Roads and Road transport
 			<xsd:element name="BrailleButtons" type="xsd:boolean" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Whether buttons have braille.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TactileGroundFloorButton" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indicates whether there is a tactile marker on the go to ground  floor button. +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GroundMarkAlignedWithButton" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indicates a tactile marker on floor under the buttons (or aligned with) +v1.1 .</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -823,6 +900,11 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Whether lift is automatic.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="ExternalFloorSelection" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether the floor selection is made outside the lift.+v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element name="AlarmButton" type="xsd:boolean" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Whether lift has alarm button.</xsd:documentation>
@@ -833,9 +915,19 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Whether Lift has a tactile actuator.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="AudioAnnouncements" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether Lift has AudioAnnouncements.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element name="AccousticAnnouncements" type="xsd:boolean" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Whether Lift has Acoustic Announcements.</xsd:documentation>
+					<xsd:documentation>DEPRECATED - Spelling correction  renamed to audio announcements. THis value will be dropped at  - so</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MagneticInductionLoop" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indicates existence of a Magnetic Induction Loop. +v1.1</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="SignageToLift" type="xsd:boolean" minOccurs="0">
@@ -917,7 +1009,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element name="GradientType" type="GradientEnumeration" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Gradient of ramp fixed values.</xsd:documentation>
+					<xsd:documentation>Gradient of ramp fixed values.+v1.1</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="Pedestal" type="xsd:boolean" minOccurs="0">
@@ -1073,6 +1165,11 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Accessibility elements for ENTRANCE EQUIPMENT type.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
+			<xsd:element name="DropKerbOutside" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether there is a drop Kerb outside door. </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element name="AcousticSensor" type="xsd:boolean" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Whether door has acoustic sensors.</xsd:documentation>
@@ -1088,6 +1185,11 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Whether door is made of glass.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="Airlock" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether there is an airlock. +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element name="WheelchairPassable" type="xsd:boolean" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Door can be passed in a wheel chair.</xsd:documentation>
@@ -1098,9 +1200,29 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Can be passed in a wheel chair unaided.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="AudioOrVideoIntercom" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether there is an audio or video communication needed for access. +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element name="EntranceAttention" type="EntranceAttentionEnumeration" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Nature of doorbell help point etc needed to operate door.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DoorstepMark" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether there is a tactile doorstep mark. +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="NecessaryForceToOpen" type="NecessaryForceEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Necessary force to open the door. +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="AudioPassthroughIndicator" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether there is an audio signal indicating passing through. +v1.1</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="SuitableForCycles" type="xsd:boolean" minOccurs="0">
@@ -1178,6 +1300,16 @@ Rail transport, Roads and Road transport
 			<xsd:element name="TicketedQueue" type="xsd:boolean" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Whether queue is controlled by numbered tickets.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DisabledPriority" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether there is priority access for disabled (no-queue).+v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="QueuingSeatedPossible" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether queuing may be done seated.+v1.1</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -1260,6 +1392,11 @@ Rail transport, Roads and Road transport
 			<xsd:element name="TactileGuidanceStrips" type="xsd:boolean" default="false" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Whether crossing has tactile guidance strips.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TactileWarningStrip" type="TactileWarningStripEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether crossing has tactile warning strip. +v1.1</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="VisualGuidanceBands" type="xsd:boolean" default="false" minOccurs="0">

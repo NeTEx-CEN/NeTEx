@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:core="http://www.govtalk.gov.uk/core" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_version_version">
 	<xsd:include schemaLocation="../netex_utility/netex_utility_contact.xsd"/>
-	<xsd:include schemaLocation="netex_entity_version.xsd"/>
-	<xsd:include schemaLocation="netex_responsibility_version.xsd"/>
 	<xsd:include schemaLocation="netex_version_support.xsd"/>
+	<xsd:include schemaLocation="netex_entity_version.xsd"/>
+	<xsd:include schemaLocation="netex_typeOfValue_version.xsd"/>
 	<xsd:annotation>
 		<xsd:appinfo>
 			<Metadata xmlns="http://www.govtalk.gov.uk/CM/gms-xs">
@@ -71,7 +71,7 @@ Rail transport, Roads and Road transport
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<!-- ======================================================================= -->
+	<!-- ======ENTITY IN VERSION =============================================== -->
 	<xsd:complexType name="entitiesInVersion_RelStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for containment in ENTITY of ENTITY In VERSION.</xsd:documentation>
@@ -127,7 +127,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
-	<!-- ======================================================================= -->
+	<!-- ==== VERSION ====================================================== -->
 	<xsd:complexType name="versions_RelStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for containment of a VERSION.</xsd:documentation>
@@ -177,6 +177,7 @@ Rail transport, Roads and Road transport
 									<xsd:documentation>VERSION type: Point or Baseline.</xsd:documentation>
 								</xsd:annotation>
 							</xsd:element>
+							<xsd:element ref="TypeOfVersionRef" minOccurs="0"/>
 							<xsd:element name="DerivedFromVersionRef" type="VersionRefStructure" minOccurs="0">
 								<xsd:annotation>
 									<xsd:documentation>Reference to VERSION from which this VERSION was derived.</xsd:documentation>
@@ -217,6 +218,7 @@ Rail transport, Roads and Road transport
 							<xsd:documentation>Version type: Point or Baseline.</xsd:documentation>
 						</xsd:annotation>
 					</xsd:element>
+					<xsd:element ref="TypeOfVersionRef" minOccurs="0"/>
 					<xsd:element name="DerivedFromVersionRef" type="VersionRefStructure" minOccurs="0">
 						<xsd:annotation>
 							<xsd:documentation>Reference to VERSION from which this VERSION was derived.</xsd:documentation>
@@ -227,5 +229,50 @@ Rail transport, Roads and Road transport
 		</xsd:complexContent>
 	</xsd:complexType>
 	<!-- ======================================================================= -->
+	<!-- ==== TYPE OF VERSION ============================================= -->
+	<xsd:element name="TypeOfVersion" substitutionGroup="TypeOfValue">
+		<xsd:annotation>
+			<xsd:documentation>A classification of the VERSIONs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="TypeOfVersion_ValueStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="TypeOfValueGroup"/>
+						</xsd:sequence>
+						<xsd:group ref="TypeOfVersionGroup"/>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="TypeOfVersionIdType">
+						<xsd:annotation>
+							<xsd:documentation>Reference to a TYPE OF VERSION.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="TypeOfVersion_ValueStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a TYPE OF VERSION.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="TypeOfValue_VersionStructure">
+				<xsd:group ref="TypeOfVersionGroup"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="TypeOfVersionGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a TYPE OF VERSION.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence/>
+	</xsd:group>
 	<!-- ======================================================================= -->
 </xsd:schema>

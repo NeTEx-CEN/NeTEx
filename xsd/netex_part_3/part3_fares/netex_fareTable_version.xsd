@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_fareTable_version">
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_transportOrganisation_support.xsd"/>
-	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_travelRights_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_facility_version.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_submode_version.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_mode_version.xsd"/>
@@ -12,7 +11,7 @@
 	<xsd:include schemaLocation="../../netex_part_2/part2_journeyTimes/netex_vehicleJourney_support.xsd"/>
 	<xsd:include schemaLocation="netex_fareTable_support.xsd"/>
 	<xsd:include schemaLocation="netex_fareSeries_support.xsd"/>
-	<xsd:include schemaLocation="netex_travelDocument_support.xsd"/>
+	<xsd:include schemaLocation="netex_typeOfTravelDocument_support.xsd"/>
 	<xsd:include schemaLocation="netex_salesDistribution_support.xsd"/>
 	<xsd:include schemaLocation="netex_fareStructureElement_support.xsd"/>
 	<xsd:include schemaLocation="netex_distanceMatrixElement_support.xsd"/>
@@ -35,14 +34,44 @@
 					<Created>2014-04-13</Created>
 				</Date>
 				<Date>
-					<Modified>2011-02-05</Modified>
-					<!-- Name Space changes -->
+					<Modified>2011-02-05</Modified>Name Space changes 
 				</Date>
 				<Date>
-					<Modified>2017-10-10</Modified> Add TypeOfTravelDocument  and PaymentMethodto Fare Table Specifics  . Add Notice Assignments. to FareTable and Cell
+					<Modified>2017-10-10</Modified>Add TypeOfTravelDocument  and PaymentMethodto Fare Table Specifics  . Add Notice Assignments. to FareTable and Cell
 				</Date>
 				<Date>
-					<Modified>2017-11-08</Modified> Allow declaration of price in Cell
+					<Modified>2017-11-08</Modified>Allow declaration of price in Cell
+				</Date>
+				<Date>
+					<Modified>2019-01-11</Modified> 
+							Fix To add CellSpecificNetworkGroup   to Fare Table Specifics, 
+							Fix to add LineRef,  FareZoneRef,  TariffRef,  LineRef, ScheduledStopPointRef SectionRef  and    FareStructureElementInSequenceRef 
+							Fix to add TariffZoneRef to  CellSpecificNetworkGroup 
+				</Date>
+				<Date>
+					<Modified>2019-02-11</Modified> 
+							Fix To add PaymentMethodRef to Cell specifics  pointRef SectionRef  and    FareStructureElementInSequenceRef 
+							Fix to add TariffZoneRef to  CellSpecificNetworkGroup 
+				</Date>
+				<Date>
+					<Modified>2019-02-25</Modified>CR-UK-07   Allow PriceRefs directly in cells. 
+							Also allow  representing VersionOfObjectRef on Row and Column
+							Also Add FareSectionRef to  FareTable / specifics
+				</Date>
+				<Date>
+					<Modified>2019-03-13</Modified>CR-UK-07    
+							Also allow  nested column and row headings 
+				</Date>
+				<Date>
+					<Modified>2019-03-14</Modified>UK-69 Scaleability of    large sets add  new TypeOfOfFareTable element
+				</Date>
+				<Date>
+					<Modified>2019-03-26</Modified>NL-27 CD #58 Add default TypeOfProductCategory and TypeOfService to Line:
+					Move TypeOfProductCategory amnd TypeOfService from netex_journey_version  to  Framework reusable components (netex_travelRights_version)  so they are visible from part 1	
+		  	Can  therefore drop include of netex_travelRights_version from  File netex_fareTable_version.xsd.
+				</Date>
+				<Date>
+					<Modified>2019-04-11</Modified>Internal change - use a structure for specifcs so as to make binding easier.. 
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -60,7 +89,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2014</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -79,13 +108,14 @@ Rail transport, Roads and Road transport
 </Category>
 					<Project>CEN TC278 WG3 SG9.</Project>
 				</Subject>
-				<Title>NeTEx FARE TABLE    types.</Title>
+				<Title>NeTEx FARE TABLE  types.</Title>
 				<Type>Standard</Type>
 			</Metadata>
 		</xsd:appinfo>
 		<xsd:documentation>NeTEx: FARE TABLE  types.</xsd:documentation>
 	</xsd:annotation>
 	<!-- ======================================================================= -->
+	<!-- ===ENTIITY IN VERSION IN FRAME====Used in SERVICE FRAME)=================================================== -->
 	<!-- ===ENTIITY IN VERSION IN FRAME====Used in SERVICE FRAME)=================================================== -->
 	<xsd:group name="FarePricesInFrameGroup">
 		<xsd:annotation>
@@ -184,6 +214,11 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Prices must not be released until this date.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="prices" type="farePrices_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Cells in the table.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element name="cells" type="cells_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Cells in the table.</xsd:documentation>
@@ -196,11 +231,39 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
+	<xsd:complexType name="FareTableSpecificsStructure">
+		<xsd:annotation>
+			<xsd:documentation>Specific references for FARE TABLE</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:group ref="CellSpecificNetworkGroup">
+				<xsd:annotation>
+					<xsd:documentation>Network Aspects of a fare structure element for a CELL.Group.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:group>
+			<xsd:group ref="CellSpecificRoutingGroup">
+				<xsd:annotation>
+					<xsd:documentation>Routing Aspects of a fare structure element for a CELL.Group.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:group>
+			<xsd:group ref="CellSpecificServiceGroup">
+				<xsd:annotation>
+					<xsd:documentation>Service Aspects of a fare structure element for a CELL.Group.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:group>
+			<xsd:group ref="CellSpecificDistributionGroup">
+				<xsd:annotation>
+					<xsd:documentation>Distribution Aspects of a fare structure element for a CELL.Group.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:group>
+		</xsd:sequence>
+	</xsd:complexType>
 	<xsd:group name="FareTableReferencesGroup">
 		<xsd:annotation>
 			<xsd:documentation>Reference Elements for FARE TABLE.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
+			<xsd:element ref="TypeOfFareTableRef" minOccurs="0"/>
 			<xsd:element name="pricesFor" type="priceableObjectRefs_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Combination of Elements for which this table provides PRICEs.</xsd:documentation>
@@ -229,23 +292,9 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Common factors shared with all cells.</xsd:documentation>
 				</xsd:annotation>
 				<xsd:complexType>
-					<xsd:sequence>
-						<xsd:group ref="CellSpecificRoutingGroup">
-							<xsd:annotation>
-								<xsd:documentation>Routing Aspects of a fare structure element for a CELL.Group.</xsd:documentation>
-							</xsd:annotation>
-						</xsd:group>
-						<xsd:group ref="CellSpecificServiceGroup">
-							<xsd:annotation>
-								<xsd:documentation>Service Aspects of a fare structure element for a CELL.Group.</xsd:documentation>
-							</xsd:annotation>
-						</xsd:group>
-						<xsd:group ref="CellSpecificDistributionGroup">
-							<xsd:annotation>
-								<xsd:documentation>Distribution Aspects of a fare structure element for a CELL.Group.</xsd:documentation>
-							</xsd:annotation>
-						</xsd:group>
-					</xsd:sequence>
+					<xsd:complexContent>
+						<xsd:extension base="FareTableSpecificsStructure"/>
+					</xsd:complexContent>
 				</xsd:complexType>
 			</xsd:element>
 		</xsd:sequence>
@@ -262,7 +311,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element name="rows" type="fareTableRows_RelStructure" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Rowheadings to use when presenting table.</xsd:documentation>
+					<xsd:documentation>Row headings to use when presenting table.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="includes" type="fareTables_RelStructure" minOccurs="0">
@@ -396,6 +445,7 @@ Rail transport, Roads and Road transport
 						</xsd:complexType>
 					</xsd:element>
 					<xsd:element ref="FarePrice_"/>
+					<xsd:element ref="FarePriceRef"/>
 					<xsd:element ref="CellRef"/>
 				</xsd:choice>
 			</xsd:extension>
@@ -577,15 +627,21 @@ Rail transport, Roads and Road transport
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:group name="CellSpecificNetworkGroup">
+		<xsd:annotation>
+			<xsd:documentation>Network Aspects of a fare structure element for a CELL.Group.</xsd:documentation>
+		</xsd:annotation>
 		<xsd:sequence>
+			<xsd:element ref="OperatorRef" minOccurs="0"/>
 			<xsd:element ref="GroupOfLinesRef" minOccurs="0"/>
 			<xsd:element ref="LineRef" minOccurs="0"/>
 			<xsd:element ref="SiteRef" minOccurs="0"/>
+			<xsd:element ref="TariffZoneRef" minOccurs="0"/>
+			<xsd:element ref="FareSectionRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:group name="CellSpecificRoutingGroup">
 		<xsd:annotation>
-			<xsd:documentation>Aspects of a fare structure element for a CELL.Group.</xsd:documentation>
+			<xsd:documentation>Routing Aspects of a fare structure element for a CELL.Group.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element name="DirectionType" type="RelativeDirectionEnumeration" default="both" minOccurs="0">
@@ -602,7 +658,7 @@ Rail transport, Roads and Road transport
 	</xsd:group>
 	<xsd:group name="CellSpecificServiceGroup">
 		<xsd:annotation>
-			<xsd:documentation>Aspects of a fare structure element for a CELL.Group.</xsd:documentation>
+			<xsd:documentation>Service Aspects of a fare structure element for a CELL.Group.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:group ref="FareClassReferencesGroup"/>
@@ -617,7 +673,7 @@ Rail transport, Roads and Road transport
 	</xsd:group>
 	<xsd:group name="CellSpecificDistributionGroup">
 		<xsd:annotation>
-			<xsd:documentation>Aspects of a fare structure element for a CELL.Group.</xsd:documentation>
+			<xsd:documentation>Distribution Aspects of a fare structure element for a CELL.Group.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="TypeOfFareProductRef" minOccurs="0"/>
@@ -627,9 +683,10 @@ Rail transport, Roads and Road transport
 			</xsd:choice>
 			<xsd:element name="PaymentMethod" type="PaymentMethodEnumeration" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>PReferece to a ayment Method .</xsd:documentation>
+					<xsd:documentation>Preferred payment Method .</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element ref="TypeOfPaymentMethodRef" minOccurs="0"/>
 			<xsd:element ref="TypeOfTravelDocumentRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
@@ -659,7 +716,11 @@ Rail transport, Roads and Road transport
 		<xsd:complexContent>
 			<xsd:extension base="strictContainmentAggregationStructure">
 				<xsd:sequence>
-					<xsd:element ref="FareTableColumn" maxOccurs="unbounded"/>
+					<xsd:element ref="FareTableColumn" maxOccurs="unbounded">
+						<xsd:annotation>
+							<xsd:documentation>A Column heading for a FARE TABLE,  </xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -728,6 +789,16 @@ Rail transport, Roads and Road transport
 			<xsd:element name="noticeAssignments" type="noticeAssignments_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>NOTICEs that apply to whole FARE TABLE COLUMN</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="representing" type="objectRefs_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>ENTITIES that column represents. +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="columns" type="fareTableColumns_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Column headings to use when presenting table.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -812,7 +883,50 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>NOTICEs that apply to whole FARE TABLE ROW.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="representing" type="objectRefs_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>ENTITIES that row represents +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="rows" type="fareTableRows_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Rowheadings to use when presenting table.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
+	<!-- === TYE OF FARE TABLE======================================= -->
+	<xsd:element name="TypeOfFareTable" abstract="false" substitutionGroup="TypeOfValue">
+		<xsd:annotation>
+			<xsd:documentation>Category of FARE TABLE user
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="TypeOfFareTable_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="TypeOfValueGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="TypeOfFareTableIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="TypeOfFareTable_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for TYPE OF FARE TABLE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="TypeOfValue_VersionStructure"/>
+		</xsd:complexContent>
+	</xsd:complexType>
 	<!-- ======================================================================= -->
 </xsd:schema>
