@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- ==== SImple Network Example ====== 
-This Example provIdes an example of a GTFS Frequencies.txt file
-from the sample-feed.zip available at 
-  http://code.google.com/transit/spec/transit_feed_specification.html
+<!-- ====  GTFS Frequencies to NeTEx  Example ====== 
+This Example provides an example of mapping of a GTFS Frequencies.txt file to NeTEx
 
+The data comes from the sample-feed.zip available at   http://code.google.com/transit/spec/transit_feed_specification.html
+ 
 Sept 2011 add exact_times support
 
 1. DATA
@@ -28,26 +28,25 @@ CITY2,19:00:00,22:00:00,1800,0
 A GTFS Trip  Frequency   maps to a NeTEx   <HeadwayJourneyGroup> /  FREQUENCY
 
 GTFS						NeTEx
-trip_Id,						<HeadwayJourneyGroup> <Id>
-start_time,				<HeadwayJourneyGroup>  <FirstDepartureTime>
-end_time,					<HeadwayJourneyGroup>  <LastDepartureTime>
-headway_secs 			<HeadwayJourneyGroup> <ScheduledHeadwayInterval> 
+trip_Id,						<HeadwayJourneyGroup #trip_Id> <Id>
+start_time,				<HeadwayJourneyGroup #trip_Id>  <FirstDepartureTime> #start_time
+end_time,					<HeadwayJourneyGroup #trip_Id>  <LastDepartureTime> #end_time
+headway_secs 			<HeadwayJourneyGroup #trip_Id> <ScheduledHeadwayInterval> 
 exact_times 				
 _0 or (empty) - Frequency-based trips are not exactly scheduled. This is the default behavior.
-								<HeadwayJourneyGroup> <MaximumHeadwayInterval> ~=  ScheduledHeadwayInterval> 
+								<HeadwayJourneyGroup  #trip_Id> <MaximumHeadwayInterval> ~=  ScheduledHeadwayInterval> #headway_secs
 											ie No  MaximumHeadwayInterval
 _1 - Frequency-based trips are exactly scheduled. For a frequencies.txt row, trips are scheduled starting with trip_start_time = start_time + x * headway_secs for all x in (0, 1, 2, ...) where trip_start_time < end_time.
 
-					<HeadwayJourneyGroup version="any"> <MaximumHeadwayInterval> =  ScheduledHeadwayInterval> 
+					<HeadwayJourneyGroup #trip_Id"> <MaximumHeadwayInterval> =  ScheduledHeadwayInterval>  #headway_secs
 		
-
 
 3. Notes
 
  
- GTFS Data copyright Google Inc 2011
-
- NeTEx (C) CEN Copyright 2011
+ GTF S Data copyright Google Inc 2011
+ v1.1 with reised ids
+ NeTEx (C) CEN Copyright 2019
 -->
 <PublicationDelivery xmlns="http://www.netex.org.uk/netex" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://www.netex.org.uk/netex ../../../xsd/NeTEx_publication.xsd">
 	<PublicationTimestamp>2011-12-17T09:30:47.0Z</PublicationTimestamp>
@@ -61,7 +60,7 @@ _1 - Frequency-based trips are exactly scheduled. For a frequencies.txt row, tri
 	<Description>Example of GTFS Journey Frequency data  (frequencies.txt file)</Description>
 	<!--- =============== RESULTS =========== -->
 	<dataObjects>
-		<TimetableFrame version="any" id="mygtfsxm:TimetableFrame:DTA">
+		<TimetableFrame version="any" id="mygtfsxm:DTA">
 			<!--- ======= CODESPACEs======== -->
 			<codespaces>
 				<Codespace id="mygtfsxm">
@@ -76,11 +75,11 @@ _1 - Frequency-based trips are exactly scheduled. For a frequencies.txt row, tri
 				<DefaultCurrency>USD</DefaultCurrency>
 			</FrameDefaults>
 			<vehicleJourneys>
-				<TemplateServiceJourney version="any" id="mygtfsxm:TemplateServiceJourney:STBA">
+				<TemplateServiceJourney version="any" id="mygtfsxm:STBA">
 					<Description>STBA,6:00:00,22:00:00,1800</Description>
 					<DepartureTime>06:00:00</DepartureTime>
 					<frequencyGroups>
-						<HeadwayJourneyGroup version="any" id="mygtfsxm:HeadwayJourneyGroup:STBA-06:00:00">
+						<HeadwayJourneyGroup version="any" id="mygtfsxm:STBA-06:00:00">
 							<FirstDepartureTime>06:00:00</FirstDepartureTime>
 							<LastDepartureTime>22:00:00</LastDepartureTime>
 							<ScheduledHeadwayInterval>PT30M</ScheduledHeadwayInterval>
@@ -88,60 +87,60 @@ _1 - Frequency-based trips are exactly scheduled. For a frequencies.txt row, tri
 						</HeadwayJourneyGroup>
 					</frequencyGroups>
 				</TemplateServiceJourney>
-				<TemplateServiceJourney version="any" id="mygtfsxm:TemplateServiceJourney:CITY1">
+				<TemplateServiceJourney version="any" id="mygtfsxm:CITY1">
 					<DepartureTime>06:00:00</DepartureTime>
 					<frequencyGroups>
-						<HeadwayJourneyGroup version="any" id="mygtfsxm:HeadwayJourneyGroup:CITY1-06:00:00">
+						<HeadwayJourneyGroup version="any" id="mygtfsxm:CITY1-06:00:00">
 							<FirstDepartureTime>06:00:00</FirstDepartureTime>
 							<LastDepartureTime>07:59:59</LastDepartureTime>
 							<ScheduledHeadwayInterval>PT30M</ScheduledHeadwayInterval>
 						</HeadwayJourneyGroup>
-						<HeadwayJourneyGroup version="any" id="mygtfsxm:HeadwayJourneyGroup:CITY1-08:00:00">
+						<HeadwayJourneyGroup version="any" id="mygtfsxm:CITY1-08:00:00">
 							<FirstDepartureTime>08:00:00</FirstDepartureTime>
 							<LastDepartureTime>09:59:59</LastDepartureTime>
 							<ScheduledHeadwayInterval>PT10M</ScheduledHeadwayInterval>
 						</HeadwayJourneyGroup>
-						<HeadwayJourneyGroup version="any" id="mygtfsxm:HeadwayJourneyGroup:CITY1-10:00:00">
+						<HeadwayJourneyGroup version="any" id="mygtfsxm:CITY1-10:00:00">
 							<FirstDepartureTime>10:00:00</FirstDepartureTime>
 							<LastDepartureTime>15:59:59</LastDepartureTime>
 							<ScheduledHeadwayInterval>PT30M</ScheduledHeadwayInterval>
 						</HeadwayJourneyGroup>
-						<HeadwayJourneyGroup version="any" id="mygtfsxm:HeadwayJourneyGroup:CITY1-16:00:00">
+						<HeadwayJourneyGroup version="any" id="mygtfsxm:CITY1-16:00:00">
 							<FirstDepartureTime>16:00:00</FirstDepartureTime>
 							<LastDepartureTime>18:59:59</LastDepartureTime>
 							<ScheduledHeadwayInterval>PT10M</ScheduledHeadwayInterval>
 						</HeadwayJourneyGroup>
-						<HeadwayJourneyGroup version="any" id="mygtfsxm:HeadwayJourneyGroup:CITY1-19:00:00">
+						<HeadwayJourneyGroup version="any" id="mygtfsxm:CITY1-19:00:00">
 							<FirstDepartureTime>19:00:00</FirstDepartureTime>
 							<LastDepartureTime>22:00:00</LastDepartureTime>
 							<ScheduledHeadwayInterval>PT30M</ScheduledHeadwayInterval>
 						</HeadwayJourneyGroup>
 					</frequencyGroups>
 				</TemplateServiceJourney>
-				<TemplateServiceJourney version="any" id="mygtfsxm:TemplateServiceJourney:CITY2">
+				<TemplateServiceJourney version="any" id="mygtfsxm:CITY2">
 					<DepartureTime>06:00:00</DepartureTime>
 					<frequencyGroups>
-						<HeadwayJourneyGroup version="any" id="mygtfsxm:HeadwayJourneyGroup:CITY2-06:00:00">
+						<HeadwayJourneyGroup version="any" id="mygtfsxm:CITY2-06:00:00">
 							<FirstDepartureTime>06:00:00</FirstDepartureTime>
 							<LastDepartureTime>07:59:59</LastDepartureTime>
 							<ScheduledHeadwayInterval>PT30M</ScheduledHeadwayInterval>
 						</HeadwayJourneyGroup>
-						<HeadwayJourneyGroup version="any" id="mygtfsxm:HeadwayJourneyGroup:CITY2-08:00:00">
+						<HeadwayJourneyGroup version="any" id="mygtfsxm:CITY2-08:00:00">
 							<FirstDepartureTime>08:00:00</FirstDepartureTime>
 							<LastDepartureTime>09:59:59</LastDepartureTime>
 							<ScheduledHeadwayInterval>PT10M</ScheduledHeadwayInterval>
 						</HeadwayJourneyGroup>
-						<HeadwayJourneyGroup version="any" id="mygtfsxm:HeadwayJourneyGroup:CITY2-10:00:00">
+						<HeadwayJourneyGroup version="any" id="mygtfsxm:CITY2-10:00:00">
 							<FirstDepartureTime>10:00:00</FirstDepartureTime>
 							<LastDepartureTime>15:59:59</LastDepartureTime>
 							<ScheduledHeadwayInterval>PT30M</ScheduledHeadwayInterval>
 						</HeadwayJourneyGroup>
-						<HeadwayJourneyGroup version="any" id="mygtfsxm:HeadwayJourneyGroup:CITY2-16:00:00">
+						<HeadwayJourneyGroup version="any" id="mygtfsxm:CITY2-16:00:00">
 							<FirstDepartureTime>16:00:00</FirstDepartureTime>
 							<LastDepartureTime>18:59:59</LastDepartureTime>
 							<ScheduledHeadwayInterval>PT10M</ScheduledHeadwayInterval>
 						</HeadwayJourneyGroup>
-						<HeadwayJourneyGroup version="any" id="mygtfsxm:HeadwayJourneyGroup:CITY2-19:00:00">
+						<HeadwayJourneyGroup version="any" id="mygtfsxm:CITY2-19:00:00">
 							<FirstDepartureTime>19:00:00</FirstDepartureTime>
 							<LastDepartureTime>22:00:00</LastDepartureTime>
 							<ScheduledHeadwayInterval>PT30M</ScheduledHeadwayInterval>

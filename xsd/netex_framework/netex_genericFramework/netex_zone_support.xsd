@@ -17,6 +17,9 @@
 				<Date>
 					<Modified>2010-11-05</Modified>
 				</Date>
+				<Date>
+					<Modified>20109-02-25</Modified>UK-05 Fix: Introduce a dummy TariffzoneRef so that Fare zone can be a specialisation of TariffZone. Workaround to XMLSPY issue.
+				</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines ZONE types.</p>
 				</Description>
@@ -55,29 +58,29 @@ Rail transport, Roads and Road transport
 		<xsd:documentation>ZONE identifier types for NeTEx.</xsd:documentation>
 	</xsd:annotation>
 	<!-- ====Zone======================================================= -->
-	<xsd:element name="ZoneRef" type="ZoneRefStructure" substitutionGroup="GroupOfPointsRef_">
-		<xsd:annotation>
-			<xsd:documentation>Reference to a ZONE.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
 	<xsd:simpleType name="ZoneIdType">
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of a ZONE.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="GroupOfPointsIdType"/>
 	</xsd:simpleType>
+	<xsd:element name="ZoneRef" type="ZoneRefStructure" substitutionGroup="GroupOfPointsRef_">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a ZONE.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
 	<!-- === Unresolved XMLSPy issue: cant make ZoneRefStructure a restriction of Group of points =====-->
 	<xsd:complexType name="ZoneRefStructure" abstract="false">
 		<xsd:annotation>
 			<xsd:documentation>Type for a reference to a ZONE.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:simpleContent>
-			<xsd:extension base="GroupOfPointsRefStructure"/>
+			<xsd:restriction base="GroupOfPointsRefStructure"/>
 		</xsd:simpleContent>
 	</xsd:complexType>
 	<xsd:complexType name="zoneRefs_RelStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for a list of ZONEs.</xsd:documentation>
+			<xsd:documentation>Type for a list of ZONEs. This is to workaround s bug in XMLSPY</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="oneToManyRelationshipStructure">
@@ -88,13 +91,18 @@ Rail transport, Roads and Road transport
 		</xsd:complexContent>
 	</xsd:complexType>
 	<!-- ======================================================================= -->
+	<xsd:element name="TariffZoneRef_" type="ZoneRefStructure" abstract="true" substitutionGroup="ZoneRef">
+		<xsd:annotation>
+			<xsd:documentation>Dummy type Reference to a TARIFF ZONE.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
 	<xsd:simpleType name="TariffZoneIdType">
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of a TARIFF ZONE.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="ZoneIdType"/>
 	</xsd:simpleType>
-	<xsd:element name="TariffZoneRef" substitutionGroup="ZoneRef">
+	<xsd:element name="TariffZoneRef" substitutionGroup="TariffZoneRef_">
 		<xsd:annotation>
 			<xsd:documentation>Reference to a TARIFF ZONE.</xsd:documentation>
 		</xsd:annotation>
