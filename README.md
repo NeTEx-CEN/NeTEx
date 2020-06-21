@@ -3,6 +3,15 @@
 
 ## Core, Part 1 (Network),  Part 2 (Timetables), Part3 (Fares) Schemas
 
+Version 1.20 - Base version plus  further minor fixes comprising
+### 2020.06.21 FIX  Issue #78 *PART2*:Journey Coupling: NJSK  __JourneyCouple__ / __MainPartRef__ should be of type  __JourneyPartRef__ 
+  * _Updates to xml schema_:  
+	* netex_coupledJourney.xml  
+ 
+### 2020.06.21 FIX  Issue #92 *FRAMEWORK*:LinkProjection NJSK Expose the missing __EntityInVersion__ elements on the __LinkProjection__ derivation
+  * _Updates to xml schema_:  
+	* netex_projectionVersion.xml  
+
 Version 1.10 - Base version plus minor fixes comprising
   * Norway contributions,  
   * The approved 1.1 CRs 1-50
@@ -43,7 +52,7 @@ There is also an _Oxygen_ project file:
 ----
 # Change Log
 
-### 2019.05.17 FIX  *PART3:FARES*: NJSK  __FarePointInPattern__Fix case on __isFareStage__ and __isForbidden__  
+### 2019.05.17 FIX  *PART3:FARES*: NJSK  __FarePointInPattern__  Fix case on __isFareStage__ and __isForbidden__  
   * _Updates to xml schema_:  
 	* netex_production.xml  
 
@@ -118,7 +127,7 @@ There is also an _Oxygen_ project file:
 	* netex_accessRightParameter_version.xml  
 	* netex_travelSpecificationSummary_version.xml
 
-### 2019.04.18 FIX  *Parts1,2,3*: NJSK  FIx Tdy up Designators.
+### 2019.04.18 FIX  *Parts1,2,3*: NJSK  Fix: Tidy up Designators.
   * __AccessRightParameter: Add __AddressRef__,  __TopoographicPlaceRef__ and __PlaceUseEnum__.
   * Modularise __ServiceDesignator__ and __JourneyDesignator__ (no functional change).
   * Add __JourneyDesignator__ to __InterchangeRule__ and __GroupOfServiceJourneysMember__.
@@ -241,7 +250,7 @@ There is also an _Oxygen_ project file:
 	* netex_interchange_version.xsd
   * _Documentation Changes_:  [uml_diagram: ok], [doc-ok]
 
-### 2019.04.04  __FIXDoc__  *Part3-FARES-AR*: NJSK Fi Further tidy ups arising from doc.
+### 2019.04.04  __FIXDoc__  *Part3-FARES-AR*: NJSK Further tidy ups arising from doc.
   * Add new value to __PreassignedFareProduct / Product__ enumeration;  _shortTrip_.
   * Add new value to __AmountOfPriceUnit / ProductType__ numeration; _storedValue_.
   * Add new  attribute __ProductType__ to  __UsageDiscountRight__ with values _mileagePoints, usageRebate, other_.
