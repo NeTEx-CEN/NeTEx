@@ -5,6 +5,10 @@
 
 Version 1.20 - Base version plus  further minor fixes comprising##
 
+FIX -  FareClassEnumeration #75
+### 2020.06.21   FIX  Issue #75*FRAMEWORK*:Remove space from end of secondClass enumeration value
+	* netex_framework/netex_reusableComponents/netex_serviceRestrictions_support.xsd
+
 FIX -  Recursive includes #73
 ### 2020.06.21 PARTIAL  FIX  Issue #73*PART2*:Recursive includes: NJSK  Remove cyclic inclusion dependency  
 	* netex_flexibleService Journey.xml  
