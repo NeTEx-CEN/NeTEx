@@ -26,7 +26,7 @@ The individual  XML files  are arranged hierarchically in folders, in a similar 
 ## Getting Started
 There are two main root schemas:
   - **netex_publication** : Embeds NeTEx XML model elements in a bulk output file format for use in asynchronous publication. The intended content scope can be indicated by a filter object.
-  - **netex_siri.xsd** : Embeds NeTEx XML model elements in the SIRI protocol  for dynamic exchange of elements between servers. Both Request/response or publish / subscribe is supported
+  - **netex_siri.xsd** : Embeds NeTEx XML model elements in the SIRI protocol for dynamic exchange of elements between servers. Both Request/response or publish / subscribe is supported
 
 In addition:
 
@@ -38,7 +38,7 @@ There are **XML examples** of the use of both protocols, see */examples* subdire
 There is an _Altova XMLSpy_ project file in the root directory  that provides an organised view  of the schema and examples:
   - NeTEx.spp
 
-There is also an _Oxygen_  project file:
+There is also an _Oxygen_ project file:
   - NeTEx.xpr
 ----
 # Change Log
