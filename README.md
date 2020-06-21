@@ -3,11 +3,16 @@
 
 ## Core, Part 1 (Network),  Part 2 (Timetables), Part3 (Fares) Schemas
 
-Version 1.20 - Base version plus  further minor fixes comprising
-### 2020.06.21 FIX  Issue #78 *PART2*:Journey Coupling: NJSK  __JourneyCouple__ / __MainPartRef__ should be of type  __JourneyPartRef__ 
+Version 1.20 - Base version plus  further minor fixes comprising##
+
+FIX -  Recursive includes #73
+### 2020.06.21 PARTIAL  FIX  Issue #73*PART2*:Recursive includes: NJSK  Remove cyclic inclusion dependency  
+	* netex_flexibleService Journey.xml  
+
+### 2020.06.21 FIX  Issue #78 *PART2*:Journey Coupling: NJSK  __JourneyCouple__ / __MainPartRef__ should be of type  __JourneyPartRef__
   * _Updates to xml schema_:  
 	* netex_coupledJourney.xml  
- 
+
 ### 2020.06.21 FIX  Issue #92 *FRAMEWORK*:LinkProjection NJSK Expose the missing __EntityInVersion__ elements on the __LinkProjection__ derivation
   * _Updates to xml schema_:  
 	* netex_projectionVersion.xml  
