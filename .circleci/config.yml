@@ -1,4 +1,7 @@
-version: 2
+# This Circle CI trigger example uses Entur open source projects
+#   https://github.com/entur/netex-java-model
+#   https://github.com/entur/circleci-toolbox-image (https://github.com/entur/circleci-toolbox-image/blob/master/tools/trigger_build.sh)
+version: 1
 aliases:
 - &post_build
   name: Trigger downstream builds
@@ -10,10 +13,10 @@ aliases:
 jobs:
   build:
     docker:
-    - image: eu.gcr.io/carbon-1287/circleci-toolbox-image
+    - image: host-URI/circleci-toolbox-image
       auth:
         username: _json_key
-        password: $GCLOUD_SERVICE_KEY
+        password: $KEY
     steps:
     - checkout
     - run: echo "Running xmllint to validate schema"
@@ -21,20 +24,20 @@ jobs:
     - run: echo "Finished running xmllint"
   trigger-dependants:
     docker:
-      - image: eu.gcr.io/carbon-1287/circleci-toolbox-image
+      - image: host-URI/circleci-toolbox-image
         auth:
           username: _json_key
-          password: $GCLOUD_SERVICE_KEY
+          password: $KEY
     steps:
       - run: *post_build
 workflows:
-  version: 2
+  version: 1
   install-validate:
     jobs:
     - build:
-        context: org-carbon
+        context: host-context
     - trigger-dependants:
-        context: org-carbon
+        context: host-context
         requires:
           - build
         filters:
