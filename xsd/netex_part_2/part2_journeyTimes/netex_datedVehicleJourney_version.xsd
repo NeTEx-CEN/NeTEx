@@ -120,7 +120,7 @@ Rail transport, Roads and Road transport
 		</xsd:complexContent>
 	</xsd:complexType>
 	<!-- ======================================================================= -->
-	<xsd:element name="DatedVehicleJourney" abstract="false" substitutionGroup="Journey_">
+	<xsd:element name="DatedVehicleJourney" abstract="false" substitutionGroup="VehicleJourney_">
 		<xsd:annotation>
 			<xsd:documentation>A particular journey of a vehicle on a particular OPERATING DAY including all modifications possibly decided by the control staff.</xsd:documentation>
 		</xsd:annotation>
@@ -193,8 +193,9 @@ Rail transport, Roads and Road transport
 				<xsd:element ref="JourneyRef"/>
 			</xsd:choice>
 			<xsd:choice minOccurs="0">
+				<!-- OperatingDayRef NOT mandatory due to DatedServiceJourney backwards compatibility, was only mandatory for (Normal)DatedVehicleJourney -->
 				<xsd:element ref="OperatingDayRef"/>
-				<!-- Makes little sense to refer a OperatingPeriod for a Dated(Service)Journey, but is maintained for backwards compatibility -->
+				<!-- Makes little sense referring to an OperatingPeriod for a Dated(x)Journey, but is kept for DatedServiceJourney backwards compatibility -->
 				<xsd:element ref="UicOperatingPeriod"/>
 			</xsd:choice>
 			<xsd:element name="ExternalDatedVehicleJourneyRef" type="ExternalObjectRefStructure" minOccurs="0">
@@ -210,12 +211,12 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="DriverRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
-	<!-- ====DATED SERVICE JOURNEY====================================-->
+	<!-- ======================================================================= -->
 	<xsd:element name="DatedServiceJourney" abstract="false" substitutionGroup="ServiceJourney_">
 		<xsd:annotation>
 			<xsd:documentation>A particular journey of a vehicle on a particular OPERATING DAY including all modifications possibly decided by the control staff. 
-
-The VIEW includes derived ancillary data from referenced entities.</xsd:documentation>
+				
+				The VIEW includes derived ancillary data from referenced entities.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -236,14 +237,14 @@ The VIEW includes derived ancillary data from referenced entities.</xsd:document
 							<xsd:group ref="DatedVehicleJourneyGroup"/>
 						</xsd:sequence>
 					</xsd:sequence>
-					<xsd:attribute name="id" type="DatedVehicleJourneyIdType"/>
+					<xsd:attribute name="id" type="DatedServiceJourneyIdType"/>
 				</xsd:restriction>
 			</xsd:complexContent>
 		</xsd:complexType>
 	</xsd:element>
 	<xsd:complexType name="DatedServiceJourney_VersionStructure" abstract="false">
 		<xsd:annotation>
-			<xsd:documentation>Data type for Planned VEHICLE JOURNEY (Production Timetable Service).</xsd:documentation>
+			<xsd:documentation>Data type for DATED SERVICE JOURNEY (Production Timetable Service).</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="ServiceJourney_VersionStructure">
@@ -254,7 +255,7 @@ The VIEW includes derived ancillary data from referenced entities.</xsd:document
 		</xsd:complexContent>
 	</xsd:complexType>
 	<!-- ======================================================================= -->
-	<xsd:element name="NormalDatedVehicleJourney" abstract="false" substitutionGroup="Journey_">
+	<xsd:element name="NormalDatedVehicleJourney" abstract="false" substitutionGroup="VehicleJourney_">
 		<xsd:annotation>
 			<xsd:documentation>A DATED VEHICLE JOURNEY identical to a long-term planned VEHICLE JOURNEY, possibly updated according to short-term modifications of the PRODUCTION PLAN decided by the control staff.</xsd:documentation>
 		</xsd:annotation>
