@@ -5,6 +5,12 @@
 
 Version 1.20 - Base version plus  further minor fixes comprising##
 
+### 2020.07.28   EXAMPLES  Revise fare examples
+  * _Updates to xml schema_:    
+	* NONE
+  * _Updates to xml examples: 
+	* \txc and \fxc subdirectory files
+	
 
 ### 2020.07.28   FIX  Issue #101*Publication*:Add missing constraints for FareTableRow FareTableColumn, TypeOfLine and for FareZoneParent
   * _Updates to xml schema_:    
