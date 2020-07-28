@@ -6,16 +6,22 @@
 Version 1.20 - Base version plus  further minor fixes comprising##
 
 
-FIX -  FareClassEnumeration #100
-### 2020.07.28   FIX  Issue #100*FRAMEWORK*:Corect the substitution group on OrganisationUnit
+### 2020.07.28   FIX  Issue #101*Publication*:Add missing constraints for FareTableRow FareTableColumn, TypeOfLine and for FareZoneParent
+  * _Updates to xml schema_:    
+	* netex_framework/netex_genericFramework/netex_organisation_version.xsd
+  * _Updates to xml examples: 
+	* Netex_era_distance_ro.xml.
+	
+### 2020.07.28   FIX  Issue #100*FRAMEWORK*:Correct the substitution group on OrganisationUnit
+  * _Updates to xml schema_:    
 	* netex_framework/netex_genericFramework/netex_organisation_version.xsd
 
-FIX -  FareClassEnumeration #75
-### 2020.06.21   FIX  Issue #75*FRAMEWORK*:Remove space from end of secondClass enumeration value
+### 2020.06.21   FIX  Issue #75*FRAMEWORK*:Remove space from end of secondClass enumeration value 
+  * _Updates to xml schema_:    
 	* netex_framework/netex_reusableComponents/netex_serviceRestrictions_support.xsd
 
-FIX -  Recursive includes #73
-### 2020.06.21 PARTIAL  FIX  Issue #73*PART2*:Recursive includes: NJSK  Remove cyclic inclusion dependency  
+### 2020.06.21 PARTIAL  FIX  Issue #73*PART2*:Recursive includes: NJSK  Remove cyclic inclusion dependency 
+  * _Updates to xml schema_:    
 	* netex_flexibleService Journey.xml  
 
 ### 2020.06.21 FIX  Issue #78 *PART2*:Journey Coupling: NJSK  __JourneyCouple__ / __MainPartRef__ should be of type  __JourneyPartRef__
@@ -68,11 +74,11 @@ There is also an _Oxygen_ project file:
 
 ### 2019.05.17 FIX  *PART3:FARES*: NJSK  __FarePointInPattern__  Fix case on __isFareStage__ and __isForbidden__  
   * _Updates to xml schema_:  
-	* netex_production.xml  
+	* netex_publication.xml  
 
 ### 2019.05.15 FIX  *PART1:ND*: NJSK  Add constraints  on __TypeOfLineRef__   
   * _Updates to xml schema_:  
-	* netex_production.xml  
+	* netex_publication.xml  
 
 ### 2019.05.14 EXMP  *FRAMEWORK*: NJSK  Add Serbia and Montenegro to country codes
   * _Updates to xml schema_:  
@@ -89,12 +95,12 @@ There is also an _Oxygen_ project file:
 ### 2019.05.02 FIX  *FRAMEWORK*: NJSK  Fix constraints  on __DefaultCodespaceRef__  
   * Also Corrections to a lot of examples.
   * _Updates to xml schema_:  
-	* netex_production.xml  
+	* netex_publication.xml  
 
 ### 2019.05.01 FIX  *FRAMEWORK*: NJSK  Fix constraints  on __DefaultDataSourceRef__ and __DefaultResponsibilitySetRef__.
   * ALso add EPIP draft profile metadata
   * _Updates to xml schema_:  
-	* netex_production.xml  
+	* netex_publication.xml  
 	* netex.spp
   * _Updates to xml examples_:
    	* uk_fxc_addon_HSP_plusbus.xml
@@ -108,11 +114,11 @@ There is also an _Oxygen_ project file:
 
 ### 2019.04.29 FIX  *PART2:ND*: NJSK  Fix Constraints  on __JourneyPart__.
   * _Updates to xml schema_:  
-	* netex_production.xml  
+	* netex_publication.xml  
 
-### 2019.04.28 FIX  *FRAMEWORK*: NJSK  Fix Constraints  on __ParkingPasengerEntrance__ and __VehicleEntranceForParking__.
+### 2019.04.28 FIX  *FRAMEWORK*: NJSK  Fix Constraints  on __ParkingPassengerEntrance__ and __VehicleEntranceForParking__.
   * _Updates to xml schema_:  
-	* netex_production.xml
+	* netex_publication.xml
 	* netex_parking_support.xml
 	* netex_parking_version.xml
 
