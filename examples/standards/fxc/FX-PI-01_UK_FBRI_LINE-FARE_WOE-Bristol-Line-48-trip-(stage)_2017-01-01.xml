@@ -216,6 +216,7 @@ At the end are shown some sample transactions showing the parameters that define
 						<FromDate>2016-02-01T00:00:00Z</FromDate>
 					</AvailabilityCondition>
 				</selectionValidityConditions>
+				<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_LINE_OFFER:FXCP"/>
 				<NetworkFilterByValue>
 					<LayerRef ref="fxc:fareNetwork_fareProducts_farePrices"/>
 					<objectReferences>
@@ -232,18 +233,30 @@ At the end are shown some sample transactions showing the parameters that define
 	<Description>Fares for West of England</Description>
 	<!-- =============== RESULTS =========== -->
 	<dataObjects>
-		<CompositeFrame version="1.0" id="frst:FBRI_WoE@Products@Bus" dataSourceRef="frst:WoE" responsibilitySetRef="frst:tariffs">
+		<CompositeFrame version="1.0" id="epd:UK:FBRI:FareFrame_UK_PI_LINE_FARE_OFFER:WoE@Bristol@48:frst" dataSourceRef="frst:WoE" responsibilitySetRef="frst:tariffs">
 			<ValidBetween>
 				<FromDate>2018-11-01T00:00:00</FromDate>
 			</ValidBetween>
 			<Name>First Group West Of England Examples 2018</Name>
-			<Description>This is an example showing how one might encode part of the First West and Britsol fares, including a Stage fare for route 48 in NeTEx.</Description>
-			<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@composite"/>
+			<Description>This is an example showing how one might encode part of the First West and Bristol fares, including a Stage fare for route 48 in NeTEx.</Description>
+			<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_LINE_FARE_OFFER:FXCP"/>
 			<!--==== CODESPACEs ==== -->
 			<codespaces>
-				<CodespaceRef ref="naptStop_data"/>
-				<CodespaceRef ref="nptgLocality_data"/>
-				<CodespaceRef ref="noc_data"/>
+				<Codespace id="naptStop_data">
+					<Xmlns>naptStop</Xmlns>
+					<XmlnsUrl>http://www.naptan.org.uk/stops</XmlnsUrl>
+					<Description>UK National Public Transport Access Nodes: Stops.</Description>
+				</Codespace>
+				<Codespace id="nptgLocality_data">
+					<Xmlns>nptgLocality</Xmlns>
+					<XmlnsUrl>http://nptg.org.uk/locations</XmlnsUrl>
+					<Description>National Public Transport gazetteer locations</Description>
+				</Codespace>
+				<Codespace id="noc_data">
+					<Xmlns>noc</Xmlns>
+					<XmlnsUrl>http://www.traveline.co.uk/noc</XmlnsUrl>
+					<Description>UK national operator codes</Description>
+				</Codespace>
 				<CodespaceRef ref="frst_data"/>
 			</codespaces>
 			<!--==== FRAME DEFAULTS ==== -->
@@ -253,605 +266,13 @@ At the end are shown some sample transactions showing the parameters that define
 				<DefaultCurrency>GBP</DefaultCurrency>
 			</FrameDefaults>
 			<frames>
-				<!-- First WoE Distance Products -->
-				<FareFrame version="1.0" id="frst:FBRI@WoE_Distance@Trip@network@Bristol@48">
-					<Name>First West ^amp; Bristol Distance Nased Fares</Name>
-					<Description>This is an example showing how one might encode a sectioj n ("Distance") of the First West and Bristol Stage fare table</Description>
-					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@fare_network"/>
-					<!--==== Fare sections - only Line 48 is coded === NB These are one way of coding - other is to use a journey pattern with the stops that are stages marked -->
-					<seriesConstraints>
-						<SeriesConstraint version="1.0" id="frst:WoE@Bristol@48@outbound_FP" order="1">
-							<Name>Rupert Street to Emersons Green</Name>
-							<Description>Fare Stages on Route</Description>
-							<farePointsInPattern>
-								<FarePointInPattern version="1.0" id="frst:WoE@Bristol@48@outbound_FP" order="1">
-									<ScheduledStopPointRef version="any" ref="naptanStop:0100BRA16911">Rupert Street</ScheduledStopPointRef>
-									<PresentationPosition>required</PresentationPosition>
-								</FarePointInPattern>
-								<FarePointInPattern version="1.0" id="frst:WoE@Bristol@48@outbound_FP" order="2">
-									<ScheduledStopPointRef version="any" ref="naptanStop:0100BRP90089">Brigstocke Road</ScheduledStopPointRef>
-									<PresentationPosition>required</PresentationPosition>
-								</FarePointInPattern>
-								<FarePointInPattern version="1.0" id="frst:WoE@Bristol@48@outbound_FP" order="3">
-									<ScheduledStopPointRef version="any" ref="naptanStop:0100BRP90110">Narroways Road</ScheduledStopPointRef>
-									<PresentationPosition>required</PresentationPosition>
-								</FarePointInPattern>
-								<FarePointInPattern version="1.0" id="frst:WoE@Bristol@48@outbound_FP" order="4">
-									<ScheduledStopPointRef version="any" ref="naptanStop:0100BRC53385">Eastville Park</ScheduledStopPointRef>
-									<PresentationPosition>required</PresentationPosition>
-								</FarePointInPattern>
-								<FarePointInPattern version="1.0" id="frst:WoE@Bristol@48@outbound_FP" order="5">
-									<ScheduledStopPointRef version="any" ref="naptanStop:0100BRA10549">River View</ScheduledStopPointRef>
-									<PresentationPosition>required</PresentationPosition>
-								</FarePointInPattern>
-								<FarePointInPattern version="1.0" id="frst:WoE@Bristol@48@outbound_FP" order="6">
-									<ScheduledStopPointRef version="any" ref="naptanStop:0100BRP90201">New Station Road</ScheduledStopPointRef>
-									<PresentationPosition>required</PresentationPosition>
-								</FarePointInPattern>
-								<FarePointInPattern version="1.0" id="frst:WoE@Bristol@48@outbound_FP" order="7">
-									<ScheduledStopPointRef version="any" ref="naptanStop:0100BRP90186">Long Close</ScheduledStopPointRef>
-									<PresentationPosition>required</PresentationPosition>
-								</FarePointInPattern>
-								<FarePointInPattern version="1.0" id="frst:WoE@Bristol@48@outbound_FP" order="8">
-									<ScheduledStopPointRef version="any" ref="naptanStop:0170SGP90546">Leap Bridge</ScheduledStopPointRef>
-									<PresentationPosition>required</PresentationPosition>
-								</FarePointInPattern>
-								<FarePointInPattern version="1.0" id="frst:WoE@Bristol@48@outbound_FP" order="9">
-									<ScheduledStopPointRef version="any" ref="naptanStop:0170SGB20003">Meadgate</ScheduledStopPointRef>
-									<PresentationPosition>required</PresentationPosition>
-								</FarePointInPattern>
-								<FarePointInPattern version="1.0" id="frst:WoE@Bristol@48@outbound_FP" order="10">
-									<ScheduledStopPointRef version="any" ref="naptanStop:017000062">Emersons Green</ScheduledStopPointRef>
-									<PresentationPosition>required</PresentationPosition>
-								</FarePointInPattern>
-							</farePointsInPattern>
-						</SeriesConstraint>
-						<SeriesConstraint version="1.0" id="frst:WoE@Bristol@48@inbound_FP" order="1">
-							<Name>Emersons Green to Rupert Street</Name>
-							<Description>Fare Stages on Route</Description>
-							<farePointsInPattern>
-								<FarePointInPattern version="1.0" id="frst:WoE@Bristol@48@inbound_FP" order="10">
-									<ScheduledStopPointRef version="any" ref="naptanStop:0100BRA16911">Rupert Street</ScheduledStopPointRef>
-									<PresentationPosition>required</PresentationPosition>
-								</FarePointInPattern>
-								<FarePointInPattern version="1.0" id="frst:WoE@Bristol@48@inbound_FP" order="9">
-									<ScheduledStopPointRef version="any" ref="naptanStop:0100BRP90089">Brigstocke Road</ScheduledStopPointRef>
-									<PresentationPosition>required</PresentationPosition>
-								</FarePointInPattern>
-								<FarePointInPattern version="1.0" id="frst:WoE@Bristol@48@inbound_FP" order="8">
-									<ScheduledStopPointRef version="any" ref="naptanStop:0100BRP90110">Narroways Road</ScheduledStopPointRef>
-									<PresentationPosition>required</PresentationPosition>
-								</FarePointInPattern>
-								<FarePointInPattern version="1.0" id="frst:WoE@Bristol@48@inbound_FP" order="7">
-									<ScheduledStopPointRef version="any" ref="naptanStop:0100BRC53385">Eastville Park</ScheduledStopPointRef>
-									<PresentationPosition>required</PresentationPosition>
-								</FarePointInPattern>
-								<FarePointInPattern version="1.0" id="frst:WoE@Bristol@48@inbound_FP" order="6">
-									<ScheduledStopPointRef version="any" ref="naptanStop:0100BRA10549">River View</ScheduledStopPointRef>
-									<PresentationPosition>required</PresentationPosition>
-								</FarePointInPattern>
-								<FarePointInPattern version="1.0" id="frst:WoE@Bristol@48@inbound_FP" order="5">
-									<ScheduledStopPointRef version="any" ref="naptanStop:0100BRP90201">New Station Road</ScheduledStopPointRef>
-									<PresentationPosition>required</PresentationPosition>
-								</FarePointInPattern>
-								<FarePointInPattern version="1.0" id="frst:WoE@Bristol@48@inbound_FP" order="4">
-									<ScheduledStopPointRef version="any" ref="naptanStop:0100BRP90186">Long Close</ScheduledStopPointRef>
-									<PresentationPosition>required</PresentationPosition>
-								</FarePointInPattern>
-								<FarePointInPattern version="1.0" id="frst:WoE@Bristol@48@inbound_FP" order="3">
-									<ScheduledStopPointRef version="any" ref="naptanStop:0170SGP90546">Leap Bridge</ScheduledStopPointRef>
-									<PresentationPosition>required</PresentationPosition>
-								</FarePointInPattern>
-								<FarePointInPattern version="1.0" id="frst:WoE@Bristol@48@inbound_FP" order="2">
-									<ScheduledStopPointRef version="any" ref="naptanStop:0170SGB20003">Meadgate</ScheduledStopPointRef>
-									<PresentationPosition>required</PresentationPosition>
-								</FarePointInPattern>
-								<FarePointInPattern version="1.0" id="frst:WoE@Bristol@48@inbound_FP" order="1">
-									<ScheduledStopPointRef version="any" ref="naptanStop:017000062">Emersons Green</ScheduledStopPointRef>
-									<PresentationPosition>required</PresentationPosition>
-								</FarePointInPattern>
-							</farePointsInPattern>
-						</SeriesConstraint>
-					</seriesConstraints>
-					<!--====Tariff Structure ==== -->
-				</FareFrame>
-				<FareFrame version="1.0" id="frst::FBRI@WoE_Distance@Trip@Products">
-					<Name>First West ^amp; Bristol section ("Distance" Based) fares</Name>
-					<Description>This is an example showing how one might encode the prduct part of the First West and Bristol section fare table in NeTEx.</Description>
-					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@products"/>
-					<!--====Tariff Structure ==== -->
-					<tariffs>
-						<Tariff version="1.0" id="frst:Tariff@WoE_Distance@Trip">
-							<validityConditions>
-								<ValidBetween>
-									<FromDate>2016-02-01T00:00:00Z</FromDate>
-									<ToDate>2018-10-01T00:00:00Z</ToDate>
-								</ValidBetween>
-							</validityConditions>
-							<Name>First West of England Distance Tariff - Tariff</Name>
-							<Description>WoE tariff for unit section fare</Description>
-							<documentLinks>
-								<InfoLink typeOfInfoLink="fareSheet">https://www.firstgroup.com/uploads/node_images/Fares%20Guide%2011%20Nov%202018_0.pdf</InfoLink>
-							</documentLinks>
-							<OperatorRef version="1.0" ref="noc:136361">First Somerset &amp; Avon Ltd</OperatorRef>
-							<TypeOfTariffRef version="fxc:v1.0" ref="fxc:section"/>
-							<TariffBasis>distance</TariffBasis>
-							<!-- === Fare Structure elements ==== -->
-							<GeographicalUnitRef version="fxc:v1.0" ref="fxc:unit_stage"/>
-							<geographicalIntervals>
-								<GeographicalInterval version="1.0" id="frst:Tariff@WoE_Distance@00_to_03">
-									<Name>One to three sections</Name>
-									<StartGeographicalValue>01</StartGeographicalValue>
-									<EndGeographicalValue>03</EndGeographicalValue>
-									<NumberOfUnits>1</NumberOfUnits>
-									<IntervalType>distance</IntervalType>
-								</GeographicalInterval>
-								<GeographicalInterval version="1.0" id="frst:Tariff@WoE_Distance@03_to_06">
-									<Name>Travel in one zone</Name>
-									<StartGeographicalValue>03</StartGeographicalValue>
-									<EndGeographicalValue>06</EndGeographicalValue>
-									<NumberOfUnits>1</NumberOfUnits>
-									<IntervalType>distance</IntervalType>
-								</GeographicalInterval>
-								<GeographicalInterval version="1.0" id="frst:Tariff@WoE_Distance@06_to_09">
-									<Name>Travel in one zone</Name>
-									<StartGeographicalValue>06</StartGeographicalValue>
-									<EndGeographicalValue>09</EndGeographicalValue>
-									<NumberOfUnits>1</NumberOfUnits>
-									<IntervalType>distance</IntervalType>
-								</GeographicalInterval>
-								<GeographicalInterval version="1.0" id="frst:Tariff@WoE_Distance@09_to_12">
-									<Name>Travel in one zone</Name>
-									<StartGeographicalValue>09</StartGeographicalValue>
-									<EndGeographicalValue>12</EndGeographicalValue>
-									<NumberOfUnits>1</NumberOfUnits>
-									<IntervalType>distance</IntervalType>
-								</GeographicalInterval>
-								<GeographicalInterval version="1.0" id="frst:Tariff@WoE_Distance@12_plus">
-									<Name>Travel in one zone</Name>
-									<StartGeographicalValue>12</StartGeographicalValue>
-									<NumberOfUnits>1</NumberOfUnits>
-									<IntervalType>distance</IntervalType>
-								</GeographicalInterval>
-							</geographicalIntervals>
-							<!--- ===GEOGRAPHICAL STRUCTURE FACTORS==== -->
-							<geographicalStructureFactors>
-								<GeographicalStructureFactor version="1.0" id="frst:Tariff@WoE_Distance@Trip@1click">
-									<Name>units are KM</Name>
-									<GeographicalUnitRef version="fxc:v1.0" ref="fxc:unit_stage"/>
-									<AmountFactor>1</AmountFactor>
-								</GeographicalStructureFactor>
-							</geographicalStructureFactors>
-							<!--- ====Fare Structure======= -->
-							<!-- ==FARE STRUCTURE ELEMENTS -->
-							<fareStructureElements>
-								<FareStructureElement id="frst:Tariff@WoE_Distance@Trip@modes" version="1.0">
-									<Name>Available modes</Name>
-									<GenericParameterAssignment order="1" id="frst:Tariff@WoE_Distance@Trip@modes" version="1.0">
-										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
-										<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
-										<validityParameters>
-											<VehicleModes>bus</VehicleModes>
-											<VehicleModes>tram</VehicleModes>
-										</validityParameters>
-									</GenericParameterAssignment>
-								</FareStructureElement>
-								<FareStructureElement id="frst:Tariff@WoE_Distance@Trip@zones" version="1.0">
-									<Name>Available zones</Name>
-									<Description>Trip may start in a city zone and continue to distance section</Description>
-									<GenericParameterAssignment version="1.0" id="frst:Tariff@WoE_Distance@Trip@from_zone" order="1">
-										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
-										<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
-										<validityParameters>
-											<FareZoneRef versionRef="1.0" ref="frst:WoE@Bath">EXTERNAL</FareZoneRef>
-											<FareZoneRef versionRef="1.0" ref="frst:WoE@Bristol">EXTERNAL</FareZoneRef>
-											<FareZoneRef versionRef="1.0" ref="frst:WoE@Weston_super_mare">EXTERNAL</FareZoneRef>
-										</validityParameters>
-									</GenericParameterAssignment>
-								</FareStructureElement>
-								<FareStructureElement id="frst:Tariff@WoE_Distance@Trip@geographic_intervals" version="1.0">
-									<Name>Available Intervals</Name>
-									<Description>How are West of England Zone single fares calculated?
-In the West of England Zone single fares are worked out based on the route distance you are travelling. 
-Distances are calculated using fare stage sections rather than individual bus stops, with each section being approximately one mile long*. 
-If you travel in 1-3 mile long sections it'll be £2.50, 3-6 mile long sections will be £3.50 and so on. 
-
-Here is an example route and some of the fares along it: Emersons Green, Sainsbury's to Long Close would be £2.50 as you are travelling in three sections (numbers 1, 2 and 3, Long Close is classed as section 3 in this example as it's where you are getting off the bus). 
-Long Close to Narroways Road would be £3.50 as you are travelling in four sections (4, 5, 6, 7, Long Close is counted as section 4 in this example as it's your boarding point). Blackberry Hospital to Downend, 
-The Leap would be £3.50 as you are travelling in four sections (5, 4, 3, 2).</Description>
-									<geographicalIntervals>
-										<GeographicalIntervalRef version="1.0" ref="frst:Tariff@WoE_Distance@00_to_03"/>
-										<GeographicalIntervalRef version="1.0" ref="frst:Tariff@WoE_Distance@03_to_06"/>
-										<GeographicalIntervalRef version="1.0" ref="frst:Tariff@WoE_Distance@06_to_09"/>
-										<GeographicalIntervalRef version="1.0" ref="frst:Tariff@WoE_Distance@09_to_12"/>
-										<GeographicalIntervalRef version="1.0" ref="frst:Tariff@WoE_Distance@12_plus"/>
-									</geographicalIntervals>
-								</FareStructureElement>
-								<FareStructureElement version="1.0" id="frst:Tariff@WoE_Distance@Trip@eligibility">
-									<Name>eligible user types</Name>
-									<GenericParameterAssignment order="1" id="frst:Tariff@WoE_Distance@eligibility" version="1.0">
-										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:eligible"/>
-										<LimitationGroupingType>XOR</LimitationGroupingType>
-										<limitations>
-											<!--- ===ELIGIBILITY USAGE PARAMETERS ========= -->
-											<UserProfileRef version="1.0" ref="frst:adult"/>
-											<UserProfileRef version="1.0" ref="frst:infant"/>
-											<UserProfileRef version="1.0" ref="frst:child"/>
-											<UserProfileRef version="1.0" ref="frst:student"/>
-											<UserProfileRef version="1.0" ref="frst:registered_disabled"/>
-										</limitations>
-									</GenericParameterAssignment>
-								</FareStructureElement>
-								<!-- ==  -->
-								<FareStructureElement version="1.0" id="frst:Tariff@WoE_Distance@Trip@steps">
-									<Name>Overall jjourney steps</Name>
-									<Description>Journey is potentially made up of two steps</Description>
-									<fareStructureElementsInSequence>
-										<FareStructureElementInSequence version="1.0" id="frst:Tariff@WoE_Distance@Trip@from_zone" order="1">
-											<Name>Optional fisrt leg in inner zone</Name>
-											<Description>If a journey begins within a flat fare zone but travels beyond the border of that zone, the fare will be calculated as follows:
-Flat fare to the border of the zone, then rounded up to £2.50, £3.50, £4.50 or £5.50 depending on the distance travelled thereafter.</Description>
-											<IsFirstInSequence>true</IsFirstInSequence>
-											<AccessNumberIsLimited>true</AccessNumberIsLimited>
-											<FareStructureElementRef ref="frst:Tariff@WoE_Distance@Trip@zones" version="1.0"/>
-										</FareStructureElementInSequence>
-										<FareStructureElementInSequence version="1.0" id="frst:Tariff@WoE_Distance@Trip@sections" order="2">
-											<Name>Unit stage count</Name>
-											<AccessNumberIsLimited>true</AccessNumberIsLimited>
-											<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Distance@Trip@geographic_intervals"/>
-										</FareStructureElementInSequence>
-									</fareStructureElementsInSequence>
-								</FareStructureElement>
-							</fareStructureElements>
-							<fareTables>
-								<FareTableRef version="1.0" ref="frst:WoE_Distance@Trip@section"/>
-							</fareTables>
-						</Tariff>
-					</tariffs>
-					<!--==== Fare Usage Parameters ==== -->
-					<!--==== Fare Product ==== -->
-					<fareProducts>
-						<!--==== Other Products ==== -->
-						<PreassignedFareProduct version="1.0" id="frst:WoE_Distance@Trip">
-							<Name>West of England Distance based (section fare) trip</Name>
-							<Description>The cost of single tickets within the West of England will be based on the route distance you travel, with five new single fares available:</Description>
-							<!-- Journeys out of a flat fare zone
-If a journey begins within a flat fare zone but travels beyond the border of that zone, the fare will be calculated as follows:
-Flat fare to the border of the zone, then rounded up to £2.50, £3.50, £4.50 or £5.50 depending on the distance travelled thereafter.
- 
-Up to three miles 										from £2.50 
-Three to six miles										 from £3.50
-Six to nine miles										 from £4.50
-Nine to 12 miles										 from £5.50
-Over 12 miles (within West of England area) 		£6.50 
--->
-							<!--==== VALIDABLE ELEMENTs ==== -->
-							<ChargingMomentRef version="fxc:v1.0" ref="fxc:prepayment"/>
-							<TypeOfFareProductRef version="fxc:v1.0" ref="fxc:standard_product@trip@single"/>
-							
-							<OperatorRef version="1.0" ref="noc:136361">First Somerset &amp; Avon Ltd</OperatorRef>
-							<ConditionSummary>
-							<FareStructureType>stageFare</FareStructureType>
-							<TariffBasis>unitSection</TariffBasis>
-								<IsPersonal>true</IsPersonal>
-								<IsRefundable>true</IsRefundable>
-								<HasDiscountedFares>true</HasDiscountedFares>
-							</ConditionSummary>
-							<validableElements>
-								<ValidableElement version="1.0" id="frst:WoE_Distance@Trip@travel">
-									<Name>Unlimited rides available for specifed periods</Name>
-									<fareStructureElements>
-										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Distance@Trip@modes"/>
-										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Distance@Trip@geographic_intervals"/>
-										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Distance@Trip@eligibility"/>
-										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Distance@Trip@steps"/>
-									</fareStructureElements>
-									<validityParameterAssignments>
-										<GenericParameterAssignment version="1.0" order="1" id="frst:WoE_Distance@Trip@travel@conditions">
-											<Name>Non transferable, single use</Name>
-											<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:condition_of_use"/>
-											<LimitationGroupingType>AND</LimitationGroupingType>
-											<limitations>
-												<Transferability version="1.0" id="frst:WoE_Distance@Trip@travel@condition@transferability">
-													<CanTransfer>false</CanTransfer>
-												</Transferability>
-												<RoundTrip version="1.0" id="frst:WoE_Distance@Trip@travel@condition@direction">
-													<Name>Single Trip</Name>
-													<TripType>single</TripType>
-												</RoundTrip>
-												<FrequencyOfUse version="1.0" id="frst:WoE_Distance@Trip@travel@condition@frequency">
-													<Name>One trip no transfers</Name>
-													<FrequencyOfUseType>single</FrequencyOfUseType>
-												</FrequencyOfUse>
-												<Interchanging version="1.0" id="frst:WoE_Distance@Trip@travel@condition@interchange">
-													<CanInterchange>false</CanInterchange>
-												</Interchanging>
-											</limitations>
-										</GenericParameterAssignment>
-									</validityParameterAssignments>
-								</ValidableElement>
-							</validableElements>
-							<!--==== ACCESS RIGHTs ===== -->
-							<accessRightsInProduct>
-								<AccessRightInProduct version="1.0" id="frst:WoE_Distance@Trip" order="1">
-									<ValidableElementRef version="1.0" ref="frst:WoE_Distance@Trip@travel"/>
-								</AccessRightInProduct>
-							</accessRightsInProduct>
-							<ProductType>singleTrip</ProductType>
-						</PreassignedFareProduct>
-					</fareProducts>
-					<!-- === SALES OFFER PACKAGES === -->
-					<salesOfferPackages>
-						<SalesOfferPackage version="1.0" id="frst:WoE_Distance@Trip-SOP@p-ticket">
-							<BrandingRef version="1.0" ref="frst:FBRI@brand"/>
-							<Name>First West of England Distance Bsed Trip Fare - p-ticket</Name>
-							<Description>Single trip on section fare</Description>
-							<TypeOfSalesOfferPackageRef version="fxc:v1.0" ref="fxc:standard_product@operator"/>
-							<ConditionSummary>
-								<IsPersonal>false</IsPersonal>
-								<CanBreakJourney>false</CanBreakJourney>
-							</ConditionSummary>
-							<distributionAssignments>
-								<DistributionAssignment version="1.0" id="frst:WoE_Distance@Trip-SOP@p-ticket" order="1">
-									<Name>Onboard</Name>
-									<Description>Pay for ticket onboard</Description>
-									<DistributionChannelRef ref="fxc:on_board" version="fxc:v1.0"/>
-									<PaymentMethods>contactlessPaymentCard contactlessTravelCard cash creditCard debitCard</PaymentMethods>
-									<FulfilmentMethodRef ref="fxc:collect_on_board" version="fxc:v1.0"/>
-								</DistributionAssignment>
-							</distributionAssignments>
-							<salesOfferPackageElements>
-								<SalesOfferPackageElement version="1.0" id="frst:WoE_Distance@Trip-SOP@p-ticket" order="1">
-									<TypeOfTravelDocumentRef version="1.0" ref="frst:paper-ticket"/>
-									<PreassignedFareProductRef version="1.0" ref="frst:WoE_Distance@Trip"/>
-								</SalesOfferPackageElement>
-							</salesOfferPackageElements>
-						</SalesOfferPackage>
-						<SalesOfferPackage version="1.0" id="frst:WoE_Distance@Trip-SOP@m-ticket">
-							<BrandingRef version="1.0" ref="frst:FBRI@brand"/>
-							<Name>First West of England Distance Based Trip Fare - m-ticket</Name>
-							<Description>Single trip on stage fare
-How do mTickets work?
-Once a ticket is purchased and downloaded, it will appear in the 'purchased' section of the Ticket Wallet in your app. Tickets in this section are listed from the oldest at the top to the newest at the bottom.
-
-When you want to use a ticket, select the one you want and then select 'Activate Now'.
-You'll then be informed of how long the ticket will be active for, before confirming that you want to want to activate this ticket. We would advise reading this carefully to avoid activating unwanted tickets.
-Once activated, the app will generate a moving ticket image on your phone's screen and a QR code. This will stay active for the remainder of the ticket's validity and will include the time and a four letter 'word of the day'.
-You'll need to scan the QR when you board the bus or show the ticket to the driver.					
-							</Description>
-							<ConditionSummary>
-								<IsPersonal>true</IsPersonal>
-								<CanBreakJourney>false</CanBreakJourney>
-							</ConditionSummary>
-							<distributionAssignments>
-								<DistributionAssignment version="1.0" id="frst:WoE_Distance@Trip-SOP@m-ticket@mobile_app" order="1">
-									<Name>Mobile app</Name>
-									<Description>Pay for ticket online with mobile app</Description>
-									<DistributionChannelRef version="fxc:v1.0" ref="fxc:online"/>
-									<PaymentMethods>mobilePhone creditCard debitCard</PaymentMethods>
-									<FulfilmentMethodRef ref="fxc:mobile_app" version="fxc:v1.0"/>
-								</DistributionAssignment>
-							</distributionAssignments>
-							<salesOfferPackageElements>
-								<SalesOfferPackageElement version="1.0" id="frst:WoE_Distance@Trip-SOP@m-ticket" order="1">
-									<TypeOfTravelDocumentRef version="1.0" ref="frst:m-ticket"/>
-									<PreassignedFareProductRef version="1.0" ref="frst:WoE_Distance@Trip"/>
-									<validityParameterAssignments>
-										<GenericParameterAssignment version="1.0" id="frst:WoE_Distance@Trip-SOP@m-ticket@conditions@Transferability " order="1">
-											<Name>Transferable, to child</Name>
-											<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:condition_of_use"/>
-											<limitations>
-												<Transferability version="1.0" id="frst:WoE_Distance@Trip-SOP@m-ticket@conditions@Transferability">
-													<Name>Child tickets</Name>
-													<Description>Customers can send tickets to a child or young person by using the sharing feature on child and young person tickets. As it stands, this function is only available for child tickets - adult tickets cannot be shared. The instructions below tell you all you need to know about sharing a ticket once it has been purchased:</Description>
-													<CanTransfer>true</CanTransfer>
-													<MaximumNumberOfNamedTransferees>1</MaximumNumberOfNamedTransferees>
-												</Transferability>
-											</limitations>
-										</GenericParameterAssignment>
-									</validityParameterAssignments>
-								</SalesOfferPackageElement>
-							</salesOfferPackageElements>
-						</SalesOfferPackage>
-					</salesOfferPackages>
-					<!--==== Fare Prices ==== -->
-				</FareFrame>
-				<FareFrame version="1.0" id="frst::FBRI@WoE_Distance@Trip@prices">
-					<Name>First West of England section ("Distance Based") Trip Fare - Prices</Name>
-					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@prices"/>
-					<fareTables>
-						<FareTable version="1.0" id="frst:WoE_Distance@Trip@section">
-							<Name>First West of England section ("Distance Based") Trip Fare</Name>
-							<!---			 
-______	______	______	_____				_	|	Adult		|	Child	 	|	Student	|	 
-Up to three miles 										|	£ 2.50		|	£ 1.30	|	£ 1.80	|
-Three to six miles										 | 	£ 3.50		|	£ 1.80	|	£ 2.50	|
-Six to nine miles										 | 	£ 4.50		|	£ 2.30	|	£ 3.20	|
-Nine to 12 miles										 | 	£ 5.50		|	£ 2.80	|	£ 3.90	|
-Over 12 miles (within West of England area) 	£ 6.50		|	£ 3.30	|	£ 4.50	|
--->
-							<pricesFor>
-								<PreassignedFareProductRef version="1.0" ref="frst:WoE_Distance@Trip"/>
-								<SalesOfferPackageRef version="1.0" ref="frst:WoE_Distance@Trip-SOP@p-ticket"/>
-								<SalesOfferPackageRef version="1.0" ref="frst:WoE_Distance@Trip-SOP@m-ticket"/>
-							</pricesFor>
-							<OperatorRef version="1.0" ref="noc:136361">First Somerset &amp; Avon Ltd</OperatorRef>
-							<includes>
-								<FareTable version="1.0" id="frst:WoE_Distance@Trip@WoE_Distance@00_to_03">
-									<Name>Up to three miles.</Name>
-									<pricesFor>
-										<GeographicalIntervalRef version="1.0" ref="frst:Tariff@WoE_Distance@00_to_03"/>
-									</pricesFor>
-									<cells>
-										<Cell version="1.0" id="frst:WoE_Distance@Trip@section@00_to_03@adult" order="1">
-											<UsageParameterPrice version="1.0" id="frst:WoE_Distance@Trip@section@00_to_03@adult">
-												<Amount>2.50</Amount>
-												<UserProfileRef version="1.0" ref="frst:adult"/>
-											</UsageParameterPrice>
-										</Cell>
-										<Cell version="1.0" id="frst:WoE_Distance@Trip@section@00_to_03@child" order="2">
-											<UsageParameterPrice version="1.0" id="frst:WoE_Distance@Trip@section@00_to_03@child">
-												<Amount>1.30</Amount>
-												<UsageParameterPriceRef version="1.0" ref="frst:WoE_Distance@Trip@section@00_to_03@adult"/>
-												<DiscountingRuleRef version="1.0" ref="frst:child_half_price"/>
-												<UserProfileRef version="1.0" ref="frst:child"/>
-											</UsageParameterPrice>
-										</Cell>
-										<Cell version="1.0" id="frst:WoE_Distance@Trip@00_to_03@student" order="3">
-											<UsageParameterPrice version="1.0" id="frst:WoE_Distance@Trip@section@00_to_03@student">
-												<Amount>1.80</Amount>
-												<UsageParameterPriceRef version="1.0" ref="frst:WoE_Distance@Trip@section@00_to_03@adult"/>
-												<DiscountingRuleRef version="1.0" ref="frst:youth_discount"/>
-												<UserProfileRef version="1.0" ref="frst:student"/>
-											</UsageParameterPrice>
-										</Cell>
-									</cells>
-								</FareTable>
-								<FareTable version="1.0" id="frst:WoE_Distance@Trip@section@03_to_06">
-									<Name>Three to six miles	</Name>
-									<pricesFor>
-										<GeographicalIntervalRef version="1.0" ref="frst:Tariff@WoE_Distance@03_to_06"/>
-									</pricesFor>
-									<cells>
-										<Cell version="1.0" id="frst:WoE_Distance@Trip@section@03_to_06@adult" order="1">
-											<UsageParameterPrice version="1.0" id="frst:WoE_Distance@Trip@section@03_to_06@adult">
-												<Amount>3.50</Amount>
-												<UserProfileRef version="1.0" ref="frst:adult"/>
-											</UsageParameterPrice>
-										</Cell>
-										<Cell version="1.0" id="frst:WoE_Distance@Trip@section@03_to_06@child" order="2">
-											<UsageParameterPrice version="1.0" id="frst:WoE_Distance@Trip@section@03_to_06@child">
-												<Amount>1.80</Amount>
-												<UsageParameterPriceRef version="1.0" ref="frst:WoE_Distance@Trip@section@03_to_06@adult"/>
-												<DiscountingRuleRef version="1.0" ref="frst:child_half_price"/>
-												<UserProfileRef version="1.0" ref="frst:child"/>
-											</UsageParameterPrice>
-										</Cell>
-										<Cell version="1.0" id="frst:WoE_Distance@Trip@section@03_to_06@student" order="3">
-											<UsageParameterPrice version="1.0" id="frst:WoE_Distance@Trip@section@03_to_06@student">
-												<Amount>2.50</Amount>
-												<UsageParameterPriceRef version="1.0" ref="frst:WoE_Distance@Trip@section@03_to_06@adult"/>
-												<DiscountingRuleRef version="1.0" ref="frst:youth_discount"/>
-												<UserProfileRef version="1.0" ref="frst:student"/>
-											</UsageParameterPrice>
-										</Cell>
-									</cells>
-								</FareTable>
-								<FareTable version="1.0" id="frst:WoE_Distance@Trip@section@06_to_09">
-									<Name>Six to nine miles	</Name>
-									<pricesFor>
-										<GeographicalIntervalRef version="1.0" ref="frst:Tariff@WoE_Distance@06_to_09"/>
-									</pricesFor>
-									<cells>
-										<Cell version="1.0" id="frst:WoE_Distance@Trip@sectiont@06_to_09@adult" order="1">
-											<UsageParameterPrice version="1.0" id="frst:WoE_Distance@Trip@section@06_to_09@adult">
-												<Amount>4.50</Amount>
-												<UserProfileRef version="1.0" ref="frst:adult"/>
-											</UsageParameterPrice>
-										</Cell>
-										<Cell version="1.0" id="frst:WoE_Distance@Trip@sectionchild@06_to_09@child" order="2">
-											<UsageParameterPrice version="1.0" id="frst:WoE_Distance@Trip@section@06_to_09@child">
-												<Amount>2.30</Amount>
-												<UsageParameterPriceRef version="1.0" ref="frst:WoE_Distance@Trip@section@06_to_09@adult"/>
-												<DiscountingRuleRef version="1.0" ref="frst:child_half_price"/>
-												<UserProfileRef version="1.0" ref="frst:child"/>
-											</UsageParameterPrice>
-										</Cell>
-										<Cell version="1.0" id="frst:WoE_Distance@Trip@sections@06_to_09@student" order="3">
-											<UsageParameterPrice version="1.0" id="frst:WoE_Distance@Trip@section@06_to_09@student">
-												<Amount>3.20</Amount>
-												<UsageParameterPriceRef version="1.0" ref="frst:WoE_Distance@Trip@section@06_to_09@adult"/>
-												<DiscountingRuleRef version="1.0" ref="frst:youth_discount"/>
-												<UserProfileRef version="1.0" ref="frst:student"/>
-											</UsageParameterPrice>
-										</Cell>
-									</cells>
-								</FareTable>
-								<FareTable version="1.0" id="frst:WoE_Distance@Trip@section@09_to_12">
-									<Name>Nine to 12 miles	</Name>
-									<pricesFor>
-										<GeographicalIntervalRef version="1.0" ref="frst:Tariff@WoE_Distance@09_to_12"/>
-									</pricesFor>
-									<cells>
-										<Cell version="1.0" id="frst:WoE_Distance@Trip@section@09_to_12@adult" order="1">
-											<UsageParameterPrice version="1.0" id="frst:WoE_Distance@Trip@section@09_to_12@adult">
-												<Amount>5.50</Amount>
-												<UserProfileRef version="1.0" ref="frst:adult"/>
-											</UsageParameterPrice>
-										</Cell>
-										<Cell version="1.0" id="frst:WoE_Distance@Trip@sectionchild@09_to_12" order="2">
-											<UsageParameterPrice version="1.0" id="frst:WoE_Distance@Trip@section@09_to_12@childs">
-												<Amount>2.80</Amount>
-												<UsageParameterPriceRef version="1.0" ref="frst:WoE_Distance@Trip@section@09_to_12@adult"/>
-												<DiscountingRuleRef version="1.0" ref="frst:child_half_price"/>
-												<UserProfileRef version="1.0" ref="frst:child"/>
-											</UsageParameterPrice>
-										</Cell>
-										<Cell version="1.0" id="frst:WoE_Distance@Trip@section@09_to_12@student" order="3">
-											<UsageParameterPrice version="1.0" id="frst:WoE_Distance@Trip@section@09_to_12@student">
-												<Amount>3.90</Amount>
-												<UsageParameterPriceRef version="1.0" ref="frst:WoE_Distance@Trip@section@09_to_12@adult"/>
-												<DiscountingRuleRef version="1.0" ref="frst:youth_discount"/>
-												<UserProfileRef version="1.0" ref="frst:student"/>
-											</UsageParameterPrice>
-										</Cell>
-									</cells>
-								</FareTable>
-								<FareTable version="1.0" id="frst:WoE_Distance@Trip@@section@12_plus">
-									<Name>Over 12 miles (within West of England area)</Name>
-									<pricesFor>
-										<GeographicalIntervalRef version="1.0" ref="frst:Tariff@WoE_Distance@12_plus"/>
-									</pricesFor>
-									<cells>
-										<Cell version="1.0" id="frst:WoE_Distance@Trip@section@12_plus@adult" order="1">
-											<UsageParameterPrice version="1.0" id="frst:WoE_Distance@Trip@section@12_plus@adult">
-												<Amount>6.50</Amount>
-												<UserProfileRef version="1.0" ref="frst:adult"/>
-											</UsageParameterPrice>
-										</Cell>
-										<Cell version="1.0" id="frst:WoE_Distance@Trip@section@12_plus@child" order="2">
-											<UsageParameterPrice version="1.0" id="frst:WoE_Distance@Trip@section@12_plus@child">
-												<Amount>3.30</Amount>
-												<UsageParameterPriceRef version="1.0" ref="frst:WoE_Distance@Trip@section@12_plus@adult"/>
-												<DiscountingRuleRef version="1.0" ref="frst:child_half_price"/>
-												<UserProfileRef version="1.0" ref="frst:child"/>
-											</UsageParameterPrice>
-										</Cell>
-										<Cell version="1.0" id="frst:WoE_Distance@Trip@section@12_plus@student" order="3">
-											<UsageParameterPrice version="1.0" id="frst:WoE_Distance@Trip@12_plus@student">
-												<Amount>4.50</Amount>
-												<UsageParameterPriceRef version="1.0" ref="frst:WoE_Distance@Trip@section@12_plus@adult"/>
-												<DiscountingRuleRef version="1.0" ref="frst:youth_discount"/>
-												<UserProfileRef version="1.0" ref="frst:student"/>
-											</UsageParameterPrice>
-										</Cell>
-									</cells>
-								</FareTable>
-							</includes>
-						</FareTable>
-					</fareTables>
-				</FareFrame>
-				<!-- First WoE Distance  Trip Prices  -->
-				<ServiceFrame version="1.0" id="frst:WoE_Zone@Pass@service_network">
-					<Name>First West Of ENgland Network</Name>
-					<!--==== Fare zones === NB These are just a guess from the map s Incoplete-->
-					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@service_network"/>
-					<!--- ======= CODESPACEs======== -->
-					<Network version="1.0" id="frst:WoE_Network">
-						<Name>First West Of England Zone Network</Name>
-						<tariffZones>
-							<TariffZoneRef versionRef="1.0" ref="frst:WoE@Bath">EXTERNAL</TariffZoneRef>
-							<TariffZoneRef versionRef="1.0" ref="frst:WoE@Bristol">EXTERNAL</TariffZoneRef>
-							<TariffZoneRef versionRef="1.0" ref="frst:WoE@Weston_super_mare">EXTERNAL</TariffZoneRef>
-							<TariffZoneRef versionRef="1.0" ref="frst:WoE@West_of_England">EXTERNAL</TariffZoneRef>
-							<!--more to add -->
-						</tariffZones>
-					</Network>
-				</ServiceFrame>
-				<!-- First WoE Network and common resources -->
-				<ServiceFrame version="1.0" id="frst:WoE_Distance@Bristol@network@48">
+				<!-- First WoE Distance  Trip    -->
+				<ServiceFrame version="1.0" id="epd:UK:FBRI:ServiceFrame_UK_PI_NETWORK:WoE_Distance@Trip@Bristol@48:frst">
 					<Name>First - Network Elemenst for Bristol CITY CENTRE - EMERSONS GREEN libes</Name>
-					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@service_network"/>
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_NETWORK:FXCP"/>
+					<prerequisites>
+						<ResourceFrameRef version="1.0" ref="epd:UK:FBRI:ResourceFrame_UK_PI_COMMON:WoE:frst"/>
+					</prerequisites>
 					<directions>
 						<Direction id="frst:WoE@Bristol@from_centre" version="1.0">
 							<Name>From CIty Centre</Name>
@@ -866,7 +287,7 @@ Over 12 miles (within West of England area) 	£ 6.50		|	£ 3.30	|	£ 4.50	|
 							<Description>BRISTOL CITY CENTRE - EMERSONS GREEN Via Easton, Eastville, Fishponds, Downend, Blackhorse</Description>
 							<PublicCode>48</PublicCode>
 							<PrivateCode type="noc_data">FBRI_48</PrivateCode>
-							<OperatorRef version="1.0" ref="noc:136361">First Somerset &amp; Avon Ltd</OperatorRef>
+							<OperatorRef version="1.0" ref="noc:FBRI">First Somerset &amp; Avon Ltd nocn:136361</OperatorRef>
 							<LineType>local</LineType>
 							<allowedDirections>
 								<AllowedLineDirection id="frst:WoE@Bristol@from_centre" version="1.0">
@@ -882,7 +303,7 @@ Over 12 miles (within West of England area) 	£ 6.50		|	£ 3.30	|	£ 4.50	|
 							<Description>BRISTOL CITY CENTRE - UWE FRENCHAY CAMPUS  Via Easton, Eastville, Fishponds, Blackberry Hill</Description>
 							<PublicCode>48A</PublicCode>
 							<PrivateCode type="noc_data">FBRI_48A</PrivateCode>
-							<OperatorRef version="1.0" ref="noc:136361">First Somerset &amp; Avon Ltd</OperatorRef>
+							<OperatorRef version="1.0" ref="noc:FBRI">First Somerset &amp; Avon Ltd nocn:136361</OperatorRef>
 							<LineType>local</LineType>
 							<allowedDirections>
 								<AllowedLineDirectionRef ref="frst:WoE@Bristol@from_centre" version="1.0"/>
@@ -894,7 +315,7 @@ Over 12 miles (within West of England area) 	£ 6.50		|	£ 3.30	|	£ 4.50	|
 							<Description>BRISTOL CITY CENTRE - EMERSONS GREEN  Via Easton, Eastville, Fishponds, Staple Hill, Mangotsfield, Blackhorse</Description>
 							<PublicCode>49</PublicCode>
 							<PrivateCode type="noc_data">FBRI_49</PrivateCode>
-							<OperatorRef version="1.0" ref="noc:136361">First Somerset &amp; Avon Ltd</OperatorRef>
+							<OperatorRef version="1.0" ref="noc:FBRI">First Somerset &amp; Avon Ltd nocn:136361</OperatorRef>
 							<LineType>local</LineType>
 							<allowedDirections>
 								<AllowedLineDirectionRef ref="frst:WoE@Bristol@from_centre" version="1.0"/>
@@ -2020,9 +1441,632 @@ Over 12 miles (within West of England area) 	£ 6.50		|	£ 3.30	|	£ 4.50	|
 						</JourneyPattern>
 					</journeyPatterns>
 				</ServiceFrame>
-				<ServiceCalendarFrame version="1.0" id="frst:WoE@Service_Calendar" dataSourceRef="frst:first_WoE" responsibilitySetRef="frst:products">
+		
+				<FareFrame version="1.0" id="epd:UK:FBRI:FareFrame_UK_PI_FARE_NETWORK:WoE_Distance@Trip@Bristol@48:frst">
+					<Name>First West ^amp; Bristol Distance Nased Fares</Name>
+					<Description>This is an example showing how one might encode a sectioj n ("Distance") of the First West and Bristol Stage fare table</Description>
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_FARE_NETWORK:FXCP"/>
+					<prerequisites>
+						<ServiceFrameRef version="1.0" ref="epd:UK:FBRI:ServiceFrame_UK_PI_NETWORK:WoE_Distance@Trip@Bristol@48:frst"/>
+					</prerequisites>
+					<!--==== Fare sections - only Line 48 is coded === NB These are one way of coding - other is to use a journey pattern with the stops that are stages marked -->
+					<seriesConstraints>
+						<SeriesConstraint version="1.0" id="frst:WoE@Bristol@48@outbound_FP" order="1">
+							<Name>Rupert Street to Emersons Green</Name>
+							<Description>Fare Stages on Route</Description>
+							<farePointsInPattern>
+								<FarePointInPattern version="1.0" id="frst:WoE@Bristol@48@outbound_FP" order="1">
+									<ScheduledStopPointRef version="any" ref="naptanStop:0100BRA16911">Rupert Street</ScheduledStopPointRef>
+									<IsFareStage>true</IsFareStage>
+								</FarePointInPattern>
+								<FarePointInPattern version="1.0" id="frst:WoE@Bristol@48@outbound_FP" order="2">
+									<ScheduledStopPointRef version="any" ref="naptanStop:0100BRP90089">Brigstocke Road</ScheduledStopPointRef>
+									<IsFareStage>true</IsFareStage>
+								</FarePointInPattern>
+								<FarePointInPattern version="1.0" id="frst:WoE@Bristol@48@outbound_FP" order="3">
+									<ScheduledStopPointRef version="any" ref="naptanStop:0100BRP90110">Narroways Road</ScheduledStopPointRef>
+									<IsFareStage>true</IsFareStage>
+								</FarePointInPattern>
+								<FarePointInPattern version="1.0" id="frst:WoE@Bristol@48@outbound_FP" order="4">
+									<ScheduledStopPointRef version="any" ref="naptanStop:0100BRC53385">Eastville Park</ScheduledStopPointRef>
+									<IsFareStage>true</IsFareStage>
+								</FarePointInPattern>
+								<FarePointInPattern version="1.0" id="frst:WoE@Bristol@48@outbound_FP" order="5">
+									<ScheduledStopPointRef version="any" ref="naptanStop:0100BRA10549">River View</ScheduledStopPointRef>
+									<IsFareStage>true</IsFareStage>
+								</FarePointInPattern>
+								<FarePointInPattern version="1.0" id="frst:WoE@Bristol@48@outbound_FP" order="6">
+									<ScheduledStopPointRef version="any" ref="naptanStop:0100BRP90201">New Station Road</ScheduledStopPointRef>
+									<IsFareStage>true</IsFareStage>
+								</FarePointInPattern>
+								<FarePointInPattern version="1.0" id="frst:WoE@Bristol@48@outbound_FP" order="7">
+									<ScheduledStopPointRef version="any" ref="naptanStop:0100BRP90186">Long Close</ScheduledStopPointRef>
+									<IsFareStage>true</IsFareStage>
+								</FarePointInPattern>
+								<FarePointInPattern version="1.0" id="frst:WoE@Bristol@48@outbound_FP" order="8">
+									<ScheduledStopPointRef version="any" ref="naptanStop:0170SGP90546">Leap Bridge</ScheduledStopPointRef>
+									<IsFareStage>true</IsFareStage>
+								</FarePointInPattern>
+								<FarePointInPattern version="1.0" id="frst:WoE@Bristol@48@outbound_FP" order="9">
+									<ScheduledStopPointRef version="any" ref="naptanStop:0170SGB20003">Meadgate</ScheduledStopPointRef>
+									<IsFareStage>true</IsFareStage>
+								</FarePointInPattern>
+								<FarePointInPattern version="1.0" id="frst:WoE@Bristol@48@outbound_FP" order="10">
+									<ScheduledStopPointRef version="any" ref="naptanStop:017000062">Emersons Green</ScheduledStopPointRef>
+									<IsFareStage>true</IsFareStage>
+								</FarePointInPattern>
+							</farePointsInPattern>
+						</SeriesConstraint>
+						<SeriesConstraint version="1.0" id="frst:WoE@Bristol@48@inbound_FP" order="1">
+							<Name>Emersons Green to Rupert Street</Name>
+							<Description>Fare Stages on Route</Description>
+							<farePointsInPattern>
+								<FarePointInPattern version="1.0" id="frst:WoE@Bristol@48@inbound_FP" order="10">
+									<ScheduledStopPointRef version="any" ref="naptanStop:0100BRA16911">Rupert Street</ScheduledStopPointRef>
+									<IsFareStage>true</IsFareStage>
+								</FarePointInPattern>
+								<FarePointInPattern version="1.0" id="frst:WoE@Bristol@48@inbound_FP" order="9">
+									<ScheduledStopPointRef version="any" ref="naptanStop:0100BRP90089">Brigstocke Road</ScheduledStopPointRef>
+									<IsFareStage>true</IsFareStage>
+								</FarePointInPattern>
+								<FarePointInPattern version="1.0" id="frst:WoE@Bristol@48@inbound_FP" order="8">
+									<ScheduledStopPointRef version="any" ref="naptanStop:0100BRP90110">Narroways Road</ScheduledStopPointRef>
+									<IsFareStage>true</IsFareStage>
+								</FarePointInPattern>
+								<FarePointInPattern version="1.0" id="frst:WoE@Bristol@48@inbound_FP" order="7">
+									<ScheduledStopPointRef version="any" ref="naptanStop:0100BRC53385">Eastville Park</ScheduledStopPointRef>
+									<IsFareStage>true</IsFareStage>
+								</FarePointInPattern>
+								<FarePointInPattern version="1.0" id="frst:WoE@Bristol@48@inbound_FP" order="6">
+									<ScheduledStopPointRef version="any" ref="naptanStop:0100BRA10549">River View</ScheduledStopPointRef>
+									<IsFareStage>true</IsFareStage>
+								</FarePointInPattern>
+								<FarePointInPattern version="1.0" id="frst:WoE@Bristol@48@inbound_FP" order="5">
+									<ScheduledStopPointRef version="any" ref="naptanStop:0100BRP90201">New Station Road</ScheduledStopPointRef>
+									<IsFareStage>true</IsFareStage>
+								</FarePointInPattern>
+								<FarePointInPattern version="1.0" id="frst:WoE@Bristol@48@inbound_FP" order="4">
+									<ScheduledStopPointRef version="any" ref="naptanStop:0100BRP90186">Long Close</ScheduledStopPointRef>
+									<IsFareStage>true</IsFareStage>
+								</FarePointInPattern>
+								<FarePointInPattern version="1.0" id="frst:WoE@Bristol@48@inbound_FP" order="3">
+									<ScheduledStopPointRef version="any" ref="naptanStop:0170SGP90546">Leap Bridge</ScheduledStopPointRef>
+									<IsFareStage>true</IsFareStage>
+								</FarePointInPattern>
+								<FarePointInPattern version="1.0" id="frst:WoE@Bristol@48@inbound_FP" order="2">
+									<ScheduledStopPointRef version="any" ref="naptanStop:0170SGB20003">Meadgate</ScheduledStopPointRef>
+									<IsFareStage>true</IsFareStage>
+								</FarePointInPattern>
+								<FarePointInPattern version="1.0" id="frst:WoE@Bristol@48@inbound_FP" order="1">
+									<ScheduledStopPointRef version="any" ref="naptanStop:017000062">Emersons Green</ScheduledStopPointRef>
+									<IsFareStage>true</IsFareStage>
+								</FarePointInPattern>
+							</farePointsInPattern>
+						</SeriesConstraint>
+					</seriesConstraints>
+					<!--====Tariff Structure ==== -->
+				</FareFrame>
+				
+				<!-- First WoE Distance Products -->
+				<FareFrame version="1.0" id="epd:UK:FBRI:FareFrame_UK_PI_FARE_PRODUCT:WoE_Distance@Trip:frst">
+					<Name>First West ^amp; Bristol section ("Distance" Based) fares</Name>
+					<Description>This is an example showing how one might encode the prduct part of the First West and Bristol section fare table in NeTEx.</Description>
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_FARE_PRODUCT:FXCP"/>
+					<prerequisites>
+						<FareFrameRef version="1.0" ref="epd:UK:FBRI:FareFrame_UK_PI_FARE_NETWORK:WoE_Distance@Trip@Bristol@48:frst"/>
+						<ServiceFrameRef version="1.0" ref="epd:UK:FBRI:ServiceFrame_UK_PI_NETWORK:WoE_Zones:frst"/>
+					</prerequisites>
+					<!--====Tariff Structure ==== -->
+					<tariffs>
+						<Tariff version="1.0" id="frst:Tariff@WoE_Distance@Trip">
+							<validityConditions>
+								<ValidBetween>
+									<FromDate>2016-02-01T00:00:00Z</FromDate>
+									<ToDate>2018-10-01T00:00:00Z</ToDate>
+								</ValidBetween>
+							</validityConditions>
+							<Name>First West of England Distance Tariff - Tariff</Name>
+							<Description>WoE tariff for unit section fare</Description>
+							<documentLinks>
+								<InfoLink typeOfInfoLink="fareSheet">https://www.firstgroup.com/uploads/node_images/Fares%20Guide%2011%20Nov%202018_0.pdf</InfoLink>
+							</documentLinks>
+							<OperatorRef version="1.0" ref="noc:FBRI">First Somerset &amp; Avon Ltd nocn:136361</OperatorRef>
+							<TypeOfTariffRef version="fxc:v1.0" ref="fxc:section"/>
+							<TariffBasis>distance</TariffBasis>
+							<!-- === Fare Structure elements ==== -->
+							<GeographicalUnitRef version="fxc:v1.0" ref="fxc:unit_stage"/>
+							<geographicalIntervals>
+								<GeographicalInterval version="1.0" id="frst:Tariff@WoE_Distance@00_to_03">
+									<Name>One to three sections</Name>
+									<StartGeographicalValue>01</StartGeographicalValue>
+									<EndGeographicalValue>03</EndGeographicalValue>
+									<NumberOfUnits>1</NumberOfUnits>
+									<IntervalType>distance</IntervalType>
+								</GeographicalInterval>
+								<GeographicalInterval version="1.0" id="frst:Tariff@WoE_Distance@03_to_06">
+									<Name>Travel in one zone</Name>
+									<StartGeographicalValue>03</StartGeographicalValue>
+									<EndGeographicalValue>06</EndGeographicalValue>
+									<NumberOfUnits>1</NumberOfUnits>
+									<IntervalType>distance</IntervalType>
+								</GeographicalInterval>
+								<GeographicalInterval version="1.0" id="frst:Tariff@WoE_Distance@06_to_09">
+									<Name>Travel in one zone</Name>
+									<StartGeographicalValue>06</StartGeographicalValue>
+									<EndGeographicalValue>09</EndGeographicalValue>
+									<NumberOfUnits>1</NumberOfUnits>
+									<IntervalType>distance</IntervalType>
+								</GeographicalInterval>
+								<GeographicalInterval version="1.0" id="frst:Tariff@WoE_Distance@09_to_12">
+									<Name>Travel in one zone</Name>
+									<StartGeographicalValue>09</StartGeographicalValue>
+									<EndGeographicalValue>12</EndGeographicalValue>
+									<NumberOfUnits>1</NumberOfUnits>
+									<IntervalType>distance</IntervalType>
+								</GeographicalInterval>
+								<GeographicalInterval version="1.0" id="frst:Tariff@WoE_Distance@12_plus">
+									<Name>Travel in one zone</Name>
+									<StartGeographicalValue>12</StartGeographicalValue>
+									<NumberOfUnits>1</NumberOfUnits>
+									<IntervalType>distance</IntervalType>
+								</GeographicalInterval>
+							</geographicalIntervals>
+							<!--- ===GEOGRAPHICAL STRUCTURE FACTORS==== -->
+							<geographicalStructureFactors>
+								<GeographicalStructureFactor version="1.0" id="frst:Tariff@WoE_Distance@Trip@1click">
+									<Name>units are KM</Name>
+									<GeographicalUnitRef version="fxc:v1.0" ref="fxc:unit_stage"/>
+									<AmountFactor>1</AmountFactor>
+								</GeographicalStructureFactor>
+							</geographicalStructureFactors>
+							<!--- ====Fare Structure======= -->
+							<!-- ==FARE STRUCTURE ELEMENTS -->
+							<fareStructureElements>
+								<FareStructureElement id="frst:Tariff@WoE_Distance@Trip@access_modes" version="1.0">
+									<Name>Available modes</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:access"/>
+									<GenericParameterAssignment order="1" id="frst:Tariff@WoE_Distance@Trip@access_modes" version="1.0">
+										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
+										<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
+										<validityParameters>
+											<VehicleModes>bus</VehicleModes>
+											<VehicleModes>tram</VehicleModes>
+										</validityParameters>
+									</GenericParameterAssignment>
+								</FareStructureElement>
+								<FareStructureElement id="frst:Tariff@WoE_Distance@Trip@access_zones" version="1.0">
+									<Name>Available zones</Name>
+									<Description>Trip may start in a city zone and continue to distance section</Description>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:access"/>
+									<GenericParameterAssignment version="1.0" id="frst:Tariff@WoE_Distance@Trip@from_zone" order="1">
+										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
+										<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
+										<validityParameters>
+											<FareZoneRef versionRef="1.0" ref="frst:WoE@Bath">EXTERNAL</FareZoneRef>
+											<FareZoneRef versionRef="1.0" ref="frst:WoE@Bristol">EXTERNAL</FareZoneRef>
+											<FareZoneRef versionRef="1.0" ref="frst:WoE@Weston_super_mare">EXTERNAL</FareZoneRef>
+										</validityParameters>
+									</GenericParameterAssignment>
+								</FareStructureElement>
+								<FareStructureElement id="frst:Tariff@WoE_Distance@Trip@geographic_intervals" version="1.0">
+									<Name>Available Intervals</Name>
+									<Description>How are West of England Zone single fares calculated?
+In the West of England Zone single fares are worked out based on the route distance you are travelling. 
+Distances are calculated using fare stage sections rather than individual bus stops, with each section being approximately one mile long*. 
+If you travel in 1-3 mile long sections it'll be £2.50, 3-6 mile long sections will be £3.50 and so on. 
+
+Here is an example route and some of the fares along it: Emersons Green, Sainsbury's to Long Close would be £2.50 as you are travelling in three sections (numbers 1, 2 and 3, Long Close is classed as section 3 in this example as it's where you are getting off the bus). 
+Long Close to Narroways Road would be £3.50 as you are travelling in four sections (4, 5, 6, 7, Long Close is counted as section 4 in this example as it's your boarding point). Blackberry Hospital to Downend, 
+The Leap would be £3.50 as you are travelling in four sections (5, 4, 3, 2).</Description>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:intervals"/>
+									<geographicalIntervals>
+										<GeographicalIntervalRef version="1.0" ref="frst:Tariff@WoE_Distance@00_to_03"/>
+										<GeographicalIntervalRef version="1.0" ref="frst:Tariff@WoE_Distance@03_to_06"/>
+										<GeographicalIntervalRef version="1.0" ref="frst:Tariff@WoE_Distance@06_to_09"/>
+										<GeographicalIntervalRef version="1.0" ref="frst:Tariff@WoE_Distance@09_to_12"/>
+										<GeographicalIntervalRef version="1.0" ref="frst:Tariff@WoE_Distance@12_plus"/>
+									</geographicalIntervals>
+									
+										 
+								</FareStructureElement>
+								<FareStructureElement version="1.0" id="frst:Tariff@WoE_Distance@Trip@eligibility">
+									<Name>eligible user types</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:eligibility"/>
+									<GenericParameterAssignment order="1" id="frst:Tariff@WoE_Distance@eligibility" version="1.0">
+										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:eligible"/>
+										<LimitationGroupingType>XOR</LimitationGroupingType>
+										<limitations>
+											<!--- ===ELIGIBILITY USAGE PARAMETERS ========= -->
+											<UserProfileRef version="1.0" ref="frst:adult"/>
+											<UserProfileRef version="1.0" ref="frst:infant"/>
+											<UserProfileRef version="1.0" ref="frst:child"/>
+											<UserProfileRef version="1.0" ref="frst:student"/>
+											<UserProfileRef version="1.0" ref="frst:registered_disabled"/>
+										</limitations>
+									</GenericParameterAssignment>
+								</FareStructureElement>
+								<!-- ==  -->
+								<FareStructureElement version="1.0" id="frst:Tariff@WoE_Distance@Trip@steps">
+									<Name>Overall journey steps</Name>
+									<Description>Journey is potentially made up of two steps</Description>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:steps"/>
+									<fareStructureElementsInSequence>
+										<FareStructureElementInSequence version="1.0" id="frst:Tariff@WoE_Distance@Trip@from_zone" order="1">
+											<Name>Optional firstt leg in inner zone</Name>
+											<Description>If a journey begins within a flat fare zone but travels beyond the border of that zone, the fare will be calculated as follows:
+Flat fare to the border of the zone, then rounded up to £2.50, £3.50, £4.50 or £5.50 depending on the distance travelled thereafter.</Description>
+											<IsFirstInSequence>true</IsFirstInSequence>
+											<AccessNumberIsLimited>true</AccessNumberIsLimited>
+											<FareStructureElementRef ref="frst:Tariff@WoE_Distance@Trip@access_zones" version="1.0"/>
+										</FareStructureElementInSequence>
+										<FareStructureElementInSequence version="1.0" id="frst:Tariff@WoE_Distance@Trip@sections" order="2">
+											<Name>Unit stage count</Name>
+											<AccessNumberIsLimited>true</AccessNumberIsLimited>
+											<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Distance@Trip@geographic_intervals"/>
+										</FareStructureElementInSequence>
+									</fareStructureElementsInSequence>
+								</FareStructureElement>
+							</fareStructureElements>
+							<fareTables>
+								<FareTableRef version="1.0" ref="frst:WoE_Distance@Trip@section"/>
+							</fareTables>
+						</Tariff>
+					</tariffs>
+					<!--==== Fare Usage Parameters ==== -->
+					<!--==== Fare Product ==== -->
+					<fareProducts>
+						<!--==== Other Products ==== -->
+						<PreassignedFareProduct version="1.0" id="frst:WoE_Distance@Trip">
+							<Name>West of England Distance based (section fare) trip</Name>
+							<Description>The cost of single tickets within the West of England will be based on the route distance you travel, with five new single fares available:</Description>
+							<!-- Journeys out of a flat fare zone
+If a journey begins within a flat fare zone but travels beyond the border of that zone, the fare will be calculated as follows:
+Flat fare to the border of the zone, then rounded up to £2.50, £3.50, £4.50 or £5.50 depending on the distance travelled thereafter.
+ 
+Up to three miles 										from £2.50 
+Three to six miles										 from £3.50
+Six to nine miles										 from £4.50
+Nine to 12 miles										 from £5.50
+Over 12 miles (within West of England area) 		£6.50 
+-->
+							<!--==== VALIDABLE ELEMENTs ==== -->
+							<ChargingMomentRef version="fxc:v1.0" ref="fxc:prepayment"/>
+							<TypeOfFareProductRef version="fxc:v1.0" ref="fxc:standard_product@trip@single"/>
+							<OperatorRef version="1.0" ref="noc:FBRI">First Somerset &amp; Avon Ltd nocn:136361</OperatorRef>
+							<ConditionSummary>
+								<FareStructureType>stageFare</FareStructureType>
+								<TariffBasis>unitSection</TariffBasis>
+								<IsPersonal>true</IsPersonal>
+								<IsRefundable>true</IsRefundable>
+								<HasDiscountedFares>true</HasDiscountedFares>
+							</ConditionSummary>
+							<validableElements>
+								<ValidableElement version="1.0" id="frst:WoE_Distance@Trip@travel">
+									<Name>Unlimited rides available for specifed periods</Name>
+									<fareStructureElements>
+										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Distance@Trip@access_modes"/>
+										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Distance@Trip@geographic_intervals"/>
+										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Distance@Trip@eligibility"/>
+										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE_Distance@Trip@steps"/>
+									</fareStructureElements>
+									<validityParameterAssignments>
+										<GenericParameterAssignment version="1.0" order="1" id="frst:WoE_Distance@Trip@travel@conditions">
+											<Name>Non transferable, single use</Name>
+											<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:condition_of_use"/>
+											<LimitationGroupingType>AND</LimitationGroupingType>
+											<limitations>
+												<Transferability version="1.0" id="frst:WoE_Distance@Trip@travel@condition@transferability">
+													<CanTransfer>false</CanTransfer>
+												</Transferability>
+												<RoundTrip version="1.0" id="frst:WoE_Distance@Trip@travel@condition@direction">
+													<Name>Single Trip</Name>
+													<TripType>single</TripType>
+												</RoundTrip>
+												<FrequencyOfUse version="1.0" id="frst:WoE_Distance@Trip@travel@condition@frequency">
+													<Name>One trip no transfers</Name>
+													<FrequencyOfUseType>single</FrequencyOfUseType>
+												</FrequencyOfUse>
+												<Interchanging version="1.0" id="frst:WoE_Distance@Trip@travel@condition@interchange">
+													<CanInterchange>false</CanInterchange>
+												</Interchanging>
+											</limitations>
+										</GenericParameterAssignment>
+									</validityParameterAssignments>
+								</ValidableElement>
+							</validableElements>
+							<!--==== ACCESS RIGHTs ===== -->
+							<accessRightsInProduct>
+								<AccessRightInProduct version="1.0" id="frst:WoE_Distance@Trip" order="1">
+									<ValidableElementRef version="1.0" ref="frst:WoE_Distance@Trip@travel"/>
+								</AccessRightInProduct>
+							</accessRightsInProduct>
+							<ProductType>singleTrip</ProductType>
+						</PreassignedFareProduct>
+					</fareProducts>
+					<!-- === SALES OFFER PACKAGES === -->
+					<salesOfferPackages>
+						<SalesOfferPackage version="1.0" id="frst:WoE_Distance@Trip-SOP@p-ticket">
+							<BrandingRef version="1.0" ref="frst:FBRI@brand"/>
+							<Name>First West of England Distance Bsed Trip Fare - p-ticket</Name>
+							<Description>Single trip on section fare</Description>
+							<TypeOfSalesOfferPackageRef version="fxc:v1.0" ref="fxc:standard_product@operator"/>
+							<ConditionSummary>
+								<IsPersonal>false</IsPersonal>
+								<CanBreakJourney>false</CanBreakJourney>
+							</ConditionSummary>
+							<distributionAssignments>
+								<DistributionAssignment version="1.0" id="frst:WoE_Distance@Trip-SOP@p-ticket" order="1">
+									<Name>Onboard</Name>
+									<Description>Pay for ticket onboard</Description>
+									<DistributionChannelRef ref="fxc:on_board" version="fxc:v1.0"/>
+									<PaymentMethods>contactlessPaymentCard contactlessTravelCard cash creditCard debitCard</PaymentMethods>
+									<FulfilmentMethodRef ref="fxc:collect_on_board" version="fxc:v1.0"/>
+								</DistributionAssignment>
+							</distributionAssignments>
+							<salesOfferPackageElements>
+								<SalesOfferPackageElement version="1.0" id="frst:WoE_Distance@Trip-SOP@p-ticket" order="1">
+									<TypeOfTravelDocumentRef version="1.0" ref="frst:paper-ticket"/>
+									<PreassignedFareProductRef version="1.0" ref="frst:WoE_Distance@Trip"/>
+								</SalesOfferPackageElement>
+							</salesOfferPackageElements>
+						</SalesOfferPackage>
+						<SalesOfferPackage version="1.0" id="frst:WoE_Distance@Trip-SOP@m-ticket">
+							<BrandingRef version="1.0" ref="frst:FBRI@brand"/>
+							<Name>First West of England Distance Based Trip Fare - m-ticket</Name>
+							<Description>Single trip on stage fare
+How do mTickets work?
+Once a ticket is purchased and downloaded, it will appear in the 'purchased' section of the Ticket Wallet in your app. Tickets in this section are listed from the oldest at the top to the newest at the bottom.
+
+When you want to use a ticket, select the one you want and then select 'Activate Now'.
+You'll then be informed of how long the ticket will be active for, before confirming that you want to want to activate this ticket. We would advise reading this carefully to avoid activating unwanted tickets.
+Once activated, the app will generate a moving ticket image on your phone's screen and a QR code. This will stay active for the remainder of the ticket's validity and will include the time and a four letter 'word of the day'.
+You'll need to scan the QR when you board the bus or show the ticket to the driver.					
+							</Description>
+							<ConditionSummary>
+								<IsPersonal>true</IsPersonal>
+								<CanBreakJourney>false</CanBreakJourney>
+							</ConditionSummary>
+							<distributionAssignments>
+								<DistributionAssignment version="1.0" id="frst:WoE_Distance@Trip-SOP@m-ticket@mobile_app" order="1">
+									<Name>Mobile app</Name>
+									<Description>Pay for ticket online with mobile app</Description>
+									<DistributionChannelRef version="fxc:v1.0" ref="fxc:online"/>
+									<PaymentMethods>mobilePhone creditCard debitCard</PaymentMethods>
+									<FulfilmentMethodRef ref="fxc:mobile_app" version="fxc:v1.0"/>
+								</DistributionAssignment>
+							</distributionAssignments>
+							<salesOfferPackageElements>
+								<SalesOfferPackageElement version="1.0" id="frst:WoE_Distance@Trip-SOP@m-ticket" order="1">
+									<TypeOfTravelDocumentRef version="1.0" ref="frst:m-ticket"/>
+									<PreassignedFareProductRef version="1.0" ref="frst:WoE_Distance@Trip"/>
+									<validityParameterAssignments>
+										<GenericParameterAssignment version="1.0" id="frst:WoE_Distance@Trip-SOP@m-ticket@conditions@Transferability " order="1">
+											<Name>Transferable, to child</Name>
+											<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:condition_of_use"/>
+											<limitations>
+												<Transferability version="1.0" id="frst:WoE_Distance@Trip-SOP@m-ticket@conditions@Transferability">
+													<Name>Child tickets</Name>
+													<Description>Customers can send tickets to a child or young person by using the sharing feature on child and young person tickets. As it stands, this function is only available for child tickets - adult tickets cannot be shared. The instructions below tell you all you need to know about sharing a ticket once it has been purchased:</Description>
+													<CanTransfer>true</CanTransfer>
+													<MaximumNumberOfNamedTransferees>1</MaximumNumberOfNamedTransferees>
+												</Transferability>
+											</limitations>
+										</GenericParameterAssignment>
+									</validityParameterAssignments>
+								</SalesOfferPackageElement>
+							</salesOfferPackageElements>
+						</SalesOfferPackage>
+					</salesOfferPackages>
+					<!--==== Fare Prices ==== -->
+				</FareFrame>
+				<FareFrame version="1.0" id="epd:UK:FBRI:FareFrame_UK_PI_FARE_PRICES:WoE_Distance@Trip:frst">
+					<Name>First West of England section ("Distance Based") Trip Fare - Prices</Name>
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_FARE_PRICE:FXCP"/>
+					<prerequisites>
+						<FareFrameRef version="1.0" ref="epd:UK:FBRI:FareFrame_UK_PI_FARE_PRODUCT:WoE_Distance@Trip:frst"/>
+					</prerequisites>
+					<fareTables>
+						<FareTable version="1.0" id="frst:WoE_Distance@Trip@section">
+							<Name>First West of England section ("Distance Based") Trip Fare</Name>
+							<!---			 
+______	______	______	_____				_	|	Adult		|	Child	 	|	Student	|	 
+Up to three miles 										|	£ 2.50		|	£ 1.30	|	£ 1.80	|
+Three to six miles										 | 	£ 3.50		|	£ 1.80	|	£ 2.50	|
+Six to nine miles										 | 	£ 4.50		|	£ 2.30	|	£ 3.20	|
+Nine to 12 miles										 | 	£ 5.50		|	£ 2.80	|	£ 3.90	|
+Over 12 miles (within West of England area) 	£ 6.50		|	£ 3.30	|	£ 4.50	|
+-->
+							<pricesFor>
+								<PreassignedFareProductRef version="1.0" ref="frst:WoE_Distance@Trip"/>
+								<SalesOfferPackageRef version="1.0" ref="frst:WoE_Distance@Trip-SOP@p-ticket"/>
+								<SalesOfferPackageRef version="1.0" ref="frst:WoE_Distance@Trip-SOP@m-ticket"/>
+							</pricesFor>
+							<OperatorRef version="1.0" ref="noc:FBRI">First Somerset &amp; Avon Ltd nocn:136361</OperatorRef>
+							<includes>
+								<FareTable version="1.0" id="frst:WoE_Distance@Trip@WoE_Distance@00_to_03">
+									<Name>Up to three miles.</Name>
+									<pricesFor>
+										<GeographicalIntervalRef version="1.0" ref="frst:Tariff@WoE_Distance@00_to_03"/>
+									</pricesFor>
+									<cells>
+										<Cell version="1.0" id="frst:WoE_Distance@Trip@section@00_to_03@adult" order="1">
+											<UsageParameterPrice version="1.0" id="frst:WoE_Distance@Trip@section@00_to_03@adult">
+												<Amount>2.50</Amount>
+												<UserProfileRef version="1.0" ref="frst:adult"/>
+											</UsageParameterPrice>
+										</Cell>
+										<Cell version="1.0" id="frst:WoE_Distance@Trip@section@00_to_03@child" order="2">
+											<UsageParameterPrice version="1.0" id="frst:WoE_Distance@Trip@section@00_to_03@child">
+												<Amount>1.30</Amount>
+												<UsageParameterPriceRef version="1.0" ref="frst:WoE_Distance@Trip@section@00_to_03@adult"/>
+												<DiscountingRuleRef version="1.0" ref="frst:child_half_price"/>
+												<UserProfileRef version="1.0" ref="frst:child"/>
+											</UsageParameterPrice>
+										</Cell>
+										<Cell version="1.0" id="frst:WoE_Distance@Trip@00_to_03@student" order="3">
+											<UsageParameterPrice version="1.0" id="frst:WoE_Distance@Trip@section@00_to_03@student">
+												<Amount>1.80</Amount>
+												<UsageParameterPriceRef version="1.0" ref="frst:WoE_Distance@Trip@section@00_to_03@adult"/>
+												<DiscountingRuleRef version="1.0" ref="frst:youth_discount"/>
+												<UserProfileRef version="1.0" ref="frst:student"/>
+											</UsageParameterPrice>
+										</Cell>
+									</cells>
+								</FareTable>
+								<FareTable version="1.0" id="frst:WoE_Distance@Trip@section@03_to_06">
+									<Name>Three to six miles	</Name>
+									<pricesFor>
+										<GeographicalIntervalRef version="1.0" ref="frst:Tariff@WoE_Distance@03_to_06"/>
+									</pricesFor>
+									<cells>
+										<Cell version="1.0" id="frst:WoE_Distance@Trip@section@03_to_06@adult" order="1">
+											<UsageParameterPrice version="1.0" id="frst:WoE_Distance@Trip@section@03_to_06@adult">
+												<Amount>3.50</Amount>
+												<UserProfileRef version="1.0" ref="frst:adult"/>
+											</UsageParameterPrice>
+										</Cell>
+										<Cell version="1.0" id="frst:WoE_Distance@Trip@section@03_to_06@child" order="2">
+											<UsageParameterPrice version="1.0" id="frst:WoE_Distance@Trip@section@03_to_06@child">
+												<Amount>1.80</Amount>
+												<UsageParameterPriceRef version="1.0" ref="frst:WoE_Distance@Trip@section@03_to_06@adult"/>
+												<DiscountingRuleRef version="1.0" ref="frst:child_half_price"/>
+												<UserProfileRef version="1.0" ref="frst:child"/>
+											</UsageParameterPrice>
+										</Cell>
+										<Cell version="1.0" id="frst:WoE_Distance@Trip@section@03_to_06@student" order="3">
+											<UsageParameterPrice version="1.0" id="frst:WoE_Distance@Trip@section@03_to_06@student">
+												<Amount>2.50</Amount>
+												<UsageParameterPriceRef version="1.0" ref="frst:WoE_Distance@Trip@section@03_to_06@adult"/>
+												<DiscountingRuleRef version="1.0" ref="frst:youth_discount"/>
+												<UserProfileRef version="1.0" ref="frst:student"/>
+											</UsageParameterPrice>
+										</Cell>
+									</cells>
+								</FareTable>
+								<FareTable version="1.0" id="frst:WoE_Distance@Trip@section@06_to_09">
+									<Name>Six to nine miles	</Name>
+									<pricesFor>
+										<GeographicalIntervalRef version="1.0" ref="frst:Tariff@WoE_Distance@06_to_09"/>
+									</pricesFor>
+									<cells>
+										<Cell version="1.0" id="frst:WoE_Distance@Trip@sectiont@06_to_09@adult" order="1">
+											<UsageParameterPrice version="1.0" id="frst:WoE_Distance@Trip@section@06_to_09@adult">
+												<Amount>4.50</Amount>
+												<UserProfileRef version="1.0" ref="frst:adult"/>
+											</UsageParameterPrice>
+										</Cell>
+										<Cell version="1.0" id="frst:WoE_Distance@Trip@sectionchild@06_to_09@child" order="2">
+											<UsageParameterPrice version="1.0" id="frst:WoE_Distance@Trip@section@06_to_09@child">
+												<Amount>2.30</Amount>
+												<UsageParameterPriceRef version="1.0" ref="frst:WoE_Distance@Trip@section@06_to_09@adult"/>
+												<DiscountingRuleRef version="1.0" ref="frst:child_half_price"/>
+												<UserProfileRef version="1.0" ref="frst:child"/>
+											</UsageParameterPrice>
+										</Cell>
+										<Cell version="1.0" id="frst:WoE_Distance@Trip@sections@06_to_09@student" order="3">
+											<UsageParameterPrice version="1.0" id="frst:WoE_Distance@Trip@section@06_to_09@student">
+												<Amount>3.20</Amount>
+												<UsageParameterPriceRef version="1.0" ref="frst:WoE_Distance@Trip@section@06_to_09@adult"/>
+												<DiscountingRuleRef version="1.0" ref="frst:youth_discount"/>
+												<UserProfileRef version="1.0" ref="frst:student"/>
+											</UsageParameterPrice>
+										</Cell>
+									</cells>
+								</FareTable>
+								<FareTable version="1.0" id="frst:WoE_Distance@Trip@section@09_to_12">
+									<Name>Nine to 12 miles	</Name>
+									<pricesFor>
+										<GeographicalIntervalRef version="1.0" ref="frst:Tariff@WoE_Distance@09_to_12"/>
+									</pricesFor>
+									<cells>
+										<Cell version="1.0" id="frst:WoE_Distance@Trip@section@09_to_12@adult" order="1">
+											<UsageParameterPrice version="1.0" id="frst:WoE_Distance@Trip@section@09_to_12@adult">
+												<Amount>5.50</Amount>
+												<UserProfileRef version="1.0" ref="frst:adult"/>
+											</UsageParameterPrice>
+										</Cell>
+										<Cell version="1.0" id="frst:WoE_Distance@Trip@sectionchild@09_to_12" order="2">
+											<UsageParameterPrice version="1.0" id="frst:WoE_Distance@Trip@section@09_to_12@childs">
+												<Amount>2.80</Amount>
+												<UsageParameterPriceRef version="1.0" ref="frst:WoE_Distance@Trip@section@09_to_12@adult"/>
+												<DiscountingRuleRef version="1.0" ref="frst:child_half_price"/>
+												<UserProfileRef version="1.0" ref="frst:child"/>
+											</UsageParameterPrice>
+										</Cell>
+										<Cell version="1.0" id="frst:WoE_Distance@Trip@section@09_to_12@student" order="3">
+											<UsageParameterPrice version="1.0" id="frst:WoE_Distance@Trip@section@09_to_12@student">
+												<Amount>3.90</Amount>
+												<UsageParameterPriceRef version="1.0" ref="frst:WoE_Distance@Trip@section@09_to_12@adult"/>
+												<DiscountingRuleRef version="1.0" ref="frst:youth_discount"/>
+												<UserProfileRef version="1.0" ref="frst:student"/>
+											</UsageParameterPrice>
+										</Cell>
+									</cells>
+								</FareTable>
+								<FareTable version="1.0" id="frst:WoE_Distance@Trip@@section@12_plus">
+									<Name>Over 12 miles (within West of England area)</Name>
+									<pricesFor>
+										<GeographicalIntervalRef version="1.0" ref="frst:Tariff@WoE_Distance@12_plus"/>
+									</pricesFor>
+									<cells>
+										<Cell version="1.0" id="frst:WoE_Distance@Trip@section@12_plus@adult" order="1">
+											<UsageParameterPrice version="1.0" id="frst:WoE_Distance@Trip@section@12_plus@adult">
+												<Amount>6.50</Amount>
+												<UserProfileRef version="1.0" ref="frst:adult"/>
+											</UsageParameterPrice>
+										</Cell>
+										<Cell version="1.0" id="frst:WoE_Distance@Trip@section@12_plus@child" order="2">
+											<UsageParameterPrice version="1.0" id="frst:WoE_Distance@Trip@section@12_plus@child">
+												<Amount>3.30</Amount>
+												<UsageParameterPriceRef version="1.0" ref="frst:WoE_Distance@Trip@section@12_plus@adult"/>
+												<DiscountingRuleRef version="1.0" ref="frst:child_half_price"/>
+												<UserProfileRef version="1.0" ref="frst:child"/>
+											</UsageParameterPrice>
+										</Cell>
+										<Cell version="1.0" id="frst:WoE_Distance@Trip@section@12_plus@student" order="3">
+											<UsageParameterPrice version="1.0" id="frst:WoE_Distance@Trip@12_plus@student">
+												<Amount>4.50</Amount>
+												<UsageParameterPriceRef version="1.0" ref="frst:WoE_Distance@Trip@section@12_plus@adult"/>
+												<DiscountingRuleRef version="1.0" ref="frst:youth_discount"/>
+												<UserProfileRef version="1.0" ref="frst:student"/>
+											</UsageParameterPrice>
+										</Cell>
+									</cells>
+								</FareTable>
+							</includes>
+						</FareTable>
+					</fareTables>
+				</FareFrame>
+				<!-- First WoE Zone pass -->
+				<ServiceFrame version="1.0" id="epd:UK:FBRI:ServiceFrame_UK_PI_NETWORK:WoE_Zones:frst">
+					<Name>First West Of England Network fare zones </Name>
+					<Description>NB These are just a guess from the map s Incomplete-</Description>
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_NETWORK:FXCP"/>
+					<prerequisites>
+						<ResourceFrameRef version="1.0" ref="epd:UK:FBRI:ResourceFrame_UK_PI_COMMON:WoE:frst"/>
+					</prerequisites>
+					<!--- ======= CODESPACEs======== -->
+					<Network version="1.0" id="frst:WoE_Network">
+						<Name>First West Of England Zone Network</Name>
+						<TransportMode>bus</TransportMode>
+						<TransportSubmode>
+							<BusSubmode>localBus</BusSubmode>
+						</TransportSubmode>
+						<OperatorRef ref="noc:FBRI" version="1.0"> noc:136361</OperatorRef>
+						<!--==== Fare zones Incomplete  === -->
+						<tariffZones>
+							<TariffZoneRef versionRef="1.0" ref="frst:WoE@Bath">EXTERNAL</TariffZoneRef>
+							<TariffZoneRef versionRef="1.0" ref="frst:WoE@Bristol">EXTERNAL</TariffZoneRef>
+							<TariffZoneRef versionRef="1.0" ref="frst:WoE@Weston_super_mare">EXTERNAL</TariffZoneRef>
+							<TariffZoneRef versionRef="1.0" ref="frst:WoE@West_of_England">EXTERNAL</TariffZoneRef>
+							<!-- TODO more to add -->
+						</tariffZones>
+					</Network>
+				</ServiceFrame>
+				<!-- First WoE Network and common resources -->
+				<ServiceCalendarFrame version="1.0" id="epd:UK:FBRI:ServiceCalendarFrame_UK_PI_CALENDAR:WoE:frst" dataSourceRef="frst:first_WoE" responsibilitySetRef="frst:products">
 					<Name>Specific Calendar</Name>
-					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@calendar"/>
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_CALENDAR:FXCP"/>
 					<FrameDefaults>
 						<DefaultCodespaceRef ref="frst_data"/>
 						<DefaultDataSourceRef ref="frst:first_WoE" version="1.0"/>
@@ -2087,10 +2131,10 @@ Over 12 miles (within West of England area) 	£ 6.50		|	£ 3.30	|	£ 4.50	|
 						</FareDayType>
 					</dayTypes>
 				</ServiceCalendarFrame>
-				<FareFrame version="1.0" id="frst:FBRI@WoE_Common" dataSourceRef="frst:first_WoE" responsibilitySetRef="frst:network_data">
+				<FareFrame version="1.0" id="epd:UK:FBRI:FareFrame_UK_PI_FARE_COMMON:WoE:frst" dataSourceRef="frst:first_WoE" responsibilitySetRef="frst:network_data">
 					<Name>First West of England ^amp; Bristol common parameters</Name>
-					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@operator_fare_resources"/>
-								<codespaces>
+					<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_FARE_COMMON:FXCP"/>
+					<codespaces>
 						<Codespace id="frst_data">
 							<Xmlns>frst</Xmlns>
 							<XmlnsUrl>http://www.firstgroup.com/</XmlnsUrl>
@@ -2102,6 +2146,9 @@ Over 12 miles (within West of England area) 	£ 6.50		|	£ 3.30	|	£ 4.50	|
 						<DefaultDataSourceRef ref="frst:first_WoE" version="1.0"/>
 						<DefaultResponsibilitySetRef ref="frst:network_data" version="1.0"/>
 					</FrameDefaults>
+					<prerequisites>
+						<ServiceCalendarFrameRef version="1.0" ref="epd:UK:FBRI:ServiceCalendarFrame_UK_PI_CALENDAR:WoE:frst"/>
+					</prerequisites>
 					<!--==== Pricing Parameters ====-->
 					<PricingParameterSet version="1.0" id="frst:WoE@Trip_Common">
 						<pricingRules>
@@ -2143,24 +2190,26 @@ Young people aged 16-21 and students get up to 30% OFF all singles, day and seas
 							<documentLinks>
 								<InfoLink typeOfInfoLink="info">https://www.firstgroup.com/bristol-bath-and-west/tickets/ticket-types/children-0-15</InfoLink>
 							</documentLinks>
-							<OperatorRef version="1.0" ref="noc:136361">First</OperatorRef>
+							<OperatorRef version="1.0" ref="noc:FBRI">First Bristol, Bath and the West nocn:136361</OperatorRef>
 							<NetworkRef version="1.0" ref="frst:WoE_Network"/>
 							<TypeOfTariffRef version="fxc:v1.0" ref="fxc:identity_card"/>
 							<!--- ====Time Intervals======= -->
 							<!-- ==FARE STRUCTURE ELEMENTS -->
 							<fareStructureElements>
-								<FareStructureElement version="1.0" id="frst:Tariff@WoE@Photo_id@operators">
-									<Name>Allowed operaror</Name>
-									<GenericParameterAssignment id="frst:Tariff@WoE@Photo_id@operators" version="1.0" order="1">
+								<FareStructureElement version="1.0" id="frst:Tariff@WoE@Photo_id@access_operators">
+									<Name>Allowed operators</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:accepted_by"/>
+									<GenericParameterAssignment id="frst:Tariff@WoE@Photo_id@access_operators" version="1.0" order="1">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:can_access"/>
 										<ValidityParameterGroupingType>XOR</ValidityParameterGroupingType>
 										<validityParameters>
-											<OperatorRef version="1.0" ref="noc:136361">First Somerset &amp; Avon Ltd</OperatorRef>
+											<OperatorRef version="1.0" ref="noc:FBRI">First Somerset &amp; Avon Ltd nocn:136361</OperatorRef>
 										</validityParameters>
 									</GenericParameterAssignment>
 								</FareStructureElement>
 								<FareStructureElement version="1.0" id="frst:Tariff@WoE@Photo_id@eligibility">
 									<Name>Allowed operaror</Name>
+									<TypeOfFareStructureElementRef version="fxc:v1.0" ref="fxc:eligibility"/>
 									<GenericParameterAssignment version="1.0" id=":Tariff@WoE@Photo_id@eligibility" order="1">
 										<TypeOfAccessRightAssignmentRef version="fxc:v1.0" ref="fxc:eligible"/>
 										<limitations>
@@ -2262,7 +2311,7 @@ BS5 0DZ or email your details to ticketssww@firstgroup</Description>
 								<ValidableElement version="1.0" id="frst:WoE@Photo_id@travel">
 									<Name>Unlimited rides available for specifed periods</Name>
 									<fareStructureElements>
-										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE@Photo_id@operators"/>
+										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE@Photo_id@access_operators"/>
 										<FareStructureElementRef version="1.0" ref="frst:Tariff@WoE@Photo_id@eligibility"/>
 									</fareStructureElements>
 								</ValidableElement>
@@ -2281,9 +2330,8 @@ BS5 0DZ or email your details to ticketssww@firstgroup</Description>
 							<Description>Most of our tickets are available from our First Travel Shops in the following locations. At these shops you can also collect timetables and ask our staff any questions you may have about the local bus services.
 </Description>
 							<Url>https://www.firstgroup.com/bristol-bath-and-west/tickets/where-buy</Url>
-							<OperatorRef version="1.0" ref="noc:136361">First Somerset &amp; Avon Ltd</OperatorRef>
-							<DistributionGroupRef version="1.0" ref="frst:Travel_shops"/> 
-						
+							<OperatorRef version="1.0" ref="noc:FBRI">First Somerset &amp; Avon Ltd nocn:136361</OperatorRef>
+							<DistributionGroupRef version="1.0" ref="frst:Travel_shops"/>
 						</DistributionChannel>
 					</distributionChannels>
 					<typesOfTravelDocuments>
@@ -2325,12 +2373,11 @@ BS5 0DZ or email your details to ticketssww@firstgroup</Description>
 						</SalesOfferPackage>
 					</salesOfferPackages>
 				</FareFrame>
-				<ResourceFrame version="1.0" id="frst:FBRI_resources" dataSourceRef="frst:first_WoE" responsibilitySetRef="frst:network_data">
+				<ResourceFrame version="1.0" id="epd:UK:FBRI:ResourceFrame_UK_PI_COMMON:WoE:frst" dataSourceRef="frst:first_WoE" responsibilitySetRef="frst:network_data">
 					<Name>Operator specific common resources</Name>
-					<TypeOfFrameRef ref="fxc:UK_Bus_tariff_profile@operator_resources" version="fxc:v1.0"/>
+					<TypeOfFrameRef ref="fxc:UK:DFT:TypeOfFrame_UK_PI_COMMON:FXCP" version="fxc:v1.0"/>
 					<codespaces>
-						<CodespaceRef ref="frst_data" />
-							 
+						<CodespaceRef ref="frst_data"/>
 					</codespaces>
 					<dataSources>
 						<DataSource id="frst:first_WoE" version="1.0">
@@ -2345,7 +2392,7 @@ BS5 0DZ or email your details to ticketssww@firstgroup</Description>
 								<ResponsibilityRoleAssignment version="1.0" id="frst:tariff_data@creates">
 									<DataRoleType>creates</DataRoleType>
 									<StakeholderRoleType>FareManagement</StakeholderRoleType>
-									<ResponsibleOrganisationRef ref="noc:136361" version="1.0"/>
+									<ResponsibleOrganisationRef ref="noc:FBRI" version="1.0"/>
 								</ResponsibilityRoleAssignment>
 							</roles>
 						</ResponsibilitySet>
@@ -2355,7 +2402,7 @@ BS5 0DZ or email your details to ticketssww@firstgroup</Description>
 								<ResponsibilityRoleAssignment version="1.0" id="frst:network_data@creates">
 									<DataRoleType>creates</DataRoleType>
 									<StakeholderRoleType>Planning</StakeholderRoleType>
-									<ResponsibleOrganisationRef ref="noc:136361" version="1.0"/>
+									<ResponsibleOrganisationRef ref="noc:FBRI" version="1.0"/>
 								</ResponsibilityRoleAssignment>
 							</roles>
 						</ResponsibilitySet>
@@ -2365,7 +2412,7 @@ BS5 0DZ or email your details to ticketssww@firstgroup</Description>
 								<ResponsibilityRoleAssignment version="1.0" id="frst:transaction_data@creates">
 									<DataRoleType>creates</DataRoleType>
 									<StakeholderRoleType>Planning</StakeholderRoleType>
-									<ResponsibleOrganisationRef ref="noc:136361" version="1.0"/>
+									<ResponsibleOrganisationRef ref="noc:FBRI" version="1.0"/>
 								</ResponsibilityRoleAssignment>
 							</roles>
 						</ResponsibilitySet>
@@ -2411,9 +2458,10 @@ BS5 0DZ or email your details to ticketssww@firstgroup</Description>
 					</typesOfValue>
 					<organisations>
 						<!--==== Operators ==== -->
-						<Operator version="1.0" id="noc:136361">
+						<Operator version="1.0" id="noc:FBRI">
 							<PublicCode>FBRI</PublicCode>
-							<Name>	First Bristol Limited</Name>
+							<PrivateCode type="nocn">nocn:136361</PrivateCode>
+							<Name>First Bristol Limited</Name>
 							<ShortName>First</ShortName>
 							<TradingName>First Bristol, Bath &amp; the West</TradingName>
 							<ContactDetails>
@@ -2430,17 +2478,15 @@ BS5 0DZ or email your details to ticketssww@firstgroup</Description>
 							<PrimaryMode>bus</PrimaryMode>
 						</Operator>
 					</organisations>
-			
-<groupsOfEntities>
-	<GroupOfPlaces version="1.0" id="frst:travel_shops">
-	<members>
+					<groupsOfEntities>
+						<GroupOfPlaces version="1.0" id="frst:travel_shops">
+							<members>
 								<PlaceRef ref="travel_shop@Bristol">EXTERNAL travel_shop@Bristol TODO</PlaceRef>
 								<PlaceRef ref="travel_shop@Bath">EXTERNAL travel_shop@Bath TODO</PlaceRef>
 								<PlaceRef ref="travel_shop@Wells">EXTERNAL travel_shop@Wells TODO</PlaceRef>
-							</members>	
-	
-	</GroupOfPlaces>
-</groupsOfEntities>			
+							</members>
+						</GroupOfPlaces>
+					</groupsOfEntities>
 				</ResourceFrame>
 			</frames>
 		</CompositeFrame>
@@ -2452,14 +2498,14 @@ This  frame Shows  sample Purchases
    Sales Transactions would normally be exchanged separately from the reference data on whoich they are based
 -->
 			<Name>Sample Transactions for First WoE trips </Name>
-			<TypeOfFrameRef ref="fxc:UK_Bus_tariff_profile@transactions_composite" version="fxc:v1.0"/>
+			<TypeOfFrameRef ref="fxc:UK:DFT:TypeOfFrame_UK_PI_FARE_TRANSACTIONS:FXCP" version="fxc:v1.0"/>
 			<frames>
 				<SalesTransactionFrame version="1.2" id="frst-t:SampleTransactions">
 					<Name>Sample Transactions</Name>
-					<TypeOfFrameRef ref="fxc:UK_Bus_tariff_profile@transactions" version="fxc:v1.0"/>
+					<TypeOfFrameRef ref="fxc:UK:DFT:TypeOfFrame_UK_PI_FARE_TRANSACTIONS:FXCP" version="fxc:v1.0"/>
 					<codespaces>
 						<CodespaceRef ref="frst_data"/>
-						<Codespace id="frst-t">
+						<Codespace id="frst_transactions">
 							<Xmlns>frst-t</Xmlns>
 							<XmlnsUrl>http://www.first.co.uk/transactions</XmlnsUrl>
 							<Description>Operator transaction data</Description>
@@ -2476,7 +2522,7 @@ This  frame Shows  sample Purchases
 									<Amount>3.50</Amount>
 									<PaymentMethod>cash</PaymentMethod>
 									<travelSpecifications>
-										<TravelSpecification version="any" id="frst-t:Anon001@trans001@purchase_single">
+										<OfferedTravelSpecification version="any" id="frst-t:Anon001@trans001@purchase_single">
 											<Date>2017-07-08T01:07:00</Date>
 											<SalesTransactionRef version="any" ref="frst-t:Anon001@trans001@purchase_single"/>
 											<UsageParameterPriceRef version="1.0" ref="frst:WoE_Distance@Trip@section@03_to_06@adult"/>
@@ -2498,7 +2544,7 @@ This  frame Shows  sample Purchases
 														<UserProfileRef version="1.0" ref="frst:adult"/>
 													</limitations>
 													<validityParameters>
-														<OperatorRef version="1.0" ref="noc:136361">First Somerset &amp; Avon Ltd</OperatorRef>
+														<OperatorRef version="1.0" ref="noc:FBRI">First Somerset &amp; Avon Ltd nocn:136361</OperatorRef>
 														<LineRef version="1.0" ref="frst:WoE@Bristol@48"/>
 														<TypeOfFareProductRef version="fxc:v1.0" ref="fxc:standard_product@trip@single"/>
 														<DistributionChannelRef version="fxc:v1.0" ref="fxc:on_board"/>
@@ -2507,8 +2553,14 @@ This  frame Shows  sample Purchases
 													<GeographicalIntervalRef version="1.0" ref="frst:Tariff@WoE_Distance@03_to_06"/>
 												</SpecificParameterAssignment>
 											</specificParameterAssignments>
-										</TravelSpecification>
+										</OfferedTravelSpecification>
 									</travelSpecifications>
+									<travelDocuments>
+										<TravelDocument version="any" id="frst-t:0975634">
+											<BrandingRef version="1.0" ref="frst:FBRI@brand"/>
+											<TypeOfTravelDocumentRef version="1.0" ref="frst:paper-ticket"/>
+										</TravelDocument>
+									</travelDocuments>
 								</SalesTransaction>
 								<SalesTransaction version="any" id="frst-t:Anon001@trans002@purchase_single">
 									<Name>Buy  Student  Single m-ticket (8 Sections)</Name>
@@ -2517,7 +2569,7 @@ This  frame Shows  sample Purchases
 									<Amount>3.50</Amount>
 									<PaymentMethod>creditCard</PaymentMethod>
 									<travelSpecifications>
-										<TravelSpecification version="any" id="frst-t:Anon001@trans002@purchase_single">
+										<OfferedTravelSpecification version="any" id="frst-t:Anon001@trans002@purchase_single">
 											<Date>2017-07-08T01:08:00</Date>
 											<SalesTransactionRef version="any" ref="frst-t:Anon001@trans002@purchase_single"/>
 											<UsageParameterPriceRef version="1.0" ref="frst:WoE_Distance@Trip@section@06_to_09@student"/>
@@ -2539,7 +2591,7 @@ This  frame Shows  sample Purchases
 														<UserProfileRef version="1.0" ref="frst:student"/>
 													</limitations>
 													<validityParameters>
-														<OperatorRef version="1.0" ref="noc:136361">First Somerset &amp; Avon Ltd</OperatorRef>
+														<OperatorRef version="1.0" ref="noc:FBRI">First Somerset &amp; Avon Ltd nocn:136361</OperatorRef>
 														<LineRef version="1.0" ref="frst:WoE@Bristol@48"/>
 														<TypeOfFareProductRef version="fxc:v1.0" ref="fxc:standard_product@trip@single"/>
 														<DistributionChannelRef version="fxc:v1.0" ref="fxc:online"/>
@@ -2548,8 +2600,14 @@ This  frame Shows  sample Purchases
 													<GeographicalIntervalRef version="1.0" ref="frst:Tariff@WoE_Distance@06_to_09"/>
 												</SpecificParameterAssignment>
 											</specificParameterAssignments>
-										</TravelSpecification>
+										</OfferedTravelSpecification>
 									</travelSpecifications>
+									<travelDocuments>
+										<TravelDocument version="any" id="frst-t:6755">
+											<BrandingRef version="1.0" ref="frst:FBRI@brand"/>
+											<TypeOfTravelDocumentRef version="1.0" ref="frst:m-ticket"/>
+										</TravelDocument>
+									</travelDocuments>
 								</SalesTransaction>
 							</fareContractEntries>
 						</FareContract>
@@ -2558,26 +2616,169 @@ This  frame Shows  sample Purchases
 			</frames>
 		</CompositeFrame>
 		<!-- ========== UK BUs Fares Generic Metadata ========== -->
-		<CompositeFrame id="fxc:DfT@Generic" version="fxc:v1.0" responsibilitySetRef="fxc:FXC_metadata" dataSourceRef="fxc:common">
+		<CompositeFrame id="fxc:UK:DFT:TypeOfFrame_UK_PI_METADATA_OFFER:FXCP:fxc" version="fxc:v1.0" responsibilitySetRef="fxc:FXC_metadata" dataSourceRef="fxc:dft">
 			<ValidBetween>
-				<FromDate>2015-02-01T00:00:00</FromDate>
+				<FromDate>2019-05-01T00:00:00</FromDate>
 				<ToDate>2020-12-31T12:00:00</ToDate>
 			</ValidBetween>
-			<Name>UK Bus Profile common resources</Name>
-			<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK_Bus_tariff_profile@UK_common_resources_composite"/>
+			<Name>UK FXCP Passenger Information Profile common resources</Name>
+			<TypeOfFrameRef version="fxc:v1.0" ref="fxc:UK:DFT:TypeOfFrame_UK_PI_METADATA_OFFER:FXCP:fxc"/>
 			<FrameDefaults>
 				<DefaultCodespaceRef ref="fxc_metadata"/>
-				<DefaultDataSourceRef ref="fxc:common" version="fxc:v1.0"/>
+				<DefaultDataSourceRef ref="fxc:dft" version="fxc:v1.0"/>
 				<DefaultResponsibilitySetRef ref="fxc:FXC_metadata" version="fxc:v1.0"/>
 			</FrameDefaults>
 			<frames>
-				<!-- ==== NPTG Data for COMMON UK Bus Fare RESOURCEs======== -->
-				<!-- ====COMMON UK Bus Fare RESOURCEs======== -->
-				<FareFrame id="fxc:Common_UK_Fare_Components" version="fxc:v1.0" responsibilitySetRef="fxc:FXC_metadata">
-					<Name>Common Country independent fare component</Name>
+				<!-- ====COMMON UK PI Profile  RESOURCEs:  META DATA - COULD BE EXTERNALISED ===== ============ -->
+				<!-- === Profile Frame Types ===  -->
+					<!-- === Profile Frame Types ===  -->
+				<ResourceFrame id="fxc:UK:DFT:ResourceFrame_UK_PI_METADATA_FRAMES:FXCP:fxc" version="fxc:v1.0" responsibilitySetRef="fxc:FXC_metadata" dataSourceRef="fxc:dft">
+					<Name>UK FXCP  Fare profile Frame types and codepaces</Name>
+					<codespaces>
+						<Codespace id="fxc_metadata">
+							<Xmlns>fxc</Xmlns>
+							<XmlnsUrl>netex.org.uk/fxc</XmlnsUrl>
+							<Description>UK FareXChange Profile metadata</Description>
+						</Codespace>
+						<Codespace id="epd_data">
+							<Xmlns>epd</Xmlns>
+							<XmlnsUrl>http://fnetex-cen.eu/epd</XmlnsUrl>
+							<Description>European Passenger Information profile data -use for UK frame names</Description>
+						</Codespace>
+					</codespaces>
+					<dataSources>
+						<DataSource id="fxc:dft" version="fxc:v1.0">
+							<Email>standards@netex.org.uk</Email>
+						</DataSource>
+					</dataSources>
+					<!-- ========Responsibility Sets========== -->
+					<responsibilitySets>
+						<ResponsibilitySet version="fxc:v1.0" id="fxc:FXC_metadata">
+							<Name>Common</Name>
+							<roles>
+								<ResponsibilityRoleAssignment version="fxc:v1.0" id="fxc:FXC_metadata:DfT">
+									<DataRoleType>creates distributes</DataRoleType>
+									<StakeholderRoleType>DataRegistrar</StakeholderRoleType>
+									<ResponsibleOrganisationRef ref="nptg:DfT" versionRef="nptg:v2.1"/>
+									<ResponsibleAreaRef ref="nptgUkRegion:GB" versionRef="nptg:v2.1"/>
+								</ResponsibilityRoleAssignment>
+							</roles>
+						</ResponsibilitySet>
+					</responsibilitySets>
+					<typesOfValue>
+						<!-- ======== TYPE S OF   FRAME========= -->
+						<ValueSet version="fxc:1.0" id="fxc:Types_of_Specific_Frame_Basic" classOfValues="TypeOfFrame">
+							<Name>Types of FXC Specific  Frame Basic </Name>
+							<values>
+								<!-- === ANCILLARY  ==== -->
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_COMMON:FXCP">
+									<Name>UK FXCP  common Local resources</Name>
+									<FrameClassRef nameOfClass="ResourceFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_CALENDAR:FXCP">
+									<Name>UK FXCP  Service calendar</Name>
+									<FrameClassRef nameOfClass="ServiceCalendarFrame"/>
+								</TypeOfFrame>
+								<!-- === PAYLOAD  ==== -->
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_STOP:FXCP">
+									<Name>UK FXCP Stops: NapTAN Stop Place  and NPTG Locations Frame</Name>
+									<FrameClassRef nameOfClass="SiteFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_NETWORK:FXCP">
+									<Name>UK FXCP Network</Name>
+									<FrameClassRef nameOfClass="ServiceFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_TIMETABLE:FXCP">
+									<Name>UK FXCP Tietable: N</Name>
+									<FrameClassRef nameOfClass="TimetableFrame"/>
+								</TypeOfFrame>
+								<!-- === METADATA   ==== -->
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_METADATA:FXCP">
+									<Name>UK Bus Profile common resources</Name>
+									<FrameClassRef nameOfClass="ResourceFrame"/>
+								</TypeOfFrame>
+							</values>
+						</ValueSet>
+						<ValueSet version="fxc::v2.4" id="fxc:Types_of_Offer_Frame_Basic" classOfValues="TypeOfFrame">
+							<Name>Types of UK Offer Frame</Name>
+							<values>
+								<!-- === COMPOSITE ====  -->
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_STOP_OFFER:FXCP">
+									<Name>UK FXCP   composite container STOP OFFER</Name>
+									<FrameClassRef nameOfClass="CompositeFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_LINE_OFFER:FXCP">
+									<Name>UK FXCP   composite container LINE OFFER</Name>
+									<FrameClassRef nameOfClass="CompositeFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_NETWORK_OFFER:FXCP">
+									<Name>UK FXCP   composite container LINE OFFER</Name>
+									<FrameClassRef nameOfClass="CompositeFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_METADATA_OFFER:FXCP:fxc">
+									<Name>UK FXCP composite used to group other UKmetadta</Name>
+									<FrameClassRef nameOfClass="CompositeFrame"/>
+								</TypeOfFrame>
+							</values>
+						</ValueSet>
+						<!-- ======== TYPE S OF   FRAME========= -->
+						<ValueSet version="fxc:1.0" id="fxc:Types_of_Specific_Frame_for_Fares" classOfValues="TypeOfFrame">
+							<Name>Types of FXC Specific  Frame</Name>
+							<values>
+								<!-- === PAYLOAD  ==== -->
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_FARE_COMMON:FXCP">
+									<Name>UK Bus Profile fare common paramaters</Name>
+									<FrameClassRef nameOfClass="FareFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_FARE_NETWORK:FXCP">
+									<Name>UK Bus Profile fare network</Name>
+									<FrameClassRef nameOfClass="ServiceFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_FARE_PRODUCT:FXCP">
+									<Name>UK FXCP Fare Porducts Frame</Name>
+									<FrameClassRef nameOfClass="FareFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_FARE_PRICE:FXCP">
+									<Name>UK FXCP Fare Prices Frame</Name>
+									<FrameClassRef nameOfClass="FareFrame"/>
+								</TypeOfFrame>
+							</values>
+						</ValueSet>
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_Offer_Frame_for_Fares" classOfValues="TypeOfFrame">
+							<Name>Types of UK Offer Frame</Name>
+							<values>
+								<!-- === COMPOSITE ====  -->
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_STOP_FARE_OFFER:FXCP">
+									<Name>UK FXCP   composite container STOP OFFER</Name>
+									<FrameClassRef nameOfClass="CompositeFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_LINE_FARE_OFFER:FXCP">
+									<Name>UK FXCP   composite container LINE OFFER</Name>
+									<FrameClassRef nameOfClass="CompositeFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_NETWORK_FARE_OFFER:FXCP">
+									<Name>UK FXCP   composite container NETWORK OFFER</Name>
+									<FrameClassRef nameOfClass="CompositeFrame"/>
+								</TypeOfFrame>
+							</values>
+						</ValueSet>
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_Transaction_Frame" classOfValues="TypeOfFrame">
+							<Name>Types of UK Trasnaction  Frame</Name>
+							<values>
+								<TypeOfFrame version="fxc:v1.0" id="fxc:UK:DFT:TypeOfFrame_UK_PI_FARE_TRANSACTIONS:FXCP">
+									<Name>UK Bus Profile Operator sample transactions</Name>
+									<FrameClassRef nameOfClass="SalesTransactionFrame"/>
+								</TypeOfFrame>
+							</values>
+						</ValueSet>
+					</typesOfValue>
+				</ResourceFrame>
+		<!-- === FareXchange  Common fixed definitions  ===  -->
+				<FareFrame id="fxc:UK:DFT:FareFrame_UK_PI_METADATA:FareXChange:fxc" version="fxc:v1.0" responsibilitySetRef="fxc:FXC_metadata" dataSourceRef="fxc:dft">
+					<Name>FXCP Values for Farexchange</Name>
 					<FrameDefaults>
 						<DefaultCodespaceRef ref="fxc_metadata"/>
-						<DefaultDataSourceRef ref="fxc:common" version="fxc:v1.0"/>
+						<DefaultDataSourceRef ref="fxc:dft" version="fxc:v1.0"/>
 						<DefaultResponsibilitySetRef ref="fxc:FXC_metadata" version="fxc:v1.0"/>
 					</FrameDefaults>
 					<PricingParameterSet id="fxc:Common_Resources" version="fxc:v1.0">
@@ -2610,6 +2811,8 @@ This  frame Shows  sample Purchases
 						<UserProfile version="fxc:v1.0" id="fxc:adult">
 							<Name>Adult</Name>
 							<TypeOfConcessionRef version="fxc:v1.0" ref="fxc:none"/>
+							<UserType>adult</UserType>
+							<DiscountBasis>none</DiscountBasis>
 							<companionProfiles>
 								<CompanionProfile version="fxc:v1.0" id="fxc:adult@infant">
 									<UserProfileRef ref="fxc:infant" version="fxc:v1.0"/>
@@ -2621,6 +2824,7 @@ This  frame Shows  sample Purchases
 						<UserProfile version="fxc:v1.0" id="fxc:child">
 							<Name>Child</Name>
 							<TypeOfConcessionRef version="fxc:v1.0" ref="fxc:child"/>
+							<UserType>child</UserType>
 							<MinimumAge>5</MinimumAge>
 							<MaximumAge>15</MaximumAge>
 						</UserProfile>
@@ -2633,8 +2837,10 @@ This  frame Shows  sample Purchases
 								</UsageParameterPrice>
 							</prices>
 							<TypeOfConcessionRef version="fxc:v1.0" ref="fxc:infant"/>
+							<UserType>infant</UserType>
 							<MinimumAge>0</MinimumAge>
 							<MaximumAge>4</MaximumAge>
+							<DiscountBasis>free</DiscountBasis>
 							<companionProfiles>
 								<CompanionProfile id="fxc:infant@adult" version="fxc:v1.0">
 									<UserProfileRef ref="fxc:adult" version="fxc:v1.0"/>
@@ -2647,6 +2853,7 @@ This  frame Shows  sample Purchases
 						<UserProfile version="fxc:v1.0" id="fxc:student">
 							<Name>Student</Name>
 							<TypeOfConcessionRef version="fxc:v1.0" ref="fxc:student"/>
+							<UserType>student</UserType>
 							<ProofRequired>membershipCard</ProofRequired>
 							<DiscountBasis>discount</DiscountBasis>
 						</UserProfile>
@@ -2681,7 +2888,7 @@ This  frame Shows  sample Purchases
 							<DistributionChannelType>atStop</DistributionChannelType>
 						</DistributionChannel>
 						<DistributionChannel id="fxc:pay_as_you_go_device" version="fxc:v1.0">
-							<ShortName>Automatic Ticket Machine</ShortName>
+							<ShortName>Pay as you go device - eg smartcard</ShortName>
 							<DistributionChannelType>atStop</DistributionChannelType>
 						</DistributionChannel>
 						<DistributionChannel id="fxc:at_counter" version="fxc:v1.0">
@@ -2850,7 +3057,12 @@ This  frame Shows  sample Purchases
 						</TypeOfTravelDocument>
 						<TypeOfTravelDocument id="fxc:smart_card" version="fxc:v1.0">
 							<MediaType>card</MediaType>
-							<MachineReadable>chip</MachineReadable>
+							<MachineReadable>nfc chip</MachineReadable>
+						</TypeOfTravelDocument>				
+							 
+						<TypeOfTravelDocument id="fxc:contactless_card" version="fxc:v1.0">
+							<MediaType>card</MediaType>
+							<MachineReadable>nfc chip</MachineReadable>
 						</TypeOfTravelDocument>
 						<TypeOfTravelDocument id="fxc:electronic_document" version="fxc:v1.0">
 							<MediaType>none</MediaType>
@@ -2862,54 +3074,11 @@ This  frame Shows  sample Purchases
 						</TypeOfTravelDocument>
 					</typesOfTravelDocuments>
 				</FareFrame>
-				<ResourceFrame id="fxc:UK_Bus_Tariffs@Common_Resources" version="fxc:v1.0" responsibilitySetRef="fxc:FXC_metadata" dataSourceRef="fxc:common">
-					<Name>NaBT Common Country independent code values</Name>
-					<codespaces>
-						<Codespace id="fxc_metadata">
-							<Xmlns>fxc</Xmlns>
-							<XmlnsUrl>http://farexchange.org.uk/fxc</XmlnsUrl>
-							<Description>National Bus Tariff Profile metadata</Description>
-						</Codespace>
-						<Codespace id="napt_metadata">
-							<Xmlns>napt</Xmlns>
-							<XmlnsUrl>http://naptan.org.uk/napt</XmlnsUrl>
-							<Description>NaPTAN metadata</Description>
-						</Codespace>
-						<Codespace id="naptStop_data">
-							<Xmlns>naptStop"></Xmlns>
-							<XmlnsUrl>http://naptan.org.uk/stops</XmlnsUrl>
-							<Description>T stop data</Description>
-						</Codespace>
-						<Codespace id="nptg_metadata">
-							<Xmlns>nptg</Xmlns>
-							<XmlnsUrl>http://nptg.org.uk/</XmlnsUrl>
-							<Description>National Public Transport gazetteer</Description>
-						</Codespace>
-						<Codespace id="nptgLocality_data">
-							<Xmlns>nptgLocality</Xmlns>
-							<XmlnsUrl>http://nptg.org.uk/localities</XmlnsUrl>
-							<Description>National Public Transport gazetteer locations</Description>
-						</Codespace>
-						<Codespace id="nptgTariffZone_data">
-							<Xmlns>nptgTariffZone</Xmlns>
-							<XmlnsUrl>http://nptg.org.uk/tariffZones</XmlnsUrl>
-							<Description>National Public Transport gazetteer plus bus zones</Description>
-						</Codespace>
-						<Codespace id="nptgUkAdministrativeArea">
-							<Xmlns>nptgUkAdministrativeArea</Xmlns>
-							<XmlnsUrl>http://www.nptg.org.uk/admin_areas</XmlnsUrl>
-							<Description>UK National Public Transport gazetteer. Codes of administrative areas, are unique within the UK.</Description>
-						</Codespace>
-						<Codespace id="noc_data">
-							<Xmlns>noc</Xmlns>
-							<XmlnsUrl>http://www.traveline.co.uk/noc</XmlnsUrl>
-							<Description>UK national operator codes</Description>
-						</Codespace>
-					 
-					</codespaces>
+				<ResourceFrame id="fxc:UK:DFT:ResourceFrame_UK_PI_METADATA:FareXChange:fxc" version="fxc:v1.0" responsibilitySetRef="fxc:FXC_metadata" dataSourceRef="fxc:dft">
+					<Name>FXCP - Fare profile  metadata</Name>
 					<FrameDefaults>
 						<DefaultCodespaceRef ref="fxc_metadata"/>
-						<DefaultDataSourceRef ref="fxc:common" version="fxc:v1.0"/>
+						<DefaultDataSourceRef ref="fxc:dft" version="fxc:v1.0"/>
 						<DefaultResponsibilitySetRef ref="fxc:FXC_metadata" version="fxc:v1.0"/>
 						<DefaultLocale>
 							<TimeZoneOffset>0</TimeZoneOffset>
@@ -2924,100 +3093,16 @@ This  frame Shows  sample Purchases
 					</FrameDefaults>
 					<versions>
 						<Version id="fxc:v1.0" version="any">
-							<Description>NPTG version 2.1</Description>
+							<ValidBetween>
+								<FromDate>2019-01-01T01:01:01Z</FromDate>
+							</ValidBetween>
+							<Description>FXC version 2.1</Description>
 							<VersionType>baseline</VersionType>
 						</Version>
 					</versions>
-					<dataSources>
-						<DataSource id="fxc:common" version="fxc:v1.0">
-							<Email>standards@nptg.org.uk</Email>
-						</DataSource>
-					</dataSources>
-					<!-- ========Responsibility Sets========== -->
-					<responsibilitySets>
-						<ResponsibilitySet version="fxc:v1.0" id="fxc:FXC_metadata">
-							<Name>Common</Name>
-							<roles>
-								<ResponsibilityRoleAssignment version="fxc:v1.0" id="fxc:FXC_metadata:DfT">
-									<DataRoleType>creates distributes</DataRoleType>
-									<StakeholderRoleType>DataRegistrar</StakeholderRoleType>
-									<ResponsibleOrganisationRef ref="fxc:DfT" version="fxc:v1.0"/>
-									<ResponsibleAreaRef ref="fxc:UK">TODO</ResponsibleAreaRef>
-								</ResponsibilityRoleAssignment>
-							</roles>
-						</ResponsibilitySet>
-					</responsibilitySets>
-					<!-- ======== Code sets ========= -->
 					<typesOfValue>
-						<ValueSet version="fxc:v1.0" id="fxc:TypeOfFrame" classOfValues="TypeOfFrame">
-							<Name>Types of UK Frame</Name>
-							<values>
-								<TypeOfFrame version="fxc:v1.0" id="nptg:UK_general_profile@locations">
-									<Name>NPTG Locations Frame</Name>
-								</TypeOfFrame>
-								<!-- COntents -->
-								<TypeOfFrame version="fxc:v1.0" id="fxc:UK_Bus_tariff_profile@fare_network">
-									<Name>UK Bus Profile fare network</Name>
-								</TypeOfFrame>
-								<TypeOfFrame version="fxc:v1.0" id="fxc:UK_Bus_tariff_profile@service_network">
-									<Name>UK Bus Profile service network</Name>
-									<FrameClassRef nameOfClass="ServiceFrame"/>
-								</TypeOfFrame>
-								<TypeOfFrame version="fxc:v1.0" id="fxc:UK_Bus_tariff_profile@service_network@line">
-									<Name>UK Bus Profile service network</Name>
-									<FrameClassRef nameOfClass="ServiceFrame"/>
-								</TypeOfFrame>
-								<TypeOfFrame version="fxc:v1.0" id="fxc:UK_Bus_tariff_profile@site_network">
-									<Name>UK Bus Profile site network</Name>
-									<FrameClassRef nameOfClass="SiteFrame"/>
-								</TypeOfFrame>
-								<TypeOfFrame version="fxc:v1.0" id="fxc:UK_Bus_tariff_profile@products">
-									<Name>UK Bus Profile products</Name>
-									<FrameClassRef nameOfClass="FareFrame"/>
-								</TypeOfFrame>
-								<TypeOfFrame version="fxc:v1.0" id="fxc::UK_Bus_tariff_profile@products@by_line">
-									<Name>UK Bus Profile tariff by line</Name>
-								</TypeOfFrame>
-								<TypeOfFrame version="fxc:v1.0" id="fxc:UK_Bus_tariff_profile@prices">
-									<Name>UK Bus Profile prices</Name>
-									<FrameClassRef nameOfClass="FareFrame"/>
-								</TypeOfFrame>
-								<TypeOfFrame version="fxc:v1.0" id="fxc:UK_Bus_tariff_profile@calendar">
-									<Name>UK Bus Profile Operator calendar</Name>
-									<FrameClassRef nameOfClass="ServiceCalendarFrame"/>
-								</TypeOfFrame>
-								<TypeOfFrame version="fxc:v1.0" id="fxc:UK_Bus_tariff_profile@operator_resources">
-									<Name>UK Bus Profile Operator resources</Name>
-									<FrameClassRef nameOfClass="ResourceFrame"/>
-								</TypeOfFrame>
-								<TypeOfFrame version="fxc:v1.0" id="fxc:UK_Bus_tariff_profile@operator_fare_resources">
-									<Name>UK Bus Profile Operator resources</Name>
-									<FrameClassRef nameOfClass="FareFrame"/>
-								</TypeOfFrame>
-								<TypeOfFrame version="fxc:v1.0" id="fxc:UK_Bus_tariff_profile@transactions">
-									<Name>UK Bus Profile Operator sample transactions</Name>
-									<FrameClassRef nameOfClass="SalesTransactionFrame"/>
-								</TypeOfFrame>
-								<TypeOfFrame version="fxc:v1.0" id="fxc:UK_Bus_tariff_profile@transactions_composite">
-									<Name>UK Bus Profile Operator sample transactions - container</Name>
-									<FrameClassRef nameOfClass="SalesTransactionFrame"/>
-								</TypeOfFrame>
-								<TypeOfFrame version="fxc:v1.0" id="fxc:UK_Bus_tariff_profile@composite">
-									<Name>UK Bus Profile coposite used to group other UK bus tariff frames</Name>
-									<FrameClassRef nameOfClass="CompositeFrame"/>
-								</TypeOfFrame>
-								<!--- for fixed elements -->
-								<TypeOfFrame version="fxc:v1.0" id="fxc:UK_Bus_tariff_profile@UK_common_resources">
-									<Name>UK Bus Profile common resources</Name>
-									<FrameClassRef nameOfClass="ResourceFrame"/>
-								</TypeOfFrame>
-								<TypeOfFrame version="fxc:v1.0" id="fxc:UK_Bus_tariff_profile@UK_common_resources_composite">
-									<Name>UK Bus Profile common resources composite container</Name>
-									<FrameClassRef nameOfClass="CompositeFrame"/>
-								</TypeOfFrame>
-							</values>
-						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:PointOfInterestClassification" classOfValues="PointOfInterestClassification">
+						<!-- ======== Code sets ========= -->
+						<ValueSet version="fxc:v1.0" id="fxc:PointsOfInterest_Classifications" classOfValues="PointOfInterestClassification">
 							<Name>Types of POI</Name>
 							<values>
 								<!--- ====Type of Product category ========= -->
@@ -3029,8 +3114,8 @@ This  frame Shows  sample Purchases
 								</PointOfInterestClassification>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:TypeOfFareZone" classOfValues="TypeOfZone">
-							<Name>Types of Fare Zone</Name>
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareZone" classOfValues="TypeOfZone">
+							<Name>Types of FARE ZONE</Name>
 							<values>
 								<!--- ====Type of Product category ========= -->
 								<TypeOfZone version="fxc:v1.0" id="fxc:fare_zone@operator">
@@ -3044,8 +3129,8 @@ This  frame Shows  sample Purchases
 								</TypeOfZone>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:TypesOfProductCategory" classOfValues="TypeOfProductCategory">
-							<Name>Types of Product Category</Name>
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_ProductCategory" classOfValues="TypeOfProductCategory">
+							<Name>Types of PRODUCT CATEGORY</Name>
 							<values>
 								<!--- ====Type of Product category ========= -->
 								<TypeOfProductCategory version="fxc:v1.0" id="fxc:urban_bus">
@@ -3064,12 +3149,12 @@ This  frame Shows  sample Purchases
 							<values>
 								<!--- ====Type of Product category ========= -->
 								<PurposeOfGrouping version="fxc:v1.0" id="fxc:route_exclusion">
-									<Name>Routes to be ommited</Name>
+									<Name>Routes to be ommitted</Name>
 								</PurposeOfGrouping>
 							</values>
 						</ValueSet>
 						<ValueSet version="fxc:v1.0" id="fxc:ChargingMoments" classOfValues="ChargingMoment">
-							<Name>Charging Moments</Name>
+							<Name>Types of CHARGING MOMENT</Name>
 							<values>
 								<!--- ==== TypeOfChargingMoment ========= -->
 								<ChargingMoment version="fxc:v1.0" id="fxc:prepayment">
@@ -3085,12 +3170,15 @@ This  frame Shows  sample Purchases
 									<Name>Prepaid - free issue</Name>
 								</ChargingMoment>
 								<ChargingMoment version="fxc:v1.0" id="fxc::post_payment">
-									<Name>Prepaid</Name>
+									<Name>Postpaid</Name>
+								</ChargingMoment>
+								<ChargingMoment version="fxc:v1.0" id="fxc::post_payment_periodic">
+									<Name>Postpaid</Name>
 								</ChargingMoment>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:TypesOfFareProduct@trip" classOfValues="TypeOfFareProduct">
-							<Name>Types Of Fare Product - Trip</Name>
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareProduct@trip" classOfValues="TypeOfFareProduct">
+							<Name>Types of FARE PRODUCT - Trip</Name>
 							<values>
 								<TypeOfFareProduct version="fxc:v1.0" id="fxc:standard_product@trip@short_hop">
 									<Name>Short hop fare</Name>
@@ -3102,16 +3190,16 @@ This  frame Shows  sample Purchases
 									<Name>Time Limited fare</Name>
 								</TypeOfFareProduct>
 								<!--- Special -->
-								<TypeOfFareProduct version="fxc:v1.0" id="fxc:special_product@Trip@period_return">
+								<TypeOfFareProduct version="fxc:v1.0" id="fxc:special_product@trip@period_return">
 									<Name>Period return fare</Name>
 								</TypeOfFareProduct>
-								<TypeOfFareProduct version="fxc:v1.0" id="fxc:era:special_produc@tript@day_return">
+								<TypeOfFareProduct version="fxc:v1.0" id="fxc:era:special_produc@trip@day_return">
 									<Name>Day retirn fare</Name>
 								</TypeOfFareProduct>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:TypesOfFareProduct@pass" classOfValues="TypeOfFareProduct">
-							<Name>Types Of Fare Product - Pass</Name>
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareProduct@pass" classOfValues="TypeOfFareProduct">
+							<Name>Types of FARE PRODUCT - Pass</Name>
 							<values>
 								<TypeOfFareProduct version="fxc:v1.0" id="fxc:standard_product@pass@day">
 									<Name>day pass - till end of fare day</Name>
@@ -3124,8 +3212,8 @@ This  frame Shows  sample Purchases
 								</TypeOfFareProduct>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:TypesOfFareProduct@carnet" classOfValues="TypeOfFareProduct">
-							<Name>Types Of Fare Product - Pass</Name>
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareProduct@carnet" classOfValues="TypeOfFareProduct">
+							<Name>Types Of FARE PRODUC- Pass</Name>
 							<values>
 								<TypeOfFareProduct version="fxc:v1.0" id="fxc:standard_product@carnet@trips">
 									<Name>Carnet of trips.</Name>
@@ -3135,8 +3223,8 @@ This  frame Shows  sample Purchases
 								</TypeOfFareProduct>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:TypesOfFareProduct@discount" classOfValues="TypeOfFareProduct">
-							<Name>Types Of Fare Product - Pass</Name>
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareProduct@discount" classOfValues="TypeOfFareProduct">
+							<Name>Types Of FARE PRODUCT - Pass</Name>
 							<values>
 								<TypeOfFareProduct version="fxc:v1.0" id="fxc:standard_product@discount@sales">
 									<Name>Sales discount righty</Name>
@@ -3146,19 +3234,19 @@ This  frame Shows  sample Purchases
 								</TypeOfFareProduct>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:TypesOfFareProduct@stored_value" classOfValues="TypeOfFareProduct">
-							<Name>Types Of Fare Product - Epurse</Name>
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareProduct@stored_value" classOfValues="TypeOfFareProduct">
+							<Name>Types of FARE PRODUCT - Epurse</Name>
 							<values>
 								<TypeOfFareProduct version="fxc:v1.0" id="fxc:standard_product@stored_value@epurse">
 									<Name>Epurse</Name>
 								</TypeOfFareProduct>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:TypesOfSalesOfferPackage" classOfValues="TypeOfSalesOfferPackage">
-							<Name>Types Of Sales Offer Product</Name>
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_SalesOfferPackage" classOfValues="TypeOfSalesOfferPackage">
+							<Name>Types of SALES OFFER PACKAGE.</Name>
 							<values>
 								<TypeOfSalesOfferPackage version="fxc:v1.0" id="fxc:standard_product@all_operators">
-									<Name>Product is standrad and supported by all operators</Name>
+									<Name>Product is standard and supported by all operators</Name>
 								</TypeOfSalesOfferPackage>
 								<TypeOfSalesOfferPackage version="fxc:v1.0" id="fxc:standard_product@multi_operator">
 									<Name>Product is standrad and supported by all operators</Name>
@@ -3171,8 +3259,8 @@ This  frame Shows  sample Purchases
 								</TypeOfSalesOfferPackage>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:ClassesOfUse" classOfValues="ClassOfUse">
-							<Name>Classes of Use</Name>
+						<ValueSet version="fxc:v1.0" id="fxc:Classes_of_Use" classOfValues="ClassOfUse">
+							<Name>Types of CLASS OF USE.</Name>
 							<values>
 								<!--- ====ClassOfUse ========= -->
 								<ClassOfUse version="fxc:v1.0" id="fxc:first">
@@ -3183,8 +3271,8 @@ This  frame Shows  sample Purchases
 								</ClassOfUse>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:TypesOfProjection" classOfValues="TypeOfProjection">
-							<Name>TypesOf Projection</Name>
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_Projection" classOfValues="TypeOfProjection">
+							<Name>Types of PROJECTION</Name>
 							<values>
 								<!--- ====ClassOfUse ========= -->
 								<TypeOfProjection version="fxc:v1.0" id="fxc:tariff_zone_border">
@@ -3192,8 +3280,8 @@ This  frame Shows  sample Purchases
 								</TypeOfProjection>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:TypesOfFareContractEntry" classOfValues="TypeOfFareContractEntry">
-							<Name>Types of fare contract entry</Name>
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareContractEntry" classOfValues="TypeOfFareContractEntry">
+							<Name>Types of FARE CONTRACT ENTRY</Name>
 							<values>
 								<!--- ====TypeOfFareContractEntry ========= -->
 								<TypeOfFareContractEntry version="fxc:v1.0" id="fxc:product_purchase">
@@ -3210,8 +3298,8 @@ This  frame Shows  sample Purchases
 								</TypeOfFareContractEntry>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:TypesOfConcession" classOfValues="TypeOfConcession">
-							<Name>Types of concession</Name>
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_Concession" classOfValues="TypeOfConcession">
+							<Name>Types of CONCESSION</Name>
 							<values>
 								<!--- ====TypeOfConcession method========= -->
 								<TypeOfConcession version="fxc:v1.0" id="fxc:none">
@@ -3252,8 +3340,8 @@ This  frame Shows  sample Purchases
 								</TypeOfConcession>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:TypesOfTariff" classOfValues="TypeOfTariff">
-							<Name>Types of Tariff</Name>
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_Tariff" classOfValues="TypeOfTariff">
+							<Name>Spatial Types of Tariff</Name>
 							<values>
 								<!--- ====Types OfTariff ========= -->
 								<TypeOfTariff version="fxc:v1.0" id="fxc:Distance_kilometers">
@@ -3264,6 +3352,9 @@ This  frame Shows  sample Purchases
 								</TypeOfTariff>
 								<TypeOfTariff version="fxc:v1.0" id="fxc:point_to_point">
 									<Name>Point to point</Name>
+								</TypeOfTariff>
+								<TypeOfTariff version="fxc:v1.0" id="fxc:zone_to_zone">
+									<Name>Zone to Zone</Name>
 								</TypeOfTariff>
 								<TypeOfTariff version="fxc:v1.0" id="fxc:zonal">
 									<Name>Zonal</Name>
@@ -3277,6 +3368,9 @@ This  frame Shows  sample Purchases
 								<TypeOfTariff version="fxc:v1.0" id="fxc:stored_value">
 									<Name>Stored value</Name>
 								</TypeOfTariff>
+								<TypeOfTariff version="fxc:v1.0" id="fxc:discount">
+									<Name>Discount value</Name>
+								</TypeOfTariff>
 								<TypeOfTariff version="fxc:v1.0" id="fxc:multitrip">
 									<Name>Multitrip carnet</Name>
 								</TypeOfTariff>
@@ -3285,8 +3379,61 @@ This  frame Shows  sample Purchases
 								</TypeOfTariff>
 							</values>
 						</ValueSet>
-						<ValueSet version="fxc:v1.0" id="fxc:TypesOfAccessRightAssignment" classOfValues="TypeOfAccessRightAssignment">
-							<Name>Types of Access right Assignment</Name>
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_FareStructureElement" classOfValues="TypeOfFareStructureElement">
+							<Name>FXCP: Types of FARE STRUCTURE ELEMENT.</Name>
+							<values>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:access">
+									<Name>Access rights</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:access_when">
+									<Name>Fare demand :peak /off peak etc access rights to use or travel during some period</Name>
+								</TypeOfFareStructureElement>
+									<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:accepted_by">
+									<Name>Accepted by operator</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:eligibility">
+									<Name>Eligibility to purchase</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:groups">
+									<Name>Group tickets available</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:durations">
+									<Name>Time intervals</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:intervals">
+									<Name>Time intervals</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:prerequisites">
+									<Name>Defines required entitlements</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:entitles">
+									<Name>Gives right to other products</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:sale_conditions">
+									<Name>Defines a condition or restriction on purchase</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:travel_conditions">
+									<Name>Condition on use</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:carnet_units">
+									<Name>Specifies units for purchase</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:outlets">
+									<Name>Specifies where a purchase can be made</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:quotas">
+									<Name>Quotas</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:steps">
+									<Name>Steps in sequence</Name>
+								</TypeOfFareStructureElement>
+								<TypeOfFareStructureElement version="fxc:v1.0" id="fxc:payment_schedules">
+									<Name>Payment Schedules</Name>
+								</TypeOfFareStructureElement>
+							</values>
+						</ValueSet>
+						<ValueSet version="fxc:v1.0" id="fxc:Types_of_AccessRightAssignment" classOfValues="TypeOfAccessRightAssignment">
+							<Name>Types of Access Right Assignment</Name>
 							<values>
 								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:eligible">
 									<Name>Eligible for a product or discount</Name>
@@ -3336,7 +3483,7 @@ This  frame Shows  sample Purchases
 								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:can_use_to_pay_for">
 									<Name>Gives ability to purchase automatically using</Name>
 								</TypeOfAccessRightAssignment>
-								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:payment_schedule">
+								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:payment_schedules">
 									<Name>Specifices if subscription or single payment</Name>
 								</TypeOfAccessRightAssignment>
 								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:reservation_condition">
@@ -3345,11 +3492,14 @@ This  frame Shows  sample Purchases
 								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:distribution_channel_restriction">
 									<Name>Constrains availability for distribution by a channel</Name>
 								</TypeOfAccessRightAssignment>
-								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:takes_properties_from_group">
+								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:use_before">
 									<Name>Takes properties from group package</Name>
 								</TypeOfAccessRightAssignment>
 								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:quota_applies">
 									<Name>Quota applies</Name>
+								</TypeOfAccessRightAssignment>
+								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:promotion_applies">
+									<Name>Promotion applies</Name>
 								</TypeOfAccessRightAssignment>
 								<TypeOfAccessRightAssignment version="fxc:v1.0" id="fxc:validity_chaining">
 									<Name>Quota applies</Name>
@@ -3373,9 +3523,9 @@ This  frame Shows  sample Purchases
 								<FromDate>2001-01-01T00:00:00Z</FromDate>
 								<ToDate>2020-01-01T00:00:00Z</ToDate>
 							</ValidityPeriod>
-							<CountryRef ref="uk" refPrincipality="GB-UKM"/>
+							<CountryRef ref="uk" refPrincipality="iso3166-2:GB-UKM"/>
 						</Operator>
-						<Operator version="fxc:v1.0" id="uic:Station_Management:0070">
+						<Operator version="fxc:v1.0" id="uicStation_Management:0070">
 							<PublicCode>NR</PublicCode>
 							<Name>Network Rail Limited</Name>
 							<ShortName>Network Rail</ShortName>
@@ -3383,20 +3533,20 @@ This  frame Shows  sample Purchases
 								<FromDate>2003-09-22T00:00:00Z</FromDate>
 								<ToDate>2020-01-01T00:00:00Z</ToDate>
 							</ValidityPeriod>
-							<CountryRef ref="uk" refPrincipality="GB-UKM"/>
+							<CountryRef ref="uk" refPrincipality="iso3166-2:GB-UKM"/>
 						</Operator>
 					</organisations>
 					<groupsOfEntities>
-						<Layer version="fxc:v1.0" id="fxc:fareNetwork_fareProducts_farePrices">
+						<Layer version="fxc:v1.0" id="fxc:fare_network+fare_products+fare_prices">
 							<Name>Fares and fare prices</Name>
 						</Layer>
-						<Layer version="fxc:v1.0" id="fxc:fareNetwork">
+						<Layer version="fxc:v1.0" id="fxc:fare_network">
 							<Name>Fares networks</Name>
 						</Layer>
-						<Layer version="fxc:v1.0" id="fxc:fareProducts">
+						<Layer version="fxc:v1.0" id="fxc:fare_products">
 							<Name>Fares ad fare prices</Name>
 						</Layer>
-						<Layer version="fxc:v1.0" id="fxc:farePrices">
+						<Layer version="fxc:v1.0" id="fxc:fare_prices">
 							<Name>Fares and fare prices</Name>
 						</Layer>
 					</groupsOfEntities>
