@@ -5,6 +5,11 @@
 
 Version 1.20 - Base version plus  further minor fixes comprising##
 
+
+FIX -  FareClassEnumeration #100
+### 2020.07.28   FIX  Issue #100*FRAMEWORK*:Corect the substitution group on OrganisationUnit
+	* netex_framework/netex_genericFramework/netex_organisation_version.xsd
+
 FIX -  FareClassEnumeration #75
 ### 2020.06.21   FIX  Issue #75*FRAMEWORK*:Remove space from end of secondClass enumeration value
 	* netex_framework/netex_reusableComponents/netex_serviceRestrictions_support.xsd
