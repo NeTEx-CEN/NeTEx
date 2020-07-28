@@ -5,24 +5,27 @@
 
 Version 1.20 - Base version plus  further minor fixes comprising##
 
+### 2020.07.29   FIX  Issue #97*Part2*: Add __NormalDatedJourney__ and __DatedVehicleJourney__ to journeys  in __TimetableFrame__
+  * _Updates to xml schema_:    
+	* netex_framework/netex_genericFramework/netex_datedVehicleJourney_version.xsd
+
 ### 2020.07.28   EXAMPLES  Revise fare examples
   * _Updates to xml schema_:    
 	* NONE
   * _Updates to xml examples: 
 	* \txc and \fxc subdirectory files
 	
-
-### 2020.07.28   FIX  Issue #101*Publication*:Add missing constraints for FareTableRow FareTableColumn, TypeOfLine and for FareZoneParent
+### 2020.07.28   FIX  Issue #101*Publication*:Add missing constraints for __FareTableRow__, __FareTableColumn__, __TypeOfLine__ and for __FareZone__ Parent
   * _Updates to xml schema_:    
 	* netex_framework/netex_genericFramework/netex_organisation_version.xsd
   * _Updates to xml examples: 
 	* Netex_era_distance_ro.xml.
 	
-### 2020.07.28   FIX  Issue #100*FRAMEWORK*:Correct the substitution group on OrganisationUnit
+### 2020.07.28   FIX  Issue #100*FRAMEWORK*:Correct the substitution group on __OrganisationUnit__
   * _Updates to xml schema_:    
 	* netex_framework/netex_genericFramework/netex_organisation_version.xsd
 
-### 2020.06.21   FIX  Issue #75*FRAMEWORK*:Remove space from end of secondClass enumeration value 
+### 2020.06.21   FIX  Issue #75*FRAMEWORK*:Remove space from end of __secondClass__ enumeration value 
   * _Updates to xml schema_:    
 	* netex_framework/netex_reusableComponents/netex_serviceRestrictions_support.xsd
 
