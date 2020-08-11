@@ -3,11 +3,11 @@
 
 ## Core, Part 1 (Network),  Part 2 (Timetables), Part3 (Fares) Schemas
 
-Version 1.20 - Base version plus  further minor fixes comprising##
+Version 1.12 - Base version plus  further minor fixes comprising:
 
-### 2020.08.11  Update oxygen projet to include new examples
+### 2020.08.11  Update Oxygen project file to include new examples
   * _Other updates_:    
-	* netex.xpr"    
+	* netex.xpr   
   * _Updates to examples_: 
 	* \examples\standards\era_uic\Netex_Eurostar mapping_era_1.xml
 	* \examples\standards\era_uic\Netex_Eurostar mapping_era_2.xml
@@ -15,20 +15,20 @@ Version 1.20 - Base version plus  further minor fixes comprising##
 	* \examples\standards\era_uic\Netex_era_uic_timetable_hack_01.xml
 	* \examples\standards\norway\stops\BasicStopPlace_example.xml
 
-### 2020.08.11   FIX  Issue #110 Add missing fuel types	to  __VehicleType__  /  __FuelType__		
+### 2020.08.11   FIX  Issue #110 *Framework* Add missing fuel types	to  __VehicleType__  /  __FuelType__		
 	 additional values:  __electricContact, battery, dieselBatteryHybrid, petrolBatteryHybrid, biodiesel, hydrogen, liquidGas, methane, ethanol__.
   * _Updates to xml schema_:    
 	* netex_framework/netex_reusableComponents/netex_vehicleType_support.xsd
 
-### 2020.08.11  FIX  Issue #106*Schema*: Add missing constraints for allow __GeneralZone__ and __AdministrativeZone__
+### 2020.08.11  FIX  Issue #106 *Schema*: Add missing constraints for allow __GeneralZone__ and __AdministrativeZone__
     * _Updates to xml schema_:     
     * netex_publication_version.xsd
 
-### 2020.08.11   FIX  Issue #104*Framework*: Add __ResponsibilityRole__    in __ResourceFrame__
+### 2020.08.11   FIX  Issue #104 *Framework*: Add __ResponsibilityRole__    in __ResourceFrame__
   * _Updates to xml schema_:    
 	* netex_framework/netex_frames/netex_resourceFrame_version.xsd"
 
-### 2020.08.10  FIX  Issue #108*Framework*: Allow __ServiceCalendar__ to hold UIC OperatingPeriod
+### 2020.08.10  FIX  Issue #108 *Framework*: Allow __ServiceCalendar__ to hold UIC OperatingPeriod
   * _Updates to xml schema_:    
 	* netex_framework/netex_reusableComponents/netex_serviceCalendar_support.xsd
 	* netex_framework/netex_reusableComponents/netex_serviceCalendar_version.xsd
@@ -36,7 +36,7 @@ Version 1.20 - Base version plus  further minor fixes comprising##
     * _Updates to examples_:  
     * Add NTA XML examples
 
-### 2020.07.29   FIX  Issue #97*Part2*: Add __NormalDatedJourney__ and __DatedVehicleJourney__ to journeys  in __TimetableFrame__
+### 2020.07.29   FIX  Issue #97 *Part2*: Add __NormalDatedJourney__ and __DatedVehicleJourney__ to journeys  in __TimetableFrame__
   * _Updates to xml schema_:    
 	* netex_part2/netex_journeyTimes/netex_datedVehicleJourney_version.xsd
 
@@ -46,21 +46,21 @@ Version 1.20 - Base version plus  further minor fixes comprising##
   * _Updates to xml examples:
 	* \txc and \fxc subdirectory files
 
-### 2020.07.28   FIX  Issue #101*Publication*:Add missing constraints for __FareTableRow__, __FareTableColumn__, __TypeOfLine__ and for __FareZone__ Parent
+### 2020.07.28   FIX  Issue #101 *Publication*:Add missing constraints for __FareTableRow__, __FareTableColumn__, __TypeOfLine__ and for __FareZone__ Parent
   * _Updates to xml schema_:    
 	* netex_framework/netex_genericFramework/netex_publication_version.xsd
   * _Updates to xml examples:
 	* Netex_era_distance_ro.xml.
 
-### 2020.07.28   FIX  Issue #100*FRAMEWORK*:Correct the substitution group on __OrganisationUnit__
+### 2020.07.28   FIX  Issue #100 *FRAMEWORK*:Correct the substitution group on __OrganisationUnit__
   * _Updates to xml schema_:    
 	* netex_framework/netex_genericFramework/netex_organisation_version.xsd
 
-### 2020.06.21   FIX  Issue #75*FRAMEWORK*:Remove space from end of __secondClass__ enumeration value
+### 2020.06.21   FIX  Issue #75 *FRAMEWORK*:Remove space from end of __secondClass__ enumeration value
   * _Updates to xml schema_:    
 	* netex_framework/netex_reusableComponents/netex_serviceRestrictions_support.xsd
 
-### 2020.06.21 PARTIAL  FIX  Issue #73*PART2*:Recursive includes: NJSK  Remove cyclic inclusion dependency
+### 2020.06.21 PARTIAL  FIX  Issue #73 *PART2*:Recursive includes: NJSK  Remove cyclic inclusion dependency
   * _Updates to xml schema_:    
 	* netex_flexibleService Journey.xml  
 
