@@ -16,6 +16,15 @@
 				<Contributor>CEN TC278 WG3 SG9 Team.</Contributor>
 				<Coverage>Europe</Coverage>
 				<Creator>First Drafted for NeTEx version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.  mailto:schemer@netex.org.uk</Creator>
+				
+				<Date>
+					<Modified>2020-08-20</Modified>Corrections
+						Add UicOperatingPeriod key and ref constraints
+				</Date>  
+				<Date>
+					<Modified>2020.07.28</Modified>### 2020.07.28   FIX  Issue #101*Publication*:Add missing constraints for __FareTableRow__, __FareTableColumn__, __TypeOfLine__ and for __FareZone__ Parent 
+ 
+				</Date>
 				<Date>
 					<Modified>2020-04-17</Modified>Corrections
 						Add ParentFareZoneRef  constraint
@@ -2811,15 +2820,37 @@ Correct COnstraints for PointOnRoute
 		</xsd:unique>
 		<!-- =====OperatingPeriod Key ========================== -->
 		<xsd:keyref name="OperatingPeriod_KeyRef" refer="netex:OperatingPeriod_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:OperatingPeriodRef"/>
+			<xsd:selector xpath=".//netex:OperatingPeriodRef  "/>
 			<xsd:field xpath="@ref"/>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
 		<xsd:key name="OperatingPeriod_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:OperatingPeriod"/>
+			<xsd:selector xpath=".//netex:OperatingPeriod  "/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
+			<!-- =====OperatingPeriod unique========================== -->
+		<xsd:unique name="UicOperatingPeriod_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [UicOperatingPeriod Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:UicOperatingPeriod"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+					<!-- =====UicOperatingPeriod Key ========================== -->
+		</xsd:unique>
+			<xsd:keyref name="UicOperatingPeriod_KeyRef" refer="netex:UicOperatingPeriod_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:UicOperatingPeriodRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<!-- =====UicOperatingPeriod Key ========================== -->
+ 		<xsd:key name="UicOperatingPeriod_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:UicOperatingPeriod"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>	
+		
 		<!-- =====DayTypeAssignment============================== -->
 		<!-- =====DayTypeAssignment unique========================== -->
 		<xsd:unique name="DayTypeAssignment_UniqueBy_Id_Version_Order">
