@@ -5,9 +5,15 @@
 
 Version 1.20 - Base version plus  further minor fixes comprising##
 
-### 2020.08.11  Update oxygen projet to include new eamples
+### 2020.08.11  Update oxygen projet to include new examples
   * _Other updates_:    
-	* netex.xpr"
+	* netex.xpr"    
+  * _Updates to examples_: 
+	* \examples\standards\era_uic\Netex_Eurostar mapping_era_1.xml
+	* \examples\standards\era_uic\Netex_Eurostar mapping_era_2.xml
+	* \examples\standards\era_uic\Netex_era_uic_joiningsplitting.xml
+	* \examples\standards\era_uic\Netex_era_uic_timetable_hack_01.xml
+	* \examples\standards\norway\stops\BasicStopPlace_example.xml
 
 ### 2020.08.11   FIX  Issue #110 Add missing fuel types	to  __VehicleType__  /  __FuelType__		
 	 additional values:  __electricContact, battery, dieselBatteryHybrid, petrolBatteryHybrid, biodiesel, hydrogen, liquidGas, methane, ethanol__.
