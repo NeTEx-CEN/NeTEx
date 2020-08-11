@@ -5,14 +5,30 @@
 
 Version 1.20 - Base version plus  further minor fixes comprising##
 
-### 2020.08.10   FIX  Issue #107*Framework*: Add __NormalDatedJourney__ and __DatedVehicleJourney__ to journeys  in __TimetableFrame__
-  * _Updates to xml schema_:    
+### 2020.08.11  Update oxygen projet to include new eamples
+  * _Other updates_:    
+	* netex.xpr"
 
-### 2020.08.10  FIX  Issue #107*Framework*: Allow Service Calendar to hold UIC OperatingPeriod
+### 2020.08.11   FIX  Issue #110 Add missing fuel types	to  __VehicleType__  /  __FuelType__		
+	 additional values:  __electricContact, battery, dieselBatteryHybrid, petrolBatteryHybrid, biodiesel, hydrogen, liquidGas, methane, ethanol__.
   * _Updates to xml schema_:    
-	* netex_framework/netex_genericFramework/netex_serviceCalendar_support.xsd
-	* netex_framework/netex_genericFramework/netex_serviceCalendar_version.xsd
-  * netex_framework/netex_genericFramework/netex_publication_version.xsd
+	* netex_framework/netex_reusableComponents/netex_vehicleType_support.xsd
+
+### 2020.08.11  FIX  Issue #106*Schema*: Add missing constraints for allow __GeneralZone__ and __AdministrativeZone__
+    * _Updates to xml schema_:     
+    * netex_publication_version.xsd
+
+### 2020.08.11   FIX  Issue #104*Framework*: Add __ResponsibilityRole__    in __ResourceFrame__
+  * _Updates to xml schema_:    
+	* netex_framework/netex_frames/netex_resourceFrame_version.xsd"
+
+### 2020.08.10  FIX  Issue #108*Framework*: Allow __ServiceCalendar__ to hold UIC OperatingPeriod
+  * _Updates to xml schema_:    
+	* netex_framework/netex_reusableComponents/netex_serviceCalendar_support.xsd
+	* netex_framework/netex_reusableComponents/netex_serviceCalendar_version.xsd
+  * netex_publication_version.xsd
+    * _Updates to examples_:  
+    * Add NTA XML examples
 
 ### 2020.07.29   FIX  Issue #97*Part2*: Add __NormalDatedJourney__ and __DatedVehicleJourney__ to journeys  in __TimetableFrame__
   * _Updates to xml schema_:    
@@ -21,7 +37,7 @@ Version 1.20 - Base version plus  further minor fixes comprising##
 ### 2020.07.28   EXAMPLES  Revise fare examples
   * _Updates to xml schema_:    
 	* NONE
-  * _Updates to xml examples: 
+  * _Updates to xml examples:
 	* \txc and \fxc subdirectory files
 
 ### 2020.07.28   FIX  Issue #101*Publication*:Add missing constraints for __FareTableRow__, __FareTableColumn__, __TypeOfLine__ and for __FareZone__ Parent
