@@ -35,7 +35,7 @@ There is also an _Oxygen_ project file:
 ----
 # Change Log
 
-Version 1.12 - Base version plus  further minor fixes comprising##
+Version 1.1.2 - Base version plus  further minor fixes comprising##
 
 ### 2020.08.11  Update oxygen project to include new examples
   * _Other updates_:    
@@ -72,7 +72,7 @@ additional values:  _electricContact, battery, dieselBatteryHybrid, petrolBatter
   * _Updates to xml schema_:    
 	* netex_part2\netex_journeyTimes\netex_datedVehicleJourney_version.xsd
 	
-Version 1.11 - Base version plus  further minor fixes comprising##
+Version 1.1.1 - Base version plus  further minor fixes comprising##
 
 ### 2020.07.28   EXAMPLES  Revise fare examples
   * _Updates to xml schema_:    
