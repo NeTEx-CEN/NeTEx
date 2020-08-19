@@ -913,8 +913,31 @@ Rail transport, Roads and Road transport
 	</xsd:complexType>
 	<xsd:group name="CustomerPurchaseParameterAssignmentGroup">
 		<xsd:annotation>
-			<xsd:documentation>Elements for a CUSTOMER PURCHASE PARAMETER ASSIGNMENT.</xsd:documentation>
+			<xsd:documentation>Elements for CUSTOMER PURCHASE PARAMETER ASSIGNMENT.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:sequence/>
+		<xsd:sequence>
+			<xsd:group ref="CustomerPurchaseParameterAssignmentIncludesGroup">
+				<xsd:annotation>
+					<xsd:documentation>Elements for compound CUSTOMER PURCHASE PARAMETER ASSIGNMENT.  May only be compounded with parameters fo the same type.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:group>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="CustomerPurchaseParameterAssignmentIncludesGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for compound CUSTOMER PURCHASE PARAMETER ASSIGNMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IncludesGroupingType" type="BooleanOperatorEnumeration" default="OR" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Operator for Grouping Scope Elements. Default is OR.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="includes" type="customerPurchaseParameterAssignments_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Assignments Logically  included in this group. Groups are combined acording to the Operator.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
 	</xsd:group>
 </xsd:schema>
