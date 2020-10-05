@@ -53,6 +53,34 @@ Rail transport, Roads and Road transport
 	<!-- ======================================================================= -->
 	<xsd:include schemaLocation="netex_modeOfOperation_support.xsd"/>
 	<xsd:include schemaLocation="netex_mode_version.xsd"/>
+	<!-- ======================================================================= -->
+	<xsd:group name="VehicleModeCharacterisationGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements characterfising a MODE</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="TransportMode" type="AllVehicleModesOfTransportEnumeration">
+				<xsd:annotation>
+					<xsd:documentation>A TRANSPORT MODE for a Vehicle</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:group ref="AllSubmodeChoiceGroup"/>
+			<xsd:element ref="ModeOfOperation" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ==== MODES OF OPERATION =================================================== -->
+	<xsd:complexType name="modesOfOperationRelStructure">
+		<xsd:annotation>
+			<xsd:documentation>SUBMODEs  associated with entity.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="ModeOfOperation_" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 	<xsd:element name="ModeOfOperation_" type="DataManagedObjectStructure" abstract="true" substitutionGroup="DataManagedObject">
 		<xsd:annotation>
 			<xsd:documentation>Dummy type to work around SG limitations.</xsd:documentation>
@@ -60,7 +88,7 @@ Rail transport, Roads and Road transport
 	</xsd:element>
 	<xsd:element name="ModeOfOperation" abstract="true" substitutionGroup="ModeOfOperation_">
 		<xsd:annotation>
-			<xsd:documentation>The use of any kind of vehicle to perform a trip using any mode of operation, this can be a CONVENTIONAL, ALTERNATIVE  or a PERSONAL MODE OF OPERATION.</xsd:documentation>
+			<xsd:documentation>The use of any kind of vehicle to perform a trip using any mode of operation, this can be a CONVENTIONAL, ALTERNATIVE  or a PERSONAL MODE OF OPERATION. +v1.2.2</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -113,8 +141,7 @@ Rail transport, Roads and Road transport
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->
-	<!-- ======================================================================= -->
-	<!-- ======================================================================= -->
+	<!-- ===== CONVENTIONAL MODEs ================================================= -->
 	<xsd:element name="ConventionalModeOfOperation_" type="DataManagedObjectStructure" abstract="true" substitutionGroup="ModeOfOperation_">
 		<xsd:annotation>
 			<xsd:documentation>Dummy type to work around SG limitations.</xsd:documentation>
@@ -122,7 +149,7 @@ Rail transport, Roads and Road transport
 	</xsd:element>
 	<xsd:element name="ConventionalModeOfOperation" abstract="true" substitutionGroup="ModeOfOperation_">
 		<xsd:annotation>
-			<xsd:documentation>Legacy mode of operation which is provided as a scheduled and/or flexible publicly advertised transport offer.
+			<xsd:documentation>Legacy mode of operation which is provided as a scheduled and/or flexible publicly advertised transport offer. +v1.2.2
 </xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
@@ -159,9 +186,10 @@ Rail transport, Roads and Road transport
 			<xsd:extension base="ModeOfOperation_ValueStructure"/>
 		</xsd:complexContent>
 	</xsd:complexType>
+	<!-- ======================================================================= -->
 	<xsd:element name="ScheduledOperation" abstract="false" substitutionGroup="ConventionalModeOfOperation_">
 		<xsd:annotation>
-			<xsd:documentation>The operation of a transportation using any kind of vehicle with a predefined time table.</xsd:documentation>
+			<xsd:documentation>The operation of a transportation using any kind of vehicle with a predefined time table. +v1.2.2</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -215,7 +243,7 @@ Rail transport, Roads and Road transport
 	<!-- ======================================================================= -->
 	<xsd:element name="FlexibleOperation" abstract="false" substitutionGroup="ConventionalModeOfOperation_">
 		<xsd:annotation>
-			<xsd:documentation>Passenger transport operation linked to a fixed network/schedule but offering flexibility, in order for instance, to optimise the service or to satisfy passenger demand.
+			<xsd:documentation>Passenger transport operation linked to a fixed network/schedule but offering flexibility, in order for instance, to optimise the service or to satisfy passenger demand. +v1.2.2
 </xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
@@ -247,7 +275,7 @@ Rail transport, Roads and Road transport
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->
-	<!-- ======================================================================= -->
+	<!-- ====== ALTERNATIVE MODEs =================================================== -->
 	<xsd:element name="AlternativeModeOfOperation_" type="DataManagedObjectStructure" abstract="true" substitutionGroup="ModeOfOperation_">
 		<xsd:annotation>
 			<xsd:documentation>Dummy type to work around SG limitations.</xsd:documentation>
@@ -255,7 +283,7 @@ Rail transport, Roads and Road transport
 	</xsd:element>
 	<xsd:element name="AlternativeModeOfOperation" substitutionGroup="ModeOfOperation_">
 		<xsd:annotation>
-			<xsd:documentation>Any publicly advertised mode of operation different from the CONVENTIONAL MODE OF OPERATION, for example: VEHICLE SHARING, VEHICLE RENTAL, VEHICLE POOLING.
+			<xsd:documentation>Any publicly advertised mode of operation different from the CONVENTIONAL MODE OF OPERATION, for example: VEHICLE SHARING, VEHICLE RENTAL, VEHICLE POOLING. +v1.2.2
 </xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
@@ -296,7 +324,7 @@ Rail transport, Roads and Road transport
 	<!-- ======================================================================= -->
 	<xsd:element name="VehicleRentalOperation" substitutionGroup="AlternativeModeOfOperation_">
 		<xsd:annotation>
-			<xsd:documentation>An ALTERNATIVE MODE OF OPERATION of a vehicle, part of a FLEET (in general privately owned), available for use for a certain period of time and fee, with the constraint to bring it back at specified agencies.</xsd:documentation>
+			<xsd:documentation>An ALTERNATIVE MODE OF OPERATION of a vehicle, part of a FLEET (in general privately owned), available for use for a certain period of time and fee, with the constraint to bring it back at specified agencies. +v1.2.2</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -351,7 +379,7 @@ Rail transport, Roads and Road transport
 	<!-- ======================================================================= -->
 	<xsd:element name="VehicleSharingOperation" substitutionGroup="AlternativeModeOfOperation_">
 		<xsd:annotation>
-			<xsd:documentation>Short term VEHICLE RENTAL where the vehicle can be taken from and parked at different places in the urban area, possibly without the constraint to bring back the vehicle to a specific location.
+			<xsd:documentation>Short term VEHICLE RENTAL where the vehicle can be taken from and parked at different places in the urban area, possibly without the constraint to bring back the vehicle to a specific location. +v1.2.2
 </xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
@@ -407,7 +435,7 @@ Rail transport, Roads and Road transport
 	<!-- ======================================================================= -->
 	<xsd:element name="VehiclePoolingOperation" substitutionGroup="AlternativeModeOfOperation_">
 		<xsd:annotation>
-			<xsd:documentation>An ALTERNATIVE MODE OF OPERATION of a privately-owned vehicle consisting in sharing the vehicle for a trip between the driver who is at the same time performing a trip and at least another traveller.</xsd:documentation>
+			<xsd:documentation>An ALTERNATIVE MODE OF OPERATION of a privately-owned vehicle consisting in sharing the vehicle for a trip between the driver who is at the same time performing a trip and at least another traveller. +v1.2.2</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -460,10 +488,10 @@ Rail transport, Roads and Road transport
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->
-	<!-- ======================================================================= -->
+	<!-- ====== PERSONAL MODEs  ============================================ -->
 	<xsd:element name="PersonalModeOfOperation" abstract="false" substitutionGroup="ModeOfOperation_">
 		<xsd:annotation>
-			<xsd:documentation>A non-advertised mode of operation of vehicles by persons using their own vehicle.</xsd:documentation>
+			<xsd:documentation>A non-advertised mode of operation of vehicles by persons using their own vehicle. +v1.2.2</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -521,10 +549,10 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
-	<!--======Modes===================================================================================-->
+	<!--====== TYPES OF MODE=======================================================-->
 	<xsd:element name="TypeOfModeOfOperation" substitutionGroup="TypeOfEntity">
 		<xsd:annotation>
-			<xsd:documentation>A classification for a MODE OF OPERATION.
+			<xsd:documentation>A classification for a MODE OF OPERATION. +v1.2.2
 </xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>

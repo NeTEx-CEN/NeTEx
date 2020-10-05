@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_accessRightParameter_version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_accessRightParameter_version">
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_transportOrganisation_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_serviceCalendar_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_dayType_support.xsd"/>
@@ -91,6 +91,9 @@
 				<Date>
 					<Modified>2019-04-18</Modified>FIX  - SUpport Place to Place travel (ADDRESS and TOPOGRAPHICAL PLACE) : Add AddressRef ,  TopoographiPlaceRef and PlaceUseEnum.
 				</Date>
+				<Date>
+					<Modified>2020-10-05</Modified> New Modes: Add AccessVeModes and  ModeOfOperation 
+				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the FARE ACCESS RIGHT PARAMETER types.</p>
@@ -107,7 +110,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
-					 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2020</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -350,6 +353,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Scoping validity parameters for ACCESS RIGHT PARAMETER ASSIGNMENT.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
+			<xsd:group ref="ModeValidityParametersGroup"/>
 			<xsd:group ref="OrganisationValidityParametersGroup"/>
 			<xsd:group ref="NetworkValidityParametersGroup">
 				<xsd:annotation>
@@ -369,17 +373,30 @@ Rail transport, Roads and Road transport
 			<xsd:group ref="FareValidityParametersGroup"/>
 		</xsd:sequence>
 	</xsd:group>
+	<xsd:group name="ModeValidityParametersGroup">
+		<xsd:annotation>
+			<xsd:documentation>MODE validity parameters for ACCESS RIGHT PARAMETER ASSIGNMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="VehicleModes" type="VehicleModeListOfEnumerations" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Vehicle Modes to which ACCESS RIGHTs  apply.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="AccessModes" type="AccessModeListOfEnumerations" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Access Modes to which ACCESS RIGHTs  apply. +V1.2.2</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="TransportSubmode" minOccurs="0"/>
+			<xsd:element ref="ModeOfOperationRef" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
 	<xsd:group name="OrganisationValidityParametersGroup">
 		<xsd:annotation>
 			<xsd:documentation>ORGANISATION validity parameters for ACCESS RIGHT PARAMETER ASSIGNMENT.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="VehicleModes" type="VehicleModeListOfEnumerations" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Vehicel Modes to which ACCESS RIGHTs  apply.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element ref="TransportSubmode" minOccurs="0"/>
 			<xsd:element ref="GroupOfOperatorsRef" minOccurs="0"/>
 			<xsd:group ref="OneOrAllOperatorsRefGroup" minOccurs="0"/>
 			<xsd:group ref="OneOrAllAuthoritiesRefGroup" minOccurs="0"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:ns1="http://www.siri.org.uk/siri" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_ifopt_stopPlace_version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:ns1="http://www.siri.org.uk/siri" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_ifopt_stopPlace_version">
 	<xsd:import namespace="http://www.opengis.net/gml/3.2" schemaLocation="../../gml/gml_extract_all_objects_v_3_2_1.xsd"/>
 	<!--Actual dependency-->
 	<xsd:import namespace="http://www.opengis.net/gml/3.2" schemaLocation="../../gml/gmlBasic2d-extract-v3_2_1-.xsd"/>
@@ -35,6 +35,10 @@
 				</Date>
 				<Date>
 					<Modified>2019-04-13 Fix add misisng elements from VEHICLE STOPPING POSITION, fix restricted attributes in StopPlaceEntrance etc</Modified>
+				</Date>
+				<Date>
+					<Modified>2020-10-05 New modes - add MODE of OPERATION to stop place compoment group.
+					 Allow selfDrive and TAxi modes for component mode</Modified>
 				</Date>
 				<Description>
 					<Title>NeTEx Network Exchange - STOP PLACE types.</Title>
@@ -90,6 +94,7 @@ Rail transport, Roads and Road transport
 	<xsd:include schemaLocation="netex_ifopt_stopPlace_support.xsd"/>
 	<xsd:include schemaLocation="netex_ifopt_vehicleStopping_support.xsd"/>
 	<!-- ======================================================================= -->
+	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_modeOfOperation_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_mode_version.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_address_version.xsd"/>
 	<xsd:include schemaLocation="../part1_networkDescription/netex_line_version.xsd"/>
@@ -336,12 +341,13 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Property Elements of a STOP PLACE COMPONENT.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="TransportMode" type="VehicleModeEnumeration" minOccurs="0">
+			<xsd:element name="TransportMode" type="AllVehicleModesOfTransportEnumeration" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Primary MODE of Vehicle transport associated by this component.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:group ref="PtSubmodeChoiceGroup" minOccurs="0"/>
+			<xsd:element ref="ModeOfOperationRef" minOccurs="0"/>
 			<xsd:element name="OtherTransportModes" type="VehicleModeListOfEnumerations" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Public transport MODES which may be accessed through associated place.</xsd:documentation>
