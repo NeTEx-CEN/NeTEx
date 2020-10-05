@@ -55,24 +55,6 @@ Rail transport, Roads and Road transport
 		</xsd:appinfo>
 		<xsd:documentation>NetEX:TRANSPORT ORGANISATION identifier  types for NeTEx Network Exchange.</xsd:documentation>
 	</xsd:annotation>
-	<!-- ==== TRANSPORT OPERATOR ========================================== -->
-	<xsd:element name="TransportOrganisationRef" type="OrganisationRefStructure" abstract="true" substitutionGroup="OrganisationRef">
-		<xsd:annotation>
-			<xsd:documentation>Reference to an  TRANSPORT ORGANISATION.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:complexType name="transportOrganisationRefs_RelStructure">
-		<xsd:annotation>
-			<xsd:documentation>Type for a list of references to an OPERATOR.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:complexContent>
-			<xsd:extension base="oneToManyRelationshipStructure">
-				<xsd:sequence>
-					<xsd:element ref="TransportOrganisationRef" maxOccurs="unbounded"/>
-				</xsd:sequence>
-			</xsd:extension>
-		</xsd:complexContent>
-	</xsd:complexType>
 	<xsd:element name="AllTransportOrganisationsRef" type="AllTransportOrganisationsRefStructure" substitutionGroup="AllOrganisationsRef">
 		<xsd:annotation>
 			<xsd:documentation>Reference to all  TRANSPORT ORGANISATION.</xsd:documentation>
@@ -101,14 +83,90 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="TransportOrganisationRef"/>
 		</xsd:choice>
 	</xsd:group>
+	<!-- ==== TRANSPORT ORGANISATION ========================================== -->
+	<xsd:complexType name="transportOrganisationRefs_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of references to an OPERATOR.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="oneToManyRelationshipStructure">
+				<xsd:sequence>
+					<xsd:element ref="TransportOrganisationRef" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:simpleType name="TransportOrganisationIdType">
+		<xsd:annotation>
+			<xsd:documentation>Type for identifier of a TRANSPORT ORGANISATION..</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="OrganisationIdType"/>
+	</xsd:simpleType>
+	<xsd:element name="TransportOrganisationRef" type="TransportOrganisationRefStructure" abstract="true" substitutionGroup="OrganisationRef">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a TRANSPORT ORGANISATION.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="TransportOrganisationRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a reference to an TRANSPORT ORGANISATION..</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="OrganisationRefStructure">
+				<xsd:attribute name="ref" type="TransportOrganisationIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Identifier of an TRANSPORT ORGANISATION.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!-- ==== TRANSPORT ORGANISATION ========================================== -->
+	<xsd:complexType name="publicTransportOrganisationRefs_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of references to an OPERATOR.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="oneToManyRelationshipStructure">
+				<xsd:sequence>
+					<xsd:element ref="PublicTransportOrganisationRef" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:simpleType name="PublicTransportOrganisationIdType">
+		<xsd:annotation>
+			<xsd:documentation>Type for identifier of a PUBLIC TRANSPORT ORGANISATION..</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="TransportOrganisationIdType"/>
+	</xsd:simpleType>
+	<xsd:element name="PublicTransportOrganisationRef" type="PublicTransportOrganisationRefStructure" abstract="true" substitutionGroup="TransportOrganisationRef">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a PUBLIC TRANSPORT ORGANISATION.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="PublicTransportOrganisationRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a reference to an PUBLIC TRANSPORT ORGANISATION..</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="TransportOrganisationRefStructure">
+				<xsd:attribute name="ref" type="PublicTransportOrganisationIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Identifier of an PUBLIC TRANSPORT ORGANISATION.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
 	<!-- ====  OPERATOR ======================================================= -->
 	<xsd:simpleType name="OperatorIdType">
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of an OPERATOR.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="OrganisationIdType"/>
+		<xsd:restriction base="PublicTransportOrganisationIdType"/>
 	</xsd:simpleType>
-	<xsd:element name="OperatorRef" type="OperatorRefStructure" substitutionGroup="TransportOrganisationRef">
+	<xsd:element name="OperatorRef" type="OperatorRefStructure" substitutionGroup="PublicTransportOrganisationRef">
 		<xsd:annotation>
 			<xsd:documentation>Reference to an OPERATOR.</xsd:documentation>
 		</xsd:annotation>
@@ -118,7 +176,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Type for a reference to an OPERATOR.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:simpleContent>
-			<xsd:restriction base="OrganisationRefStructure">
+			<xsd:restriction base="PublicTransportOrganisationRefStructure">
 				<xsd:attribute name="ref" type="OperatorIdType" use="required">
 					<xsd:annotation>
 						<xsd:documentation>Identifier of an OPERATOR.</xsd:documentation>
@@ -146,19 +204,24 @@ Rail transport, Roads and Road transport
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of an AUTHORITY.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="OrganisationIdType"/>
+		<xsd:restriction base="PublicTransportOrganisationIdType"/>
 	</xsd:simpleType>
-	<xsd:element name="AuthorityRef" type="AuthorityRefStructure" substitutionGroup="TransportOrganisationRef">
+	<xsd:element name="AuthorityRef" substitutionGroup="PublicTransportOrganisationRef">
 		<xsd:annotation>
 			<xsd:documentation>Reference to an AUTHORITY.</xsd:documentation>
 		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:simpleContent>
+				<xsd:restriction base="AuthorityRefStructure"/>
+			</xsd:simpleContent>
+		</xsd:complexType>
 	</xsd:element>
 	<xsd:complexType name="AuthorityRefStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for a reference to an AUTHORITY.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:simpleContent>
-			<xsd:restriction base="OrganisationRefStructure">
+			<xsd:restriction base="PublicTransportOrganisationRefStructure">
 				<xsd:attribute name="ref" type="AuthorityIdType" use="required">
 					<xsd:annotation>
 						<xsd:documentation>Identifier of referenced entity.</xsd:documentation>
@@ -181,10 +244,10 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="AuthorityRef"/>
 		</xsd:choice>
 	</xsd:group>
-	<!-- ===== AUTHORITY ========================================================= -->
-	<xsd:complexType name="groupsOfTransportOrganisationsRefs_RelStructure">
+	<!-- ==GROUP OF OPERATORss============================================================ -->
+	<xsd:complexType name="groupsOfOperatorsRefs_RelStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for a list of references to list of GROUPs OF TRANSPORT ORGANISATIONS.</xsd:documentation>
+			<xsd:documentation>Type for a list of references to list of GROUPs OFOPERATORS.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="oneToManyRelationshipStructure">
@@ -194,7 +257,6 @@ Rail transport, Roads and Road transport
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<!-- ==GROUP OF OPERATORss============================================================ -->
 	<xsd:simpleType name="GroupOfOperatorsIdType">
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of a GROUP OF OPERATORs. (In fact TRNASPORT ORGANISATION)</xsd:documentation>

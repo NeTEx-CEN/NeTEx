@@ -37,15 +37,22 @@ There is also an _Oxygen_ project file:
 
 =======
 Version 1.2.2 - New modes initial changes
+### 2020.10.04  NewModes  Add  __TransportOrganisation__ and __PublicTransportOrganisation__.   
+  * _Updates to xml schema_:   
+	* netex_transportOrganisation_support.xsd
+	* netex_transportOrganisation_version.xsd
+	
 ### 2020.10.04  NewModes  Add  references to__ModeOfOperation__.   
-  * _Updates to xml schema_:    
-	* netex_stopPlace_version.xsd
-	* netex_servicePattern_version.xsd
-	* netex_equipmentTicketing_version.xsd
+  * _Updates to xml schema_:   
 	* netex_transportOrganisation_version.xsd
 	* netex_vehicleType_version.xsd
-	* netex_line_version.xsd
+	* netex_stopPlace_version.xsd
+	* netex_flexiblStopPlace_version.xsd
+	* netex_equipmentTicketing_version.xsd
+	* netex_equipmentSigns_version.xsd
 	* netex_access_version.xsd
+	* netex_line_version.xsd
+	* netex_servicePattern_version.xsd
 	* netex_assistenceBooking_version.xsd
 	* netex_accessRightParameter_version.xsd
 	* netex_usageParameterTravel_version.xsd
