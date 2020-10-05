@@ -37,6 +37,10 @@ There is also an _Oxygen_ project file:
 
 =======
 Version 1.2.2 - New modes initial changes
+### 2020.10.04  NewModes  Add new values for  __StakeholderRoleType__ and    __DataRoleType__.   
+  * _Updates to xml schema_:  
+  	* netex_responsibilities_support.xsd 
+
 ### 2020.10.04  NewModes  Add  __MobilityService__ and subtypes, add __OnlineServiceOperator__.   
   * _Updates to xml schema_:  
   	* netex_all_objects_reusableComponents.xsd
