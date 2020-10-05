@@ -36,14 +36,28 @@ There is also an _Oxygen_ project file:
 # Change Log
 
 =======
-Version 1.2.2 - New mode initial changes
-### 2020.10.04  NewModes  Add __ModeOfOperation__.  ALso correct typos in Notice fiel.
+Version 1.2.2 - New modes initial changes
+### 2020.10.04  NewModes  Add  references to__ModeOfOperation__.   
   * _Updates to xml schema_:    
-	* NEW netex_framework\netex_reusableComponents\netex_modeOfOperation_support.xsd
-	* NEW netex_framework\netex_reusableComponents\netex_modeOfOperation_version.xsd
-	* netex_framework\netex_reusableComponents\netex_mode_support.xsd
-	* netex_framework\netex_reusableComponents\netex_mode_version.xsd
-	* netex_framework\netex_reusableComponents\netex_notice_version.xsd
+	* netex_stopPlace_version.xsd
+	* netex_servicePattern_version.xsd
+	* netex_equipmentTicketing_version.xsd
+	* netex_transportOrganisation_version.xsd
+	* netex_vehicleType_version.xsd
+	* netex_line_version.xsd
+	* netex_access_version.xsd
+	* netex_assistenceBooking_version.xsd
+	* netex_accessRightParameter_version.xsd
+	* netex_usageParameterTravel_version.xsd
+	* netex_fareFrame_version.xsd
+	
+### 2020.10.04  NewModes  Add __ModeOfOperation__.  ALso correct typos in __Notice__  file.
+  * _Updates to xml schema_:    
+	* NEW netex_modeOfOperation_support.xsd
+	* NEW netex_modeOfOperation_version.xsd
+	* netex_mode_support.xsd
+	* netex_mode_version.xsd
+	* netex_notice_version.xsd
 	* netex.spp
 
 Version 1.1.2 - Base version plus further minor fixes comprising##

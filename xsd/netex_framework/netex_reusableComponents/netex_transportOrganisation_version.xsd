@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <!-- edited with XMLSpy v2010 rel. 3 sp1 (http://www.altova.com) by Nicholas Knowles (Kizoom) -->
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_transportOrganisation_version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_transportOrganisation_version">
 	<xsd:include schemaLocation="netex_transportOrganisation_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_modeOfOperation_support.xsd"/>
 	<xsd:include schemaLocation="../netex_reusableComponents/netex_mode_version.xsd"/>
-	<xsd:include schemaLocation="../netex_genericFramework/netex_organisation_version.xsd"/>
 	<xsd:include schemaLocation="netex_address_version.xsd"/>
 	<xsd:annotation>
 		<xsd:appinfo>
@@ -23,6 +23,10 @@
 				</Date>
 				<Date>
 					<Modified>2019-03-08</Modified>Improve _Network_  etc for large tariff definitions: 		Add UseToExclude flag to GroupOfOperators
+				</Date>
+				<Date>
+					<Modified>2020-10-05</Modified> New Modes: Add mode of operation to operator.
+					 Allow selfdrive and taximodes
 				</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines  NetEX:TRANSPORT  ORGANISATION    types.</p>
@@ -62,6 +66,7 @@ Rail transport, Roads and Road transport
 		<xsd:documentation>NetEX:TRANSPORT ORGANISATION  types for NeTEx Network Exchange.</xsd:documentation>
 	</xsd:annotation>
 	<!-- ===ENTIITY IN VERSION IN FRAME====Used in SERVICE FRAME)=================================================== -->
+	<xsd:include schemaLocation="../netex_genericFramework/netex_organisation_version.xsd"/>
 	<xsd:group name="OrganisationInFrameGroup">
 		<xsd:annotation>
 			<xsd:documentation>ORGANISATION elements in frame.</xsd:documentation>
@@ -199,7 +204,6 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Elements of an OPERATOR.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element ref="CountryRef" minOccurs="0"/>
 			<xsd:element name="Address" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Address of OPERATOR.</xsd:documentation>
@@ -228,11 +232,13 @@ Rail transport, Roads and Road transport
 					</xsd:complexContent>
 				</xsd:complexType>
 			</xsd:element>
-			<xsd:element name="PrimaryMode" type="VehicleModeEnumeration" minOccurs="0">
+			<xsd:element ref="CountryRef" minOccurs="0"/>
+			<xsd:element name="PrimaryMode" type="AllVehicleModesOfTransportEnumeration" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Primary transport MODE of OPERATOR</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element ref="ModeOfOperationRef" minOccurs="0"/>
 			<xsd:element name="OperatorActivities" type="ListOfOperatorActivities" default="passenger" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Activities undertaken by OPERATOR.</xsd:documentation>
