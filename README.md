@@ -36,7 +36,17 @@ There is also an _Oxygen_ project file:
 # Change Log
 
 =======
-Version 1.1.2 - Base version plus  further minor fixes comprising##
+Version 1.2.2 - New mode initial changes
+### 2020.10.04  NewModes  Add __ModeOfOperation__.  ALso correct typos in Notice fiel.
+  * _Updates to xml schema_:    
+	* NEW netex_framework\netex_reusableComponents\netex_modeOfOperation_support.xsd
+	* NEW netex_framework\netex_reusableComponents\netex_modeOfOperation_version.xsd
+	* netex_framework\netex_reusableComponents\netex_mode_support.xsd
+	* netex_framework\netex_reusableComponents\netex_mode_version.xsd
+	* netex_framework\netex_reusableComponents\netex_notice_version.xsd
+	* netex.spp
+
+Version 1.1.2 - Base version plus further minor fixes comprising##
 
 ### 2020.08.11  Update oxygen project to include new examples
   * _Other updates_:    
