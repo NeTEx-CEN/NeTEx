@@ -27,8 +27,6 @@
 				<Date>
 					<Modified>2020-10-05</Modified> New Modes: Add mode of operation to operator.
 					 Allow selfdrive and taximodes
-					 Insert TransportOrganisation and PublicTransportOrganisation in hierarch
-					 Qdd additional modes relationship to PublicTransportOperator
 				</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines  NetEX:TRANSPORT  ORGANISATION    types.</p>
@@ -158,13 +156,8 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>A company  providing public transport services.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:element name="PublicTransportOrganisation_" type="TransportOrganisation_VersionStructure" abstract="true" substitutionGroup="TransportOrganisation_">
-		<xsd:annotation>
-			<xsd:documentation>A company  providing public transport services.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
 	<!-- ==== PUBLIC TRANSPORT ORGANISATION ================================================== -->
-	<xsd:element name="TransportOrganisation" abstract="true" substitutionGroup="TransportOrganisation_">
+	<xsd:element name="TransportOrganisation" substitutionGroup="TransportOrganisation_">
 		<xsd:annotation>
 			<xsd:documentation>A company  providing transport services.</xsd:documentation>
 		</xsd:annotation>
@@ -194,7 +187,7 @@ Rail transport, Roads and Road transport
 			</xsd:complexContent>
 		</xsd:complexType>
 	</xsd:element>
-	<xsd:complexType name="TransportOrganisation_VersionStructure" abstract="true">
+	<xsd:complexType name="TransportOrganisation_VersionStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for an TRANSPORT ORGANISATION.</xsd:documentation>
 		</xsd:annotation>
@@ -273,7 +266,7 @@ Rail transport, Roads and Road transport
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ==== PUBLIC TRANSPORT ORGANISATION ================================================== -->
-	<xsd:element name="PublicTransportOrganisation" abstract="true" substitutionGroup="TransportOrganisation_">
+	<xsd:element name="PublicTransportOrganisation" substitutionGroup="TransportOrganisation">
 		<xsd:annotation>
 			<xsd:documentation>A company  providing public transport services.</xsd:documentation>
 		</xsd:annotation>
@@ -303,7 +296,7 @@ Rail transport, Roads and Road transport
 			</xsd:complexContent>
 		</xsd:complexType>
 	</xsd:element>
-	<xsd:complexType name="PublicTransportOrganisation_VersionStructure" abstract="true">
+	<xsd:complexType name="PublicTransportOrganisation_VersionStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for an PUBLIC TRANSPORT ORGANISATION.</xsd:documentation>
 		</xsd:annotation>
@@ -319,16 +312,10 @@ Rail transport, Roads and Road transport
 		<xsd:annotation>
 			<xsd:documentation>Elements of an PUBLIC TRANSPORT ORGANISATION.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:sequence>
-			<xsd:element name="otherModes" type="modeRefs_RelStructure" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Additional transport MODEs for OPEARTOR.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-		</xsd:sequence>
+		<xsd:sequence/>
 	</xsd:group>
 	<!-- ==== OPERATOR ========================================================= -->
-	<xsd:element name="Operator" substitutionGroup="PublicTransportOrganisation_">
+	<xsd:element name="Operator" substitutionGroup="TransportOrganisation_">
 		<xsd:annotation>
 			<xsd:documentation>A company  providing public transport services.</xsd:documentation>
 		</xsd:annotation>
@@ -377,7 +364,7 @@ Rail transport, Roads and Road transport
 		<xsd:sequence/>
 	</xsd:group>
 	<!-- ===== AUTHORITY ========================================================== -->
-	<xsd:element name="Authority" substitutionGroup="PublicTransportOrganisation_">
+	<xsd:element name="Authority" substitutionGroup="TransportOrganisation_">
 		<xsd:annotation>
 			<xsd:documentation>The ORGANISATION under which the responsibility of organising the transport service in a certain area is placed.</xsd:documentation>
 		</xsd:annotation>
@@ -432,7 +419,7 @@ Rail transport, Roads and Road transport
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->
-	<!-- ==== GROUP OF OPERATORs ========================================================== -->
+	<!-- ==GROUP OF OPERATORs============================================================ -->
 	<xsd:element name="GroupOfOperators" abstract="false" substitutionGroup="GroupOfEntities">
 		<xsd:annotation>
 			<xsd:documentation>A grouping of OPERATORs.</xsd:documentation>
@@ -492,7 +479,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
-	<!-- ==== OPERATIONAL CONTEXT ======================================================= -->
+	<!-- ====Operator========================================================== -->
 	<xsd:element name="OperationalContext" substitutionGroup="DataManagedObject">
 		<xsd:annotation>
 			<xsd:documentation>Characterization of a set of operational objects, such as timing or links determined either by a DEPARTMENT or by an ORGANISATIONAL UNIT.</xsd:documentation>
@@ -553,7 +540,7 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="TransportSubmode" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
-	<!-- ==== OPERATOR DEPARTMENT t========================================================= -->
+	<!-- ====OperatingDepartment========================================================= -->
 	<xsd:element name="OperatingDepartment" substitutionGroup="OrganisationPart_">
 		<xsd:annotation>
 			<xsd:documentation>A specific DEPARTMENT which administers certain LINEs.</xsd:documentation>
@@ -635,7 +622,7 @@ Rail transport, Roads and Road transport
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<!-- === CONTROL CENTRE ====================================================== -->
+	<!-- ======================================================================= -->
 	<xsd:complexType name="ControlCentres_RelStructure">
 		<xsd:annotation>
 			<xsd:documentation>A list of CONTROL CENTREs.</xsd:documentation>
@@ -709,7 +696,7 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="DepartmentRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
-	<!-- ===== TRANSPORT ADMINISTRATIVE ZONE ================================================ -->
+	<!-- ======================================================================= -->
 	<xsd:element name="TransportAdministrativeZone" abstract="false" substitutionGroup="AdministrativeZone_">
 		<xsd:annotation>
 			<xsd:documentation>A ZONE relating to the management responsibilities of an ORGANISATION. For example to allocate bus stop identifiers for a region.</xsd:documentation>
