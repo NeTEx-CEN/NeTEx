@@ -30,6 +30,8 @@
 				</Date>
 				<Date>
 					<Modified>2020-10-04</Modified>NewModes: Add list of VEHICLEs.
+						Add TransportType, PersonalTransportType
+						Add fuel types none, other
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -71,7 +73,45 @@ Rail transport, Roads and Road transport
 			</Metadata>
 		</xsd:appinfo>
 	</xsd:annotation>
-	<!-- ======================================================================= -->
+	<!-- ==== VEHICLE TYPE ==================================================== -->
+	<xsd:complexType name="transportTypeRefs_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of TRANSPORT TYPEs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="oneToManyRelationshipStructure">
+				<xsd:sequence>
+					<xsd:element ref="TransportTypeRef" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:simpleType name="TransportTypeIdType">
+		<xsd:annotation>
+			<xsd:documentation>Type for identifier of a TRANSPORT TYPE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ObjectIdType"/>
+	</xsd:simpleType>
+	<xsd:element name="TransportTypeRef" type="TransportTypeRefStructure" substitutionGroup="VersionOfObjectRef">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a TRANSPORT TYPE.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="TransportTypeRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a reference to a TRANSPORT TYPE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="VersionOfObjectRefStructure">
+				<xsd:attribute name="ref" type="TransportTypeIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Identifier of a TRANSPORT TYPE.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!-- ==== VEHICLE TYPE ==================================================== -->
 	<xsd:complexType name="vehicleTypeRefs_RelStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for a list of VEHICLE TYPEs.</xsd:documentation>
@@ -88,9 +128,9 @@ Rail transport, Roads and Road transport
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of a VEHICLE TYPE.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="ObjectIdType"/>
+		<xsd:restriction base="TransportTypeIdType"/>
 	</xsd:simpleType>
-	<xsd:element name="VehicleTypeRef" type="VehicleTypeRefStructure" substitutionGroup="VersionOfObjectRef">
+	<xsd:element name="VehicleTypeRef" type="VehicleTypeRefStructure" substitutionGroup="TransportTypeRef">
 		<xsd:annotation>
 			<xsd:documentation>Reference to a VEHICLE TYPE.</xsd:documentation>
 		</xsd:annotation>
@@ -100,7 +140,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Type for a reference to a VEHICLE TYPE.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:simpleContent>
-			<xsd:restriction base="VersionOfObjectRefStructure">
+			<xsd:restriction base="TransportTypeRefStructure">
 				<xsd:attribute name="ref" type="VehicleTypeIdType" use="required">
 					<xsd:annotation>
 						<xsd:documentation>Identifier of a VEHICLE TYPE.</xsd:documentation>
@@ -109,7 +149,45 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
-	<!-- ======================================================================= -->
+	<!-- ==== VEHICLE TYPE ==================================================== -->
+	<xsd:complexType name="personalTransportTypeRefs_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of PERSONAL TRANSPORT TYPEs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="oneToManyRelationshipStructure">
+				<xsd:sequence>
+					<xsd:element ref="PersonalTransportTypeRef" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:simpleType name="PersonalTransportTypeIdType">
+		<xsd:annotation>
+			<xsd:documentation>Type for identifier of a PERSONAL TRANSPORT TYPE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="TransportTypeIdType"/>
+	</xsd:simpleType>
+	<xsd:element name="PersonalTransportTypeRef" type="PersonalTransportTypeRefStructure" substitutionGroup="TransportTypeRef">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a PERSONAL TRANSPORT TYPE.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="PersonalTransportTypeRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a reference to a PERSONAL TRANSPORT TYPE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="TransportTypeRefStructure">
+				<xsd:attribute name="ref" type="VehicleTypeIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Identifier of a VEHICLE TYPE.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!-- ===== VEHICLE REQUIREMENT ======================================================== -->
 	<xsd:simpleType name="VehicleRequirementIdType">
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of a PASSENGER CARRYING REQUIREMENT.</xsd:documentation>
@@ -135,7 +213,7 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
-	<!-- ======================================================================= -->
+	<!-- ====== PASSENGER CARRYING REQUIREMENT ======================================= -->
 	<xsd:simpleType name="PassengerCarryingRequirementIdType">
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of a PASSENGER CARRYING REQUIREMENT.</xsd:documentation>
@@ -161,7 +239,7 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
-	<!-- ======================================================================= -->
+	<!-- ======= PASSENGER CAPACITY =========================================== -->
 	<xsd:simpleType name="PassengerCapacityIdType">
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of a PASSENGER CAPACITY.</xsd:documentation>
@@ -187,7 +265,7 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
-	<!-- ======================================================================= -->
+	<!-- ===== VEHICLE MANOEVRING REQUIREMENT ================================================= -->
 	<xsd:simpleType name="VehicleManoeuvringRequirementIdType">
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of a VEHICLE MANOEUVRING REQUIREMENT.</xsd:documentation>
@@ -213,7 +291,7 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
-	<!-- ======================================================================= -->
+	<!-- ======= FACILITY REQUIREMENT =================================================== -->
 	<xsd:simpleType name="FacilityRequirementIdType">
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of a FACILITY REQUIRMENT.</xsd:documentation>
@@ -239,7 +317,7 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
-	<!-- ======================================================================= -->
+	<!-- ====== VEHICLE ================================================== -->
 	<xsd:complexType name="vehicleRefs_RelStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for a list of VEHICLEs.</xsd:documentation>
@@ -277,7 +355,7 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
-	<!-- ======================================================================= -->
+	<!-- ===== VEHICLE MODEL ======================================================= -->
 	<xsd:simpleType name="VehicleModelIdType">
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of a VEHICLE MODEL.</xsd:documentation>
@@ -303,7 +381,7 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
-	<!-- ======================================================================= -->
+	<!-- ======VEHICLE EQUIPMENT PROFILE ====================================================== -->
 	<xsd:simpleType name="VehicleEquipmentProfileIdType">
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of a VEHICLE EQUIPMENT PROFILE.</xsd:documentation>
@@ -343,13 +421,24 @@ Rail transport, Roads and Road transport
 			<xsd:enumeration value="electricContact"/>
 			<xsd:enumeration value="battery"/>
 			<xsd:enumeration value="dieselBatteryHybrid"/>
+			<xsd:enumeration value="hydrogen"/>
 			<xsd:enumeration value="petrolBatteryHybrid"/>
 			<xsd:enumeration value="biodiesel"/>
-			<xsd:enumeration value="hydrogen"/>
 			<xsd:enumeration value="liquidGas"/>
 			<xsd:enumeration value="methane"/>
 			<xsd:enumeration value="ethanol"/>
+			<xsd:enumeration value="none"/>
 			<xsd:enumeration value="other"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="LicenceRequirementsEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for licence requirements </xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="full"/>
+			<xsd:enumeration value="provisional"/> 
+			<xsd:enumeration value="none"/> 
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="VehicleOrientationEnumeration">
