@@ -37,11 +37,24 @@ There is also an _Oxygen_ project file:
 
 =======
 Version 1.2.2 - New modes initial changes
+### 2020.10.04  NewModes  Add  __MobilityService__ and subtypes, add __OnlineServiceOperator__.   
+  * _Updates to xml schema_:  
+  	* netex_all_objects_reusableComponents.xsd
+  	* NEW netex_mobilityService_support.xsd
+	* NEW netex_mobilityService_version.xsd
+	* NEW netex_onlineService_support.xsd
+	* NEW netex_onlineService_version.xsd
+	* netex.spp
+
 ### 2020.10.04  NewModes  Revise  __VehicleType__ add __TransportType__ and __PersonalTransportType__.   
-  * _Updates to xml schema_:   
+  * _Updates to xml schema_:  
+  	* NEW netex_fleet_support.xsd
+	* NEW netex_fleet_version.xsd
 	* netex_vehicleType_support.xsd
 	* netex_vehicleType_version.xsd
 	* netex_vehicleJourney_version.xsd
+	* netex_all_objects_reusableComponents.xsd
+	* NEW netex_all_objects_newModes.xsd
 
 ### 2020.10.04  NewModes  Add  __TransportOrganisation__ and __PublicTransportOrganisation__.   
   * _Updates to xml schema_:   
