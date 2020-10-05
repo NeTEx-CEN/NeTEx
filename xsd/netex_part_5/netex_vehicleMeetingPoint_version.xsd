@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_fleet_version">
-	<xsd:include schemaLocation="netex_fleet_support.xsd"/>
-	<xsd:include schemaLocation="../netex_framework/netex_reusableComponents/netex_transportOrganisation_support.xsd"/>
-	<xsd:include schemaLocation="../netex_framework/netex_reusableComponents/netex_vehicleType_support.xsd"/>
-	<xsd:include schemaLocation="../netex_framework/netex_genericFramework/netex_grouping_version.xsd"/>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_vehicleMeetingPoint_version">
+	<xsd:include schemaLocation="netex_vehicleMeetingPoint_support.xsd"/>
+	<xsd:include schemaLocation="../netex_framework/netex_genericFramework/netex_pointAndLink_version.xsd"/>
 	<!-- ======================================================================= -->
 	<xsd:annotation>
 		<xsd:appinfo>
@@ -15,10 +13,10 @@
 				<Coverage>Europe</Coverage>
 				<Creator>First drafted for NeTEx version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.  mailto:schemer@netex.org.uk</Creator>
 				<Date>
-					<Created>2020-10-04</Created>Add for New Modes
+					<Created>2020-10-05</Created>Add for New Modes
 				</Date>
 				<Date>
-					<Modified>2020-10-04</Modified>Add list of FLEET refs  
+					<Modified>2020-10-05</Modified>
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -29,7 +27,7 @@
 					<Syntax>http://www.w3.org/2001/XMLSchema</Syntax>
 					<Description>XML schema, W3C Recommendation 2001</Description>
 				</Format>
-				<Identifier>{http://www.netex.org.uk/schemas/1.0/xsd/netex_part_5/netex_reusableComponents}netex_fleet_version.xsd</Identifier>
+				<Identifier>{http://www.netex.org.uk/schemas/1.0/xsd/netex_part_5/netex_newModes}netex_vehicleMeetingPoint_version.xsd</Identifier>
 				<Language>[ISO 639-2/B] ENG</Language>
 				<Publisher>CEN TC278 WG3 SG9</Publisher>
 				<Relation>
@@ -59,17 +57,16 @@ Rail transport, Roads and Road transport
 				<Type>Standard</Type>
 			</Metadata>
 		</xsd:appinfo>
-		<xsd:documentation>FLEET data types</xsd:documentation>
+		<xsd:documentation>MEETING POINT data types</xsd:documentation>
 	</xsd:annotation>
-	<!-- ==== FLEET ============================================================ -->
-	<xsd:element name="Fleet" substitutionGroup="DataManagedObject">
+	<!-- ==== MEETING POINT  ============================================================ -->
+	<xsd:element name="VehicleMeetingPoint" abstract="false" substitutionGroup="Point">
 		<xsd:annotation>
-			<xsd:documentation>A set of vehicles of any type.
-</xsd:documentation>
+			<xsd:documentation> A POINT where passengers can board or alight from vehicles.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
-				<xsd:restriction base="Fleet_VersionStructure">
+				<xsd:restriction base="VehicleMeetingPoint_VersionStructure">
 					<xsd:sequence>
 						<xsd:sequence>
 							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
@@ -78,57 +75,43 @@ Rail transport, Roads and Road transport
 							<xsd:group ref="DataManagedObjectGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
-							<xsd:group ref="FleetGroup"/>
+							<xsd:group ref="PointGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="VehicleMeetingPointGroup"/>
 						</xsd:sequence>
 					</xsd:sequence>
-					<xsd:attribute name="id" type="FleetIdType">
-						<xsd:annotation>
-							<xsd:documentation>Identifier of FLEET.</xsd:documentation>
-						</xsd:annotation>
-					</xsd:attribute>
+					<xsd:attribute name="id" type="VehicleMeetingPointIdType" use="optional"/>
 				</xsd:restriction>
 			</xsd:complexContent>
 		</xsd:complexType>
 	</xsd:element>
-	<xsd:complexType name="Fleet_VersionStructure">
+	<xsd:complexType name="VehicleMeetingPoint_VersionStructure" abstract="false">
 		<xsd:annotation>
-			<xsd:documentation>Type for a  FLEET.</xsd:documentation>
+			<xsd:documentation>Type for VEHICLE MEETING POINT restricts id.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
-			<xsd:extension base="GroupOfEntities_VersionStructure">
+			<xsd:extension base="Point_VersionStructure">
 				<xsd:sequence>
-					<xsd:group ref="FleetGroup"/>
+					<xsd:group ref="VehicleMeetingPointGroup"/>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:group name="FleetGroup">
+	<xsd:group name="VehicleMeetingPointGroup">
 		<xsd:annotation>
-			<xsd:documentation>Elements for a FLEET.</xsd:documentation>
+			<xsd:documentation>Elements for a VEHICLE MEETING POINT.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:sequence>
-			<xsd:element name="members" type="vehicleRefs_RelStructure" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>VEHICLEs in FLEET,</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element ref="TransportOrganisationRef" minOccurs="0"/>
-			<xsd:element ref="TypeOfFleetRef" minOccurs="0"/>
-			<xsd:element name="vehicleTypes" type="vehicleTypeRefs_RelStructure" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>VEHICLE TYPEs used in FLEET..</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-		</xsd:sequence>
+		<xsd:sequence/>
 	</xsd:group>
 	<!-- ======================================================================= -->
-	<xsd:element name="TypeOfFleet" abstract="false" substitutionGroup="TypeOfValue">
+	<xsd:element name="VehicleMeetingLink" abstract="false" substitutionGroup="Link">
 		<xsd:annotation>
-			<xsd:documentation>A classification for a FLEET of VEHICLEs.</xsd:documentation>
+			<xsd:documentation>A LINK between an ordered pair of STOP POINTs.  VEHICLE MEETING LINKs are directional - there will be separate links for each direction of a route.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
-				<xsd:restriction base="TypeOfFleet_ValueStructure">
+				<xsd:restriction base="VehicleMeetingLink_VersionStructure">
 					<xsd:sequence>
 						<xsd:sequence>
 							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
@@ -137,25 +120,45 @@ Rail transport, Roads and Road transport
 							<xsd:group ref="DataManagedObjectGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
-							<xsd:group ref="TypeOfValueGroup"/>
+							<xsd:group ref="LinkGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="VehicleMeetingLinkGroup"/>
 						</xsd:sequence>
 					</xsd:sequence>
-					<xsd:attribute name="id" type="TypeOfFleetIdType">
-						<xsd:annotation>
-							<xsd:documentation>Identifier of TYPE OF FLEET.</xsd:documentation>
-						</xsd:annotation>
-					</xsd:attribute>
+					<xsd:attribute name="id" type="VehicleMeetingLinkIdType"/>
 				</xsd:restriction>
 			</xsd:complexContent>
 		</xsd:complexType>
 	</xsd:element>
-	<xsd:complexType name="TypeOfFleet_ValueStructure" abstract="false">
+	<xsd:complexType name="VehicleMeetingLink_VersionStructure" abstract="false">
 		<xsd:annotation>
-			<xsd:documentation>Type for a TYPE OF FLEET.</xsd:documentation>
+			<xsd:documentation>Type for VEHICLE MEETING LINK.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
-			<xsd:extension base="TypeOfValue_VersionStructure"/>
+			<xsd:extension base="Link_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="VehicleMeetingLinkGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
+	<xsd:group name="VehicleMeetingLinkGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a VEHICLE MEETING LINK.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="FromPointRef" type="VehicleMeetingPointRefStructure">
+				<xsd:annotation>
+					<xsd:documentation>Identifier of VEHICLE MEETING POINT from which Link starts.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ToPointRef" type="VehicleMeetingPointRefStructure">
+				<xsd:annotation>
+					<xsd:documentation>Identifier of VEHICLE MEETING POINT at which Link ends.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
 	<!-- ======================================================================= -->
 </xsd:schema>
