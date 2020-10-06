@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_ifopt_parking_version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_ifopt_parking_version">
 	<xsd:include schemaLocation="netex_ifopt_parking_support.xsd"/>
 	<xsd:include schemaLocation="netex_ifopt_navigationPath_version.xsd"/>
 	<!-- ======================================================================= -->
@@ -36,7 +36,10 @@
 				<Date>
 					<Modified>2019-04-25</Modified>Fix to use  Parking Passenger ENtrance  
 				</Date>
-						 
+				<Date>
+					<Modified>2020-10-06</Modified>New Modes Add TYPE OF PARKING,
+					    Add MODE OF OPERATION to PARKING ENTRANCE
+				</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines STOP PLACE base types.</p>
 				</Description>
@@ -49,7 +52,7 @@
 				<Language>[ISO 639-2/B] ENG</Language>
 				<Publisher>Kizoom Software Ltd, 16 High Holborn, London WC1V 6BX</Publisher>
 				<Rights>Unclassified
-					 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2020</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -197,6 +200,7 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Types of Vehicle allowed in PARKING.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element ref="TypeOfParkingRef" minOccurs="0"/>
 			<xsd:element name="ParkingLayout" type="ParkingLayoutEnumeration" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Format of building.</xsd:documentation>
@@ -440,6 +444,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Elements of a PARKING ENTRANCE.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
+			<xsd:element ref="ModeOfOperationRef" minOccurs="0"/>
 			<xsd:element name="areas" type="parkingAreaRefs_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>PARKING AREA to which prperties appky +v1.1.</xsd:documentation>
@@ -1008,5 +1013,41 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
+	<!-- ==== TYPE OF FLEET ============================================================ -->
+	<xsd:element name="TypeOfParking" abstract="false" substitutionGroup="TypeOfValue">
+		<xsd:annotation>
+			<xsd:documentation>A classification for a PARKING.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="TypeOfParking_ValueStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="TypeOfValueGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="TypeOfParkingIdType">
+						<xsd:annotation>
+							<xsd:documentation>Identifier of TYPE OF PARKING.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="TypeOfParking_ValueStructure" abstract="false">
+		<xsd:annotation>
+			<xsd:documentation>Type for a TYPE OF PARKING.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="TypeOfValue_VersionStructure"/>
+		</xsd:complexContent>
+	</xsd:complexType>
 	<!-- ======================================================================= -->
 </xsd:schema>
