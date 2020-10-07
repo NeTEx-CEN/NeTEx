@@ -37,13 +37,62 @@ There is also an _Oxygen_ project file:
 
 =======
 Version 1.2.2 - New modes initial changes
+
+### 2020.10.07  NewModes  Add  __MediumAccessDevice__.
+  * _Updates to xml schema_:  
+    	* netex_all_objects_part5_newModes.xsd
+   	* NEW netex_mediumApplication_support.xsd
+   	* NEW netex_mediumApplication_version.xsd
+   	* NEW netex_customerMeans_support.xsd
+   	* NEW netex_customerMeans_version.xsd
+   	* NEW netex_vehicleAccessCredentials_support.xsd
+   	* NEW netex_vehicleAccessCredentials_version.xsd
+   	* netex_salesContract_support.xsd
+   	
+### 2020.10.07  NewModes  Add  __VehicleReleaseEquipment__,  __RefuellingEquipment__ , __ModelProfile__.
+  * _Updates to xml schema_:  
+    	* netex_all_objects_part5_newModes.xsd
+   	* netex_parkingEquipment_support.xsd
+   	* netex_parkingEquipment_version.xsd
+   	* netex_vehicleType_support.xsd
+   	* netex_vehicleType_version.xsd
+   	* NEW netex_fleetEquipment_support.xsd
+  	* NEW netex_fleetEquipment_version.xsd
+  	* NEW netex_equipmentEnergy_support.xsd
+  	* NEW netex_equipmentEnergy_version.xsd
+
+### 2020.10.06  NewModes  Add    __SingleJourney__ and    ___SingleJourneyPath__. Add __ModeRestrictionAsssessment__ to __RouteLink__.
+  * _Updates to xml schema_:  
+  	* netex_all_objects_part5_newModes.xsd
+  	* NEW netex_singleJourney_support.xsd
+  	* NEW netex_singleJourney_version.xsd
+  	* NEW netex_singleJourneyPath_support.xsd
+  	* NEW netex_singleJourneyPath_version.xsd
+  	* NEW netex_vehicleServicePlaceAssignment_support.xsd
+  	* NEW netex_vehicleServicePlaceAssignment_version.xsd
+   	* netex_route_support.xsd
+  	* netex_route_version.xsd
+ 
+### 2020.10.06 NewModes  Add    __SingleJourney__ and    ___SingleJourneyPath__.  Add __VehicleMeetingPoint__ to __Connection__ end.
+  * _Updates to xml schema_:  
+  	* netex_all_objects_part5_newModes.xsd
+  	* NEW netex_vehicleMeetingPoint_support.xsd
+  	* NEW netex_vehicleMeetingPoint_vesion.xsd
+  	* NEW netex_vehicleMeetingPointAssignment_support.xsd
+  	* NEW netex_vehicleMeetingPointAssignment_version.xsd
+  	* NEW netex_taxiPlace_support.xsd
+  	* NEW netex_taxiPlace_vesion.xsd
+  	* NEW netex_vehicleMeetingPlace_support.xsd
+  	* NEW netex_vehicleMeetingPlace_vesion.xsd
+  	* netex_servicePattern_version.xsd
+  	
 ### 2020.10.04  NewModes  Add new values for  __StakeholderRoleType__ and    __DataRoleType__.   
   * _Updates to xml schema_:  
   	* netex_responsibilities_support.xsd 
 
 ### 2020.10.04  NewModes  Add  __MobilityService__ and subtypes, add __OnlineServiceOperator__.   
   * _Updates to xml schema_:  
-  	* netex_all_objects_reusableComponents.xsd
+  	* netex_all_objects_part5_newModes.xsd
   	* NEW netex_mobilityService_support.xsd
 	* NEW netex_mobilityService_version.xsd
 	* NEW netex_onlineService_support.xsd
