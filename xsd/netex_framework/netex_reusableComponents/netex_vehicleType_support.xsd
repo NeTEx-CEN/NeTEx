@@ -32,6 +32,7 @@
 					<Modified>2020-10-04</Modified>NewModes: Add list of VEHICLEs.
 						Add TransportType, PersonalTransportType
 						Add fuel types none, other
+						Add Vehicle PRofile
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -437,8 +438,8 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:restriction base="xsd:normalizedString">
 			<xsd:enumeration value="full"/>
-			<xsd:enumeration value="provisional"/> 
-			<xsd:enumeration value="none"/> 
+			<xsd:enumeration value="provisional"/>
+			<xsd:enumeration value="none"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="VehicleOrientationEnumeration">
@@ -451,7 +452,33 @@ Rail transport, Roads and Road transport
 			<xsd:enumeration value="unknown"/>
 		</xsd:restriction>
 	</xsd:simpleType>
-	<!--=============================================================================-->
+	<!-- ===== VEHICLE PROFILE ======================================================== -->
+	<xsd:simpleType name="VehicleProfileIdType">
+		<xsd:annotation>
+			<xsd:documentation>Type for identifier of a VEHICLE PROFILE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ObjectIdType"/>
+	</xsd:simpleType>
+	<xsd:element name="VehicleProfileRef" type="VehicleProfileRefStructure" substitutionGroup="VersionOfObjectRef">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a VEHICLE PROFILE</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="VehicleProfileRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a reference to a VEHICLE PROFILE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="VersionOfObjectRefStructure">
+				<xsd:attribute name="ref" type="VehicleProfileIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Identifier of referenced entity.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!--==== PURPOSE OF EQUIPMENT =========================================================-->
 	<xsd:simpleType name="PurposeOfEquipmentProfileIdType">
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of a PURPOSE OF EQUIPMENT PROFILE.</xsd:documentation>
