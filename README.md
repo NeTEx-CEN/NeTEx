@@ -38,6 +38,16 @@ There is also an _Oxygen_ project file:
 =======
 Version 1.2.2 - New modes initial changes
 
+### 2020.10.07  NewModes  Add  __MobilityServiceFrame__ and __MobilityJourneyFrame__.
+  * _Updates to xml schema_:  
+    	* netex_all_objects_part5_newModes.xsd
+   	* NEW netex_mobilityServiceFrame_version.xsd
+    	* NEW netex_mobilityJourneyFrame_version.xsd  	
+    	
+### 2020.10.07  NewModes  Add  parameters to  __MValidityParameterAssignments__.
+  * _Updates to xml schema_:  
+    	* netex_all_objects_part5_newModes.xsd
+
 ### 2020.10.07  NewModes  Add  __MediumAccessDevice__.
   * _Updates to xml schema_:  
     	* netex_all_objects_part5_newModes.xsd
