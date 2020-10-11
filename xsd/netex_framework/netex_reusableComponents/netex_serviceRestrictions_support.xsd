@@ -33,10 +33,14 @@
 					Rename netex_travel_rights to netext_serviceRestrictions so as to align with TM6,
 					Fx SuvsriptionOnly and checkin values on PurchaseMoment
 				</Date>
-				
 				<Date>
 					<Modified>2020-06-21</Modified>FIX: Issue #75 FareClassEnumeration    Remove space from end of secondClass enum value
 	 			</Date>
+				<Date>
+					<Modified>2020-10-07</Modified>NewModes Booking arrangements add further attributes
+ 				         MaximumBookingPeriod, MinimBookingDuration, MaximumBookingDuration, DepositRequired,
+ 				         Add  ServiceBookimngArrangements.
+				</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines  NetEX:TRAVEL RIGHTS identifier  types.</p>
 				</Description>
@@ -49,7 +53,7 @@
 				<Language>[ISO 639-2/B] ENG</Language>
 				<Publisher>Kizoom Software Ltd, 16 High Holborn, London WC1V 6BX</Publisher>
 				<Rights>Unclassified
-					 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2020</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -197,6 +201,8 @@ Rail transport, Roads and Road transport
 			<xsd:enumeration value="other"/>
 			<xsd:enumeration value="phoneAtStop"/>
 			<xsd:enumeration value="text"/>
+			<xsd:enumeration value="mobileApp"/>
+			<xsd:enumeration value="atOffice"/>
 			<xsd:enumeration value="none"/>
 		</xsd:restriction>
 	</xsd:simpleType>
@@ -602,6 +608,31 @@ Rail transport, Roads and Road transport
 		<xsd:list itemType="PaymentMethodEnumeration"/>
 	</xsd:simpleType>
 	<!-- =================================================== -->
+	<xsd:simpleType name="BookingChargeTypeEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for BookingPayment +v1.1</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="fullAmount">
+				<xsd:annotation>
+					<xsd:documentation>Purchase and payment.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="blockFullAmountOnCard"/>
+			<xsd:enumeration value="deposit">
+				<xsd:annotation>
+					<xsd:documentation>Purchase with deferred  payment.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="none"/>
+			<xsd:enumeration value="other">
+				<xsd:annotation>
+					<xsd:documentation>Reervation but not necessarily payment</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- =================================================== -->
 	<xsd:complexType name="TypeOfPaymentMethodRefs_RelStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for a collection of one or more references to a  TYPE OF PAYMENT METHOD.</xsd:documentation>
@@ -632,7 +663,7 @@ Rail transport, Roads and Road transport
 	</xsd:element>
 	<xsd:complexType name="TypeOfPaymentMethodRefStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for a reference to a TYPE OF PAYMENT METHOD.</xsd:documentation>
+			<xsd:documentation>Type for a reference to a TYPE OF PAYMENT METHOD. +v1.2.2</xsd:documentation>
 		</xsd:annotation>
 		<xsd:simpleContent>
 			<xsd:restriction base="TypeOfValueRefStructure">
