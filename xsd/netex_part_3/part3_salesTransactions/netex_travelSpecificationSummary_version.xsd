@@ -10,6 +10,9 @@
 	<xsd:include schemaLocation="../part3_fares/netex_fareSeries_support.xsd"/>
 	<xsd:include schemaLocation="../part3_fares/netex_fareProduct_support.xsd"/>
 	<xsd:include schemaLocation="../part3_fares/netex_usageParameterEligibility_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_part_5/netex_vehicleMeetingPoint_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_part_5/netex_vehicleMeetingPlace_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_part_5/netex_singleJourneyService_support.xsd"/>
 	<!-- ======================================================================= -->
 	<xsd:annotation>
 		<xsd:appinfo>
@@ -27,8 +30,10 @@
 					<Modified>2019-03-12</Modified>
 				</Date>
 				<Date>
-					<Modified>2020-10-05</Modified> New modes  
-						 Change OperatorRef to be wider TransportOrganisationRefe	
+					<Modified>2020-10-11</Modified>New Modes: 
+					      * Add SingleJourneyRef					    
+					      * Add VehicleMeetingPointRef and ehicleMeetingPlaceRef to  TravelSpecificationSummaryEndpoint .
+						  * Revise reference:  TravelSpecificationSummaryEndpoint  widen to use TransportOrganinisationRef rather than OperatorRef.
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -46,7 +51,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
-					 <Copyright>CEN, Crown Copyright 2009-2020</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -108,6 +113,7 @@ Rail transport, Roads and Road transport
 		<xsd:sequence>
 			<xsd:group ref="TravelSpecificationSummaryEndPointPlaceGroup"/>
 			<xsd:element ref="ScheduledStopPointView" minOccurs="0"/>
+			<xsd:element ref="VehicleMeetingPointRef" minOccurs="0"/>
 			<xsd:element ref="QuayRef" minOccurs="0"/>
 			<xsd:element ref="BoardingPositionRef" minOccurs="0"/>
 			<xsd:element ref="TariffZoneRef" minOccurs="0" maxOccurs="unbounded"/>
@@ -119,6 +125,7 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="TopographicPlaceView" minOccurs="0"/>
+			<xsd:element ref="VehicleMeetingPlaceRef" minOccurs="0"/>
 			<xsd:element ref="AddressRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
@@ -167,6 +174,7 @@ Rail transport, Roads and Road transport
 				<xsd:choice minOccurs="0" maxOccurs="unbounded">
 					<xsd:sequence>
 						<xsd:element ref="ServiceJourneyRef" minOccurs="0"/>
+						<xsd:element ref="SingleJourneyRef" minOccurs="0"/>
 						<xsd:element ref="TrainNumberRef" minOccurs="0"/>
 					</xsd:sequence>
 				</xsd:choice>

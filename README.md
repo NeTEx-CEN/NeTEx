@@ -37,24 +37,34 @@ There is also an _Oxygen_ project file:
 
 =======
 Version 1.2.2 - New modes initial changes
-
+### 2020.10.09  NewModes  Tidy ups - update references, fixes.
+  * __CellReferences__: Add __VehicleTypeRef__ and __VehicleModelRef__ to __ModelEquipmentRef__, EquipmentRef.  
+  * _Updates to xml schema_:  
+     	* netex_fareTable_version.xsd
 
 ### 2020.10.09  NewModes  Tidy ups - update references, fixes.
-  * Add __VehicleMeetingPoint__ and __VehicleMeetingPlace__ to __TravelSpecificationSummaryEndpoint__.
+  * __TravelSpecificationSummary__: Add __VehicleMeetingPoint__ and __VehicleMeetingPlace__ to __TravelSpecificationSummaryEndpoint__.
+  * __TravelSpecificationSummary__: Add __SingleJourneyRef__.
+  * Revise reference:  __TravelSpecificationSummaryEndpoint__   widen to use __TransportOrganinisationRef rather than __OperatorRef__.
   * Revise reference:  __TravelSpecificationSummaryEndpoint__   widen to use __TransportOrganinisationRef rather than __OperatorRef__.
   * Revise reference:  __SiteConnection__  widen to use __TransportOrganisationRef rather than __OperatorRef__.
   * Revise reference:  __FareTable__  widen to use __TransportOrganisationRef rather than __OperatorRef__.
+  * Revise reference:  __JourneyDesignator__  widen to use __TransportOrganisationRef rather than __OperatorRef__.
   * Revise reference:  __TimetableFrame__ to use __TransportType rather than __VehicleRef__.
-  * Revise reference:  __ParkingTariff__,  __{atkimg_Properties__ to use __TransportType rather than __VehicleRef__.
+  * Revise reference:  __ParkingTariff__,  __Parking_Properties__ to use __TransportType rather than __VehicleRef__.
   * Revise reference:  __Fleet__,  __{atkimg_Properties__ to use __TransportType rather than __VehicleRef__.
   * Revise reference:  Add onward meeting Link to use __SIngeleJpourneyPath/PointInIngleJourneyPath__.
+  * __FareTable__ : Add __SingleJourneyRef__, __GroupOfSingleJourneysRef__.
   * _Updates to xml schema_:  
      	* netex_travelSpecificationSummary_version.xsd
      	* netex_timetableFrame_version.xsd
 	* netex_siteConnection_version.xsd
 	* netex_fleet_version.xsd
 	* netex_singleJourneyPath_version.xsd
+	* netex_journeyDesignator_support.xsd
 	* netex_parkingTariff_version.xsd
+	* netex_fareTable_version.xsd
+	
 ### 2020.10.09  NewModes  Add  __ServiceBookingArrangement__ to  __MobilityService__.
   * Add further __PaymentMethodType__ enum values to __bookingMethod__ , __mobileApp__ and __atCounter__.
   * _Updates to xml schema_:  
