@@ -6,9 +6,17 @@
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_mode_version.xsd"/>
 	<xsd:include schemaLocation="../../netex_part_1/part1_networkDescription/netex_line_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_part_1/part1_ifopt/netex_ifopt_site_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_part_1/part1_ifopt/netex_ifopt_parking_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_part_1/part1_tacticalPlanning/netex_fareZone_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_part_2/part2_journeyTimes/netex_serviceJourney_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_part_2/part2_journeyTimes/netex_vehicleJourney_support.xsd"/>
+	<!-- ======================================================================= -->
+	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_vehicleType_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_part_5/netex_mobilityService_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_part_5/netex_onlineService_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_part_5/netex_fleetEquipment_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_part_5/netex_vehicleMeetingPlace_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_part_5/netex_singleJourneyService_support.xsd"/>
 	<xsd:include schemaLocation="netex_fareTable_support.xsd"/>
 	<xsd:include schemaLocation="netex_fareSeries_support.xsd"/>
 	<xsd:include schemaLocation="netex_typeOfTravelDocument_support.xsd"/>
@@ -74,8 +82,12 @@
 					<Modified>2019-04-11</Modified>Internal change - use a structure for specifcs so as to make binding easier.. 
 				</Date>
 				<Date>
-					<Modified>2020-10-05</Modified> New modes  
-						 Change OperatorRef to be wider TransportOrganisationRefe	
+					<Modified>2020-10-05</Modified> New Modes  
+						 Change OperatorRef to be wider TransportOrganisationRef
+						 UpdatedCellAssociations: Add SingleJourneyRef,  GroupOfSingleJourneysRef
+						 Add MeetingPlaceRef, TypeOfParkingRef
+						 Add VehicleTypeGrpup: TransportTypeRef, VehicleModelRef, ModelEquipmentRef
+						  Add EquipmentGrpup: LocalServiceRef, MobilityServiceRef, OnlineServiceRef
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -623,6 +635,8 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Service Aspects of a fare structure element for a CELL.Group.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:group>
+			<xsd:group ref="CellSpecificTransportTypeGroup"/>
+			<xsd:group ref="CellSpecificEquipmentGroup"/>
 			<xsd:group ref="CellSpecificDistributionGroup">
 				<xsd:annotation>
 					<xsd:documentation>Distribution Aspects of a fare structure element for a CELL.Group.</xsd:documentation>
@@ -639,6 +653,8 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="GroupOfLinesRef" minOccurs="0"/>
 			<xsd:element ref="LineRef" minOccurs="0"/>
 			<xsd:element ref="SiteRef" minOccurs="0"/>
+			<xsd:element ref="VehicleMeetingPlaceRef" minOccurs="0"/>
+			<xsd:element ref="TypeOfParkingRef" minOccurs="0"/>
 			<xsd:element ref="TariffZoneRef" minOccurs="0"/>
 			<xsd:element ref="FareSectionRef" minOccurs="0"/>
 		</xsd:sequence>
@@ -670,9 +686,29 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="TypeOfServiceRef" minOccurs="0"/>
 			<xsd:choice minOccurs="0">
 				<xsd:element ref="ServiceJourneyRef"/>
+				<xsd:element ref="SingleJourneyRef"/>
 				<xsd:element ref="TrainNumberRef"/>
 				<xsd:element ref="GroupOfServicesRef"/>
+				<xsd:element ref="GroupOfSingleJourneysRef"/>
 			</xsd:choice>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="CellSpecificTransportTypeGroup">
+		<xsd:annotation>
+			<xsd:documentation>Equipment Aspects of a fare structure element for a CELL.Group +v1.2.2</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="TransportTypeRef" minOccurs="0"/>
+			<xsd:element ref="VehicleModelRef" minOccurs="0"/>
+			<xsd:element ref="ModelEquipmentProfileRef" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="CellSpecificEquipmentGroup">
+		<xsd:annotation>
+			<xsd:documentation>Equipment Aspects of a fare structure element for a CELL.Group +v1.2.2</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="EquipmentRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:group name="CellSpecificDistributionGroup">
