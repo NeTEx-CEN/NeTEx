@@ -37,7 +37,34 @@ There is also an _Oxygen_ project file:
 
 =======
 Version 1.2.2 - New modes initial changes
-### 2020.10.09  NewModes  Tidy ups - update references, fixes.
+### 2020.10.11  NewModes  PFile reord and rename
+  * move prerequisite  files to NeTEx framework. Add "_nm_ "to name
+  * _Updates to xml schema_:  
+      	* MOVE to IFOPT  netex_taxiPlace_support.xsd
+      	* MOVE to IFOPT  netex_taxiPlace_version.xsd
+    	* MOVE to FM_FS  netex_mediumAplication_support.xsd
+      	* MOVE to FM_FS  netex_mediumApplication_version.xsd
+    	* MOVE to FM_ST  netex_customerPaymentMeans_support.xsd
+      	* MOVE to FM_ST  netex_customerPaymentMeans_version.xsd
+  	* RENAME netex_netex_nm_fleet_version.xsd
+  	* RENAME netex_netex_nm_fleet_support.xsd
+  	* RENAME netex_netex_nm_fleet_version.xsd
+  	* RENAME netex_netex_nm_fleetEquipmenpt_support.xsd
+  	* RENAME netex_netex_nm_fleetEquipment_version.xsd
+  	* RENAME netex_netex_nm_mobilityService_support.xsd
+  	* RENAME netex_netex_nm_mobilityService_version.xsd
+  	* RENAME netex_netex_nm_onlineService_support.xsd
+  	* RENAME netex_netex_nm_onlineService_version.xsd  	
+  	* RENAME netex_nm_vehicleMeetingPoint_support.xsd
+  	* RENAME netex_nm_vehicleMeetingPoint_version.xsd
+  	* RENAME netex_nm_vehicleMeetingPointAssignment_support.xsd
+  	* RENAME netex_nm_vehicleMeetingPointAssignment_version.xsd
+  	* RENAME netex_nm_taxiPlace_support.xsd
+  	* RENAME netex_nm_taxiPlace_vesion.xsd
+  	* RENAME netex_nm_vehicleMeetingPlace_support.xsd
+  	* RENAME netex_nm_vehicleMeetingPlace_vesion.xsd
+
+### 2020.10.11 NewModes  Price Tidy ups - update references, fixes.
   * __CellReferences__: Add __VehicleTypeRef__ and __VehicleModelRef__ to __ModelEquipmentRef__, EquipmentRef.  
   * _Updates to xml schema_:  
      	* netex_fareTable_version.xsd
