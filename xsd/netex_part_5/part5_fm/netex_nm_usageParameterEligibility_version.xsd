@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_nm_usageParameterEligibility_version">
- 
 	<xsd:include schemaLocation="netex_nm_usageParameterEligibility_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_part_3/part3_fares/netex_usageParameterEligibility_version.xsd"/>
 	<!-- ======================================================================= -->
@@ -9,7 +8,7 @@
 			<Metadata xmlns="http://www.govtalk.gov.uk/CM/gms-xs">
 				<Aggregation>main schema</Aggregation>
 				<Audience>e-service developers</Audience>
-				<Contributor>Nicholas Knowles</Contributor>			
+				<Contributor>Nicholas Knowles</Contributor>
 				<Contributor>Christophe Duquesne</Contributor>
 				<Coverage>Europe</Coverage>
 				<Creator>First drafted for NeTEx version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.  mailto:schemer@netex.org.uk</Creator>
@@ -63,7 +62,8 @@ Rail transport, Roads and Road transport
 	<!-- ==== VEHICLE POOLER PROFILE================================================= -->
 	<xsd:element name="VehiclePoolerProfile" abstract="false" substitutionGroup="UsageParameter_">
 		<xsd:annotation>
-			<xsd:documentation>The social profile of a passenger, based on age group, education, profession, social status, sex etc., often used for allowing discounts: 18-40 years old, graduates, drivers, unemployed, women etc.</xsd:documentation>
+			<xsd:documentation>A set of USER PARAMETERS characterising access rights to VEHICLE POOLING SERVICE. +v1.2.2
+</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -95,7 +95,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Type for VEHICLE POOLER PROFILE.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
-			<xsd:extension base="UsageParameter_VersionStructure">
+			<xsd:extension base="UserProfile_VersionStructure">
 				<xsd:sequence>
 					<xsd:group ref="VehiclePoolerProfileGroup"/>
 				</xsd:sequence>
@@ -107,22 +107,24 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Elements for VEHICLE POOLER PROFILE Group.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="BaseUserProfileRef" type="UserProfileRefStructure" minOccurs="0">
+			<xsd:element name="HostUserProfileRef" type="UserProfileRefStructure" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Base Profile on which this User profile is based. Assume all properties from base that are not explicitly stated on subprofile.</xsd:documentation>
+					<xsd:documentation>Host uder profile offering these pooler prferences </xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="UserType" minOccurs="0">
+			<xsd:element name="SmokingAllowed" type="xsd:boolean" default="false" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Classification of user profile.</xsd:documentation>
+					<xsd:documentation>Whether pets are  is allowed by the host pooler.</xsd:documentation>
 				</xsd:annotation>
-				<xsd:simpleType>
-					<xsd:restriction base="UserTypeEnumeration"/>
-				</xsd:simpleType>
 			</xsd:element>
-			<xsd:element name="companionProfiles" type="companionProfiles_RelStructure" minOccurs="0">
+			<xsd:element name="PetsAllowed" type="xsd:boolean" default="false" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Minimum and maximum numbers of users in each category  allowed on GROUP TICKET.</xsd:documentation>
+					<xsd:documentation>Whether smoking  is allowed by the host pooler.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DetourAccepted" type="xsd:boolean" default="false" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether the pooler is prepared to make a detour.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>

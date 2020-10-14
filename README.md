@@ -37,19 +37,38 @@ There is also an _Oxygen_ project file:
 
 =======
 Version 1.2.2 - New modes initial changes
-### 2020.10.11  NewModes  PFile reord and rename
-  * move prerequisite  files to NeTEx framework. Add "_nm_ "to name
+
+### 2020.10.14  NewModes : Add   : Add __VehicleServiceParkingBay__ and __PArkingBaySTatus__ .
   * _Updates to xml schema_:  
+    	* netex_all_objects_part5_newModes.xsd
+        * netex_nm_parkingBayStatus_support.xsd
+        * netex_nm_parkingBayVersion_version.xsd. 
+
+### 2020.10.13  NewModes : Fares updates: Add __MediumApplicationRef__ to __CustomerPurchasePackage__ , Add __VehiclePoolerProfile__/
+  * _Updates to xml schema_:  
+        * netex_netex_customerPurchasePackage_version.xsd
+        * netex_nm_usageParameterEligibility_support.xsd
+        * netex_nm_usageParameterEligibility_version.xsd.
+        * netex_nm_salesContract_version.xsd.  
+        
+### 2020.10.11  NewModes  File reorganise and rename to follow dependecies
+  * Move prerequisite  files to NeTEx framework. Add "_nm_ "to name
+  * _Updates to xml schema_:  
+        * MOVE to RC  netex_netex_nm_fleet_support.xsd
+        * MOVE to RC  netex_netex_nm_fleet_version.xsd
+        * MOVE to RC  netex_netex_nm_fleetEquipment_support.xsd
+        * MOVE to RC  netex_netex_nm_fleetEquipment_version.xsd 
       	* MOVE to IFOPT  netex_taxiPlace_support.xsd
       	* MOVE to IFOPT  netex_taxiPlace_version.xsd
-    	* MOVE to FM_FS  netex_mediumAplication_support.xsd
-      	* MOVE to FM_FS  netex_mediumApplication_version.xsd
+    	* MOVE to FM_ST  netex_mediumAplication_support.xsd
+      	* MOVE to FM_ST  netex_mediumApplication_version.xsd
     	* MOVE to FM_ST  netex_customerPaymentMeans_support.xsd
       	* MOVE to FM_ST  netex_customerPaymentMeans_version.xsd
+      	
   	* RENAME netex_netex_nm_fleet_version.xsd
   	* RENAME netex_netex_nm_fleet_support.xsd
   	* RENAME netex_netex_nm_fleet_version.xsd
-  	* RENAME netex_netex_nm_fleetEquipmenpt_support.xsd
+  	* RENAME netex_netex_nm_fleetEquipment_support.xsd
   	* RENAME netex_netex_nm_fleetEquipment_version.xsd
   	* RENAME netex_netex_nm_mobilityService_support.xsd
   	* RENAME netex_netex_nm_mobilityService_version.xsd
@@ -63,6 +82,8 @@ Version 1.2.2 - New modes initial changes
   	* RENAME netex_nm_taxiPlace_vesion.xsd
   	* RENAME netex_nm_vehicleMeetingPlace_support.xsd
   	* RENAME netex_nm_vehicleMeetingPlace_vesion.xsd
+  	* RENAME netex_nm_vehicleAccessCredentials_support.xsd
+  	* RENAME netex_nm_vehicleAccessCredentials_vesion.xsd
 
 ### 2020.10.11 NewModes  Price Tidy ups - update references, fixes.
   * __CellReferences__: Add __VehicleTypeRef__ and __VehicleModelRef__ to __ModelEquipmentRef__, EquipmentRef.  
@@ -80,7 +101,7 @@ Version 1.2.2 - New modes initial changes
   * Revise reference:  __TimetableFrame__ to use __TransportType rather than __VehicleRef__.
   * Revise reference:  __ParkingTariff__,  __Parking_Properties__ to use __TransportType rather than __VehicleRef__.
   * Revise reference:  __Fleet__,  __{atkimg_Properties__ to use __TransportType rather than __VehicleRef__.
-  * Revise reference:  Add onward meeting Link to use __SIngeleJpourneyPath/PointInIngleJourneyPath__.
+  * Revise reference:  Add onward meeting Link to use __SingleJourneyPath/PointInIngleJourneyPath__.
   * __FareTable__ : Add __SingleJourneyRef__, __GroupOfSingleJourneysRef__.
   * _Updates to xml schema_:  
      	* netex_travelSpecificationSummary_version.xsd
