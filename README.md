@@ -38,6 +38,21 @@ There is also an _Oxygen_ project file:
 =======
 Version 1.2.2 - New modes initial changes
 
+### 2020.10.14  NewModes :  Add C__ParkingCapacityAssignment__
+  * _Updates to xml schema_:    
+        * netex_ifopt_allObjects.xsd	  
+        * NEW netex_nm_parkingCapacityAssignment_support.xsd
+        * NEW netex_nm_parkingCapacityAssignment_version.xsd
+        
+parkingCapacityAssignment
+### 2020.10.14  NewModes : AClean up all_object includes. ADd missing files
+  * _Updates to xml schema_:    
+        * netex_ifopt_allObjects.xsd	  
+    	* DELETE netex_accounting_version.xsd
+        * netex_allObjects_part2_journeyTimes.xsd	
+        * netex_allObjects_reusableComponents.xsd
+        * netex_all_objects_part3_salesTransactions
+            
 ### 2020.10.14  NewModes : Add   : Add __VehicleServiceParkingBay__ and __PArkingBaySTatus__ .
   * _Updates to xml schema_:  
     	* netex_all_objects_part5_newModes.xsd
