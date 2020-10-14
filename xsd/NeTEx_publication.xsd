@@ -16,11 +16,16 @@
 				<Contributor>CEN TC278 WG3 SG9 Team.</Contributor>
 				<Coverage>Europe</Coverage>
 				<Creator>First Drafted for NeTEx version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.  mailto:schemer@netex.org.uk</Creator>
-				
+				<Date>
+					<Modified>2020-10-14</Modified>NewModes
+						Add MobilityServiceFrame, MobilityJourneyFrame
+						TypeOfProof, TaxiRank, TaxiStand
+						
+				</Date>
 				<Date>
 					<Modified>2020-08-20</Modified>Corrections
 						Add UicOperatingPeriod key and ref constraints
-				</Date>  
+				</Date>
 				<Date>
 					<Modified>2020.07.28</Modified>### 2020.07.28   FIX  Issue #101*Publication*:Add missing constraints for __FareTableRow__, __FareTableColumn__, __TypeOfLine__ and for __FareZone__ Parent 
  
@@ -731,6 +736,46 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:unique>
+		<!-- =====MobilityJourneyFrame Key ========================== -->
+		<xsd:keyref name="MobilityJourneyFrame_AnyKeyRef" refer="netex:MobilityJourneyFrame_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:MobilityJourneyFrameRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="MobilityJourneyFrame_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:MobilityJourneyFrame"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====MobilityJourneyFrame unique========================== -->
+		<xsd:unique name="MobilityJourneyFrame_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [MobilityJourneyFrame Id + MobilityJourneyFrame] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:MobilityJourneyFrame"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====MobilityServiceFrame Key ========================== -->
+		<xsd:keyref name="MobilityServiceFrame_AnyKeyRef" refer="netex:MobilityServiceFrame_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:MobilityServiceFrameRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="MobilityServiceFrame_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:MobilityServiceFrame"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====MobilityServiceFrame unique========================== -->
+		<xsd:unique name="MobilityServiceFrame_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [MobilityServiceFrame Id + MobilityServiceFrame] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:MobilityServiceFrame"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
 		<!-- =====VehicleScheduleFrame Key ========================== -->
 		<xsd:keyref name="VehicleScheduleFrame_AnyKeyRef" refer="netex:VehicleScheduleFrame_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:VehicleScheduleFrameRef"/>
@@ -852,7 +897,7 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
 		<xsd:key name="Point_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:Point | .//netex:RoutePoint | .//netex:TimingPoint | .//netex:ReliefPoint | .//netex:ParkingPoint | .//netex:GaragePoint | .//netex:ScheduledStopPoint   | .//netex:RoadJunction | .//netex:RailwayJunction | .//netex:WireJunction | .//netex:ActivationPoint | .//netex:BeaconPoint | .//netex:TrafficControlPoint |.//netex:PathJunction  |.//netex:FareScheduledStopPoint   |.//netex:BorderPoint"/>
+			<xsd:selector xpath=".//netex:Point | .//netex:RoutePoint | .//netex:TimingPoint | .//netex:ReliefPoint | .//netex:ParkingPoint | .//netex:GaragePoint | .//netex:ScheduledStopPoint   | .//netex:RoadJunction | .//netex:RailwayJunction | .//netex:WireJunction | .//netex:ActivationPoint | .//netex:BeaconPoint | .//netex:TrafficControlPoint |.//netex:PathJunction  |.//netex:FareScheduledStopPoint   |.//netex:BorderPoint | .//netex:VehicleMeetingPoint  "/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
@@ -1063,7 +1108,7 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
 		<xsd:key name="Zone_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:Zone | .//netex:TariffZone | .//netex:FareZone | .//netex:RoutingConstraintZone | .//netex:ConnectionZone  | .//netex:PointOfInterest | .//netex:Parking | .//netex:ParkingArea | .//netex:ParkingBay | .//netex:TopographicPlace | .//netex:Quay | .//netex:AccessSpace | .//netex:PointOfInterestSpace | .//netex:StopPlace| .//netex:Garage| .//netex:EquipmentPlace | .//netex:FlexibleArea | .//netex:HailAndRideArea | .//netex:FlexibleQuay| .//netex:StopPlaceEntrance |  .//netex:PointOfInterestEntrance |  .//netex:ParkingPassengerEntrance | .//netex:BoardingPosition | .//netex:VehicleStoppingPlace | .//netex:VehicleEntrance   | .//netex:TransportAdministrativeZone | .//netex:AdministrativeZone | .//netex:GeneralZone"/>
+			<xsd:selector xpath=".//netex:Zone | .//netex:TariffZone | .//netex:FareZone | .//netex:RoutingConstraintZone | .//netex:ConnectionZone  | .//netex:PointOfInterest | .//netex:Parking | .//netex:ParkingArea | .//netex:ParkingBay | .//netex:TopographicPlace | .//netex:Quay | .//netex:AccessSpace | .//netex:PointOfInterestSpace | .//netex:StopPlace| .//netex:Garage| .//netex:EquipmentPlace | .//netex:FlexibleArea | .//netex:HailAndRideArea | .//netex:FlexibleQuay| .//netex:StopPlaceEntrance |  .//netex:PointOfInterestEntrance |  .//netex:ParkingPassengerEntrance | .//netex:BoardingPosition | .//netex:VehicleStoppingPlace | .//netex:VehicleEntrance | .//netex:TaxiRank|   .//netex:TaxiStand|   .//netex:TransportAdministrativeZone | .//netex:AdministrativeZone | .//netex:GeneralZone"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
@@ -1317,7 +1362,7 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
 		<xsd:key name="Place_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:Place | .//netex:TopographicPlace | .//netex:RoadAddress | .//netex:PostalAddress | .//netex:Garage | .//netex:StopPlace | .//netex:Quay | .//netex:BoardingPosition | .//netex:AccessSpace | .//netex:EquipmentPlace | .//netex:StopPlaceEntrance | .//netex:FlexibleStopPlace | .//netex:FlexibleArea | .//netex:HailAndRideArea | .//netex:PointOfInterest | .//netex:PointOfInterestSpace | .//netex:PointOfInterestEntrance | .//netex:PathJunction | .//netex:SiteEntrance | .//netex:Parking | .//netex:ParkingBay | .//netex:ParkingArea | .//netex:VehicleStoppingPlace"/>
+			<xsd:selector xpath=".//netex:Place | .//netex:TopographicPlace | .//netex:RoadAddress | .//netex:PostalAddress | .//netex:Garage | .//netex:StopPlace | .//netex:Quay | .//netex:BoardingPosition | .//netex:AccessSpace | .//netex:EquipmentPlace | .//netex:StopPlaceEntrance | .//netex:FlexibleStopPlace | .//netex:FlexibleArea | .//netex:HailAndRideArea | .//netex:PointOfInterest | .//netex:PointOfInterestSpace | .//netex:PointOfInterestEntrance | .//netex:PathJunction | .//netex:SiteEntrance | .//netex:Parking | .//netex:ParkingBay | .//netex:ParkingArea | .//netex:VehicleStoppingPlace| .//netex:TaxiStand | .//netex:TaxiRank | .//netex:VehicleMeetingPlace  "/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
@@ -2829,7 +2874,7 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-			<!-- =====OperatingPeriod unique========================== -->
+		<!-- =====OperatingPeriod unique========================== -->
 		<xsd:unique name="UicOperatingPeriod_UniqueBy_Id_Version">
 			<xsd:annotation>
 				<xsd:documentation>Every [UicOperatingPeriod Id + Version] must be unique within document.</xsd:documentation>
@@ -2837,20 +2882,19 @@ Correct COnstraints for PointOnRoute
 			<xsd:selector xpath=".//netex:UicOperatingPeriod"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
-					<!-- =====UicOperatingPeriod Key ========================== -->
+			<!-- =====UicOperatingPeriod Key ========================== -->
 		</xsd:unique>
-			<xsd:keyref name="UicOperatingPeriod_KeyRef" refer="netex:UicOperatingPeriod_AnyVersionedKey">
+		<xsd:keyref name="UicOperatingPeriod_KeyRef" refer="netex:UicOperatingPeriod_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:UicOperatingPeriodRef"/>
 			<xsd:field xpath="@ref"/>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
 		<!-- =====UicOperatingPeriod Key ========================== -->
- 		<xsd:key name="UicOperatingPeriod_AnyVersionedKey">
+		<xsd:key name="UicOperatingPeriod_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:UicOperatingPeriod"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
-		</xsd:key>	
-		
+		</xsd:key>
 		<!-- =====DayTypeAssignment============================== -->
 		<!-- =====DayTypeAssignment unique========================== -->
 		<xsd:unique name="DayTypeAssignment_UniqueBy_Id_Version_Order">
@@ -3369,7 +3413,7 @@ Correct COnstraints for PointOnRoute
 		</xsd:unique>
 		<!-- =====Quay Key ========================== -->
 		<xsd:keyref name="Quay_KeyRef" refer="netex:Quay_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:QuayRef | .//netex:ParentQuayRef"/>
+			<xsd:selector xpath=".//netex:QuayRef | .//netex:ParentQuayRef  "/>
 			<xsd:field xpath="@ref"/>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
@@ -3399,6 +3443,50 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
+		
+		<!-- =====TaxiRank============================== -->
+		<!-- =====TaxiRank unique========================== -->
+		<xsd:unique name="TaxiRank_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [TaxiRank Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:TaxiRank"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====TaxiRank Key ========================== -->
+		<xsd:keyref name="TaxiRank_KeyRef" refer="netex:TaxiRank_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:TaxiRankRef  "/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="TaxiRank_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:TaxiRank"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>		
+			<!-- =====TaxiStand============================== -->
+		<!-- =====TaxiStand unique========================== -->
+		<xsd:unique name="TaxiStand_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [TaxiStand Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:TaxiStand"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====TaxiStand Key ========================== -->
+		<xsd:keyref name="TaxiStand_KeyRef" refer="netex:TaxiStand_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:TaxiStandRef | .//netex:ParentTaxiStandRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="TaxiStand_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:TaxiStand"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		
 		<!-- =====VehicleStoppingPlace============================== -->
 		<!-- =====VehicleStoppingPlace unique========================== -->
 		<xsd:unique name="VehicleStoppingPlace_UniqueBy_Id_Version">
@@ -4454,7 +4542,7 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-<!-- =====TypeOfLine unique========================== -->
+		<!-- =====TypeOfLine unique========================== -->
 		<xsd:unique name="TypeOfLine_UniqueBy_Id_Version">
 			<xsd:annotation>
 				<xsd:documentation>Every [TypeOfLine Id + Version] must be unique within document.</xsd:documentation>
@@ -4558,7 +4646,7 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
 		<xsd:key name="RoutePoint_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:RoutePoint | .//netex:ScheduledStopPoint | .//netex:GaragePoint | .//netex:ParkingPoint | .//netex:ReliefPoint | .//netex:ActivationPoint | .//netex:TimingPoint |.//netex:FareScheduledStopPoint"/>
+			<xsd:selector xpath=".//netex:RoutePoint | .//netex:ScheduledStopPoint | .//netex:GaragePoint | .//netex:ParkingPoint | .//netex:ReliefPoint | .//netex:ActivationPoint | .//netex:TimingPoint |.//netex:FareScheduledStopPoint  | .//netex:VehicleMeetingPoint  "/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
@@ -8270,6 +8358,28 @@ Correct COnstraints for PointOnRoute
 		</xsd:keyref>
 		<xsd:key name="TypeOfConcession_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:TypeOfConcession"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		
+				<!-- =====TypeOfProof ============================== -->
+		<!-- =====TypeOfProof unique========================== -->
+		<xsd:unique name="TypeOfProof_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [TypeOfProof Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:TypeOfProof"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====TypeOfProof Key ========================== -->
+		<xsd:keyref name="TypeOfProof_KeyRef" refer="netex:TypeOfProof_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:TypeOfProofRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="TypeOfProof_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:TypeOfProof"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
