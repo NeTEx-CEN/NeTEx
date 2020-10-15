@@ -38,6 +38,15 @@ There is also an _Oxygen_ project file:
 =======
 Version 1.2.2 - New modes initial changes
 
+### 2020.10.15  NewModes : Fare Prices
+  * Add __LocalServiceRef__ and __MobilityServiceRef__  to __Tariff__ applicability 
+  * Add   __MobilityServiceMatrixElement__
+  * _Updates to xml schema_:     
+        * netex_fareStructureElement_version.xsd
+        * netex_ifopt_allObjects.xsd	
+        * NEW netex_nm_mobilityServiceElement_support.xsd
+        * NEW netex_nm_mobilityServiceElement_version.xsd
+        
 ### 2020.10.14  NewModes :  Add C__ParkingCapacityAssignment__
   * _Updates to xml schema_:    
         * netex_ifopt_allObjects.xsd	  
