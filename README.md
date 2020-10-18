@@ -38,25 +38,28 @@ There is also an _Oxygen_ project file:
 =======
 Version 1.2.2 - New modes initial changes
 ### 2020.10.16  NewModes : 
-  * Add Examples    CycleSharing, revise to enable
+  * Add Example    CycleSharing, revise to enable
+  * Travel Specification : Add 
   * Usage Parameters
-	* New Modes: _UsageValidityPeriod : __ ADd _accessCode_ value to __ActivationMeans__ enumeration. uml
-	* New Modes: ADd new __HirePenaltyPolicy__ parameter with _noVehicleReturn_, _lateVehicleReturn_, _damageToVehice_, _damageToEquipment_ values to __PenaltyPolicyType. uml
-	* New Modes: __ChargingPolicy__ : Add __DepositPolicy_  with enum values  n for __ChargingPolicy__. uml
+	* New Modes: _UsageValidityPeriod : __ Add _accessCode_ value to __ActivationMeans__ enumeration. uml
+	* New Modes: Add new __HirePenaltyPolicy__ parameter with _noVehicleReturn_, _lateVehicleReturn_, _damageToVehice_, _damageToEquipment_ values to __PenaltyPolicyType. uml
+	* New Modes: __ChargingPolicy__ : Add __DepositPolicy_  with enum values    for __ChargingPolicy__. uml
   * Fare Product
 	* New Modes: Add __RequiresDeposit__ and __NoCashPayment__ to __CommercialConditionSummary__.  
 	* FIX:  __ChargingMomementType__ add new value beforeTravelThenAdjustAtEndOfTravel__, correcet type on beforeStartThenAdjustAtEndOfFareDay__
-  * FAre Table:
-        * ADd equipment to __FARETable__ and __Cell__ specifics. 
-  * New Modes: Add __onlineService__ to __OrganisationType__ enumeration
+  * Fare Table:
+        * Add __EquipmentRef__ to __FareTable__ and __Cell__ specifics. 
+  * New Modes: Add __onlineProvider__ to __OrganisationType__ enumeration
   * Equipment:
 	* New Modes: Add _docks_ value  to __CycleStorageType__ enumeration values.
+	* LuggageStorageFacilities: add SkiRacks and SkiRacksAtRear.
   * Network Restriction
-        * NewModes: Widen all  references __VehicleTypeRef__ to be __TransportTypeRef__
+        * NewModes: __NetworkRestrictions__ : Widen all  references __VehicleTypeRef__ to be __TransportTypeRef__
   * _Updates to xml schema_:  
-        * newModes_cycleExchanegExample.xsd 
+        * NewModes_CycleSharingExample.xsd 
         * netex_organisation_support.xsd 
         * netex_equipmentParking_support.xsd 
+        * netex_facility_support.xsd 
         * netex_networkRestriction_version.xsd 
         * netex_parking_version.xsd 
         * netex_usageParameterTravel_support.xsd 
@@ -64,6 +67,7 @@ Version 1.2.2 - New modes initial changes
         * netex_usageParameterCharging_version.xsd 
         * netex_fareTable_version.xsd 
         * netex_usageParameterCharging_version.xsd 
+        * netex_nm_accessCredentialAssignment_version.xsd 
         * netex_conditionSummary_support.xsd 
          
 ### 2020.10.15  NewModes : Add Constraints
