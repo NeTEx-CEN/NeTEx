@@ -68,6 +68,23 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="ModeOfOperation" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
+	<xsd:group name="ModesInFrameGroup">
+		<xsd:annotation>
+			<xsd:documentation>MODE elements in frame.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="openModes" type="openModesRelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>OPEN MODES in FRAME</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="modesOfOperation" type="modesOfOperationRelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>MODES OF OPERATION in frame.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
 	<!-- ==== MODES OF OPERATION =================================================== -->
 	<xsd:complexType name="modesOfOperationRelStructure">
 		<xsd:annotation>
@@ -167,6 +184,11 @@ Rail transport, Roads and Road transport
 						</xsd:sequence>
 						<xsd:sequence>
 							<xsd:element ref="TypeOfModeOfOperationRef" minOccurs="0"/>
+							<xsd:element name="submodes" type="submodes_RelStructure" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>SUBMODEs associated with MODE OF OPERATION.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
 						</xsd:sequence>
 					</xsd:sequence>
 					<xsd:attribute name="id" type="ConventionalModeOfOperationIdType" use="optional">
@@ -206,6 +228,11 @@ Rail transport, Roads and Road transport
 						</xsd:sequence>
 						<xsd:sequence>
 							<xsd:element ref="TypeOfModeOfOperationRef" minOccurs="0"/>
+							<xsd:element name="submodes" type="submodes_RelStructure" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>SUBMODEs associated with MODE OF OPERATION.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
 						</xsd:sequence>
 						<xsd:group ref="ScheduledModeOfOperationGroup"/>
 					</xsd:sequence>
@@ -267,7 +294,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Elements for a FLEXIBLE MODE OF OPERATION.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="FlexibleOperationType" type="ScheduledOperationTypeEnumeration" minOccurs="0">
+			<xsd:element name="FlexibleOperationType" type="FlexibleOperationTypeEnumeration" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Allowed values for FLEXIBLE  MODE OF OPERATION.</xsd:documentation>
 				</xsd:annotation>
@@ -345,7 +372,7 @@ Rail transport, Roads and Road transport
 						</xsd:sequence>
 						<xsd:group ref="VehicleRentalModeOfOperationGroup"/>
 					</xsd:sequence>
-					<xsd:attribute name="id" type="VehicleRentalIdType" use="optional">
+					<xsd:attribute name="id" type="VehicleRentalOperationIdType" use="optional">
 						<xsd:annotation>
 							<xsd:documentation>Identifier of VEHICLE RENTAL MODE OF OPERATION.</xsd:documentation>
 						</xsd:annotation>
@@ -369,7 +396,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Elements for a VEHICLE RENTAL MODE OF OPERATION.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="VehicleRentalOperationType" type="ScheduledOperationTypeEnumeration" minOccurs="0">
+			<xsd:element name="VehicleRentalOperationType" type="RentalOperationTypeEnumeration" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Allowed values for VEHICLE RENTAL MODE.OF OPERATION.</xsd:documentation>
 				</xsd:annotation>
@@ -397,11 +424,21 @@ Rail transport, Roads and Road transport
 						</xsd:sequence>
 						<xsd:sequence>
 							<xsd:element ref="TypeOfModeOfOperationRef" minOccurs="0"/>
-							<xsd:element name="submodes" type="submodes_RelStructure" minOccurs="0"/>
+							<xsd:element name="submodes" type="submodes_RelStructure" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>SUBMODEs associated with MODE OF OPERATION.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
 						</xsd:sequence>
-						<xsd:group ref="VehicleRentalModeOfOperationGroup"/>
+						<xsd:sequence>
+							<xsd:element name="VehicleSharingOperationType" type="SharingOperationTypeEnumeration" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Allowed values for VEHICLE SHARING MODE.OF OPERATION.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+						</xsd:sequence>
 					</xsd:sequence>
-					<xsd:attribute name="id" type="VehicleSharingIdType" use="optional">
+					<xsd:attribute name="id" type="VehicleSharingOperationIdType" use="optional">
 						<xsd:annotation>
 							<xsd:documentation>Identifier of ENTITY.</xsd:documentation>
 						</xsd:annotation>
@@ -416,7 +453,7 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="AlternativeModeOfOperation_ValueStructure">
-				<xsd:group ref="VehicleRentalModeOfOperationGroup"/>
+				<xsd:group ref="VehicleSharingModeOfOperationGroup"/>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
@@ -425,7 +462,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Elements for a VEHICLE RENTAL MODE OF OPERATION.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="VehicleSharingOperationType" type="ScheduledOperationTypeEnumeration" minOccurs="0">
+			<xsd:element name="VehicleSharingOperationType" type="SharingOperationTypeEnumeration" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Allowed values for VEHICLE SHARING MODE.OF OPERATION.</xsd:documentation>
 				</xsd:annotation>
@@ -456,7 +493,7 @@ Rail transport, Roads and Road transport
 						</xsd:sequence>
 						<xsd:group ref="VehiclePoolingModeOfOperationGroup"/>
 					</xsd:sequence>
-					<xsd:attribute name="id" type="VehiclePoolingIdType" use="optional">
+					<xsd:attribute name="id" type="VehiclePoolingOperationIdType" use="optional">
 						<xsd:annotation>
 							<xsd:documentation>Identifier of ENTITY.</xsd:documentation>
 						</xsd:annotation>
@@ -485,7 +522,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Elements for a VEHICLE POOLING MODE OF OPERATION.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="VehiclePoolingOperationType" type="ScheduledOperationTypeEnumeration" minOccurs="0">
+			<xsd:element name="VehiclePoolingOperationType" type="PoolingOperationTypeEnumeration" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Allowed values for VEHICLE POOLING MODE.OF OPERATION.</xsd:documentation>
 				</xsd:annotation>

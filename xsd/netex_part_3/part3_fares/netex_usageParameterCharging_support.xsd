@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_usageParameterCharging_support">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_usageParameterCharging_support">
 	<!-- ======================================================================= -->
 	<xsd:annotation>
 		<xsd:appinfo>
@@ -24,6 +24,10 @@
 				 billAFareDayEnd - Bill at end of evey fare day.
 				 billAtPeriodEnd - Bill at end of period			
 				</Date>
+				<Date>
+					<Modified>2020-10-16</Modified>Add HirePenaltyPolicy usage parameter and enumeration values
+					   Add DEpositPolicy attrobute to CHarging Policy.
+				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the Charging USAGE PARAMETER   types.</p>
@@ -40,7 +44,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/xsd/netex_part_3/fares/netex_usageParameterEligibility_support</Requires>
 				</Relation>
 				<Rights>Unclassified
-					 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2020</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -143,6 +147,33 @@ Rail transport, Roads and Road transport
 			</xsd:enumeration>
 		</xsd:restriction>
 	</xsd:simpleType>
+	<xsd:simpleType name="DepositPolicyEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for  Deposit  Policy. +v1.1.2</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="none">
+				<xsd:annotation>
+					<xsd:documentation>No deposit required.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="depositTaken">
+				<xsd:annotation>
+					<xsd:documentation>Deposit charged and later refunded.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="depositBlocked">
+				<xsd:annotation>
+					<xsd:documentation>Deposit amount blocked on card but not subtracted.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="other">
+				<xsd:annotation>
+					<xsd:documentation>Other policy.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<!-- === PENALTY POLICY PARAMETER============================================== -->
 	<xsd:simpleType name="PenaltyPolicyIdType">
 		<xsd:annotation>
@@ -169,7 +200,6 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
-	<!-- ======================================================================= -->
 	<xsd:simpleType name="SameStationReentryPolicyEnumeration">
 		<xsd:annotation>
 			<xsd:documentation>Allowed values for Same Station Rentry Policy.</xsd:documentation>
@@ -181,6 +211,7 @@ Rail transport, Roads and Road transport
 			<xsd:enumeration value="allowed"/>
 		</xsd:restriction>
 	</xsd:simpleType>
+	<!-- ======================================================================= -->
 	<xsd:simpleType name="PenaltyPolicyTypeEnumeration">
 		<xsd:annotation>
 			<xsd:documentation>Allowed values for Penlaty Policy Ypye.</xsd:documentation>
@@ -193,6 +224,47 @@ Rail transport, Roads and Road transport
 			<xsd:enumeration value="other"/>
 		</xsd:restriction>
 	</xsd:simpleType>
+	<!-- === PENALTY POLICY PARAMETER============================================== -->
+	<xsd:simpleType name="HirePenaltyPolicyIdType">
+		<xsd:annotation>
+			<xsd:documentation>Type for identifier of a HIRE PENALTY POLICY usage parameter.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="UsageParameterIdType"/>
+	</xsd:simpleType>
+	<xsd:element name="HirePenaltyPolicyRef" type="HirePenaltyPolicyRefStructure" substitutionGroup="UsageParameterRef">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a HIRE PENALTY POLICY usage parameter. +v1.2.2</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="HirePenaltyPolicyRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for Reference to a HIRE PENALTY POLICY usage parameter.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="UsageParameterRefStructure">
+				<xsd:attribute name="ref" type="HirePenaltyPolicyIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Identifier of a HIRE PENALTY POLICY PARAMETER.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!-- ======================================================================= -->
+	<xsd:simpleType name="HirePenaltyPolicyTypeEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for Penlaty Policy Ypye.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="lateVehicleReturn"/>
+			<xsd:enumeration value="noVehicleReturn"/>
+			<xsd:enumeration value="damageToVehicle"/>
+			<xsd:enumeration value="damageToEquipment"/>
+			<xsd:enumeration value="lossOfEquipment"/>
+			<xsd:enumeration value="other"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- ======================================================================= -->
 	<!-- === SUBSCRIBING PARAMETER============================================== -->
 	<xsd:simpleType name="SubscribingIdType">
 		<xsd:annotation>
