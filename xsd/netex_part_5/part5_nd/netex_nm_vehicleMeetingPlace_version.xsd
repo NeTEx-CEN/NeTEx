@@ -17,7 +17,7 @@
 					<Created>2020-10-06</Created>Add for New Modes
 				</Date>
 				<Date>
-					<Modified>2020-10-06</Modified>
+					<Modified>2020-10-16</Modified>Add TopographicPlaceRef to VehicleMeetingPlace
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -75,7 +75,7 @@ Rail transport, Roads and Road transport
 	</xsd:complexType>
 	<xsd:element name="VehicleMeetingPlace_" type="AddressablePlace_VersionStructure" abstract="false" substitutionGroup="Place">
 		<xsd:annotation>
-			<xsd:documentation>DUMM type to workaround SG limitation.</xsd:documentation>
+			<xsd:documentation>DUMMY type to workaround SG limitation.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:element name="VehicleMeetingPlace" abstract="false" substitutionGroup="Place">
@@ -106,6 +106,9 @@ Rail transport, Roads and Road transport
 						<xsd:sequence>
 							<xsd:group ref="AddressablePlaceGroup"/>
 						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="VehicleMeetingPlaceGroup"/>
+						</xsd:sequence>
 					</xsd:sequence>
 					<xsd:attribute name="id" type="VehicleMeetingPlaceIdType" use="optional">
 						<xsd:annotation>
@@ -121,14 +124,21 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Type for VEHICLE MEETING PLACE.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
-			<xsd:extension base="AddressablePlace_VersionStructure"/>
+			<xsd:extension base="AddressablePlace_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="VehicleMeetingPlaceGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
 	<xsd:group name="VehicleMeetingPlaceGroup">
 		<xsd:annotation>
 			<xsd:documentation>Elements for a VEHICLE MEETING PLACE.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:sequence/>
+		<xsd:sequence>
+			<xsd:element ref="TopographicPlaceRef" minOccurs="0"/>
+			<xsd:element ref="SiteElementRef" minOccurs="0"/>
+		</xsd:sequence>
 	</xsd:group>
 	<!-- ====== VEHICLE MEETING PLACE ======================================================== -->
 	<xsd:element name="VehiclePoolingMeetingPlace" abstract="false" substitutionGroup="VehicleMeetingPlace_">
@@ -157,6 +167,9 @@ Rail transport, Roads and Road transport
 						<xsd:group ref="PlaceGroup"/>
 						<xsd:sequence>
 							<xsd:group ref="AddressablePlaceGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="VehicleMeetingPlaceGroup"/>
 						</xsd:sequence>
 					</xsd:sequence>
 					<xsd:attribute name="id" type="VehiclePoolingMeetingPlaceIdType" use="optional">
