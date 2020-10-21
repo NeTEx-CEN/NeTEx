@@ -130,6 +130,15 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
+	<xsd:simpleType name="ScheduledOperationTypeEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for ScheduledOperationModeOfOperation.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="scheduledService"/>
+			<xsd:enumeration value="eventBasedService"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<!-- ======================================================================= -->
 	<xsd:simpleType name="FlexibleModeOfOperationIdType">
 		<xsd:annotation>
@@ -156,6 +165,16 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
+	<xsd:simpleType name="FlexibleOperationTypeEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for FlexibleModeOfOperation.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="flexibleRoute"/>
+			<xsd:enumeration value="flexibleArea"/>
+			<xsd:enumeration value="demandResponsive"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<!-- ======================================================================= -->
 	<xsd:simpleType name="AlternativeModeOfOperationIdType">
 		<xsd:annotation>
@@ -189,7 +208,7 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:restriction base="AlternativeModeOfOperationIdType"/>
 	</xsd:simpleType>
-	<xsd:element name="VehicleRentalOperationRef" type="VehicleRentalOperationRefStructure" abstract="true" substitutionGroup="AlternativeModeOfOperationRef">
+	<xsd:element name="VehicleRentalOperationRef" type="VehicleRentalOperationRefStructure" abstract="false" substitutionGroup="AlternativeModeOfOperationRef">
 		<xsd:annotation>
 			<xsd:documentation>Reference to a VEHICLE RENTAL MODE OF OPERATION. +V1.2.2</xsd:documentation>
 		</xsd:annotation>
@@ -208,6 +227,15 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
+	<xsd:simpleType name="RentalOperationTypeEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for VehiclePRentalModeOfOperation.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="vehicleHire"/>
+			<xsd:enumeration value="vehicleLease"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<!-- ======================================================================= -->
 	<xsd:simpleType name="VehicleSharingOperationIdType">
 		<xsd:annotation>
@@ -215,7 +243,7 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:restriction base="AlternativeModeOfOperationIdType"/>
 	</xsd:simpleType>
-	<xsd:element name="VehicleSharingOperationRef" type="VehicleSharingOperationRefStructure" substitutionGroup="AlternativeModeOfOperationRef">
+	<xsd:element name="VehicleSharingOperationRef" type="VehicleSharingOperationRefStructure" abstract="false" substitutionGroup="AlternativeModeOfOperationRef">
 		<xsd:annotation>
 			<xsd:documentation>Reference to a VEHICLE SHARING MODE OF OPERATION. +V1.2.2</xsd:documentation>
 		</xsd:annotation>
@@ -234,6 +262,16 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
+	<xsd:simpleType name="SharingOperationTypeEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for VehicleSharingModeOfOperation.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="carSharingClub"/>
+			<xsd:enumeration value="peerToPeerCarSharing"/>
+			<xsd:enumeration value="vehicleSharing"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<!-- ======================================================================= -->
 	<xsd:simpleType name="VehiclePoolingOperationIdType">
 		<xsd:annotation>
@@ -241,7 +279,7 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:restriction base="AlternativeModeOfOperationIdType"/>
 	</xsd:simpleType>
-	<xsd:element name="VehiclePoolingOperationRef" type="VehiclePoolingOperationRefStructure" substitutionGroup="AlternativeModeOfOperationRef">
+	<xsd:element name="VehiclePoolingOperationRef" type="VehiclePoolingOperationRefStructure" abstract="false" substitutionGroup="AlternativeModeOfOperationRef">
 		<xsd:annotation>
 			<xsd:documentation>Reference to a VEHICLE POOLING MODE OF OPERATION. +V1.2.2</xsd:documentation>
 		</xsd:annotation>
@@ -260,6 +298,22 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
+	<xsd:simpleType name="PoolingOperationTypeEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for VehiclePoolingModeOfOperation.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="taxi"/>
+			
+			<xsd:enumeration value="appBookedTaxi"/>
+			<xsd:enumeration value="sharedTaxi"/>
+			<xsd:enumeration value="prebookedTaxi"/>
+			<xsd:enumeration value="chaffeuredVehicle"/>
+			<xsd:enumeration value="dynamicCarPooling"/>
+			<xsd:enumeration value="longDistanceCarPooling"/>
+			<xsd:enumeration value="commuterCarPooling"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<!-- ======================================================================= -->
 	<xsd:simpleType name="PersonalModeOfOperationIdType">
 		<xsd:annotation>
@@ -267,7 +321,7 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:restriction base="ModeOfOperationIdType"/>
 	</xsd:simpleType>
-	<xsd:element name="PersonalModeOfOperationRef" type="PersonalModeOfOperationRefStructure" substitutionGroup="ModeOfOperationRef">
+	<xsd:element name="PersonalModeOfOperationRef" type="PersonalModeOfOperationRefStructure" abstract="false" substitutionGroup="ModeOfOperationRef">
 		<xsd:annotation>
 			<xsd:documentation>Reference to a PERSONAL MODE OF OPERATION. +V1.2.2</xsd:documentation>
 		</xsd:annotation>
@@ -286,6 +340,15 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
+	<xsd:simpleType name="PersonalOperationTypeEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for VehiclePoolingModeOfOperation.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:NMTOKEN"> 
+			<xsd:enumeration value="ownCar"/>			
+			<xsd:enumeration value="privateLift"/> 
+		</xsd:restriction>
+	</xsd:simpleType>
 	<!-- ======================================================================= -->
 	<xsd:simpleType name="TypeOfModeOfOperationIdType">
 		<xsd:annotation>
@@ -313,64 +376,4 @@ Rail transport, Roads and Road transport
 		</xsd:simpleContent>
 	</xsd:complexType>
 	<!-- ======================================================================= -->
-	<xsd:simpleType name="ScheduledOperationTypeEnumeration">
-		<xsd:annotation>
-			<xsd:documentation>Allowed values for ScheduledOperationModeOfOperation.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="xsd:NMTOKEN">
-			<xsd:enumeration value="scheduledService"/>
-			<xsd:enumeration value="eventBasedService"/>
-		</xsd:restriction>
-	</xsd:simpleType>
-	<xsd:simpleType name="FlexibleOperationTypeEnumeration">
-		<xsd:annotation>
-			<xsd:documentation>Allowed values for FlexibleModeOfOperation.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="xsd:NMTOKEN">
-			<xsd:enumeration value="flexibleRoute"/>
-			<xsd:enumeration value="flexibleArea"/>
-			<xsd:enumeration value="demandResponsive"/>
-		</xsd:restriction>
-	</xsd:simpleType>
-	<xsd:simpleType name="RentalOperationTypeEnumeration">
-		<xsd:annotation>
-			<xsd:documentation>Allowed values for VehiclePRentalModeOfOperation.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="xsd:NMTOKEN">
-			<xsd:enumeration value="vehicleHire"/>
-			<xsd:enumeration value="vehicleLease"/>
-		</xsd:restriction>
-	</xsd:simpleType>
-	<xsd:simpleType name="SharingOperationTypeEnumeration">
-		<xsd:annotation>
-			<xsd:documentation>Allowed values for VehicleSharingModeOfOperation.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="xsd:NMTOKEN">
-			<xsd:enumeration value="carSharingClub"/>
-			<xsd:enumeration value="peerToPeerCarSharing"/>
-			<xsd:enumeration value="vehicleSharing"/>
-		</xsd:restriction>
-	</xsd:simpleType>
-	<xsd:simpleType name="PoolingOperationTypeEnumeration">
-		<xsd:annotation>
-			<xsd:documentation>Allowed values for VehiclePoolingModeOfOperation.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="xsd:NMTOKEN">
-			<xsd:enumeration value="dynamicCarPooling"/>
-			<xsd:enumeration value="longDistanceCarPooling"/>
-			<xsd:enumeration value="commuterCarPooling"/>
-		</xsd:restriction>
-	</xsd:simpleType>
-	<xsd:simpleType name="PersonalOperationTypeEnumeration">
-		<xsd:annotation>
-			<xsd:documentation>Allowed values for VehiclePoolingModeOfOperation.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="xsd:NMTOKEN">
-			<xsd:enumeration value="appBookedTaxi"/>
-			<xsd:enumeration value="taxi"/>
-			<xsd:enumeration value="sharedTaxi"/>
-			<xsd:enumeration value="prebookedTaxi"/>
-			<xsd:enumeration value="chaffeuredVehicle"/>
-		</xsd:restriction>
-	</xsd:simpleType>
 </xsd:schema>

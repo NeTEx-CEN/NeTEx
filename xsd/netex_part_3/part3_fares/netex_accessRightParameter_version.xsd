@@ -105,14 +105,14 @@
 				<Date>
 					<Modified>2020-10-05</Modified> New Modes: 
 					ValidityParameters 
-					- MOdes: Add AccessVeModes and  ModeOfOperation 
+					- Modes: Add AccessVeModes and  ModeOfOperation 
 					- VehcileTypes:   Add ModelProfileType, use Wider TransportType rather than VehicleType
 					- Organisations - Generalision to include all organisations
 					     NB this breaks strict compatibility  in one edge case where
 					     both an operator and an authority is specified
 					 - Equipment: Add MobilityService, Euipment / LocalService / MobilitySrevice. ModelEqipmentProfile, VehicleModelRef, 
 					 - Seating: Add VehicleRef
-					 - Place - Add VehicleMeetingPlace 
+					 - MeetingPoint/Place - Add VehicleMeetingPlace , VehicleMeetingPoint, VehicleMeetingLink
 					 - Network - Add VehicleMeetingPoint, 
 					 - Route : SingleJourneyPath
 					 - Service add SingleJourney and GroupOfSingleJourneys
@@ -438,7 +438,11 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="FareZoneRef" minOccurs="0"/>
 			<xsd:element ref="FareSectionRef" minOccurs="0"/>
 			<xsd:element ref="ScheduledStopPointRef" minOccurs="0"/>
-			<xsd:element ref="VehicleMeetingPointRef" minOccurs="0"/>
+			<xsd:group ref="VehicleMeetingValidityParametersGroup">
+				<xsd:annotation>
+					<xsd:documentation>VEHICLE MEETING  validity parameters for ACCESS RIGHT PARAMETER ASSIGNMENT. + V1.2.2</xsd:documentation>
+				</xsd:annotation>
+			</xsd:group>
 			<xsd:group ref="PlaceValidityParametersGroup"/>
 			<xsd:group ref="SiteValidityParametersGroup">
 				<xsd:annotation>
@@ -458,7 +462,7 @@ Rail transport, Roads and Road transport
 	</xsd:group>
 	<xsd:group name="PlaceValidityParametersGroup">
 		<xsd:annotation>
-			<xsd:documentation>PLACEvalidity parameters for ACCESS RIGHT PARAMETER ASSIGNMENT.</xsd:documentation>
+			<xsd:documentation>PLACE validity parameters for ACCESS RIGHT PARAMETER ASSIGNMENT.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element name="PlaceUse" type="PlaceUseEnumeration" minOccurs="0">
@@ -468,6 +472,15 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element ref="TopographicPlaceRef" minOccurs="0"/>
 			<xsd:element ref="AddressRef" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="VehicleMeetingValidityParametersGroup">
+		<xsd:annotation>
+			<xsd:documentation>VEHICLE MEETING  validity parameters for ACCESS RIGHT PARAMETER ASSIGNMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="VehicleMeetingPointRef" minOccurs="0"/>
+			<xsd:element ref="VehicleMeetingLinkRef" minOccurs="0"/>
 			<xsd:element ref="VehicleMeetingPlaceRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>

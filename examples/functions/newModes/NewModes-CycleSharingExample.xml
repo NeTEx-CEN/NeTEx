@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- ==== Metrobike Line 1 ==== -->
-<PublicationDelivery version="1.1" xsi:schemaLocation="http://www.netex.org.uk/netex ../../../xsd/NeTEx_publication.xsd" xmlns="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<PublicationDelivery version="1.2.2" xsi:schemaLocation="http://www.netex.org.uk/netex ../../../xsd/NeTEx_publication.xsd" xmlns="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<!-- NewModes example of an urban cycle sharing scheme
          Cycles available from parking stations ALpha & Beta in Area metropolis
              
@@ -13,7 +12,10 @@
 					  Deposit required.
                       SALES PACKAGES  (a) walk up fare  from ticket machine
                                         (b) mobile app for preregistered users.
-                  (2) Unlimited day use   TODO
+                  (2) Unlimited day use    Flat rate 
+                      Runs to end of fare day
+							  Deposit required.
+						   SALES PACKAGES  (a) mobile app for preregistered users only.
 -->
 	<PublicationTimestamp>2020-12-17T09:30:47.0Z</PublicationTimestamp>
 	<ParticipantRef>SYS001</ParticipantRef>
@@ -33,7 +35,7 @@
 					<LayerRef ref="fxc:fareNetwork_fareProducts_farePrices"/>
 					<objectReferences>
 						<AlternativeTransportOperatorRef version="any" ref="noc:MBIKE"/>
-						<VehicleSharingOperationRef ref="CycleSharing"/>
+						<VehicleSharingOperationRef ref="cycle_sharing"/>
 					</objectReferences>
 				</NetworkFilterByValue>
 			</NetworkFrameTopic>
@@ -43,7 +45,7 @@
 	<Description>Example of Cycle Sharing schem with prices</Description>
 	<!-- =============== RESULTS =========== -->
 	<dataObjects>
-		<CompositeFrame version="1.0" id="newModes:CycleSharingExample" dataSourceRef="mb:metrobike" responsibilitySetRef="mb:tariffs">
+		<CompositeFrame version="1.0" id="mb:cycle_sharing_example" dataSourceRef="mb:metrobike" responsibilitySetRef="mb:tariffs">
 			<ValidBetween>
 				<FromDate>2020-01-01T00:00:00</FromDate>
 				<ToDate>2020-12-31T12:00:00</ToDate>
@@ -63,7 +65,7 @@
 			</FrameDefaults>
 			<frames>
 				<!--==== OPERATOR COMMON RESOURCES==== -->
-				<ResourceFrame version="1.0" id="newModes:CycleSharingExample" responsibilitySetRef="mb:network_data">
+				<ResourceFrame version="1.0" id="mb:cycle_sharing_example" responsibilitySetRef="mb:network_data">
 					<Name>Metrobike Operator specific  common resources</Name>
 					<codespaces>
 						<Codespace id="mb_data">
@@ -142,9 +144,9 @@
 							<OrganisationType>onlineProvider</OrganisationType>
 							<Address>
 								<Street>Rue des Postes.</Street>
-								<Town>Betaville</Town> 
+								<Town>Betaville</Town>
 								<PostalRegion>Metroland</PostalRegion>
-							</Address>  
+							</Address>
 						</OnlineServiceOperator>
 					</organisations>
 					<modesOfOperation>
@@ -197,6 +199,7 @@
 							<Pump>false</Pump>
 							<Locker>false</Locker>
 							<Basket>false</Basket>
+							<Lock>true</Lock>
 						</CycleEquipmentProfile>
 						<CycleEquipmentProfile version="any" id="boneKitB">
 							<Battery>false</Battery>
@@ -205,15 +208,15 @@
 							<Pump>false</Pump>
 							<Locker>false</Locker>
 							<Basket>true</Basket>
+							<Lock>true</Lock>
 						</CycleEquipmentProfile>
 					</modelEquipmentProfiles>
 				</ResourceFrame>
 				<!--==== NETWORK ==== -->
-				<SiteFrame version="1.0" id="newModes:CycleSharingExample" responsibilitySetRef="nptg:data" dataSourceRef="nptg:dft">
-					<Name>NPTG localities used by Metrobike 1</Name>
-					<Description>This frame contains the NPTG locality definitions used by the stops  the service. It could also be exchanged separately.</Description>
+				<SiteFrame version="1.0" id="mb:cycle_sharing_example" responsibilitySetRef="mb:network_data">
+					<Name>Network data used by Metrobike 1</Name>
 					<prerequisites>
-						<ResourceFrameRef version="1.0" ref="newModes:CycleSharingExample"/>
+						<ResourceFrameRef version="1.0" ref="mb:cycle_sharing_example"/>
 					</prerequisites>
 					<topographicPlaces>
 						<TopographicPlace version="any" id="Alphaville">
@@ -230,7 +233,7 @@
 						</TopographicPlace>
 					</topographicPlaces>
 					<parkings>
-						<Parking version="any" id="BikeStationAlpha">
+						<Parking version="any" id="bike_station_alpha">
 							<Name lang="en">Bike Station Alpha</Name>
 							<CrossRoad>Main Street</CrossRoad>
 							<Landmark>Main Railway Station</Landmark>
@@ -238,21 +241,22 @@
 							<TopographicPlaceRef version="any" ref="Alphaville"/>
 							<AlternativeTransportOperatorRef version="any" ref="noc:MBIKE"/>
 							<parkingAreas>
-								<ParkingArea version="any" id="BikeStationAlpha_Rack">
+								<VehicleSharingParkingArea version="any" id="bike_station_alpha_A1">
 									<equipmentPlaces>
-										<EquipmentPlace version="any" id="BikeStationAlpha_Rack@1">
+										<EquipmentPlace version="any" id="bike_station_alpha_A1@rack">
 										</EquipmentPlace>
 									</equipmentPlaces>
 									<placeEquipments>
-										<VehicleReleaseEquipment version="any" id="BikeStationAlpha_Rack@1">
+										<VehicleReleaseEquipment version="any" id="bike_station_alpha_A1@rack">
 											<LocalControl>true</LocalControl>
+											<LockingMechanism>dock</LockingMechanism>
 										</VehicleReleaseEquipment>
-										<CycleStorageEquipment version="any" id="BikeStationAlpha_Rack@1">
+										<CycleStorageEquipment version="any" id="bike_station_alpha_A1@rack">
 											<NumberOfSpaces>10</NumberOfSpaces>
 											<CycleStorageType>docks</CycleStorageType>
 										</CycleStorageEquipment>
-										<TicketingEquipment version="any" id="BikeStationAlpha">
-											<Name>Ticket Machine s at Bike Station Beta</Name>
+										<TicketingEquipment version="any" id="bike_station_alpha">
+											<Name>Ticket Machine s at Bike Station Alpha</Name>
 											<TicketMachines>true</TicketMachines>
 											<NumberOfMachines>2</NumberOfMachines>
 											<TicketingFacilityList>ticketMachines</TicketingFacilityList>
@@ -262,41 +266,41 @@
 									</placeEquipments>
 									<TotalCapacity>10</TotalCapacity>
 									<bays>
-										<MonitoredVehicleSharingParkingBay version="any" id="BikeStationAlpha_Rack@1@01">
+										<MonitoredVehicleSharingParkingBay version="any" id="bike_station_alpha_A1@01">
 											<ParkingVehicleType>pedalCycle</ParkingVehicleType>
 										</MonitoredVehicleSharingParkingBay>
-										<MonitoredVehicleSharingParkingBay version="any" id="BikeStationAlpha_Rack@1@02">
+										<MonitoredVehicleSharingParkingBay version="any" id="bike_station_alpha_A1@02">
 											<ParkingVehicleType>pedalCycle</ParkingVehicleType>
 										</MonitoredVehicleSharingParkingBay>
-										<MonitoredVehicleSharingParkingBay version="any" id="BikeStationAlpha_Rack@1@03">
+										<MonitoredVehicleSharingParkingBay version="any" id="bike_station_alpha_A1@03">
 											<ParkingVehicleType>pedalCycle</ParkingVehicleType>
 										</MonitoredVehicleSharingParkingBay>
-										<MonitoredVehicleSharingParkingBay version="any" id="BikeStationAlpha_Rack@1@04">
+										<MonitoredVehicleSharingParkingBay version="any" id="bike_station_alpha_A1@04">
 											<ParkingVehicleType>pedalCycle</ParkingVehicleType>
 										</MonitoredVehicleSharingParkingBay>
-										<MonitoredVehicleSharingParkingBay version="any" id="BikeStationAlpha_Rack@1@05">
+										<MonitoredVehicleSharingParkingBay version="any" id="bike_station_alpha_A1@05">
 											<ParkingVehicleType>pedalCycle</ParkingVehicleType>
 										</MonitoredVehicleSharingParkingBay>
-										<MonitoredVehicleSharingParkingBay version="any" id="BikeStationAlpha_Rack@1@06">
+										<MonitoredVehicleSharingParkingBay version="any" id="bike_station_alpha_A1@06">
 											<ParkingVehicleType>pedalCycle</ParkingVehicleType>
 										</MonitoredVehicleSharingParkingBay>
-										<MonitoredVehicleSharingParkingBay version="any" id="BikeStationAlpha_Rack@1@07">
+										<MonitoredVehicleSharingParkingBay version="any" id="bike_station_alpha_A1@07">
 											<ParkingVehicleType>pedalCycle</ParkingVehicleType>
 										</MonitoredVehicleSharingParkingBay>
-										<MonitoredVehicleSharingParkingBay version="any" id="BikeStationAlpha_Rack@1@08">
+										<MonitoredVehicleSharingParkingBay version="any" id="bike_station_alpha_A1@08">
 											<ParkingVehicleType>pedalCycle</ParkingVehicleType>
 										</MonitoredVehicleSharingParkingBay>
-										<MonitoredVehicleSharingParkingBay version="any" id="BikeStationAlpha_Rack@1@09">
+										<MonitoredVehicleSharingParkingBay version="any" id="bike_station_alpha_A1@09">
 											<ParkingVehicleType>pedalCycle</ParkingVehicleType>
 										</MonitoredVehicleSharingParkingBay>
-										<MonitoredVehicleSharingParkingBay version="any" id="BikeStationAlpha_Rack@1@10">
+										<MonitoredVehicleSharingParkingBay version="any" id="bike_station_alpha_A1@rack@10">
 											<ParkingVehicleType>pedalCycle</ParkingVehicleType>
 										</MonitoredVehicleSharingParkingBay>
 									</bays>
-								</ParkingArea>
+								</VehicleSharingParkingArea>
 							</parkingAreas>
 						</Parking>
-						<Parking version="any" id="BikeStationBeta">
+						<Parking version="any" id="bike_station_beta">
 							<Name lang="en">Bike Station Beta</Name>
 							<CrossRoad>Main Street</CrossRoad>
 							<Landmark>Town Hall</Landmark>
@@ -304,20 +308,20 @@
 							<TopographicPlaceRef version="any" ref="Alphaville"/>
 							<AlternativeTransportOperatorRef version="any" ref="noc:MBIKE"/>
 							<parkingAreas>
-								<ParkingArea version="any" id="BikeStationBeta_Rack">
+								<VehicleSharingParkingArea version="any" id="bike_station_beta_B1">
 									<equipmentPlaces>
-										<EquipmentPlace version="any" id="BikeStationBeta_Rack@1">
+										<EquipmentPlace version="any" id="bike_station_beta_B1@rack">
 										</EquipmentPlace>
 									</equipmentPlaces>
 									<placeEquipments>
-										<VehicleReleaseEquipment version="any" id="BikeStationBeta_Rack@1">
+										<VehicleReleaseEquipment version="any" id="bike_station_beta_B1@rack">
 											<LocalControl>true</LocalControl>
 										</VehicleReleaseEquipment>
-										<CycleStorageEquipment version="any" id="BikeStationBeta_Rack@1">
+										<CycleStorageEquipment version="any" id="bike_station_beta_B1@rack">
 											<NumberOfSpaces>10</NumberOfSpaces>
 											<CycleStorageType>docks</CycleStorageType>
 										</CycleStorageEquipment>
-										<TicketingEquipment version="any" id="BikeStationBeta_Rack@1">
+										<TicketingEquipment version="any" id="bike_station_beta_B1@rack">
 											<Name>Ticket Machine   at Bike Station Beta</Name>
 											<TicketMachines>true</TicketMachines>
 											<NumberOfMachines>1</NumberOfMachines>
@@ -328,23 +332,23 @@
 									</placeEquipments>
 									<TotalCapacity>5</TotalCapacity>
 									<bays>
-										<MonitoredVehicleSharingParkingBay version="any" id="BikeStationBeta_Rack@1@01">
+										<MonitoredVehicleSharingParkingBay version="any" id="bike_station_beta_B1@01">
 											<ParkingVehicleType>pedalCycle</ParkingVehicleType>
 										</MonitoredVehicleSharingParkingBay>
-										<MonitoredVehicleSharingParkingBay version="any" id="BikeStationBeta_Rack@1@02">
+										<MonitoredVehicleSharingParkingBay version="any" id="bike_station_beta_B1@02">
 											<ParkingVehicleType>pedalCycle</ParkingVehicleType>
 										</MonitoredVehicleSharingParkingBay>
-										<MonitoredVehicleSharingParkingBay version="any" id="BikeStationBeta_Rack@1@03">
+										<MonitoredVehicleSharingParkingBay version="any" id="bike_station_beta_B1@03">
 											<ParkingVehicleType>pedalCycle</ParkingVehicleType>
 										</MonitoredVehicleSharingParkingBay>
-										<MonitoredVehicleSharingParkingBay version="any" id="BikeStationBeta_Rack@1@04">
+										<MonitoredVehicleSharingParkingBay version="any" id="bike_station_beta_B1@04">
 											<ParkingVehicleType>pedalCycle</ParkingVehicleType>
 										</MonitoredVehicleSharingParkingBay>
-										<MonitoredVehicleSharingParkingBay version="any" id="BikeStationBeta_Rack@1@05">
+										<MonitoredVehicleSharingParkingBay version="any" id="bike_station_beta_B1@05">
 											<ParkingVehicleType>pedalCycle</ParkingVehicleType>
 										</MonitoredVehicleSharingParkingBay>
 									</bays>
-								</ParkingArea>
+								</VehicleSharingParkingArea>
 							</parkingAreas>
 						</Parking>
 					</parkings>
@@ -355,9 +359,9 @@
 					</tariffZones>
 				</SiteFrame>
 				<!--==== Mobility Service ==== -->
-				<MobilityServiceFrame version="1.0" id="newModes:CycleSharingExample" responsibilitySetRef="mb:network_data">
+				<MobilityServiceFrame version="1.0" id="mb:cycle_sharing_example" responsibilitySetRef="mb:network_data">
 					<prerequisites>
-						<ResourceFrameRef version="1.0" ref="newModes:CycleSharingExample"/>
+						<ResourceFrameRef version="1.0" ref="mb:cycle_sharing_example"/>
 					</prerequisites>
 					<fleets>
 						<Fleet version="any" id="MetrobikeFleet">
@@ -452,23 +456,34 @@
 							</proposingServices>
 						</OnlineService>
 					</onlineServices>
+					<vehicleMeetingPlaceAssignments>
+						<VehicleSharingPlaceAssignment version="any" id="metrobik@bike_station_alpha_A1@rack" order="1">
+							<VehicleSharingServiceRef version="any" ref="Metrobike"/>
+							<VehicleSharingParkingAreaRef version="any" ref="bike_station_alpha_A1"/>
+						</VehicleSharingPlaceAssignment>
+						<VehicleSharingPlaceAssignment version="any" id="bike_station_beta" order="1">
+							<VehicleSharingServiceRef version="any" ref="Metrobike"/>
+							<VehicleSharingParkingAreaRef version="any" ref="bike_station_beta_B1"/>
+						</VehicleSharingPlaceAssignment>
+					</vehicleMeetingPlaceAssignments>
 				</MobilityServiceFrame>
 				<!--==== FARES ==== -->
-				<FareFrame version="1.0" id="newModes:CycleSharingExample" dataSourceRef="mb:metrobike" responsibilitySetRef="mb:tariffs">
-					<Name>Metrobike 1</Name>
+				<FareFrame version="1.0" id="mb:cycle_sharing_example-single_session" dataSourceRef="mb:metrobike" responsibilitySetRef="mb:tariffs">
+					<Name>Metrobike single session </Name>
 					<prerequisites>
-						<MobilityServiceFrameRef version="1.0" ref="newModes:CycleSharingExample"/>
-						<SiteFrameRef version="1.0" ref="newModes:CycleSharingExample"/>
+						<MobilityServiceFrameRef version="1.0" ref="mb:cycle_sharing_example"/>
+						<SiteFrameRef version="1.0" ref="mb:cycle_sharing_example"/>
 					</prerequisites>
 					<!--==== Fare Structure ==== -->
 					<tariffs>
-						<Tariff version="any" id="metrobike@singleSession">
+						<Tariff version="any" id="metrobike@single_session">
 							<Name>Metrobike 1 - Tariff</Name>
 							<documentLinks>
 								<InfoLink typeOfInfoLink="info">https://metrobike.eu/tariff.pdf</InfoLink>
 								<InfoLink typeOfInfoLink="map">https://metrobike.eu/tariffMap.pdf</InfoLink>
 							</documentLinks>
 							<AlternativeTransportOperatorRef version="any" ref="noc:MBIKE"/>
+							<VehicleSharingServiceRef version="any" ref="Metrobike"/>
 							<timeIntervals>
 								<TimeInterval version="any" id="metrobike@M0+M45">
 									<Name>First 45 minutes</Name>
@@ -478,7 +493,7 @@
 									<Name>45 -90  minutes</Name>
 									<Duration>PT45M</Duration>
 								</TimeInterval>
-								<TimeInterval version="any" id="metrobike@M90-each60">
+								<TimeInterval version="any" id="metrobike@M90-eachM60">
 									<Name>90 - 600  minutes, per hour</Name>
 									<Duration>PT60M</Duration>
 								</TimeInterval>
@@ -488,10 +503,10 @@
 								</TimeInterval>
 							</timeIntervals>
 							<fareStructureElements>
-								<FareStructureElement version="any" id="metrobike@singleSession@access">
+								<FareStructureElement version="any" id="metrobike@single_session@access">
 									<Name>Any where in Zone</Name>
 									<TypeOfFareStructureElementRef ref="fxc:access"/>
-									<GenericParameterAssignment version="any" order="01" id="metrobike@singleSession@@access">
+									<GenericParameterAssignment version="any" order="01" id="metrobike@single_session@access">
 										<TypeOfAccessRightAssignmentRef versionRef="EXTERNAL" ref="fxc:can_access"/>
 										<ValidityParameterAssignmentType>EQ</ValidityParameterAssignmentType>
 										<validityParameters>
@@ -500,81 +515,82 @@
 										</validityParameters>
 									</GenericParameterAssignment>
 								</FareStructureElement>
-								<FareStructureElement version="any" id="metrobike@singleSession@durations">
+								<FareStructureElement version="any" id="metrobike@single_session@durations">
 									<Name>Any where in Zone</Name>
 									<TypeOfFareStructureElementRef ref="fxc:access_when"/>
 									<fareStructureElementsInSequence>
-										<FareStructureElementInSequence version="any" id="metrobike@singleSession@durations" order="1">
+										<FareStructureElementInSequence version="any" id="metrobike@single_session@durations" order="1">
 											<IsFirstInSequence>true</IsFirstInSequence>
 											<MinimumAccess>1</MinimumAccess>
 											<MaximumAccess>1</MaximumAccess>
-											<GenericParameterAssignment version="any" order="01" id="metrobike@singleSession@durations@M0+M45">
+											<GenericParameterAssignment version="any" order="01" id="metrobike@single_session@durations@M0+M45">
 												<TypeOfAccessRightAssignmentRef versionRef="EXTERNAL" ref="fxc:can_access_during"/>
 												<TimeIntervalRef version="any" ref="metrobike@M0+M45"/>
 											</GenericParameterAssignment>
 										</FareStructureElementInSequence>
-										<FareStructureElementInSequence version="any" id="metrobike@singleSession@durations" order="2">
+										<FareStructureElementInSequence version="any" id="metrobike@single_session@durations" order="2">
 											<MinimumAccess>0</MinimumAccess>
 											<MaximumAccess>1</MaximumAccess>
-											<GenericParameterAssignment version="any" order="01" id="metrobike@singleSession@durations@M45+M90">
+											<GenericParameterAssignment version="any" order="01" id="metrobike@single_session@durations@M45+M90">
 												<TypeOfAccessRightAssignmentRef versionRef="EXTERNAL" ref="fxc:can_access_during"/>
 												<TimeIntervalRef version="any" ref="metrobike@M45+M90"/>
 											</GenericParameterAssignment>
 										</FareStructureElementInSequence>
-										<FareStructureElementInSequence version="any" id="metrobike@singleSession@durations" order="3">
+										<FareStructureElementInSequence version="any" id="metrobike@single_session@durations" order="3">
 											<MinimumAccess>0</MinimumAccess>
 											<MaximumAccess>4</MaximumAccess>
-											<GenericParameterAssignment version="any" order="01" id="metrobike@singleSession@durations@M90-each60">
+											<GenericParameterAssignment version="any" order="01" id="metrobike@single_session@durations@M90-eachM60">
 												<TypeOfAccessRightAssignmentRef versionRef="EXTERNAL" ref="fxc:can_access_during"/>
-												<TimeIntervalRef version="any" ref="metrobike@M90-each60"/>
+												<TimeIntervalRef version="any" ref="metrobike@M90-eachM60"/>
 											</GenericParameterAssignment>
 										</FareStructureElementInSequence>
-										<FareStructureElementInSequence version="any" id="metrobike@singleSession@durations@M600+" order="4">
+										<FareStructureElementInSequence version="any" id="metrobike@single_session@durations@M600+" order="4">
 											<IsLastInSequence>true</IsLastInSequence>
 											<MinimumAccess>0</MinimumAccess>
 											<MaximumAccess>1</MaximumAccess>
-											<GenericParameterAssignment version="any" order="01" id="metrobike@singleSession@durations">
+											<GenericParameterAssignment version="any" order="01" id="metrobike@single_session@durations">
 												<TypeOfAccessRightAssignmentRef versionRef="EXTERNAL" ref="fxc:can_access_during"/>
 												<TimeIntervalRef version="any" ref="metrobike@M600+"/>
 											</GenericParameterAssignment>
 										</FareStructureElementInSequence>
 									</fareStructureElementsInSequence>
 								</FareStructureElement>
-								<FareStructureElement version="any" id="metrobike@singleSession@eligibility">
-									<Name>eligible user types</Name>
+								<FareStructureElement version="any" id="metrobike@single_session@eligibility">
+									<Name>Eligible user types</Name>
 									<TypeOfFareStructureElementRef versionRef="EXTERNAL" ref="fxc:eligibility"/>
-									<GenericParameterAssignment order="1" id="metrobike@eligibility" version="any">
+									<GenericParameterAssignment order="1" id="metrobike@single_session@eligibility" version="any">
 										<TypeOfAccessRightAssignmentRef versionRef="EXTERNAL" ref="fxc:eligible"/>
 										<limitations>
 											<!---  ===ELIGIBILITY USAGE PARAMETERS =========    -->
 											<UserProfile version="any" id="notATot">
 												<Name>Adult</Name>
+												<UserType>anyone</UserType>
 												<MinimumAge>14</MinimumAge>
 											</UserProfile>
 										</limitations>
 									</GenericParameterAssignment>
 								</FareStructureElement>
-								<FareStructureElement version="any" id="metrobike@singleSession@conditions_of_travel">
+								<FareStructureElement version="any" id="metrobike@single_session@conditions_of_travel">
 									<Name>COnditions on travel</Name>
 									<TypeOfFareStructureElementRef versionRef="EXTERNAL" ref="fxc:travel_conditions"/>
-									<GenericParameterAssignment version="any" order="1" id="metrobike@singleSession@conditions_of_travel">
+									<GenericParameterAssignment version="any" order="1" id="metrobike@single_session@conditions_of_travel">
 										<Name>Conditions of travel</Name>
 										<TypeOfAccessRightAssignmentRef versionRef="EXTERNAL" ref="fxc:condition_of_use"/>
 										<LimitationGroupingType>AND</LimitationGroupingType>
 										<limitations>
-											<UsageValidityPeriod version="any" id="metrobike@singleSession@usagValidity">
+											<UsageValidityPeriod version="any" id="metrobike@single_session@usageValidity">
 												<ValidityPeriodType>singleTrip</ValidityPeriodType>
 												<UsageTrigger>activation</UsageTrigger>
 												<UsageEnd>endOfTrip</UsageEnd>
 												<ActivationMeans>accessCode</ActivationMeans>
 												<UsageStartConstraintType>variable</UsageStartConstraintType>
 											</UsageValidityPeriod>
-											<FrequencyOfUse version="any" id="metrobike@singleSession@frequency">
+											<FrequencyOfUse version="any" id="metrobike@single_session@frequency">
 												<Name>One trip no transfers</Name>
 												<FrequencyOfUseType>single</FrequencyOfUseType>
 												<MaximalFrequency>1</MaximalFrequency>
 											</FrequencyOfUse>
-											<Transferability version="any" id="metrobike@singleSession@transferability">
+											<Transferability version="any" id="metrobike@single_session@transferability">
 												<Name>Is Transferable - Transferee bust be eligible</Name>
 												<CanTransfer>true</CanTransfer>
 												<SharedUsage>singleUser</SharedUsage>
@@ -582,23 +598,23 @@
 										</limitations>
 									</GenericParameterAssignment>
 								</FareStructureElement>
-								<FareStructureElement version="any" id="metrobike@singleSession@conditions_of_sale">
+								<FareStructureElement version="any" id="metrobike@single_session@conditions_of_sale">
 									<Name>Conditions of sale</Name>
 									<TypeOfFareStructureElementRef versionRef="EXTERNAL" ref="fxc:sale_conditions"/>
-									<GenericParameterAssignment version="any" order="1" id="metrobike@singleSession@conditions_of_sale">
+									<GenericParameterAssignment version="any" order="1" id="metrobike@single_session@conditions_of_sale">
 										<Name>Conditions of sale</Name>
 										<TypeOfAccessRightAssignmentRef versionRef="EXTERNAL" ref="fxc:condition_of_sale"/>
 										<LimitationGroupingType>AND</LimitationGroupingType>
 										<limitations>
-											<ChargingPolicy version="any" id="metrobike@singleSession@ChargingPolicy@Deposit">
+											<ChargingPolicy version="any" id="metrobike@single_session@charging_policy@Deposit">
 												<Name>Deposit</Name>
 												<DepositPolicy>depositBlocked</DepositPolicy>
 											</ChargingPolicy>
-											<HirePenaltyPolicy version="any" id="metrobike@singleSession@HirePenalty@late">
+											<HirePenaltyPolicy version="any" id="metrobike@single_session@hire_penalty@late_return">
 												<Name>Charge for late return</Name>
 												<HirePenaltyPolicyType>lateVehicleReturn</HirePenaltyPolicyType>
 											</HirePenaltyPolicy>
-											<HirePenaltyPolicy version="any" id="metrobike@singleSession@HirePenalty@lostVehicle">
+											<HirePenaltyPolicy version="any" id="metrobike@single_session@hire_penalty@lost_vehicle">
 												<Name>Charge for no return</Name>
 												<HirePenaltyPolicyType>noVehicleReturn</HirePenaltyPolicyType>
 											</HirePenaltyPolicy>
@@ -611,12 +627,12 @@
 					<!--==== Fare Usage Parameters ==== -->
 					<!--==== Fare Product ==== -->
 					<fareProducts>
-						<ThirdPartyProduct version="any" id="MetrobikeOnline@membership">
+						<ThirdPartyProduct version="any" id="metrobike_online@membership">
 							<BrandingRef version="any" ref="myBrand"/>
 							<Name>Registered member of Metrobike online</Name>
 							<OnlineServiceOperatorRef version="any" ref="floggit"/>
 						</ThirdPartyProduct>
-						<PreassignedFareProduct version="any" id="metrobike@singleSession">
+						<PreassignedFareProduct version="any" id="metrobike@single_session">
 							<Name>One off trip</Name>
 							<ChargingMomentType>beforeTravelThenAdjustAtEndOfTravel</ChargingMomentType>
 							<AlternativeTransportOperatorRef version="any" ref="noc:MBIKE"/>
@@ -631,19 +647,21 @@
 							</ConditionSummary>
 							<!--==== VALIDABLE ELEMENTs ==== -->
 							<validableElements>
-								<ValidableElement version="any" id="metrobike@singleSession@travel">
+								<ValidableElement version="any" id="metrobike@single_session@travel">
 									<Name>Single  ride</Name>
 									<fareStructureElements>
-										<FareStructureElementRef version="any" ref="metrobike@singleSession@access"/>
-										<FareStructureElementRef version="any" ref="metrobike@singleSession@eligibility"/>
-										<FareStructureElementRef version="any" ref="metrobike@singleSession@conditions_of_travel"/>
+										<FareStructureElementRef version="any" ref="metrobike@single_session@access"/>
+										<FareStructureElementRef version="any" ref="metrobike@single_session@durations"/>
+										<FareStructureElementRef version="any" ref="metrobike@single_session@eligibility"/>
+										<FareStructureElementRef version="any" ref="metrobike@single_session@conditions_of_travel"/>
+										<FareStructureElementRef version="any" ref="metrobike@single_session@conditions_of_sale"/>
 									</fareStructureElements>
 								</ValidableElement>
 							</validableElements>
 							<!--==== ACCESS RIGHTs ===== -->
 							<accessRightsInProduct>
-								<AccessRightInProduct version="any" id="metrobike@singleSession" order="1">
-									<ValidableElementRef version="any" ref="metrobike@singleSession@travel"/>
+								<AccessRightInProduct version="any" id="metrobike@single_session" order="1">
+									<ValidableElementRef version="any" ref="metrobike@single_session@travel"/>
 								</AccessRightInProduct>
 							</accessRightsInProduct>
 							<ProductType>singleTrip</ProductType>
@@ -659,12 +677,19 @@
 							<PaymentMethods>debitCard creditCard contactlessPaymentCard epayDevice</PaymentMethods>
 							<DistributionRights>sell</DistributionRights>
 						</DistributionChannel>
-						<DistributionChannel version="any" id="mobile_app">
+						<DistributionChannel version="any" id="mobile_application">
 							<Name>Mobile application</Name>
 							<DistributionChannelType>mobileDevice</DistributionChannelType>
 							<OnlineServiceOperatorRef version="any" ref="floggit"/>
 							<PaymentMethods>debitCard creditCard  </PaymentMethods>
 							<DistributionRights>sell</DistributionRights>
+						</DistributionChannel>
+						<DistributionChannel version="any" id="online">
+							<Name>internet web acces</Name>
+							<DistributionChannelType>online</DistributionChannelType>
+							<OnlineServiceOperatorRef version="any" ref="floggit"/>
+							<PaymentMethods>debitCard creditCard contactlessPaymentCard</PaymentMethods>
+							<DistributionRights>sell inform</DistributionRights>
 						</DistributionChannel>
 					</distributionChannels>
 					<fulfilmentMethods>
@@ -679,7 +704,7 @@
 							<Name>Collect from machine</Name>
 							<FulfilmentMethodType>mobileApp</FulfilmentMethodType>
 							<typesOfTravelDocument>
-								<TypeOfTravelDocumentRef version="any" ref="mobile_application"/>
+								<TypeOfTravelDocumentRef version="any" ref="mobile_application_data"/>
 							</typesOfTravelDocument>
 						</FulfilmentMethod>
 					</fulfilmentMethods>
@@ -689,7 +714,7 @@
 							<MediaType>paperTicket</MediaType>
 							<MachineReadable>none</MachineReadable>
 						</TypeOfTravelDocument>
-						<TypeOfTravelDocument version="any" id="mobile_application">
+						<TypeOfTravelDocument version="any" id="mobile_application_data">
 							<Name>Mobile app with access code</Name>
 							<MediaType>mobileApp</MediaType>
 							<MachineReadable>nfc</MachineReadable>
@@ -697,11 +722,11 @@
 					</typesOfTravelDocuments>
 					<!--==== Sales Packages==== -->
 					<salesOfferPackages>
-						<SalesOfferPackage version="any" id="metrobike@singleSession-SOP@p-ticket">
+						<SalesOfferPackage version="any" id="metrobike@single_session-SOP@p-ticket">
 							<BrandingRef version="any" ref="myBrand"/>
 							<Name>Metrobike one-session purchase from  ticket machine</Name>
 							<distributionAssignments>
-								<DistributionAssignment version="any" id="metrobike@singleSession-SOP@p-ticket@onStreet" order="1">
+								<DistributionAssignment version="any" id="metrobike@single_session-SOP@p-ticket@onStreet" order="1">
 									<Name>On street ticket machine</Name>
 									<DistributionChannelRef version="any" ref="ticket_machine"/>
 									<DistributionChannelType>atStop</DistributionChannelType>
@@ -711,24 +736,24 @@
 								</DistributionAssignment>
 							</distributionAssignments>
 							<salesOfferPackageElements>
-								<SalesOfferPackageElement version="any" id="metrobike@singleSession-SOP@p-ticket" order="1">
+								<SalesOfferPackageElement version="any" id="metrobike@single_session-SOP@p-ticket" order="1">
 									<TypeOfTravelDocumentRef version="any" ref="printed_ticket"/>
-									<PreassignedFareProductRef version="any" ref="metrobike@singleSession"/>
+									<PreassignedFareProductRef version="any" ref="metrobike@single_session"/>
 								</SalesOfferPackageElement>
 							</salesOfferPackageElements>
 						</SalesOfferPackage>
-						<SalesOfferPackage version="any" id="metrobike@singleSession-SOP@mobileApp">
+						<SalesOfferPackage version="any" id="metrobike@single_session-SOP@mobileApp">
 							<BrandingRef version="any" ref="myBrand"/>
 							<Name>Metrobike one off Mobile app purchase</Name>
 							<ConditionSummary>
 								<RequiresAccount>true</RequiresAccount>
 							</ConditionSummary>
 							<validityParameterAssignments>
-								<GenericParameterAssignment version="any" id="metrobike@singleSession-SOP@mobileApp" order="1">
+								<GenericParameterAssignment version="any" id="metrobike@single_session-SOP@mobileApp" order="1">
 									<Name>Registered member of floggit </Name>
 									<limitations>
-										<EntitlementRequired version="any" id="metrobike@singleSession-SOP@mobileApp@registered">
-											<ThirdPartyProductRef version="any" ref="MetrobikeOnline@membership"/>
+										<EntitlementRequired version="any" id="metrobike@single_session-SOP@mobileApp@registered">
+											<ThirdPartyProductRef version="any" ref="metrobike_online@membership"/>
 											<EntitlementConstraint>
 												<UserConstraint>samePerson</UserConstraint>
 											</EntitlementConstraint>
@@ -740,42 +765,208 @@
 								</GenericParameterAssignment>
 							</validityParameterAssignments>
 							<distributionAssignments>
-								<DistributionAssignment version="any" id="metrobike@singleSession-SOP@mobileApp" order="1">
+								<DistributionAssignment version="any" id="metrobike@single_session-SOP@mobileApp" order="1">
 									<Name>By Mobile app</Name>
-									<DistributionChannelRef version="any" ref="mobile_app"/>
+									<DistributionChannelRef version="any" ref="mobile_application"/>
 									<DistributionChannelType>mobileDevice</DistributionChannelType>
 									<TicketingServiceFacilityList>purchase refund</TicketingServiceFacilityList>
 									<FulfilmentMethodRef version="any" ref="mobile_device"/>
 								</DistributionAssignment>
 							</distributionAssignments>
 							<salesOfferPackageElements>
-								<SalesOfferPackageElement version="any" id="metrobike@singleSession-SOP@mobileApp" order="1">
-									<TypeOfTravelDocumentRef version="any" ref="mobile_application"/>
-									<PreassignedFareProductRef version="any" ref="metrobike@singleSession"/>
+								<SalesOfferPackageElement version="any" id="metrobike@single_session-SOP@mobileApp" order="1">
+									<TypeOfTravelDocumentRef version="any" ref="mobile_application_data"/>
+									<PreassignedFareProductRef version="any" ref="metrobike@single_session"/>
 								</SalesOfferPackageElement>
 							</salesOfferPackageElements>
 						</SalesOfferPackage>
 					</salesOfferPackages>
 				</FareFrame>
-				<FareFrame version="1.0" id="newModes:CycleSharingExample_Prices" dataSourceRef="mb:metrobike" responsibilitySetRef="mb:tariffs">
+				<FareFrame version="1.0" id="mb:cycle_sharing_example-day_pass" dataSourceRef="mb:metrobike" responsibilitySetRef="mb:tariffs">
+					<Name>Metrobike  day Pass1</Name>
+					<prerequisites>
+						<MobilityServiceFrameRef version="1.0" ref="mb:cycle_sharing_example"/>
+						<SiteFrameRef version="1.0" ref="mb:cycle_sharing_example"/>
+					</prerequisites>
+					<!--==== Fare Structure ==== -->
+					<tariffs>
+						<Tariff version="any" id="metrobike@day_pass">
+							<Name>Metrobike Day Pass - Tariff</Name>
+							<documentLinks>
+								<InfoLink typeOfInfoLink="info">https://metrobike.eu/tariff.pdf</InfoLink>
+								<InfoLink typeOfInfoLink="map">https://metrobike.eu/tariffMap.pdf</InfoLink>
+							</documentLinks>
+							<AlternativeTransportOperatorRef version="any" ref="noc:MBIKE"/>
+							<VehicleSharingServiceRef version="any" ref="Metrobike"/>
+							<timeIntervals>
+								<TimeInterval version="any" id="metrobike@1D">
+									<Name>Metrobike Day Pass</Name>
+									<MinimumDuration>P1D</MinimumDuration>
+								</TimeInterval>
+							</timeIntervals>
+							<fareStructureElements>
+								<FareStructureElement version="any" id="metrobike@day_pass@access">
+									<Name>Any where in Zone</Name>
+									<TypeOfFareStructureElementRef ref="fxc:access"/>
+									<GenericParameterAssignment version="any" order="01" id="metrobike@day_pass@@access">
+										<TypeOfAccessRightAssignmentRef versionRef="EXTERNAL" ref="fxc:can_access"/>
+										<ValidityParameterAssignmentType>EQ</ValidityParameterAssignmentType>
+										<validityParameters>
+											<TariffZoneRef version="any" ref="AllMetropolis"/>
+											<VehicleSharingServiceRef version="any" ref="Metrobike"/>
+										</validityParameters>
+									</GenericParameterAssignment>
+								</FareStructureElement>
+								<FareStructureElement version="any" id="metrobike@day_pass@durations">
+									<Name>Access up to end of fare day</Name>
+									<TypeOfFareStructureElementRef ref="fxc:access_when"/>
+									<TimeIntervalRef version="any" ref="metrobike@1D"/>
+								</FareStructureElement>
+								<FareStructureElement version="any" id="metrobike@day_pass@eligibility">
+									<Name>Eligible user types</Name>
+									<TypeOfFareStructureElementRef versionRef="EXTERNAL" ref="fxc:eligibility"/>
+									<GenericParameterAssignment order="1" id="metrobike@day_pass@eligibility" version="any">
+										<TypeOfAccessRightAssignmentRef versionRef="EXTERNAL" ref="fxc:eligible"/>
+										<limitations>
+											<!---  ===ELIGIBILITY USAGE PARAMETERS =========    -->
+											<UserProfileRef version="any" ref="notATot"/>
+											<EntitlementRequiredRef version="any" ref="metrobike_registered"/>
+										</limitations>
+									</GenericParameterAssignment>
+								</FareStructureElement>
+								<FareStructureElement version="any" id="metrobike@day_pass@conditions_of_travel">
+									<Name>COnditions on travel</Name>
+									<TypeOfFareStructureElementRef versionRef="EXTERNAL" ref="fxc:travel_conditions"/>
+									<GenericParameterAssignment version="any" order="1" id="metrobike@day_pass@conditions_of_travel">
+										<Name>Conditions of travel</Name>
+										<TypeOfAccessRightAssignmentRef versionRef="EXTERNAL" ref="fxc:condition_of_use"/>
+										<LimitationGroupingType>AND</LimitationGroupingType>
+										<limitations>
+											<UsageValidityPeriod version="any" id="metrobike@day_pass@usagValidity">
+												<Name>Valid till end of fare day.</Name>
+												<ValidityPeriodType>dayPass</ValidityPeriodType>
+												<UsageTrigger>purchase</UsageTrigger>
+												<UsageEnd>endOfFareDay</UsageEnd>
+												<ActivationMeans>useOfMobileDevice</ActivationMeans>
+												<UsageStartConstraintType>variable</UsageStartConstraintType>
+											</UsageValidityPeriod>
+											<FrequencyOfUse version="any" id="metrobike@day_pass@frequency">
+												<FrequencyOfUseType>unlimited</FrequencyOfUseType>
+											</FrequencyOfUse>
+											<Transferability version="any" id="metrobike@day_pass@transferability">
+												<Name>Is Transferable - Transferee must be eligible</Name>
+												<CanTransfer>true</CanTransfer>
+												<SharedUsage>singleUser</SharedUsage>
+											</Transferability>
+										</limitations>
+									</GenericParameterAssignment>
+								</FareStructureElement>
+							</fareStructureElements>
+						</Tariff>
+					</tariffs>
+					<!--==== Fare Usage Parameters ==== -->
+					<!--==== Fare Product ==== -->
+					<fareProducts>
+						<PreassignedFareProduct version="any" id="metrobike@day_pass">
+							<Name>Metrobike day pass</Name>
+							<ChargingMomentType>beforeTravel</ChargingMomentType>
+							<AlternativeTransportOperatorRef version="any" ref="noc:MBIKE"/>
+							<ConditionSummary>
+								<FareStructureType>networkFlatFare</FareStructureType>
+								<TariffBasis>flat</TariffBasis>
+								<IsRefundable>false</IsRefundable>
+								<HasDiscountedFares>false</HasDiscountedFares>
+								<RequiresDeposit>true</RequiresDeposit>
+								<NoCashPayment>true</NoCashPayment>
+								<RequiresReservation>false</RequiresReservation>
+							</ConditionSummary>
+							<!--==== VALIDABLE ELEMENTs ==== -->
+							<validableElements>
+								<ValidableElement version="any" id="metrobike@day_pass@travel">
+									<Name>Single  ride</Name>
+									<fareStructureElements>
+										<FareStructureElementRef version="any" ref="metrobike@day_pass@access"/>
+										<FareStructureElementRef version="any" ref="metrobike@day_pass@eligibility"/>
+										<FareStructureElementRef version="any" ref="metrobike@day_pass@durations"/>
+										<FareStructureElementRef version="any" ref="metrobike@day_pass@conditions_of_travel"/>
+										<FareStructureElementRef version="any" ref="metrobike@single_session@conditions_of_sale"/>
+									</fareStructureElements>
+								</ValidableElement>
+							</validableElements>
+							<!--==== ACCESS RIGHTs ===== -->
+							<accessRightsInProduct>
+								<AccessRightInProduct version="any" id="metrobike@day_pass" order="1">
+									<ValidableElementRef version="any" ref="metrobike@day_pass@travel"/>
+								</AccessRightInProduct>
+							</accessRightsInProduct>
+							<ProductType>singleTrip</ProductType>
+						</PreassignedFareProduct>
+						<!--==== Other Products ==== -->
+					</fareProducts>
+					<!--==== Sales Packages==== -->
+					<salesOfferPackages>
+						<SalesOfferPackage version="any" id="metrobike@day_pass-SOP@mobileApp">
+							<BrandingRef version="any" ref="myBrand"/>
+							<Name>Metrobike day pass Mobile (app purchase only)</Name>
+							<ConditionSummary>
+								<RequiresAccount>true</RequiresAccount>
+							</ConditionSummary>
+							<validityParameterAssignments>
+								<GenericParameterAssignment version="any" id="metrobike@day_pass-SOP@mobileApp" order="1">
+									<Name>Registered member of floggit </Name>
+									<limitations>
+										<EntitlementRequired version="any" id="metrobike_registered">
+											<ThirdPartyProductRef version="any" ref="metrobike_online@membership"/>
+											<EntitlementConstraint>
+												<UserConstraint>samePerson</UserConstraint>
+											</EntitlementConstraint>
+										</EntitlementRequired>
+									</limitations>
+									<validityParameters>
+										<OnlineServiceRef version="any" ref="MetrobikeOnline"/>
+									</validityParameters>
+								</GenericParameterAssignment>
+							</validityParameterAssignments>
+							<distributionAssignments>
+								<DistributionAssignment version="any" id="metrobike@day_pass-SOP@mobileApp" order="1">
+									<Name>By Mobile app</Name>
+									<DistributionChannelRef version="any" ref="mobile_application"/>
+									<DistributionChannelType>mobileDevice</DistributionChannelType>
+									<TicketingServiceFacilityList>purchase refund</TicketingServiceFacilityList>
+									<FulfilmentMethodRef version="any" ref="mobile_device"/>
+								</DistributionAssignment>
+							</distributionAssignments>
+							<salesOfferPackageElements>
+								<SalesOfferPackageElement version="any" id="metrobike@day_pass-SOP@mobileApp" order="1">
+									<TypeOfTravelDocumentRef version="any" ref="mobile_application_data"/>
+									<PreassignedFareProductRef version="any" ref="metrobike@day_pass"/>
+								</SalesOfferPackageElement>
+							</salesOfferPackageElements>
+						</SalesOfferPackage>
+					</salesOfferPackages>
+				</FareFrame>
+				<FareFrame version="1.0" id="mb:cycle_sharing_example_prices" dataSourceRef="mb:metrobike" responsibilitySetRef="mb:tariffs">
 					<FrameDefaults>
 						<DefaultCurrency>EUR</DefaultCurrency>
 					</FrameDefaults>
 					<prerequisites>
-						<FareFrameRef version="1.0" ref="newModes:CycleSharingExample"/>
+						<FareFrameRef version="1.0" ref="mb:cycle_sharing_example-single_session"/>
 					</prerequisites>
 					<!--==== Pricing Parameters ====-->
+					<PricingParameterSet version="any" id="mb:cycle_sharing_example_Prices">
+						<pricingRules>
+							<PricingRule version="any" id="cumulative_total">
+								<Name>Excess charge is sum of additional </Name>
+							</PricingRule>
+							<PricingRule version="any" id="per_hour">
+								<Name>Multiply by number of hours</Name>
+							</PricingRule>
+						</pricingRules>
+					</PricingParameterSet>
 					<!--==== Fare Prices ==== -->
 					<fareTables>
-						<FareTable version="any" id="metrobike@singleSession">
-							<Name>Metrobike one off use prices</Name>
-							<pricesFor>
-								<SalesOfferPackageRef version="any" ref="metrobike@singleSession-SOP@p-ticket"/>
-								<SalesOfferPackageRef version="any" ref="metrobike@singleSession-SOP@mobileApp"/>
-							</pricesFor>
-							<usedIn>
-								<TariffRef version="any" ref="metrobike@singleSession"/>
-							</usedIn>
+						<FareTable version="any" id="metrobike">
+							<Name>Metrobike  prices</Name>
 							<AlternativeTransportOperatorRef version="any" ref="noc:MBIKE"/>
 							<limitations>
 								<UserProfileRef version="any" ref="notATot"/>
@@ -785,52 +976,92 @@
 								<VehicleSharingServiceRef version="any" ref="Metrobike"/>
 							</specifics>
 							<includes>
-								<FareTable version="any" id="metrobike@singleSession@rental">
-									<prices>
-										<UsageParameterPrice version="any" id="metrobike@singleSession@ChargingPolicy@Deposit">
-											<Name>Deposit - blocked</Name>
-											<Amount>300</Amount>
-											<ChargingPolicyRef version="any" ref="metrobike@singleSession@ChargingPolicy@Deposit"/>
-										</UsageParameterPrice>
-										<TimeIntervalPrice version="any" id="metrobike@M0+M45">
-											<Name>Next 45 minutes</Name>
-											<Amount>2.10</Amount>
-											<TimeIntervalRef version="any" ref="metrobike@M45+M90"/>
-										</TimeIntervalPrice>
-										<TimeIntervalPrice version="any" id="metrobike@M45+M90">
-											<Name>Next 45 minutes</Name>
-											<Amount>3.00</Amount>
-											<TimeIntervalRef version="any" ref="metrobike@M45+M90"/>
-										</TimeIntervalPrice>
-										<TimeIntervalPrice version="any" id="metrobike@M90-each60">
-											<Name>Netx 45 minutes</Name>
-											<Amount>4.00</Amount>
-											<TimeIntervalRef version="any" ref="metrobike@M90-each60"/>
-										</TimeIntervalPrice>
-										<TimeIntervalPrice version="any" id="metrobike@M600+">
-											<Name>Netx 45 minutes</Name>
-											<Amount>40.00</Amount>
-											<TimeIntervalRef version="any" ref="metrobike@M600+"/>
-										</TimeIntervalPrice>
-									</prices>
+								<FareTable version="any" id="metrobike@single_session">
+									<Name>Metrobike one off use prices</Name>
+									<pricesFor>
+										<SalesOfferPackageRef version="any" ref="metrobike@single_session-SOP@p-ticket"/>
+										<SalesOfferPackageRef version="any" ref="metrobike@single_session-SOP@mobileApp"/>
+									</pricesFor>
+									<usedIn>
+										<TariffRef version="any" ref="metrobike@single_session"/>
+									</usedIn>
+									<includes>
+										<FareTable version="any" id="metrobike@single_session@rental">
+											<prices>
+												<UsageParameterPrice version="any" id="metrobike@single_session@charging_policy@Deposit">
+													<Name>Deposit - blocked</Name>
+													<Amount>300</Amount>
+													<ChargingPolicyRef version="any" ref="metrobike@single_session@charging_policy@Deposit"/>
+												</UsageParameterPrice>
+												<TimeIntervalPrice version="any" id="metrobike@M0+M45">
+													<Name>First 45 minutes</Name>
+													<Amount>2.10</Amount>
+													<Units>45</Units>
+													<TimeIntervalRef version="any" ref="metrobike@M45+M90"/>
+												</TimeIntervalPrice>
+												<TimeIntervalPrice version="any" id="metrobike@M45+M90">
+													<Name>45 to 90 minutes extra charge</Name>
+													<Amount>3.00</Amount>
+													<Units>45</Units>
+													<TimeIntervalRef version="any" ref="metrobike@M45+M90"/>
+												</TimeIntervalPrice>
+												<TimeIntervalPrice version="any" id="metrobike@M90-eachM60">
+													<Name>90 to 600 minutes, charge  per hour e</Name>
+													<Amount>4.00</Amount>
+													<Units>60</Units>
+													<TimeIntervalRef version="any" ref="metrobike@M90-eachM60"/>
+												</TimeIntervalPrice>
+												<TimeIntervalPrice version="any" id="metrobike@M600+">
+													<Name>Over 600 minutes</Name>
+													<Amount>40.00</Amount>
+													<Units>600</Units>
+													<TimeIntervalRef version="any" ref="metrobike@M600+"/>
+												</TimeIntervalPrice>
+											</prices>
+										</FareTable>
+										<FareTable version="any" id="metrobike@hire_penalty">
+											<Name>Metrobike penalty fees</Name>
+											<limitations>
+												<UserProfileRef version="any" ref="notATot"/>
+											</limitations>
+											<prices>
+												<UsageParameterPrice version="any" id="metrobike@single_session@hire_penalty@late_return">
+													<Name>Late return</Name>
+													<Amount>100.00</Amount>
+													<HirePenaltyPolicyRef version="any" ref="metrobike@single_session@hire_penalty@late_return"/>
+												</UsageParameterPrice>
+												<UsageParameterPrice version="any" id="metrobike@single_session@hire_penalty@lost_vehicle">
+													<Name>Late retrun</Name>
+													<Amount>900.00</Amount>
+													<HirePenaltyPolicyRef version="any" ref="metrobike@single_session@hire_penalty@lost_vehicle"/>
+												</UsageParameterPrice>
+											</prices>
+										</FareTable>
+									</includes>
 								</FareTable>
-								<FareTable version="any" id="metrobike@hirePenalty">
-									<Name>Metrobike penalty fees</Name>
-									<limitations>
-										<UserProfileRef version="any" ref="notATot"/>
-									</limitations>
-									<prices>
-										<UsageParameterPrice version="any" id="metrobike@singleSession@HirePenalty@late">
-											<Name>Late retrun</Name>
-											<Amount>100.00</Amount>
-											<HirePenaltyPolicyRef version="any" ref="metrobike@singleSession@HirePenalty@late"/>
-										</UsageParameterPrice>
-										<UsageParameterPrice version="any" id="metrobike@singleSession@HirePenalty@lostVehicle">
-											<Name>Late retrun</Name>
-											<Amount>900.00</Amount>
-											<HirePenaltyPolicyRef version="any" ref="metrobike@singleSession@HirePenalty@lostVehicle"/>
-										</UsageParameterPrice>
-									</prices>
+								<FareTable version="any" id="metrobike@day_pass">
+									<Name>Metrobike day pass prices</Name>
+									<pricesFor>
+										<SalesOfferPackageRef version="any" ref="metrobike@day_pass-SOP@mobileApp"/>
+									</pricesFor>
+									<usedIn>
+										<TariffRef version="any" ref="metrobike@day_pass"/>
+									</usedIn>
+									<includes>
+										<FareTable version="any" id="metrobike@day_pass@rental">
+											<Name>Metrobike Day PAss fees</Name>
+											<limitations>
+												<UserProfileRef version="any" ref="notATot"/>
+											</limitations>
+											<prices>
+												<TimeIntervalPrice version="any" id="metrobike@1D">
+													<Name>day pass</Name>
+													<Amount>12.00</Amount>
+													<TimeIntervalRef version="any" ref="metrobike@1D"/>
+												</TimeIntervalPrice>
+											</prices>
+										</FareTable>
+									</includes>
 								</FareTable>
 							</includes>
 						</FareTable>
@@ -839,7 +1070,7 @@
 			</frames>
 		</CompositeFrame>
 		<!--==== SAMPLE TRANSACTIONS - NORMALLY IN A SEPARATE FILE ==== -->
-		<CompositeFrame id="newModes:CycleSharingExample_transaction_examples" version="1.0" responsibilitySetRef="mb:transaction_data" dataSourceRef="mb:metrobike">
+		<CompositeFrame id="mb:cycle_sharing_example_transaction_examples" version="1.0" responsibilitySetRef="mb:transaction_data" dataSourceRef="mb:metrobike">
 			<!--  ===============
 This Shows  sample Purchases 
 
@@ -847,16 +1078,23 @@ This Shows  sample Purchases
 -->
 			<Name>Sample Transactions for Metrobike trips </Name>
 			<prerequisites>
-				<CompositeFrameRef version="1.0" ref="newModes:CycleSharingExample"/>
+				<CompositeFrameRef version="1.0" ref="mb:cycle_sharing_example"/>
 			</prerequisites>
 			<frames>
 				<MobilityJourneyFrame version="1.2" id="mbt:SampleTransactions">
 					<vehicleAccessCredentials>
-						<VehicleAccessCredentialsAssignment version="any" id="mbt:Anon001@trans001@purchase_single" order="1">
+						<VehicleAccessCredentialsAssignment version="any" id="mbt:Anon001@trans069@purchase_single_session@one_time" order="1">
 							<VehicleSharingServiceRef version="any" ref="Metrobike"/>
 							<VehicleRef version="any" ref="B04"/>
-							<ServiceAccessToken version="any" id="mbt:Anon001@trans001@purchase_single">
+							<ServiceAccessToken version="any" id="mbt:Anon001@trans069@purchase_single_session">
 								<AccessCode>1234</AccessCode>
+							</ServiceAccessToken>
+						</VehicleAccessCredentialsAssignment>
+						<VehicleAccessCredentialsAssignment version="any" id="mbt:Cust444@trans005@purchase_day_pass" order="1">
+							<VehicleSharingServiceRef version="any" ref="Metrobike"/>
+							<MobileDeviceRef versionRef="External" ref="mbt:317867122222"/>
+							<ServiceAccessToken version="any" id="mbt:Cust444@trans005@purchase_day_pass">
+								<AccessCode>9876</AccessCode>
 							</ServiceAccessToken>
 						</VehicleAccessCredentialsAssignment>
 					</vehicleAccessCredentials>
@@ -871,26 +1109,159 @@ This Shows  sample Purchases
 							<Description>Operator transaction data</Description>
 						</Codespace>
 					</codespaces>
+					<!-- ===== Transaction data -->
+					<customers>
+						<Customer version="any" id="mbt:Cust444">
+							<Surname>Johnson</Surname>
+							<FirstName>Boris</FirstName>
+							<Title>Mr</Title>
+							<Gender>male</Gender>
+							<Email>boris@brexit.eu</Email>
+							<Phone>
+								<TelNationalNumber>07867122222</TelNationalNumber>
+								<TelCountryCode>31</TelCountryCode>
+							</Phone>
+							<customerEligibilities>
+								<UserProfileEligibility version="any" id="mbt:Cust444@trans001@pooler">
+								</UserProfileEligibility>
+							</customerEligibilities>
+							<customerAccounts>
+								<CustomerAccount version="any" id="mbt:Cust444@AC7651">
+									<Name>hotrider</Name>
+									<StartDate>2020-02-28T13:00:00</StartDate>
+									<CustomerAccountStatusType>active</CustomerAccountStatusType>
+									<customerPurchasePackages>
+										<CustomerPurchasePackageRef version="any" ref="mbt:Good@Cust444@005"/>
+									</customerPurchasePackages>
+									<CustomerPaymentMeansRef version="any" ref="mbt:Cust444@AC7651@p1"/>
+									<paymentMeans>
+										<CustomerPaymentMeans version="any" id="mbt:Cust444@AC7651@p1">
+											<Name>B.ohnson Visa Card</Name>
+											<EmvCardRef versionRef="external" ref="visa:47594444555666"/>
+										</CustomerPaymentMeans>
+										<CustomerPaymentMeans version="any" id="mbt:Cust444@AC7651@p2">
+											<Name>B.Johnson mobile device</Name>
+											<MobileDeviceRef versionRef="external" ref="mbt:317867122222"/>
+										</CustomerPaymentMeans>
+									</paymentMeans>
+									<mediumAccessDevices>
+										<MobileDeviceRef versionRef="External" ref="mbt:317867122222"/>
+									</mediumAccessDevices>
+								</CustomerAccount>
+							</customerAccounts>
+							<fareContracts>
+								<FareContract version="any" id="mbt:Cust444@trans001">
+									<CustomerRef ref="mbt:Anon"/>
+									<fareContractEntries>
+										<SalesTransaction version="any" id="mbt:Cust444@trans001@join_as_member">
+											<Name>Join AS Member</Name>
+											<Date>2020-02-28T13:00:00</Date>
+											<TypeOfFareContractEntryRef versionRef="EXTERNAL" ref="fxc:product_purchase"/>
+											<Amount>0</Amount>
+											<travelSpecifications>
+												<OfferedTravelSpecification version="any" id="mbt:Cust444@trans001@join_as_member">
+													<Date>2020-10-08T11:07:00</Date>
+													<SalesTransactionRef version="any" ref="mbt:Cust444@trans001@join_as_member"/>
+													<Amount>0</Amount>
+													<StartOfValidity>2020-10-08T11:07:00</StartOfValidity>
+													<TravelSpecificationSummaryView>
+														<Start>2020-02-28T13:00:00</Start>
+														<OnlineServiceOperatorRef version="any" ref="floggit"/>
+														<VehicleSharingServiceRef version="any" ref="Metrobike"/>
+													</TravelSpecificationSummaryView>
+													<specificParameterAssignments>
+														<SpecificParameterAssignment version="any" order="1" id="mbt:Cust444@trans001@purchase_member">
+															<Name>Join as member</Name>
+															<ThirdPartyProductRef version="any" ref="metrobike_online@membership"/>
+														</SpecificParameterAssignment>
+													</specificParameterAssignments>
+												</OfferedTravelSpecification>
+											</travelSpecifications>
+											<travelDocuments>
+												<TravelDocument version="any" id="mbt:ticket@765452230">
+													<ValidBetween>
+														<FromDate>2018-07-08T11:07:00</FromDate>
+													</ValidBetween>
+													<TypeOfTravelDocumentRef version="any" ref="mobile_application_data"/>
+												</TravelDocument>
+											</travelDocuments>
+										</SalesTransaction>
+										<SalesTransaction version="any" id="mbt:Cust444@trans005@purchase_day_pass">
+											<Name>Buy Dap PAss</Name>
+											<Date>2020-10-08T11:07:00</Date>
+											<TypeOfFareContractEntryRef versionRef="EXTERNAL" ref="fxc:product_purchase"/>
+											<Amount>12.00</Amount>
+											<PaymentMethod>creditCard</PaymentMethod>
+											<travelSpecifications>
+												<OfferedTravelSpecification version="any" id="mbt:Cust444@trans005@purchase_day_pass">
+													<Date>2020-10-08T11:07:00</Date>
+													<SalesTransactionRef version="any" ref="mbt:Cust444@trans005@purchase_day_pass"/>
+													<TimeIntervalPriceRef version="any" ref="metrobike@1D"/>
+													<Amount>12.00</Amount>
+													<StartOfValidity>2020-10-08T11:07:00</StartOfValidity>
+													<TravelSpecificationSummaryView>
+														<Start>2020-10-08T11:07:00</Start>
+														<Duration>P1D</Duration>
+														<VehicleSharingServiceRef version="any" ref="Metrobike"/>
+													</TravelSpecificationSummaryView>
+													<specificParameterAssignments>
+														<SpecificParameterAssignment version="any" order="1" id="mbt:Cust444@trans005@purchase_day_pass">
+															<Name>Single ride</Name>
+															<ValidableElementRef version="any" ref="metrobike@day_pass@travel"/>
+															<PreassignedFareProductRef version="any" ref="metrobike@day_pass"/>
+															<FareStructureElementRef version="any" ref="metrobike@day_pass@access"/>
+															<SalesOfferPackageRef version="any" ref="metrobike@day_pass-SOP@mobileApp"/>
+															<validityParameters>
+																<AlternativeTransportOperatorRef version="any" ref="noc:MBIKE"/>
+																<DistributionChannelRef version="any" ref="mobile_application"/>
+																<FulfilmentMethodRef version="any" ref="mobile_device"/>
+																<TypeOfTravelDocumentRef version="any" ref="mobile_application_data"/>
+																<VehicleSharingOperationRef ref="cycle_sharing"/>
+																<VehicleSharingServiceRef version="any" ref="Metrobike"/>
+															</validityParameters>
+															<TimeIntervalRef version="any" ref="metrobike@1D"/>
+															<ServiceAccessTokenRef version="any" ref="mbt:Cust444@trans005@purchase_day_pass"/>
+														</SpecificParameterAssignment>
+													</specificParameterAssignments>
+												</OfferedTravelSpecification>
+											</travelSpecifications>
+											<travelDocuments>
+												<TravelDocument version="any" id="mbt:Cust444@trans005@purchase_day_pass">
+													<ValidBetween>
+														<FromDate>2020-10-08T11:07:00</FromDate>
+														<ToDate>2020-10-09T11:02:00</ToDate>
+													</ValidBetween>
+													<TypeOfTravelDocumentRef version="any" ref="mobile_application_data"/>
+													<CustomerPurchasePackageRef version="any" ref="mbt:Good@Cust444@005"/>
+												</TravelDocument>
+											</travelDocuments>
+										</SalesTransaction>
+									</fareContractEntries>
+								</FareContract>
+							</fareContracts>
+						</Customer>
+					</customers>
+					<!--  ==== Annonymous transactions -->
 					<fareContracts>
-						<FareContract version="any" id="mbt:Anon001@trans001">
+						<FareContract version="any" id="mbt:Anon001@trans069">
 							<CustomerRef ref="mbt:Anon"/>
 							<fareContractEntries>
-								<SalesTransaction version="any" id="mbt:Anon001@trans001@purchase_single">
+								<SalesTransaction version="any" id="mbt:Anon001@trans069@purchase_single_session@checkout">
 									<Name>Buy Single   ticket Adult</Name>
 									<Date>2020-10-08T11:07:00</Date>
 									<TypeOfFareContractEntryRef versionRef="EXTERNAL" ref="fxc:product_purchase"/>
 									<Amount>2.10</Amount>
 									<PaymentMethod>cash</PaymentMethod>
 									<travelSpecifications>
-										<OfferedTravelSpecification version="any" id="mbt:Anon001@trans001@purchase_single">
+										<OfferedTravelSpecification version="any" id="mbt:Anon001@trans069@purchase_single_session@checkout">
 											<Date>2020-10-08T11:07:00</Date>
-											<SalesTransactionRef version="any" ref="mbt:Anon001@trans001@purchase_single"/>
+											<SalesTransactionRef version="any" ref="mbt:Anon001@trans069@purchase_single_session@checkout"/>
 											<TimeIntervalPriceRef version="any" ref="metrobike@M0+M45"/>
 											<Amount>2.10</Amount>
 											<StartOfValidity>2020-10-08T11:07:00</StartOfValidity>
 											<TravelSpecificationSummaryView>
 												<Origin>
-													<ParkingRef version="any" ref="BikeStationAlpha"/>
+													<ParkingRef version="any" ref="bike_station_alpha"/>
 												</Origin>
 												<Start>2020-10-08T11:07:00</Start>
 												<Duration>PT45M</Duration>
@@ -899,18 +1270,19 @@ This Shows  sample Purchases
 												<VehicleSharingServiceRef version="any" ref="Metrobike"/>
 											</TravelSpecificationSummaryView>
 											<specificParameterAssignments>
-												<SpecificParameterAssignment version="any" order="1" id="mbt:Anon001@trans001@purchase_single">
+												<SpecificParameterAssignment version="any" order="1" id="mbt:Anon001@trans069@purchase_single_session@checkout">
 													<Name>One off cycle hire</Name>
-													<ValidableElementRef version="any" ref="metrobike@singleSession@travel"/>
-													<PreassignedFareProductRef version="any" ref="metrobike@singleSession"/>
-													<FareStructureElementRef version="any" ref="metrobike@singleSession@access"/>
-													<SalesOfferPackageRef version="any" ref="metrobike@singleSession-SOP@p-ticket"/>
+													<ValidableElementRef version="any" ref="metrobike@single_session@travel"/>
+													<PreassignedFareProductRef version="any" ref="metrobike@single_session"/>
+													<FareStructureElementRef version="any" ref="metrobike@single_session@access"/>
+													<SalesOfferPackageRef version="any" ref="metrobike@single_session-SOP@p-ticket"/>
 													<limitations>
 														<UserProfileRef version="any" ref="notATot"/>
 													</limitations>
 													<validityParameters>
 														<AlternativeTransportOperatorRef version="any" ref="noc:MBIKE"/>
 														<TariffZoneRef version="any" ref="AllMetropolis"/>
+														<MonitoredVehicleSharingParkingBayRef version="any" ref="bike_station_alpha_A1@02"/>
 														<DistributionChannelRef version="any" ref="ticket_machine"/>
 														<FulfilmentMethodRef version="any" ref="collect_from_machine"/>
 														<TypeOfTravelDocumentRef version="any" ref="printed_ticket"/>
@@ -919,9 +1291,10 @@ This Shows  sample Purchases
 														<CycleEquipmentProfileRef version="any" ref="boneKitB"/>
 														<VehicleSharingServiceRef version="any" ref="Metrobike"/>
 														<VehicleRef version="any" ref="B04"/>
+														<VehicleSharingParkingAreaRef version="any" ref="bike_station_alpha_A1"/>
 													</validityParameters>
 													<TimeIntervalRef version="any" ref="metrobike@M0+M45"/>
-													<ServiceAccessTokenRef version="any" ref="mbt:Anon001@trans001@purchase_single"/>
+													<ServiceAccessTokenRef version="any" ref="mbt:Anon001@trans069@purchase_single_session"/>
 												</SpecificParameterAssignment>
 											</specificParameterAssignments>
 										</OfferedTravelSpecification>
@@ -936,9 +1309,121 @@ This Shows  sample Purchases
 										</TravelDocument>
 									</travelDocuments>
 								</SalesTransaction>
+								<SalesTransaction version="any" id="mbt:Anon001@trans069@purchase_single_session@return">
+									<Name>Return and pay additional chgarge</Name>
+									<Date>2020-10-08T13:10:00</Date>
+									<TypeOfFareContractEntryRef versionRef="EXTERNAL" ref="fxc:product_purchase"/>
+									<Amount>11.00</Amount>
+									<Units>123</Units>
+									<PaymentMethod>cash</PaymentMethod>
+									<travelSpecifications>
+										<OfferedTravelSpecification version="any" id="mbt:Anon001@trans069@purchase_single_session@return">
+											<Date>2020-10-08T13:10:00</Date>
+											<SalesTransactionRef version="any" ref="mbt:Anon001@trans069@purchase_single_session@return"/>
+											<Amount>11.00</Amount>
+											<ruleStepResults>
+												<RuleStepResult id="mbt:Anon001@trans069@purchase_single_session@return" order="1">
+													<TimeIntervalPriceRef version="any" ref="metrobike@M45+M90"/>
+													<Amount>3.00</Amount>
+													<AdjustmentAmount>3.00</AdjustmentAmount>
+													<PricingRuleRef version="any" ref="cumulative_total"/>
+													<Narrative>46 minutes to 90 minutes</Narrative>
+												</RuleStepResult>
+												<RuleStepResult id="mbt:Anon001@trans069@purchase_single_session@return" order="2">
+													<TimeIntervalPriceRef version="any" ref="metrobike@M90-eachM60"/>
+													<Amount>4.00</Amount>
+													<AdjustmentAmount>8.00</AdjustmentAmount>
+													<AdjustmentUnits>120</AdjustmentUnits>
+													<PricingRuleRef version="any" ref="per_hour"/>
+													<Narrative>91 minutes  to 600 minutes</Narrative>
+												</RuleStepResult>
+											</ruleStepResults>
+											<EndOfValidity>2020-10-08T13:10:00</EndOfValidity>
+											<TravelSpecificationSummaryView>
+												<Destination>
+													<ParkingRef version="any" ref="bike_station_beta"/>
+												</Destination>
+												<Start>2020-10-08T11:07:00</Start>
+												<Duration>PT45M</Duration>
+												<AlternativeTransportOperatorRef version="any" ref="noc:MBIKE"/>
+												<UserProfileRef version="any" ref="notATot"/>
+												<VehicleSharingServiceRef version="any" ref="Metrobike"/>
+											</TravelSpecificationSummaryView>
+											<specificParameterAssignments>
+												<SpecificParameterAssignment version="any" order="1" id="mbt:Anon001@trans069@purchase_single_session@return">
+													<Name>One off cycle hire</Name>
+													<ValidableElementRef version="any" ref="metrobike@single_session@travel"/>
+													<PreassignedFareProductRef version="any" ref="metrobike@single_session"/>
+													<FareStructureElementRef version="any" ref="metrobike@single_session@access"/>
+													<SalesOfferPackageRef version="any" ref="metrobike@single_session-SOP@p-ticket"/>
+													<validityParameters>
+														<AlternativeTransportOperatorRef version="any" ref="noc:MBIKE"/>
+														<TariffZoneRef version="any" ref="AllMetropolis"/>
+														<MonitoredVehicleSharingParkingBayRef version="any" ref="bike_station_beta_B1@04"/>
+														<DistributionChannelRef version="any" ref="online"/>
+														<VehicleSharingOperationRef version="any" ref="cycle_share"/>
+														<VehicleModelRef version="any" ref="boneShaker2"/>
+														<CycleEquipmentProfileRef version="any" ref="boneKitB"/>
+														<VehicleSharingServiceRef version="any" ref="Metrobike"/>
+														<VehicleRef version="any" ref="B04"/>
+														<VehicleSharingParkingAreaRef version="any" ref="bike_station_beta_B1"/>
+													</validityParameters>
+													<TimeIntervalRef version="any" ref="metrobike@M90-eachM60"/>
+												</SpecificParameterAssignment>
+											</specificParameterAssignments>
+										</OfferedTravelSpecification>
+									</travelSpecifications>
+								</SalesTransaction>
 							</fareContractEntries>
 						</FareContract>
 					</fareContracts>
+					<!-- CUSTOMER PURCHASE PACKAGES === -->
+					<customerPurchasePackages>
+						<CustomerPurchasePackage version="any" id="mbt:Good@Cust444@001">
+							<Name>Membership</Name>
+							<CustomerRef version="any" ref="mbt:Cust444"/>
+							<CustomerAccountRef version="any" ref="mbt:Cust444@AC7651"/>
+							<customerPurchasePackageElements>
+								<CustomerPurchasePackageElement version="any" id="mbt:Good@Cust444@001" order="1">
+									<SalesOfferPackageElementRef version="any" ref="metrobike@day_pass-SOP@mobileApp"/>
+								</CustomerPurchasePackageElement>
+							</customerPurchasePackageElements>
+							<SalesTransactionRef version="any" ref="mbt:Cust444@trans001@join_as_member"/>
+							<MobileDeviceRef versionRef="external" ref="mbt:317867122222"/>
+							<MediumApplicationInstanceRef versionRef="external" ref="mbt:317867122222@mboik"/>
+						</CustomerPurchasePackage>
+						<CustomerPurchasePackage version="any" id="mbt:Good@Cust444@005">
+							<Name>Day Pass</Name>
+							<CustomerRef version="any" ref="mbt:Cust444"/>
+							<CustomerAccountRef version="any" ref="mbt:Cust444@AC7651"/>
+							<customerPurchasePackageElements>
+								<CustomerPurchasePackageElement version="any" id="mbt:Good@Cust444@005" order="1">
+									<SalesOfferPackageElementRef version="any" ref="metrobike@day_pass-SOP@mobileApp"/>
+									<validityParameterAssignments>
+										<CustomerPurchaseParameterAssignment version="any" id="mbt:Good@Cust444@005" order="1">
+											<validityParameters>
+												<AlternativeTransportOperatorRef version="any" ref="noc:MBIKE"/>
+												<DistributionChannelRef version="any" ref="mobile_application"/>
+												<FulfilmentMethodRef version="any" ref="mobile_device"/>
+												<TypeOfTravelDocumentRef version="any" ref="mobile_application_data"/>
+												<VehicleSharingOperationRef ref="cycle_sharing"/>
+												<VehicleSharingServiceRef version="any" ref="Metrobike"/>
+											</validityParameters>
+										</CustomerPurchaseParameterAssignment>
+									</validityParameterAssignments>
+								</CustomerPurchasePackageElement>
+							</customerPurchasePackageElements>
+							<SalesTransactionRef version="any" ref="mbt:Cust444@trans005@purchase_day_pass"/>
+							<prices>
+								<CustomerPurchasePackagePrice version="any" id="mbt:Good@Cust444@005">
+									<Amount>12.00</Amount>
+									<CustomerPurchasePackageRef version="any" ref="mbt:Good@Cust444@005"/>
+								</CustomerPurchasePackagePrice>
+							</prices>
+							<MobileDeviceRef versionRef="external" ref="mbt:317867122222"/>
+							<MediumApplicationInstanceRef versionRef="external" ref="mbt:317867122222@mboik"/>
+						</CustomerPurchasePackage>
+					</customerPurchasePackages>
 				</SalesTransactionFrame>
 			</frames>
 		</CompositeFrame>
