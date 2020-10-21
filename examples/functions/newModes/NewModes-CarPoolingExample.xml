@@ -10,6 +10,7 @@
                A dynmic pricing engine  supplies the fares
 
         This examples provides just the static aspecs such that down stream PI systems can report the existence a of the scheme for teh given area. 
+(C) CEN 2020
 -->
 	<PublicationTimestamp>2020-12-17T09:30:47.0Z</PublicationTimestamp>
 	<ParticipantRef>SYS001</ParticipantRef>
@@ -80,7 +81,7 @@
 								<ResponsibilityRoleAssignment version="any" id="rd:tariff_data@creates">
 									<DataRoleType>creates</DataRoleType>
 									<StakeholderRoleType>FareManagement</StakeholderRoleType>
-									<ResponsibleOrganisationRef ref="noc:XRYD" version="any">ryde</ResponsibleOrganisationRef>
+									<ResponsibleOrganisationRef ref="noc:XRYD" version="any">noc:XRYD</ResponsibleOrganisationRef>
 								</ResponsibilityRoleAssignment>
 							</roles>
 						</ResponsibilitySet>
@@ -90,7 +91,7 @@
 								<ResponsibilityRoleAssignment version="any" id="rd:network_data@creates">
 									<DataRoleType>creates</DataRoleType>
 									<StakeholderRoleType>Planning</StakeholderRoleType>
-									<ResponsibleOrganisationRef ref="noc:XRYD" version="any">ryde</ResponsibleOrganisationRef>
+									<ResponsibleOrganisationRef ref="noc:XRYD" version="any">noc:XRYD</ResponsibleOrganisationRef>
 								</ResponsibilityRoleAssignment>
 							</roles>
 						</ResponsibilitySet>
@@ -233,7 +234,6 @@
 							<StopPlaceType>taxiRank</StopPlaceType>
 							<taxiStands>
 								<TaxiStand version="any" id="alphaville_hdv_taxi@s1">
-								
 									<BoardingUse>true</BoardingUse>
 									<AlightingUse>true</AlightingUse>
 									<QuayType>taxiStand</QuayType>
@@ -291,7 +291,6 @@
 							</parkingAreas>
 						</Parking>
 					</parkings>
-				 
 				</SiteFrame>
 				<!--==== Mobility Service ==== -->
 				<MobilityServiceFrame version="1.0" id="rd:ride_sharing_example" responsibilitySetRef="rd:network_data">
@@ -434,7 +433,7 @@
 								<FareStructureElement version="any" id="ryde@single_trip@eligibility">
 									<Name>eligible user types</Name>
 									<TypeOfFareStructureElementRef versionRef="EXTERNAL" ref="fxc:eligibility"/>
-									<GenericParameterAssignment order="1" id="ryde@eligibility" version="any">
+									<GenericParameterAssignment order="1" id="ryde@single_trip@eligibility" version="any">
 										<TypeOfAccessRightAssignmentRef versionRef="EXTERNAL" ref="fxc:eligible"/>
 										<limitations>
 											<!---  ===ELIGIBILITY USAGE PARAMETERS =========    -->
@@ -662,7 +661,7 @@
 							<PricingService version="any" id="ryde_pricer">
 								<Name>Dynamic pricing engine</Name>
 								<AlternativeTransportOperatorRef version="any" ref="noc:XRYD"/>
-								<Url>https://tickettoryde/engine</Url>
+								<Url>https://ticketToRyde/engine</Url>
 							</PricingService>
 						</pricingServices>
 					</PricingParameterSet>
@@ -713,30 +712,60 @@ This Shows  sample Purchases
 						</Vehicle>
 					</vehicles>
 				</ResourceFrame>
+				<ServiceCalendarFrame version="1.0" id="rd:ride_sharing_example_data">
+					<operatingDays>
+						<OperatingDay version="any" id="2020-02-28">
+							<CalendarDate>2020-02-28</CalendarDate>
+						</OperatingDay>
+					</operatingDays>
+				</ServiceCalendarFrame>
 				<!--==== NETWORK ==== -->
-				<MobilityJourneyFrame version="1.2" id="rydt:SampleTransactions">
+				<MobilityJourneyFrame version="1.2" id="rydt:sample_transactions">
+					<singleJourneyPaths>
+						<SingleJourneyPath version="any" id="rydt:Cust555@trans001@ride4444">
+							<Name>Path from Delta park and ride to Alphaville  hotel de ville.</Name>
+							<Distance>25.00</Distance>
+							<pointsInSequence>
+								<VehicleMeetingPointInPath version="any" id="rydt:Cust555@trans001@ride4444" order="1">
+									<VehicleMeetingPointRef version="any" ref="gamma_area"/>
+									<OnwardVehicleMeetingLinkRef version="any" ref="gamma_area+alphaville_centre"/>
+								</VehicleMeetingPointInPath>
+								<VehicleMeetingPointInPath version="any" id="rydt:Cust555@trans001@ride4444" order="2">
+									<VehicleMeetingPointRef version="any" ref="alphaville_centre"/>
+								</VehicleMeetingPointInPath>
+							</pointsInSequence>
+						</SingleJourneyPath>
+					</singleJourneyPaths>
 					<singleJourneys>
 						<SingleJourney version="any" id="rydt:Cust555@trans001@ride4444">
+							<Name>Car pool journey from Delta park and ride to Alphaville  hotel de ville</Name>
 							<TransportMode>selfDrive</TransportMode>
 							<TransportSubmode>
 								<SelfDriveSubmode>ownCar</SelfDriveSubmode>
 							</TransportSubmode>
 							<GeneralVehiclePoolingServiceRef version="any" ref="ryde"/>
-							<VehicleRef ref=""/>
-							<OperatingDayRef ref=""/>
+							<VehicleRef version="any" ref="db54278"/>
+							<SingleJourneyPathRef version="any" ref="rydt:Cust555@trans001@ride4444"/>
+							<DepartureTime>08:30:00</DepartureTime>
+							<OperatingDayRef version="any" ref="2020-02-28"/>
 							<datedPassingTimes>
-								<TargetPassingTime/>
+								<TargetPassingTime version="any" id="rydt:Cust555@trans001@ride4444">
+									<PointInSingleJourneyPathRef version="any" ref="rydt:Cust555@trans001@ride4444" order="1"/>
+									<AimedDepartureTime>08:30:00</AimedDepartureTime>
+								</TargetPassingTime>
+								<TargetPassingTime version="any" id="rydt:Cust555@trans001@ride4444">
+									<PointInSingleJourneyPathRef version="any" ref="rydt:Cust555@trans001@ride4444" order="2"/>
+									<AimedArrivalTime>09:15:00</AimedArrivalTime>
+								</TargetPassingTime>
 							</datedPassingTimes>
 							<meetingPointAssignments>
 								<VehicleMeetingPointAssignment version="any" id="rydt:Cust555@trans001@ride4444" order="1">
-									<VehicleMeetingPointRef version="any" ref="gamma_area">
-									</VehicleMeetingPointRef>
+									<VehicleMeetingPointRef version="any" ref="gamma_area"/>
 									<VehiclePoolingParkingAreaRef version="any" ref="delta_park_and_ride@A1"/>
 									<Usage>pickUp</Usage>
 								</VehicleMeetingPointAssignment>
 								<VehicleMeetingPointAssignment version="any" id="rydt:Cust555@trans001@ride4444" order="2">
-									<VehicleMeetingPointRef version="any" ref="alphaville_centre">
-									</VehicleMeetingPointRef>
+									<VehicleMeetingPointRef version="any" ref="alphaville_centre"/>
 									<PointOfInterestRef version="any" ref="alphaville_hdv"/>
 									<Usage>setDown</Usage>
 								</VehicleMeetingPointAssignment>
@@ -744,13 +773,13 @@ This Shows  sample Purchases
 						</SingleJourney>
 					</singleJourneys>
 				</MobilityJourneyFrame>
-				<SalesTransactionFrame version="1.2" id="rydt:SampleTransactions">
+				<SalesTransactionFrame version="1.2" id="rydt:sample_transactions">
 					<Name>ryde Sample Transactions</Name>
 					<codespaces>
 						<CodespaceRef ref="ryd_data"/>
 						<Codespace id="ryd_transactions">
 							<Xmlns>rydt</Xmlns>
-							<XmlnsUrl>http://www.metrobus.co.uk/transactions</XmlnsUrl>
+							<XmlnsUrl>http://www.ryde.eu/transactions</XmlnsUrl>
 							<Description>Operator transaction data</Description>
 						</Codespace>
 					</codespaces>

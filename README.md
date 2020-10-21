@@ -37,21 +37,33 @@ There is also an _Oxygen_ project file:
 
 =======
 Version 1.2.2 - New modes initial changes
-### 2020.10.16  NewModes : 
-  * Add Example    CarPooling, revise to enable
-  * SalesTransactionFrame : Add __MediumAccessDevice__
-  * ResourceFrame :  Add Facility sets to RESOURCE FRAME.
-  * COnditionSummaty:  and RentalConditionSummaryGroup 
+
+### 2020.10.21  NewModes : 
+  * Add Example    Chauffeured car , revise to enable
+  * Rename TypeofFuel to Fue Type (Depreceate FuelType)
+  * _Updates to xml schema_:  
+        * NewModes-ChauffeuredServiceExample.xsd 
+        * netex_distribution_support.xsd 
+        * netex_dequipmentENergySupport_support.xsd 
+
+### 2020.10.20  NewModes : 
+  * Add Example    Car Pooling, revise to enable
+  * SalesTransactionFrame : Add __MediumAccessDevice__.
+  * ResourceFrame :  Add __FacilitySets__ to __REsourceFrame__.
+  * ConditionSummaty:  Add __RentalConditionSummaryGroup__.
   * Utility types: __InfoLinks__ add _mobileAppDOwnload_ value to __infoLinkTypes__ enumeration.
   * Facilities:  Add _AnimalsAllowed_   enum value  to __NuisanceFacility__. Add missing taxiRank  _enumeration_value to __StpPlaceType__
   * _Updates to xml schema_:  
-        * NewModes_CarPoolingExample.xsd 
+        * NewModes-CarPoolingExample.xsd 
+        * netex_salesContract_version.xsd 
         * netex_salesTransaction_version.xsd 
+        * netex_usageParameterEligibility_support.xsd 
         * netex_facility_support.xsd 
         * netex_parkingSupport_version.xsd 
         * netex_utilityTypes_version.xsd 
-        * netex_resourceFrame_version.xsd 
-
+        * netex_resourceFrame_version.xsd  
+        * netex_customerELigibility_version.xsd   
+         
 ### 2020.10.16  NewModes : 
   * Add Example    CycleSharing, revise to enable
   * Travel Specification : Add 
@@ -71,7 +83,7 @@ Version 1.2.2 - New modes initial changes
   * Network Restriction
         * NewModes: __NetworkRestrictions__ : Widen all  references __VehicleTypeRef__ to be __TransportTypeRef__
   * _Updates to xml schema_:  
-        * NewModes_CycleSharingExample.xsd 
+        * NewModes-CycleSharingExample.xsd 
         * netex_organisation_support.xsd 
         * netex_equipmentParking_support.xsd 
         * netex_facility_support.xsd 
