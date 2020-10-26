@@ -19,7 +19,7 @@
 				<Date>
 					<Modified>2020-10-14</Modified>NewModes Add Constraints (NM)
 						Add MobilityServiceFrame, MobilityJourneyFrame.
-						TypeOfProof, TaxiRank, TaxiStand.
+						TypeOfProof, TaxiRank, TaxiStand.  TypeOfParking
 						ScheduledOperation, FlexibleOperation, VehicleRental, VehicleSharing, VehiclePooling.
 						VehicleRentalService, VehicleSharingService, GeneralVehiclePoolingService. TaxiService, ChaufferedVehicleService. OnlineService.
 						AlternativeTransportOperator, OnlineServiceOperator.
@@ -34,10 +34,12 @@
 						SingleJourneyPath, VehicleMeetingPointInPath, SingleJourney, GroupOfSingleJourneys.
 						MobilityServiceElement, MobilityServiceElementPrice, VehiclePoolerProfile (USerProfile)
 						VehicleAccessCredentials, ServiceAccessToken
-						HirePenaltyPolicy
+						RentalPenaltyPolicy
+						IndividualTraveller, VehiclePoolingDriverInfo, IndividualPassengetrInfo
+						MobilityServiceConstraint, VehicleTypeZoneConstraint
 						TM: CustomerMaymentMeans, MediumAccessDevice, NediunACcessDeviceSecurityListing, MediumAPplicationInstance.
 						FIX: Add OpenTransportMode, Submode, VehicleChargingEquipment, CycleStorageEquipment, HailAndRideArea
-						  Remove PaceRef and EquipmentRef  and bogus restrictions on uniqueness axross places and equipment.
+						FIX:  Remove PlaceRef and EquipmentRef  and bogus restrictions on uniqueness across places and equipment.
 				</Date>
 				<Date>
 					<Modified>2020-08-20</Modified>Corrections
@@ -4258,6 +4260,27 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
+		<!-- =====TypeOfParking============================== -->
+		<!-- =====TypeOfParking unique========================== -->
+		<xsd:unique name="TypeOfParking_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [TypeOfParking Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:TypeOfParking"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====TypeOfParking Key ========================== -->
+		<xsd:keyref name="TypeOfParking_KeyRef" refer="netex:TypeOfParking_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:TypeOfParkingRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="TypeOfParking_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:TypeOfParking"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
 		<!-- =====ParkingProperties============================== -->
 		<!-- =====ParkingProperties unique========================== -->
 		<xsd:unique name="ParkingProperties_UniqueBy_Id_Version">
@@ -4450,7 +4473,6 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		
 		<!-- =====ParkingBayStatus====(NM)===================== -->
 		<!-- =====ParkingBayStatus unique========================== -->
 		<xsd:unique name="ParkingBayStatus_UniqueBy_Id_Version">
@@ -5968,6 +5990,48 @@ Correct COnstraints for PointOnRoute
 		</xsd:keyref>
 		<xsd:key name="RoutingConstraintZone_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:RoutingConstraintZone"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====MobilityServiceConstraintZone============================== -->
+		<!-- =====MobilityServiceConstraintZone unique========================== -->
+		<xsd:unique name="MobilityServiceConstraintZone_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [MobilityServiceConstraintZone Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:MobilityServiceConstraintZone"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====MobilityServiceConstraintZone Key ========================== -->
+		<xsd:keyref name="MobilityServiceConstraintZone_KeyRef" refer="netex:MobilityServiceConstraintZone_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:MobilityServiceConstraintZoneRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="MobilityServiceConstraintZone_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:MobilityServiceConstraintZone"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====VehicleTypeZoneRestrictionZone============================== -->
+		<!-- =====VehicleTypeZoneRestrictionZone unique========================== -->
+		<xsd:unique name="VehicleTypeZoneRestrictionZone_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [VehicleTypeZoneRestrictionZone Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:VehicleTypeZoneRestrictionZone"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====VehicleTypeZoneRestrictionZone Key ========================== -->
+		<xsd:keyref name="VehicleTypeZoneRestrictionZone_KeyRef" refer="netex:VehicleTypeZoneRestrictionZone_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:VehicleTypeZoneRestrictionZoneRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="VehicleTypeZoneRestrictionZone_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:VehicleTypeZoneRestrictionZone"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
@@ -8875,23 +8939,23 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- === HirePenaltyPolicy Key ========================== -->
-		<!-- =====HirePenaltyPolicy unique========================== -->
-		<xsd:unique name="HirePenaltyPolicy">
+		<!-- === RentalPenaltyPolicy Key ========================== -->
+		<!-- =====RentalPenaltyPolicy unique========================== -->
+		<xsd:unique name="RentalPenaltyPolicy">
 			<xsd:annotation>
-				<xsd:documentation>Every [HirePenaltyPolicy Id + Version] must be unique within document.</xsd:documentation>
+				<xsd:documentation>Every [RentalPenaltyPolicy Id + Version] must be unique within document.</xsd:documentation>
 			</xsd:annotation>
-			<xsd:selector xpath=".//netex:HirePenaltyPolicy"/>
+			<xsd:selector xpath=".//netex:RentalPenaltyPolicy"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:unique>
-		<xsd:keyref name="HirePenaltyPolicy_KeyRef" refer="netex:HirePenaltyPolicy_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:HirePenaltyPolicyRef "/>
+		<xsd:keyref name="RentalPenaltyPolicy_KeyRef" refer="netex:RentalPenaltyPolicy_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:RentalPenaltyPolicyRef "/>
 			<xsd:field xpath="@ref"/>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
-		<xsd:key name="HirePenaltyPolicy_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:HirePenaltyPolicy"/>
+		<xsd:key name="RentalPenaltyPolicy_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:RentalPenaltyPolicy"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
@@ -9867,7 +9931,7 @@ Correct COnstraints for PointOnRoute
 			</xsd:annotation>
 			<xsd:selector xpath=".//netex:MediumApplicationInstance"/>
 			<xsd:field xpath="@id"/>
-			<xsd:field xpath="@version"/> 
+			<xsd:field xpath="@version"/>
 		</xsd:unique>
 		<!-- =====MediumApplicationInstance Key ========================== -->
 		<xsd:keyref name="MediumApplicationInstance_KeyRef" refer="netex:MediumApplicationInstance_AnyVersionedKey">
@@ -10122,6 +10186,69 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 			<xsd:field xpath="@order"/>
+		</xsd:key>
+		<!-- =====IndividualTraveller============================== -->
+		<!-- =====IndividualTraveller unique========================== -->
+		<xsd:unique name="IndividualTraveller_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [IndividualTraveller Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:IndividualTraveller"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====IndividualTraveller Key ========================== -->
+		<xsd:keyref name="IndividualTraveller_KeyRef" refer="netex:IndividualTraveller_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:IndividualTravellerRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="IndividualTraveller_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:IndividualTraveller"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====VehiclePoolingDriverInfo============================== -->
+		<!-- =====VehiclePoolingDriverInfo unique========================== -->
+		<xsd:unique name="VehiclePoolingDriverInfo_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [VehiclePoolingDriverInfo Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:VehiclePoolingDriverInfo"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====VehiclePoolingDriverInfo Key ========================== -->
+		<xsd:keyref name="VehiclePoolingDriverInfo_KeyRef" refer="netex:VehiclePoolingDriverInfo_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:VehiclePoolingDriverInfoRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="VehiclePoolingDriverInfo_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:VehiclePoolingDriverInfo"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====IndividualPassengerInfo============================== -->
+		<!-- =====IndividualPassengerInfo unique========================== -->
+		<xsd:unique name="IndividualPassengerInfo_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [IndividualPassengerInfo Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:IndividualPassengerInfo"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====IndividualPassengerInfo Key ========================== -->
+		<xsd:keyref name="IndividualPassengerInfo_KeyRef" refer="netex:IndividualPassengerInfo_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:IndividualPassengerInfoRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="IndividualPassengerInfo_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:IndividualPassengerInfo"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
 		</xsd:key>
 		<!-- =====UserProfileEligibility  ========================== -->
 		<!-- =====UserProfileEligibility unique========================== -->
