@@ -40,12 +40,28 @@ Version 1.2.2 - New modes initial changes
 
 ### 2020.10.21  NewModes : 
   * Add Example    Chauffeured car , revise to enable
-  * Rename TypeofFuel to Fue Type (Depreceate FuelType)
+  * Rename TypeofFuel to FuelType (Depreceate FuelType)
+  * Add __MobilityServiceElement__ to __Tarriff__.
+  * __RoutingConstraintZone__ : Add _forbiddenZone_, _passThroughUseOnly_, _cannotBoardInZOne__ and _mustAlightInZone_ to  __ZoneUse_ .
+  * Add __individualTraveller__ __VehiclePoolingDriverInfo__
+  * Add _fine_ and _findeHandlingFee_ to __HirePolicy__ values.
+  * Add __PropulsionType__ and __MaximumRange__ to __TransportType__
+  * ADd __Description__,, __ModelEquipmentProfileRef__  to __Vehicle__
+  * Add __member_ and _other_ to __USerProfile__ __UserType__ enumeration.
+  Add _unspecifed_ value to __Gender__
   * _Updates to xml schema_:  
         * NewModes-ChauffeuredServiceExample.xsd 
+        * netex_routingConstraint_support.xsd 
+        * NEW netex_mobilityServiceConstraint_support.xsd         
+        * NEW netex_mobilityServiceConstraint_version.xsd 
         * netex_distribution_support.xsd 
-        * netex_dequipmentENergySupport_support.xsd 
-
+        * netex_equipmentENergySupport_support.xsd 
+        * netex_fareStructureElement_support.xsd 
+        * NEW netex_nm_individualTraveller_support.xsd
+        * NEW netex_nm_individualTraveller_version.xsd
+        * netex_vehicleType_support.xsd 
+        * netex_vehicleType_version.xsd 
+        
 ### 2020.10.20  NewModes : 
   * Add Example    Car Pooling, revise to enable
   * SalesTransactionFrame : Add __MediumAccessDevice__.
