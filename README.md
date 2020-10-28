@@ -3,16 +3,8 @@
 
 ## Core, Part 1 (Network),  Part 2 (Timetables), Part3 (Fares) Schemas
 
-Version 1.10 - Base version plus minor fixes comprising
-  * Norway contributions,  
-  * The approved 1.1 CRs 1-50
-  * Rollup of fixes  and additional documentation on other fixes.
-  * Corrections to  integration of NK  1.09.
-  * 51-55 CRSs from Meeting Feb 2019. Also CRs from NL, EURA, UK,  Norway and SBB input.
-
-   The Part 1, Part 2, & Part 3 Schemas include minor  corrections and enhancements since the issue of the Version 1.0 documents.
+The Part 1, Part 2, & Part 3 Schemas include minor  corrections and enhancements since the issue of the Version 1.0 documents.
 The revised Version 1.1 documents include the changes.
-
 ### Note on the schema
 The schema is broken down systematically into small modular files; generally for each functional package in the design model  (See UML Model) there are two xml schema files
   - netex_xxxx_suppport.xsd - containing data type  and ref structure definitions.
@@ -26,7 +18,7 @@ The individual  XML files  are arranged hierarchically in folders, in a similar 
 ## Getting Started
 There are two main root schemas:
   - **netex_publication** : Embeds NeTEx XML model elements in a bulk output file format for use in asynchronous publication. The intended content scope can be indicated by a filter object.
-  - **netex_siri.xsd** : Embeds NeTEx XML model elements in the SIRI protocol  for dynamic exchange of elements between servers. Both Request/response or publish / subscribe is supported
+  - **netex_siri.xsd** : Embeds NeTEx XML model elements in the SIRI protocol for dynamic exchange of elements between servers. Both Request/response or publish / subscribe is supported
 
 In addition:
 
@@ -38,18 +30,98 @@ There are **XML examples** of the use of both protocols, see */examples* subdire
 There is an _Altova XMLSpy_ project file in the root directory  that provides an organised view  of the schema and examples:
   - NeTEx.spp
 
-There is also an _Oxygen_  project file:
+There is also an _Oxygen_ project file:
   - NeTEx.xpr
 ----
 # Change Log
 
-### 2019.05.17 FIX  *PART3:FARES*: NJSK  __FarePointInPattern__Fix case on __isFareStage__ and __isForbidden__  
+Version 1.1.2 - Base version plus  further minor fixes comprising##
+
+### 2020.08.11  Update oxygen project to include new examples
+  * _Other updates_:    
+	* netex.xpr    
+  * _Updates to examples_: 
+	* \examples\standards\era_uic\Netex_Eurostar mapping_era_1.xml
+	* \examples\standards\era_uic\Netex_Eurostar mapping_era_2.xml
+	* \examples\standards\era_uic\Netex_era_uic_joiningsplitting.xml
+	* \examples\standards\era_uic\Netex_era_uic_timetable_hack_01.xml
+	* \examples\standards\norway\stops\BasicStopPlace_example.xml
+
+### 2020.08.11   FIX  Issue #110 Add missing fuel types	to  __VehicleType__  /  __FuelType__ 
+additional values:  _electricContact, battery, dieselBatteryHybrid, petrolBatteryHybrid, biodiesel, hydrogen, liquidGas, methane, ethanol_.
+   * _Updates to xml schema_:    
+        * netex_framework\netex_reusableComponents\netex_vehicleType_support.xsd
+
+### 2020.08.11  FIX  Issue #106 *Schema*: Add missing constraints for allow __GeneralZone__ and __AdministrativeZone__
+   * _Updates to xml schema_:     
+        * netex_publication_version.xsd
+
+### 2020.08.11   FIX  Issue #104 *Framework*: Add __ResponsibilityRole__    in __ResourceFrame__
+  * _Updates to xml schema_:    
+	* netex_framework\netex_frames\netex_resourceFrame_version.xsd"
+
+### 2020.08.10  FIX  Issue #108 *Framework*: Allow __ServiceCalendar__ to hold UIC OperatingPeriod
+  * _Updates to xml schema_:    
+	* netex_framework\netex_reusableComponents\netex_serviceCalendar_support.xsd
+	* netex_framework\netex_reusableComponents\netex_serviceCalendar_version.xsd
+  * netex_publication_version.xsd
+    * _Updates to examples_:  
+    * Add NTA XML examples
+
+### 2020.07.29   FIX  Issue #97 *Part2*: Add __NormalDatedJourney__ and __DatedVehicleJourney__ to journeys  in __TimetableFrame__
+  * _Updates to xml schema_:    
+	* netex_part2\netex_journeyTimes\netex_datedVehicleJourney_version.xsd
+	
+Version 1.1.1 - Base version plus  further minor fixes comprising##
+
+### 2020.07.28   EXAMPLES  Revise fare examples
+  * _Updates to xml schema_:    
+	* NONE
+  * _Updates to xml examples:
+	* \txc and \fxc subdirectory files
+
+### 2020.07.28   FIX  Issue #101*Publication*:Add missing constraints for __FareTableRow__, __FareTableColumn__, __TypeOfLine__ and for __FareZone__ Parent
+  * _Updates to xml schema_:    
+	* netex_framework/netex_genericFramework/netex_publication_version.xsd
+  * _Updates to xml examples:
+	* Netex_era_distance_ro.xml.
+
+### 2020.07.28   FIX  Issue #100*FRAMEWORK*:Correct the substitution group on __OrganisationUnit__
+  * _Updates to xml schema_:    
+	* netex_framework/netex_genericFramework/netex_organisation_version.xsd
+
+### 2020.06.21   FIX  Issue #75*FRAMEWORK*:Remove space from end of __secondClass__ enumeration value
+  * _Updates to xml schema_:    
+	* netex_framework/netex_reusableComponents/netex_serviceRestrictions_support.xsd
+
+### 2020.06.21 PARTIAL  FIX  Issue #73*PART2*:Recursive includes: NJSK  Remove cyclic inclusion dependency
+  * _Updates to xml schema_:    
+	* netex_flexibleService Journey.xml  
+
+### 2020.06.21 FIX  Issue #78 *PART2*:Journey Coupling: NJSK  __JourneyCouple__ / __MainPartRef__ should be of type  __JourneyPartRef__
   * _Updates to xml schema_:  
-	* netex_production.xml  
+	* netex_coupledJourney.xml  
+
+### 2020.06.21 FIX  Issue #92 *FRAMEWORK*:LinkProjection NJSK Expose the missing __EntityInVersion__ elements on the __LinkProjection__ derivation
+  * _Updates to xml schema_:  
+	* netex_projectionVersion.xml  
+	
+====
+Version 1.10 - Base version plus minor fixes comprising
+  * Norway contributions,  
+  * The approved 1.1 CRs 1-50
+  * Rollup of fixes  and additional documentation on other fixes.
+  * Corrections to  integration of NK  1.09.
+  * 51-55 CRSs from Meeting Feb 2019. Also CRs from NL, EURA, UK,  Norway and SBB input.
+  
+
+### 2019.05.17 FIX  *PART3:FARES*: NJSK  __FarePointInPattern__  Fix case on __isFareStage__ and __isForbidden__  
+  * _Updates to xml schema_:  
+	* netex_publication.xml  
 
 ### 2019.05.15 FIX  *PART1:ND*: NJSK  Add constraints  on __TypeOfLineRef__   
   * _Updates to xml schema_:  
-	* netex_production.xml  
+	* netex_publication.xml  
 
 ### 2019.05.14 EXMP  *FRAMEWORK*: NJSK  Add Serbia and Montenegro to country codes
   * _Updates to xml schema_:  
@@ -66,12 +138,12 @@ There is also an _Oxygen_  project file:
 ### 2019.05.02 FIX  *FRAMEWORK*: NJSK  Fix constraints  on __DefaultCodespaceRef__  
   * Also Corrections to a lot of examples.
   * _Updates to xml schema_:  
-	* netex_production.xml  
+	* netex_publication.xml  
 
 ### 2019.05.01 FIX  *FRAMEWORK*: NJSK  Fix constraints  on __DefaultDataSourceRef__ and __DefaultResponsibilitySetRef__.
   * ALso add EPIP draft profile metadata
   * _Updates to xml schema_:  
-	* netex_production.xml  
+	* netex_publication.xml  
 	* netex.spp
   * _Updates to xml examples_:
    	* uk_fxc_addon_HSP_plusbus.xml
@@ -85,11 +157,11 @@ There is also an _Oxygen_  project file:
 
 ### 2019.04.29 FIX  *PART2:ND*: NJSK  Fix Constraints  on __JourneyPart__.
   * _Updates to xml schema_:  
-	* netex_production.xml  
+	* netex_publication.xml  
 
-### 2019.04.28 FIX  *FRAMEWORK*: NJSK  Fix Constraints  on __ParkingPasengerEntrance__ and __VehicleEntranceForParking__.
+### 2019.04.28 FIX  *FRAMEWORK*: NJSK  Fix Constraints  on __ParkingPassengerEntrance__ and __VehicleEntranceForParking__.
   * _Updates to xml schema_:  
-	* netex_production.xml
+	* netex_publication.xml
 	* netex_parking_support.xml
 	* netex_parking_version.xml
 
@@ -118,7 +190,7 @@ There is also an _Oxygen_  project file:
 	* netex_accessRightParameter_version.xml  
 	* netex_travelSpecificationSummary_version.xml
 
-### 2019.04.18 FIX  *Parts1,2,3*: NJSK  FIx Tdy up Designators.
+### 2019.04.18 FIX  *Parts1,2,3*: NJSK  Fix: Tidy up Designators.
   * __AccessRightParameter: Add __AddressRef__,  __TopoographicPlaceRef__ and __PlaceUseEnum__.
   * Modularise __ServiceDesignator__ and __JourneyDesignator__ (no functional change).
   * Add __JourneyDesignator__ to __InterchangeRule__ and __GroupOfServiceJourneysMember__.
@@ -241,7 +313,7 @@ There is also an _Oxygen_  project file:
 	* netex_interchange_version.xsd
   * _Documentation Changes_:  [uml_diagram: ok], [doc-ok]
 
-### 2019.04.04  __FIXDoc__  *Part3-FARES-AR*: NJSK Fi Further tidy ups arising from doc.
+### 2019.04.04  __FIXDoc__  *Part3-FARES-AR*: NJSK Further tidy ups arising from doc.
   * Add new value to __PreassignedFareProduct / Product__ enumeration;  _shortTrip_.
   * Add new value to __AmountOfPriceUnit / ProductType__ numeration; _storedValue_.
   * Add new  attribute __ProductType__ to  __UsageDiscountRight__ with values _mileagePoints, usageRebate, other_.
