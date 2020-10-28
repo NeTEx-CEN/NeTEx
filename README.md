@@ -35,19 +35,34 @@ There is also an _Oxygen_ project file:
 ----
 # Change Log
 
+=======
 Version 1.1.2 - Base version plus  further minor fixes comprising##
 
+### 2020.10.28 FIX Issue 121 Errors in VehicleType / ActualVehicleEquipment, WheelchairVehicleEquipment  , AccessVehicleEquipment
+  * WWheelchairEquipmentRef renamed to WheelchairVehicleEquipmentRef
+  * Supertypes corrected
+  * ActualVehicleEquipment revised.
+  * _Updates to examples_:
+    * \examples\standards\norway\vehicles\submodel-Vehicle.xml
+    * \examples\functions\stopPlace\Netex_10_StopPlace_withParking_1.xml
+  * _Updates to examples_:
+    * netex_framework\netex_reusableComponents\netex_equipmentVehicle_support.xsd
+    * netex_framework\netex_reusableComponents\netex_equipmentVehicle_version.xsd
+    * netex_framework\netex_reusableComponents\netex_vehicleTypes_support.xsd
+    * netex_framework\netex_reusableComponents\netex_vehicleTypes_version.xsd
+ #121 Fix Add ACTUAL VEHICLE EQUIPMENT :
+					     
 ### 2020.08.11  Update oxygen project to include new examples
   * _Other updates_:    
-	* netex.xpr    
-  * _Updates to examples_: 
-	* \examples\standards\era_uic\Netex_Eurostar mapping_era_1.xml
-	* \examples\standards\era_uic\Netex_Eurostar mapping_era_2.xml
-	* \examples\standards\era_uic\Netex_era_uic_joiningsplitting.xml
-	* \examples\standards\era_uic\Netex_era_uic_timetable_hack_01.xml
-	* \examples\standards\norway\stops\BasicStopPlace_example.xml
+  	* netex.xpr    
+  * _Updates to examples_:
+  	* \examples\standards\era_uic\Netex_Eurostar mapping_era_1.xml
+	  * \examples\standards\era_uic\Netex_Eurostar mapping_era_2.xml
+  	* \examples\standards\era_uic\Netex_era_uic_joiningsplitting.xml
+  	* \examples\standards\era_uic\Netex_era_uic_timetable_hack_01.xml
+  	* \examples\standards\norway\stops\BasicStopPlace_example.xml
 
-### 2020.08.11   FIX  Issue #110 Add missing fuel types	to  __VehicleType__  /  __FuelType__ 
+### 2020.08.11   FIX  Issue #110 Add missing fuel types	to  __VehicleType__  /  __FuelType__
 additional values:  _electricContact, battery, dieselBatteryHybrid, petrolBatteryHybrid, biodiesel, hydrogen, liquidGas, methane, ethanol_.
    * _Updates to xml schema_:    
         * netex_framework\netex_reusableComponents\netex_vehicleType_support.xsd
@@ -71,8 +86,11 @@ additional values:  _electricContact, battery, dieselBatteryHybrid, petrolBatter
 ### 2020.07.29   FIX  Issue #97 *Part2*: Add __NormalDatedJourney__ and __DatedVehicleJourney__ to journeys  in __TimetableFrame__
   * _Updates to xml schema_:    
 	* netex_part2\netex_journeyTimes\netex_datedVehicleJourney_version.xsd
-	
+<<<<<<< HEAD
+=======
+
 Version 1.1.1 - Base version plus  further minor fixes comprising##
+>>>>>>> master
 
 ### 2020.07.28   EXAMPLES  Revise fare examples
   * _Updates to xml schema_:    
@@ -105,7 +123,7 @@ Version 1.1.1 - Base version plus  further minor fixes comprising##
 ### 2020.06.21 FIX  Issue #92 *FRAMEWORK*:LinkProjection NJSK Expose the missing __EntityInVersion__ elements on the __LinkProjection__ derivation
   * _Updates to xml schema_:  
 	* netex_projectionVersion.xml  
-	
+
 ====
 Version 1.10 - Base version plus minor fixes comprising
   * Norway contributions,  
@@ -113,7 +131,7 @@ Version 1.10 - Base version plus minor fixes comprising
   * Rollup of fixes  and additional documentation on other fixes.
   * Corrections to  integration of NK  1.09.
   * 51-55 CRSs from Meeting Feb 2019. Also CRs from NL, EURA, UK,  Norway and SBB input.
-  
+
 
 ### 2019.05.17 FIX  *PART3:FARES*: NJSK  __FarePointInPattern__  Fix case on __isFareStage__ and __isForbidden__  
   * _Updates to xml schema_:  

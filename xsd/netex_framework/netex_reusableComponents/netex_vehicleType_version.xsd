@@ -26,6 +26,12 @@
 					<Modified>2019-03-25</Modified>NL31 CD #60 Add new attributes BoardingHeight and GapToPlatform attributes to VehicleType. 
 					 NJSK Review correct data types of new attributes to be of LengthType
 				</Date>
+				<Date>
+					<Modified>2020-10-20</Modified>FIX Issue #121   Add ACTUAL VEHICLE EQUIPMENT :
+					      Move to here from PAssengerEQuipmentPAckage, correct supertype to be EQUIPMENT
+					      Correct IdType to be ActualInformationType,   
+					      Correct use of WHeelchairEquipmentRef
+				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the VEHICLE TYPE types.</p>
@@ -756,7 +762,7 @@ Rail transport, Roads and Road transport
 			<xsd:group ref="VehicleCodeGroup"/>
 			<xsd:element ref="OperatorRef" minOccurs="0"/>
 			<xsd:element ref="VehicleTypeRef" minOccurs="0"/>
-			<xsd:element name="actualVehicleEquipments" type="equipments_RelStructure" minOccurs="0">
+			<xsd:element name="actualVehicleEquipments" type="actualVehicleEquipments_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>ACTUAL EQUIPMENT found in VEHICLE.</xsd:documentation>
 				</xsd:annotation>
@@ -774,6 +780,80 @@ Rail transport, Roads and Road transport
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element ref="PrivateCode" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ======================================================================= -->
+	<xsd:complexType name="actualVehicleEquipments_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>List of ACTUAL VEHICLE EQUIPMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element ref="ActualVehicleEquipmentRef"/>
+					<xsd:element ref="ActualVehicleEquipment"/>
+				</xsd:choice>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="ActualVehicleEquipment" abstract="false" substitutionGroup="Equipment">
+		<xsd:annotation>
+			<xsd:documentation>An item of EQUIPMENT of a particular type actually available in an individual VEHICLE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="ActualVehicleEquipment_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EquipmentGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="ActualVehicleEquipmentGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="ActualVehicleEquipmentIdType" use="optional">
+						<xsd:annotation>
+							<xsd:documentation>Identifier of ENTITY.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="ActualVehicleEquipment_VersionStructure" abstract="false">
+		<xsd:annotation>
+			<xsd:documentation>Abstract Type for an ACTUAL VEHICLE EQUIPMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="Equipment_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="ActualVehicleEquipmentGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="ActualVehicleEquipmentGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for an ACTUAL VEHICLE EQUIPMENT type.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Units" type="xsd:integer" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Units of EQUIPMENT.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="VehicleTypeRef" minOccurs="0"/>
+			<xsd:choice minOccurs="0">
+				<xsd:element ref="VehicleEquipmentRef"/>
+				<xsd:element ref="InstalledEquipment"/>
+			</xsd:choice>
+			<xsd:element ref="AccessibilityAssessment" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->
