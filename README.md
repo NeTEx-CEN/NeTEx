@@ -38,6 +38,20 @@ There is also an _Oxygen_ project file:
 =======
 Version 1.1.2 - Base version plus  further minor fixes comprising##
 
+### 2020.10.28 FIX Issue 121 Errors in VehicleType / ActualVehicleEquipment, WheelchairVehicleEquipment  , AccessVehicleEquipment
+  * WWheelchairEquipmentRef renamed to WheelchairVehicleEquipmentRef
+  * Supertypes corrected
+  * ActualVehicleEquipment revised.
+  * _Updates to examples_:
+    * \examples\standards\norway\vehicles\submodel-Vehicle.xml
+    * \examples\functions\stopPlace\Netex_10_StopPlace_withParking_1.xml
+  * _Updates to examples_:
+    * netex_framework\netex_reusableComponents\netex_equipmentVehicle_support.xsd
+    * netex_framework\netex_reusableComponents\netex_equipmentVehicle_version.xsd
+    * netex_framework\netex_reusableComponents\netex_vehicleTypes_support.xsd
+    * netex_framework\netex_reusableComponents\netex_vehicleTypes_version.xsd
+ #121 Fix Add ACTUAL VEHICLE EQUIPMENT :
+					     
 ### 2020.08.11  Update oxygen project to include new examples
   * _Other updates_:    
   	* netex.xpr    
