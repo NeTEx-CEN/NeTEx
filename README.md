@@ -36,12 +36,32 @@ There is also an _Oxygen_ project file:
 # Change Log
 
 =======
-Version 1.2.2 - New modes Revised changes withe xamples and constraints.
+Version 1.2.2 - New modes Revised changes with examples and constraints.
 
+### 2020.11.06  NewModes (norway):  Enhance Organisations
+  * Add relationship between organisations:  * Add __RelatedOrganisation__, with __OrganisationRole__ enumerations.
+  * Add reusable contact details
+  * _Updates to xml schema_:  
+    * netex_organisation_support.xsd
+    * netex_organisation_version.xsd   
+    * netex_transportOrganisation_version.xsd   
+    * NEW netex_contact_support.xsd
+    * NEW netex_contact_version.xsd  
+    * netex_all_objects_generic.xsd
+    * netex_salesDistribution_version.xsd   
+    * netex_publication.xsd
+    * NeTEx.SPP
+
+### 2020.11.06  Incorporate master udpates :
+  * Issue #124,   allow mulimodalQuay.
+  * _Updates to xml schema_:  
+        * netex_all_frames_framework.xsd
+        * netex_stopPlace_support.xsd
+         
 ### 2020.10.21  NewModes : Car service example and miscellaneous small revisions.
   * Add XML Example of  Chauffeured car service; revise schema to enable.
   * NewModes: Add __MobilityServiceElement__ to __Tariff__.
-  * Geofencing: 
+  * Geofencing:
     * Add new __MobilityServiceConstraintZone__ : for geofenceing. Add to __ResourceFrame__.
     * __RoutingConstraintZone__ : Add _forbiddenZone_, _passThroughUseOnly_, _cannotBoardInZone_ and _mustAlightInZone_ to  __ZoneUse__.
   * Individual Traveller
@@ -49,7 +69,7 @@ Version 1.2.2 - New modes Revised changes withe xamples and constraints.
     * Add _member_ and _other_ to __UserProfile__ __UserType__ enumeration.
     * Add _unspecified_ enum value to   __GenderEnumeration__, for use in __IndividualTraveller__.
   * Usage Paremeters:
-    * Rename __HireChargePolicy__ to __RentalChargePolicy__ and move to separate rental operations package. 
+    * Rename __HireChargePolicy__ to __RentalChargePolicy__ and move to separate rental operations package.
     * Add _fine_ and _findeHandlingFee_ to __RentalPolicy__ values.
   * Vehicles
     * Add __PropulsionType__ (with enum values) and __MaximumRange__ to __TransportType__,
@@ -57,21 +77,21 @@ Version 1.2.2 - New modes Revised changes withe xamples and constraints.
     * Rename __TypeofFuel__ to __FuelType__ (Depreceate __TypeOfFuel__),
   * __Parking__ add open vehicle types using __TransportTypeRef__.
   * _Updates to xml schema_:  
-    * NEW NewModes-ChauffeuredServiceExample.xsd 
-    * netex_routingConstraint_support.xsd 
+    * NEW NewModes-ChauffeuredServiceExample.xsd
+    * netex_routingConstraint_support.xsd
     * NEW netex_mobilityServiceConstraint_support.xsd         
-    * NEW netex_mobilityServiceConstraint_version.xsd 
+    * NEW netex_mobilityServiceConstraint_version.xsd
     * netex_distribution_support.xsd         
-    * netex_parking_support.xsd 
-    * netex_parking_version.xsd 
-    * netex_equipmentENergySupport_support.xsd 
-    * netex_fareStructureElement_support.xsd 
+    * netex_parking_support.xsd
+    * netex_parking_version.xsd
+    * netex_equipmentENergySupport_support.xsd
+    * netex_fareStructureElement_support.xsd
     * NEW netex_nm_individualTraveller_support.xsd
     * NEW netex_nm_individualTraveller_version.xsd
-    * netex_vehicleType_support.xsd 
+    * netex_vehicleType_support.xsd
     * netex_vehicleType_version.xsd
     * netex_all_objects_part5_newModes.xsd
-        
+
 ### 2020.10.20  NewModes : Car pooling example and miscellaneous small revisions.
   * NewModes:Add XML Example of Car Pooling Service, revise  schema to enable.
   * Frames
@@ -81,16 +101,16 @@ Version 1.2.2 - New modes Revised changes withe xamples and constraints.
   * Utility types: __InfoLinks__ add _mobileAppDownload_ value to __infoLinkTypes__ enumeration.
   * Facilities:  Add _AnimalsAllowed_   enum value  to __NuisanceFacility__. Add missing _taxiRank_  enumeration value to __StopPlaceType__,
   * _Updates to xml schema_:  
-    * NEW NewModes-CarPoolingExample.xsd 
-    * netex_salesContract_version.xsd 
-    * netex_salesTransaction_version.xsd 
-    * netex_usageParameterEligibility_support.xsd 
-    * netex_facility_support.xsd 
-    * netex_parkingSupport_version.xsd 
-    * netex_utilityTypes_version.xsd 
+    * NEW NewModes-CarPoolingExample.xsd
+    * netex_salesContract_version.xsd
+    * netex_salesTransaction_version.xsd
+    * netex_usageParameterEligibility_support.xsd
+    * netex_facility_support.xsd
+    * netex_parkingSupport_version.xsd
+    * netex_utilityTypes_version.xsd
     * netex_resourceFrame_version.xsd  
     * netex_customerEligibility_version.xsd   
-         
+
 ### 2020.10.16  NewModes : Cycle example and miscellaneous small revisions.
   * NewModes: Add XML Example of Cycle Sharing service, revise to enable
   * Usage Parameters
@@ -101,7 +121,7 @@ Version 1.2.2 - New modes Revised changes withe xamples and constraints.
 	* NewModes: Add __RequiresDeposit__ and __NoCashPayment__ to __CommercialConditionSummary__.  
 	* FIX:  __ChargingMomementType__ add new value _beforeTravelThenAdjustAtEndOfTravel_; correct typo on _beforeStartThenAdjustAtEndOfFareDay__
   * Fare Table:
-     * Add __EquipmentRef__ to __FareTable__ and __Cell__ specifics. 
+     * Add __EquipmentRef__ to __FareTable__ and __Cell__ specifics.
   * Organisation:
      * NewModes: __Organisation__; Add __onlineProvider__ to __OrganisationType__ enumeration
   * Equipment:
@@ -110,32 +130,32 @@ Version 1.2.2 - New modes Revised changes withe xamples and constraints.
   * Network Restriction
     * NewModes: __NetworkRestrictions__ : Widen all  references __VehicleTypeRef__ to be __TransportTypeRef__
   * _Updates to xml schema_:  
-      * NEW NewModes-CycleSharingExample.xsd 
-      * netex_organisation_support.xsd 
-      * netex_equipmentParking_support.xsd 
-      * netex_facility_support.xsd 
-      * netex_networkRestriction_version.xsd 
-      * netex_parking_version.xsd 
-      * netex_usageParameterTravel_support.xsd 
-      * netex_usageParameterCharging_support.xsd 
-      * netex_usageParameterCharging_version.xsd 
-      * netex_fareTable_version.xsd 
-      * netex_usageParameterCharging_version.xsd 
-      * netex_nm_accessCredentialAssignment_version.xsd 
-      * netex_conditionSummary_support.xsd 
-         
+      * NEW NewModes-CycleSharingExample.xsd
+      * netex_organisation_support.xsd
+      * netex_equipmentParking_support.xsd
+      * netex_facility_support.xsd
+      * netex_networkRestriction_version.xsd
+      * netex_parking_version.xsd
+      * netex_usageParameterTravel_support.xsd
+      * netex_usageParameterCharging_support.xsd
+      * netex_usageParameterCharging_version.xsd
+      * netex_fareTable_version.xsd
+      * netex_usageParameterCharging_version.xsd
+      * netex_nm_accessCredentialAssignment_version.xsd
+      * netex_conditionSummary_support.xsd
+
 ### 2020.10.15  NewModes : Revise condition summary.
   *	NewModes: __FareProduct__ / __ConditionSummary__: Add __Mode__ and __ModeOfOperation__.
   *	FIX: __Site__: Add _transport_ value  to __SiteType__ enumeration values.
   * _Updates to xml schema_:   
-    * netex_site_support.xsd 
-    * netex_resourceFrame_version.xsd 
-    * netex_conditionSummary_support.xsd 
-        
+    * netex_site_support.xsd
+    * netex_resourceFrame_version.xsd
+    * netex_conditionSummary_support.xsd
+
 ### 2020.10.15  NewModes : Add Constraints for NewMode entities.
   * _Updates to xml schema_:   
-      * netex_networkRestriction_version.xsd 
-      * netex_nm_publication_version.xsd 
+      * netex_networkRestriction_version.xsd
+      * netex_nm_publication_version.xsd
 
 ### 2020.10.15  NewModes : Revise Frames
   * _Updates to xml schema_:   
@@ -143,44 +163,44 @@ Version 1.2.2 - New modes Revised changes withe xamples and constraints.
     * netex_nm_vehicleMeetingPoint_version.xsd
     * netex_nm_singleJourneyPath_version.xsd
 
-### 2020.10.15  NewModes : Add attributes from IXSO 
+### 2020.10.15  NewModes : Add attributes from IXSO
   * NewModes:Update __FleetEquipment__: add attributes from IXSO.
   * _Updates to xml schema_:   
     * netex_nm_fleetEquipment_support.xsd
     * netex_nm_fleetEquipment_version.xsd
-        
-### 2020.10.15  NewModes : Fares  support. 
+
+### 2020.10.15  NewModes : Fares  support.
   * NewModes: Add __LocalServiceRef__ and __MobilityServiceRef__  to __Tariff__ applicability.
   * NewModes: Add  __MobilityServiceElement__  and __MobilityServiceElementPrice__.
   * _Updates to xml schema_:     
     * netex_fareStructureElement_version.xsd
-    * netex_ifopt_allObjects.xsd	
+    * netex_ifopt_allObjects.xsd
     * NEW netex_nm_mobilityServiceElement_support.xsd
     * NEW netex_nm_mobilityServiceElement_version.xsd
-        
+
 ### 2020.10.14  NewModes :  Parking Caspacity.
   * NewModes: Add __ParkingCapacityAssignment__
   * _Updates to xml schema_:    
       * netex_ifopt_allObjects.xsd	  
       * NEW netex_nm_parkingCapacityAssignment_support.xsd
       * NEW netex_nm_parkingCapacityAssignment_version.xsd
-        
+
 ### 2020.10.14  NewModes : Corrections to "all object" include files,
   * FIX: Clean up all_object includes. Add missing files
-  * _Updates to xml schema_: 
+  * _Updates to xml schema_:
     * neetx.spp
     * netex_ifopt_allObjects.xsd	  
     * DELETE netex_accounting_version.xsd
-    * netex_allObjects_part2_journeyTimes.xsd	
+    * netex_allObjects_part2_journeyTimes.xsd
     * netex_allObjects_reusableComponents.xsd
     * netex_all_objects_part3_salesTransactions
-            
+
 ### 2020.10.14  NewModes : Revise __Parking__ model.
   * NewModes: Add __VehicleServiceParkingBay__ and __ParkingBayStatus__ .
   * _Updates to xml schema_:  
    	* netex_all_objects_part5_newModes.xsd
     * netex_nm_parkingBayStatus_support.xsd
-    * netex_nm_parkingBayVersion_version.xsd. 
+    * netex_nm_parkingBayVersion_version.xsd.
 
 ### 2020.10.13  NewModes : Fare model updates.
   * NewModes: __CustomerPurchasePackage__: Add __MediumApplicationRef__.
@@ -190,14 +210,14 @@ Version 1.2.2 - New modes Revised changes withe xamples and constraints.
     * netex_nm_usageParameterEligibility_support.xsd
     * netex_nm_usageParameterEligibility_version.xsd.
     * netex_nm_salesContract_version.xsd.  
-        
+
 ### 2020.10.11  NewModes:  File reorganise and rename to follow dependencies
   * TIDY UP Move prerequisite  files to NeTEx framework. Add "nm" to file name to distinguish.
   * _Updates to xml schema_:
     * MOVE to RC: netex_netex_nm_fleet_support.xsd
     * MOVE to RC: netex_netex_nm_fleet_version.xsd
     * MOVE to RC: netex_netex_nm_fleetEquipment_support.xsd
-    * MOVE to RC: netex_netex_nm_fleetEquipment_version.xsd 
+    * MOVE to RC: netex_netex_nm_fleetEquipment_version.xsd
   	* MOVE to IFOPT: netex_taxiPlace_support.xsd
   	* MOVE to IFOPT: netex_taxiPlace_version.xsd
 	* MOVE to FM_ST:  netex_mediumAplication_support.xsd
@@ -225,7 +245,7 @@ Version 1.2.2 - New modes Revised changes withe xamples and constraints.
   	* RENAME as  netex_nm_vehicleAccessCredentials_vesion.xsd
 
 ### 2020.10.11 NewModes  Price Tidy ups - update references, fixes.
-  * NewModes __FareTable___ Update __CellReferences__: 
+  * NewModes __FareTable___ Update __CellReferences__:
     * Add __VehicleTypeRef__ .  __VehicleModelRef__,  __ModelEquipmentRef__, __EquipmentRef__.  
   * _Updates to xml schema_:  
     * netex_fareTable_version.xsd
@@ -254,7 +274,7 @@ Version 1.2.2 - New modes Revised changes withe xamples and constraints.
 	* netex_journeyDesignator_support.xsd
 	* netex_parkingTariff_version.xsd
 	* netex_fareTable_version.xsd
-	
+
 ### 2020.10.09  NewModes:  Revise booking arrangements
   * NewModes: Add  __ServiceBookingArrangement__ to  __MobilityService__.
   * General: Add further __PaymentMethodType__ enum values; _mobileApp_ and _atCounter_ to __BookingMethod__ .
@@ -263,11 +283,11 @@ Version 1.2.2 - New modes Revised changes withe xamples and constraints.
    	* netex_serviceRestriction_version.xsd
    	* netex_usageParameterBooking_support.xsd
    	* netex_usageParameterBooking_version.xsd
-   	
+
 ### 2020.10.09  NewModes:  Allow a colour to be associated with a parking etc.
   * NewModes: Add  __Presentation__ to  __SiteElement__.
   * _Updates to xml schema_:   
-   	* netex_ifopt_site_version.xsd 
+   	* netex_ifopt_site_version.xsd
 
 ### 2020.10.07  NewModes  Add new frames
   * NewModes: Add  __MobilityServiceFrame__ and __MobilityJourneyFrame__.
@@ -275,13 +295,13 @@ Version 1.2.2 - New modes Revised changes withe xamples and constraints.
     * netex_all_objects_part5_newModes.xsd
    	* NEW netex_mobilityServiceFrame_version.xsd
     * NEW netex_mobilityJourneyFrame_version.xsd  	
-    	
-### 2020.10.07  NewModes:  Make new mode elements assignable as fare parameters. 
+
+### 2020.10.07  NewModes:  Make new mode elements assignable as fare parameters.
   * Add  parameters to  __ValidityParameterAssignments__.
   * _Updates to xml schema_:  
     * netex_all_objects_part5_newModes.xsd
 
-### 2020.10.07  NewModes:  Implement TM6.0 Fare entities not yet in NeTEx. 
+### 2020.10.07  NewModes:  Implement TM6.0 Fare entities not yet in NeTEx.
   * Add  __MediumAccessDevice__, __CustomerPaymentMeans__.
   * _Updates to xml schema_:  
     	* netex_all_objects_part5_newModes.xsd
@@ -292,9 +312,9 @@ Version 1.2.2 - New modes Revised changes withe xamples and constraints.
    	* NEW netex_vehicleAccessCredentials_support.xsd
    	* NEW netex_vehicleAccessCredentials_version.xsd
    	* netex_salesContract_support.xsd
-   	
+
 ### 2020.10.07  NewModes: Equipment additions.
-  * NewModes: Add  __VehicleReleaseEquipment__,  __RefuellingEquipment__ , 
+  * NewModes: Add  __VehicleReleaseEquipment__,  __RefuellingEquipment__ ,
   * NewModes: __TransportType__: Add __ModelEquipmentProfile__.
   * _Updates to xml schema_:  
     * netex_all_objects_part5_newModes.xsd
@@ -320,7 +340,7 @@ Version 1.2.2 - New modes Revised changes withe xamples and constraints.
   	* NEW netex_vehicleServicePlaceAssignment_version.xsd
    	* netex_route_support.xsd
   	* netex_route_version.xsd
- 
+
 ### 2020.10.06 NewModes:  Add topology elements;  points, places and assignments.
   * NewModes: Add  __VehicleMeetingPooint__ and    ___VehicleMeetingLink__.  
   * NewModes: Add  __VehicleMeetingPlace__ and    ___VehicleServicePlaceAssignments__, with subtypes.  
@@ -336,11 +356,11 @@ Version 1.2.2 - New modes Revised changes withe xamples and constraints.
   	* NEW netex_vehicleMeetingPlace_support.xsd
   	* NEW netex_vehicleMeetingPlace_vesion.xsd
   	* netex_servicePattern_version.xsd
-  	
+
 ### 2020.10.04  NewModes: Update responsibility role types.
   * NewModes: Add new enumeration values for  __StakeholderRoleType__ and    __DataRoleType__.   
   * _Updates to xml schema_:  
-  	* netex_responsibilities_support.xsd 
+  	* netex_responsibilities_support.xsd
 
 ### 2020.10.04  NewModes: Add mobility services.
   * NewModes: Add  __MobilityService__ and subtypes, add __OnlineServiceOperator__.   
@@ -352,7 +372,7 @@ Version 1.2.2 - New modes Revised changes withe xamples and constraints.
 	* NEW netex_onlineService_version.xsd
 	* netex.spp
 
-### 2020.10.04  NewModes:  Revise  __VehicleType__ 
+### 2020.10.04  NewModes:  Revise  __VehicleType__
   * Add __TransportType__ and __PersonalTransportType__.   
   * _Updates to xml schema_:  
   	* NEW netex_fleet_support.xsd
@@ -370,8 +390,8 @@ Version 1.2.2 - New modes Revised changes withe xamples and constraints.
   * _Updates to xml schema_:   
 	* netex_transportOrganisation_support.xsd
 	* netex_transportOrganisation_version.xsd
-	
-### 2020.10.04  NewModes:  Add  references to __ModeOfOperation__. 
+
+### 2020.10.04  NewModes:  Add  references to __ModeOfOperation__.
   * NewModes: Update existing references to __Mode__ to include __ModeOfOperation__.
   * _Updates to xml schema_:   
 	* netex_transportOrganisation_version.xsd
@@ -387,7 +407,7 @@ Version 1.2.2 - New modes Revised changes withe xamples and constraints.
 	* netex_accessRightParameter_version.xsd
 	* netex_usageParameterTravel_version.xsd
 	* netex_fareFrame_version.xsd
-	
+
 ### 2020.10.04  NewModes : revise modes
   * NewModes Add __ModeOfOperation__.  
   * FIX: Also correct typos in __Notice__  file.
@@ -434,11 +454,11 @@ additional values:  _electricContact, battery, dieselBatteryHybrid, petrolBatter
 
 ### 2020.07.29   FIX  Issue #97 *Part2*: Add __NormalDatedJourney__ and __DatedVehicleJourney__ to journeys  in __TimetableFrame__
   * _Updates to xml schema_:    
-	* netex_part2\netex_journeyTimes\netex_datedVehicleJourney_version.xsd 
+	* netex_part2\netex_journeyTimes\netex_datedVehicleJourney_version.xsd
 =======
 
 ##Version 1.1.1 - Base version plus  further minor fixes comprising
- 
+
 
 ### 2020.07.28   EXAMPLES  Revise fare examples
   * _Updates to xml schema_:    
