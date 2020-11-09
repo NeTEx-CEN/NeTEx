@@ -20,7 +20,7 @@
 					<Created>2020-10-05</Created>Added for New modes
 				</Date>
 				<Date>
-					<Modified>2020-10-07</Modified>Add Booking Arrangements
+					<Modified>2020-11-09</Modified>Add Booking Arrangements. Rename GeneralPolling to CarPooling
 				</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines EQUIPMENT types for Place access.</p>
@@ -106,7 +106,7 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="TypeOfMobilityServiceRef" minOccurs="0"/>
-			<xsd:element ref="TransportOrganisationRef" minOccurs="0"/>
+			<xsd:element ref="OrganisationRef" minOccurs="0"/>
 			<xsd:element name="ServiceBookingArrangements" type="ServiceBookingArrangementsStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Booking Arrangements for service.</xsd:documentation>
@@ -167,6 +167,11 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Elements for a COMMON VEHICLE SERVICE.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
+			<xsd:element name="StartDate" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Start date from when services are available</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element name="BookingRequired" type="xsd:boolean" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Whether booking is required.
@@ -177,11 +182,6 @@ Rail transport, Roads and Road transport
 				<xsd:annotation>
 					<xsd:documentation>Whether registration is required.
 </xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="StartDate" type="xsd:boolean" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Start date from when services are available</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element ref="TopographicPlaceRef" minOccurs="0"/>
@@ -253,7 +253,8 @@ Rail transport, Roads and Road transport
 	<!-- =====  TAXI SERVICE ============================================= -->
 	<xsd:element name="TaxiService" substitutionGroup="VehiclePoolingService_">
 		<xsd:annotation>
-			<xsd:documentation>A transport service that connects users (driver and passenger(s)) for carrying out trips.  +v1.2.2</xsd:documentation>
+			<xsd:documentation>A type of VEHICLE POOLING SERVICE where the service may be regulated according to a particular taxi policy.
+.  +v1.2.2</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -313,13 +314,13 @@ Rail transport, Roads and Road transport
 		<xsd:sequence/>
 	</xsd:group>
 	<!-- =====  GENERAL POOLING SERVICE ============================================= -->
-	<xsd:element name="GeneralVehiclePoolingService" substitutionGroup="VehiclePoolingService_">
+	<xsd:element name="CarPoolingService" substitutionGroup="VehiclePoolingService_">
 		<xsd:annotation>
 			<xsd:documentation>A transport service that connects users (driver and passenger(s)) for carrying out trips.  +v1.2.2</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
-				<xsd:restriction base="GeneralVehiclePoolingService_VersionStructure">
+				<xsd:restriction base="CarPoolingService_VersionStructure">
 					<xsd:sequence>
 						<xsd:sequence>
 							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
@@ -344,10 +345,10 @@ Rail transport, Roads and Road transport
 							<xsd:group ref="VehiclePoolingServiceGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
-							<xsd:group ref="GeneralVehiclePoolingServiceGroup"/>
+							<xsd:group ref="CarPoolingServiceGroup"/>
 						</xsd:sequence>
 					</xsd:sequence>
-					<xsd:attribute name="id" type="GeneralVehiclePoolingServiceIdType" use="optional">
+					<xsd:attribute name="id" type="CarPoolingServiceIdType" use="optional">
 						<xsd:annotation>
 							<xsd:documentation>Identifier of GENERAL POOLIMG SERVICE.</xsd:documentation>
 						</xsd:annotation>
@@ -356,28 +357,28 @@ Rail transport, Roads and Road transport
 			</xsd:complexContent>
 		</xsd:complexType>
 	</xsd:element>
-	<xsd:complexType name="GeneralVehiclePoolingService_VersionStructure" abstract="false">
+	<xsd:complexType name="CarPoolingService_VersionStructure" abstract="false">
 		<xsd:annotation>
-			<xsd:documentation>Type for GENERAL POOLING SERVICE.</xsd:documentation>
+			<xsd:documentation>Type for CAR POOLING SERVICE.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="VehiclePoolingService_VersionStructure">
 				<xsd:sequence>
-					<xsd:group ref="GeneralVehiclePoolingServiceGroup"/>
+					<xsd:group ref="CarPoolingServiceGroup"/>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:group name="GeneralVehiclePoolingServiceGroup">
+	<xsd:group name="CarPoolingServiceGroup">
 		<xsd:annotation>
-			<xsd:documentation>Elements for a GENERAL POOLING SERVICE.</xsd:documentation>
+			<xsd:documentation>Elements for a CAR POOLING SERVICE.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence/>
 	</xsd:group>
 	<!-- =====  ChauffeuredVehicle SERVICE ============================================= -->
 	<xsd:element name="ChauffeuredVehicleService" substitutionGroup="VehiclePoolingService_">
 		<xsd:annotation>
-			<xsd:documentation>A transport service that connects users (driver and passenger(s)) for carrying out trips.  +v1.2.2</xsd:documentation>
+			<xsd:documentation>A type of VEHICLE POOLING SERVICE which can only be used by prior arrangement and where the driver has a commercial agreement with the user. +v1.2.2</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -439,7 +440,8 @@ Rail transport, Roads and Road transport
 	<!-- =====  VEHICLE SHARING SERVICE ============================================= -->
 	<xsd:element name="VehicleSharingService" substitutionGroup="CommonVehicleService_">
 		<xsd:annotation>
-			<xsd:documentation>A transport service offer related to VEHICLE SHARING. _+v1.2.2</xsd:documentation>
+			<xsd:documentation>A transport service offer related to VEHICLE SHARING. 
++v1.2.2</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -509,7 +511,8 @@ Rail transport, Roads and Road transport
 	<!-- =====  VEHICLE RENTAL SERVICE ============================================= -->
 	<xsd:element name="VehicleRentalService" substitutionGroup="CommonVehicleService_">
 		<xsd:annotation>
-			<xsd:documentation>A transport service that uses vehicles for carrying out trips/ +v1.2.2</xsd:documentation>
+			<xsd:documentation>A transport service offer related to VEHICLE RENTAL. 
++v1.2.2</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
