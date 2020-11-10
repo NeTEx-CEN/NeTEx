@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:core="http://www.govtalk.gov.uk/core" xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_organisation_version">
-	<xsd:include schemaLocation="netex_contact_version.xsd"/>
+	<xsd:include schemaLocation="../netex_responsibility/netex_responsibilitySet_version.xsd"/>
 	<xsd:include schemaLocation="netex_alternativeName_version.xsd"/>
 	<xsd:include schemaLocation="netex_organisation_support.xsd"/>
 	<xsd:include schemaLocation="netex_zone_version.xsd"/>
@@ -28,7 +28,7 @@
 				</Date>
 				<Date>
 					<Modified>2020-11-06 New Modes (Norway): Add related organisations.
-								Add external COntact details</Modified>
+								Add external Contact details</Modified>
 				</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines ORGANISATION types.</p>
@@ -995,5 +995,84 @@ Rail transport, Roads and Road transport
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
+	<!-- ======================================================================= -->
+	<!-- ===CONTACTS =================================================== -->
+	<xsd:complexType name="contacts_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for containment in frame of reusable CONTACT details. +v1.2.2</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="Contact"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="Contact" substitutionGroup="DataManagedObject">
+		<xsd:annotation>
+			<xsd:documentation>Reusable CONTACT details for an ORGANISATION or other entity. +v1.2.2</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="Contact_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="ContactGroup">
+								<xsd:annotation>
+									<xsd:documentation>Details for CONTACT </xsd:documentation>
+								</xsd:annotation>
+							</xsd:group>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="ContactIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="Contact_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for an CONTACT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="DataManagedObjectStructure">
+				<xsd:sequence>
+					<xsd:group ref="ContactGroup">
+						<xsd:annotation>
+							<xsd:documentation>Details for resuable CONTACT.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:group>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="ContactGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for an CONTACT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Name" type="MultilingualString" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The name of the CONTACT.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ContactDetails" type="ContactDetailsStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Contact details for CONTACT.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ContactType" type="ContactTypeEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Classification of ContactTy[e. Used for arbitrary documentation.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
 	<!-- ======================================================================= -->
 </xsd:schema>

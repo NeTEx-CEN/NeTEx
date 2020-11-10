@@ -2,6 +2,7 @@
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:core="http://www.govtalk.gov.uk/core" xmlns="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_organisation_support">
 	<xsd:include schemaLocation="../netex_responsibility/netex_responsibility_support.xsd"/>
 	<xsd:include schemaLocation="../netex_responsibility/netex_relationship_support.xsd"/>
+	<xsd:include schemaLocation="../netex_utility/netex_utility_contact.xsd"/>
 	<xsd:include schemaLocation="netex_zone_support.xsd"/>
 	<xsd:annotation>
 		<xsd:appinfo>
@@ -26,7 +27,8 @@
 					<Modified>2020-10-16 New Modes: Add onlineProvider, alternativeModeOperator to enumeration types</Modified>
 				</Date>
 				<Date>
-					<Modified>2020-11-06 New Modes: Add support for related organisations, with role type enuemration</Modified>
+					<Modified>2020-11-06 New Modes: Add support for related organisations, with role type enuemration
+				    		Add external Contact details</Modified>
 				</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines ORGANISATION types.</p>
@@ -65,7 +67,7 @@ Rail transport, Roads and Road transport
 		</xsd:appinfo>
 		<xsd:documentation>ORGANISATION part identifier types for NeTEx.</xsd:documentation>
 	</xsd:annotation>
-	<!-- ======================================================================= -->
+	<!-- ======= DEPARTMENT ==================================================== -->
 	<xsd:complexType name="departmentRefs_RelStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for a list of DEPARTMENTs.</xsd:documentation>
@@ -103,7 +105,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Reference to a DEPARTMENT.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<!-- ======================================================================= -->
+	<!-- ======= ORGANISATIIONAL UNIT ================================================= -->
 	<xsd:complexType name="organisationalUnitRefs_RelStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for a list of ORGANISATIONAL UNITs.</xsd:documentation>
@@ -141,7 +143,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Reference to a ORGANISATIONAL UNIT.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<!-- ======================================================================= -->
+	<!-- ======== ADMINISTRATIVE ZONE ============================================ -->
 	<xsd:complexType name="administrativeZoneRefs_RelStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for a list of ADMINISTRATIVE ZONEs.</xsd:documentation>
@@ -178,7 +180,7 @@ Rail transport, Roads and Road transport
 			<xsd:extension base="ZoneRefStructure"/>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<!-- ======================================================================= -->
+	<!-- ======== CODESPACE ASSIGNMENT =============================================== -->
 	<xsd:simpleType name="CodespaceAssignmentIdType">
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of a CODESPACE ASSIGNMENT.</xsd:documentation>
@@ -190,7 +192,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Reference to a CODESPACE ASSIGNMENT.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<!-- ======================================================================= -->
+	<!-- ====== TYPE OF CODESPACE ASSIGNMENT   ======================= -->
 	<xsd:simpleType name="TypeOfCodespaceAssignmentIdType">
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of a TYPE OF CODESPACE ASSIGNMENT</xsd:documentation>
@@ -216,7 +218,7 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
-	<!-- ======================================================================= -->
+	<!-- ====== TYPE OF ORGANISATION =========================================== -->
 	<xsd:complexType name="typeOfOrganisationRefs_RelStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for a list of TYPEs OF ORGANISATION.</xsd:documentation>
@@ -254,7 +256,7 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
-	<!-- ======================================================================= -->
+	<!-- ====== TYPE OF ORGANISATION PART ========================================= -->
 	<xsd:simpleType name="TypeOfOrganisationPartIdType">
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of a TYPE OF ORGANISATION PART.</xsd:documentation>
@@ -291,7 +293,7 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
-	<!-- ======================================================================= -->
+	<!-- ======= TYPE OF OPERATION =========================================== -->
 	<xsd:simpleType name="TypeOfOperationIdType">
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of a TYPE OF OPERATION.</xsd:documentation>
@@ -449,5 +451,69 @@ Rail transport, Roads and Road transport
 			</xsd:enumeration>
 		</xsd:restriction>
 	</xsd:simpleType>
+	<!-- ===== CONTACT ======================================================== -->
+	<xsd:complexType name="contactRefs_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of REUSABLE CONTACT. +v1.2.2</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="oneToManyRelationshipStructure">
+				<xsd:sequence>
+					<xsd:element ref="ContactRef" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:simpleType name="ContactIdType">
+		<xsd:annotation>
+			<xsd:documentation>Type for identifier of a CONTACT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ObjectIdType"/>
+	</xsd:simpleType>
+	<xsd:element name="ContactRef" type="ContactRefStructure" substitutionGroup="VersionOfObjectRef">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a CONTACT. +v1.2.2</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ContactRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for Reference to a CONTACT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="VersionOfObjectRefStructure">
+				<xsd:attribute name="ref" type="ContactIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Identifier of CONTACT.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:simpleType name="ContactTypeEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for CONTACT role. +v1.2.2</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="any"/>
+			<xsd:enumeration value="information"/>
+			<xsd:enumeration value="reservations"/>
+			<xsd:enumeration value="lostProperty"/>
+			<xsd:enumeration value="complaints"/>
+			<xsd:enumeration value="emergency"/>
+			<xsd:enumeration value="other"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="ContactStructure">
+		<xsd:annotation>
+			<xsd:documentation>Contact details with reference to CONTACT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="ContactDetailsStructure">
+				<xsd:sequence>
+					<xsd:element ref="ContactRef" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 	<!-- ======================================================================= -->
 </xsd:schema>
