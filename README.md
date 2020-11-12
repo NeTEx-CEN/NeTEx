@@ -38,6 +38,21 @@ There is also an _Oxygen_ project file:
 =======
 Version 1.2.2 - New modes Revised changes with e xamples and constraints.
 
+
+### 2020.11.06  NewModes: Corrections
+ * Rename GenaralVehiclePooling to CarPoolingService
+ * Correct comments and missing types.  Move __Contact__ into organisation package
+ * M
+ * _Updates to xml examples_:  
+   * NEW NewModes-CarPoolingExample.xsd
+ * _Updates to xml schema_:  
+   * netex_organisation_support.xsd
+   * netex_organisation_version.xsd   
+   * netex_transportOrganisation_version.xsd   
+   * netex_nm_mobilityService_support.xsd
+   * netex_nm_mobilityService_version.xsd
+   * netex_publication.xsd
+
 ### 2020.11.06  NewModes (Norway):  Enhace Organisations
  * Add relationship between organisations:  * Add __RelatedOrganisation__, with __OrganisationRole__ enumerations.
  * Add reusable contact details
@@ -45,8 +60,6 @@ Version 1.2.2 - New modes Revised changes with e xamples and constraints.
    * netex_organisation_support.xsd
    * netex_organisation_version.xsd   
    * netex_transportOrganisation_version.xsd   
-   * NEW netex_contact_support.xsd
-   * NEW netex_contact_version.xsd  
    * netex_all_objects_generic.xsd
    * netex_salesDistribution_version.xsd   
    * netex_publication.xsd
@@ -77,8 +90,9 @@ Version 1.2.2 - New modes Revised changes with e xamples and constraints.
    * Add __Description__, and __ModelEquipmentProfileRef__  to __Vehicle__,
    * Rename __TypeofFuel__ to __FuelType__ (Depreceate __TypeOfFuel__),
  * __Parking__ add open vehicle types using __TransportTypeRef__.
- * _Updates to xml schema_:  
+ * _Updates to xml examples_:  
    * NEW NewModes-ChauffeuredServiceExample.xsd
+ * _Updates to xml schema_:  
    * netex_routingConstraint_support.xsd
    * NEW netex_mobilityServiceConstraint_support.xsd         
    * NEW netex_mobilityServiceConstraint_version.xsd
