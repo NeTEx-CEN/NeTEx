@@ -38,11 +38,21 @@ There is also an _Oxygen_ project file:
 =======
 Version 1.2.2 - New modes Revised changes with e xamples and constraints.
 
+### 2020.11.12  NewModes: Corrections
+ * Rename __ModelEquipmentProfile__ to __VehicleModelProfile__,  __CycleEquipmentProfile__ to __CycleModelProfile__, ,  __CarEquipmentProfile__ to __CarModelProfile__
+ * Correct comments and missing types.  Move __Contact__ into organisation package 
+ * _Updates to xml examples_:  
+   * NEW NewModes-CarPoolingExample.xsd
+   * NEW NewModes-CyclePoolingExample.xsd
+ * _Updates to xml schema_:  
+   * netex_nm_vehicleType_support.xsd
+   * netex_nm_fleetEquipment_support.xsd
+   * netex_nm_fleetEquipment_version.xsd
+   * netex_publication.xsd
 
 ### 2020.11.06  NewModes: Corrections
- * Rename GenaralVehiclePooling to CarPoolingService
- * Correct comments and missing types.  Move __Contact__ into organisation package
- * M
+ * Rename __GeneralVehiclePooling__ to __CarPoolingService__.
+ * Correct comments and missing types.  Move __Contact__ into organisation package.
  * _Updates to xml examples_:  
    * NEW NewModes-CarPoolingExample.xsd
  * _Updates to xml schema_:  
@@ -87,7 +97,7 @@ Version 1.2.2 - New modes Revised changes with e xamples and constraints.
    * Add _fine_ and _findeHandlingFee_ to __RentalPolicy__ values.
  * Vehicles
    * Add __PropulsionType__ (with enum values) and __MaximumRange__ to __TransportType__,
-   * Add __Description__, and __ModelEquipmentProfileRef__  to __Vehicle__,
+   * Add __Description__, and __ModelProfileRef__  to __Vehicle__,
    * Rename __TypeofFuel__ to __FuelType__ (Depreceate __TypeOfFuel__),
  * __Parking__ add open vehicle types using __TransportTypeRef__.
  * _Updates to xml examples_:  
@@ -330,7 +340,7 @@ Version 1.2.2 - New modes Revised changes with e xamples and constraints.
 
 ### 2020.10.07  NewModes: Equipment additions.
  * NewModes: Add  __VehicleReleaseEquipment__,  __RefuellingEquipment__ ,
- * NewModes: __TransportType__: Add __ModelEquipmentProfile__.
+ * NewModes: __TransportType__: Add __ModelProfile__.
  * _Updates to xml schema_:  
    * netex_all_objects_part5_newModes.xsd
  * netex_parkingEquipment_support.xsd

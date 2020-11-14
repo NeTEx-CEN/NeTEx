@@ -139,11 +139,10 @@
 							</ContactDetails>
 							<OrganisationType>operator</OrganisationType>
 							<relatedOrganisations>
-								<RelatedOrganisation  version="any"  id="noc:MBIKE">
-								<OnlineServiceOperatorRef version="any" ref="floggit"/>
-								<OrganisationRoleType>distributor</OrganisationRoleType>
+								<RelatedOrganisation version="any" id="noc:MBIKE">
+									<OnlineServiceOperatorRef version="any" ref="floggit"/>
+									<OrganisationRoleType>distributor</OrganisationRoleType>
 								</RelatedOrganisation>
-											 
 							</relatedOrganisations>
 							<Address>
 								<Street>Alpha1</Street>
@@ -204,21 +203,21 @@
 						<VehicleModel version="any" id="pennyFarthing">
 							<Name>Old Model Bike</Name>
 							<PersonalTransportTypeRef version="any" ref="pedal_cycle"/>
-							<CycleEquipmentProfileRef version="any" ref="boneKitA"/>
+							<CycleModelProfileRef version="any" ref="boneKitA"/>
 						</VehicleModel>
 						<VehicleModel version="any" id="boneShaker">
 							<Name>New Model Bike</Name>
 							<PersonalTransportTypeRef version="any" ref="pedal_cycle"/>
-							<CycleEquipmentProfileRef version="any" ref="boneKitA"/>
+							<CycleModelProfileRef version="any" ref="boneKitA"/>
 						</VehicleModel>
 						<VehicleModel version="any" id="boneShaker2">
 							<Name>New Model Bike v2</Name>
 							<PersonalTransportTypeRef version="any" ref="pedal_cycle"/>
-							<CycleEquipmentProfileRef version="any" ref="boneKitB"/>
+							<CycleModelProfileRef version="any" ref="boneKitB"/>
 						</VehicleModel>
 					</vehicleModels>
-					<modelEquipmentProfiles>
-						<CycleEquipmentProfile version="any" id="boneKitA">
+					<vehicleModelProfiles>
+						<CycleModelProfile version="any" id="boneKitA">
 							<Battery>false</Battery>
 							<Lamps>true</Lamps>
 							<Helmet>false</Helmet>
@@ -226,8 +225,8 @@
 							<Locker>false</Locker>
 							<Basket>false</Basket>
 							<Lock>true</Lock>
-						</CycleEquipmentProfile>
-						<CycleEquipmentProfile version="any" id="boneKitB">
+						</CycleModelProfile>
+						<CycleModelProfile version="any" id="boneKitB">
 							<Battery>false</Battery>
 							<Lamps>true</Lamps>
 							<Helmet>false</Helmet>
@@ -235,8 +234,8 @@
 							<Locker>false</Locker>
 							<Basket>true</Basket>
 							<Lock>true</Lock>
-						</CycleEquipmentProfile>
-					</modelEquipmentProfiles>
+						</CycleModelProfile>
+					</vehicleModelProfiles>
 				</ResourceFrame>
 				<!--==== NETWORK ==== -->
 				<SiteFrame version="1.0" id="mb:cycle_sharing_example" responsibilitySetRef="mb:network_data">
@@ -264,6 +263,8 @@
 							<CrossRoad>Main Street</CrossRoad>
 							<Landmark>Main Railway Station</Landmark>
 							<Covered>covered</Covered>
+							<Gated>openArea</Gated>
+							<Lighting>wellLit</Lighting>
 							<TopographicPlaceRef version="any" ref="Alphaville"/>
 							<AlternativeTransportOperatorRef version="any" ref="noc:MBIKE"/>
 							<ParkingType>cycleRental</ParkingType>
@@ -352,9 +353,6 @@
 										</EquipmentPlace>
 									</equipmentPlaces>
 									<placeEquipments>
-										<VehicleReleaseEquipment version="any" id="bike_station_beta_B1@rack">
-											<LocalControl>true</LocalControl>
-										</VehicleReleaseEquipment>
 										<CycleStorageEquipment version="any" id="bike_station_beta_B1@rack">
 											<NumberOfSpaces>10</NumberOfSpaces>
 											<CycleStorageType>docks</CycleStorageType>
@@ -427,16 +425,40 @@
 									<AlternativeTransportOperatorRef version="any" ref="noc:MBIKE"/>
 									<PersonalTransportTypeRef version="any" ref="pedal_cycle"/>
 									<VehicleModelRef version="any" ref="pennyFarthing"/>
+									<actualVehicleEquipments>
+										<VehicleReleaseEquipment version="any" id="P01@release">
+											<OutOfService>false</OutOfService>
+											<RemoteControl>true</RemoteControl>
+											<LocalControl>true</LocalControl>
+											<LockingMechanism>dock</LockingMechanism>
+										</VehicleReleaseEquipment>
+									</actualVehicleEquipments>
 								</Vehicle>
 								<Vehicle version="any" id="P02">
 									<AlternativeTransportOperatorRef version="any" ref="noc:MBIKE"/>
 									<PersonalTransportTypeRef version="any" ref="pedal_cycle"/>
 									<VehicleModelRef version="any" ref="pennyFarthing"/>
+									<actualVehicleEquipments>
+										<VehicleReleaseEquipment version="any" id="P02@release">
+											<OutOfService>false</OutOfService>
+											<RemoteControl>false</RemoteControl>
+											<LocalControl>true</LocalControl>
+											<LockingMechanism>dock</LockingMechanism>
+										</VehicleReleaseEquipment>
+									</actualVehicleEquipments>
 								</Vehicle>
 								<Vehicle version="any" id="P03">
 									<AlternativeTransportOperatorRef version="any" ref="noc:MBIKE"/>
 									<PersonalTransportTypeRef version="any" ref="pedal_cycle"/>
 									<VehicleModelRef version="any" ref="pennyFarthing"/>
+									<actualVehicleEquipments>
+										<VehicleReleaseEquipment version="any" id="P03@release">
+											<OutOfService>true</OutOfService>
+											<RemoteControl>true</RemoteControl>
+											<LocalControl>false</LocalControl>
+											<LockingMechanism>dock</LockingMechanism>
+										</VehicleReleaseEquipment>
+									</actualVehicleEquipments>
 								</Vehicle>
 								<Vehicle version="any" id="P04">
 									<AlternativeTransportOperatorRef version="any" ref="noc:MBIKE"/>
@@ -1389,7 +1411,7 @@ This Shows  sample Purchases
 														<TypeOfTravelDocumentRef version="any" ref="printed_ticket"/>
 														<VehicleSharingOperationRef version="any" ref="cycle_share"/>
 														<VehicleModelRef version="any" ref="boneShaker2"/>
-														<CycleEquipmentProfileRef version="any" ref="boneKitB"/>
+														<CycleModelProfileRef version="any" ref="boneKitB"/>
 														<VehicleSharingServiceRef version="any" ref="metrobike"/>
 														<VehicleRef version="any" ref="B04"/>
 														<VehicleSharingParkingAreaRef version="any" ref="bike_station_alpha_A1"/>
@@ -1464,7 +1486,7 @@ This Shows  sample Purchases
 														<DistributionChannelRef version="any" ref="online"/>
 														<VehicleSharingOperationRef version="any" ref="cycle_share"/>
 														<VehicleModelRef version="any" ref="boneShaker2"/>
-														<CycleEquipmentProfileRef version="any" ref="boneKitB"/>
+														<CycleModelProfileRef version="any" ref="boneKitB"/>
 														<VehicleSharingServiceRef version="any" ref="metrobike"/>
 														<VehicleRef version="any" ref="B04"/>
 														<VehicleSharingParkingAreaRef version="any" ref="bike_station_beta_B1"/>
