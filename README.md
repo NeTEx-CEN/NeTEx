@@ -38,6 +38,18 @@ There is also an _Oxygen_ project file:
 =======
 Version 1.2.2 - New modes Revised changes with e xamples and constraints.
 
+### 2020.11.06  NewModes: Corrections
+ * Drop unused COntinuousMOdes enumeration.
+ * _Updates to xml schema_:  
+   * netex_mode_support.xsd
+
+### 2020.11.06  NewModes: Corrections
+ * Correct ParkingEquipment supertypes
+ * _Updates to xml schema_:  
+   * netex_nm_parkingEquipment_version.xsd
+   * netex_nm_parkingEquipmentsupport.xsd
+   * netex_nm_parkingEquipment_version.xsd
+   
 ### 2020.11.12  NewModes: Corrections
  * Rename __ModelEquipmentProfile__ to __VehicleModelProfile__,  __CycleEquipmentProfile__ to __CycleModelProfile__, ,  __CarEquipmentProfile__ to __CarModelProfile__
  * Correct comments and missing types.  Move __Contact__ into organisation package 
