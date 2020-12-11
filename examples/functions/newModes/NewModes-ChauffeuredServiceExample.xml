@@ -29,7 +29,7 @@
 				<NetworkFilterByValue>
 					<LayerRef ref="fxc:fareNetwork_fareProducts_farePrices"/>
 					<objectReferences>
-						<AlternativeTransportOperatorRef version="any" ref="noc:HJM"/>
+						<OperatorRef version="any" ref="noc:HJM"/>
 						<VehiclePoolingOperationRef ref="chauffeured_car"/>
 					</objectReferences>
 				</NetworkFilterByValue>
@@ -118,7 +118,7 @@
 					</typesOfValue>
 					<organisations>
 						<!-- ==== ORGANISATIONS ==== -->
-						<AlternativeTransportOperator version="any" id="noc:HJM">
+						<Operator version="any" id="noc:HJM">
 							<Name>Home James Cars</Name>
 							<ShortName>Home James</ShortName>
 							<TradingName>HJ Driver services Ltd.</TradingName>
@@ -137,7 +137,7 @@
 							<PrimaryMode>taxi</PrimaryMode>
 							<TaxiSubmode>charterTaxi</TaxiSubmode>
 							<VehiclePoolingOperationRef version="any" ref="chauffeured_car"/>
-						</AlternativeTransportOperator>
+						</Operator>
 						<OnlineServiceOperator version="any" id="floggit">
 							<Name>Online transport services</Name>
 							<TradingName>Web Floggers SA</TradingName>
@@ -213,6 +213,43 @@
 							<PassengerCommsFacilityList>freeWifi</PassengerCommsFacilityList>
 						</ServiceFacilitySet>
 					</serviceFacilitySets>
+					<vehicleTypes>
+						<VehicleType version="any" id="stretch_limo">
+							<Name>Strech limo</Name>
+							<ReversingDirection>true</ReversingDirection>
+							<SelfPropelled>true</SelfPropelled>
+							<PropulsionType>combustion</PropulsionType>
+							<FuelType>petrol</FuelType>
+							<TransportMode>selfDrive</TransportMode>
+							<PassengerCapacity version="any" id="stretch_limo">
+								<SeatingCapacity>7</SeatingCapacity>
+							</PassengerCapacity>
+							<Length>20</Length>
+							<Height>1.8</Height>
+							<Weight>1000</Weight>
+							<FirstAxleHeight>0.25</FirstAxleHeight>
+							<facilities>
+								<ServiceFacilitySet version="any" id="stretch_limo">
+									<CateringFacilityList>bar</CateringFacilityList>
+									<PassengerCommsFacilityList>videoEntertainment publicWifi</PassengerCommsFacilityList>
+								</ServiceFacilitySet>
+							</facilities>
+						</VehicleType>
+					</vehicleTypes>
+					<vehicleModels>
+						<VehicleModel version="any" id="stretch_cadillac">
+							<Name>Strech Cadillac</Name>
+							<Manufacturer>Cadillac</Manufacturer>
+							<VehicleTypeRef version="any" ref="stretch_limo"/>
+							<CarModelProfileRef version="any" ref="stretch_model"/>
+						</VehicleModel>
+					</vehicleModels>
+					<vehicleModelProfiles>
+						<CarModelProfile version="any" id="stretch_model">
+							<AirConditioning>true</AirConditioning>
+							<UsbPowerSockets>true</UsbPowerSockets>
+						</CarModelProfile>
+					</vehicleModelProfiles>
 				</ResourceFrame>
 				<!--==== NETWORK ==== -->
 				<SiteFrame version="1.0" id="hjm:chauffeured_taxi_example" responsibilitySetRef="hjm:network_data">
@@ -390,10 +427,10 @@
 						<Parking version="any" id="alphaville_airport_taxi_parking">
 							<Name lang="en">Alphaville Airport taxi parking</Name>
 							<CrossRoad>Delta road</CrossRoad>
-							<Landmark>Alphaville airports</Landmark> 
+							<Landmark>Alphaville airports</Landmark>
 							<Covered>outdoors</Covered>
 							<TopographicPlaceRef version="any" ref="belaire"/>
-							<AlternativeTransportOperatorRef version="any" ref="noc:HJM"/>
+							<OperatorRef version="any" ref="noc:HJM"/>
 							<ParkingType>airportParking</ParkingType>
 							<TypeOfParkingRef version="any" ref="airport"/>
 							<ParkingVehicleTypes>taxi</ParkingVehicleTypes>
@@ -410,11 +447,32 @@
 					<prerequisites>
 						<ResourceFrameRef version="1.0" ref="hjm:chauffeured_taxi_example"/>
 					</prerequisites>
+					<fleets>
+						<Fleet version="any" id="MetrobikeFleet">
+							<Name>The metrobike fleet</Name>
+							<members>
+								<Vehicle version="any" id="SWK007">
+									<RegistrationNumber>SWK007</RegistrationNumber>
+									<OperatorRef version="any" ref="noc:HJM"/>
+									<VehicleTypeRef version="any" ref="stretch_limo"/>
+									<VehicleModelRef version="any" ref="stretch_cadillac"/>
+									<CarModelProfileRef version="any" ref="stretch_model"/>
+								</Vehicle>
+								<Vehicle version="any" id="SWK044">
+									<RegistrationNumber>SWK044</RegistrationNumber>
+									<OperatorRef version="any" ref="noc:HJM"/>
+									<VehicleTypeRef version="any" ref="stretch_limo"/>
+									<VehicleModelRef version="any" ref="stretch_cadillac"/>
+									<CarModelProfileRef version="any" ref="stretch_model"/>
+								</Vehicle>
+							</members>
+						</Fleet>
+					</fleets>
 					<mobilityServices>
 						<ChauffeuredVehicleService version="any" id="hj_cars">
 							<BrandingRef version="any" ref="myBrand"/>
 							<Name>Home James Cars.</Name>
-							<AlternativeTransportOperatorRef version="any" ref="noc:HJM"/>
+							<OperatorRef version="any" ref="noc:HJM"/>
 							<ServiceBookingArrangements>
 								<BookingContact>
 									<Phone>=31666777</Phone>
@@ -571,7 +629,7 @@
 								<InfoLink typeOfInfoLink="info">https://homeJames.eu/tariff.pdf</InfoLink>
 								<InfoLink typeOfInfoLink="map">https://homeJames.eu/tariffMap.pdf</InfoLink>
 							</documentLinks>
-							<AlternativeTransportOperatorRef version="any" ref="noc:HJM"/>
+							<OperatorRef version="any" ref="noc:HJM"/>
 							<ChauffeuredVehicleServiceRef version="any" ref="hj_cars"/>
 							<fareStructureElements>
 								<FareStructureElement version="any" id="home_james@prepriced_trip@access">
@@ -672,7 +730,7 @@
 						<PreassignedFareProduct version="any" id="home_james@prepriced_trip">
 							<Name>One off trip for fixed price route </Name>
 							<ChargingMomentType>atEndOfTravel</ChargingMomentType>
-							<AlternativeTransportOperatorRef version="any" ref="noc:HJM"/>
+							<OperatorRef version="any" ref="noc:HJM"/>
 							<ConditionSummary>
 								<FareStructureType>networkFlatFare</FareStructureType>
 								<TariffBasis>flat</TariffBasis>
@@ -716,7 +774,7 @@
 						<DistributionChannel version="any" id="call_centre">
 							<Name>MCall centre</Name>
 							<DistributionChannelType>telephone</DistributionChannelType>
-							<AlternativeTransportOperatorRef version="any" ref="noc:HJM"/>
+							<OperatorRef version="any" ref="noc:HJM"/>
 							<PaymentMethods>debitCard creditCard  </PaymentMethods>
 							<DistributionRights>  </DistributionRights>
 						</DistributionChannel>
@@ -783,7 +841,7 @@
 							<usedIn>
 								<TariffRef version="any" ref="home_james@prepriced_trip"/>
 							</usedIn>
-							<AlternativeTransportOperatorRef version="any" ref="noc:HJM"/>
+							<OperatorRef version="any" ref="noc:HJM"/>
 							<specifics>
 								<ChauffeuredVehicleServiceRef version="any" ref="hj_cars"/>
 							</specifics>
@@ -822,7 +880,7 @@
 								<InfoLink typeOfInfoLink="info">https://homeJames.eu/tariffBespoke.pdf</InfoLink>
 								<InfoLink typeOfInfoLink="map">https://homeJames.eu/tariffMap.pdf</InfoLink>
 							</documentLinks>
-							<AlternativeTransportOperatorRef version="any" ref="noc:HJM"/>
+							<OperatorRef version="any" ref="noc:HJM"/>
 							<ChauffeuredVehicleServiceRef version="any" ref="hj_cars"/>
 							<timeIntervals>
 								<TimeInterval version="any" id="charter@4H">
@@ -855,7 +913,7 @@
 										<TypeOfAccessRightAssignmentRef versionRef="EXTERNAL" ref="fxc:access"/>
 										<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
 										<validityParameters>
-											<AlternativeTransportOperatorRef version="any" ref="noc:HJM"/>
+											<OperatorRef version="any" ref="noc:HJM"/>
 										</validityParameters>
 									</GenericParameterAssignment>
 								</FareStructureElement>
@@ -866,7 +924,7 @@
 										<TypeOfAccessRightAssignmentRef versionRef="EXTERNAL" ref="fxc:can_access_when"/>
 										<ValidityParameterGroupingType>OR</ValidityParameterGroupingType>
 										<validityParameters>
-											<AlternativeTransportOperatorRef version="any" ref="noc:HJM"/>
+											<OperatorRef version="any" ref="noc:HJM"/>
 										</validityParameters>
 									</GenericParameterAssignment>
 								</FareStructureElement>
@@ -914,7 +972,7 @@
 						<PreassignedFareProduct version="any" id="home_james@charter">
 							<Name>One off trip for fixed price route </Name>
 							<ChargingMomentType>atEndOfTravel</ChargingMomentType>
-							<AlternativeTransportOperatorRef version="any" ref="noc:HJM"/>
+							<OperatorRef version="any" ref="noc:HJM"/>
 							<ConditionSummary>
 								<FareStructureType>networkFlatFare</FareStructureType>
 								<TariffBasis>flat</TariffBasis>
@@ -995,7 +1053,7 @@
 							<usedIn>
 								<TariffRef version="any" ref="home_james@charter"/>
 							</usedIn>
-							<AlternativeTransportOperatorRef version="any" ref="noc:HJM"/>
+							<OperatorRef version="any" ref="noc:HJM"/>
 							<specifics>
 								<ChauffeuredVehicleServiceRef version="any" ref="hj_cars"/>
 							</specifics>
@@ -1059,7 +1117,7 @@ This Shows  sample Purchases
 								<TaxiSubmode>charterTaxi</TaxiSubmode>
 							</TransportSubmode>
 							<ChauffeuredVehicleServiceRef version="any" ref="hj_cars"/>
-							<VehicleRef versionRef="external" ref="CD886645"/>
+							<VehicleRef version="any" ref="SWK007"/>
 							<DepartureTime>10:15:00</DepartureTime>
 							<OperatingDayRef versionRef="EXTERNAL" ref="opday_7656"/>
 							<datedPassingTimes>
@@ -1123,7 +1181,7 @@ This Shows  sample Purchases
 												</Destination>
 												<Start>2020-10-08T11:07:00</Start>
 												<Duration>PT60M</Duration>
-												<AlternativeTransportOperatorRef version="any" ref="noc:HJM"/>
+												<OperatorRef version="any" ref="noc:HJM"/>
 												<ChauffeuredVehicleServiceRef version="any" ref="hj_cars"/>
 											</TravelSpecificationSummaryView>
 											<specificParameterAssignments>
@@ -1134,7 +1192,7 @@ This Shows  sample Purchases
 													<FareStructureElementRef version="any" ref="home_james@prepriced_trip@access"/>
 													<SalesOfferPackageRef version="any" ref="home_james@prepriced_trip-SOP@online"/>
 													<validityParameters>
-														<AlternativeTransportOperatorRef version="any" ref="noc:HJM"/>
+														<OperatorRef version="any" ref="noc:HJM"/>
 														<DistributionChannelRef version="any" ref="online"/>
 														<TypeOfTravelDocumentRef version="any" ref="email_confirmation"/>
 														<VehiclePoolingOperationRef version="any" ref="chauffeured_car"/>
