@@ -17,6 +17,9 @@
 				<Date>
 					<Modified>2020-10-05</Modified>
 				</Date>
+				<Date>
+					<Modified>2020-11-27</Modified>Revise to be Organisation not transport Oranisation
+				</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines ONLINE SERVICE types.</p>
 				</Description>
@@ -48,7 +51,7 @@ Rail transport, Roads and Road transport
 </Category>
 					<Project>CEN TC278 WG3 SG9.</Project>
 				</Subject>
-				<Title>NeTEx Network Exchange - ONLINE SERVICE SERVICE types.</Title>
+				<Title>NeTEx Network Exchange - ONLINE SERVICE  types.</Title>
 				<Type>Standard</Type>
 			</Metadata>
 		</xsd:appinfo>
@@ -78,9 +81,6 @@ Rail transport, Roads and Road transport
 							</xsd:group>
 						</xsd:sequence>
 						<xsd:sequence>
-							<xsd:group ref="TransportOrganisationGroup"/>
-						</xsd:sequence>
-						<xsd:sequence>
 							<xsd:group ref="OnlineServiceOperatorGroup"/>
 						</xsd:sequence>
 					</xsd:sequence>
@@ -98,7 +98,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Type for an ONLINE SERVICE OPERATOR.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
-			<xsd:extension base="TransportOrganisation_VersionStructure">
+			<xsd:extension base="Organisation_VersionStructure">
 				<xsd:sequence>
 					<xsd:group ref="OnlineServiceOperatorGroup"/>
 				</xsd:sequence>
@@ -110,6 +110,38 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Elements of an ONLINE SERVICE OPERATOR.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
+			<xsd:element ref="CountryRef" minOccurs="0"/>
+			<xsd:element name="Address" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Address of TRANSPORT ORGANISATION.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:restriction base="PostalAddress_VersionStructure">
+							<xsd:sequence>
+								<xsd:sequence>
+									<xsd:group ref="GroupOfEntitiesGroup"/>
+								</xsd:sequence>
+								<xsd:sequence>
+									<xsd:group ref="ZoneGroup"/>
+								</xsd:sequence>
+								<xsd:group ref="PlaceGroup"/>
+								<xsd:sequence>
+									<xsd:group ref="AddressGroup"/>
+								</xsd:sequence>
+								<xsd:sequence>
+									<xsd:group ref="PostalAddressGroup"/>
+									<xsd:element name="RoadAddressRef" type="AddressRefStructure" minOccurs="0">
+										<xsd:annotation>
+											<xsd:documentation>Road on which address lies.</xsd:documentation>
+										</xsd:annotation>
+									</xsd:element>
+								</xsd:sequence>
+							</xsd:sequence>
+						</xsd:restriction>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
 			<xsd:element name="services" type="onlineServiceRefs_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>ONLIEN SERVICES managed by ONLIEN OPERATOR,</xsd:documentation>
@@ -188,7 +220,7 @@ Rail transport, Roads and Road transport
 </xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="proposingServices" type="commonVehicleServiceRefs_RelStructure" minOccurs="0"/>
+			<xsd:element name="proposingServices" type="mobilityServiceRefs_RelStructure" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->

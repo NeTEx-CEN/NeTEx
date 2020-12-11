@@ -16,10 +16,13 @@
 					<Modified>2014-03-31</Modified>
 				</Date>
 				<Date>
-					<Modified>2019-03-08</Modified>UK-44 Add additional  groupsOfOperatorss  to Network.   
+					<Modified>2019-03-08</Modified>UK-44 Add additional  groupsOfOperators  to Network.   
 				</Date>
 				<Date>
-					<Modified>2020-10-15</Modified>NewModes: Add PublicTransportOperator, Add alternativeTransportOperatorrk.   
+					<Modified>2020-10-15</Modified>NewModes: Add TransportOperator PublicTransportOperator, Add alternativeTransportOperatorrk.   
+				</Date>
+				<Date>
+					<Modified>2020-11-24</Modified>NewModes: Drop  PublicTransportOperator,   alternativeTransportOperatorrk.   
 				</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines  NetEX:TRANSPORT  ORGANISATION identifier  types.</p>
@@ -118,44 +121,6 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
-	<!-- ==== TRANSPORT ORGANISATION ========================================== -->
-	<xsd:complexType name="publicTransportOrganisationRefs_RelStructure">
-		<xsd:annotation>
-			<xsd:documentation>Type for a list of references to an OPERATOR.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:complexContent>
-			<xsd:extension base="oneToManyRelationshipStructure">
-				<xsd:sequence>
-					<xsd:element ref="PublicTransportOrganisationRef" maxOccurs="unbounded"/>
-				</xsd:sequence>
-			</xsd:extension>
-		</xsd:complexContent>
-	</xsd:complexType>
-	<xsd:simpleType name="PublicTransportOrganisationIdType">
-		<xsd:annotation>
-			<xsd:documentation>Type for identifier of a PUBLIC TRANSPORT ORGANISATION..</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="TransportOrganisationIdType"/>
-	</xsd:simpleType>
-	<xsd:element name="PublicTransportOrganisationRef" type="PublicTransportOrganisationRefStructure" abstract="true" substitutionGroup="TransportOrganisationRef">
-		<xsd:annotation>
-			<xsd:documentation>Reference to a PUBLIC TRANSPORT ORGANISATION. + v1.2.2</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:complexType name="PublicTransportOrganisationRefStructure">
-		<xsd:annotation>
-			<xsd:documentation>Type for a reference to an PUBLIC TRANSPORT ORGANISATION..</xsd:documentation>
-		</xsd:annotation>
-		<xsd:simpleContent>
-			<xsd:restriction base="TransportOrganisationRefStructure">
-				<xsd:attribute name="ref" type="PublicTransportOrganisationIdType" use="required">
-					<xsd:annotation>
-						<xsd:documentation>Identifier of an PUBLIC TRANSPORT ORGANISATION.</xsd:documentation>
-					</xsd:annotation>
-				</xsd:attribute>
-			</xsd:restriction>
-		</xsd:simpleContent>
-	</xsd:complexType>
 	<!-- ====  OPERATOR ======================================================= -->
 	<xsd:element name="AllPublicTransportOrganisationsRef" type="AllPublicTransportOrganisationsRefStructure" substitutionGroup="AllTransportOrganisationsRef">
 		<xsd:annotation>
@@ -174,9 +139,9 @@ Rail transport, Roads and Road transport
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of an OPERATOR.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="PublicTransportOrganisationIdType"/>
+		<xsd:restriction base="TransportOrganisationIdType"/>
 	</xsd:simpleType>
-	<xsd:element name="OperatorRef" type="OperatorRefStructure" substitutionGroup="PublicTransportOrganisationRef">
+	<xsd:element name="OperatorRef" type="OperatorRefStructure" substitutionGroup="TransportOrganisationRef">
 		<xsd:annotation>
 			<xsd:documentation>Reference to an OPERATOR.</xsd:documentation>
 		</xsd:annotation>
@@ -186,7 +151,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Type for a reference to an OPERATOR.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:simpleContent>
-			<xsd:restriction base="PublicTransportOrganisationRefStructure">
+			<xsd:restriction base="TransportOrganisationRefStructure">
 				<xsd:attribute name="ref" type="OperatorIdType" use="required">
 					<xsd:annotation>
 						<xsd:documentation>Identifier of an OPERATOR.</xsd:documentation>
@@ -217,40 +182,14 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="OperatorRef"/>
 		</xsd:choice>
 	</xsd:group>
-	<!-- ===== ALTERNATIVE TRANSPORT OPERATOR ========================================================= -->
-	<xsd:simpleType name="AlternativeTransportOperatorIdType">
-		<xsd:annotation>
-			<xsd:documentation>Type for identifier of an ALTERNATIVE TRANSPORT OPERATOR</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="PublicTransportOrganisationIdType"/>
-	</xsd:simpleType>
-	<xsd:element name="AlternativeTransportOperatorRef" type="AlternativeTransportOperatorRefStructure" substitutionGroup="PublicTransportOrganisationRef">
-		<xsd:annotation>
-			<xsd:documentation>Reference to an ALTERNATIVE TRANSPORT OPERATOR. +v1.2.2</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:complexType name="AlternativeTransportOperatorRefStructure">
-		<xsd:annotation>
-			<xsd:documentation>Type for a reference to an ALTERNATIVE TRANSPORT OPERATOR</xsd:documentation>
-		</xsd:annotation>
-		<xsd:simpleContent>
-			<xsd:restriction base="PublicTransportOrganisationRefStructure">
-				<xsd:attribute name="ref" type="AlternativeTransportOperatorIdType" use="required">
-					<xsd:annotation>
-						<xsd:documentation>Identifier of an ALTERNATIVE TRANSPORT OPERATOR</xsd:documentation>
-					</xsd:annotation>
-				</xsd:attribute>
-			</xsd:restriction>
-		</xsd:simpleContent>
-	</xsd:complexType>
 	<!-- ===== AUTHORITY ========================================================= -->
 	<xsd:simpleType name="AuthorityIdType">
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of an AUTHORITY.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="PublicTransportOrganisationIdType"/>
+		<xsd:restriction base="TransportOrganisationIdType"/>
 	</xsd:simpleType>
-	<xsd:element name="AuthorityRef" substitutionGroup="PublicTransportOrganisationRef">
+	<xsd:element name="AuthorityRef" substitutionGroup="TransportOrganisationRef">
 		<xsd:annotation>
 			<xsd:documentation>Reference to an AUTHORITY.</xsd:documentation>
 		</xsd:annotation>
@@ -265,7 +204,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Type for a reference to an AUTHORITY.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:simpleContent>
-			<xsd:restriction base="PublicTransportOrganisationRefStructure">
+			<xsd:restriction base="TransportOrganisationRefStructure">
 				<xsd:attribute name="ref" type="AuthorityIdType" use="required">
 					<xsd:annotation>
 						<xsd:documentation>Identifier of referenced entity.</xsd:documentation>
