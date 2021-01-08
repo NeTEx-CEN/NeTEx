@@ -36,8 +36,22 @@ There is also an _Oxygen_ project file:
 # Change Log
 
 =======
-Version 1.2.2 - New modes Revised changes with e xamples and constraints.
+Version 1.2.2 - New modes Revised changes with e examples and constraints.
 
+
+### 2021.01.08  NewModes: Revisions
+ * Rename PersonalVehiclType simpleVehicleType
+ * Drop MobilityServiceELement and use .DistanceMatricElement instead
+  * _Updates to xml examples_:  
+    * NEW NewModes-CarPoolingExample.xsd
+    * NEW NewModes-CyclePoolingExample.xsd
+        * NEW NewModes-CyclePoolingExample.xsd
+  * _Updates to xml schema_:  
+   * netex_distanceMatrixElement_version.xsd
+   * netex_farsStructureElement_version.xsd
+   * netex_nm_publication_version.xsd
+   * REMOVE netex_nm_mobilityServiceElement_support.xsd
+   * REMOVE netex_nm_mobilityServiceElement_version.xsd
 ### 2020.12.11  NewModes: Revisions
  * Rename PersonalVehiclType simpleVehicleType
  * Drop PublicTransportOrganisationType. add expiry date to AccessCOde
