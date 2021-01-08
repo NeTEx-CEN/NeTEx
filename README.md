@@ -37,6 +37,23 @@ There is also an _Oxygen_ project file:
 
 Version 1.2.2 - New modes Revised changes with e xamples and constraints.
 
+### 2020.12.11  NewModes: Revisions
+ * Rename PersonalVehiclType simpleVehicleType
+ * Drop PublicTransportOrganisationType. add expiry date to AccessCOde
+ * _Updates to xml schema_:  
+   * netex_submmode_version.xsd
+   * netex_mode_version.xsd
+   * netex_mode_support.xsd
+   * netex_vehicleType_support.xsd
+   * netex_vehicleType_version.xsd
+   * netex_transportOrganisation_support.xsd
+   * netex_transportOrganisation_version.xsd
+   * netex_mobilityService_support.xsd
+   * netex_mobilityService_version.xsd
+   * netex_onlineService_version.xsd
+   * netex_trainElement_version.xsd
+   * netex_accessCredentials_version.xsd
+
 ### 2020.11.06  NewModes: Corrections
  * Drop unused COntinuousMOdes enumeration.
  * _Updates to xml schema_:  
