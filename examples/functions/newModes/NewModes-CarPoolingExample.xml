@@ -334,6 +334,56 @@
 						</Parking>
 					</parkings>
 				</SiteFrame>
+				<ServiceFrame version="1.0" id="rd:ride_sharing_example" responsibilitySetRef="rd:route_data">
+					<Name>Routes</Name>
+					<prerequisites>
+						<ResourceFrameRef version="1.0" ref="rd:ride_sharing_example"/>
+					</prerequisites>
+					<routePoints>
+						<RoutePoint version="1.0" id="rd:h1@p1">
+							<!-- coords etc -->
+						</RoutePoint>
+						<RoutePoint version="1.0" id="rd:h1@p2">
+							<!-- coords etc -->
+						</RoutePoint>
+						<RoutePoint version="1.0" id="rd:h1@p3">
+							<!-- coords etc -->
+						</RoutePoint>
+					</routePoints>
+					<routeLinks>
+						<RouteLink version="any" id="h1@p1+h1@p2">
+							<FromPointRef version="1.0" ref="rd:h1@p1"/>
+							<ToPointRef version="1.0" ref="rd:h1@p2"/>
+							<modeRestrictionAssessments>
+								<ModeRestrictionAssessment version="1.0" id="h1@p1+h1@p2">
+									<transportModes>
+										<TransportMode>
+											<TransportMode>selfDrive</TransportMode>
+											<SelfDriveSubmode>allHireVehicles</SelfDriveSubmode>
+										</TransportMode>
+									</transportModes>
+									<VehiclePoolingOperationRef version="any" ref="ride_share"/>
+									<MinimumNumberOfPassengers>1</MinimumNumberOfPassengers>
+								</ModeRestrictionAssessment>
+							</modeRestrictionAssessments>
+						</RouteLink>
+					</routeLinks>
+					<connections>
+						<SiteConnection version="any" id="alphaville_gare1+alphaville_station">
+							<TransferDuration>
+								<DefaultDuration>PT6M</DefaultDuration>
+							</TransferDuration>
+							<From>
+								<TransportMode>selfDrive</TransportMode>
+								<VehicleMeetingPointRef version="any" ref="alphaville_gare"/>
+							</From>
+							<To>
+								<TransportMode>rail</TransportMode>
+								<VehicleMeetingPointRef versionRef="EXTERNAL" ref="alphaville_station"/>
+							</To>
+						</SiteConnection>
+					</connections>
+				</ServiceFrame>
 				<!--==== Mobility Service ==== -->
 				<MobilityServiceFrame version="1.0" id="rd:ride_sharing_example" responsibilitySetRef="rd:network_data">
 					<prerequisites>
@@ -343,6 +393,7 @@
 						<CarPoolingService version="any" id="ryde">
 							<BrandingRef version="any" ref="myBrand"/>
 							<Name>Ryde car scharing scheme.</Name>
+							<StartDate>2018-01-01</StartDate>
 							<OperatorRef version="any" ref="noc:XRYD"/>
 							<ServiceBookingArrangements>
 								<BookingContact>
@@ -358,7 +409,6 @@
 								<DepositRequired>false</DepositRequired>
 								<BookingChargeType>none</BookingChargeType>
 							</ServiceBookingArrangements>
-							<StartDate>2018-01-01</StartDate>
 							<BookingRequired>true</BookingRequired>
 							<RegistrationRequired>true</RegistrationRequired>
 							<proposedByServices>
