@@ -41,6 +41,8 @@ Version 1.2.2 - New modes Revised changes with examples and constraints.
 ### 2021.01.10  NewModes: Revisions
  PlaceRef
  * Add constraint for __ModeRestrictionAssessment__
+ * Aadd unverified status to  AccountStatusType   
+ ( __Sustomer__: Add EMail and Phone  verification flag
  * Add __allVehicles__ enbum value to   __SelfDDricveMode__ values.
   * _Updates to xml examples_:
     * NewModes-CarPoolingExample.xsd
@@ -48,6 +50,8 @@ Version 1.2.2 - New modes Revised changes with examples and constraints.
     * NewModes-CyclePoolingExample.xsd
   * _Updates to xml schema_:
    * netex_mobilityService_version.xsd
+   * netex_msalesContract_support.xsd
+   * netex_salesContract_version.xsd
    * netex_nm_publication_version.xsd
 
 ### 2021.01.08  NewModes: Revisions
