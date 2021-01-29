@@ -93,6 +93,11 @@
 				</Date>
 				<Date>
 					<Modified>2020-12-08</Modified>FIX - Add optional TimebandRef and ServiceCalendarRef to TemporalValidityParametersGroup
+        <Date>
+					<Modified>2021-01-25</Modified>FIX - Added missing TransportMode field to accompany existing TransportSubmode
+        </Date>
+				<Date>
+					<Modified>2021-01-25</Modified>Add GroupOfTariffZonesRef to NetworkValidityParametersGroup
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -253,7 +258,10 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="TariffRef" minOccurs="0"/>
 			<xsd:element ref="FareStructureElementRef" minOccurs="0"/>
 			<xsd:element ref="FareElementInSequenceRef" minOccurs="0"/>
-			<xsd:element ref="DistanceMatrixElementRef" minOccurs="0"/>
+			<xsd:choice  minOccurs="0">
+				<xsd:element ref="DistanceMatrixElementRef"/>
+				<xsd:element ref="DistanceMatrixElement"/>
+			</xsd:choice>
 			<xsd:element ref="DistanceMatrixElementInverseRef" minOccurs="0"/>
 			<xsd:element ref="DistanceMatrixElementView" minOccurs="0"/>
 			<xsd:element ref="SalesOfferPackageRef" minOccurs="0"/>
@@ -266,7 +274,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Limiting USAGE PARAMETER Elements or ACCESS RIGHT PARAMETER ASSIGNMENT.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="LimitationGroupingType" type="BooleanOperatorEnumeration" default="AND" minOccurs="0">
+			<xsd:element name="LimitationGroupingType" type="LogicalOperationEnumeration" default="AND" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Operator for Grouping Scope Elements: logical OR, AND, NOT. Default is AND.</xsd:documentation>
 				</xsd:annotation>
@@ -289,7 +297,7 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Comparison Operator for comparing Validity Erlements valeus. Defalut is EQ.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="ValidityParameterGroupingType" type="BooleanOperatorEnumeration" default="AND" minOccurs="0">
+			<xsd:element name="ValidityParameterGroupingType" type="LogicalOperationEnumeration" default="AND" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Operator for Grouping Scope Elements: logical OR, AND, NOT. Default is AND.</xsd:documentation>
 				</xsd:annotation>
@@ -384,6 +392,11 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Vehicel Modes to which ACCESS RIGHTs  apply.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="TransportMode" type="AllVehicleModesOfTransportEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Mode of transport of JOURNEY.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element ref="TransportSubmode" minOccurs="0"/>
 			<xsd:element ref="GroupOfOperatorsRef" minOccurs="0"/>
 			<xsd:group ref="OneOrAllOperatorsRefGroup" minOccurs="0"/>
@@ -398,6 +411,7 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="GroupOfLinesRef" minOccurs="0"/>
 			<xsd:element ref="LineRef" minOccurs="0"/>
 			<xsd:element ref="TypeOfLineRef" minOccurs="0"/>
+			<xsd:element ref="GroupOfTariffZonesRef" minOccurs="0"/>
 			<xsd:element ref="TariffZoneRef" minOccurs="0"/>
 			<xsd:element ref="FareZoneRef" minOccurs="0"/>
 			<xsd:element ref="FareSectionRef" minOccurs="0"/>
@@ -737,7 +751,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Elements for compound GENERIC PARAMETER ASSIGNMENT.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="IncludesGroupingType" type="BooleanOperatorEnumeration" default="OR" minOccurs="0">
+			<xsd:element name="IncludesGroupingType" type="LogicalOperationEnumeration" default="OR" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Operator for Grouping Scope Elements. Default is OR.</xsd:documentation>
 				</xsd:annotation>

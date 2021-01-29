@@ -10,21 +10,21 @@ aliases:
 jobs:
   build:
     docker:
-    - image: eu.gcr.io/carbon-1287/circleci-toolbox-image
+    - image: eu.gcr.io/entur-system-1287/circleci-toolbox-image
       auth:
         username: _json_key
-        password: $GCLOUD_SERVICE_KEY
+        password: $DOCKER_PASSWORD
     steps:
     - checkout
     - run: echo "Running xmllint to validate schema"
-    - run: xmllint --noout --schema xsd/NeTEx_publication.xsd examples/functions/stopPlace/Netex_01_StopPoints_NoFrills_1.xml
+    - run: xmllint --noout --schema xsd/NeTEx_publication.xsd examples/functions/calendar/*xml examples/functions/fares/*xml examples/functions/grouping/*xml examples/functions/patterns/*xml examples/functions/pointOfInterest/*xml examples/functions/simpleNetwork/*xml examples/functions/site/*xml examples/functions/stopPlace/*xml examples/functions/timetable/*xml examples/functions/validityCondition/*xml examples/functions/variant/*xml examples/functions/vehicleSchedule/*xml 
     - run: echo "Finished running xmllint"
   trigger-dependants:
     docker:
-      - image: eu.gcr.io/carbon-1287/circleci-toolbox-image
+      - image: eu.gcr.io/entur-system-1287/circleci-toolbox-image
         auth:
           username: _json_key
-          password: $GCLOUD_SERVICE_KEY
+          password: $DOCKER_PASSWORD
     steps:
       - run: *post_build
 workflows:
