@@ -38,6 +38,10 @@ There is also an _Oxygen_ project file:
 =======
 Version 1.2.2 - New modes Revised changes with examples and constraints.
 
+### 2021.01.29  Bug Issue #143 COrerct data type of __GapToPlatform__
+  * _Updates to xml schema_:   
+   * netex_equipmentVehiclePassenger_version.xsd.xsd
+
 ### 2021.01.10  NewModes: Revisions
  PlaceRef
  * Add constraint for __ModeRestrictionAssessment__
