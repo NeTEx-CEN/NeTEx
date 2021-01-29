@@ -43,6 +43,20 @@ There is also an _Oxygen_  project file:
 ----
 # Change Log
 
+
+### 2021.01.29  FIX  *PART3:FARES*: NJSK ISSUE  ISSUE #143 correct data type of __GapToPlatform__
+  * _Updates to xml schema_:   
+   * netex_equipmentVehiclePassenger_version.xsd.xsd
+   
+   
+====
+Version 1.10 - Base version plus minor fixes comprising
+ * Norway contributions,  
+ * The approved 1.1 CRs 1-50
+ * Rollup of fixes  and additional documentation on other fixes.
+ * Corrections to  integration of NK  1.09.
+ * 51-55 CRSs from Meeting Feb 2019. Also CRs from NL, EURA, UK,  Norway and SBB input.
+   
 ### 2019.05.17 FIX  *PART3:FARES*: NJSK  __FarePointInPattern__Fix case on __isFareStage__ and __isForbidden__  
   * _Updates to xml schema_:  
 	* netex_production.xml  
