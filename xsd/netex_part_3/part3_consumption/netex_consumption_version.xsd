@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_customerPurchasePackage_version">
+	<!-- ======================================================================= -->
+	<xsd:include schemaLocation="../../netex_framework/netex_responsibility/netex_responsibility_version.xsd"/>
+	<xsd:include schemaLocation="../../netex_part_3/part3_salesTransactions/netex_customerPurchasePackage_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_part_3/part3_fares/netex_usageParameterEntitlement_version.xsd"/>
+	<xsd:include schemaLocation="netex_consumption_support.xsd"/>
+	<!-- ======================================================================= -->
+	<xsd:annotation>
+		<xsd:appinfo>
+			<Metadata xmlns="http://www.govtalk.gov.uk/CM/gms-xs">
+				<Aggregation>main schema</Aggregation>
+				<Audience>e-service developers</Audience>
+				<Coverage>Europe</Coverage>
+				<Creator>First drafted for NeTEx version 1.2 CEN TC278 WG3 SG9 Editor Arne Seime</Creator>
+				<Date>
+					<Created>2021-02-04</Created>
+				</Date>
+				<Description>
+					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
+					<p>This sub-schema describes the CONSUMPTION types.</p>
+				</Description>
+				<Format>
+					<MediaType>text/xml</MediaType>
+					<Syntax>http://www.w3.org/2001/XMLSchema</Syntax>
+					<Description>XML schema, W3C Recommendation 2001</Description>
+				</Format>
+				<Title>NeTEx CONSUMPTION identifier types.</Title>
+				<Type>Standard</Type>
+			</Metadata>
+		</xsd:appinfo>
+		<xsd:documentation>NeTEx: CONSUMPTION types.</xsd:documentation>
+	</xsd:annotation>
+	
+	<!-- ====CONSUMPTION UTILISATION DEPENDENCIES================================================= -->
+	<xsd:complexType name="consumptionUtilisationDependencies_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of CONSUMPTION UTILISATION DEPENDENCIESs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="strictContainmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="ConsumptionUtilisationDependency" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="ConsumptionUtilisationDependency" abstract="false">
+		<xsd:annotation>
+			<xsd:documentation>The definition of a CONSUMPTION UTILISATION DEPENDENCY accross multiple CUSTOMER PURCHASE PACKAGE ELEMENTs</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="ConsumptionUtilisationDependency_VersionedChildStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="VersionedChildGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="ConsumptionUtilisationDependencyGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="ConsumptionUtilisationDependencyIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="ConsumptionUtilisationDependency_VersionedChildStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for CONSUMPTION UTILISATION DEPENDENCY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="VersionedChildStructure">
+				<xsd:sequence>
+					<xsd:group ref="ConsumptionUtilisationDependencyGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="ConsumptionUtilisationDependencyGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for CONSUMPTION UTILISATION DEPENDENCY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<!-- TODO must be replaced with LogicalOperatorEnumeration when https://github.com/NeTEx-CEN/NeTEx/pull/126 is merged -->
+			<xsd:element name="ConsumptionDependencyGroupingType" type="BooleanOperatorEnumeration" minOccurs="0" default="AND"/>
+			<xsd:element name="consumptionDependencies" type="consumptionDependencies_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>CONSUMPTION DEPENDENCY elements.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ConsumptionTransitionPolicy" type="ConsumptionTransitionPolicyEnumeration"/>
+			<!-- TODO must be replaced with LogicalOperatorEnumeration when https://github.com/NeTEx-CEN/NeTEx/pull/126 is merged -->
+			<xsd:element name="ConsumptionUtilisationGroupingType" type="BooleanOperatorEnumeration" minOccurs="0" default="AND"/>
+			<xsd:element name="consumptionUtilisations" type="consumptionUtilisations_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>CONSUMPTION UTILISATION elements.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="crossConstraints" type="crossConstraints_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>CROSS CONSTRAINTS elements.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="MaximumNumberOfAccesses" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Overall maximum number of acceses for the consumption utilisation elements</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="consumptionDependencies_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of CONSUMPTION DEPENDENCIES.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="strictContainmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="ConsumptionDependency_" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="consumptionUtilisations_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of CONSUMPTION UTILISATIONS.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="ConsumptionUtilisation_" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="crossConstraints_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of CROSS CONSTRAINTS.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="CrossConstraint" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+	
+	<!-- === CONSUMPTION DEPENDENCY =========================================== -->
+	<xsd:element name="ConsumptionDependency_" type="VersionedChildStructure" substitutionGroup="VersionedChild" abstract="true"/>
+	<xsd:element name="ConsumptionDependency" abstract="true" substitutionGroup="ConsumptionDependency_">
+		<xsd:annotation>
+			<xsd:documentation>The CONSUMPTION DEPENDENCY defines which state a CUSTOMER PURCHASE PACKAGE ELEMENT must be in (recorded via ElementAccesses)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="ConsumptionDependency_VersionedChildStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="ConsumptionDependencyGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="ConsumptionDependencyIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="ConsumptionDependency_VersionedChildStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for CONSUMPTION DEPENDENCY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="VersionedChildStructure">
+				<xsd:sequence>
+					<xsd:group ref="ConsumptionDependencyGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="ConsumptionDependencyGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for CONSUMPTION DEPENDENCY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="MarkedAs" type="MarkedAsEnumeration"/>
+		</xsd:sequence>
+	</xsd:group>
+
+	
+	<!-- === CONSUMPTION UTILISATION =========================================== -->
+	<xsd:element name="ConsumptionUtilisation_" type="VersionedChildStructure" substitutionGroup="VersionedChild" abstract="true"/>
+	<xsd:element name="ConsumptionUtilisation" abstract="true" substitutionGroup="ConsumptionUtilisation_">
+		<xsd:annotation>
+			<xsd:documentation>The definition of a CONSUMPTION UTILISATION defining which ELEMENT that is to be processed</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="ConsumptionUtilisation_VersionedChildStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="VersionedChildGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="ConsumptionUtilisationIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="ConsumptionUtilisation_VersionedChildStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for CONSUMPTION UTILISATION.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="VersionedChildStructure">
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+
+	<!-- === CROSS CONSTRAINT =========================================== -->
+	<xsd:element name="CrossConstraint" abstract="false">
+		<xsd:annotation>
+			<xsd:documentation>The definition of a CROSS CONSTRAINTS defining constraints for parameter selection</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="CrossConstraint_VersionedChildStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="CrossConstraintGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="CrossConstraintIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="CrossConstraint_VersionedChildStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for CONSUMPTION UTILISATION.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="VersionedChildStructure">
+				<xsd:sequence>
+					<xsd:group ref="CrossConstraintGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="CrossConstraintGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for CONSUMPTION UTILISATION.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Constraint" type="EntitlementConstraintStructure"/>
+			<xsd:element name="validityParameterAssignments" type="validityParameterAssignmentRefs_RelStructure"/>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ====MAXIMUM NUMBER OF ACCESSES.======================================================== -->
+	<xsd:element name="MaximumNumberOfAccesses">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="Type" type="MaximumNumberOfAccessesEnumeration"/>
+				<xsd:element name="Value" type="xsd:positiveInteger" minOccurs="0">
+					<xsd:annotation>
+						<xsd:documentation>If type is limited, specify value</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

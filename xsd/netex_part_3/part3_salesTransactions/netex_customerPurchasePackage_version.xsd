@@ -9,6 +9,7 @@
 	<xsd:include schemaLocation="netex_salesTransaction_support.xsd"/>
 	<xsd:include schemaLocation="../part3_fares/netex_validableElement_support.xsd"/>
 	<xsd:include schemaLocation="../part3_fares/netex_salesOfferPackage_version.xsd"/>
+	<xsd:include schemaLocation="../part3_consumption/netex_consumption_version.xsd"/>
 	<xsd:include schemaLocation="netex_travelSpecificationSummary_version.xsd"/>
 	<xsd:include schemaLocation="netex_salesContract_version.xsd"/>
 	<xsd:include schemaLocation="netex_travelSpecificationSummary_version.xsd"/>
@@ -585,6 +586,11 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>DiISTRIBUTION ASSIGNMENTS for  CUSTOMER PURCHASE PACKAGE.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="consumptionUtilisationDependencies" type="consumptionUtilisationDependencies_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>CONSUMPTION UTLIISATION DEPENDENCIES in CUSTOMER PURCHASE PACKAGE.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element name="customerPurchasePackageElements" type="customerPurchasePackageElements_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>CUSTOMER PURCHASE PACKAGE ELEMENTs in CUSTOMER PURCHASE PACKAGE.</xsd:documentation>
@@ -690,6 +696,11 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="CustomerPurchasePackageRef" minOccurs="0"/>
 			<xsd:element ref="SalesOfferPackageElementRef" minOccurs="0"/>
 			<xsd:group ref="CustomerPurchasePackageValidationGroup"/>
+			<xsd:element name="groupsOfCustomerPurchaseParameterAssignments" type="groupsOfCustomerPurchaseParameterAssignments_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>GROUPS OF VALIDITY PARAMETER ASSIGNMENTs applying to CUSTOMER PURCHASE PACKAGE ELEMENT.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element name="validityParameterAssignments" type="customerPurchaseParameterAssignments_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>VALIDITY PARAMETER ASSIGNMENTs applying to CUSTOMER PURCHASE PACKAGE ELEMENT..</xsd:documentation>
@@ -915,6 +926,165 @@ Rail transport, Roads and Road transport
 		<xsd:annotation>
 			<xsd:documentation>Elements for a CUSTOMER PURCHASE PARAMETER ASSIGNMENT.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:sequence/>
+		<xsd:sequence>
+			<xsd:element ref="MaximumNumberOfAccesses" minOccurs="0"/>
+		</xsd:sequence>
 	</xsd:group>
+	
+	<!-- ==GROUP OF CUSTOMER PURCHASE PARAMETER ASSIGNMENTS ============================================================ -->
+	<xsd:complexType name="groupsOfCustomerPurchaseParameterAssignments_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for containment of GroupsOfCustomerPurchaseParameterAssignments.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="GroupOfCustomerPurchaseParameterAssignments" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="GroupOfCustomerPurchaseParameterAssignments" abstract="false" substitutionGroup="GroupOfEntities">
+		<xsd:annotation>
+			<xsd:documentation>A grouping of CUSTOMER PURCHASE PARAMETER ASSIGNMENTs</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="GroupOfCustomerPurchaseParameterAssignments_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="GroupOfEntitiesGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="GroupOfCustomerPurchaseParameterAssignmentsGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="GroupOfCustomerPurchaseParameterAssignmentsIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="GroupOfCustomerPurchaseParameterAssignments_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for CUSTOMER PURCHASE PARAMETER ASSIGNMENTs</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="GroupOfEntities_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="GroupOfCustomerPurchaseParameterAssignmentsGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="GroupOfCustomerPurchaseParameterAssignmentsGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for CUSTOMER PURCHASE PARAMETER ASSIGNMENTs</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="CustomerPurchaseParameterAssignmentRef" minOccurs="2" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:group>
+	
+	<xsd:complexType name="customerPurchaseParameterAssignmentRefs_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of CUSTOMER PURCHASE PARAMETER ASSIGNMENT REFs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="CustomerPurchaseParameterAssignmentRef" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<!-- ==== CUSTOMER PURCHASE PACKAGE ELEMENT CONSUMPTION DEPENDENCY ======= -->
+	<xsd:element name="CustomerPurchasePackageElementConsumptionDependency" substitutionGroup="ConsumptionDependency_">
+		<xsd:annotation>
+			<xsd:documentation>The definition of a CONSUMPTION DEPENDENCY defining which state a CUSTOMER PURCHASE PACKAGE ELEMENT must be in (recorded via ElementAccesses)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="CustomerPurchasePackageElementConsumptionDependency_VersionedChildStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="ConsumptionDependencyGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="CustomerPurchasePackageElementConsumptionDependencyGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="CustomerPurchasePackageElementConsumptionDependencyIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="CustomerPurchasePackageElementConsumptionDependency_VersionedChildStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for CONSUMPTION DEPENDENCY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="ConsumptionDependency_VersionedChildStructure">
+				<xsd:sequence>
+					<xsd:group ref="CustomerPurchasePackageElementConsumptionDependencyGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="CustomerPurchasePackageElementConsumptionDependencyGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for CONSUMPTION DEPENDENCY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="CustomerPurchasePackageElementRef"/>
+		</xsd:sequence>
+	</xsd:group>
+	
+	
+
+	<!-- ==== CUSTOMER PURCHASE PACKAGE ELEMENT CONSUMPTION UTILISATION ======= -->
+	<xsd:element name="CustomerPurchasePackageElementConsumptionUtilisation" abstract="false" substitutionGroup="ConsumptionUtilisation_">
+		<xsd:annotation>
+			<xsd:documentation>The definition of a CONSUMPTION UTILISATION defining which CUSTOMER PURCHASE PACKAGE ELEMENT that is to be processed</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="CustomerPurchasePackageElementConsumptionUtilisation_VersionedChildStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="CustomerPurchasePackageElementConsumptionUtilisationGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="CustomerPurchasePackageElementConsumptionUtilisationIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="CustomerPurchasePackageElementConsumptionUtilisation_VersionedChildStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for CONSUMPTION DEPENDENCY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="ConsumptionUtilisation_VersionedChildStructure">
+				<xsd:sequence>
+					<xsd:group ref="CustomerPurchasePackageElementConsumptionUtilisationGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="CustomerPurchasePackageElementConsumptionUtilisationGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for CONSUMPTION DEPENDENCY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="CustomerPurchasePackageElementRef"/>
+		</xsd:sequence>
+	</xsd:group>
+	
 </xsd:schema>
