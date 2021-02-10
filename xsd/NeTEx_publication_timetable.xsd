@@ -1020,6 +1020,27 @@ Provides a general purose wrapper for NeTEx data content.</xsd:documentation>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
+		<!-- =====FareZone============================== -->
+		<!-- =====FareZone unique========================== -->
+		<xsd:unique name="FareZone_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [FareZone Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:FareZone"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====FareZone Key ========================== -->
+		<xsd:keyref name="FareZone_KeyRef" refer="netex:FareZone_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:FareZoneRef | .//netex:ParentFareZoneRef | .//netex:FromFareZoneRef | .//netex:ToFareZoneRef   |.//netex:ProjectedObjectRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="FareZone_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:FareZone"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
 		<!-- =====GroupOfTariffZones============================== -->
 		<!-- =====GroupOfTariffZones unique========================== -->
 		<xsd:unique name="GroupOfTariffZones_UniqueBy_Id_Version">
