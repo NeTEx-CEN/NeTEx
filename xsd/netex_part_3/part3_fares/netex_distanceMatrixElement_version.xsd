@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.10" id="netex_distanceMatrixElement_version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.10"
+	id="netex_distanceMatrixElement_version">
 	<xsd:include schemaLocation="netex_fareSeries_version.xsd"/>
 	<xsd:include schemaLocation="netex_fareTable_version.xsd"/>
 	<xsd:include schemaLocation="netex_geographicStructureFactor_version.xsd"/>
@@ -31,7 +33,10 @@
 				</Date>
 				<Date>
 					<Modified>2019-03-25</Modified>Fix #40 by Skinkie from 2019.01.07 . Fix typo on DistanceMatrixElement.IsDirect.  
-					 NB this will break existing XML that uses IsDirect. 
+					NB this will break existing XML that uses IsDirect. 
+				</Date>
+				<Date>
+					<Modified>2021-02-05</Modified>Add DynamicDistanceMatrixElement for on-the-fly creation when pre-computing all possible combinations is not feasible
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -225,7 +230,14 @@ Rail transport, Roads and Road transport
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:element name="DistanceMatrixElement" abstract="false" substitutionGroup="PriceableObject">
+	
+	
+	<xsd:element name="DistanceMatrixElement_" type="PriceableObject_VersionStructure" abstract="true" substitutionGroup="PriceableObject">
+		<xsd:annotation>
+			<xsd:documentation>Dummy SERVICE JOURNEY Supertype.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DistanceMatrixElement" abstract="false" substitutionGroup="DistanceMatrixElement_">
 		<xsd:annotation>
 			<xsd:documentation>A cell of an origin-destination matrix for TARIFF ZONEs or STOP POINTs, expressing a fare distance for the corresponding trip: value in km, number of fare units etc.</xsd:documentation>
 		</xsd:annotation>
@@ -479,6 +491,43 @@ Rail transport, Roads and Road transport
 		</xsd:choice>
 	</xsd:group>
 	<!-- ======================================================================= -->
+	<!-- === DYNAMIC DISTANCE MATRIX ELEMENT  ================================================= -->
+	<xsd:element name="DynamicDistanceMatrixElement" abstract="false" substitutionGroup="DistanceMatrixElement_">
+		<xsd:annotation>
+			<xsd:documentation>A dynamic free-standing distance matrix element. Used when a pre-computed distance matrix element is not feasible.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="DynamicDistanceMatrixElement_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="PriceableObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DistanceMatrixElementGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="DynamicDistanceMatrixElementIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="DynamicDistanceMatrixElement_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for DYNAMIC DISTANCE MATRIX ELEMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="DistanceMatrixElement_VersionStructure">
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
 	<!-- == DISTANCE MATRIX ELEMENT View-->
 	<xsd:element name="DistanceMatrixElementView" type="DistanceMatrixElement_DerivedViewStructure" abstract="false" substitutionGroup="DerivedView">
 		<xsd:annotation>

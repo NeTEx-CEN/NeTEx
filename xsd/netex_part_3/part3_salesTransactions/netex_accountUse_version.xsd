@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_accouuntUse_version">
+	<xsd:include schemaLocation="netex_accountUse_support.xsd"/>
+	<xsd:include schemaLocation="netex_customerPurchasePackage_version.xsd"/>
+	<!-- ======================================================================= -->
+	<xsd:annotation>
+		<xsd:appinfo>
+			<Metadata xmlns="http://www.govtalk.gov.uk/CM/gms-xs">
+				<Aggregation>main schema</Aggregation>
+				<Audience>e-service developers</Audience>
+				<Coverage>Europe</Coverage>
+				<Creator>Arne Seime</Creator>
+				<Date>
+					<Created>2020-11-20</Created>
+					Align with TM
+					Add CustomerAccountEntry as a base type for Customer Account log entries
+					Add CustomerRegistrationEntry and CustomerDeregistrationEntry as concrete CustomerAccountEntries
+				</Date>
+				<Description>
+					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
+					<p>This sub-schema describes the CUSTOMER ACCOUNT LOG ENTRY types.</p>
+				</Description>
+				<Format>
+					<MediaType>text/xml</MediaType>
+					<Syntax>http://www.w3.org/2001/XMLSchema</Syntax>
+					<Description>XML schema, W3C Recommendation 2001</Description>
+				</Format>
+				<Language>[ISO 639-2/B] ENG</Language>
+				<Rights>Unclassified
+					<Copyright>CEN, Crown Copyright 2009-2020</Copyright>
+				</Rights>
+				<Source>
+					<ul>
+						<li>Derived from the Transmodel, VDV, TransXChange, NEPTUNE, BISON and Trident standards.</li>
+					</ul>
+				</Source>
+				<Status>Version 1.0 Draft for approval</Status>
+				<Subject>
+					<Category>Arts, recreation and travel, Tourism, Travel (tourism), Transport,
+						Air transport, Airports,
+						Ports and maritime transport, Ferries (marine),
+						Public transport, Bus services, Coach services, Bus stops and stations,
+						Rail transport, Railway stations and track, Train services, Underground trains,
+						Business and industry, Transport, Air transport , Ports and maritime transport, Public transport,
+						Rail transport, Roads and Road transport
+					</Category>
+					<Project>CEN TC278 WG3 SG9.</Project>
+				</Subject>
+				<Title>NeTEx CUSTOMER ACCOUNT USE identifier types.</Title>
+				<Type>Standard</Type>
+			</Metadata>
+		</xsd:appinfo>
+		<xsd:documentation>NeTEx: ACCOUNT USE types.</xsd:documentation>
+	</xsd:annotation>
+	<!-- ====CUSTOMER ACCOUNT ENTRY-->
+	<xsd:complexType name="customerAccountEntries_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of CUSTOMER ACCOUNT ENTRYs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element ref="CustomerAccountEntryRef"/>
+					<xsd:element ref="CustomerAccountEntry_"/>
+				</xsd:choice>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="CustomerAccountEntry_" abstract="true" type="DataManagedObjectStructure" substitutionGroup="DataManagedObject">
+		<xsd:annotation>
+			<xsd:documentation>Dummy type for CUSTOMER ACCOUNT ENTRY.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CustomerAccountEntry" abstract="true" substitutionGroup="CustomerAccountEntry_">
+		<xsd:annotation>
+			<xsd:documentation>A log entry describing an event referring to the life of a CUSTOMER ACCOUNT: customer registration, deregistration, account suspension/re-enabling etc
+				
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="CustomerAccountEntry_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="LogEntryGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="CustomerAccountEntryGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="CustomerAccountEntryIdType" use="optional">
+						<xsd:annotation>
+							<xsd:documentation>Identifier of ENTITY.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="CustomerAccountEntry_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for CUSTOMER ACCOUNT ENTRY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="LogEntry_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="CustomerAccountEntryGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="CustomerAccountEntryGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for CUSTOMER ACCOUNT ENTRY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IsValid" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether CUSTOMER ACCOUNT ENTRY is valid.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="TypeOfCustomerAccountEntryRef" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>A classification of CUSTOMER ACCOUNT ENTRYs.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="CustomerAccountRef" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ====CUSTOMER REGISTRATION ================================================ -->
+	<xsd:element name="CustomerRegistration" abstract="false" substitutionGroup="CustomerAccountEntry_">
+		<xsd:annotation>
+			<xsd:documentation>A CUSTOMER REGISTRATION ENTRY records the registering of a customer and the creating of an account</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="CustomerRegistration_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="LogEntryGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="CustomerAccountEntryGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="CustomerRegistrationGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="CustomerRegistrationIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="CustomerRegistration_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for CUSTOMER REGISTRATION.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="CustomerAccountEntry_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="CustomerRegistrationGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="CustomerRegistrationGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for CUSTOMER REGISTRATION.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<!-- No specific content -->
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ====CUSTOMER DEREGISTRATION ================================================ -->
+	<xsd:element name="CustomerDeregistration" abstract="false" substitutionGroup="CustomerAccountEntry_">
+		<xsd:annotation>
+			<xsd:documentation>A CUSTOMER DEREGISTRATION ENTRY records the clearing of all personal details of a customer and the closing of an account</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="CustomerDeregistration_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="LogEntryGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="CustomerAccountEntryGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="CustomerDeregistrationGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="CustomerDeregistrationIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="CustomerDeregistration_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for CUSTOMER DEREGISTRATION.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="CustomerAccountEntry_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="CustomerDeregistrationGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="CustomerDeregistrationGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for CUSTOMER DEREGISTRATION.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<!-- No specific content -->
+		</xsd:sequence>
+	</xsd:group>
+</xsd:schema>
