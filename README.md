@@ -38,6 +38,17 @@ There is also an _Oxygen_ project file:
 =======
 Version 1.2.2 - New modes Revised changes with e examples and constraints.
 
+### 2021.03.10  NewModes: Revisions to support GBS. add _RentalAvailability_ and _ParkingBayCondition_
+  * _Updates to xml schema_:   
+   * rename parkingBayStatus to netex_nm_vehicleParkingAreaInformation_support.xsd 
+   * rename nm_mobilityJourneyFrame_version.xsd
+   * netex_nm_publication_version.xsd
+   * netex_all_objects_part5_newModes.xsd
+   * netex_nm_mobilityJourneyFrame_version.xsd
+   * NeTEx.SPP, NeTEx.xpr
+  * _Updates to xml examples_:   
+    * NewModes-CyclePoolingExample.xsd
+   
 ### 2021.01.29  Bug Issue #143 COrerct data type of __GapToPlatform__
   * _Updates to xml schema_:   
    * netex_equipmentVehiclePassenger_version.xsd.xsd
@@ -54,7 +65,7 @@ Version 1.2.2 - New modes Revised changes with e examples and constraints.
     * NewModes-CyclePoolingExample.xsd
   * _Updates to xml schema_:   
    * netex_mobilityService_version.xsd
-   * netex_msalesContract_support.xsd
+   * netex_salesContract_support.xsd
    * netex_salesContract_version.xsd
    * netex_nm_publication_version.xsd
 
