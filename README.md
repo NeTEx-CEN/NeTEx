@@ -38,6 +38,10 @@ There is also an _Oxygen_ project file:
 =======
 Version 1.2.2 - New modes Revised changes with e examples and constraints.
 
+### 2021.03.10  NewModes: Revisions to support GBS. add _targetPlatform_ attribute to  _InfoLink_
+  * _Updates to xml schema_:   
+   * netex_utilityTypes.xsd
+New modes: add  target platform to attributes of  infoLinkType 
 ### 2021.03.10  NewModes: Revisions to support GBS. add _RentalAvailability_ and _ParkingBayCondition_
   * _Updates to xml schema_:   
    * rename parkingBayStatus to netex_nm_vehicleParkingAreaInformation_support.xsd 
