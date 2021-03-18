@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_customerPurchasePackage_support">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_customerPurchasePackage_support">
 	<xsd:include schemaLocation="../part3_fares/netex_accessRightParameter_support.xsd"/>
 	<!-- =============================================================== -->
 	<xsd:annotation>
@@ -34,7 +35,7 @@
 		</xsd:annotation>
 		<xsd:restriction base="ObjectIdType"/>
 	</xsd:simpleType>
-	
+
 	<!-- ====CONSUMPTION REQUIREMENT.======================================================== -->
 	<xsd:simpleType name="ConsumptionRequirementIdType">
 		<xsd:annotation>
@@ -42,7 +43,41 @@
 		</xsd:annotation>
 		<xsd:restriction base="ObjectIdType"/>
 	</xsd:simpleType>
-	
+
+	<!-- ====MARKED AS TEMPORAL VALIDITY.======================================================== -->
+	<xsd:simpleType name="MarkedAsTemporalValidityEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Specifies the temporal aspects of a CONSUMPTION REQUIREMENT</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="any">
+				<xsd:annotation>
+					<xsd:documentation>Any ElementAccess with correct markedAs will fulfill requirement, regardless of validity period</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="current">
+				<xsd:annotation>
+					<xsd:documentation>A currently active ElementAccess with correct markedAs is required to fulfill requirement</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="future">
+				<xsd:annotation>
+					<xsd:documentation>A not yet active ElementAccess with correct markedAs is required to fulfill requirement</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="currentFuture">
+				<xsd:annotation>
+					<xsd:documentation>A currently or not yet active ElementAccess with correct markedAs is required to fulfill requirement</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="expired">
+				<xsd:annotation>
+					<xsd:documentation>An expired ElementAccess with correct markedAs is required to fulfill requirement</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+
 	<!-- ====CONSUMPTION.======================================================== -->
 	<xsd:simpleType name="ConsumptionIdType">
 		<xsd:annotation>
@@ -50,7 +85,7 @@
 		</xsd:annotation>
 		<xsd:restriction base="ObjectIdType"/>
 	</xsd:simpleType>
-	
+
 	<!-- ====CROSS CONSTRAINT.======================================================== -->
 	<xsd:simpleType name="CrossConstraintIdType">
 		<xsd:annotation>
@@ -69,7 +104,7 @@
 			<xsd:enumeration value="automatic"/>
 		</xsd:restriction>
 	</xsd:simpleType>
-	
+
 	<!-- ====MAXIMUM NUMBER OF ACCESSES.======================================================== -->
 	<xsd:simpleType name="MaximumNumberOfAccessesEnumeration">
 		<xsd:annotation>
@@ -88,6 +123,6 @@
 			</xsd:enumeration>
 		</xsd:restriction>
 	</xsd:simpleType>
-	
+
 	<!-- =============================================================== -->
 </xsd:schema>

@@ -185,6 +185,7 @@
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element name="MarkedAs" type="MarkedAsEnumeration"/>
+			<xsd:element name="MarkedAsTemporalValidity" type="MarkedAsTemporalValidityEnumeration"/>
 		</xsd:sequence>
 	</xsd:group>
 
@@ -201,6 +202,7 @@
 					<xsd:sequence>
 						<xsd:sequence>
 							<xsd:group ref="VersionedChildGroup"/>
+							<xsd:group ref="ConsumptionGroup"/>
 						</xsd:sequence>
 					</xsd:sequence>
 					<xsd:attribute name="id" type="ConsumptionIdType"/>
@@ -214,11 +216,31 @@
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="VersionedChildStructure">
+				<xsd:sequence>
+					<xsd:group ref="ConsumptionGroup"/>
+				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
 
-
+	<xsd:group name="ConsumptionGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for CONSUMPTION.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="FromMarkedAs" type="MarkedAsEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Specifies the expected state of the ElementAccess before execution</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ToMarkedAs" type="MarkedAsEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Specifies the expected state of the ElementAccess after execution</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	
 	<!-- === CROSS CONSTRAINT =========================================== -->
 	<xsd:element name="CrossConstraint" abstract="false">
 		<xsd:annotation>
@@ -228,9 +250,7 @@
 			<xsd:complexContent>
 				<xsd:restriction base="CrossConstraint_VersionedChildStructure">
 					<xsd:sequence>
-						<xsd:sequence>
-							<xsd:group ref="CrossConstraintGroup"/>
-						</xsd:sequence>
+						<xsd:group ref="CrossConstraintGroup"/>
 					</xsd:sequence>
 					<xsd:attribute name="id" type="CrossConstraintIdType"/>
 				</xsd:restriction>
