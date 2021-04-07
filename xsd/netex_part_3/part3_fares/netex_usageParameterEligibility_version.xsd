@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_usageParameterEligibility_version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_usageParameterEligibility_version">
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_topographicPlace_support.xsd"/>
 	<xsd:include schemaLocation="netex_usageParameterEligibility_support.xsd"/>
 	<xsd:include schemaLocation="netex_usageParameter_version.xsd"/>
@@ -35,6 +35,9 @@
 				<Date>
 					<Modified>2019-03-10</Modified> Fix add missing Tickting element Reoraise groups of elements
 				</Date>
+				<Date>
+					<Modified>2020-10-12</Modified>New Modes add TypeOfProofRequired value to allow open values
+			 	</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the ELIGIBILITY USAGE PARAMETER    types.</p>
@@ -51,7 +54,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/xsd/netex_part_3/fares/netex_usageParameterProduct_support</Requires>
 				</Relation>
 				<Rights>Unclassified
-					 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2020</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -142,6 +145,11 @@ Rail transport, Roads and Road transport
 			<xsd:element name="ProofRequired" type="ProofOfIdentityListOfEnumerations" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Type of document accepted as proof of eligibility.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="typesOfProofRequiredRef" type="typesOfProofRefs_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Types of Document accepted as proof of identify - open values. +v1.2.2</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="DiscountBasis" type="DiscountBasisEnumeration" minOccurs="0">
@@ -645,6 +653,43 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
+	<!-- ==== TYPE OF PROOF REQUIRED ========================================================== -->
+	<xsd:element name="TypeOfProof" abstract="false" substitutionGroup="TypeOfValue">
+		<xsd:annotation>
+			<xsd:documentation>Type of Proff of identity required. +v1.2.2</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="TypeOfProof_ValueStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="TypeOfValueGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="TypeOfProofIdType">
+						<xsd:annotation>
+							<xsd:documentation>Identifier of TYPE OF PROOF .</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="TypeOfProof_ValueStructure" abstract="false">
+		<xsd:annotation>
+			<xsd:documentation>Type for a TYPE OF PROOF.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="TypeOfValue_VersionStructure"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ======================================================================= -->
 	<!-- ======================================================================= -->
 	<!-- ==== ELIGIBILITY CHANGE POLICY QUALIFICATION. ================================================== -->
 	<xsd:element name="EligibilityChangePolicy" abstract="false" substitutionGroup="UsageParameter_">

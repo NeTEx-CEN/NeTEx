@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2010 rel. 3 sp1 (http://www.altova.com) by Nicholas Knowles (Kizoom) -->
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_ifopt_site_version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_ifopt_site_version">
 	<xsd:include schemaLocation="netex_ifopt_site_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_equipmentPlace_version.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_accessibility/netex_acsb_accessibility.xsd"/>
@@ -25,8 +25,10 @@
 					<Created>2010-09-04</Created>
 				</Date>
 				<Date>
-					<Modified>2011-02-05</Modified>
-					<!-- Name Space changes -->
+					<Modified>2011-02-05</Modified>Name Space changes 
+				</Date>
+				<Date>
+					<Modified>2020-10-10</Modified>New Modes : Add PRESENTATGION To Site ELement
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -44,7 +46,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2014</Copyright>
+ <Copyright>CEN, Crown Copyright 2009-2020</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -158,6 +160,11 @@ Rail transport, Roads and Road transport
 			<xsd:element name="PersonCapacity" type="xsd:nonNegativeInteger" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Total number of people that component can contain.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Presentation" type="PresentationStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Presentation defaults for SITE ELEMENT. +V1.2.2</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="facilities" type="siteFacilitySets_RelStructure" minOccurs="0">
@@ -316,6 +323,20 @@ Rail transport, Roads and Road transport
 			<xsd:group ref="AllEquipmentGroup"/>
 		</xsd:sequence>
 	</xsd:group>
+	<xsd:group name="SiteComponentModeGroup">
+		<xsd:annotation>
+			<xsd:documentation>Mode Elements of a SITE COMPONENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="TransportMode" type="AllVehicleModesOfTransportEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Primary MODE of Vehicle transport associated by this component.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:group ref="PtSubmodeChoiceGroup" minOccurs="0"/>
+			<xsd:element ref="ModeOfOperationRef" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
 	<!-- ======================================================================= -->
 	<xsd:complexType name="siteEntrances_RelStructure">
 		<xsd:annotation>
@@ -364,7 +385,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element name="Label" type="MultilingualString" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Name of ENTRANCE.</xsd:documentation>
+					<xsd:documentation>Label of ENTRANCE.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="EntranceType" type="EntranceEnumeration" minOccurs="0">
@@ -737,5 +758,25 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:sequence/>
 	</xsd:group>
-	<!-- ======================================================================= -->
+	<!-- ===DUMMY TYPES======================================================= -->
+	<xsd:element name="ParkingBay_" type="SiteComponent_VersionStructure" abstract="true" substitutionGroup="SiteComponent">
+		<xsd:annotation>
+			<xsd:documentation>Dummy Type to get round SG   limitatiins</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ParkingArea_" type="SiteComponent_VersionStructure" abstract="true" substitutionGroup="SiteComponent">
+		<xsd:annotation>
+			<xsd:documentation>Dummy Type to get round SG   limitatiins</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="StopPlace_" type="Site_VersionStructure" abstract="true" substitutionGroup="Site">
+		<xsd:annotation>
+			<xsd:documentation>Dummy Type to get round SG   limitatiins</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="Quay_" type="Site_VersionStructure" abstract="true" substitutionGroup="Site">
+		<xsd:annotation>
+			<xsd:documentation>Dummy Type to get round SG   limitatiins</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
 </xsd:schema>
