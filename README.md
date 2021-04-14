@@ -38,10 +38,16 @@ There is also an _Oxygen_ project file:
 =======
 Version 1.2.2 - New modes Revised changes with examples and constraints.
 
+
+### 2021.04.14  NewModes: Revise AT#9 Add missing enum values to __MobilityCOnstraintZone__ __TransportZoneUseEnumeration__:  _allUsesAllowed_ and _noPassThrough_ .
+  * _Updates to xml schema_:   
+   * netex_nm_mobilityServiceConstraintZone_version.xsd
+
 ### 2021.03.10  NewModes: Revisions to support GBS. add _targetPlatform_ attribute to  _InfoLink_
+New modes: add  target platform to attributes of  infoLinkType 
   * _Updates to xml schema_:   
    * netex_utilityTypes.xsd
-New modes: add  target platform to attributes of  infoLinkType 
+
 ### 2021.03.10  NewModes: Revisions to support GBS. add _RentalAvailability_ and _ParkingBayCondition_
   * _Updates to xml schema_:   
    * rename parkingBayStatus to netex_nm_vehicleParkingAreaInformation_support.xsd 
