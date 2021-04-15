@@ -38,7 +38,16 @@ There is also an _Oxygen_ project file:
 =======
 Version 1.2.2 - New modes Revised changes with examples and constraints.
 
-### 2021.04.14  NewModes: Revise AT#8 ew modes: AT#8 add  _mobileAppInstallCheck_ to value to __infoLinkTypes__ enumeration
+### 2021.04.15  NewModes: Revise AT#8 Facilities: AT#8 add  _scooterHire_ to value to __HireFacility__ enumeration
+Align __Hirefacility__ values with spec and add  new mode values _scooterHire_, _vehicleHire_, _boatHire_ and _other_.					   
+  * _Updates to xml schema_:   
+   * netex_ifopt_localServiceCommercial_support.xsd.xsd
+   * netex_ifopt_mobilityService_version.xsd.xsd   
+   * netex_facility_support.xsd.xsd
+  * _Updates to xml examples_:
+   * NewModes-CycleSharingExample.xml is valid.
+
+### 2021.04.14  NewModes: Revise AT#8 add  _mobileAppInstallCheck_ to value to __infoLinkTypes__ enumeration
   * _Updates to xml schema_:   
    * netex_utility_types.xsd
   * _Updates to xml examples_:
