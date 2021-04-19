@@ -38,26 +38,44 @@ There is also an _Oxygen_ project file:
 =======
 Version 1.2.2 - New modes Revised changes with examples and constraints.
 
-### 2021.04.15  NewModes: Revise AT#8 Facilities: AT#8 add  _scooterHire_ to value to __HireFacility__ enumeration
-Align __Hirefacility__ values with spec and add  new mode values _scooterHire_, _vehicleHire_, _boatHire_ and _other_.					   
+### 2021.04.15  NewModes: GBFS compatibility Add _car_ as enum value to to __Vehicle__  / _vehicle Types_.
+__ParkingProperties__ 
+- Add __BayGeometry__, __ParkingVisibility__ uth values.
+- Add _enclosed_ value to  __arkingLayout__ enumeration
+  * _Updates to xml schema_:  
+   * netex_vehicle_type_support.xsd.xsd   
+   * netex_parking_support.xsd.xsd  
+   * netex_parking_version.xsd.xsd  
+  * _Updates to xml examples_:
+   * NewModes-CycleSharingExample.xml
+      * NewModes-CycleSharingExample.xml is valid. 
+### 2021.04.15  NewModes: Revise AT#8 Add __ShortName__ to __MobilityService__
+   * _Updates to xml schema_:   
+   * netex_mobility_service.xsd.xsd
+   
+### 2021.04.15  NewModes: Revise AT#8 Facilities: AT#8 add  _scooterHire_ to value to __HireFacility__ enumeration.
+Align __Hirefacility__ values with spec and add  new mode values _scooterHire_, _vehicleHire_, _boatHire_ and _other_.	
+Add _docks_ to 		__CycleStorage__ enumeration
   * _Updates to xml schema_:   
    * netex_ifopt_localServiceCommercial_support.xsd.xsd
-   * netex_ifopt_mobilityService_version.xsd.xsd   
+   * netex_ifopt_mobilityService_version.xsd.
+   * netex_ifopt_equipmentParking_support.xsd   
    * netex_facility_support.xsd.xsd
   * _Updates to xml examples_:
-   * NewModes-CycleSharingExample.xml is valid.
+   * NewModes-CycleSharingExample.xml
+   * NewModes-CarPoolingExample.xsd
 
 ### 2021.04.14  NewModes: Revise AT#8 add  _mobileAppInstallCheck_ to value to __infoLinkTypes__ enumeration
   * _Updates to xml schema_:   
    * netex_utility_types.xsd
   * _Updates to xml examples_:
-   * NewModes-CycleSharingExample.xml is valid.
+   * NewModes-CycleSharingExample.xml
 
 ### 2021.04.14  NewModes: Revise AT#9 Add missing enum values to __MobilityCOnstraintZone__ __TransportZoneUseEnumeration__:  _allUsesAllowed_ and _noPassThrough_ .
   * _Updates to xml schema_: 
    * netex_nm_mobilityServiceConstraintZone_version.xsd
   * _Updates to xml examples_:
-   * NewModes-CycleSharingExample.xml is valid.
+   * NewModes-CycleSharingExample.xml
 
 ### 2021.03.10  NewModes: Revisions to support GBS. add _targetPlatform_ attribute to  _InfoLink_
 New modes: add  target platform to attributes of  infoLinkType 
@@ -73,7 +91,7 @@ New modes: add  target platform to attributes of  infoLinkType
    * netex_nm_mobilityJourneyFrame_version.xsd
    * NeTEx.SPP, NeTEx.xpr
   * _Updates to xml examples_:   
-    * NewModes-CyclePoolingExample.xsd
+    * NewModes-CarPoolingExample.xsd
    
 ### 2021.01.29  Bug Issue #143 COrerct data type of __GapToPlatform__
   * _Updates to xml schema_:   
