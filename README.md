@@ -38,7 +38,18 @@ There is also an _Oxygen_ project file:
 =======
 Version 1.2.2 - New modes Revised changes with examples and constraints.
 
-### 2021.04.15  NewModes: GBFS compatibility Add _car_ as enum value to to __Vehicle__  / _vehicle Types_.
+New Modes at#  Add DataLicenceCode and DataLicenceUrl to DataSource
+
+### 2021.04.18  NewModes: GBFS compatibility AT#1 __DataSource__ add __DataLicenceCOde__ and __DataLicenceUrl__  to __DataSource__.  
+ 
+- Add _enclosed_ value to  __arkingLayout__ enumeration
+  * _Updates to xml schema_:  
+      * netex_dataSource_version.xsd.xsd  
+  * _Updates to xml examples_:
+   * NewModes-CycleSharingExample.xml
+   * NewModes-CarPoolingExample.xml.    
+
+### 2021.04.15  NewModes: GBFS compatibility AT#1 Add _car_ as enum value to to __Vehicle__  / _vehicle Types_.
 __ParkingProperties__ 
 - Add __BayGeometry__, __ParkingVisibility__ uth values.
 - Add _enclosed_ value to  __arkingLayout__ enumeration
@@ -48,7 +59,8 @@ __ParkingProperties__
    * netex_parking_version.xsd.xsd  
   * _Updates to xml examples_:
    * NewModes-CycleSharingExample.xml
-      * NewModes-CycleSharingExample.xml is valid. 
+   * NewModes-CarPoolingExample.xml. 
+   
 ### 2021.04.15  NewModes: Revise AT#8 Add __ShortName__ to __MobilityService__
    * _Updates to xml schema_:   
    * netex_mobility_service.xsd.xsd
