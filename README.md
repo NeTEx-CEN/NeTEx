@@ -51,7 +51,7 @@ New Modes at#  Add DataLicenceCode and DataLicenceUrl to DataSource
 
 ### 2021.04.15  NewModes: GBFS compatibility AT#1 Add _car_ as enum value to to __Vehicle__  / _vehicle Types_.
 __ParkingProperties__ 
-- Add __BayGeometry__, __ParkingVisibility__ uth values.
+- Add __BayGeometry__, __ParkingVisibility__ with values.
 - Add _enclosed_ value to  __arkingLayout__ enumeration
   * _Updates to xml schema_:  
    * netex_vehicle_type_support.xsd.xsd   
