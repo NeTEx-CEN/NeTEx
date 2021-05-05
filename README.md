@@ -40,18 +40,22 @@ Version 1.2.2 - New modes Revised changes with examples and constraints.
 
 New Modes at#  Add DataLicenceCode and DataLicenceUrl to DataSource
 
-### 2021.04.18  NewModes: GBFS compatibility AT#1 __DataSource__ add __DataLicenceCOde__ and __DataLicenceUrl__  to __DataSource__.  
+
+### 2021.05.03  NewModes: GBFS compatibility AT#1 __MobilityCOnstraintZOne__ add __ZoneRuleApplicability__ and _inside_  and _outside_.  
  
 - Add _enclosed_ value to  __arkingLayout__ enumeration
+
+### 2021.04.18  NewModes: GBFS compatibility AT#1 __DataSource__ add __DataLicenceCOde__ and __DataLicenceUrl__  to __DataSource__.  
+ - Add _enclosed_ value to  __arkingLayout__ enumeration
   * _Updates to xml schema_:  
-      * netex_dataSource_version.xsd.xsd  
+   * netex_mobilityZerviceConstraintZone_support.xsd.xsd  
+   * netex_mobilityZerviceConstraintZone_version.xsd.xsd  
   * _Updates to xml examples_:
-   * NewModes-CycleSharingExample.xml
-   * NewModes-CarPoolingExample.xml.    
+   * NewModes-CycleSharingExample.xml 
 
 ### 2021.04.15  NewModes: GBFS compatibility AT#1 Add _car_ as enum value to to __Vehicle__  / _vehicle Types_.
 __ParkingProperties__ 
-- Add __BayGeometry__, __ParkingVisibility__ uth values.
+- Add __BayGeometry__, __ParkingVisibility__ with values.
 - Add _enclosed_ value to  __arkingLayout__ enumeration
   * _Updates to xml schema_:  
    * netex_vehicle_type_support.xsd.xsd   
