@@ -25,12 +25,24 @@
 					<Modified>2011-02-05</Modified>
 					<!-- Name Space changes -->
 				</Date>
-				<Date><Modified>2017-05-19</Modified>CRT040
+				<Date>
+					<Modified>2017-05-19</Modified>CRT040
 				     	Allow type  attribute on Public and ShortCode.   Backwards compatible.  Add NameSuffix to SchedueldStopPoint
 				</Date>
-				<Date><Modified>2017-06-11</Modified>CRT023 Add BookingArrangements to StopPointInPattern nt
+				<Date>
+					<Modified>2017-06-11</Modified>CRT023 Add BookingArrangements to StopPointInPattern nt
 				</Date>
-				<Date><Modified>2017-05-25</Modified>Text on foralighting/boarding corrected. Doc change only.
+				<Date>
+					<Modified>2017-05-25</Modified>Text on for alighting/boarding corrected. Doc change only.
+				</Date>
+				<Date>
+					<Modified>2019-02-21</Modified>Remove commented out old Section code
+				</Date>
+				<Date>
+					<Modified>2019-03-25</Modified>Merge in Corrections to comments as per SBB20 #55 Correct camel case on StopPoinInXXX groups. 
+				</Date>
+				<Date>
+					<Modified>2019-03-25</Modified> NL48  CD #64  Add new attributes for   advertising of stop; Print and Dynamic to StopPointInPattern.
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -48,7 +60,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2017</Copyright>
+						<Copyright>CEN, Crown Copyright 2009-2019</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -561,12 +573,12 @@ Rail transport, Roads and Road transport
 		<xsd:sequence>
 			<xsd:element name="TransportMode" type="AllVehicleModesOfTransportEnumeration" default="all" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>MODE of end Point of TRANSFER . Default is all modes. of SCHEDULED STOP POINT Can be derived.</xsd:documentation>
+					<xsd:documentation>MODE of end Point of CONNECTION. Default is all modes. Can be derived.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="ScheduledStopPointRef" type="ScheduledStopPointRefStructure" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Identifier of end SCHEDULED STOP POINT of TRANSFER.</xsd:documentation>
+					<xsd:documentation>Identifier of  specific SCHEDULED STOP POINT at end of CONNECTION.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -627,7 +639,7 @@ Rail transport, Roads and Road transport
 	</xsd:group>
 	<xsd:group name="ServicePatternSequenceGroup">
 		<xsd:annotation>
-			<xsd:documentation>Elements for a SERVICE PATTERN.</xsd:documentation>
+			<xsd:documentation>Point and Link elements in sequence for a SERVICE PATTERN.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element name="pointsInSequence" type="stopPointsInJourneyPattern_RelStructure" minOccurs="0">
@@ -698,7 +710,7 @@ Rail transport, Roads and Road transport
 	</xsd:group>
 	<xsd:group name="ServiceJourneyPatternSequencesGroup">
 		<xsd:annotation>
-			<xsd:documentation>Sequence Elements for a SERVICE JOURNEY PATTERN.</xsd:documentation>
+			<xsd:documentation>Sequence elements for a SERVICE JOURNEY PATTERN.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element name="pointsInSequence" type="stopPointsInJourneyPattern_RelStructure" minOccurs="0">
@@ -756,7 +768,7 @@ Rail transport, Roads and Road transport
 							</xsd:sequence>
 						</xsd:sequence>
 						<xsd:sequence>
-							<xsd:group ref="StopPointinJourneyPatternGroup"/>
+							<xsd:group ref="StopPointInJourneyPatternGroup"/>
 						</xsd:sequence>
 					</xsd:sequence>
 					<xsd:attribute name="id" type="StopPointInJourneyPatternIdType"/>
@@ -771,17 +783,17 @@ Rail transport, Roads and Road transport
 		<xsd:complexContent>
 			<xsd:extension base="PointInLinkSequence_VersionedChildStructure">
 				<xsd:sequence>
-					<xsd:group ref="StopPointinJourneyPatternGroup"/>
+					<xsd:group ref="StopPointInJourneyPatternGroup"/>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:group name="StopPointinJourneyPatternGroup">
+	<xsd:group name="StopPointInJourneyPatternGroup">
 		<xsd:annotation>
 			<xsd:documentation>Elements for a STOP POINT IN JOURNEY PATTERN.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:group ref="StopPointinJourneyPatternTimingGroup"/>
+			<xsd:group ref="StopPointInJourneyPatternTimingGroup"/>
 			<xsd:element name="OnwardServiceLinkRef" type="ServiceLinkRefStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Link that connects this to the next point. Allows to disambiguate if there are multiple SERVICE LINKs between two SERVICE POINTs.</xsd:documentation>
@@ -800,7 +812,7 @@ Rail transport, Roads and Road transport
 			<xsd:group ref="StopPointInPatternPropertiesGroup"/>
 		</xsd:sequence>
 	</xsd:group>
-	<xsd:group name="StopPointinJourneyPatternTimingGroup">
+	<xsd:group name="StopPointInJourneyPatternTimingGroup">
 		<xsd:annotation>
 			<xsd:documentation>TiingPoint Elements for a STOP POINT IN JOURNEY PATTERN.</xsd:documentation>
 		</xsd:annotation>
@@ -837,7 +849,29 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element name="BookingArrangements" type="BookingArrangementsStructure" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Booking Arrangements for stop if different from thos forSERVICE JOURNEY.</xsd:documentation>
+					<xsd:documentation>Booking Arrangements for stop if different from those for SERVICE JOURNEY.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:group ref="StopPointInPatternAdvertisementGroup">
+				<xsd:annotation>
+					<xsd:documentation>Advertisement Elements for info about publicising STOP POINT IN JOURNEY PATTERN. +V1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:group>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="StopPointInPatternAdvertisementGroup">
+		<xsd:annotation>
+			<xsd:documentation>Advertisement Elements for info about publicising STOP POINT IN JOURNEY PATTERN.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Print" type="xsd:boolean" default="true" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether the stop is included in printed media. Default is true. +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Dynamic" type="DynamicAdvertisementEnumeration" default="always" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>When STOP POINT IN JOURNEY PATTERN is to be publicised in dynamic media. Default is always. +v1.1</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -883,66 +917,6 @@ Rail transport, Roads and Road transport
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->
-	<!--
-	<xsd:complexType name="servicePatternSections_RelStructure">
-		<xsd:annotation>
-			<xsd:documentation>Type for a list of SERVICE PATTERN SECTIONs iin SERVICE PATTERN.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:complexContent>
-			<xsd:extension base="strictContainmentAggregationStructure">
-				<xsd:sequence>
-					<xsd:element ref="ServicePatternSection" minOccurs="2" maxOccurs="unbounded"/>
-				</xsd:sequence>
-			</xsd:extension>
-		</xsd:complexContent>
-	</xsd:complexType>
-	<xsd:element name="ServicePatternSection" abstract="false" substitutionGroup="Section_">
-		<xsd:annotation>
-			<xsd:documentation>A shared set of SERVICE LINKS or SCHEDULED STOP POINTs. </xsd:documentation>
-		</xsd:annotation>
-		<xsd:complexType>
-			<xsd:complexContent>
-				<xsd:restriction base="ServicePatternSection_VersionStructure">
-					<xsd:sequence>
-						<xsd:sequence>
-							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
-						</xsd:sequence>
-						<xsd:sequence>
-							<xsd:group ref="DataManagedObjectGroup"/>
-						</xsd:sequence>
-						<xsd:sequence>
-							<xsd:group ref="GroupOfEntitiesGroup"/>
-						</xsd:sequence>
-						<xsd:sequence>
-							<xsd:group ref="ServicePatternSectionGroup"/>
-						</xsd:sequence>
-					</xsd:sequence>
-				</xsd:restriction>
-			</xsd:complexContent>
-		</xsd:complexType>
-	</xsd:element>
-	<xsd:complexType name="ServicePatternSection_VersionStructure" abstract="false">
-		<xsd:annotation>
-			<xsd:documentation>Type for a SERVICE PATTERN SECTION.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:complexContent>
-			<xsd:extension base="GroupOfEntities_VersionStructure">
-				<xsd:sequence>
-					<xsd:group ref="ServicePatternSectionGroup"/>
-				</xsd:sequence>
-			</xsd:extension>
-		</xsd:complexContent>
-	</xsd:complexType>
-	<xsd:group name="ServicePatternSectionGroup">
-		<xsd:annotation>
-			<xsd:documentation>Elements for a SERVICE PATTERN SECTION.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:sequence>
-			<xsd:group ref="ServicePatternSequenceGroup"/>
-		</xsd:sequence>
-	</xsd:group>  -->
-	<!-- ======================================================================= -->
-	<!-- ======================================================================= -->
 	<xsd:element name="ScheduledStopPointView" type="ScheduledStopPoint_DerivedViewStructure" abstract="false" substitutionGroup="DerivedView">
 		<xsd:annotation>
 			<xsd:documentation>Simplified view of SCHEDULED STOP POINT. Includes derived some propertries of a stop.</xsd:documentation>
@@ -980,7 +954,7 @@ Rail transport, Roads and Road transport
 	</xsd:element>
 	<xsd:complexType name="OnwardServiceLink_DerivedViewStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for Information about onwards SERVICE LINK.</xsd:documentation>
+			<xsd:documentation>Type for information about onwards SERVICE LINK.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="DerivedViewStructure">
@@ -1037,7 +1011,7 @@ Rail transport, Roads and Road transport
 	</xsd:complexType>
 	<xsd:group name="StopPointInJourneyPatternViewPropertiesGroup">
 		<xsd:annotation>
-			<xsd:documentation>Elements from a STOP POINT IN JOURNEY PATTERN.</xsd:documentation>
+			<xsd:documentation>Elements from a STOP POINT IN JOURNEY PATTERN VIEW.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element name="VisitNumber" type="xsd:positiveInteger" default="1" minOccurs="0">
@@ -1070,7 +1044,7 @@ Rail transport, Roads and Road transport
 	</xsd:group>
 	<xsd:group name="StopPointInJourneyPatternViewTimingGroup">
 		<xsd:annotation>
-			<xsd:documentation>Elements from a POINT IN JOURNEY PATTERN.</xsd:documentation>
+			<xsd:documentation>Timing elements from a STOP POINT IN JOURNEY PATTERN VIEW.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element name="IsWaitPoint" type="xsd:boolean" default="false" minOccurs="0">

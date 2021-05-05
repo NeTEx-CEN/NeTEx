@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_usageParameterBooking_support">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_usageParameterBooking_support">
 	<!-- ======================================================================= -->
-	<xsd:include schemaLocation="netex_usageParameter_support.xsd"/>
 	<xsd:annotation>
 		<xsd:appinfo>
 			<Metadata xmlns="http://www.govtalk.gov.uk/CM/gms-xs">
@@ -16,8 +14,13 @@
 					<Created>2013-04-14</Created>
 				</Date>
 				<Date>
-					<Modified>2011-02-05</Modified>
-					<!-- Name Space changes -->
+					<Modified>2011-02-05</Modified>Name Space changes 
+				</Date>
+				<Date>
+					<Modified>2019-03-14</Modified>Eura-50  *FARES* Add new PurchaseAction attribute to  PurchaseWindow    with values purchase,  reserve,  orderWithoutPaying,  payForPreviousOrder, other   
+				</Date>
+					<Date>
+					<Modified>2019-04-10</Modified>Eura-50  *FARES* Add new values subscribe and payInstallment to PurchaseAction attribute to  PurchaseWindow    
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -35,7 +38,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2014</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -60,6 +63,7 @@ Rail transport, Roads and Road transport
 		</xsd:appinfo>
 		<xsd:documentation>NeTEX: Booking USAGE PARAMETER identifier types.</xsd:documentation>
 	</xsd:annotation>
+	<xsd:include schemaLocation="netex_usageParameter_support.xsd"/>
 	<xsd:group name="UsageParameterBookingRefGroup">
 		<xsd:annotation>
 			<xsd:documentation>USAGE PARAMETER Elements forCELL.Group.</xsd:documentation>
@@ -97,6 +101,36 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
+	<xsd:simpleType name="PurchaseActionEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for Purchase Action +v1.1</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="purchase">
+				<xsd:annotation>
+					<xsd:documentation>Purchase and payment.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="orderWithoutPayment">
+				<xsd:annotation>
+					<xsd:documentation>Purchase with deferred  payment.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="reserve">
+				<xsd:annotation>
+					<xsd:documentation>Reervation but not necessarily payment</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="payForPreviousOrder">
+				<xsd:annotation>
+					<xsd:documentation>Payment for previously ordered service.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="subscribe"/>
+			<xsd:enumeration value="payInstallment"/>
+			<xsd:enumeration value="other"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<!-- === RESERVING PARAMETER====================================================== -->
 	<xsd:simpleType name="ReservingIdType">
 		<xsd:annotation>

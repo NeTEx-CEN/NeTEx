@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_usageParameterTravel_version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_usageParameterTravel_version">
 	<xsd:include schemaLocation="netex_usageParameterTravel_support.xsd"/>
 	<xsd:include schemaLocation="netex_timeStructureFactor_support.xsd"/>
 	<!-- ======================================================================= -->
@@ -20,8 +20,23 @@
 					<Created>2013-04-14</Created>
 				</Date>
 				<Date>
-					<Modified>2011-02-05</Modified>
-					<!-- Name Space changes -->
+					<Modified>2011-02-05</Modified>Name Space changes 
+				</Date>
+				<Date>
+					<Modified>2019-03-10</Modified>EURA-73 Add a new StartConstraintType attribute to UsageValidityPeriod  to specify  if start is floating or fixed. 
+						Also Add  new startOnlyOn  DayTypes  so that any required day of week, day of month, month of year can be indicated.,  eg specific days at start of each month or each quarter .
+						Also EURA-78   add new FixedStartWindow	attribute to UsageValidityPeriod			
+				</Date>
+				<Date>
+					<Modified>2019-03-12</Modified>EURA-093 Add  new attribute RegisterBreakOfJourney  to Interchanging with   values  none,   markByStaff,  markByValidator,  markByMobileApp , 					
+		 	 						EURA-085  Add  new attribute ActivationMeans  with values  none required,, checkIn,  useOfValidato useOfMobileDevice, automaticByTime,  automaticByProximity, other				
+				</Date>
+				<Date>
+				<Modified>2019-03-31</Modified>EURA-52, EURA40 *FARES*  Support Suspension
+					 Separate out Suspending as separate usage parameter with attributes __SuspensionPolicy, QualificatioPeriod, QualificatioPercent,  MinimumSuspensionPeriod, MaximumSuspensionPeriod, MaximumNumberOfSuspensionsPermTer
+				</Date>
+				<Date>
+				<Modified>2019-04-01</Modified>EURA-52, EURA40 *FARES*  Add   attribute ActivationMeans to UsageValidityPeriod as previously intended.
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -39,7 +54,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_usageParameterTravel_support.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2014</Copyright>
+				 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -113,7 +128,7 @@ Rail transport, Roads and Road transport
 		<xsd:sequence>
 			<xsd:element name="TripType" type="RoundTripTypeEnumeration" default="single" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Type of trip. (Single, return, returnonly). default is single.</xsd:documentation>
+					<xsd:documentation>Type of trip. (Single, return, return only). default is single.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="DoubleSingleFare" type="xsd:boolean" minOccurs="0">
@@ -254,7 +269,7 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Whether restricted to a number of stops.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="StepUnits" type="StepLimitUnitEnumeration" minOccurs="0">
+			<xsd:element name="AdjustmentUnits" type="StepLimitUnitEnumeration" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Units in which steps atre counted.</xsd:documentation>
 				</xsd:annotation>
@@ -418,6 +433,33 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Duration of  USAGE VALIDITY PERIOD.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="ActivationMeans" type="ActivationMeansEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Means of activatiing start of period.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:group ref="UsageValidityPeriodFixedPeriodGroup">
+				<xsd:annotation>
+					<xsd:documentation>Elements defining a validtiy period in terms of an absolute calendar date </xsd:documentation>
+				</xsd:annotation>
+			</xsd:group>
+			<xsd:group ref="UsageValidityPeriodStartConstraintGroup">
+				<xsd:annotation>
+					<xsd:documentation>Elements defining a permitted  validitiy period in terms of an calendar date </xsd:documentation>
+				</xsd:annotation>
+			</xsd:group>
+			<xsd:element name="BlackoutUse" type="BlackoutStartEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Interaction with blackout periods.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="UsageValidityPeriodFixedPeriodGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements to specify a fixed period.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
 			<xsd:element name="StartDate" type="xsd:date" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Start date of  USAGE VALIDITY PERIOD.</xsd:documentation>
@@ -438,9 +480,138 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>End time of  USAGE VALIDITY PERIOD.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="BlackoutUse" type="BlackoutStartEnumeration" minOccurs="0">
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="UsageValidityPeriodStartConstraintGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements to specify specify constraints on start of  USAGE VALIDITY PERIOD.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="UsageStartConstraintType" type="UsageStartConstraintTypeEnumeration" default="variable" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Interaction with blackout periods.</xsd:documentation>
+					<xsd:documentation>Whether start type of trip or pass  is  variable or fixed. +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="startOnlyOn" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>If UsageStartConstraintType is "fixed", then allowed days to start on can be indicated by a DAY TYPE, for example Monday, 1st of Month, Start of Quarter, etc. (Applies mainly  to Passes.)</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="dayTypes_RelStructure"/>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="FixedStartWindow" type="FixedStartWindowStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>If UsageStartConstraintType is "fixedWindow" , then can specify a window relative to booked train for alternative services that may be used. +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="FixedStartWindowStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for Fiexd Start WIndow.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="MaximumServicesBefore" type="xsd:nonNegativeInteger" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>If UsageStartConstraintType is "fixedWindow", maximum number of services before the booked train that may also be used. +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="FlexiblePeriodBefore" type="xsd:duration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>If UsageStartConstraintType is "fixedWindow", maximum period before the booked train during which other trains may also be caught. +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MaximumServicesAfter" type="xsd:nonNegativeInteger" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>If UsageStartConstraintType is "fixedWindow", maximum number of services after the booked train that may also be used. +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="FlexiblePeriodAfter" type="xsd:duration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>If UsageStartConstraintType is "fixedWindow", maximum period after the booked train during which other trains may also be caught. +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- ====SUSPENDING.================================================ -->
+	<xsd:element name="Suspending" abstract="false" substitutionGroup="UsageParameter_">
+		<xsd:annotation>
+			<xsd:documentation>Conditions governing suspension of a FARE PRODUCT, e.g.  period pass or subscription.
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="Suspending_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="PriceableObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="UsageParameterGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="SuspendingGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="SuspendingIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="Suspending_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for SUSPENDING </xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="UsageParameter_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="SuspendingGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="SuspendingGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for SUSPENDING Group.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="SuspensionPolicy" type="SuspensionPolicyListOfEnumerations" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Allowed policies for suspending term of product.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="QualificationPeriod" type="xsd:duration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Minimum duration that must have occurred before a suspension is allowed.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="QualificationPercent" type="xsd:decimal" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Minimum proportion of term that must  have occurred before a suspension is allowed.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MinimumSuspensionPeriod" type="xsd:duration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Minimum duration allowed for a suspension.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MaximumSuspensionPeriod" type="xsd:duration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Maximum duration allowed for a suspension.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MaximumNumberOfSuspensionsPerTerm" type="xsd:integer" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Maximum duration allowed for a suspension. with the term of the fare product or subscription.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -525,6 +696,11 @@ Rail transport, Roads and Road transport
 			<xsd:element name="CrossBorder" type="xsd:boolean" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Whether interchanging crosses a border.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="RegisterBreakOfJourney" type="RegisterBreakOfJourneyEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether the Journey can be interrupted, i.e. leave stop point and return. +v1.1</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>

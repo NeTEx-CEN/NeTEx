@@ -18,7 +18,14 @@
 				<Date>
 					<Modified>2011-12-16</Modified>
 				</Date>
-				<Date><Modified>2017-05-25</Modified> NPR Request Vehicle Type enum corrected.
+				<Date>
+					<Modified>2017-05-25</Modified> NPR Request Vehicle Type enum corrected.
+				</Date>
+				<Date>
+					<Modified>2019-04-11</Modified>Correct name of Parking PropertyId to ParkimgPropertiesId
+				</Date>
+				<Date>
+					<Modified>2019-04-25</Modified>Fix to use  Parking Passenger ENtrances
 				</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines PARKING    base types.</p>
@@ -131,20 +138,20 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
-	<xsd:simpleType name="ParkingPropertyIdType">
+	<xsd:simpleType name="ParkingPropertiesIdType">
 		<xsd:annotation>
-			<xsd:documentation>Type for identifier of a PARKING PRPERTY.</xsd:documentation>
+			<xsd:documentation>Type for identifier of a PARKING PROPERTIES</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="ObjectIdType"/>
 	</xsd:simpleType>
-	<xsd:element name="ParkingPropertyRef" type="ParkingPropertyRefStructure" substitutionGroup="VersionOfObjectRef">
+	<xsd:element name="ParkingPropertiesRef" type="ParkingPropertiesRefStructure" substitutionGroup="VersionOfObjectRef">
 		<xsd:annotation>
-			<xsd:documentation>Reference to a PARKING PROPERTY.</xsd:documentation>
+			<xsd:documentation>Reference to a PARKING PROPERTIES</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:complexType name="ParkingPropertyRefStructure">
+	<xsd:complexType name="ParkingPropertiesRefStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for a reference to a PARKING PROPERTY.</xsd:documentation>
+			<xsd:documentation>Type for a reference to a PARKING PROPERTIES</xsd:documentation>
 		</xsd:annotation>
 		<xsd:simpleContent>
 			<xsd:restriction base="VersionOfObjectRefStructure">
@@ -153,7 +160,7 @@ Rail transport, Roads and Road transport
 						<xsd:documentation>Name of Class of the referenced entity. Allows reflection. Fixed for each ENTITY type.</xsd:documentation>
 					</xsd:annotation>
 				</xsd:attribute>
-				<xsd:attribute name="ref" type="ParkingPropertyIdType" use="required">
+				<xsd:attribute name="ref" type="ParkingPropertiesIdType" use="required">
 					<xsd:annotation>
 						<xsd:documentation>Identifier of a PARKING PROPERTY.</xsd:documentation>
 					</xsd:annotation>
@@ -188,13 +195,44 @@ Rail transport, Roads and Road transport
 		</xsd:simpleContent>
 	</xsd:complexType>
 	<!-- ======================================================================= -->
+	<xsd:simpleType name="ParkingPassengerEntranceIdType">
+		<xsd:annotation>
+			<xsd:documentation>Type for identifier of a PARKING ENTRANCE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ParkingEntranceIdType"/>
+	</xsd:simpleType>
+	<xsd:element name="ParkingPassengerEntranceRef" substitutionGroup="ParkingEntranceRef">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a PARKING VEHICLE ENTRANCE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:simpleContent>
+				<xsd:restriction base="ParkingPassengerEntranceRefStructure"/>
+			</xsd:simpleContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="ParkingPassengerEntranceRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for reference to a PARKING ENTRANCE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="ParkingEntranceRefStructure">
+				<xsd:attribute name="ref" type="ParkingPassengerEntranceIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Identifier of PARKING ENTRANCE.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!-- ======================================================================= -->
 	<xsd:simpleType name="ParkingEntranceForVehiclesIdType">
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of a PARKING VEHICLE ENTRANCE.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="EntranceIdType"/>
+		<xsd:restriction base="ParkingEntranceIdType"/>
 	</xsd:simpleType>
-	<xsd:element name="ParkingEntranceForVehiclesRef" type="ParkingEntranceForVehiclesRefStructure" substitutionGroup="EntranceRef">
+	<xsd:element name="ParkingEntranceForVehiclesRef" type="ParkingEntranceForVehiclesRefStructure" substitutionGroup="ParkingEntranceRef">
 		<xsd:annotation>
 			<xsd:documentation>Reference to a PARKING VEHICLE ENTRANCE.</xsd:documentation>
 		</xsd:annotation>
@@ -204,7 +242,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Type for reference to a PARKING VEHICLE ENTRANCE.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:simpleContent>
-			<xsd:restriction base="EntranceRefStructure">
+			<xsd:restriction base="ParkingEntranceRefStructure">
 				<xsd:attribute name="ref" type="ParkingEntranceForVehiclesIdType" use="required">
 					<xsd:annotation>
 						<xsd:documentation>Identifier of a PARKING ENTRANCE FOR VEHICLES.</xsd:documentation>
@@ -473,22 +511,5 @@ Rail transport, Roads and Road transport
 		</xsd:restriction>
 	</xsd:simpleType>
 	<!-- ======================================================================= -->
-	<xsd:complexType name="parkingTariffRefs_RelStructure">
-		<xsd:annotation>
-			<xsd:documentation>Type for a collection of one or more a references to a PARKING TARIFF.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:complexContent>
-			<xsd:extension base="oneToManyRelationshipStructure">
-				<xsd:sequence>
-					<xsd:element ref="ParkingTariffRef_" maxOccurs="unbounded"/>
-				</xsd:sequence>
-			</xsd:extension>
-		</xsd:complexContent>
-	</xsd:complexType>
-	<xsd:element name="ParkingTariffRef_" type="VersionOfObjectRefStructure" substitutionGroup="VersionOfObjectRef">
-		<xsd:annotation>
-			<xsd:documentation>Dummy Reference to a PARKING TARIFF.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
 	<!-- ======================================================================= -->
 </xsd:schema>

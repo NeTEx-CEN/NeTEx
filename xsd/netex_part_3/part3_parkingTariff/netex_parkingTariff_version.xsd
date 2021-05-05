@@ -21,7 +21,8 @@
 				<Date>
 					<Modified>2011-12-16</Modified>
 				</Date>
-				<Date><Modified>2017-06-28</Modified> CR047 Drop ParkingTaxRate as now covered by chained rules
+				<Date>
+					<Modified>2017-06-28</Modified> CR047 Drop ParkingTaxRate as now covered by chained rules
 				</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines PARKING TARIFF elements</p>
@@ -180,7 +181,17 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element name="ParkingVehicleTypes" type="ParkingVehicleListOfEnumerations" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Type of Vehicle for which PARKING TARIFF applies.</xsd:documentation>
+					<xsd:documentation>Type of Vehicle for which PARKING TARIFF applies.  Fixed values.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="vehicleTypes" type="vehicleTypeRefs_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Opnen specifcation of VEHICLE TYPEs + v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="appliesTo" type="parkingRefs_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>PaARKIMNGs to which this tariff applies</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -221,6 +232,8 @@ Rail transport, Roads and Road transport
 							<xsd:group ref="PriceableObjectGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
+							<xsd:element ref="PrivateCode" minOccurs="0"/>
+							<xsd:element ref="TypeOfFareStructureFactorRef" minOccurs="0"/>
 							<xsd:element name="Factor" type="xsd:anyType" minOccurs="0">
 								<xsd:annotation>
 									<xsd:documentation>Factor value assoictaed with init.</xsd:documentation>
@@ -256,11 +269,13 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Elements of a PARKING TARIFF CHARGE BAND.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
+			<xsd:element ref="ParkingPropertiesRef" minOccurs="0"/>
 			<xsd:element name="ParkingVehicleType" type="ParkingVehicleEnumeration" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Type of vehicle for which this is the PARKING TARIFF CHARGE BAND.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element ref="VehicleTypeRef" minOccurs="0"/>
 			<xsd:element name="MaximumStay" type="xsd:duration" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Maximum allowed stay duration for tariff amount.</xsd:documentation>

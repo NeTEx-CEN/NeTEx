@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_salesDistribution_version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_salesDistribution_version">
 	<xsd:include schemaLocation="netex_salesDistribution_support.xsd"/>
-	<xsd:include schemaLocation="netex_travelDocument_support.xsd"/>
+	<xsd:include schemaLocation="netex_typeOfTravelDocument_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_responsibility/netex_typeOfValue_version.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_country_support.xsd"/>
 	<!-- ======================================================================= -->
@@ -22,8 +22,10 @@
 					<Created>2013-04-10</Created>
 				</Date>
 				<Date>
-					<Modified>2011-02-05</Modified>
-					<!-- Name Space changes -->
+					<Modified>2011-02-05</Modified> Name Space changes
+				</Date>
+				<Date>
+					<Modified>2019-03-02</Modified>UK-24 Add open   PaymentMethod as first class object  so that user defined methods can be added
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -41,7 +43,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2014</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -128,7 +130,8 @@ Rail transport, Roads and Road transport
 	<!-- ====DISTRIBUTION CHANNEL=================================================== -->
 	<xsd:element name="DistributionChannel" abstract="false" substitutionGroup="DataManagedObject">
 		<xsd:annotation>
-			<xsd:documentation>A type of outlet for selling a product.</xsd:documentation>
+			<xsd:documentation>A type of outlet for selling a product.
+</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -204,6 +207,11 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Payment methods allowed.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="typesOfPaymentMethod" type="TypeOfPaymentMethodRefs_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Additional methods for paymen + v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element name="DistributionRights" type="DistributionRightsListOfEnumerations" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Defaut distribution Rigts allowed by DISTRIBUTION CHANNEL.</xsd:documentation>
@@ -237,7 +245,8 @@ Rail transport, Roads and Road transport
 	<!-- ====GROUP OF DISTRIBUTION CHANNELs=================================================== -->
 	<xsd:element name="GroupOfDistributionChannels" abstract="false" substitutionGroup="GroupOfEntities">
 		<xsd:annotation>
-			<xsd:documentation>A package to be sold as a whole, consisting of one or several FARE PRODUCTs materialised thanks to one or several TRAVEL DOCUMENTs. The FARE PRODUCTs may be either directly attached to the TRAVEL DOCUMENTs, or may be reloadable on the TRAVEL DOCUMENTs.</xsd:documentation>
+			<xsd:documentation>A package to be sold as a whole, consisting of one or several FARE PRODUCTs materialised thanks to one or several TRAVEL DOCUMENTs. The FARE PRODUCTs may be either directly attached to the TRAVEL DOCUMENTs, or may be reloadable on the TRAVEL DOCUMENTs.
+</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -296,7 +305,8 @@ Rail transport, Roads and Road transport
 					<xsd:element ref="FulfilmentMethodRef"/>
 					<xsd:element ref="FulfilmentMethod">
 						<xsd:annotation>
-							<xsd:documentation>A sequence or set of CONTROLLABLE ELEMENTs to which rules for limitation of access rights and calculation of prices (DISTRIBUTION CHANNEL) are applied.</xsd:documentation>
+							<xsd:documentation>A sequence or set of CONTROLLABLE ELEMENTs to which rules for limitation of access rights and calculation of prices (DISTRIBUTION CHANNEL) are applied.
+</xsd:documentation>
 						</xsd:annotation>
 					</xsd:element>
 				</xsd:choice>
@@ -305,7 +315,8 @@ Rail transport, Roads and Road transport
 	</xsd:complexType>
 	<xsd:element name="FulfilmentMethod" abstract="false" substitutionGroup="PriceableObject_">
 		<xsd:annotation>
-			<xsd:documentation>The means by which the ticket is delivered to the Customer. e.g. online, collection, etc.</xsd:documentation>
+			<xsd:documentation>The means by which the ticket is delivered to the Customer. e.g. online, collection, etc.
+</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
