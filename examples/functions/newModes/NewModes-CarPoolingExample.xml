@@ -1,16 +1,50 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <!-- ==== ryde Line 1 ==== -->
 <PublicationDelivery version="1.2.2" xsi:schemaLocation="http://www.netex.org.uk/netex ../../../xsd/NeTEx_publication.xsd" xmlns="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<!-- NewModes example of a commuter  car pooling   scheme
-       Membership required
-       Journeys can be booked between  meeting points 
+	<!-- NewModes > Example of a car pooling   scheme
 
-               (Additional meeting points would be created dynamically bu the real time operation systems)
+This example is prmarily concerned with the static aspects,  so  that a down stream PI system can report the existence  of the ride scheme as covering  the given area. 
+These are given in the first COMPOSITE FRAME.
 
-               A dynmic pricing engine  supplies the fares
+  -  A CAR POOLING SERVICE declares that service is available in an area with a specifed coverage
+  -  Journeys can be booked between  MEETING POINTS that can be associated with  physical VEHICLE MEETING PLACEs such as PARKING AREAS, STOP PLACEs, ADDRESSEs,  and POINTs of INTEREST.  
+   -   A number  DISTANCE MATRIX ELEMENTs indicate the  common point to  point trips are defined       (Additional meeting points and DISTANCE MATRIX ELEMENTS would be created dynamically by the real time operation systems)
+     
+   - The Possibility of buying a trip is defined as a   SALES OFFER PACKAGE  + PREASSIGNED FARE PRODUCT + VALIDABLE ELEMENT + TARIFF, 
 
-        This examples provides just the static aspecs such that down stream PI systems can report the existence a of the scheme for teh given area. 
-(C) CEN 2020
+   -  In order to buy a trip       Membership of the specified CAR POOLING  service required , defined ass a THIRD PARTY PRODUCT 
+     
+  -  A dynamic pricing engine  supplies the prices as FARE PRICEs  at run time.
+
+   
+It also gives an example of a car pooled SINGLE JOURNEY   that could be used for example in a car pooled leg for a  multimodel trip plan.
+These are given in the second COMPOSITE FRAME
+
+ - To show how the various parameters are used to offer and accept journeys, some made up   SALE TRANSACTYIONs are provided covering the following scenario:
+
+ Customer Cust777   (driver)
+  On 2019-01-05T12:00:00 joins as member 
+	creating a CUSTOMER, CUSTOMER ACCOUNT, FARE CONTRACT and MPBILE DEVICE, INDIVIDUAL TRAVELLER, VEHICLE POOLING DRIVER INFO,  etc  
+
+  On 2020-08-06T16:00:00 Offers trip to be made on 2021-08-10 at 07:00:00 between  gamma area  and alphaville area, 
+	as defined by a  SINGLE JOURNEY PATH and SINGLE JOURNEY, and recorded as a SALES TRANSACTION.   
+  On 2020-08-08T12:00:00 Accepts ride booking  from Cust 755  for the offered trip to be made on 2021-08-10 at 07:00:00amma (delta park and ride) and alphaville (town hall), , 
+     as recorded by a SALES TRANSACTION and a CUSTOMER PURCHASE PACKAGE for the driver.
+  On 2020-08-10T07:00:00 Makes  trip 
+    as recorded  by an update to the CUSTOMER PURCHASE PACKAGE for the rider and comments on 
+
+ Customer Cust555 (rider)
+  On 2020-02-28T13:00:00 joins as member  
+     creating a CUSTOMER, CUSTOMER ACCOUNT, FARE CONTRACT and MEDIA DEVICE, INDIVIDUAL TRAVELLER, INDIVIDUAL PASSENGER INFO etc  
+  On 2020-08-08T12:00:00 Books and pays for  trip to be made on the  ride offered by Cust777 between     gamma (delta park and ride) and alphaville (town hall), 
+      as recored  by a  SALES TRANSACTION and a CUSTOMER PURCHASE PACKAGE for the rider 
+  On 2020-08-10T07:00:00 Makes  trip 
+    as recorded  by an update to the CUSTOMER PURCHASE PACKAGE for the rider 
+
+
+In addition CUSTOMER PURCHASE PACKAGES showing the parameters that might be held  for each customer (e.g. on an electronic app ) are shown.
+
+(C) CEN 2021
 -->
 	<PublicationTimestamp>2020-12-17T09:30:47.0Z</PublicationTimestamp>
 	<ParticipantRef>SYS001</ParticipantRef>
@@ -37,16 +71,16 @@
 		</topics>
 	</PublicationRequest>
 	<PublicationRefreshInterval>P1M</PublicationRefreshInterval>
-	<Description>Example  of simple point to point fares</Description>
+	<Description>Example  of simple car pooling  ride offfer and fare </Description>
 	<!-- =============== RESULTS =========== -->
 	<dataObjects>
 		<CompositeFrame version="1.0" id="rd:ride_sharing_example" dataSourceRef="rd:ryde" responsibilitySetRef="rd:tariffs">
 			<ValidBetween>
-				<FromDate>2020-01-01T00:00:00</FromDate>
+				<FromDate>2020-06-01T00:00:00</FromDate>
 				<ToDate>2020-12-31T12:00:00</ToDate>
 			</ValidBetween>
 			<Name>Ride Sharing  Example</Name>
-			<Description>This is an example showing how one might encode  static aspects of a car ride  sharing scheme " ryde   "  in NeTEx.  It includes some  prices.</Description>
+			<Description>This is an example showing how one might encode  static aspects of a car ride  sharing scheme "ryde"  in NeTEx.  It includes some  prices.</Description>
 			<!--==== CODESPACEs ==== -->
 			<codespaces>
 				<CodespaceRef ref="ryd_data"/>
@@ -395,6 +429,7 @@
 							<To>
 								<TransportMode>rail</TransportMode>
 								<VehicleMeetingPointRef versionRef="EXTERNAL" ref="alphaville_station"/>
+								<TaxiRankRef versionRef="EXTERNAL" ref="alphaville_station@taxi"/>
 							</To>
 						</SiteConnection>
 					</connections>
@@ -470,6 +505,16 @@
 							<FromPointRef version="any" ref="gamma_area"/>
 							<ToPointRef version="any" ref="alphaville_centre"/>
 						</VehicleMeetingLink>
+						<VehicleMeetingLink version="any" id="gamma_area+alphaville_gare">
+							<Distance>23</Distance>
+							<FromPointRef version="any" ref="gamma_area"/>
+							<ToPointRef version="any" ref="alphaville_gare"/>
+						</VehicleMeetingLink>
+						<VehicleMeetingLink version="any" id="alphaville_gare+alphaville_centre">
+							<Distance>3</Distance>
+							<FromPointRef version="any" ref="alphaville_gare"/>
+							<ToPointRef version="any" ref="alphaville_centre"/>
+						</VehicleMeetingLink>
 					</vehicleMeetingLinks>
 					<vehicleMeetingPlaces>
 						<VehiclePoolingMeetingPlace version="any" id="delta_park_and_ride">
@@ -477,7 +522,7 @@
 							<TopographicPlaceRef version="any" ref="gamma_sur_mer"> </TopographicPlaceRef>
 						</VehiclePoolingMeetingPlace>
 						<VehiclePoolingMeetingPlace version="any" id="bull_and_bush_inn">
-							<Name>TheBull and bush, Gama</Name>
+							<Name>TheBull and bush, Gamma</Name>
 							<RoadAddress version="any" id="bull_and_bush_inn">
 								<RoadNumber>A512</RoadNumber>
 								<RoadName>High Street</RoadName>
@@ -491,6 +536,15 @@
 								<Town>Alphaville</Town>
 							</PostalAddress>
 							<TopographicPlaceRef version="any" ref="alphaville"> </TopographicPlaceRef>
+						</VehiclePoolingMeetingPlace>
+						<VehiclePoolingMeetingPlace version="any" id="alphaville_gare">
+							<Name>Alphaville Station</Name>
+							<PostalAddress version="any" id="alphaville_gare">
+								<Street>Rue de Gare</Street>
+								<Town>Alphaville</Town>
+							</PostalAddress>
+							<TopographicPlaceRef version="any" ref="alphaville"> </TopographicPlaceRef>
+							<TaxiRankRef versionRef="EXTERNAL" ref="alphaville_gare@taxi"/>
 						</VehiclePoolingMeetingPlace>
 					</vehicleMeetingPlaces>
 					<vehicleMeetingPlaceAssignments>
@@ -558,14 +612,17 @@
 												<DetourAccepted>true</DetourAccepted>
 											</VehiclePoolerProfile>
 											<LuggageAllowance version="any" id="non_smoker@skis">
+												<Name>Will accept up to one pair of skis</Name>
 												<BaggageType>skis</BaggageType>
 												<MaximumNumberItems>1</MaximumNumberItems>
 											</LuggageAllowance>
 											<LuggageAllowance version="any" id="non_smoker@bag">
+												<Name>Will accept one suitcase</Name>
 												<BaggageType>smallSuitcase</BaggageType>
 												<MaximumNumberItems>1</MaximumNumberItems>
 											</LuggageAllowance>
 											<LuggageAllowance version="any" id="non_smoker@wheelchair">
+												<Name>Will accept wheelchair up to stated dimensions</Name>
 												<BaggageType>wheelchair</BaggageType>
 												<MaximumNumberItems>1</MaximumNumberItems>
 												<MaximumBagHeight>1.5</MaximumBagHeight>
@@ -631,6 +688,15 @@
 									<StartMeetingPointRef version="any" ref="gamma_area"/>
 									<EndMeetingPointRef version="any" ref="alphaville_centre"/>
 								</DistanceMatrixElement>
+								<DistanceMatrixElement version="any" id="gamma_area+alphaville_gare">
+									<StartMeetingPointRef version="any" ref="gamma_area"/>
+									<EndMeetingPointRef version="any" ref="alphaville_gare"/>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="any" id="alphaville_centre+alphaville_gare">
+									<StartMeetingPointRef version="any" ref="alphaville_centre"/>
+									<EndMeetingPointRef version="any" ref="alphaville_gare"/>
+								</DistanceMatrixElement>
+								<!-- etc etc possible many more of these -->
 							</distanceMatrixElements>
 						</Tariff>
 					</tariffs>
@@ -825,7 +891,7 @@
 			<!--  ===============
 This Shows  sample Purchases 
 
-   Sales Transactions would normally be exchanged separately from the reference data on whoich they are based
+   Sales Transactions would normally be exchanged separately from the reference data on which they are based
 -->
 			<Name>Sample Transactions for ryde trips </Name>
 			<prerequisites>
@@ -872,7 +938,7 @@ This Shows  sample Purchases
 						</CarModelProfile>
 					</vehicleModelProfiles>
 					<vehicles>
-						<Vehicle version="any" id="db54278">
+						<Vehicle version="any" id="db54278" created="2019-01-05T12:00:00">
 							<Name>Freddy's car</Name>
 							<Description>Bright red Porsche convertible</Description>
 							<RegistrationNumber>db54278</RegistrationNumber>
@@ -884,8 +950,8 @@ This Shows  sample Purchases
 				</ResourceFrame>
 				<ServiceCalendarFrame version="1.0" id="rd:ride_sharing_example_data">
 					<operatingDays>
-						<OperatingDay version="any" id="2020-02-28">
-							<CalendarDate>2020-02-28</CalendarDate>
+						<OperatingDay version="any" id="2020-08-10">
+							<CalendarDate>2020-08-10</CalendarDate>
 						</OperatingDay>
 					</operatingDays>
 				</ServiceCalendarFrame>
@@ -908,7 +974,7 @@ This Shows  sample Purchases
 					</singleJourneyPaths>
 					<singleJourneys>
 						<SingleJourney version="any" id="rydt:Cust777@trans001@ride1234">
-							<Name>Car pool journey from Delta park and ride to Alphaville  hotel de ville</Name>
+							<Name>Offered Car pool journey from Delta, park and ride, to Alphaville,  hotel de ville</Name>
 							<TransportMode>selfDrive</TransportMode>
 							<TransportSubmode>
 								<SelfDriveSubmode>ownCar</SelfDriveSubmode>
@@ -916,12 +982,12 @@ This Shows  sample Purchases
 							<CarPoolingServiceRef version="any" ref="ryde"/>
 							<VehicleRef version="any" ref="db54278"/>
 							<SingleJourneyPathRef version="any" ref="rydt:Cust777@trans001@ride1234"/>
-							<DepartureTime>08:30:00</DepartureTime>
-							<OperatingDayRef version="any" ref="2020-02-28"/>
+							<DepartureTime>07:00:00</DepartureTime>
+							<OperatingDayRef version="any" ref="2020-08-10"/>
 							<datedPassingTimes>
 								<TargetPassingTime version="any" id="rydt:Cust777@trans001@ride1234">
 									<PointInSingleJourneyPathRef version="any" ref="rydt:Cust777@trans001@ride1234" order="1"/>
-									<AimedDepartureTime>08:30:00</AimedDepartureTime>
+									<AimedDepartureTime>07:00:00</AimedDepartureTime>
 								</TargetPassingTime>
 								<TargetPassingTime version="any" id="rydt:Cust777@trans001@ride1234">
 									<PointInSingleJourneyPathRef version="any" ref="rydt:Cust777@trans001@ride1234" order="2"/>
@@ -943,7 +1009,7 @@ This Shows  sample Purchases
 						</SingleJourney>
 					</singleJourneys>
 					<individualTravellers>
-						<IndividualTraveller version="any" id="rydt:Cust555">
+						<IndividualTraveller version="any" id="rydt:Cust555" created="2020-02-28T13:00:00" changed="2020-08-10T09:55:00">
 							<Name>Esmerelda</Name>
 							<CustomerRef version="any" ref="rydt:Cust555"/>
 							<IdentityVerified>true</IdentityVerified>
@@ -953,16 +1019,16 @@ This Shows  sample Purchases
 							<Smoker>true</Smoker>
 							<Languages>fr de en ru it es nl</Languages>
 							<individualPassengerInfos>
-								<IndividualPassengerInfo version="any" id="rydt:Cust555-01">
+								<IndividualPassengerInfo version="any" id="rydt:Cust555-01" created="2020-02-28T13:00:00" changed="2020-08-10T09:55:00">
 									<IndividualTravellerRef version="any" ref="rydt:Cust555"/>
 									<Ranking>9</Ranking>
-									<LastTripDate>2020-02-28T13:00:00</LastTripDate>
+									<LastTripDate>2020-08-10T07:00:00</LastTripDate>
 									<CommentsAbout>Never stopped talking, dog was sick everywhere</CommentsAbout>
 									<TravellingWithPet>true</TravellingWithPet>
 								</IndividualPassengerInfo>
 							</individualPassengerInfos>
 						</IndividualTraveller>
-						<IndividualTraveller version="any" id="rydt:Cust777">
+						<IndividualTraveller version="any" id="rydt:Cust777" created="2019-01-05T12:00:00" changed="2020-08-10T14:20:00">
 							<Name>Freddy</Name>
 							<CustomerRef version="any" ref="rydt:Cust777"/>
 							<IdentityVerified>true</IdentityVerified>
@@ -972,10 +1038,10 @@ This Shows  sample Purchases
 							<Smoker>false</Smoker>
 							<Languages>ga en</Languages>
 							<vehiclePoolingDriverInfos>
-								<VehiclePoolingDriverInfo version="any" id="rydt:Cust777-01">
+								<VehiclePoolingDriverInfo version="any" id="rydt:Cust777-01" created="2020-02-28T13:00:00" changed="2020-08-10T14:20:00">
 									<IndividualTravellerRef version="any" ref="rydt:Cust777"/>
 									<Ranking>5</Ranking>
-									<LastTripDate>2020-02-28T13:00:00</LastTripDate>
+									<LastTripDate>2020-08-10T07:00:00</LastTripDate>
 									<CommentsAbout>Crazy, drove like a bat out of hell</CommentsAbout>
 									<TravellingWithPet>false</TravellingWithPet>
 									<DrivingLicenceVerified>true</DrivingLicenceVerified>
@@ -1001,7 +1067,7 @@ This Shows  sample Purchases
 					</codespaces>
 					<customers>
 						<!--  rider -->
-						<Customer version="any" id="rydt:Cust555">
+						<Customer version="any" id="rydt:Cust555" created="2020-02-28T13:00:00">
 							<Surname>von Ritter</Surname>
 							<FirstName>Esmerelda Z</FirstName>
 							<Title>Baronin</Title>
@@ -1018,7 +1084,7 @@ This Shows  sample Purchases
 								</UserProfileEligibility>
 							</customerEligibilities>
 							<customerAccounts>
-								<CustomerAccount version="any" id="rydt:Cust555@AC7651">
+								<CustomerAccount version="any" id="rydt:Cust555@AC7651" created="2020-02-28T13:00:00">
 									<Name>hotrider</Name>
 									<StartDate>2020-02-28T13:00:00</StartDate>
 									<CustomerAccountStatusType>active</CustomerAccountStatusType>
@@ -1043,20 +1109,20 @@ This Shows  sample Purchases
 								</CustomerAccount>
 							</customerAccounts>
 							<fareContracts>
-								<FareContract version="any" id="rydt:Cust555@trans001">
+								<FareContract version="any" id="rydt:Cust555@trans001" created="2020-02-28T13:00:00">
 									<CustomerRef version="any" ref="rydt:Cust555"/>
 									<fareContractEntries>
-										<SalesTransaction version="any" id="rydt:Cust555@trans001@join_as_member">
+										<SalesTransaction version="any" id="rydt:Cust555@trans001@join_as_member" created="2020-02-28T13:00:00">
 											<Name>Join AS Member</Name>
 											<Date>2020-02-28T13:00:00</Date>
 											<TypeOfFareContractEntryRef versionRef="EXTERNAL" ref="fxc:product_purchase"/>
 											<Amount>0</Amount>
 											<travelSpecifications>
 												<OfferedTravelSpecification version="any" id="rydt:Cust555@trans001@join_as_member">
-													<Date>2020-10-08T11:07:00</Date>
+													<Date>2020-02-28T13:00:00</Date>
 													<SalesTransactionRef version="any" ref="rydt:Cust555@trans001@join_as_member"/>
 													<Amount>0</Amount>
-													<StartOfValidity>2020-10-08T11:07:00</StartOfValidity>
+													<StartOfValidity>2020-02-28T13:00:00</StartOfValidity>
 													<TravelSpecificationSummaryView>
 														<Start>2020-02-28T13:00:00</Start>
 														<OperatorRef version="any" ref="noc:XRYD"/>
@@ -1074,25 +1140,28 @@ This Shows  sample Purchases
 											<travelDocuments>
 												<TravelDocument version="any" id="rydt:ticket@765452230">
 													<ValidBetween>
-														<FromDate>2018-07-08T11:07:00</FromDate>
+														<FromDate>2020-02-28T13:00:00</FromDate>
 													</ValidBetween>
 													<TypeOfTravelDocumentRef version="any" ref="mobile_application_data"/>
 												</TravelDocument>
 											</travelDocuments>
 										</SalesTransaction>
-										<SalesTransaction version="any" id="rydt:Cust555@trans005@purchase_ride">
+										<SalesTransaction version="any" id="rydt:Cust555@trans005@purchase_ride" created="2020-08-08T12:00:00">
 											<Name>Buy Single   ride Adult</Name>
-											<Date>2020-10-08T11:07:00</Date>
+											<Description>Cust555 pays for ride from Cust777. For simplicity we show  as a single  prepaid. If payment waslaterm e.g. completion, could have separate transactiosn for reservation and payment. </Description>
+											<Date>2020-08-08T12:00:00</Date>
+											<!-- Date of booking -->
 											<TypeOfFareContractEntryRef versionRef="EXTERNAL" ref="fxc:product_purchase"/>
 											<Amount>10.00</Amount>
 											<PaymentMethod>cash</PaymentMethod>
 											<travelSpecifications>
-												<OfferedTravelSpecification version="any" id="rydt:Cust555@trans005@purchase_ride">
-													<Date>2020-10-08T11:07:00</Date>
+												<OfferedTravelSpecification version="any" id="rydt:Cust555@trans005@purchase_ride" created="2020-08-08T12:00:00">
+													<Date>2020-08-10T07:00:00</Date>
+													<!-- Date of Travel -->
 													<SalesTransactionRef version="any" ref="rydt:Cust555@trans005@purchase_ride"/>
 													<DistanceMatrixElementPriceRef version="any" ref="gamma_area+alphaville_centre"/>
 													<Amount>10.00</Amount>
-													<StartOfValidity>2020-10-08T11:07:00</StartOfValidity>
+													<StartOfValidity>2020-08-10T07:00:00</StartOfValidity>
 													<TravelSpecificationSummaryView>
 														<Origin>
 															<VehicleMeetingPointRef version="any" ref="gamma_area"/>
@@ -1100,7 +1169,7 @@ This Shows  sample Purchases
 														<Destination>
 															<VehicleMeetingPointRef version="any" ref="alphaville_centre"/>
 														</Destination>
-														<Start>2020-10-08T11:07:00</Start>
+														<Start>2020-08-10T07:00:00 </Start>
 														<Duration>PT45M</Duration>
 														<OperatorRef version="any" ref="noc:XRYD"/>
 														<VehiclePoolerProfileRef version="any" ref="non_smoker"/>
@@ -1126,15 +1195,22 @@ This Shows  sample Purchases
 																<ServiceFacilitySetRef version="any" ref="no_smoking"/>
 																<SingleJourneyRef version="any" ref="rydt:Cust777@trans001@ride1234"/>
 																<VehicleRef version="any" ref="db54278"/>
+																<!-- These are also given by Journey  but may be more specifc than opffer eg if agree to specif location-->
+																<VehicleMeetingPointRef version="any" ref="gamma_area"/>
+																<VehiclePoolingMeetingPlaceRef version="any" ref="delta_park_and_ride"/>
+																<VehiclePoolingParkingAreaRef version="any" ref="delta_park_and_ride@A1"/>
+																<VehicleMeetingPointRef version="any" ref="alphaville_centre"/>
+																<VehiclePoolingMeetingPlaceRef version="any" ref="town_hall"/>
 															</validityParameters>
 														</SpecificParameterAssignment>
 													</specificParameterAssignments>
 												</OfferedTravelSpecification>
 											</travelSpecifications>
 											<travelDocuments>
-												<TravelDocument version="any" id="rydt:ticket@765452234">
+												<TravelDocument version="any" id="rydt:ticket@765452234" created="2020-08-08T12:00:00">
 													<ValidBetween>
-														<FromDate>2020-10-08T11:07:00</FromDate>
+														<FromDate>2020-08-10T07:00:00</FromDate>
+														<ToDate>2020-08-10T08:00:00 </ToDate>
 													</ValidBetween>
 													<TypeOfTravelDocumentRef version="any" ref="mobile_application_data"/>
 													<CustomerPurchasePackageRef version="any" ref="rydt:CPP@Cust555@005"/>
@@ -1146,7 +1222,7 @@ This Shows  sample Purchases
 							</fareContracts>
 						</Customer>
 						<!--  driver -->
-						<Customer version="any" id="rydt:Cust777">
+						<Customer version="any" id="rydt:Cust777" created="2019-01-05T12:00:00">
 							<Surname>Gonzalez</Surname>
 							<FirstName>Freddy</FirstName>
 							<Gender>male</Gender>
@@ -1162,7 +1238,7 @@ This Shows  sample Purchases
 								</UserProfileEligibility>
 							</customerEligibilities>
 							<customerAccounts>
-								<CustomerAccount version="any" id="rydt:Cust777@AC8145">
+								<CustomerAccount version="any" id="rydt:Cust777@AC8145" created="2019-01-05T12:00:00">
 									<Name>fastrunner</Name>
 									<StartDate>2018-01-28T12:00:00</StartDate>
 									<CustomerAccountStatusType>active</CustomerAccountStatusType>
@@ -1180,22 +1256,22 @@ This Shows  sample Purchases
 								</CustomerAccount>
 							</customerAccounts>
 							<fareContracts>
-								<FareContract version="any" id="rydt:Cust777@trans001">
-									<CustomerRef ref="rydt:Anson"/>
+								<FareContract version="any" id="rydt:Cust777@trans001" created="2019-01-05T12:00:00">
+									<CustomerRef ref="rydt:Cust777"/>
 									<fareContractEntries>
-										<SalesTransaction version="any" id="rydt:Cust777@trans001@join_as_member">
+										<SalesTransaction version="any" id="rydt:Cust777@trans001@join_as_member" created="2019-01-05T12:00:00">
 											<Name>Join AS Member</Name>
-											<Date>2018-01-28T12:00:00</Date>
+											<Date>2019-01-05T12:00:00</Date>
 											<TypeOfFareContractEntryRef versionRef="EXTERNAL" ref="fxc:product_purchase"/>
 											<Amount>0</Amount>
 											<travelSpecifications>
 												<OfferedTravelSpecification version="any" id="rydt:Cust777@trans001@join_as_member">
-													<Date>2018-01-28T12:00:00</Date>
+													<Date>2019-01-05T12:00:00</Date>
 													<SalesTransactionRef version="any" ref="rydt:Cust777@trans001@join_as_member"/>
 													<Amount>0</Amount>
-													<StartOfValidity>2018-01-28T12:00:00</StartOfValidity>
+													<StartOfValidity>2019-01-05T12:00:00</StartOfValidity>
 													<TravelSpecificationSummaryView>
-														<Start>2018-01-28T12:00:00</Start>
+														<Start>2019-01-05T12:00:00</Start>
 														<OperatorRef version="any" ref="noc:XRYD"/>
 														<VehiclePoolerProfileRef version="any" ref="non_smoker"/>
 														<CarPoolingServiceRef version="any" ref="ryde"/>
@@ -1209,15 +1285,72 @@ This Shows  sample Purchases
 												</OfferedTravelSpecification>
 											</travelSpecifications>
 										</SalesTransaction>
-										<SalesTransaction version="any" id="rydt:Cust777@trans005@sell_ride">
-											<Name>Sell Single   ride Adult</Name>
-											<Date>2020-10-08T11:07:00</Date>
+										<SalesTransaction version="any" id="rydt:Cust777@trans005@offer_ride" created="2020-08-06T16:00:00">
+											<Name>Offer a Single  ride Adult beteen gamma and alphavile on 2020-08-10T07:00:00 </Name>
+											<Description>Cust777 a offers ride. </Description>
+											<Date>2020-08-06T16:00:00</Date>
+											<!-- Date of offer -->
+											<TypeOfFareContractEntryRef versionRef="EXTERNAL" ref="fxc:offer_ride"/>
+											<Amount>-8.00</Amount>
+											<PaymentMethod>cash</PaymentMethod>
+											<travelSpecifications>
+												<OfferedTravelSpecification version="any" id="rydt:Cust777@trans005@offer_ride" created="2020-08-06T16:00:00">
+													<Date>2020-08-10T07:00:00 </Date>
+													<!--Date of Travel -->
+													<SalesTransactionRef version="any" ref="rydt:Cust777@trans005@sell_ride"/>
+													<DistanceMatrixElementPriceRef version="any" ref="gamma_area+alphaville_centre"/>
+													<Amount>10.00</Amount>
+													<TravelSpecificationSummaryView>
+														<Origin>
+															<VehicleMeetingPointRef version="any" ref="gamma_area"/>
+														</Origin>
+														<Destination>
+															<VehicleMeetingPointRef version="any" ref="alphaville_centre"/>
+														</Destination>
+														<Start>2020-08-10T07:00:00 </Start>
+														<Duration>PT45M</Duration>
+														<OperatorRef version="any" ref="noc:XRYD"/>
+														<VehiclePoolerProfileRef version="any" ref="non_smoker"/>
+														<CarPoolingServiceRef version="any" ref="ryde"/>
+													</TravelSpecificationSummaryView>
+													<specificParameterAssignments>
+														<SpecificParameterAssignment version="any" order="1" id="rydt:Cust777@trans005@offer_ride">
+															<Name>Single ride</Name>
+															<ValidableElementRef version="any" ref="ryde@single_trip@travel"/>
+															<PreassignedFareProductRef version="any" ref="ryde@single_trip"/>
+															<FareStructureElementRef version="any" ref="ryde@single_trip@access"/>
+															<SalesOfferPackageRef version="any" ref="ryde@single_trip-SOP@mobileApp"/>
+															<limitations>
+																<VehiclePoolerProfileRef version="any" ref="non_smoker"/>
+															</limitations>
+															<validityParameters>
+																<OperatorRef version="any" ref="noc:XRYD"/>
+																<DistributionChannelRef version="any" ref="mobile_application"/>
+																<FulfilmentMethodRef version="any" ref="mobile_device"/>
+																<TypeOfTravelDocumentRef version="any" ref="mobile_application_data"/>
+																<VehiclePoolingOperationRef version="any" ref="ride_share"/>
+																<CarPoolingServiceRef version="any" ref="ryde"/>
+																<ServiceFacilitySetRef version="any" ref="no_smoking"/>
+																<SingleJourneyRef version="any" ref="rydt:Cust777@trans001@ride1234"/>
+																<VehicleRef version="any" ref="db54278"/>
+															</validityParameters>
+														</SpecificParameterAssignment>
+													</specificParameterAssignments>
+												</OfferedTravelSpecification>
+											</travelSpecifications>
+										</SalesTransaction>
+										<SalesTransaction version="any" id="rydt:Cust777@trans005@sell_ride" created="2020-08-08T12:00:00">
+											<Name>Sell Single  ride Adult</Name>
+											<Description>Cust777 accepts to provides ride by  Cust555. For simplicity we show  as a single  prepaid. If payment was later e.g.  on completion, could have separate transactions for reservation and payment. </Description>
+											<Date>2020-08-08T12:00:00</Date>
+											<!-- Date of booking -->
 											<TypeOfFareContractEntryRef versionRef="EXTERNAL" ref="fxc:sell_ride"/>
 											<Amount>-8.00</Amount>
 											<PaymentMethod>cash</PaymentMethod>
 											<travelSpecifications>
 												<OfferedTravelSpecification version="any" id="rydt:Cust777@trans005@sell_ride">
-													<Date>2020-10-08T11:07:00</Date>
+													<Date>2020-08-10T07:00:00 </Date>
+													<!--Date of Travel -->
 													<SalesTransactionRef version="any" ref="rydt:Cust777@trans005@sell_ride"/>
 													<DistanceMatrixElementPriceRef version="any" ref="gamma_area+alphaville_centre"/>
 													<Amount>-8.00</Amount>
@@ -1226,10 +1359,10 @@ This Shows  sample Purchases
 															<Amount>-10</Amount>
 															<AdjustmentAmount>2.00</AdjustmentAmount>
 															<PricingRuleRef ref="ryde_fee"/>
-															<Narrative> 10 charge less £2 Ryde fee</Narrative>
+															<Narrative>10 charge less £2 Ryde fee</Narrative>
 														</RuleStepResult>
 													</ruleStepResults>
-													<StartOfValidity>2020-10-08T11:07:00</StartOfValidity>
+													<StartOfValidity>2020-08-10T07:00:00 </StartOfValidity>
 													<TravelSpecificationSummaryView>
 														<Origin>
 															<VehicleMeetingPointRef version="any" ref="gamma_area"/>
@@ -1237,7 +1370,7 @@ This Shows  sample Purchases
 														<Destination>
 															<VehicleMeetingPointRef version="any" ref="alphaville_centre"/>
 														</Destination>
-														<Start>2020-10-08T11:07:00</Start>
+														<Start>2020-08-10T07:00:00 </Start>
 														<Duration>PT45M</Duration>
 														<OperatorRef version="any" ref="noc:XRYD"/>
 														<VehiclePoolerProfileRef version="any" ref="non_smoker"/>
@@ -1263,15 +1396,21 @@ This Shows  sample Purchases
 																<ServiceFacilitySetRef version="any" ref="no_smoking"/>
 																<SingleJourneyRef version="any" ref="rydt:Cust777@trans001@ride1234"/>
 																<VehicleRef version="any" ref="db54278"/>
+																<VehicleMeetingPointRef version="any" ref="gamma_area"/>
+																<VehiclePoolingMeetingPlaceRef version="any" ref="delta_park_and_ride"/>
+																<VehiclePoolingParkingAreaRef version="any" ref="delta_park_and_ride@A1"/>
+																<VehicleMeetingPointRef version="any" ref="alphaville_centre"/>
+																<VehiclePoolingMeetingPlaceRef version="any" ref="town_hall"/>
 															</validityParameters>
 														</SpecificParameterAssignment>
 													</specificParameterAssignments>
 												</OfferedTravelSpecification>
 											</travelSpecifications>
 											<travelDocuments>
-												<TravelDocument version="any" id="rydt:ticket@765452235">
+												<TravelDocument version="any" id="rydt:ticket@765452235" created="2020-08-08T12:00:00">
 													<ValidBetween>
-														<FromDate>2020-10-08T11:07:00</FromDate>
+														<FromDate>2020-08-10T07:00:00 </FromDate>
+														<ToDate>2020-08-10T08:00:00 </ToDate>
 													</ValidBetween>
 													<TypeOfTravelDocumentRef version="any" ref="mobile_application_data"/>
 													<CustomerPurchasePackageRef version="any" ref="rydt:CPP@Cust777@021"/>
@@ -1284,11 +1423,12 @@ This Shows  sample Purchases
 						</Customer>
 					</customers>
 					<mediumAccessDevices>
-						<EmvCard version="any" id="visa:47594444555666">
+						<EmvCard version="any" id="visa:47594444555666" created="2020-02-28T13:00:00">
 							<Name>E.von Ritter - Visa card</Name>
 						</EmvCard>
-						<MobileDevice version="any" id="rydt:4178671234567">
+						<MobileDevice version="any" id="rydt:4178671234567" created="2020-02-28T13:00:00">
 							<Name>Esmerelda's phone</Name>
+							<CustomerRef version="any" ref="rydt:Cust555"/>
 							<applicationInstances>
 								<MediumApplicationInstance version="any" id="rydt:4178671234567@Ryde">
 									<Name>Ryde app</Name>
@@ -1296,8 +1436,9 @@ This Shows  sample Purchases
 								</MediumApplicationInstance>
 							</applicationInstances>
 						</MobileDevice>
-						<MobileDevice version="any" id="rydt:3178672020202">
+						<MobileDevice version="any" id="rydt:3178672020202" created="2019-01-05T12:00:00">
 							<Name>Freddy's phone</Name>
+							<CustomerRef version="any" ref="rydt:Cust777"/>
 							<applicationInstances>
 								<MediumApplicationInstance version="any" id="rydt:3178672020202@Ryde">
 									<Name>Ryde app</Name>
@@ -1342,8 +1483,13 @@ This Shows  sample Purchases
 					<!-- CUSTOMER PURCHASE PACKAGES === -->
 					<customerPurchasePackages>
 						<!--  rider -->
-						<CustomerPurchasePackage version="any" id="rydt:CPP@Cust555@001">
+						<CustomerPurchasePackage version="any" id="rydt:CPP@Cust555@001" created="2020-02-28T13:00:00">
+							<ValidBetween>
+								<FromDate>2020-02-28T13:00:00</FromDate>
+								<!-- Date of Joining -->
+							</ValidBetween>
 							<Name>Membership</Name>
+							<Description>Cust555 joins ride schem as a member</Description>
 							<CustomerRef version="any" ref="rydt:Cust555"/>
 							<CustomerAccountRef version="any" ref="rydt:Cust555@AC7651"/>
 							<customerPurchasePackageElements>
@@ -1355,13 +1501,35 @@ This Shows  sample Purchases
 							<MobileDeviceRef version="any" ref="rydt:4178671234567"/>
 							<MediumApplicationInstanceRef version="any" ref="rydt:4178671234567@Ryde"/>
 						</CustomerPurchasePackage>
-						<CustomerPurchasePackage version="any" id="rydt:CPP@Cust555@005">
-							<Name>Single ride</Name>
+						<CustomerPurchasePackage version="any" id="rydt:CPP@Cust555@005" created="2020-08-08T12:00:00" changed="2020-08-10T11:50:00">
+							<Name>Book Single ride, prepaid</Name>
+							<Description>Cust555 Purchase of ride from CUST777 to be made on   2020-08-10 at - 07:00:00  </Description>
+							<!-- Package is created on Booking. -->
 							<CustomerRef version="any" ref="rydt:Cust555"/>
 							<CustomerAccountRef version="any" ref="rydt:Cust555@AC7651"/>
+							<travelSpecifications>
+								<!-- In practice might want to repeat offer definition here (rather than kust reference it)  so that CPP is self contained -->
+								<OfferedTravelSpecificationRef version="any" ref="rydt:Cust555@trans005@purchase_ride"/>
+							</travelSpecifications>
 							<customerPurchasePackageElements>
-								<CustomerPurchasePackageElement version="any" id="rydt:CPP@Cust555@005" order="1">
+								<CustomerPurchasePackageElement version="any" id="rydt:CPP@Cust555@005" order="1" created="2020-08-08T12:00:00" changed="2020-08-10T11:50:00">
 									<SalesOfferPackageElementRef version="any" ref="ryde@single_trip-SOP@mobileApp"/>
+									<!-- state gets changed when used -->
+									<MarkedAs>used</MarkedAs>
+									<elementAccesses>
+										<CustomerPurchasePackageElementAccess version="any" id="rydt:CPP@Cust555@005@001" created="2020-08-08T12:00:00">
+											<!-- State when first booked/purchased -->
+											<MarkedAs>unused</MarkedAs>
+										</CustomerPurchasePackageElementAccess>
+										<CustomerPurchasePackageElementAccess version="any" id="rydt:CPP@Cust555@005@002" changed="2020-08-10T07:00:00">
+											<!-- State when journey started  -->
+											<MarkedAs>activated</MarkedAs>
+										</CustomerPurchasePackageElementAccess>
+										<CustomerPurchasePackageElementAccess version="any" id="rydt:CPP@Cust555@005@003" changed="2020-08-10T07:55:00">
+											<!-- State when complete -->
+											<MarkedAs>used</MarkedAs>
+										</CustomerPurchasePackageElementAccess>
+									</elementAccesses>
 									<validityParameterAssignments>
 										<CustomerPurchaseParameterAssignment version="any" id="rydt:CPP@Cust555@005" order="1">
 											<limitations>
@@ -1397,8 +1565,12 @@ This Shows  sample Purchases
 							<MediumApplicationInstanceRef version="any" ref="rydt:4178671234567@Ryde"/>
 						</CustomerPurchasePackage>
 						<!--  driver -->
-						<CustomerPurchasePackage version="any" id="rydt:CPP@Cust777@001">
+						<CustomerPurchasePackage version="any" id="rydt:CPP@Cust777@001" created="2019-01-05T12:00:00">
+							<ValidBetween>
+								<FromDate>2019-01-05T12:00:00</FromDate>
+							</ValidBetween>
 							<Name>Membership</Name>
+							<Description>Cust777 joins ride scheme</Description>
 							<CustomerRef version="any" ref="rydt:Cust777"/>
 							<CustomerAccountRef version="any" ref="rydt:Cust777@AC8145"/>
 							<customerPurchasePackageElements>
@@ -1410,13 +1582,32 @@ This Shows  sample Purchases
 							<MobileDeviceRef version="any" ref="rydt:3178672020202"/>
 							<MediumApplicationInstanceRef version="any" ref="rydt:3178672020202@Ryde"/>
 						</CustomerPurchasePackage>
-						<CustomerPurchasePackage version="any" id="rydt:CPP@Cust777@021">
-							<Name>Single ride</Name>
+						<CustomerPurchasePackage version="any" id="rydt:CPP@Cust777@021" created="2020-08-06T16:00:00" changed="2020-08-10T11:50:00">
+							<Name>Provide Single ride</Name>
+							<Description>Cust777 to provide a ride to CUst555 on 2020-08-10</Description>
 							<CustomerRef version="any" ref="rydt:Cust777"/>
 							<CustomerAccountRef version="any" ref="rydt:Cust777@AC8145"/>
+							<travelSpecifications>
+								<!-- In practice might want to repeat offer definition here (rather than  just reference it)  so that CPP is self contained -->
+								<OfferedTravelSpecificationRef version="any" ref="rydt:Cust777@trans005@sell_ride"/>
+							</travelSpecifications>
 							<customerPurchasePackageElements>
 								<CustomerPurchasePackageElement version="any" id="rydt:CPP@Cust777@021" order="1">
 									<SalesOfferPackageElementRef version="any" ref="ryde@single_trip-SOP@mobileApp"/>
+									<elementAccesses>
+										<CustomerPurchasePackageElementAccess version="any" id="rydt:CPP@Cust777@005@001" created="2020-08-06T16:00:00">
+											<!-- State when first offered -->
+											<MarkedAs>unused</MarkedAs>
+										</CustomerPurchasePackageElementAccess>
+										<CustomerPurchasePackageElementAccess version="any" id="rydt:CPP@Cust777@005@002" changed="2020-08-10T07:00:00">
+											<!-- State when journey started  -->
+											<MarkedAs>activated</MarkedAs>
+										</CustomerPurchasePackageElementAccess>
+										<CustomerPurchasePackageElementAccess version="any" id="rydt:CPP@Cust777@005@003" changed="2020-08-10T07:55:00">
+											<!-- State when complete -->
+											<MarkedAs>used</MarkedAs>
+										</CustomerPurchasePackageElementAccess>
+									</elementAccesses>
 									<validityParameterAssignments>
 										<CustomerPurchaseParameterAssignment version="any" id="rydt:CPP@Cust777@021" order="1">
 											<limitations>
