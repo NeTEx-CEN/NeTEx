@@ -519,7 +519,7 @@ In addition CUSTOMER PURCHASE PACKAGES showing the parameters that might be held
 					<vehicleMeetingPlaces>
 						<VehiclePoolingMeetingPlace version="any" id="delta_park_and_ride">
 							<Name>Delta Park and ride</Name>
-							<TopographicPlaceRef version="any" ref="gamma_sur_mer"> </TopographicPlaceRef>
+							<TopographicPlaceRef version="any" ref="gamma_sur_mer"> </TopographicPlaceRef>  
 						</VehiclePoolingMeetingPlace>
 						<VehiclePoolingMeetingPlace version="any" id="bull_and_bush_inn">
 							<Name>TheBull and bush, Gamma</Name>
@@ -548,13 +548,14 @@ In addition CUSTOMER PURCHASE PACKAGES showing the parameters that might be held
 						</VehiclePoolingMeetingPlace>
 					</vehicleMeetingPlaces>
 					<vehicleMeetingPlaceAssignments>
-						<VehiclePoolingPlaceAssignment version="any" id="delta_park_and_ride@A1" order="1">
-							<CarPoolingServiceRef version="any" ref="ryde"/>
-							<VehiclePoolingParkingAreaRef version="any" ref="delta_park_and_ride@A1"/>
-						</VehiclePoolingPlaceAssignment>
 						<VehiclePoolingPlaceAssignment version="any" id="delta_park_and_ride" order="1">
 							<CarPoolingServiceRef version="any" ref="ryde"/>
+							<VehiclePoolingMeetingPlaceRef  version="any"  ref="delta_park_and_ride"/> 
+						</VehiclePoolingPlaceAssignment>
+						<VehiclePoolingPlaceAssignment version="any" id="delta_park_and_ride@A1" order="2">
+							<CarPoolingServiceRef version="any" ref="ryde"/>
 							<VehiclePoolingMeetingPlaceRef version="any" ref="delta_park_and_ride"/>
+							<VehiclePoolingParkingBayRef version="any" ref="delta_park_and_ride@A1@01"/>
 						</VehiclePoolingPlaceAssignment>
 					</vehicleMeetingPlaceAssignments>
 				</MobilityServiceFrame>
@@ -1143,6 +1144,7 @@ This Shows  sample Purchases
 														<FromDate>2020-02-28T13:00:00</FromDate>
 													</ValidBetween>
 													<TypeOfTravelDocumentRef version="any" ref="mobile_application_data"/>
+													<CustomerPurchasePackageRef version="any" ref="rydt:CPP@Cust555@001"/>
 												</TravelDocument>
 											</travelDocuments>
 										</SalesTransaction>
@@ -1195,7 +1197,7 @@ This Shows  sample Purchases
 																<ServiceFacilitySetRef version="any" ref="no_smoking"/>
 																<SingleJourneyRef version="any" ref="rydt:Cust777@trans001@ride1234"/>
 																<VehicleRef version="any" ref="db54278"/>
-																<!-- These are also given by Journey  but may be more specifc than opffer eg if agree to specif location-->
+																<!-- These are also given by Journey  but may be more specific than offer eg if agree to specific location-->
 																<VehicleMeetingPointRef version="any" ref="gamma_area"/>
 																<VehiclePoolingMeetingPlaceRef version="any" ref="delta_park_and_ride"/>
 																<VehiclePoolingParkingAreaRef version="any" ref="delta_park_and_ride@A1"/>
@@ -1494,7 +1496,7 @@ This Shows  sample Purchases
 							<CustomerAccountRef version="any" ref="rydt:Cust555@AC7651"/>
 							<customerPurchasePackageElements>
 								<CustomerPurchasePackageElement version="any" id="rydt:CPP@Cust555@001" order="1">
-									<SalesOfferPackageElementRef version="any" ref="ryde@single_trip-SOP@mobileApp"/>
+									<SalesOfferPackageElementRef version="any" ref="ryde@membership-SOP@mobileApp"/>
 								</CustomerPurchasePackageElement>
 							</customerPurchasePackageElements>
 							<SalesTransactionRef version="any" ref="rydt:Cust555@trans001@join_as_member"/>
@@ -1524,10 +1526,29 @@ This Shows  sample Purchases
 										<CustomerPurchasePackageElementAccess version="any" id="rydt:CPP@Cust555@005@002" changed="2020-08-10T07:00:00">
 											<!-- State when journey started  -->
 											<MarkedAs>activated</MarkedAs>
+											<validityParameterAssignments>
+												<CustomerPurchaseParameterAssignment version="any" order="1" id="rydt:Cust555@trans005@002">
+													<Name>Pick up at designated point</Name>
+													<validityParameters>
+														<VehicleMeetingPointRef version="any" ref="gamma_area"/>
+														<VehiclePoolingMeetingPlaceRef version="any" ref="delta_park_and_ride"/>
+														<VehiclePoolingParkingAreaRef version="any" ref="delta_park_and_ride@A1"/>
+													</validityParameters>
+												</CustomerPurchaseParameterAssignment>
+											</validityParameterAssignments>
 										</CustomerPurchasePackageElementAccess>
 										<CustomerPurchasePackageElementAccess version="any" id="rydt:CPP@Cust555@005@003" changed="2020-08-10T07:55:00">
 											<!-- State when complete -->
 											<MarkedAs>used</MarkedAs>
+											<validityParameterAssignments>
+												<CustomerPurchaseParameterAssignment version="any" order="1" id="rydt:Cust555@trans005@003">
+													<Name>Set down at designated point</Name>
+													<validityParameters>
+														<VehicleMeetingPointRef version="any" ref="alphaville_centre"/>
+														<VehiclePoolingMeetingPlaceRef version="any" ref="town_hall"/>
+													</validityParameters>
+												</CustomerPurchaseParameterAssignment>
+											</validityParameterAssignments>
 										</CustomerPurchasePackageElementAccess>
 									</elementAccesses>
 									<validityParameterAssignments>
@@ -1575,7 +1596,7 @@ This Shows  sample Purchases
 							<CustomerAccountRef version="any" ref="rydt:Cust777@AC8145"/>
 							<customerPurchasePackageElements>
 								<CustomerPurchasePackageElement version="any" id="rydt:CPP@Cust777@001" order="1">
-									<SalesOfferPackageElementRef version="any" ref="ryde@single_trip-SOP@mobileApp"/>
+									<SalesOfferPackageElementRef version="any" ref="ryde@membership-SOP@mobileApp"/>
 								</CustomerPurchasePackageElement>
 							</customerPurchasePackageElements>
 							<SalesTransactionRef version="any" ref="rydt:Cust777@trans001@join_as_member"/>

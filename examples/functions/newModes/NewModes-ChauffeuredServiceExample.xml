@@ -437,6 +437,16 @@
 							<parkingAreas>
 								<TaxiParkingArea version="any" id="alphaville_airport_taxi_parking@A1">
 									<TotalCapacity>20</TotalCapacity>
+									<bays>
+										<ParkingBay version="any" id="alphaville_airport_taxi_parking@A1@chauff_1">
+											<Name>Chauffeured service pickup Bay</Name>
+											<Label>Chauffeur 1</Label>
+										</ParkingBay>
+										<ParkingBay version="any" id="alphaville_airport_taxi_parking@A1@chauff_2">
+											<Name>Chauffeured service pickup Bay</Name>
+											<Label>Chauffeur 1</Label>
+										</ParkingBay>
+									</bays>
 								</TaxiParkingArea>
 							</parkingAreas>
 						</Parking>
@@ -585,10 +595,12 @@
 						<VehiclePoolingPlaceAssignment version="any" id="alphaville_airport_taxi_parking@pick_up" order="1">
 							<ChauffeuredVehicleServiceRef version="any" ref="hj_cars"/>
 							<VehiclePoolingMeetingPlaceRef version="any" ref="alphaville_airport_pick_up"/>
+							<ParkingBayRef version="any" ref="alphaville_airport_taxi_parking@A1@chauff_1"/>
 						</VehiclePoolingPlaceAssignment>
 						<VehiclePoolingPlaceAssignment version="any" id="alphaville_airport_taxi_parking@set_down" order="1">
 							<ChauffeuredVehicleServiceRef version="any" ref="hj_cars"/>
 							<VehiclePoolingMeetingPlaceRef version="any" ref="alphaville_airport_set_down"/>
+							<ParkingBayRef version="any" ref="alphaville_airport_taxi_parking@A1@chauff_2"/>
 						</VehiclePoolingPlaceAssignment>
 						<VehiclePoolingPlaceAssignment version="any" id="alphaville_gare_taxi_parking@pick_up" order="1">
 							<ChauffeuredVehicleServiceRef version="any" ref="hj_cars"/>
@@ -599,7 +611,6 @@
 							<VehiclePoolingMeetingPlaceRef version="any" ref="alphaville_gare_set_down"/>
 						</VehiclePoolingPlaceAssignment>
 					</vehicleMeetingPlaceAssignments>
-			
 				</MobilityServiceFrame>
 				<!--==== FARES : Prepriced trips ==== -->
 				<FareFrame version="1.0" id="hjm:chauffeured_taxi_example-prepriced_trips" dataSourceRef="hjm:home_james" responsibilitySetRef="hjm:tariffs">
@@ -709,29 +720,23 @@
 									</GenericParameterAssignment>
 								</FareStructureElement>
 							</fareStructureElements>
-													<distanceMatrixElements>
-								 
- 
-					 
-				 
-						<DistanceMatrixElement version="any" id="gamma_area+alphaville_airport">
-							<InverseAllowed>true</InverseAllowed>
-								<StartMeetingPointRef version="any" ref="gamma_area"/>
-							<EndMeetingPointRef version="any" ref="alphaville_airport"/>
-						</DistanceMatrixElement>
-						<DistanceMatrixElement version="any" id="alphaville_airport+alphaville_centre">
-							<InverseAllowed>true</InverseAllowed> 
-														<StartMeetingPointRef version="any" ref="alphaville_airport"/>
-							<EndMeetingPointRef version="any" ref="alphaville_centre"/>
-							
-						</DistanceMatrixElement>
-						<DistanceMatrixElement version="any" id="gamma_area+alphaville_gare">
-							<InverseAllowed>true</InverseAllowed>
-											<StartMeetingPointRef version="any" ref="gamma_area"/>
-							<EndMeetingPointRef version="any" ref="alphaville_gare"/>
-						</DistanceMatrixElement>
-						</distanceMatrixElements>
-						
+							<distanceMatrixElements>
+								<DistanceMatrixElement version="any" id="gamma_area+alphaville_airport">
+									<InverseAllowed>true</InverseAllowed>
+									<StartMeetingPointRef version="any" ref="gamma_area"/>
+									<EndMeetingPointRef version="any" ref="alphaville_airport"/>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="any" id="alphaville_airport+alphaville_centre">
+									<InverseAllowed>true</InverseAllowed>
+									<StartMeetingPointRef version="any" ref="alphaville_airport"/>
+									<EndMeetingPointRef version="any" ref="alphaville_centre"/>
+								</DistanceMatrixElement>
+								<DistanceMatrixElement version="any" id="gamma_area+alphaville_gare">
+									<InverseAllowed>true</InverseAllowed>
+									<StartMeetingPointRef version="any" ref="gamma_area"/>
+									<EndMeetingPointRef version="any" ref="alphaville_gare"/>
+								</DistanceMatrixElement>
+							</distanceMatrixElements>
 						</Tariff>
 					</tariffs>
 					<!--==== Fare Usage Parameters ==== -->
@@ -964,7 +969,7 @@
 										<LimitationGroupingType>AND</LimitationGroupingType>
 										<limitations>
 											<Cancelling version="any" id="home_james@charter@refunding">
-												<Name>Canc ancel up top 3 hours before</Name>
+												<Name>Can cancel up top 3 hours before</Name>
 												<BookingArrangements>
 													<MinimumBookingPeriod>PT3H</MinimumBookingPeriod>
 												</BookingArrangements>
@@ -1104,7 +1109,7 @@ This Shows  sample Purchases
 				</ResourceFrame>
 				<!--==== NETWORK ==== -->
 				<MobilityJourneyFrame version="1.2" id="hjmt:sample_transactions">
- 		<singleJourneyPaths>
+					<singleJourneyPaths>
 						<SingleJourneyPath version="any" id="hmjt:anon@trans005@ride5163">
 							<Name>Path from Airportand   to Chez Ritter.</Name>
 							<Distance>25.00</Distance>
@@ -1153,7 +1158,7 @@ This Shows  sample Purchases
 								</VehicleMeetingPointAssignment>
 							</meetingPointAssignments>
 						</SingleJourney>
-					</singleJourneys> 
+					</singleJourneys>
 				</MobilityJourneyFrame>
 				<SalesTransactionFrame version="1.2" id="hjmt:sample_transactions">
 					<Name>Home James  Sample Transactions</Name>
