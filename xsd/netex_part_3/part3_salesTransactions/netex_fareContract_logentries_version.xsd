@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1"
+	id="netex_salesTransaction_version">
+	<xsd:include schemaLocation="netex_salesContract_version.xsd"/>
+	<xsd:include schemaLocation="netex_travelDocument_support.xsd"/>
+	<xsd:include schemaLocation="netex_fareContract_logentries_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_part_1/part1_ifopt/netex_ifopt_stopPlace_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_part_1/part1_ifopt/netex_ifopt_equipmentTicketing_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_part_2/part2_journeyTimes/netex_serviceJourney_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_part_2/part2_journeyTimes/netex_datedVehicleJourney_support.xsd"/>
+	<!-- ======================================================================= -->
+	<xsd:annotation>
+		<xsd:appinfo>
+			<Metadata xmlns="http://www.govtalk.gov.uk/CM/gms-xs">
+				<Aggregation>main schema</Aggregation>
+				<Audience>e-service developers</Audience>
+				<Coverage>Europe</Coverage>
+				<Creator>Arne Seime</Creator>
+				<Date>
+					<Created>2021-08-10</Created>
+					Add Fare Contract log entries related to validation and control
+				</Date>
+				<Description>
+					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
+					<p>This sub-schema describes the FARE CONTRACT LOG ENTRY types related to validation and control</p>
+				</Description>
+				<Format>
+					<MediaType>text/xml</MediaType>
+					<Syntax>http://www.w3.org/2001/XMLSchema</Syntax>
+					<Description>XML schema, W3C Recommendation 2001</Description>
+				</Format>
+				<Language>[ISO 639-2/B] ENG</Language>
+				<Rights>Unclassified
+					<Copyright>CEN, Crown Copyright 2009-2020</Copyright>
+				</Rights>
+				<Source>
+					<ul>
+						<li>Derived from the Transmodel, VDV, TransXChange, NEPTUNE, BISON and Trident standards.</li>
+					</ul>
+				</Source>
+				<Status>Version 1.0 Draft for approval</Status>
+				<Subject>
+					<Category>Arts, recreation and travel, Tourism, Travel (tourism), Transport,
+						Air transport, Airports,
+						Ports and maritime transport, Ferries (marine),
+						Public transport, Bus services, Coach services, Bus stops and stations,
+						Rail transport, Railway stations and track, Train services, Underground trains,
+						Business and industry, Transport, Air transport , Ports and maritime transport, Public transport,
+						Rail transport, Roads and Road transport
+					</Category>
+					<Project>CEN TC278 WG3 SG9.</Project>
+				</Subject>
+				<Title>NeTEx CUSTOMER ACCOUNT USE identifier types.</Title>
+				<Type>Standard</Type>
+			</Metadata>
+		</xsd:appinfo>
+		<xsd:documentation>NeTEx: CUSTOMER ACCOUNT USE identifier types.</xsd:documentation>
+	</xsd:annotation>
+	<!-- ====VALIDATION ENTRY ================================================ -->
+	<xsd:element name="ValidationEntry" abstract="true" substitutionGroup="FareContractEntry_">
+		<xsd:annotation>
+			<xsd:documentation>An abstract element defining a VALIDATION ENTRY</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="ValidationEntry_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+							<xsd:group ref="LogEntryGroup"/>
+							<xsd:group ref="FareContractEntryGroup"/>
+							<xsd:group ref="ValidationEntryGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="ValidationEntryIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="ValidationEntry_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for VALIDATION ENTRY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="FareContractEntry_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="ValidationEntryGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="ValidationEntryGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for VALIDATION ENTRY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="TravelDocumentRef" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+
+	<!-- ====PASSENGER TRAVEL ENTRY ================================================ -->
+	<xsd:element name="PassengerTravelEntry" abstract="true" substitutionGroup="FareContractEntry_">
+		<xsd:annotation>
+			<xsd:documentation>An abstract element defining a PASSENGER TRAVEL ENTRY</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="PassengerTravelEntry_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+
+						<xsd:sequence>
+							<xsd:group ref="LogEntryGroup"/>
+						</xsd:sequence>
+
+						<xsd:sequence>
+							<xsd:group ref="FareContractEntryGroup"/>
+						</xsd:sequence>
+
+						<xsd:sequence>
+							<xsd:group ref="ValidationEntryGroup"/>
+						</xsd:sequence>
+
+						<xsd:sequence>
+							<xsd:group ref="PassengerTravelEntryGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="PassengerTravelEntryIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="PassengerTravelEntry_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for PASSENGER TRAVEL ENTRY</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="ValidationEntry_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="PassengerTravelEntryGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="PassengerTravelEntryGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for PASSENGER TRAVEL ENTRY</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:group ref="ControlMeansGroup"/>
+			<xsd:group ref="DeviceRelatedControlMeansGroup"/>
+		</xsd:sequence>
+	</xsd:group>
+
+	<xsd:group name="ControlMeansGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for CONTROL MEANS group</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="DeviceRelatedControlMeansGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for DEVICE RELATED CONTROL MEANS</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:sequence>
+				<xsd:element ref="TicketValidatorEquipmentRef">
+					<xsd:annotation>
+						<xsd:documentation>The specific device that was used for control</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element ref="StopPlaceRef" minOccurs="0"/>
+				<xsd:element ref="QuayRef" minOccurs="0"/>
+				<xsd:element ref="ServiceJourneyRef" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:group>
+	
+	<!-- ====PASSENGER VALIDATE TRAVEL ENTRY ================================================ -->
+	<xsd:element name="PassengerValidateTravelEntry" abstract="false" substitutionGroup="FareContractEntry_">
+		<xsd:annotation>
+			<xsd:documentation>Element defining a PASSENGER VALIDATE TRAVEL ENTRY</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="PassengerValidateTravelEntry_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="LogEntryGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="FareContractEntryGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="ValidationEntryGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="PassengerTravelEntryGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="PassengerValidateTravelEntryGroup"/>
+					</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="PassengerValidateTravelEntryIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="PassengerValidateTravelEntry_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for PASSENGER VALIDATE TRAVEL ENTRY</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="PassengerTravelEntry_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="PassengerValidateTravelEntryGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="PassengerValidateTravelEntryGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for PASSENGER VALIDATE TRAVEL ENTRY</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<!-- ADD ELEMENTS FOR PASSENGER VALIDATE TRAVEL ENTRY -->
+		</xsd:sequence>
+	</xsd:group>
+
+	<!-- ====PASSENGER USED SAME STOP ENTRY ================================================ -->
+	<xsd:element name="PassengerUsedSameStopEntry" abstract="false" substitutionGroup="FareContractEntry_">
+		<xsd:annotation>
+			<xsd:documentation>Element defining a PASSENGER USED SAME STOP ENTRY</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="PassengerUsedSameStopEntry_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="LogEntryGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="FareContractEntryGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="ValidationEntryGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="PassengerTravelEntryGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="PassengerUsedSameStopEntryGroup"/>
+						</xsd:sequence>
+				
+					</xsd:sequence>
+					<xsd:attribute name="id" type="PassengerUsedSameStopEntryIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="PassengerUsedSameStopEntry_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for PASSENGER USED SAME STOP ENTRY</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="PassengerTravelEntry_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="PassengerUsedSameStopEntryGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="PassengerUsedSameStopEntryGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for PASSENGER USED SAME STOP ENTRY</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<!-- ADD ELEMENTS FOR PASSENGER USED SAME STOP ENTRY -->
+		</xsd:sequence>
+	</xsd:group>
+
+</xsd:schema>
