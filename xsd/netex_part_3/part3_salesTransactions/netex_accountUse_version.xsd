@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_accouuntUse_version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1"
+	id="netex_accouuntUse_version">
 	<xsd:include schemaLocation="netex_accountUse_support.xsd"/>
 	<xsd:include schemaLocation="netex_customerPurchasePackage_version.xsd"/>
 	<!-- ======================================================================= -->
@@ -15,6 +17,13 @@
 					Align with TM
 					Add CustomerAccountEntry as a base type for Customer Account log entries
 					Add CustomerRegistrationEntry and CustomerDeregistrationEntry as concrete CustomerAccountEntries
+				</Date>
+				<Date>
+					<Created>2021-08-09</Created>
+					Add NoAccessRightsOnAccount similar to FareContractEntry NoAccessRights (not in Netex yet) to signal that no 
+					access rights exists on any FareContract on the account that can be activated
+					Add InsufficientAccessRightsOnAccount similar to FareContractEntry InsufficientAccessRights (not in Netex yet) to signal that 
+					activatable access rights exists on any of the FareContracts on the account, but cannot be activated as they do not match requirements (due to wrong farezone, outside valid dates/time of day etc)
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -52,6 +61,22 @@
 		</xsd:appinfo>
 		<xsd:documentation>NeTEx: ACCOUNT USE types.</xsd:documentation>
 	</xsd:annotation>
+	<xsd:group name="CustomerAccountEntryLocationGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements specifying where event originated.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="StopPlaceRef">
+				<xsd:annotation><xsd:documentation>StopPlace where activitiy leading to event happened</xsd:documentation></xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="ServiceJourneyRef">
+				<xsd:annotation><xsd:documentation>ServiceJourney where activitiy leading to event happened</xsd:documentation></xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="DistanceMatrixElementRef">
+				<xsd:annotation><xsd:documentation>DistanceMatrixElement where activitiy leading to event happened</xsd:documentation></xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
 	<!-- ====CUSTOMER ACCOUNT ENTRY-->
 	<xsd:complexType name="customerAccountEntries_RelStructure">
 		<xsd:annotation>
@@ -74,7 +99,6 @@
 	<xsd:element name="CustomerAccountEntry" abstract="true" substitutionGroup="CustomerAccountEntry_">
 		<xsd:annotation>
 			<xsd:documentation>A log entry describing an event referring to the life of a CUSTOMER ACCOUNT: customer registration, deregistration, account suspension/re-enabling etc
-				
 			</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
@@ -222,6 +246,94 @@
 	<xsd:group name="CustomerDeregistrationGroup">
 		<xsd:annotation>
 			<xsd:documentation>Elements for CUSTOMER DEREGISTRATION.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<!-- No specific content -->
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ==== NO ACCESS RIGHTS ON ACCOUNT ================================================ -->
+	<xsd:element name="NoAccessRightsOnAccount" abstract="false" substitutionGroup="CustomerAccountEntry_">
+		<xsd:annotation>
+			<xsd:documentation>A NO ACCESS RIGHTS ON ACCOUNT ENTRY records the detection of a passenger without any valid ticket.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="NoAccessRightsOnAccount_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+							<xsd:group ref="LogEntryGroup"/>
+							<xsd:group ref="CustomerAccountEntryGroup"/>
+							<xsd:group ref="NoAccessRightsOnAccountGroup"/>
+							<xsd:group ref="CustomerAccountEntryLocationGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="NoAccessRightsOnAccountIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="NoAccessRightsOnAccount_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for NO ACCESS RIGHTS ON ACCOUNT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="CustomerAccountEntry_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="NoAccessRightsOnAccountGroup"/>
+					<xsd:group ref="CustomerAccountEntryLocationGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="NoAccessRightsOnAccountGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for NO ACCESS RIGHTS ON ACCOUNT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<!-- No specific content -->
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ==== INSUFFICIENT ACCESS RIGHTS ON ACCOUNT ================================================ -->
+	<xsd:element name="InsufficientAccessRightsOnAccount" abstract="false" substitutionGroup="CustomerAccountEntry_">
+		<xsd:annotation>
+			<xsd:documentation>INSUFFICIENT ACCESS RIGHTS ENTRY records the result of the comparison between one or several CONTROL ENTRies 
+				and the theoretical access rights attached to the TRAVEL DOCUMENT controlled, detecting insufficient rights to consume and possibly 
+				providing a DEBIT or one or more OFFENCEs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="InsufficientAccessRightsOnAccount_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+							<xsd:group ref="LogEntryGroup"/>
+							<xsd:group ref="CustomerAccountEntryGroup"/>
+							<xsd:group ref="InsufficientAccessRightsOnAccountGroup"/>
+							<xsd:group ref="CustomerAccountEntryLocationGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="InsufficientAccessRightsOnAccountIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="InsufficientAccessRightsOnAccount_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for NO ACCESS RIGHTS ON ACCOUNT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="CustomerAccountEntry_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="InsufficientAccessRightsOnAccountGroup"/>
+					<xsd:group ref="CustomerAccountEntryLocationGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="InsufficientAccessRightsOnAccountGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for NO ACCESS RIGHTS ON ACCOUNT.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<!-- No specific content -->
