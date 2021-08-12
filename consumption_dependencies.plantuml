@@ -1,0 +1,206 @@
+@startuml
+title Consumption dependencies between CPPEs
+
+package "Sales offer package model" {
+	class SalesOfferPackage
+	class SalesOfferPackageElement
+	class FareProduct
+	class ValidableElement
+	class AccessRightInProduct  {
+		-int maximumAccess // number of instances of validableElement
+	}
+	class FareStructureElement
+	class GenericParameterAssignment
+
+	SalesOfferPackage "1" *-- "1..n" SalesOfferPackageElement: "salesOfferPackageElements"
+	SalesOfferPackageElement "1" *-- "1" FareProduct: "salesOfferPackageElements"
+	FareProduct  "1" *-- "1..n" AccessRightInProduct : "accessRightInProduct"
+	AccessRightInProduct  "1" *-- "1..n" ValidableElement : "validableElement (number defined by MaximumAccess)"
+	ValidableElement  "1" *-- "1..n" FareStructureElement : "fareStructureElements"
+	SalesOfferPackageElement "1" *-- "0..n" GenericParameterAssignment: "validityParameterAssignments"
+	FareProduct "1" *-- "0..n" GenericParameterAssignment: "validityParameterAssignments"
+	ValidableElement "1" *-- "0..n" GenericParameterAssignment: "validityParameterAssignments"
+	FareStructureElement "1" *-- "0..n" GenericParameterAssignment: "validityParameterAssignments"
+}
+
+package "Customer purchase package model" {
+	class CustomerPurchasePackage
+	class CustomerPurchasePackageElement
+	class CustomerPurchasePackageElementAccess
+	class CustomerPurchaseParameterAssignment
+
+	CustomerPurchasePackage "1" *-- "1..n" CustomerPurchasePackageElement: "customerPurchasePackageElements"
+	CustomerPurchasePackageElement "1" *-- "0..n" CustomerPurchasePackageElementAccess: "elementAccesses"
+	CustomerPurchasePackageElement "1" *-- "0..n" CustomerPurchaseParameterAssignment: "validityParameterAssignments"
+
+	enum MarkedAs {
+		-unused
+		-activated
+		-used
+		-marked
+		-expired
+	}
+}
+
+package "Access right parameter model" {
+	class ValidityParameterAssignment
+
+	ValidityParameterAssignment <|-- CustomerPurchaseParameterAssignment
+	ValidityParameterAssignment <|-- GenericParameterAssignment
+
+}
+
+
+package "Consumption dependency model" {
+	note top of ConsumptionUtilisationDependency
+		Describes a dependency that one or more CustomerPurchasePackageElementAccess
+		for a given CustomerPurchasePackageElement must be in the state defined by MarkedAs
+		in order for elements listed in ConsumptionUtilisation to proceed state changes
+		(defined using CPPAs with TypeOfAccessRightParameterAssignment=xxxPolicyAssignment inside the corresponding CPPE)
+	end note
+	class ConsumptionUtilisationDependency #lightblue
+
+
+
+
+	note top of ConsumptionDependency
+		Defines the state the corresponding
+		CustomerPurchasePackageElementAccess
+		must be in in order for dependency to be satisfied
+	end note
+	class ConsumptionDependency #lightblue
+
+	note bottom of CustomerPurchasePackageElementConsumptionDependency
+		Specialisation referring to an CPPE.
+		Used in the CustomerPurchasePackage hierarchy
+	end note
+	class CustomerPurchasePackageElementConsumptionDependency #lightblue
+
+
+	note bottom of AccessRightInProductConsumptionDependency
+		Specialisation referring to an AccessRightInProduct with
+		a given access number (used if MaximumAccess > 1)
+	end note
+	class AccessRightInProductConsumptionDependency #lightblue {
+		-int accessNumber
+	}
+	ConsumptionDependency <|-- CustomerPurchasePackageElementConsumptionDependency
+	ConsumptionDependency <|-- AccessRightInProductConsumptionDependency
+
+	AccessRightInProductConsumptionDependency --> AccessRightInProduct
+	CustomerPurchasePackageElementConsumptionDependency --> CustomerPurchasePackageElement
+
+
+
+
+	note bottom of CrossConstraint
+		Defines a constraint accross multiple
+		parameter assigments.
+		This is used to ensure that 2 or more
+		ValidityParameterAssignment
+		(TypeOfAccessRightParameterAssignment=SpecificationPolicyAssignment)
+		must receive the same Journey-details when activating/consuming the element
+	end note
+	class CrossConstraint #lightblue{
+	}
+
+
+
+
+
+	note top of ConsumptionUtilisation
+		The CPPE/AccessRightInProduct that is affected when
+		dependency is satisfied
+	end note
+	class ConsumptionUtilisation #lightblue
+
+	note bottom of CustomerPurchasePackageElementConsumptionUtilisation
+		Specialisation referring to a CustomerPurchasePackageElement
+	end note
+	class CustomerPurchasePackageElementConsumptionUtilisation #lightblue
+
+	note bottom of AccessRightInProductConsumptionUtilisation
+		Specialisation referring to an AccessRightInProduct with
+		a given access number (used if MaximumAccess > 1)
+	end note
+	class AccessRightInProductConsumptionUtilisation #lightblue {
+		-int accessNumber
+	}
+	ConsumptionUtilisation <|-- CustomerPurchasePackageElementConsumptionUtilisation
+	ConsumptionUtilisation <|-- AccessRightInProductConsumptionUtilisation
+
+
+	CustomerPurchasePackageElementConsumptionUtilisation "1" --> "1" CustomerPurchasePackageElement: "cppe in question"
+	AccessRightInProductConsumptionUtilisation "1" --> "1" AccessRightInProduct: "access right in question"
+
+
+
+
+
+	ConsumptionDependency "1" --> "1" CustomerPurchasePackageElement: "cppe in question"
+	ConsumptionDependency "1" --> "1" MarkedAs: "markedAs status"
+	CustomerPurchasePackageElementConsumptionUtilisation  .. CustomerPurchasePackageElementAccess: "element access in state"
+
+	note top of MaximumNumberOfAccesses
+		Maximum number the CPPE can be transitioned
+		Overall value for all listed ConsumptionUtilisation
+	end note
+	class MaximumNumberOfAccesses #lightblue {
+		-integer value
+	}
+	note bottom of MaximumNumberOfAccessesType
+		Either limited with a given value
+		or unlimited
+	end note
+	enum MaximumNumberOfAccessesType #lightblue {
+		-limited
+		-unlimited
+	}
+	MaximumNumberOfAccesses *--  MaximumNumberOfAccessesType: "type"
+
+
+	note top of ConsumptionTransitionPolicy
+		Shall the coresponding CPPE referred to in ConsumptionUtilisation
+		be transitioned automatically (according to CPPE parameters)
+		or manually at the convenience of the traveller/external system
+	end note
+	enum ConsumptionTransitionPolicy #lightblue{
+		-manual
+		-automatic
+	}
+
+	CustomerPurchasePackage "1" *-- "0..n" ConsumptionUtilisationDependency: "consumptionUtilisationDependencies"
+	SalesOfferPackage "1" *-- "0..n" ConsumptionUtilisationDependency: "consumptionUtilisationDependencies"
+
+
+
+
+	ConsumptionUtilisationDependency "1" *-- "0..n" ConsumptionDependency: "consumptionDependencies"
+	ConsumptionUtilisationDependency *--  MaximumNumberOfAccesses: "maximumNumberOfAccesses"
+	ConsumptionUtilisationDependency "1" *-- "0..n" ConsumptionUtilisation: "consumptionUtilisations"
+	ConsumptionUtilisationDependency "1" *-- "0..n" CrossConstraint: "crossConstraints"
+	ConsumptionUtilisationDependency *--  LogicalOperatorEnumeration: "consumptionDependenciesGrouping"
+	ConsumptionUtilisationDependency *--  LogicalOperatorEnumeration: "consumptionUtilisationGrouping"
+	ConsumptionUtilisationDependency *--  ConsumptionTransitionPolicy: "transitionPolicy"
+
+
+	class EntitlementConstraintStructure {
+		-JourneyConstraint journeyConstraint
+		-...
+	}
+
+	CrossConstraint  *--  EntitlementConstraintStructure: "constraint"
+	CrossConstraint "1" *-- "2..n" ValidityParameterAssignment: "validityParameterAssignments"
+
+	enum LogicalOperatorEnumeration {
+		-AND
+		-OR
+		-XOR
+		-NOT
+		-NAND
+		-NOR
+		-XNOR
+	}
+
+}
+@enduml
