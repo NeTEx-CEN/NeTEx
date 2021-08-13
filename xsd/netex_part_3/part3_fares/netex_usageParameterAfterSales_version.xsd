@@ -217,7 +217,7 @@ Rail transport, Roads and Road transport
 			<xsd:element name="NotificationPeriod" type="xsd:duration" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Notice period  needed before transaction can be made. + v1.1
-</xsd:documentation>
+					</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -252,6 +252,76 @@ Rail transport, Roads and Road transport
 			<xsd:element name="typesOfPaymentMethodRef" type="TypeOfPaymentMethodRefs_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>POther AYMENT METHODs allowd to pay fee or to make refund.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ====REVERTING =================================================== -->
+	<xsd:element name="Reverting" abstract="false" substitutionGroup="UsageParameter_">
+		<xsd:annotation>
+			<xsd:documentation>Common rules describing reverting of activations and markings of tickets (CustomerPurchasePackageElementAccess) 
+				in case the traveller, conductor og customer service representative or others accidentially activates/validates/uses the wrong ticket/FareContract</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="Reverting_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="PriceableObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="UsageParameterGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="RevertingGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="RevertingIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="Reverting_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for REVERTING.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="UsageParameter_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="RevertingGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="RevertingGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for REVERTING Group.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="TypeOfResponsibilityRoleRef">
+				<xsd:annotation>
+					<xsd:documentation>Type of role required of the part initiating the reverting (ie self service, customer service, conductor etc)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MinimumTimeAfterUse" type="xsd:duration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Minimum time after erranous activation/use of the ticket the reverting is allowed</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MaxiumTimeAfterUse" type="xsd:duration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Maximum time after erranous activation/use of the ticket the reverting is allowed</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="AllowedAfterControl" type="xsd:boolean">
+				<xsd:annotation>
+					<xsd:documentation>Whether ticket can be reverted after ticket has been exposed to ticket control</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
