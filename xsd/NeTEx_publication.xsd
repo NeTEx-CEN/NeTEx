@@ -17,6 +17,9 @@
 				<Coverage>Europe</Coverage>
 				<Creator>First Drafted for NeTEx version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.  mailto:schemer@netex.org.uk</Creator>
 				<Date>
+					<Modified>2020-11-06</Modified>NewMOdes (Norway) Add  RelatedOrganisation and reusable   Contacts  constraints.
+				</Date>
+				<Date>
 					<Modified>2020-10-14</Modified>NewModes Add Constraints (NM)
 						Add MobilityServiceFrame, MobilityJourneyFrame.
 						TypeOfProof, TaxiRank, TaxiStand.  TypeOfParking
@@ -1386,6 +1389,27 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
+		<!-- =====Contact============================== -->
+		<!-- =====Contact unique========================== -->
+		<xsd:unique name="Contact_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [Contact Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:Contact"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====Contact Key ========================== -->
+		<xsd:keyref name="Contact_KeyRef" refer="netex:Contact_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:ContactRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="Contact_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:Contact"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
 		<!-- =====ORGANISATION CONSTRAINTS========================== -->
 		<!-- =====TypeOfOrganisation============================== -->
 		<!-- =====TypeOfOrganisation unique========================== -->
@@ -1461,6 +1485,30 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
+		
+	<!-- =====RelatedOrganisation============================== -->
+		<!-- =====RelatedOrganisation unique========================== -->
+		<xsd:unique name="RelatedOrganisation_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [RelatedOrganisation Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:RelatedOrganisation"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====RelatedOrganisation Key ========================== -->
+		<xsd:keyref name="RelatedOrganisation_KeyRef" refer="netex:RelatedOrganisation_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:RelatedOrganisationRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="RelatedOrganisation_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:RelatedOrganisation"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>		
+		
+		
 		<!-- =====Address Constraints========================= -->
 		<!-- =====Address============================== -->
 		<xsd:keyref name="Address_AnyKeyRef" refer="netex:Address_AnyVersionedKey">
