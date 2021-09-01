@@ -16,9 +16,11 @@
 				<Contributor>CEN TC278 WG3 SG9 Team.</Contributor>
 				<Coverage>Europe</Coverage>
 				<Creator>First Drafted for NeTEx version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.  mailto:schemer@netex.org.uk</Creator>
-
 				<Date>
-					<Modified>2020-11-16</Modified>NewMOdes Drop ALternativeTransprotOperatpor
+					<Modified>2021-01-08</Modified>NewModes: drop MobilityServiceElement, MobilityServiceElementPrice, add constraint for ModeRestriction assessment
+				</Date>
+				<Date>
+					<Modified>2020-11-16</Modified>NewModes: Drop AlternativeTransportOperator
 				</Date>
 				<Date>
 					<Modified>2020-11-06</Modified>NewMOdes (Norway) Add  RelatedOrganisation and reusable   Contacts  constraints.
@@ -30,7 +32,7 @@
 						ScheduledOperation, FlexibleOperation, VehicleRental, VehicleSharing, VehiclePooling.
 						VehicleRentalService, VehicleSharingService, CarPoolingService. TaxiService, ChaufferedVehicleService. OnlineService.
 						  OnlineServiceOperator.
-						PersonalVehicleType, CycleModelProfile, CarModelProfile. TypeOfFuel
+						SimpleVehicleType, CycleModelProfile, CarModelProfile. TypeOfFuel
 						Fleet, TypeOfFleet.
 						VehicleMeetingPoint, VehicleMeetingLink, VehicleMeetingPlace.
 						VehicleMeetingPointAssignment, DynamicVehicleMeetingPointAssignment.
@@ -39,7 +41,7 @@
 						VehicleReleaseEquipment, RefuellingEquipment.
 						TaxiServicePlaceAssignment, VehiclePoolingPlaceAssignment, VehicleSharingPlaceAssignment.
 						SingleJourneyPath, VehicleMeetingPointInPath, SingleJourney, GroupOfSingleJourneys.
-						MobilityServiceElement, MobilityServiceElementPrice, VehiclePoolerProfile (USerProfile)
+						 VehiclePoolerProfile (USerProfile)
 						VehicleAccessCredentials, ServiceAccessToken
 						RentalPenaltyPolicy
 						IndividualTraveller, VehiclePoolingDriverInfo, IndividualPassengetrInfo
@@ -3434,28 +3436,28 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
 		<xsd:key name="VehicleType_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:VehicleType| .//netex:PersonalVehicleType"/>
+			<xsd:selector xpath=".//netex:VehicleType| .//netex:SimpleVehicleType"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====PersonalVehicleType==(NM)========================== -->
-		<!-- =====PersonalVehicleType unique========================== -->
-		<xsd:unique name="PersonalVehicleType_UniqueBy_Id_Version">
+		<!-- =====SimpleVehicleType==(NM)========================== -->
+		<!-- =====SimpleVehicleType unique========================== -->
+		<xsd:unique name="SimpleVehicleType_UniqueBy_Id_Version">
 			<xsd:annotation>
-				<xsd:documentation>Every [PersonalVehicleType Id + Version] must be unique within document.</xsd:documentation>
+				<xsd:documentation>Every [SimpleVehicleType Id + Version] must be unique within document.</xsd:documentation>
 			</xsd:annotation>
-			<xsd:selector xpath=".//netex:PersonalVehicleType"/>
+			<xsd:selector xpath=".//netex:SimpleVehicleType"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:unique>
-		<!-- =====PersonalVehicleType Key ========================== -->
-		<xsd:keyref name="PersonalVehicleType_KeyRef" refer="netex:PersonalVehicleType_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:PersonalVehicleTypeRef "/>
+		<!-- =====SimpleVehicleType Key ========================== -->
+		<xsd:keyref name="SimpleVehicleType_KeyRef" refer="netex:SimpleVehicleType_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:SimpleVehicleTypeRef "/>
 			<xsd:field xpath="@ref"/>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
-		<xsd:key name="PersonalVehicleType_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:PersonalVehicleType"/>
+		<xsd:key name="SimpleVehicleType_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:SimpleVehicleType"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
@@ -5482,6 +5484,29 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
+
+		<!-- =====ModeRestrictionAssessment============================== -->
+		<!-- =====ModeRestrictionAssessment unique========================== -->
+		<xsd:unique name="ModeRestrictionAssessment_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [ModeRestrictionAssessment Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:ModeRestrictionAssessment"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====ModeRestrictionAssessment Key ========================== -->
+		<xsd:keyref name="ModeRestrictionAssessment_KeyRef" refer="netex:ModeRestrictionAssessment_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:ModeRestrictionAssessmentRef   "/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="ModeRestrictionAssessment_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:ModeRestrictionAssessment"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+
 		<!-- =====PointOnRouteLink============================== -->
 		<!-- =====PointOnRoute unique========================== -->
 		<xsd:unique name="PointOnRoute_UniqueBy_Id_Version_Order">
@@ -8365,27 +8390,6 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====MobilityServiceElementPrice===(NM)===================== -->
-		<!-- ===== MobilityServiceElementPrice unique========================== -->
-		<xsd:unique name="MobilityServiceElementPrice">
-			<xsd:annotation>
-				<xsd:documentation>Every [MobilityServiceElementPrice Id + Version] must be unique within document.</xsd:documentation>
-			</xsd:annotation>
-			<xsd:selector xpath=".//netex:MobilityServiceElementPrice"/>
-			<xsd:field xpath="@id"/>
-			<xsd:field xpath="@version"/>
-		</xsd:unique>
-		<!-- =====MobilityServiceElementPrice Key ========================== -->
-		<xsd:keyref name="MobilityServiceElementPrice_KeyRef" refer="netex:MobilityServiceElementPrice_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:MobilityServiceElementPriceRef"/>
-			<xsd:field xpath="@ref"/>
-			<xsd:field xpath="@version"/>
-		</xsd:keyref>
-		<xsd:key name="MobilityServiceElementPrice_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:MobilityServiceElementPrice"/>
-			<xsd:field xpath="@id"/>
-			<xsd:field xpath="@version"/>
-		</xsd:key>
 		<!-- =====SeriesConstraintPrice============================== -->
 		<!-- ===== SeriesConstraintPrice unique========================== -->
 		<xsd:unique name="SeriesConstraintPrice">
@@ -8774,27 +8778,6 @@ Correct COnstraints for PointOnRoute
 		</xsd:keyref>
 		<xsd:key name="GroupOfDistanceMatrixElements_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:GroupOfDistanceMatrixElements"/>
-			<xsd:field xpath="@id"/>
-			<xsd:field xpath="@version"/>
-		</xsd:key>
-		<!-- =====MobilityServiceElement==(NM)======================= -->
-		<!-- =====MobilityServiceElement unique========================== -->
-		<xsd:unique name="MobilityServiceElement_UniqueBy_Id_Version">
-			<xsd:annotation>
-				<xsd:documentation>Every [MobilityServiceElement Id + Version] must be unique within document.</xsd:documentation>
-			</xsd:annotation>
-			<xsd:selector xpath=".//netex:MobilityServiceElement"/>
-			<xsd:field xpath="@id"/>
-			<xsd:field xpath="@version"/>
-		</xsd:unique>
-		<!-- =====MobilityServiceElement Key ========================== -->
-		<xsd:keyref name="MobilityServiceElement_KeyRef" refer="netex:MobilityServiceElement_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:MobilityServiceElementRef  | .//netex:MobilityServiceElementInverseRef "/>
-			<xsd:field xpath="@ref"/>
-			<xsd:field xpath="@version"/>
-		</xsd:keyref>
-		<xsd:key name="MobilityServiceElement_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:MobilityServiceElement"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>

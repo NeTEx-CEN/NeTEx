@@ -38,14 +38,25 @@ There is also an _Oxygen_ project file:
 =======
 Version 1.2.2 - New modes Revised changes with examples and constraints.
 
+### 2021.01.10  NewModes: Revisions
+ PlaceRef
+ * Add constraint for __ModeRestrictionAssessment__
+ * Add __allVehicles__ enbum value to   __SelfDDricveMode__ values.
+  * _Updates to xml examples_:
+    * NewModes-CarPoolingExample.xsd
+    * NewModes-CyclePoolingExample.xsd
+    * NewModes-CyclePoolingExample.xsd
+  * _Updates to xml schema_:
+   * netex_mobilityService_version.xsd
+   * netex_nm_publication_version.xsd
 
 ### 2021.01.08  NewModes: Revisions
- * Rename PersonalVehiclType simpleVehicleType
- * Drop MobilityServiceELement and use .DistanceMatricElement instead
+ * Rename __PersonalVehicleType__ to __SimpleVehicleType__.
+ * Drop __MobilityServiceElement__ and use __DistanceMatricElement__ instead
   * _Updates to xml examples_:
-    * NEW NewModes-CarPoolingExample.xsd
-    * NEW NewModes-CyclePoolingExample.xsd
-        * NEW NewModes-CyclePoolingExample.xsd
+    * NewModes-CarPoolingExample.xsd
+    * NewModes-CyclePoolingExample.xsd
+    * NewModes-CyclePoolingExample.xsd
   * _Updates to xml schema_:
    * netex_distanceMatrixElement_version.xsd
    * netex_farsStructureElement_version.xsd
