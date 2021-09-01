@@ -37,19 +37,31 @@ There is also an _Oxygen_ project file:
 
 Version 1.2.2 - New modes Revised changes with e xamples and constraints.
 
-### 2020.11.06  NewModes (norway):  Enhace Oragnisations
-  * Add relationship between organisations:  * Add __RelatedOrganisation__, with __OrganisationRole__ enumerations.
-  * Add reusable contact details
-  * _Updates to xml schema_:
-    * netex_organisation_support.xsd
-    * netex_organisation_version.xsd
-    * netex_transportOrganisation_version.xsd
-    * NEW netex_contact_support.xsd
-    * NEW netex_contact_version.xsd
-    * netex_all_objects_generic.xsd
-    * netex_salesDistribution_version.xsd
-    * netex_publication.xsd
-    * NeTEx,SPP
+### 2020.11.06  NewModes: Corrections
+ * Rename GenaralVehiclePooling to CarPoolingService
+ * Correct comments and missing types.  Move __Contact__ into organisation package
+ * M
+ * _Updates to xml examples_:
+   * NEW NewModes-CarPoolingExample.xsd
+ * _Updates to xml schema_:
+   * netex_organisation_support.xsd
+   * netex_organisation_version.xsd
+   * netex_transportOrganisation_version.xsd
+   * netex_nm_mobilityService_support.xsd
+   * netex_nm_mobilityService_version.xsd
+   * netex_publication.xsd
+
+### 2020.11.06  NewModes (Norway):  Enhace Organisations
+ * Add relationship between organisations:  * Add __RelatedOrganisation__, with __OrganisationRole__ enumerations.
+ * Add reusable contact details
+ * _Updates to xml schema_:
+   * netex_organisation_support.xsd
+   * netex_organisation_version.xsd
+   * netex_transportOrganisation_version.xsd
+   * netex_all_objects_generic.xsd
+   * netex_salesDistribution_version.xsd
+   * netex_publication.xsd
+   * NeTEx,SPP
 
 ### 2020.11.06  Incorporate master udpates :
   * Issue #124,   allow mulimodalQuay.
@@ -58,38 +70,39 @@ Version 1.2.2 - New modes Revised changes with e xamples and constraints.
         * netex_stopPlace_support.xsd
 
 ### 2020.10.21  NewModes : Car service example and miscellaneous small revisions.
-  * Add XML Example of  Chauffeured car service; revise schema to enable.
-  * NewModes: Add __MobilityServiceElement__ to __Tariff__.
-  * Geofencing:
-    * Add new __MobilityServiceConstraintZone__ : for geofenceing. Add to __ResourceFrame__.
-    * __RoutingConstraintZone__ : Add _forbiddenZone_, _passThroughUseOnly_, _cannotBoardInZone_ and _mustAlightInZone_ to  __ZoneUse__.
-  * Individual Traveller
-    * Add __IndividualTraveller__  with __IndividualTravellerInfo__ and __VehiclePoolingDriverInfo__,
-    * Add _member_ and _other_ to __UserProfile__ __UserType__ enumeration.
-    * Add _unspecified_ enum value to   __GenderEnumeration__, for use in __IndividualTraveller__.
-  * Usage Paremeters:
-    * Rename __HireChargePolicy__ to __RentalChargePolicy__ and move to separate rental operations package.
-    * Add _fine_ and _findeHandlingFee_ to __RentalPolicy__ values.
-  * Vehicles
-    * Add __PropulsionType__ (with enum values) and __MaximumRange__ to __TransportType__,
-    * Add __Description__, and __ModelEquipmentProfileRef__  to __Vehicle__,
-    * Rename __TypeofFuel__ to __FuelType__ (Depreceate __TypeOfFuel__),
-  * __Parking__ add open vehicle types using __TransportTypeRef__.
-  * _Updates to xml schema_:
-    * NEW NewModes-ChauffeuredServiceExample.xsd
-    * netex_routingConstraint_support.xsd
-    * NEW netex_mobilityServiceConstraint_support.xsd
-    * NEW netex_mobilityServiceConstraint_version.xsd
-    * netex_distribution_support.xsd
-    * netex_parking_support.xsd
-    * netex_parking_version.xsd
-    * netex_equipmentENergySupport_support.xsd
-    * netex_fareStructureElement_support.xsd
-    * NEW netex_nm_individualTraveller_support.xsd
-    * NEW netex_nm_individualTraveller_version.xsd
-    * netex_vehicleType_support.xsd
-    * netex_vehicleType_version.xsd
-    * netex_all_objects_part5_newModes.xsd
+ * Add XML Example of  Chauffeured car service; revise schema to enable.
+ * NewModes: Add __MobilityServiceElement__ to __Tariff__.
+ * Geofencing:
+   * Add new __MobilityServiceConstraintZone__ : for geofenceing. Add to __ResourceFrame__.
+   * __RoutingConstraintZone__ : Add _forbiddenZone_, _passThroughUseOnly_, _cannotBoardInZone_ and _mustAlightInZone_ to  __ZoneUse__.
+ * Individual Traveller
+   * Add __IndividualTraveller__  with __IndividualTravellerInfo__ and __VehiclePoolingDriverInfo__,
+   * Add _member_ and _other_ to __UserProfile__ __UserType__ enumeration.
+   * Add _unspecified_ enum value to   __GenderEnumeration__, for use in __IndividualTraveller__.
+ * Usage Paremeters:
+   * Rename __HireChargePolicy__ to __RentalChargePolicy__ and move to separate rental operations package.
+   * Add _fine_ and _findeHandlingFee_ to __RentalPolicy__ values.
+ * Vehicles
+   * Add __PropulsionType__ (with enum values) and __MaximumRange__ to __TransportType__,
+   * Add __Description__, and __ModelEquipmentProfileRef__  to __Vehicle__,
+   * Rename __TypeofFuel__ to __FuelType__ (Depreceate __TypeOfFuel__),
+ * __Parking__ add open vehicle types using __TransportTypeRef__.
+ * _Updates to xml examples_:
+   * NEW NewModes-ChauffeuredServiceExample.xsd
+ * _Updates to xml schema_:
+   * netex_routingConstraint_support.xsd
+   * NEW netex_mobilityServiceConstraint_support.xsd
+   * NEW netex_mobilityServiceConstraint_version.xsd
+   * netex_distribution_support.xsd
+   * netex_parking_support.xsd
+   * netex_parking_version.xsd
+   * netex_equipmentENergySupport_support.xsd
+   * netex_fareStructureElement_support.xsd
+   * NEW netex_nm_individualTraveller_support.xsd
+   * NEW netex_nm_individualTraveller_version.xsd
+   * netex_vehicleType_support.xsd
+   * netex_vehicleType_version.xsd
+   * netex_all_objects_part5_newModes.xsd
 
 ### 2020.10.20  NewModes : Car pooling example and miscellaneous small revisions.
   * NewModes:Add XML Example of Car Pooling Service, revise  schema to enable.
