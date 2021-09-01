@@ -35,12 +35,27 @@ There is also an _Oxygen_ project file:
 ----
 # Change Log
 
-Version 1.2.2 - New modes Revised changes with e xamples and constraints.
+=======
+Version 1.2.2 - New modes Revised changes with examples and constraints.
 
+
+### 2021.01.08  NewModes: Revisions
+ * Rename PersonalVehiclType simpleVehicleType
+ * Drop MobilityServiceELement and use .DistanceMatricElement instead
+  * _Updates to xml examples_:
+    * NEW NewModes-CarPoolingExample.xsd
+    * NEW NewModes-CyclePoolingExample.xsd
+        * NEW NewModes-CyclePoolingExample.xsd
+  * _Updates to xml schema_:
+   * netex_distanceMatrixElement_version.xsd
+   * netex_farsStructureElement_version.xsd
+   * netex_nm_publication_version.xsd
+   * REMOVE netex_nm_mobilityServiceElement_support.xsd
+   * REMOVE netex_nm_mobilityServiceElement_version.xsd
 ### 2020.12.11  NewModes: Revisions
  * Rename PersonalVehiclType simpleVehicleType
  * Drop PublicTransportOrganisationType. add expiry date to AccessCOde
- * _Updates to xml schema_:  
+ * _Updates to xml schema_:
    * netex_submmode_version.xsd
    * netex_mode_version.xsd
    * netex_mode_support.xsd
@@ -56,16 +71,16 @@ Version 1.2.2 - New modes Revised changes with e xamples and constraints.
 
 ### 2020.11.06  NewModes: Corrections
  * Drop unused COntinuousMOdes enumeration.
- * _Updates to xml schema_:  
+ * _Updates to xml schema_:
    * netex_mode_support.xsd
 
 ### 2020.11.06  NewModes: Corrections
  * Correct ParkingEquipment supertypes
- * _Updates to xml schema_:  
+ * _Updates to xml schema_:
    * netex_nm_parkingEquipment_version.xsd
    * netex_nm_parkingEquipmentsupport.xsd
    * netex_nm_parkingEquipment_version.xsd
-   
+
 ### 2020.11.12  NewModes: Corrections
  * Rename __ModelEquipmentProfile__ to __VehicleModelProfile__,  __CycleEquipmentProfile__ to __CycleModelProfile__, ,  __CarEquipmentProfile__ to __CarModelProfile__
  * Correct comments and missing types.  Move __Contact__ into organisation package
