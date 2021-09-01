@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_nm_vehicleMeetingPlace_version">
-	<xsd:include schemaLocation="netex_nm_parkingBayStatus_support.xsd"/>
+	<xsd:include schemaLocation="netex_nm_vehicleParkingAreaInformation_support.xsd"/>
 	<xsd:include schemaLocation="netex_nm_vehicleMeetingPlace_version.xsd"/>
+	<xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_loggable_version.xsd"/>
 	<!-- ======================================================================= -->
 	<xsd:annotation>
 		<xsd:appinfo>
@@ -17,6 +18,9 @@
 				</Date>
 				<Date>
 					<Modified>2020-10-06</Modified>
+				</Date>
+				<Date>
+					<Modified>2021-10-3</Modified>Add PARKING BAY CONDITION and RENTRAL AVAILABILITY 
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -59,6 +63,29 @@ Rail transport, Roads and Road transport
 		</xsd:appinfo>
 		<xsd:documentation>NeTEx NM PARKING BAY STATUS  data types</xsd:documentation>
 	</xsd:annotation>
+	<xsd:element name="ParkingLogEntry_" type="DataManagedObjectStructure" substitutionGroup="DataManagedObject">
+		<xsd:annotation>
+			<xsd:documentation>Dummy type for  Parking Log ENTRY.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="parkingLogEntries_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of PARKING LOG ENTRYs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element ref="ParkingBayConditionRef"/>
+					<xsd:element ref="RentalAvailabilityRef"/>
+					<xsd:element ref="ParkingLogEntry_">
+						<xsd:annotation>
+							<xsd:documentation>Dummy type for  Parking Log ENTRY. +v1.2.2</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 	<!-- ==== VEHICLE SHARING PARKING BAY  ============================================================ -->
 	<xsd:element name="MonitoredVehicleSharingParkingBay" abstract="false" substitutionGroup="ParkingBay_">
 		<xsd:annotation>
@@ -141,7 +168,7 @@ Rail transport, Roads and Road transport
 	<!-- ==== PARKING BAY STATUS ============================================================ -->
 	<xsd:element name="ParkingBayStatus" abstract="false" substitutionGroup="TypeOfValue">
 		<xsd:annotation>
-			<xsd:documentation>A categorisation of the  the change of availability of the parking spot, such as being temporarily closed, unavailable, available.
+			<xsd:documentation> A categorisation of the  availability of the parking spot, such as being temporarily closed, unavailable, available. +v1.2.2
 
 .  +v1.2.2</xsd:documentation>
 		</xsd:annotation>
@@ -176,5 +203,144 @@ Rail transport, Roads and Road transport
 			<xsd:extension base="TypeOfValue_VersionStructure"/>
 		</xsd:complexContent>
 	</xsd:complexType>
+	<!-- ====RENTAL AVAILABILITY ============================================================ -->
+	<xsd:element name="RentalAvailability" abstract="false" substitutionGroup="ParkingLogEntry_">
+		<xsd:annotation>
+			<xsd:documentation>A summary of the status of the rental at a  SITE  at a given point on time.  +v1.2.2</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="RentalAvailability_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="LogEntryGroup"/>
+						</xsd:sequence>
+						<xsd:group ref="RentalAvailabilityGroup"/>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="RentalAvailabilityIdType">
+						<xsd:annotation>
+							<xsd:documentation>Identifier of RENTAL AVAILABILITYS.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="RentalAvailability_VersionStructure" abstract="false">
+		<xsd:annotation>
+			<xsd:documentation>Type for a RENTAL AVAILABILITY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="LogEntry_VersionStructure">
+				<xsd:group ref="RentalAvailabilityGroup"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="RentalAvailabilityGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a PRENTAL AVAILABILITY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="ParkingRef"/>
+			<xsd:element name="IsOperational" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether the parking is zurrently operational.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IsRenting" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether the parking is currently renting out vehicles.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IsAcceptingReturns" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether the parking is currently accepting returned vehicles.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="AvailableVehicles" type="xsd:nonNegativeInteger" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Number of vehicles  available for rental at the site.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DisabledVehicles" type="xsd:nonNegativeInteger" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Number of disabled vehicles not available for rental at the site.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="AvailableDocks" type="xsd:nonNegativeInteger" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Number of docks available to accept vehicle returns.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DisabledDocks" type="xsd:nonNegativeInteger" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Number of empty but disabled dock points at the site. </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ==== PARKING BAY STATUS ============================================================ -->
+	<xsd:element name="ParkingBayCondition" abstract="false" substitutionGroup="ParkingLogEntry_">
+		<xsd:annotation>
+			<xsd:documentation>A record of the status of the PARKING BAY at a given moment in time.  +v1.2.2</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="ParkingBayCondition_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="LogEntryGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="ParkingBayConditionGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="ParkingBayConditionIdType">
+						<xsd:annotation>
+							<xsd:documentation>Identifier of PARKING BAY STATUS.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="ParkingBayCondition_VersionStructure" abstract="false">
+		<xsd:annotation>
+			<xsd:documentation>Type for a PARKING BAY CONDITION..</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="LogEntry_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="ParkingBayConditionGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="ParkingBayConditionGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a PARKING BAY CONDITION..</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="ParkingBayRef"/>
+			<xsd:element name="Status" type="ParkingBayStatusEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Current status</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="ParkingBayStatusRef" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
 	<!-- ======================================================================= -->
 </xsd:schema>

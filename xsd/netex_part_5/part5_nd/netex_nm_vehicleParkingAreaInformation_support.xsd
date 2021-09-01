@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:core="http://www.govtalk.gov.uk/core" xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_nm_vehicleParkingBayStatus_support">
 	<xsd:include schemaLocation="netex_nm_vehicleMeetingPlace_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_loggable_support.xsd"/>
 	<!-- ======================================================================= -->
 	<xsd:annotation>
 		<xsd:appinfo>
@@ -16,6 +17,9 @@
 				</Date>
 				<Date>
 					<Modified>2020-10-05</Modified>Add elements
+				</Date>
+				<Date>
+					<Modified>2022-10-3</Modified>Add PARKING BAY CONDITION, RENTAL AVAILABILITY
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -33,7 +37,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
-					 <Copyright>CEN, Crown Copyright 2019-2020</Copyright>
+					 <Copyright>CEN, Crown Copyright 2019-2021</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -85,7 +89,7 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
-	<!-- ==== TYPE OF FLEET ================================================== -->
+	<!-- ==== PARKING BAY STATUS  ================================================== -->
 	<xsd:simpleType name="ParkingBayStatusIdType">
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of a PARKING BAY STATUS.</xsd:documentation>
@@ -123,5 +127,57 @@ Rail transport, Roads and Road transport
 			<xsd:enumeration value="unknown"/>
 		</xsd:restriction>
 	</xsd:simpleType>
+	<!-- ====  RENTAL AVAILABILITY   ================================================== -->
+	<xsd:simpleType name="RentalAvailabilityIdType">
+		<xsd:annotation>
+			<xsd:documentation>Type for identifier of a RENTAL AVAILABILITY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ObjectIdType"/>
+	</xsd:simpleType>
+	<xsd:element name="RentalAvailabilityRef" type="ParkingBayStatusRefStructure" abstract="false" substitutionGroup="TypeOfValueRef">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a RENTAL AVAILABILITY. +v1.2.2</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="RentalAvailabilityRefStructure" abstract="false">
+		<xsd:annotation>
+			<xsd:documentation>Type for a reference to a RENTAL AVAILABILITY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="VersionOfObjectRefStructure">
+				<xsd:attribute name="ref" type="RentalAvailabilityIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Reference to a RENTAL AVAILABILITY.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!-- ==== PARKING BAY CONDITION  ================================================== -->
+	<xsd:simpleType name="ParkingBayConditionIdType">
+		<xsd:annotation>
+			<xsd:documentation>Type for identifier of a PARKING BAY CONDITION.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="LogEntryIdType"/>
+	</xsd:simpleType>
+	<xsd:element name="ParkingBayConditionRef" type="ParkingBayStatusRefStructure" abstract="false" substitutionGroup="TypeOfValueRef">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a PARKING BAY CONDITION. +v1.2.2</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ParkingBayConditionRefStructure" abstract="false">
+		<xsd:annotation>
+			<xsd:documentation>Type for a reference to a PPARKING BAY CONDITION.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="LogEntryRefStructure">
+				<xsd:attribute name="ref" type="ParkingBayConditionIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Reference to a PARKING BAY CONDITION.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
 	<!-- ======================================================================= -->
 </xsd:schema>
