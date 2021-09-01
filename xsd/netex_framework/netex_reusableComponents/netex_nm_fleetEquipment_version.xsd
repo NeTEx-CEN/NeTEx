@@ -61,17 +61,20 @@ Rail transport, Roads and Road transport
 	</xsd:annotation>
 	<!-- ===== MODEL PROFILE ======================================================== -->
 	<!-- ======  MODEL EQUIPMENT PROFILE ====================================== -->
-	<xsd:element name="ModelEquipmentProfile_" abstract="true" substitutionGroup="DataManagedObject">
+	<xsd:complexType name="modelEquipmentProfilesInFrame_RelStructure">
 		<xsd:annotation>
-			<xsd:documentation>DUMMY TYPE tp Work around SG restrictions.</xsd:documentation>
+			<xsd:documentation>Type for containment in frame of MODEL  EQUIPMENT PROFILEs.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:complexType>
-			<xsd:complexContent>
-				<xsd:extension base="DataManagedObjectStructure"/>
-			</xsd:complexContent>
-		</xsd:complexType>
-	</xsd:element>
-	<xsd:element name="ModelEquipmentProfile" abstract="true">
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element ref="CarEquipmentProfile"/>
+					<xsd:element ref="CycleEquipmentProfile"/>
+				</xsd:choice>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="ModelEquipmentProfile" abstract="true" substitutionGroup="DataManagedObject">
 		<xsd:annotation>
 			<xsd:documentation>A set of characteristics of equipment installed on-board and characterising a MODEL EQUIPMENT PROFILE. +v1.2.2</xsd:documentation>
 		</xsd:annotation>
@@ -85,7 +88,9 @@ Rail transport, Roads and Road transport
 						<xsd:sequence>
 							<xsd:group ref="DataManagedObjectGroup"/>
 						</xsd:sequence>
-						<xsd:group ref="ModelEquipmentProfileGroup"/>
+						<xsd:sequence>
+							<xsd:group ref="ModelEquipmentProfileGroup"/>
+						</xsd:sequence>
 					</xsd:sequence>
 					<xsd:attribute name="id" type="ModelEquipmentProfileIdType">
 						<xsd:annotation>
@@ -102,7 +107,9 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="DataManagedObjectStructure">
-				<xsd:group ref="ModelEquipmentProfileGroup"/>
+				<xsd:sequence>
+					<xsd:group ref="ModelEquipmentProfileGroup"/>
+				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
@@ -129,7 +136,7 @@ Rail transport, Roads and Road transport
 		</xsd:sequence>
 	</xsd:group>
 	<!-- =======CAR EQUIPMENT PROFILE================================================== -->
-	<xsd:element name="CarEquipmentProfile" substitutionGroup="DataManagedObject">
+	<xsd:element name="CarEquipmentProfile" abstract="false" substitutionGroup="DataManagedObject">
 		<xsd:annotation>
 			<xsd:documentation>A set of characteristics of equipment installed on-board and characterising a CAR EQUIPMENT PROFILE. +v1.2.2</xsd:documentation>
 		</xsd:annotation>
@@ -144,23 +151,11 @@ Rail transport, Roads and Road transport
 							<xsd:group ref="DataManagedObjectGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
-							<xsd:element name="Name" type="MultilingualString" minOccurs="0">
-								<xsd:annotation>
-									<xsd:documentation>Name of VEHCILE MODEL.</xsd:documentation>
-								</xsd:annotation>
-							</xsd:element>
-							<xsd:element name="NumberOfGears" type="xsd:nonNegativeInteger" minOccurs="0">
-								<xsd:annotation>
-									<xsd:documentation>Number of Gears</xsd:documentation>
-								</xsd:annotation>
-							</xsd:element>
-							<xsd:element name="BabySeat" type="xsd:boolean" minOccurs="0">
-								<xsd:annotation>
-									<xsd:documentation>Whether there is a BabySeat/</xsd:documentation>
-								</xsd:annotation>
-							</xsd:element>
+							<xsd:group ref="ModelEquipmentProfileGroup"/>
 						</xsd:sequence>
-						<xsd:group ref="CarEquipmentProfileGroup"/>
+						<xsd:sequence>
+							<xsd:group ref="CarEquipmentProfileGroup"/>
+						</xsd:sequence>
 					</xsd:sequence>
 					<xsd:attribute name="id" type="CarEquipmentProfileIdType">
 						<xsd:annotation>
@@ -177,7 +172,9 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="ModelEquipmentProfile_VersionStructure">
-				<xsd:group ref="CarEquipmentProfileGroup"/>
+				<xsd:sequence>
+					<xsd:group ref="CarEquipmentProfileGroup"/>
+				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
@@ -186,24 +183,29 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Elements for a CAR EQUIPMENT PROFILE.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
+			<xsd:element name="Seats" type="xsd:nonNegativeInteger" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Number of seats.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Doors" type="xsd:nonNegativeInteger" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Number of doors on vehicle..</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element name="Transmission" type="TransmissionEnumeration" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Type of Transmission</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="RoofRack" type="xsd:boolean" minOccurs="0">
+			<xsd:element name="CruiseControl" type="xsd:boolean" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>WHether vehicle has a roof rack.</xsd:documentation>
+					<xsd:documentation>Whether there is cruise-control</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="WinterTyres" type="xsd:boolean" minOccurs="0">
+			<xsd:element name="SatNav" type="xsd:boolean" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Whether vehicel has winter tyres.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="Chains" type="xsd:boolean" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Whether vehicel has remopvable chains.</xsd:documentation>
+					<xsd:documentation>Whether vehicel has satellite navigation.s.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="AirConditioning" type="xsd:boolean" minOccurs="0">
@@ -211,9 +213,34 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Whether vehicel has remopvable chains.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="SatNav" type="xsd:boolean" minOccurs="0">
+			<xsd:element name="UsbPowerSockets" type="xsd:boolean" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Whether vehicel has satellite navigation.s.</xsd:documentation>
+					<xsd:documentation>Whether vehicel has UsbPowerSockets.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TrailerHitch" type="xsd:boolean" default="false" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether vehicel has a trailer hitch.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="WinterTyres" type="xsd:boolean" default="false" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether vehicle has winter tyres.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Chains" type="xsd:boolean" default="false" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether vehicel has remopvable chains.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="RoofRack" type="xsd:boolean" default="false" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>WHether vehicle has a roof rack.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="SkiRack" type="xsd:boolean" default="false" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether vehicle has a ski rack.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -234,23 +261,11 @@ Rail transport, Roads and Road transport
 							<xsd:group ref="DataManagedObjectGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
-							<xsd:element name="Name" type="MultilingualString" minOccurs="0">
-								<xsd:annotation>
-									<xsd:documentation>Name of VEHCILE MODEL.</xsd:documentation>
-								</xsd:annotation>
-							</xsd:element>
-							<xsd:element name="NumberOfGears" type="xsd:nonNegativeInteger" minOccurs="0">
-								<xsd:annotation>
-									<xsd:documentation>Number of Gears</xsd:documentation>
-								</xsd:annotation>
-							</xsd:element>
-							<xsd:element name="BabySeat" type="xsd:boolean" minOccurs="0">
-								<xsd:annotation>
-									<xsd:documentation>Whether there is a BabySeat/</xsd:documentation>
-								</xsd:annotation>
-							</xsd:element>
+							<xsd:group ref="ModelEquipmentProfileGroup"/>
 						</xsd:sequence>
-						<xsd:group ref="CycleEquipmentProfileGroup"/>
+						<xsd:sequence>
+							<xsd:group ref="CycleEquipmentProfileGroup"/>
+						</xsd:sequence>
 					</xsd:sequence>
 					<xsd:attribute name="id" type="CycleEquipmentProfileIdType">
 						<xsd:annotation>
@@ -267,7 +282,9 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="ModelEquipmentProfile_VersionStructure">
-				<xsd:group ref="CycleEquipmentProfileGroup"/>
+				<xsd:sequence>
+					<xsd:group ref="CycleEquipmentProfileGroup"/>
+				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>

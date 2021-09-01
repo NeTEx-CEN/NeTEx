@@ -37,7 +37,58 @@ There is also an _Oxygen_ project file:
 
 =======
 Version 1.2.2 - New modes initial changes
+### 2020.10.16  NewModes : 
+  * Add Examples    CycleSharing, revise to enable
+  * Usage Parameters
+	* New Modes: _UsageValidityPeriod : __ ADd _accessCode_ value to __ActivationMeans__ enumeration. uml
+	* New Modes: ADd new __HirePenaltyPolicy__ parameter with _noVehicleReturn_, _lateVehicleReturn_, _damageToVehice_, _damageToEquipment_ values to __PenaltyPolicyType. uml
+	* New Modes: __ChargingPolicy__ : Add __DepositPolicy_  with enum values  n for __ChargingPolicy__. uml
+  * Fare Product
+	* New Modes: Add __RequiresDeposit__ and __NoCashPayment__ to __CommercialConditionSummary__.  
+	* FIX:  __ChargingMomementType__ add new value beforeTravelThenAdjustAtEndOfTravel__, correcet type on beforeStartThenAdjustAtEndOfFareDay__
+  * FAre Table:
+        * ADd equipment to __FARETable__ and __Cell__ specifics. 
+  * New Modes: Add __onlineService__ to __OrganisationType__ enumeration
+  * Equipment:
+	* New Modes: Add _docks_ value  to __CycleStorageType__ enumeration values.
+  * Network Restriction
+        * NewModes: Widen all  references __VehicleTypeRef__ to be __TransportTypeRef__
+  * _Updates to xml schema_:  
+        * newModes_cycleExchanegExample.xsd 
+        * netex_organisation_support.xsd 
+        * netex_equipmentParking_support.xsd 
+        * netex_networkRestriction_version.xsd 
+        * netex_parking_version.xsd 
+        * netex_usageParameterTravel_support.xsd 
+        * netex_usageParameterCharging_support.xsd 
+        * netex_usageParameterCharging_version.xsd 
+        * netex_fareTable_version.xsd 
+        * netex_usageParameterCharging_version.xsd 
+        * netex_conditionSummary_support.xsd 
+         
+### 2020.10.15  NewModes : Add Constraints
+ 	Fix: add __Mode__ and __ModeOfOperation to __ResourceFrame__
+ 	Fix: add _transport_ value  to __SiteType__ enumeration values.
+  * _Updates to xml schema_:   
+        * netex_site_support.xsd 
+        * netex_resourceFrame_version.xsd 
+        
+### 2020.10.15  NewModes : Add Constraints
+  * _Updates to xml schema_:   
+        * netex_networkRestriction_version.xsd 
+        * netex_nm_publication_version.xsd 
 
+### 2020.10.15  NewModes : ReviseFrames
+  * _Updates to xml schema_:   
+        * netex_nm_mobilityServiceFrame_version.xsd
+        * netex_nm_vehicleMeetingPoint_version.xsd
+        * netex_nm_singleJourneyPath_version.xsd
+
+### 2020.10.15  NewModes : FleetEquipment: add attributes from IXSO 
+  * _Updates to xml schema_:   
+        * netex_nm_fleetEquipment_support.xsd
+        * netex_nm_fleetEquipment_version.xsd
+        
 ### 2020.10.15  NewModes : Fare Prices
   * Add __LocalServiceRef__ and __MobilityServiceRef__  to __Tariff__ applicability 
   * Add   __MobilityServiceMatrixElement__

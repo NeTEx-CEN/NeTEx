@@ -28,7 +28,8 @@
 					<Modified>2020-10-05</Modified> New Modes: Add mode of operation to operator.
 					 Allow selfdrive and taximodes
 					 Insert TransportOrganisation and PublicTransportOrganisation in hierarch
-					 Qdd additional modes relationship to PublicTransportOperator
+					 Add additional modes relationship to PublicTransportOperator
+					 Add AlternativeTransportOperator
 				</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines  NetEX:TRANSPORT  ORGANISATION    types.</p>
@@ -117,6 +118,11 @@ Rail transport, Roads and Road transport
 				<xsd:choice maxOccurs="unbounded">
 					<xsd:element ref="Authority"/>
 					<xsd:element ref="Operator"/>
+					<xsd:element ref="AlternativeTransportOperator">
+						<xsd:annotation>
+							<xsd:documentation>A company  providing public transport services. +v1.2.2</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
 				</xsd:choice>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -448,6 +454,61 @@ Rail transport, Roads and Road transport
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
+	</xsd:group>
+	<!-- ==== OPERATOR ========================================================= -->
+	<xsd:element name="AlternativeTransportOperator" substitutionGroup="PublicTransportOrganisation_">
+		<xsd:annotation>
+			<xsd:documentation>A company  providing public transport services.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="AlternativeTransportOperator_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="OrganisationGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="TransportOrganisationGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="PublicTransportOrganisationGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="AlternativeTransportOperatorGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="AlternativeTransportOperatorIdType">
+						<xsd:annotation>
+							<xsd:documentation>Identifier of  OPERATOR.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="AlternativeTransportOperator_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for an OPERATOR.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="PublicTransportOrganisation_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="AlternativeTransportOperatorGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="AlternativeTransportOperatorGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements of an OPERATOR.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence/>
 	</xsd:group>
 	<!-- ======================================================================= -->
 	<!-- ==== GROUP OF OPERATORs ========================================================== -->
