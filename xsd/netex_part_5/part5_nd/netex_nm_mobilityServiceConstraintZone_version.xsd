@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_nm_mobilityServiceConstraintZone_version">
+	<xsd:include schemaLocation="../../netex_part_1/part1_ifopt/netex_ifopt_parking_support.xsd"/>
 	<xsd:include schemaLocation="../part5_rc/netex_nm_mobilityService_support.xsd"/>
 	<xsd:include schemaLocation="netex_nm_mobilityServiceConstraintZone_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_vehicleType_support.xsd"/>
@@ -241,5 +242,93 @@ Rail transport, Roads and Road transport
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->
+	<!-- ==== POOL OF VEHICLEs  ============================================================ -->
+	<xsd:complexType name="poolOfVehicles_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of references to a POOL OF VEHICLEs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:sequence minOccurs="0" maxOccurs="unbounded">
+					<xsd:element ref="PoolOfVehicles" maxOccurs="unbounded">
+						<xsd:annotation>
+							<xsd:documentation> A set of vehicles assigned to a specific PARKING, PARKING AREAs, PARKING BAYs, p lace  or MOBILITY CONSTRAINT ZONE that must be  picked up and returned to the same area.
+.  +v1.2.2</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="PoolOfVehicles" abstract="false" substitutionGroup="GroupOfEntities">
+		<xsd:annotation>
+			<xsd:documentation> A POINT where passengers can board or alight from vehicles.  +v1.2.2</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="PoolOfVehicles_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="GroupOfEntitiesGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="PoolOfVehiclesGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="PoolOfVehiclesIdType" use="optional"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="PoolOfVehicles_VersionStructure" abstract="false">
+		<xsd:annotation>
+			<xsd:documentation>Type for POOL OF VEHICLEs restricts id.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="GroupOfEntities_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="PoolOfVehiclesGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="PoolOfVehiclesGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a POOL OF VEHICLEs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="MobilityServiceRef" minOccurs="0"/>
+			<xsd:group ref="PoolOfVehiclesConstraintGroup">
+				<xsd:annotation>
+					<xsd:documentation>Restcrictions on using POOL OF VEHICLEs.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:group>
+			<xsd:element name="vehicles" type="vehicleRefs_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>VEHICLEs in POOL OF VEHICLEs.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="PoolOfVehiclesConstraintGroup">
+		<xsd:annotation>
+			<xsd:documentation>Restriction elements for a POOL OF VEHICLEs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="MobilityServiceConstraintZoneRef" minOccurs="0"/>
+			<xsd:element ref="ParkingRef" minOccurs="0"/>
+			<xsd:element name="parkingComponents" type="parkingComponentRefs_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Vehclie restrictions in Zone</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
 	<!-- ======================================================================= -->
 </xsd:schema>
