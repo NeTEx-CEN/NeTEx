@@ -36,229 +36,254 @@ There is also an _Oxygen_ project file:
 # Change Log
 
 =======
-Version 1.2.2 - New modes initial changes
+Version 1.2.2 - New modes Revised changes withe xamples and constraints.
 
-### 2020.10.21  NewModes : 
-  * Add Example    Chauffeured car , revise to enable
-  * Rename TypeofFuel to FuelType (Depreceate FuelType)
-  * Add __MobilityServiceElement__ to __Tarriff__.
-  * __RoutingConstraintZone__ : Add _forbiddenZone_, _passThroughUseOnly_, _cannotBoardInZOne__ and _mustAlightInZone_ to  __ZoneUse_ .
-  * Add __individualTraveller__ __VehiclePoolingDriverInfo__
-  * Add _fine_ and _findeHandlingFee_ to __HirePolicy__ values.
-  * Add __PropulsionType__ and __MaximumRange__ to __TransportType__
-  * ADd __Description__,, __ModelEquipmentProfileRef__  to __Vehicle__
-  * Add __member_ and _other_ to __USerProfile__ __UserType__ enumeration.
-  Add _unspecifed_ value to __Gender__
-  * _Updates to xml schema_:  
-        * NewModes-ChauffeuredServiceExample.xsd 
-        * netex_routingConstraint_support.xsd 
-        * NEW netex_mobilityServiceConstraint_support.xsd         
-        * NEW netex_mobilityServiceConstraint_version.xsd 
-        * netex_distribution_support.xsd 
-        * netex_equipmentENergySupport_support.xsd 
-        * netex_fareStructureElement_support.xsd 
-        * NEW netex_nm_individualTraveller_support.xsd
-        * NEW netex_nm_individualTraveller_version.xsd
-        * netex_vehicleType_support.xsd 
-        * netex_vehicleType_version.xsd 
-        
-### 2020.10.20  NewModes : 
-  * Add Example    Car Pooling, revise to enable
-  * SalesTransactionFrame : Add __MediumAccessDevice__.
-  * ResourceFrame :  Add __FacilitySets__ to __REsourceFrame__.
-  * ConditionSummaty:  Add __RentalConditionSummaryGroup__.
-  * Utility types: __InfoLinks__ add _mobileAppDOwnload_ value to __infoLinkTypes__ enumeration.
-  * Facilities:  Add _AnimalsAllowed_   enum value  to __NuisanceFacility__. Add missing taxiRank  _enumeration_value to __StpPlaceType__
-  * _Updates to xml schema_:  
-        * NewModes-CarPoolingExample.xsd 
-        * netex_salesContract_version.xsd 
-        * netex_salesTransaction_version.xsd 
-        * netex_usageParameterEligibility_support.xsd 
-        * netex_facility_support.xsd 
-        * netex_parkingSupport_version.xsd 
-        * netex_utilityTypes_version.xsd 
-        * netex_resourceFrame_version.xsd  
-        * netex_customerELigibility_version.xsd   
-         
-### 2020.10.16  NewModes : 
-  * Add Example    CycleSharing, revise to enable
-  * Travel Specification : Add 
+### 2020.10.21  NewModes : Car service example and miscellaneous small revisions.
+  * Add XML Example of  Chauffeured car service; revise schema to enable.
+  * NewModes: Add __MobilityServiceElement__ to __Tariff__.
+  * Geofencing:
+    * Add new __MobilityServiceConstraintZone__ : for geofenceing. Add to __ResourceFrame__.
+    * __RoutingConstraintZone__ : Add _forbiddenZone_, _passThroughUseOnly_, _cannotBoardInZone_ and _mustAlightInZone_ to  __ZoneUse__.
+  * Individual Traveller
+    * Add __IndividualTraveller__  with __IndividualTravellerInfo__ and __VehiclePoolingDriverInfo__,
+    * Add _member_ and _other_ to __UserProfile__ __UserType__ enumeration.
+    * Add _unspecified_ enum value to   __GenderEnumeration__, for use in __IndividualTraveller__.
+  * Usage Paremeters:
+    * Rename __HireChargePolicy__ to __RentalChargePolicy__ and move to separate rental operations package.
+    * Add _fine_ and _findeHandlingFee_ to __RentalPolicy__ values.
+  * Vehicles
+    * Add __PropulsionType__ (with enum values) and __MaximumRange__ to __TransportType__,
+    * Add __Description__, and __ModelEquipmentProfileRef__  to __Vehicle__,
+    * Rename __TypeofFuel__ to __FuelType__ (Depreceate __TypeOfFuel__),
+  * __Parking__ add open vehicle types using __TransportTypeRef__.
+  * _Updates to xml schema_:
+    * NEW NewModes-ChauffeuredServiceExample.xsd
+    * netex_routingConstraint_support.xsd
+    * NEW netex_mobilityServiceConstraint_support.xsd
+    * NEW netex_mobilityServiceConstraint_version.xsd
+    * netex_distribution_support.xsd
+    * netex_parking_support.xsd
+    * netex_parking_version.xsd
+    * netex_equipmentENergySupport_support.xsd
+    * netex_fareStructureElement_support.xsd
+    * NEW netex_nm_individualTraveller_support.xsd
+    * NEW netex_nm_individualTraveller_version.xsd
+    * netex_vehicleType_support.xsd
+    * netex_vehicleType_version.xsd
+    * netex_all_objects_part5_newModes.xsd
+
+### 2020.10.20  NewModes : Car pooling example and miscellaneous small revisions.
+  * NewModes:Add XML Example of Car Pooling Service, revise  schema to enable.
+  * Frames
+    * TM Support: __SalesTransactionFrame__ : Add __MediumAccessDevice__.
+    * General: __ResourceFrame__ :  Add __FacilitySets__.
+  *  __ConditionSummary__ (for __FareProduct__ and __SalesOfferPackage__):  Add __RentalConditionSummaryGroup__.
+  * Utility types: __InfoLinks__ add _mobileAppDownload_ value to __infoLinkTypes__ enumeration.
+  * Facilities:  Add _AnimalsAllowed_   enum value  to __NuisanceFacility__. Add missing _taxiRank_  enumeration value to __StopPlaceType__,
+  * _Updates to xml schema_:
+    * NEW NewModes-CarPoolingExample.xsd
+    * netex_salesContract_version.xsd
+    * netex_salesTransaction_version.xsd
+    * netex_usageParameterEligibility_support.xsd
+    * netex_facility_support.xsd
+    * netex_parkingSupport_version.xsd
+    * netex_utilityTypes_version.xsd
+    * netex_resourceFrame_version.xsd
+    * netex_customerEligibility_version.xsd
+
+### 2020.10.16  NewModes : Cycle example and miscellaneous small revisions.
+  * NewModes: Add XML Example of Cycle Sharing service, revise to enable
   * Usage Parameters
-	* New Modes: _UsageValidityPeriod : __ Add _accessCode_ value to __ActivationMeans__ enumeration. uml
-	* New Modes: Add new __HirePenaltyPolicy__ parameter with _noVehicleReturn_, _lateVehicleReturn_, _damageToVehice_, _damageToEquipment_ values to __PenaltyPolicyType. uml
-	* New Modes: __ChargingPolicy__ : Add __DepositPolicy_  with enum values    for __ChargingPolicy__. uml
+	* New Modes: __UsageValidityPeriod__ : __ Add _accessCode_ value to __ActivationMeans__ enumeration.
+	* NewModes: Add new __HirePenaltyPolicy__ parameter with _noVehicleReturn_, _lateVehicleReturn_, _damageToVehicle_, _damageToEquipment_, etc, values.
+	* NewModes: __ChargingPolicy__ : Add __DepositPolicy__ attribute  with enum values.
   * Fare Product
-	* New Modes: Add __RequiresDeposit__ and __NoCashPayment__ to __CommercialConditionSummary__.  
-	* FIX:  __ChargingMomementType__ add new value beforeTravelThenAdjustAtEndOfTravel__, correcet type on beforeStartThenAdjustAtEndOfFareDay__
+	* NewModes: Add __RequiresDeposit__ and __NoCashPayment__ to __CommercialConditionSummary__.
+	* FIX:  __ChargingMomementType__ add new value _beforeTravelThenAdjustAtEndOfTravel_; correct typo on _beforeStartThenAdjustAtEndOfFareDay__
   * Fare Table:
-        * Add __EquipmentRef__ to __FareTable__ and __Cell__ specifics. 
-  * New Modes: Add __onlineProvider__ to __OrganisationType__ enumeration
+     * Add __EquipmentRef__ to __FareTable__ and __Cell__ specifics.
+  * Organisation:
+     * NewModes: __Organisation__; Add __onlineProvider__ to __OrganisationType__ enumeration
   * Equipment:
-	* New Modes: Add _docks_ value  to __CycleStorageType__ enumeration values.
-	* LuggageStorageFacilities: add SkiRacks and SkiRacksAtRear.
+	* NewModes: Add _docks_ value  to __CycleStorageType__ enumeration values.
+	* __LuggageStorageFacilities__: add enumeration values _skiRacks_ and _skiRacksAtRear_.
   * Network Restriction
-        * NewModes: __NetworkRestrictions__ : Widen all  references __VehicleTypeRef__ to be __TransportTypeRef__
-  * _Updates to xml schema_:  
-        * NewModes-CycleSharingExample.xsd 
-        * netex_organisation_support.xsd 
-        * netex_equipmentParking_support.xsd 
-        * netex_facility_support.xsd 
-        * netex_networkRestriction_version.xsd 
-        * netex_parking_version.xsd 
-        * netex_usageParameterTravel_support.xsd 
-        * netex_usageParameterCharging_support.xsd 
-        * netex_usageParameterCharging_version.xsd 
-        * netex_fareTable_version.xsd 
-        * netex_usageParameterCharging_version.xsd 
-        * netex_nm_accessCredentialAssignment_version.xsd 
-        * netex_conditionSummary_support.xsd 
-         
-### 2020.10.15  NewModes : Add Constraints
- 	Fix: add __Mode__ and __ModeOfOperation to __ResourceFrame__
- 	Fix: add _transport_ value  to __SiteType__ enumeration values.
-  * _Updates to xml schema_:   
-        * netex_site_support.xsd 
-        * netex_resourceFrame_version.xsd 
-        
-### 2020.10.15  NewModes : Add Constraints
-  * _Updates to xml schema_:   
-        * netex_networkRestriction_version.xsd 
-        * netex_nm_publication_version.xsd 
+    * NewModes: __NetworkRestrictions__ : Widen all  references __VehicleTypeRef__ to be __TransportTypeRef__
+  * _Updates to xml schema_:
+      * NEW NewModes-CycleSharingExample.xsd
+      * netex_organisation_support.xsd
+      * netex_equipmentParking_support.xsd
+      * netex_facility_support.xsd
+      * netex_networkRestriction_version.xsd
+      * netex_parking_version.xsd
+      * netex_usageParameterTravel_support.xsd
+      * netex_usageParameterCharging_support.xsd
+      * netex_usageParameterCharging_version.xsd
+      * netex_fareTable_version.xsd
+      * netex_usageParameterCharging_version.xsd
+      * netex_nm_accessCredentialAssignment_version.xsd
+      * netex_conditionSummary_support.xsd
 
-### 2020.10.15  NewModes : ReviseFrames
-  * _Updates to xml schema_:   
-        * netex_nm_mobilityServiceFrame_version.xsd
-        * netex_nm_vehicleMeetingPoint_version.xsd
-        * netex_nm_singleJourneyPath_version.xsd
+### 2020.10.15  NewModes : Revise condition summary.
+  *	NewModes: __FareProduct__ / __ConditionSummary__: Add __Mode__ and __ModeOfOperation__.
+  *	FIX: __Site__: Add _transport_ value  to __SiteType__ enumeration values.
+  * _Updates to xml schema_:
+    * netex_site_support.xsd
+    * netex_resourceFrame_version.xsd
+    * netex_conditionSummary_support.xsd
 
-### 2020.10.15  NewModes : FleetEquipment: add attributes from IXSO 
-  * _Updates to xml schema_:   
-        * netex_nm_fleetEquipment_support.xsd
-        * netex_nm_fleetEquipment_version.xsd
-        
-### 2020.10.15  NewModes : Fare Prices
-  * Add __LocalServiceRef__ and __MobilityServiceRef__  to __Tariff__ applicability 
-  * Add   __MobilityServiceMatrixElement__
-  * _Updates to xml schema_:     
-        * netex_fareStructureElement_version.xsd
-        * netex_ifopt_allObjects.xsd	
-        * NEW netex_nm_mobilityServiceElement_support.xsd
-        * NEW netex_nm_mobilityServiceElement_version.xsd
-        
-### 2020.10.14  NewModes :  Add C__ParkingCapacityAssignment__
-  * _Updates to xml schema_:    
-        * netex_ifopt_allObjects.xsd	  
-        * NEW netex_nm_parkingCapacityAssignment_support.xsd
-        * NEW netex_nm_parkingCapacityAssignment_version.xsd
-        
-parkingCapacityAssignment
-### 2020.10.14  NewModes : AClean up all_object includes. ADd missing files
-  * _Updates to xml schema_:    
-        * netex_ifopt_allObjects.xsd	  
-    	* DELETE netex_accounting_version.xsd
-        * netex_allObjects_part2_journeyTimes.xsd	
-        * netex_allObjects_reusableComponents.xsd
-        * netex_all_objects_part3_salesTransactions
-            
-### 2020.10.14  NewModes : Add   : Add __VehicleServiceParkingBay__ and __PArkingBaySTatus__ .
-  * _Updates to xml schema_:  
-    	* netex_all_objects_part5_newModes.xsd
-        * netex_nm_parkingBayStatus_support.xsd
-        * netex_nm_parkingBayVersion_version.xsd. 
+### 2020.10.15  NewModes : Add Constraints for NewMode entities.
+  * _Updates to xml schema_:
+      * netex_networkRestriction_version.xsd
+      * netex_nm_publication_version.xsd
 
-### 2020.10.13  NewModes : Fares updates: Add __MediumApplicationRef__ to __CustomerPurchasePackage__ , Add __VehiclePoolerProfile__/
-  * _Updates to xml schema_:  
-        * netex_netex_customerPurchasePackage_version.xsd
-        * netex_nm_usageParameterEligibility_support.xsd
-        * netex_nm_usageParameterEligibility_version.xsd.
-        * netex_nm_salesContract_version.xsd.  
-        
-### 2020.10.11  NewModes  File reorganise and rename to follow dependecies
-  * Move prerequisite  files to NeTEx framework. Add "_nm_ "to name
-  * _Updates to xml schema_:  
-        * MOVE to RC  netex_netex_nm_fleet_support.xsd
-        * MOVE to RC  netex_netex_nm_fleet_version.xsd
-        * MOVE to RC  netex_netex_nm_fleetEquipment_support.xsd
-        * MOVE to RC  netex_netex_nm_fleetEquipment_version.xsd 
-      	* MOVE to IFOPT  netex_taxiPlace_support.xsd
-      	* MOVE to IFOPT  netex_taxiPlace_version.xsd
-    	* MOVE to FM_ST  netex_mediumAplication_support.xsd
-      	* MOVE to FM_ST  netex_mediumApplication_version.xsd
-    	* MOVE to FM_ST  netex_customerPaymentMeans_support.xsd
-      	* MOVE to FM_ST  netex_customerPaymentMeans_version.xsd
-      	
-  	* RENAME netex_netex_nm_fleet_version.xsd
-  	* RENAME netex_netex_nm_fleet_support.xsd
-  	* RENAME netex_netex_nm_fleet_version.xsd
-  	* RENAME netex_netex_nm_fleetEquipment_support.xsd
-  	* RENAME netex_netex_nm_fleetEquipment_version.xsd
-  	* RENAME netex_netex_nm_mobilityService_support.xsd
-  	* RENAME netex_netex_nm_mobilityService_version.xsd
-  	* RENAME netex_netex_nm_onlineService_support.xsd
-  	* RENAME netex_netex_nm_onlineService_version.xsd  	
-  	* RENAME netex_nm_vehicleMeetingPoint_support.xsd
-  	* RENAME netex_nm_vehicleMeetingPoint_version.xsd
-  	* RENAME netex_nm_vehicleMeetingPointAssignment_support.xsd
-  	* RENAME netex_nm_vehicleMeetingPointAssignment_version.xsd
-  	* RENAME netex_nm_taxiPlace_support.xsd
-  	* RENAME netex_nm_taxiPlace_vesion.xsd
-  	* RENAME netex_nm_vehicleMeetingPlace_support.xsd
-  	* RENAME netex_nm_vehicleMeetingPlace_vesion.xsd
-  	* RENAME netex_nm_vehicleAccessCredentials_support.xsd
-  	* RENAME netex_nm_vehicleAccessCredentials_vesion.xsd
+### 2020.10.15  NewModes : Revise Frames
+  * _Updates to xml schema_:
+    * netex_nm_mobilityServiceFrame_version.xsd
+    * netex_nm_vehicleMeetingPoint_version.xsd
+    * netex_nm_singleJourneyPath_version.xsd
+
+### 2020.10.15  NewModes : Add attributes from IXSO
+  * NewModes:Update __FleetEquipment__: add attributes from IXSO.
+  * _Updates to xml schema_:
+    * netex_nm_fleetEquipment_support.xsd
+    * netex_nm_fleetEquipment_version.xsd
+
+### 2020.10.15  NewModes : Fares  support.
+  * NewModes: Add __LocalServiceRef__ and __MobilityServiceRef__  to __Tariff__ applicability.
+  * NewModes: Add  __MobilityServiceElement__  and __MobilityServiceElementPrice__.
+  * _Updates to xml schema_:
+    * netex_fareStructureElement_version.xsd
+    * netex_ifopt_allObjects.xsd
+    * NEW netex_nm_mobilityServiceElement_support.xsd
+    * NEW netex_nm_mobilityServiceElement_version.xsd
+
+### 2020.10.14  NewModes :  Parking Caspacity.
+  * NewModes: Add __ParkingCapacityAssignment__
+  * _Updates to xml schema_:
+      * netex_ifopt_allObjects.xsd
+      * NEW netex_nm_parkingCapacityAssignment_support.xsd
+      * NEW netex_nm_parkingCapacityAssignment_version.xsd
+
+### 2020.10.14  NewModes : Corrections to "all object" include files,
+  * FIX: Clean up all_object includes. Add missing files
+  * _Updates to xml schema_:
+    * neetx.spp
+    * netex_ifopt_allObjects.xsd
+    * DELETE netex_accounting_version.xsd
+    * netex_allObjects_part2_journeyTimes.xsd
+    * netex_allObjects_reusableComponents.xsd
+    * netex_all_objects_part3_salesTransactions
+
+### 2020.10.14  NewModes : Revise __Parking__ model.
+  * NewModes: Add __VehicleServiceParkingBay__ and __ParkingBayStatus__ .
+  * _Updates to xml schema_:
+   	* netex_all_objects_part5_newModes.xsd
+    * netex_nm_parkingBayStatus_support.xsd
+    * netex_nm_parkingBayVersion_version.xsd.
+
+### 2020.10.13  NewModes : Fare model updates.
+  * NewModes: __CustomerPurchasePackage__: Add __MediumApplicationRef__.
+  * NewModes: Eligibility  __UsageParameter__:  Add __VehiclePoolerProfile__.
+  * _Updates to xml schema_:
+    * netex_netex_customerPurchasePackage_version.xsd
+    * netex_nm_usageParameterEligibility_support.xsd
+    * netex_nm_usageParameterEligibility_version.xsd.
+    * netex_nm_salesContract_version.xsd.
+
+### 2020.10.11  NewModes:  File reorganise and rename to follow dependencies
+  * TIDY UP Move prerequisite  files to NeTEx framework. Add "nm" to file name to distinguish.
+  * _Updates to xml schema_:
+    * MOVE to RC: netex_netex_nm_fleet_support.xsd
+    * MOVE to RC: netex_netex_nm_fleet_version.xsd
+    * MOVE to RC: netex_netex_nm_fleetEquipment_support.xsd
+    * MOVE to RC: netex_netex_nm_fleetEquipment_version.xsd
+  	* MOVE to IFOPT: netex_taxiPlace_support.xsd
+  	* MOVE to IFOPT: netex_taxiPlace_version.xsd
+	* MOVE to FM_ST:  netex_mediumAplication_support.xsd
+  	* MOVE to FM_ST:  netex_mediumApplication_version.xsd
+	* MOVE to FM_ST:  netex_customerPaymentMeans_support.xsd
+  	* MOVE to FM_ST:  netex_customerPaymentMeans_version.xsd
+  	* RENAME as netex_netex_nm_fleet_version.xsd
+  	* RENAME as  netex_netex_nm_fleet_support.xsd
+  	* RENAME as  netex_netex_nm_fleet_version.xsd
+  	* RENAME as  netex_netex_nm_fleetEquipment_support.xsd
+  	* RENAME as  netex_netex_nm_fleetEquipment_version.xsd
+  	* RENAME as  netex_netex_nm_mobilityService_support.xsd
+  	* RENAME as  netex_netex_nm_mobilityService_version.xsd
+  	* RENAME as  netex_netex_nm_onlineService_support.xsd
+  	* RENAME as  netex_netex_nm_onlineService_version.xsd
+  	* RENAME as  netex_nm_vehicleMeetingPoint_support.xsd
+  	* RENAME as  netex_nm_vehicleMeetingPoint_version.xsd
+  	* RENAME as  netex_nm_vehicleMeetingPointAssignment_support.xsd
+  	* RENAME as  netex_nm_vehicleMeetingPointAssignment_version.xsd
+  	* RENAME as  netex_nm_taxiPlace_support.xsd
+  	* RENAME as  netex_nm_taxiPlace_vesion.xsd
+  	* RENAME as  netex_nm_vehicleMeetingPlace_support.xsd
+  	* RENAME as  netex_nm_vehicleMeetingPlace_vesion.xsd
+  	* RENAME as  netex_nm_vehicleAccessCredentials_support.xsd
+  	* RENAME as  netex_nm_vehicleAccessCredentials_vesion.xsd
 
 ### 2020.10.11 NewModes  Price Tidy ups - update references, fixes.
-  * __CellReferences__: Add __VehicleTypeRef__ and __VehicleModelRef__ to __ModelEquipmentRef__, EquipmentRef.  
-  * _Updates to xml schema_:  
-     	* netex_fareTable_version.xsd
+  * NewModes __FareTable___ Update __CellReferences__:
+    * Add __VehicleTypeRef__ .  __VehicleModelRef__,  __ModelEquipmentRef__, __EquipmentRef__.
+  * _Updates to xml schema_:
+    * netex_fareTable_version.xsd
 
 ### 2020.10.09  NewModes  Tidy ups - update references, fixes.
-  * __TravelSpecificationSummary__: Add __VehicleMeetingPoint__ and __VehicleMeetingPlace__ to __TravelSpecificationSummaryEndpoint__.
-  * __TravelSpecificationSummary__: Add __SingleJourneyRef__.
-  * Revise reference:  __TravelSpecificationSummaryEndpoint__   widen to use __TransportOrganinisationRef rather than __OperatorRef__.
-  * Revise reference:  __TravelSpecificationSummaryEndpoint__   widen to use __TransportOrganinisationRef rather than __OperatorRef__.
-  * Revise reference:  __SiteConnection__  widen to use __TransportOrganisationRef rather than __OperatorRef__.
-  * Revise reference:  __FareTable__  widen to use __TransportOrganisationRef rather than __OperatorRef__.
-  * Revise reference:  __JourneyDesignator__  widen to use __TransportOrganisationRef rather than __OperatorRef__.
-  * Revise reference:  __TimetableFrame__ to use __TransportType rather than __VehicleRef__.
-  * Revise reference:  __ParkingTariff__,  __Parking_Properties__ to use __TransportType rather than __VehicleRef__.
-  * Revise reference:  __Fleet__,  __{atkimg_Properties__ to use __TransportType rather than __VehicleRef__.
-  * Revise reference:  Add onward meeting Link to use __SingleJourneyPath/PointInIngleJourneyPath__.
+  *  NewModes: revise __TravelSpecificationSummary__:
+    * Add __VehicleMeetingPoint__ and __VehicleMeetingPlace__ to __TravelSpecificationSummaryEndpoint__.
+    * __TravelSpecificationSummary__: Add __SingleJourneyRef__.
+  * NewModes: Widen  refernce to use __TransportOrganisationRef__ rather than __OperatorRef__
+    * Revise reference:  __TravelSpecificationSummaryEndpoint__.
+    * Revise reference:  __SiteConnection__.
+    * Revise reference:  __FareTable__.
+    * Revise reference:  __JourneyDesignator__.
+  * NewModes: Widen  reference to use __TransportTypeRef_ rather than __VehicleRef__.
+    * Revise reference:  __TimetableFrame__.
+    * Revise reference:  __ParkingTariff__,  __Parking_Properties__.
+    * Revise reference:  __Fleet__.
+  * Revise reference:  __SingleJourneyPath__: Add __OnwardMeetingLinkRef__ to __PointInSingleJourneyPath__.
   * __FareTable__ : Add __SingleJourneyRef__, __GroupOfSingleJourneysRef__.
-  * _Updates to xml schema_:  
-     	* netex_travelSpecificationSummary_version.xsd
-     	* netex_timetableFrame_version.xsd
+  * _Updates to xml schema_:
+    * netex_travelSpecificationSummary_version.xsd
+    * netex_timetableFrame_version.xsd
 	* netex_siteConnection_version.xsd
 	* netex_fleet_version.xsd
 	* netex_singleJourneyPath_version.xsd
 	* netex_journeyDesignator_support.xsd
 	* netex_parkingTariff_version.xsd
 	* netex_fareTable_version.xsd
-	
-### 2020.10.09  NewModes  Add  __ServiceBookingArrangement__ to  __MobilityService__.
-  * Add further __PaymentMethodType__ enum values to __bookingMethod__ , __mobileApp__ and __atCounter__.
-  * _Updates to xml schema_:  
-     	* netex_serviceRestriction_support.xsd
+
+### 2020.10.09  NewModes:  Revise booking arrangements
+  * NewModes: Add  __ServiceBookingArrangement__ to  __MobilityService__.
+  * General: Add further __PaymentMethodType__ enum values; _mobileApp_ and _atCounter_ to __BookingMethod__ .
+  * _Updates to xml schema_:
+    * netex_serviceRestriction_support.xsd
    	* netex_serviceRestriction_version.xsd
    	* netex_usageParameterBooking_support.xsd
    	* netex_usageParameterBooking_version.xsd
-   	
-### 2020.10.09  NewModes  Add  __Presentation__ to  __SiteElement__.
-  * _Updates to xml schema_:   
-   	* netex_ifopt_site_version.xsd 
 
-### 2020.10.07  NewModes  Add  __MobilityServiceFrame__ and __MobilityJourneyFrame__.
-  * _Updates to xml schema_:  
-    	* netex_all_objects_part5_newModes.xsd
+### 2020.10.09  NewModes:  Allow a colour to be associated with a parking etc.
+  * NewModes: Add  __Presentation__ to  __SiteElement__.
+  * _Updates to xml schema_:
+   	* netex_ifopt_site_version.xsd
+
+### 2020.10.07  NewModes  Add new frames
+  * NewModes: Add  __MobilityServiceFrame__ and __MobilityJourneyFrame__.
+  * Updates to xml schema_:
+    * netex_all_objects_part5_newModes.xsd
    	* NEW netex_mobilityServiceFrame_version.xsd
-    	* NEW netex_mobilityJourneyFrame_version.xsd  	
-    	
-### 2020.10.07  NewModes  Add  parameters to  __MValidityParameterAssignments__.
-  * _Updates to xml schema_:  
-    	* netex_all_objects_part5_newModes.xsd
+    * NEW netex_mobilityJourneyFrame_version.xsd
 
-### 2020.10.07  NewModes  Add  __MediumAccessDevice__.
-  * _Updates to xml schema_:  
+### 2020.10.07  NewModes:  Make new mode elements assignable as fare parameters.
+  * Add  parameters to  __ValidityParameterAssignments__.
+  * _Updates to xml schema_:
+    * netex_all_objects_part5_newModes.xsd
+
+### 2020.10.07  NewModes:  Implement TM6.0 Fare entities not yet in NeTEx.
+  * Add  __MediumAccessDevice__, __CustomerPaymentMeans__.
+  * _Updates to xml schema_:
     	* netex_all_objects_part5_newModes.xsd
    	* NEW netex_mediumApplication_support.xsd
    	* NEW netex_mediumApplication_version.xsd
@@ -267,10 +292,12 @@ parkingCapacityAssignment
    	* NEW netex_vehicleAccessCredentials_support.xsd
    	* NEW netex_vehicleAccessCredentials_version.xsd
    	* netex_salesContract_support.xsd
-   	
-### 2020.10.07  NewModes  Add  __VehicleReleaseEquipment__,  __RefuellingEquipment__ , __ModelProfile__.
-  * _Updates to xml schema_:  
-    	* netex_all_objects_part5_newModes.xsd
+
+### 2020.10.07  NewModes: Equipment additions.
+  * NewModes: Add  __VehicleReleaseEquipment__,  __RefuellingEquipment__ ,
+  * NewModes: __TransportType__: Add __ModelEquipmentProfile__.
+  * _Updates to xml schema_:
+    * netex_all_objects_part5_newModes.xsd
    	* netex_parkingEquipment_support.xsd
    	* netex_parkingEquipment_version.xsd
    	* netex_vehicleType_support.xsd
@@ -280,8 +307,10 @@ parkingCapacityAssignment
   	* NEW netex_equipmentEnergy_support.xsd
   	* NEW netex_equipmentEnergy_version.xsd
 
-### 2020.10.06  NewModes  Add    __SingleJourney__ and    ___SingleJourneyPath__. Add __ModeRestrictionAsssessment__ to __RouteLink__.
-  * _Updates to xml schema_:  
+### 2020.10.06  NewModes:  Add single journey support.
+  * NewModes: Add    __SingleJourney__ and    ___SingleJourneyPath__.
+  * NewModes: Add __ModeRestrictionAsssessment__ to __RouteLink__.
+  * _Updates to xml schema_:
   	* netex_all_objects_part5_newModes.xsd
   	* NEW netex_singleJourney_support.xsd
   	* NEW netex_singleJourney_version.xsd
@@ -291,9 +320,12 @@ parkingCapacityAssignment
   	* NEW netex_vehicleServicePlaceAssignment_version.xsd
    	* netex_route_support.xsd
   	* netex_route_version.xsd
- 
-### 2020.10.06 NewModes  Add    __SingleJourney__ and    ___SingleJourneyPath__.  Add __VehicleMeetingPoint__ to __Connection__ end.
-  * _Updates to xml schema_:  
+
+### 2020.10.06 NewModes:  Add topology elements;  points, places and assignments.
+  * NewModes: Add  __VehicleMeetingPooint__ and    ___VehicleMeetingLink__.
+  * NewModes: Add  __VehicleMeetingPlace__ and    ___VehicleServicePlaceAssignments__, with subtypes.
+  * NewModes: Add __VehicleMeetingPoint__ to __Connection__ end.
+  * _Updates to xml schema_:
   	* netex_all_objects_part5_newModes.xsd
   	* NEW netex_vehicleMeetingPoint_support.xsd
   	* NEW netex_vehicleMeetingPoint_vesion.xsd
@@ -304,13 +336,15 @@ parkingCapacityAssignment
   	* NEW netex_vehicleMeetingPlace_support.xsd
   	* NEW netex_vehicleMeetingPlace_vesion.xsd
   	* netex_servicePattern_version.xsd
-  	
-### 2020.10.04  NewModes  Add new values for  __StakeholderRoleType__ and    __DataRoleType__.   
-  * _Updates to xml schema_:  
-  	* netex_responsibilities_support.xsd 
 
-### 2020.10.04  NewModes  Add  __MobilityService__ and subtypes, add __OnlineServiceOperator__.   
-  * _Updates to xml schema_:  
+### 2020.10.04  NewModes: Update responsibility role types.
+  * NewModes: Add new enumeration values for  __StakeholderRoleType__ and    __DataRoleType__.
+  * _Updates to xml schema_:
+  	* netex_responsibilities_support.xsd
+
+### 2020.10.04  NewModes: Add mobility services.
+  * NewModes: Add  __MobilityService__ and subtypes, add __OnlineServiceOperator__.
+  * _Updates to xml schema_:
   	* netex_all_objects_part5_newModes.xsd
   	* NEW netex_mobilityService_support.xsd
 	* NEW netex_mobilityService_version.xsd
@@ -318,23 +352,28 @@ parkingCapacityAssignment
 	* NEW netex_onlineService_version.xsd
 	* netex.spp
 
-### 2020.10.04  NewModes  Revise  __VehicleType__ add __TransportType__ and __PersonalTransportType__.   
-  * _Updates to xml schema_:  
+### 2020.10.04  NewModes:  Revise  __VehicleType__
+  * Add __TransportType__ and __PersonalTransportType__.
+  * _Updates to xml schema_:
   	* NEW netex_fleet_support.xsd
 	* NEW netex_fleet_version.xsd
 	* netex_vehicleType_support.xsd
 	* netex_vehicleType_version.xsd
+	* netex_train_support.xsd
+	* netex_train_version.xsd
 	* netex_vehicleJourney_version.xsd
 	* netex_all_objects_reusableComponents.xsd
 	* NEW netex_all_objects_newModes.xsd
 
-### 2020.10.04  NewModes  Add  __TransportOrganisation__ and __PublicTransportOrganisation__.   
-  * _Updates to xml schema_:   
+### 2020.10.04  NewModes  Revise Transport Organisations.
+  * NewModes: Add  __TransportOrganisation__ and __PublicTransportOrganisation__.
+  * _Updates to xml schema_:
 	* netex_transportOrganisation_support.xsd
 	* netex_transportOrganisation_version.xsd
-	
-### 2020.10.04  NewModes  Add  references to__ModeOfOperation__.   
-  * _Updates to xml schema_:   
+
+### 2020.10.04  NewModes:  Add  references to __ModeOfOperation__.
+  * NewModes: Update existing references to __Mode__ to include __ModeOfOperation__.
+  * _Updates to xml schema_:
 	* netex_transportOrganisation_version.xsd
 	* netex_vehicleType_version.xsd
 	* netex_stopPlace_version.xsd
@@ -348,9 +387,11 @@ parkingCapacityAssignment
 	* netex_accessRightParameter_version.xsd
 	* netex_usageParameterTravel_version.xsd
 	* netex_fareFrame_version.xsd
-	
-### 2020.10.04  NewModes  Add __ModeOfOperation__.  ALso correct typos in __Notice__  file.
-  * _Updates to xml schema_:    
+
+### 2020.10.04  NewModes : revise modes
+  * NewModes Add __ModeOfOperation__.
+  * FIX: Also correct typos in __Notice__  file.
+  * _Updates to xml schema_:
 	* NEW netex_modeOfOperation_support.xsd
 	* NEW netex_modeOfOperation_version.xsd
 	* netex_mode_support.xsd
@@ -358,193 +399,194 @@ parkingCapacityAssignment
 	* netex_notice_version.xsd
 	* netex.spp
 
-Version 1.1.2 - Base version plus further minor fixes comprising##
+Version 1.1.2 - Base version plus further minor fixes comprising
 
 ### 2020.08.11  Update oxygen project to include new examples
-  * _Other updates_:    
-	* netex.xpr    
-  * _Updates to examples_: 
+  * _Other updates_:
+	* netex.xpr
+  * _Updates to examples_:
 	* \examples\standards\era_uic\Netex_Eurostar mapping_era_1.xml
 	* \examples\standards\era_uic\Netex_Eurostar mapping_era_2.xml
 	* \examples\standards\era_uic\Netex_era_uic_joiningsplitting.xml
 	* \examples\standards\era_uic\Netex_era_uic_timetable_hack_01.xml
 	* \examples\standards\norway\stops\BasicStopPlace_example.xml
 
-### 2020.08.11   FIX  Issue #110 Add missing fuel types	to  __VehicleType__  /  __FuelType__ 
+### 2020.08.11   FIX  Issue #110 Add missing fuel types	to  __VehicleType__  /  __FuelType__
 additional values:  _electricContact, battery, dieselBatteryHybrid, petrolBatteryHybrid, biodiesel, hydrogen, liquidGas, methane, ethanol_.
-   * _Updates to xml schema_:    
+   * _Updates to xml schema_:
         * netex_framework\netex_reusableComponents\netex_vehicleType_support.xsd
 
 ### 2020.08.11  FIX  Issue #106 *Schema*: Add missing constraints for allow __GeneralZone__ and __AdministrativeZone__
-   * _Updates to xml schema_:     
+   * _Updates to xml schema_:
         * netex_publication_version.xsd
 
 ### 2020.08.11   FIX  Issue #104 *Framework*: Add __ResponsibilityRole__    in __ResourceFrame__
-  * _Updates to xml schema_:    
+  * _Updates to xml schema_:
 	* netex_framework\netex_frames\netex_resourceFrame_version.xsd"
 
 ### 2020.08.10  FIX  Issue #108 *Framework*: Allow __ServiceCalendar__ to hold UIC OperatingPeriod
-  * _Updates to xml schema_:    
+  * _Updates to xml schema_:
 	* netex_framework\netex_reusableComponents\netex_serviceCalendar_support.xsd
 	* netex_framework\netex_reusableComponents\netex_serviceCalendar_version.xsd
   * netex_publication_version.xsd
-    * _Updates to examples_:  
+    * _Updates to examples_:
     * Add NTA XML examples
 
 ### 2020.07.29   FIX  Issue #97 *Part2*: Add __NormalDatedJourney__ and __DatedVehicleJourney__ to journeys  in __TimetableFrame__
-  * _Updates to xml schema_:    
+  * _Updates to xml schema_:
 	* netex_part2\netex_journeyTimes\netex_datedVehicleJourney_version.xsd
-	
-Version 1.1.1 - Base version plus  further minor fixes comprising##
+
+Version 1.1.1 - Base version plus further minor fixes comprising##
+	* netex_part2\netex_journeyTimes\netex_datedVehicleJourney_version.xsd
 
 ### 2020.07.28   EXAMPLES  Revise fare examples
-  * _Updates to xml schema_:    
+  * _Updates to xml schema_:
 	* NONE
   * _Updates to xml examples:
 	* \txc and \fxc subdirectory files
 
 ### 2020.07.28   FIX  Issue #101*Publication*:Add missing constraints for __FareTableRow__, __FareTableColumn__, __TypeOfLine__ and for __FareZone__ Parent
-  * _Updates to xml schema_:    
+  * _Updates to xml schema_:
 	* netex_framework/netex_genericFramework/netex_publication_version.xsd
   * _Updates to xml examples:
 	* Netex_era_distance_ro.xml.
 
 ### 2020.07.28   FIX  Issue #100*FRAMEWORK*:Correct the substitution group on __OrganisationUnit__
-  * _Updates to xml schema_:    
+  * _Updates to xml schema_:
 	* netex_framework/netex_genericFramework/netex_organisation_version.xsd
 
 ### 2020.06.21   FIX  Issue #75*FRAMEWORK*:Remove space from end of __secondClass__ enumeration value
-  * _Updates to xml schema_:    
+  * _Updates to xml schema_:
 	* netex_framework/netex_reusableComponents/netex_serviceRestrictions_support.xsd
 
 ### 2020.06.21 PARTIAL  FIX  Issue #73*PART2*:Recursive includes: NJSK  Remove cyclic inclusion dependency
-  * _Updates to xml schema_:    
-	* netex_flexibleService Journey.xml  
+  * _Updates to xml schema_:
+	* netex_flexibleService Journey.xml
 
 ### 2020.06.21 FIX  Issue #78 *PART2*:Journey Coupling: NJSK  __JourneyCouple__ / __MainPartRef__ should be of type  __JourneyPartRef__
-  * _Updates to xml schema_:  
-	* netex_coupledJourney.xml  
+  * _Updates to xml schema_:
+	* netex_coupledJourney.xml
 
 ### 2020.06.21 FIX  Issue #92 *FRAMEWORK*:LinkProjection NJSK Expose the missing __EntityInVersion__ elements on the __LinkProjection__ derivation
-  * _Updates to xml schema_:  
-	* netex_projectionVersion.xml  
-	
+  * _Updates to xml schema_:
+	* netex_projectionVersion.xml
+
 ====
 Version 1.10 - Base version plus minor fixes comprising
-  * Norway contributions,  
+  * Norway contributions,
   * The approved 1.1 CRs 1-50
   * Rollup of fixes  and additional documentation on other fixes.
   * Corrections to  integration of NK  1.09.
   * 51-55 CRSs from Meeting Feb 2019. Also CRs from NL, EURA, UK,  Norway and SBB input.
-  
+
 
 Version 1.11 - Base version plus  further minor fixes comprising##
 
 ### 2020.08.11  Update oxygen project to include new examples
-  * _Other updates_:    
-	* netex.xpr    
-  * _Updates to examples_: 
+  * _Other updates_:
+	* netex.xpr
+  * _Updates to examples_:
 	* \examples\standards\era_uic\Netex_Eurostar mapping_era_1.xml
 	* \examples\standards\era_uic\Netex_Eurostar mapping_era_2.xml
 	* \examples\standards\era_uic\Netex_era_uic_joiningsplitting.xml
 	* \examples\standards\era_uic\Netex_era_uic_timetable_hack_01.xml
 	* \examples\standards\norway\stops\BasicStopPlace_example.xml
 
-### 2020.08.11   FIX  Issue #110 Add missing fuel types	to  __VehicleType__  /  __FuelType__ 
+### 2020.08.11   FIX  Issue #110 Add missing fuel types	to  __VehicleType__  /  __FuelType__
 additional values:  _electricContact, battery, dieselBatteryHybrid, petrolBatteryHybrid, biodiesel, hydrogen, liquidGas, methane, ethanol_.
-   * _Updates to xml schema_:    
+   * _Updates to xml schema_:
         * netex_framework\netex_reusableComponents\netex_vehicleType_support.xsd
 
 ### 2020.08.11  FIX  Issue #106 *Schema*: Add missing constraints for allow __GeneralZone__ and __AdministrativeZone__
-   * _Updates to xml schema_:     
+   * _Updates to xml schema_:
         * netex_publication_version.xsd
 
 ### 2020.08.11   FIX  Issue #104 *Framework*: Add __ResponsibilityRole__    in __ResourceFrame__
-  * _Updates to xml schema_:    
+  * _Updates to xml schema_:
 	* netex_framework\netex_frames\netex_resourceFrame_version.xsd"
 
 ### 2020.08.10  FIX  Issue #108 *Framework*: Allow __ServiceCalendar__ to hold UIC OperatingPeriod
-  * _Updates to xml schema_:    
+  * _Updates to xml schema_:
 	* netex_framework\netex_reusableComponents\netex_serviceCalendar_support.xsd
 	* netex_framework\netex_reusableComponents\netex_serviceCalendar_version.xsd
   * netex_publication_version.xsd
-    * _Updates to examples_:  
+    * _Updates to examples_:
     * Add NTA XML examples
 
 ### 2020.07.29   FIX  Issue #97 *Part2*: Add __NormalDatedJourney__ and __DatedVehicleJourney__ to journeys  in __TimetableFrame__
-  * _Updates to xml schema_:    
+  * _Updates to xml schema_:
 	* netex_part2\netex_journeyTimes\netex_datedVehicleJourney_version.xsd
 
 ### 2020.07.28   EXAMPLES  Revise fare examples
-  * _Updates to xml schema_:    
+  * _Updates to xml schema_:
 	* NONE
   * _Updates to xml examples:
 	* \txc and \fxc subdirectory files
 
 ### 2020.07.28   FIX  Issue #101*Publication*:Add missing constraints for __FareTableRow__, __FareTableColumn__, __TypeOfLine__ and for __FareZone__ Parent
-  * _Updates to xml schema_:    
+  * _Updates to xml schema_:
 	* netex_framework/netex_genericFramework/netex_publication_version.xsd
   * _Updates to xml examples:
 	* Netex_era_distance_ro.xml.
 
 ### 2020.07.28   FIX  Issue #100*FRAMEWORK*:Correct the substitution group on __OrganisationUnit__
-  * _Updates to xml schema_:    
+  * _Updates to xml schema_:
 	* netex_framework/netex_genericFramework/netex_organisation_version.xsd
 
 ### 2020.06.21   FIX  Issue #75*FRAMEWORK*:Remove space from end of __secondClass__ enumeration value
-  * _Updates to xml schema_:    
+  * _Updates to xml schema_:
 	* netex_framework/netex_reusableComponents/netex_serviceRestrictions_support.xsd
 
 ### 2020.06.21 PARTIAL  FIX  Issue #73*PART2*:Recursive includes: NJSK  Remove cyclic inclusion dependency
-  * _Updates to xml schema_:    
-	* netex_flexibleService Journey.xml  
+  * _Updates to xml schema_:
+	* netex_flexibleService Journey.xml
 
 ### 2020.06.21 FIX  Issue #78 *PART2*:Journey Coupling: NJSK  __JourneyCouple__ / __MainPartRef__ should be of type  __JourneyPartRef__
-  * _Updates to xml schema_:  
-	* netex_coupledJourney.xml  
+  * _Updates to xml schema_:
+	* netex_coupledJourney.xml
 
 ### 2020.06.21 FIX  Issue #92 *FRAMEWORK*:LinkProjection NJSK Expose the missing __EntityInVersion__ elements on the __LinkProjection__ derivation
-  * _Updates to xml schema_:  
-	* netex_projectionVersion.xml  
-	
+  * _Updates to xml schema_:
+	* netex_projectionVersion.xml
+
 ====
 Version 1.10 - Base version plus minor fixes comprising
-  * Norway contributions,  
+  * Norway contributions,
   * The approved 1.1 CRs 1-50
   * Rollup of fixes  and additional documentation on other fixes.
   * Corrections to  integration of NK  1.09.
   * 51-55 CRSs from Meeting Feb 2019. Also CRs from NL, EURA, UK,  Norway and SBB input.
-  
 
-### 2019.05.17 FIX  *PART3:FARES*: NJSK  __FarePointInPattern__  Fix case on __isFareStage__ and __isForbidden__  
-  * _Updates to xml schema_:  
-	* netex_publication.xml  
 
-### 2019.05.15 FIX  *PART1:ND*: NJSK  Add constraints  on __TypeOfLineRef__   
-  * _Updates to xml schema_:  
-	* netex_publication.xml  
+### 2019.05.17 FIX  *PART3:FARES*: NJSK  __FarePointInPattern__  Fix case on __isFareStage__ and __isForbidden__
+  * _Updates to xml schema_:
+	* netex_publication.xml
+
+### 2019.05.15 FIX  *PART1:ND*: NJSK  Add constraints  on __TypeOfLineRef__
+  * _Updates to xml schema_:
+	* netex_publication.xml
 
 ### 2019.05.14 EXMP  *FRAMEWORK*: NJSK  Add Serbia and Montenegro to country codes
-  * _Updates to xml schema_:  
-	* netex_countrySupport.xml  
+  * _Updates to xml schema_:
+	* netex_countrySupport.xml
 
 ### 2019.05.10 EXMP  *EXAMPLES*: NJSK  Revise UK examples to have UK Profile data.
   * _Updates to xml examples:  Many
 
 ### 2019.05.19 FIX  *PART1:ND*: NJSK  Fix - remove empty value for CompassBearing enum
-  * _Updates to xml schema_:  
-	* netex_locationTypes.xml  
-	* netex_routeInstructionVersion.xml  
+  * _Updates to xml schema_:
+	* netex_locationTypes.xml
+	* netex_routeInstructionVersion.xml
 
-### 2019.05.02 FIX  *FRAMEWORK*: NJSK  Fix constraints  on __DefaultCodespaceRef__  
+### 2019.05.02 FIX  *FRAMEWORK*: NJSK  Fix constraints  on __DefaultCodespaceRef__
   * Also Corrections to a lot of examples.
-  * _Updates to xml schema_:  
-	* netex_publication.xml  
+  * _Updates to xml schema_:
+	* netex_publication.xml
 
 ### 2019.05.01 FIX  *FRAMEWORK*: NJSK  Fix constraints  on __DefaultDataSourceRef__ and __DefaultResponsibilitySetRef__.
   * ALso add EPIP draft profile metadata
-  * _Updates to xml schema_:  
-	* netex_publication.xml  
+  * _Updates to xml schema_:
+	* netex_publication.xml
 	* netex.spp
   * _Updates to xml examples_:
    	* uk_fxc_addon_HSP_plusbus.xml
@@ -557,45 +599,45 @@ Version 1.10 - Base version plus minor fixes comprising
    	* epip_common_profile.xml
 
 ### 2019.04.29 FIX  *PART2:ND*: NJSK  Fix Constraints  on __JourneyPart__.
-  * _Updates to xml schema_:  
-	* netex_publication.xml  
+  * _Updates to xml schema_:
+	* netex_publication.xml
 
 ### 2019.04.28 FIX  *FRAMEWORK*: NJSK  Fix Constraints  on __ParkingPassengerEntrance__ and __VehicleEntranceForParking__.
-  * _Updates to xml schema_:  
+  * _Updates to xml schema_:
 	* netex_publication.xml
 	* netex_parking_support.xml
 	* netex_parking_version.xml
 
 ### 2019.05.01 FIX  *Parts2VS*: NJSK  Fix Add missing _ParentRef__ to __FlexibleService__.
   * Also add missing flexble attributes to __SpecialService__
-  * _Updates to xml schema_:  
+  * _Updates to xml schema_:
 	* netex_flexibleService.xml
-	* netex_ServiceJourney.xml  
+	* netex_ServiceJourney.xml
 
 ### 2019.04.29 FIX  *PART1:ND*: NJSK  Fix Dummy __TariffZone__ should be abstract.
-  * _Updates to xml schema_:   
+  * _Updates to xml schema_:
 	* netex_zone_version.xml
 
 ### 2019.04.19 __CHECKPOINT__.
    - Revised  v1.1 versions of NeTEx UML diagrams, and revised draft NeTEx Part1, Part2 and Part3 documents correspond to this point.
 
 ### 2019.04.19 FIX  *Parts3FARES3*: NJSK  Add missing __TypeOfFareTable__ element.
-  * _Updates to xml schema_:  
-	* netex_fareTable_version.xml   
+  * _Updates to xml schema_:
+	* netex_fareTable_version.xml
 
 ### 2019.04.18 FIX  *Parts3FARES3*: NJSK  Support Place to Place travel.
   *  __AccessRightParameter__: Add __AddressRef__,  __TopoographicPlaceRef__ and __PlaceUseEnum__.
   *  __InterchangeRule__   use of __ServiceDesignator__ versus __JourneyDesignator__
   * _Updates to xml schema_:
-	* netex_accessRightParameter_support.xml  
-	* netex_accessRightParameter_version.xml  
+	* netex_accessRightParameter_support.xml
+	* netex_accessRightParameter_version.xml
 	* netex_travelSpecificationSummary_version.xml
 
 ### 2019.04.18 FIX  *Parts1,2,3*: NJSK  Fix: Tidy up Designators.
   * __AccessRightParameter: Add __AddressRef__,  __TopoographicPlaceRef__ and __PlaceUseEnum__.
   * Modularise __ServiceDesignator__ and __JourneyDesignator__ (no functional change).
   * Add __JourneyDesignator__ to __InterchangeRule__ and __GroupOfServiceJourneysMember__.
-  * _Updates to xml schema_: 	 
+  * _Updates to xml schema_:
 	* netex_journeyDesignator_support.xml
 	* netex_interchangeRuletravelSpecificationSummary_version.xml
 	* netex_serviceJourney_version.xml
@@ -785,13 +827,13 @@ Version 1.10 - Base version plus minor fixes comprising
   * _Documentation Changes_:  [uml_diagram: ok], [doc-done]
 
 ### 2019.03.26 __UK-27__ *Fares-ST*: NJSK Correct annotations, reorder parameters,
- * Add __TypeOfProductCategoryRef__ to __TravelSpecificationSummary__, fix __CellRef__ .  
+ * Add __TypeOfProductCategoryRef__ to __TravelSpecificationSummary__, fix __CellRef__ .
  * Make __TravelDOcumentRef__ many-to-one.as per TM.
- * Also EURA-(nk)Allow marking of use of __CustomerPurchasePackage__. Refine model: make blocking separate from status. Correct annotations.	 
- * Wrap __CustomerPurchasePackage /TravelDocRef__   in  a tag.  
+ * Also EURA-(nk)Allow marking of use of __CustomerPurchasePackage__. Refine model: make blocking separate from status. Correct annotations.
+ * Wrap __CustomerPurchasePackage /TravelDocRef__   in  a tag.
  * Align doc with schema.
  * Reorganize fare examples.
- * _Updates to xml schema_:  
+ * _Updates to xml schema_:
   	* netex_salesTransaction_version.xsd
   	* netex_travelDocument_version.xsd
   	* netex_salesDistribution_support.xsd
@@ -827,7 +869,7 @@ Version 1.10 - Base version plus minor fixes comprising
 	* netex_parking_version.xsd
 	* netex.spp
 	* netex.xpr
-   * _Documentation Changes_:  [uml_diagram: done], [doc-done]  
+   * _Documentation Changes_:  [uml_diagram: done], [doc-done]
 
 ### 2019.03.25 __FR49__ *Part1-IFOPT*:  CD #65 Accessibility changes.
   * __TicketingEquipment__ (_netex_ifopt_equipmentTicketing_.xsd):
@@ -843,14 +885,14 @@ Version 1.10 - Base version plus minor fixes comprising
   	atDoorOpening, onlyAtNight_.
 	* NJSK Review: Correct typo on _stepDetector_.
 	* CD Add __TactileWarningStripEnumeration__ to __CrossingEquipment__ with values _tactileStripAtBeginning, tactileStripAtEnd, 	tactileStripAtBothEnds, noTactileStrip, unknown_,
-  	* NJSK Review:  Move __TactileWarningStripEnumeration, FlooringTypeEnumeration, BorderTypeEnumeration__ to _netex_ifopt_equipmentAccess,xsd_ from _netex_path_support.sd_; use lower camel case for values.		 
+  	* NJSK Review:  Move __TactileWarningStripEnumeration, FlooringTypeEnumeration, BorderTypeEnumeration__ to _netex_ifopt_equipmentAccess,xsd_ from _netex_path_support.sd_; use lower camel case for values.
 	* CD Add new attribute __NecessaryForceEnumeration__ with values _noForce, lightForce, mediumForce,  heavyForce, unknown_.
   	* CD Add new attribute __LightingMethod__ to __PlaceLighting__ with values _movementDetector, stepDetector, switchOnTheWall, atDoorOpening, onlyAtNight, other_.
   	* NJSK Review:  correct typo on _stepDetector_.
   	* CD Add new attribute __WithoutRiser__ to __StairEquipment__.
 	* NJSK Review: Change order of new elements to be with other  step properties.
   	* CD  Add new attribute __EscalatorWithLanding__ to __EscalatorEquipment__.
-  	* CD  Add new attributes to __TravelatorEquipment__; __Length__, __Slope__ and __IntegratesAnEscalatorPart__.		
+  	* CD  Add new attributes to __TravelatorEquipment__; __Length__, __Slope__ and __IntegratesAnEscalatorPart__.
   	* NJSK Review:  correct  name of __IntegratesAnEscalatorPart__
   	* CD Add new attributes  to __EscalatorEquipment__: __MagneticInductionLoop__, __GroundMarkAlignedWithButton__, __TactileGroundFloorButton__,  __ExternalFloorSelection__.
 	* NJSK Review: Correct  name of __GroundMarkAlignedWithButton__.
@@ -860,16 +902,16 @@ Version 1.10 - Base version plus minor fixes comprising
   	* NJSK Review: Change order of new elements to group with like properties
   	* NJSK Review: NB __AudioOrVideoIntercom__ overlaps with __EntranceAttention__.
   	* CD Add new attributes  to __QueuingEquipment__:  __DisabledPriority, QueuingSeatedPossible.__
-  * __PathLink__ (_netex_ifopt_path.xsd_):  	
+  * __PathLink__ (_netex_ifopt_path.xsd_):
   	* CD Add new attributes to __PathLink__;  __Width, FlooringType,  RightSideBorder,  LeftSideBordert, TiltAngle, CodedTilt, TactileWarningStrip,  TactileGuidingStrip__.
-  	* NJSK Review: Reorder so as to place like elements together, add XML sub groups to organize  
+  	* NJSK Review: Reorder so as to place like elements together, add XML sub groups to organize
 	* _netex_ifopt_equipmentPassenger_:
 		* CD Add __FlooringTypeEnumeration__ to __PathLink__ with values _carpet, concrete, asphalt, cork, fibreglassGrating, glazedCeramicTiles, plasticMatting, ceramicTiles, rubber, steelPlate, vinyl, wood, stone, grass, dirt, gravel, uneven, unknown, other_
 		* CD Add __BorderTypeEnumeration__ with __PathLink__ values _wall, grass, dirt, barrier, road, cyclingLane, step, rail, plants, trees, mud, solidEdge, water, gravel, noPhysicalBorder, otherPhysicalBorder, unknown, other,_
   * __PassengerEquipment__ (_netex_passengerEquipment.xsd_):
-  	* CD Add new attribute to __PassengerSafetyEquipment__;  __AcousticAnnouncementsTrigger__  with values _onDemand,   automatic_.	 
+  	* CD Add new attribute to __PassengerSafetyEquipment__;  __AcousticAnnouncementsTrigger__  with values _onDemand,   automatic_.
   	* CD Add new attribute to __PassengerSafetyEquipment__; __AnnouncementsTriggeringMethod__  with values _presenceDetector,  app, internetPage, specificDevice, pushButton_.
-  	* CD add new attribute to __SanitaryEquipment__;  __SupportBarHeight__  with values _onDemand,   automatic_.	 
+  	* CD add new attribute to __SanitaryEquipment__;  __SupportBarHeight__  with values _onDemand,   automatic_.
   	* NJSK Review: Correct typo on __SupportBarHeigth__, reorder new elements.
   	* NJSK Review: Add missing __ChangeAvailable__ attribute
   * __WaitingEquipment__ (_netex_ifopt_equipmentWaiting_):
@@ -898,7 +940,7 @@ Version 1.10 - Base version plus minor fixes comprising
   * _Documentation Changes_:  [uml_diagram: done], [doc-done]
 
 ### 2019.03.25 __NL48__ *Part1-ND*: CD #64  Add new attributes to __StopPointInPattern__ for   advertising of stop; __Print__ and __Dynamic__.
-  * NJSK Review: Correct dependencies: Move  __DynamicAdvertisement__ of use of stop  from _netex_serviceJourney_support.xsd_ to _netex_servicePattern_support.xsd_.  
+  * NJSK Review: Correct dependencies: Move  __DynamicAdvertisement__ of use of stop  from _netex_serviceJourney_support.xsd_ to _netex_servicePattern_support.xsd_.
   * NJSK Review: correct the annotations.
   * _Updates to xml schema_:
   	* netex_serviceJourney_support.xsd
@@ -954,14 +996,14 @@ Version 1.10 - Base version plus minor fixes comprising
   * _Documentation Changes_:  [uml_diagram: done], [doc-done]
 
 ### 2019.03.25 __CR51__ *PART2-TI*: CD Add new __VehicleJourneyStopAssignment__ entity to set default stop assignment for __VehicleJourney__.
-  * NJSK Review CR51:  add doc comments  
+  * NJSK Review CR51:  add doc comments
   * NJSK make __vehicleJourneyStopAssignmentsInFrame_RelStructure__ lower camel case consistent with NeTEx conventions.
   * NJSK Allow inlining of __vehicleJourneyStopAssignments__ within __VehicleJourney__ as for other subcomponents
   * NJSK Also correct camel case on __trainComponentLabelAssignents__ and __trainComponentLabelAssignents_RelStructure__.
   * _Updates to xml schema_:
-	* netex_vehicleJourney_support.xsd  
+	* netex_vehicleJourney_support.xsd
 	* netex_vehicleJourney_version.xsd
-	* netex_timetableFrame_version.xsd  
+	* netex_timetableFrame_version.xsd
 	* netex_stopAssignment_version.xsd
   * _Documentation Changes_:  [uml_diagram: done], [doc-done]
 
@@ -972,12 +1014,12 @@ Version 1.10 - Base version plus minor fixes comprising
 
 ### 2019.03.25 __CR50__ by CD from 2019-02-20 *FRAMEWORK-CC*.  CD add snow and ice modes.
   * NJSK  Revise -
-  * Correct camel casing of _snowAndIce_   value for __TransportMode__,  
-  * Correct camel casing of  __SnowAndIceSubmode__ values ; 	 _unknown, undefined,  snowMobile,  snowCat,  snowCoach,  terraBus, windSled_,  
+  * Correct camel casing of _snowAndIce_   value for __TransportMode__,
+  * Correct camel casing of  __SnowAndIceSubmode__ values ; 	 _unknown, undefined,  snowMobile,  snowCat,  snowCoach,  terraBus, windSled_,
   * Add _snowAndIce_ to __Submode__ choices
   * Add _snowAndIce_ to __AllModes__.
   * Add _ski_ and _skate_ to __AccessMode__  __ContinuousMode__ values
-  * _Updates to xml schema_:  
+  * _Updates to xml schema_:
 	* netex_submode_version.xsd
 	* netex_mode_support.xsd
   * _Documentation Changes_:  [uml_diagram: done], [doc-done]
@@ -985,15 +1027,15 @@ Version 1.10 - Base version plus minor fixes comprising
 ### 2019.03.25 __NL34__  from 2019.01.07 *FRAMEWORK-CC*. Fix #42 by Seime & #63 by CD move  _canalBarge_ value from air to water modes.
   * NB this will break existing XML that uses _canalBarge_ value.
   * Also changed __Duty.TransportMode__ from __VehicleModeEnumeration__   to __AllVehicleModesOfTransportEnumeration__ to allow for non-vehicle modes.
-  * _Updates to xml schema_:  
+  * _Updates to xml schema_:
 	* netex_submode_version.xsd
  	* netex_duty_version.xsd
   * _Documentation Changes_:  [uml_diagram: done], [doc-done]
 
 ### 2019.03.25 __Fix__  *FRAMEWORK-CC*:   #43 by Skinkie from 2019.01.07.
-  * Fix typo on _tactilePlatformEdges_.   
+  * Fix typo on _tactilePlatformEdges_.
   * NB this will break existing XML that uses _tactilePlatformEdges_ value.
-  * _Updates to xml schema_:  
+  * _Updates to xml schema_:
 	* netex_facility_support.xsd
   * _Updates to xml examples_:
 	* examples\functions\stopPlace\Netex_10_StopPlace_uk_ComplexStation_Wimbledon_1.xml
@@ -1001,27 +1043,27 @@ Version 1.10 - Base version plus minor fixes comprising
    * _Documentation Changes_:  [uml_diagram: NONE], [doc-NONE]
 
 ### 2019.03.25 __Fix__  *FRAMEWORK-CC*: #41 by Skinkie from 2019.01.07: Fix typo on __MobilityList__.  Internal change only.
-  * _Updates to xml schema_:  
+  * _Updates to xml schema_:
 	* netex_acsb_passengerMobility.xsd
 	* netex_equipmentVehiclePassenger_version.xsd
   * _Documentation Changes_:  [uml_diagram: NONE], [doc-NONE]
 
-### 2019.03.25 __Fix__ *FARES-FS*: #40 by Skinkie from 2019.01.07  Fix typo on __DistanceMatrixElement.IsDirect__.  
+### 2019.03.25 __Fix__ *FARES-FS*: #40 by Skinkie from 2019.01.07  Fix typo on __DistanceMatrixElement.IsDirect__.
   * NB this will break existing XML that uses __IsDirect__ attribute.
-  * _Updates to xml schema_:  
+  * _Updates to xml schema_:
 	* netex_distanceMatrixElement_version.xsd
   * _Documentation Changes_:  [uml_diagram: NONE], [doc-NONE]
 
 ### 2019.03.25 __Fix__  *Part1-IFOPT*: #39 by Skinkie from 2019.01.07.
-  * Fix typo on __ServiceSiteRef.Structure__.  
-  * _Updates to xml schema_:  
+  * Fix typo on __ServiceSiteRef.Structure__.
+  * _Updates to xml schema_:
 	* netex_ifopt_site_support.xsd
   * _Documentation Changes_:  [uml_diagram: NONE], [doc-NONE]
 
 ### 2019.03.25 __Fix__  *Part1-IFOPT*: Fix #38 by Skinkie from 2019.01.07
-  * Fix typo on __KeyScheme__.  
+  * Fix typo on __KeyScheme__.
   * NB this will break existing XML that uses __KeyScheme__ attribute.
-  * _Updates to xml schema_:  
+  * _Updates to xml schema_:
 	* netex_ifopt_equipmentPassenger_version.xsd
   * _Documentation Changes_:  [uml_diagram: NONE], [doc-NONE]
 
@@ -1029,14 +1071,14 @@ Version 1.10 - Base version plus minor fixes comprising
   * Fix typo on __AccountingTime__.
   * NB This will break existing XML that uses __AccountingTime__ attribute.
   * NJSK  Also add separate EndDayOffSer - DayOffSet should apply to start time relative to operatig day of Duty
-  * _Updates to xml schema_:  
+  * _Updates to xml schema_:
 	* netex_duty_version.xsd
   * _Documentation Changes_:  [uml_diagram: NONE], [doc-NONE]
 
 ### 2019.03.25 __Fix__  *PART1-ND*: #37 by Skinkie from 2019.01.07 Correct type on  __OppositeDirectionRef__.
   * Correct Typo:  rename __OppositeDIrectionRef__ to __OppositeDirectionRef__.
   *  NB This will break existing XML  that uses __OppositeDirectionRef__ attribute.
-  * _Updates to xml schema_:  
+  * _Updates to xml schema_:
 	* netex_route_version.xsd
   * _Documentation Changes_:  [uml_diagram: NONE], [doc-NONE]
 
@@ -1077,7 +1119,7 @@ Version 1.10 - Base version plus minor fixes comprising
 	* netex_customerPurchasePackage_support.xsd
 	* netex_customerPurchasePackage_version.xsd
 	* netex_usageParameterEligibility_support.xsd
-	* netex_usageParameterEligibility_version.xsd 	
+	* netex_usageParameterEligibility_version.xsd
 	* netex_salesContract_support.xsd
 	* netex_salesTransaction_version.xsd
 	* netex_publication.xsd
@@ -1092,13 +1134,13 @@ Version 1.10 - Base version plus minor fixes comprising
   * _Documentation Changes_:  [uml_diagram: done], [doc-done]
 
 ### 2019.03.13 EURA-29  *Part3-FARES*:    Add  new __EligibilityChangePolicy__  usage parameter.
-  * Wwith attributes __OnBecomingPolicy__ and __OnCeasingPolicy__.  
+  * Wwith attributes __OnBecomingPolicy__ and __OnCeasingPolicy__.
   * __OnBecomingEnumeration__.
  	* _automatic_ - If user becomes eligible, automatically apply additional user profile benefits to user, e.g. apply student or senior discounts.
 	* _invite_ - If user becomes eligible, invite user to take up eligible products. e.g. Invite to buy Senior railcard.
 	* _noAction_ - If user becomes eligible,, no automatic measures are taken.
 	* _other_
- * __OnCeasingEnumeration__ - Allowed values  
+ * __OnCeasingEnumeration__ - Allowed values
  	* _immediateTermination_ - If user ceases to be eligible, automatically terminate validity of an  elibility dependent product.
 	* _useUntilExpiry_ - If user ceases to be eligible, they may go on using the product until it  expires.
 	* _terminateAfterGracePeriod_ - If user ceases to be eligible,  termination  take place after the end of a grace period.
@@ -1106,9 +1148,9 @@ Version 1.10 - Base version plus minor fixes comprising
 	* _noAction_ - If user ceases to be eligible, take no action.
 	* _other_
   * add integrity constraint for __EligibilityChangePolicy__.
-  * _Updates to xml schema_:   
+  * _Updates to xml schema_:
 	* netex_usageParameterEligibility_support.xsd
-	* netex_usageParameterEligibility_version.xsd 	
+	* netex_usageParameterEligibility_version.xsd
 	* netex_publication.xsd
   * _Documentation Changes_:  [uml_diagram: done], [doc-done]
 
@@ -1116,21 +1158,21 @@ Version 1.10 - Base version plus minor fixes comprising
   * With values: _purchase_,  _reserve_,  _orderWithoutPaying_,  payForPreviousOrder, other_, _seatMap_  and _openSeating_.
   * Also rename  __Reserving__  \ __ReservationType__ to __SeatAllocationMethod__ and move __SeatAllocationMethodEnumeration__ to new __VehicleSeating__ package.
   * Also add __ReservationExpiryPeriod__ to __Reserving__.
-  * _Updates to xml schema_:  
+  * _Updates to xml schema_:
 	* netex_vehicleSeating_support.xsd
 	* netex_usageParameterBooking_support.xsd
 	* netex_usageParameterBooking_version.xsd
   * _Documentation Changes_:  [uml_diagram: done], [doc-done]
 
 ## 2019.03.13  EURA-40 *Part3-FARES*: Tidy up - Include new elements as fare validity parameters
-  * Add  new __FareStructureValidityParametersGroup__ to validity paarmaters with new attributes   __TypeOfTariffRef__,   __TypeOfFareStructureFactor__,  __TypeOfFarFresStructureFactorRef__,   
+  * Add  new __FareStructureValidityParametersGroup__ to validity paarmaters with new attributes   __TypeOfTariffRef__,   __TypeOfFareStructureFactor__,  __TypeOfFarFresStructureFactorRef__,
   * Extend  __FareProduct ValidityParametersGroup__  to validity paramaters  with new attributes   __TypeOfPriceingRuleRef__,   __ChargingMethodRef__, __TypeOfPaymentMethodRef__, __TypeOfMachineReadability__, __TypeOfFareTableRef.__
   * Add  new __SeatingValidityParametersGroup__ with new attributes   __TrainElementRef__,    __TrainComponentLabelAssignmentRef__.
   * Also UK-69 Scaleability. Allow classification ofto  __FareTable__ with     new __TypeOfOfFareTable__ element.
   * Also Rename draft  __ValidityParameterSetOperator__ __ValidityParameterSelectionType__.
   * Also UK-41  Also add new __LimitationSelectionType__ as additional functional operator to __GenericParameterAssignment__  to clarify use of groups :  _oneOf /  someOf/  allOf_.
   * Also add integrity constraints for __TypeOfMachineReadability__.
-  * _Updates to xml schema_:  
+  * _Updates to xml schema_:
 	* netex_fareTable_support.xsd
 	* netex_fareTable_version.xsd
 	* netex_validityCondition_support.xsd
@@ -1146,7 +1188,7 @@ Version 1.10 - Base version plus minor fixes comprising
 ### 2019.03.13 EURA-93, EURA-085  *Part3-FARES*: Add new attribute to  __InterChanging__, __RegisterBreak__.
   * With values _none,   markByStaff,  markByValidator,  markByMobileApp, other_
   * Also EURA-085  Add  new attribute __ActivationMeans__ attribute  to __UsageValidityPerido__ with values  _noneRequired, checkIn,  useOfValidato useOfMobileDevice, automaticByTime,  automaticByProximity, other_
-  * _Updates to xml schema_:  
+  * _Updates to xml schema_:
 	* netex_usageParameterTravel_support.xsd
 	* netex_usageParameterTravel_version.xsd
   * _Documentation Changes_:  [uml_diagram: done], [doc-done]
@@ -1155,10 +1197,10 @@ Version 1.10 - Base version plus minor fixes comprising
 ### 2019.03.13 UK  *Part3-FARES*: Simplify use of Fares:
   * Add new  Atrribute  __PreeassignedFareProductType__ to      __PreassignedFareProduct__ with values _singleTip,  timeTimitedSingleTrip, dayReturnTrip, periodReturnTrip, multiStepTrip, dayPass,  periodPass, other_.
   * Add new attribute   __AmountOfPriceUnitType__ to     __AmountOfPriceUnitFareProduct__ with values  _tripCarnet, passCarnet, unitCoupons, other_.
-  * NB these are separate from __TariffBasis__.  
-  * _Updates to xml schema_:  
+  * NB these are separate from __TariffBasis__.
+  * _Updates to xml schema_:
 	* netex_fareProduct_support.xsd
-	* netex_fareProduct_version.xsd 	
+	* netex_fareProduct_version.xsd
   * _Documentation Changes_:  [uml_diagram: done], [doc-done]
 
 ### 2019.03.13 NORWAY-100 *Part3-FARES*: Support VAT (and other tax)  categories.
@@ -1174,7 +1216,7 @@ Version 1.10 - Base version plus minor fixes comprising
  * NB this revises current sense of   __PriceRuleStepResult__ \ __Amount__.
  * Also allow nesting of __FareTable__ column headings and rows.
  * Add __RoundingStepRef__, and   __Narrative__ text elements.
- * _Updates to xml schema_:  
+ * _Updates to xml schema_:
 	* netex_farePrice_support.xsd
 	* netex_farePrice_version.xsd
 	* netex_fareTable_support.xsd
@@ -1189,12 +1231,12 @@ Version 1.10 - Base version plus minor fixes comprising
   * Also drop some spurious selectors.
   * Add constraint for __SupplementToFareProductRef__.
 	* _Updates to xml examples_:
-	* netex_publication_support.xsd  
+	* netex_publication_support.xsd
   * _Documentation Changes_:  [uml_diagram: NONE], [doc-NONE]
 
 ### 2019.03.12 NORWAY-100 *Part3-FARES*: Add __ReservationType__ to __Reserving__ usage parameter.
   * With values _autoAssigned_, _seatMap_  and _openSeating_.
-  * _Updates to xml schema_:  
+  * _Updates to xml schema_:
 	* netex_usageParameterBooking_support.xsd
 	* netex_usageParameterBooking_version.xsd
   * _Updates to xml examples_:
@@ -1202,24 +1244,24 @@ Version 1.10 - Base version plus minor fixes comprising
   * _Documentation Changes_:  [uml_diagram: done], [doc-done]
 
 ### 2019.03.12 NORWAY-102 *Part3-FARES*:   Add  new enum values to __Exchanging__ \  __ExchangeableTo__.
-  * Values _upgradeToSpecifiedFare_, _downgradeToSpecifedFare_, _equivalentProduct_ (already have a _changeGroupSize_ value).  
+  * Values _upgradeToSpecifiedFare_, _downgradeToSpecifedFare_, _equivalentProduct_ (already have a _changeGroupSize_ value).
   * Also add new _purchaseGracePeriod_ (i.e. afterPurchaseWindow)    enum values to  __Reselling  \  ResellWhen__.
-  * _Updates to xml schema_:    
+  * _Updates to xml schema_:
 	* netex_usageParameterAfterSales_support.xsd
   * _Documentation Changes_:  [uml_diagram: done], [doc-done]
 
 ### 2019.03.12 NORWAY-105 *Part3-FARES*:   Add new __MinimumDuration__  attribute to __TimeInterval__.
   * Also fix __TypeOffareStructureFactor__ on __GeograohicalStructreFactor__.
-  * _Updates to xml schema_:    
+  * _Updates to xml schema_:
 	* netex_timeStructureFactor_version.xsd
 	* netex_geographicalStructureFactor_version.xsd
   * _Documentation Changes_:  [uml_diagram: done], [doc-done]
 
 ### 2019.03.12 EURA-84 *PART1-ND*   Add default __PaymentMethods__, to __Lines__.
  * add xml groupwith __PaymentMethods__, __TypesOfPaymentMethods__   and __PurchaseMoments__ attributes.
- * Add to __Network__, __GroupOfLines__, and __Line__.   
- * Also add  _cashExactChangeOnly_ to values for __PaymentMethods__.   
- * _Updates to xml schema_:   
+ * Add to __Network__, __GroupOfLines__, and __Line__.
+ * Also add  _cashExactChangeOnly_ to values for __PaymentMethods__.
+ * _Updates to xml schema_:
 	* netex_travelRights.xsd
 	* netex_line_version.xsd
  * _Updates to xml examples_:
@@ -1230,38 +1272,38 @@ Version 1.10 - Base version plus minor fixes comprising
  * This so that supplements and dependent products can be required to have same parameters.
  * Add constraint elements to   __EntitlementRequired__, __EntitlementGiven__.
  * Add constraint elements to   __SalesOfferEntitlementRequired__, __SalesOfferEntitlementGiven__.
- * _Updates to xml schema_:   
+ * _Updates to xml schema_:
 	* netex_usageParameterEntitlement_support.xsd
 	* netex_usageParameterEntitlement_version.xsd
 	* netex_salesOfferPackageEntitlement_support.xsd
 	* netex_salesOfferPackage_version.xsd
  * _Updates to xml examples_:
-	* examples\standards\fxc\uk_fxc_pass_Metrobus_metrorider.xml  
+	* examples\standards\fxc\uk_fxc_pass_Metrobus_metrorider.xml
 	* exaamplesstandards\fxc\uk_fxc_addon_HSP_plusbus.xml
  * _Documentation Changes_:  [uml_diagram: done], [doc-done]
 
 ### 2019.03.12 NORWAY-99  *Part3-FARES*:  Change cardinality of __SupplementProduct__.
  * Change __SupplementProduct__ / __SupplementToFareProductRef__ cardinality   from _0:1_ to _0:*_.
  * Also add  missing constraint for __SupplementTofareProductRef__.
- * _Updates to xml schema_:   
+ * _Updates to xml schema_:
  	* netex_fareProduct_supplement.xsd
 	* netex_fareProduct_version.xsd
 	* netex_publication_version.xsd
  * _Updates to xml examples_:
-	* examples\standards\fxc\uk_fxc_pass_Metrobus_metrorider.xml  
+	* examples\standards\fxc\uk_fxc_pass_Metrobus_metrorider.xml
 	* exaamplesstandards\fxc\uk_fxc_addon_HSP_plusbus.xml
  * _Documentation Changes_:  [uml_diagram: done], [doc-done]
 
 ### 2019.03.11 NORWAY-98  *Part3-FARES*:  NORWAY-98 Add new  value _activation_ to __UsageTriggerEnumeration__ for __UsageValidityPeriod__.
  * Also add  _Deregistration_ value to __UsageEnd__ enumeration
  * Also and annototation comments.
- * _Updates to xml schema_:     	    
+ * _Updates to xml schema_:
 	* netex_usageParameterTravel_support.xsd
  * _Documentation Changes_:  [uml_diagram: done], [doc-done]
 
 ### 2019.03.11 NORWAY-97 *Part3-FARES*:  : Add new values to __UserProfile \ UserType__,
  * Values: _student, schoolPupil, youngPerson, military, disabled, disabledCompanion,  employee, jobSeeker_.
- * _Updates to xml schema_:  
+ * _Updates to xml schema_:
 	* netex_user_support.xsd
  * _Updates to xml examples_:
 	* \examples\standards\fxc\uk_fxc_common_profile.xml
@@ -1276,7 +1318,7 @@ Version 1.10 - Base version plus minor fixes comprising
  *  Add add new __EffectiveFrom__ attribute  to __Reselling__ with values _anytime, nextInterval, nextInstallment, never_.
  * Add new __NoticePeriod__ to __Reselling__.
  * Also UK-46- Add __typesOfPaymentMethods /TypeOfPaymentRef__ and move __PaymentMethods__ up hierarchy with new name (Old attribute on __Refunding__  deprecated)
- * _Updates to xml schema_:    
+ * _Updates to xml schema_:
 	* netex_usageParameterAfterSales_support.xsd
 	* netex_usageParameterAfterSales_version.xsd
  * _Updates to xml examples_:
@@ -1285,13 +1327,13 @@ Version 1.10 - Base version plus minor fixes comprising
 
 ### 2019.03.11 EURA-52, EURA40 *Part3-FARES*:  Support Suspension.
  * add _subscription_ enum value to __UsageValidityPeriodType__.
- * Add __SubscriptionSuspensionPolicy__ attribute to __UsageValidityPeriod__ with enumeration   values:  
+ * Add __SubscriptionSuspensionPolicy__ attribute to __UsageValidityPeriod__ with enumeration   values:
 	* _none_ - Suspension not allowed.
 	* _forCertifiedIllness_ - Suspension allowed for illness.
 	* _forParentalLeave_ - Suspension allowed for parental leave.
 	* _forHoliday_ - Suspension allowed for Holiday.
 	* _forAnyReason_ - Suspension allowed for any reason.
- * _Updates to xml schema_:     	    
+ * _Updates to xml schema_:
 	* netex_usageParameterTravel_support.xsd
 	* netex_usageParameterTravel_version.xsd
  * _Documentation Changes_:  [uml_diagram: done], [doc-done]
@@ -1299,7 +1341,7 @@ Version 1.10 - Base version plus minor fixes comprising
 ### 2019.03.11 EURA-72  *Part3-FARES*:   Improve __FareDemandType__ for direction constraints.
  * Make  __StartTimeAtStop__  and __StartTime__ optional.
  * Add new attribute StopUseConstraint__ to   __FareDemandType__ with values _arriving_. _departing_, _passingThrough_.
- * _Updates to xml schema_:     	    
+ * _Updates to xml schema_:
 	* netex_fareQualityFactor_support.xsd
 	* netex_fareQualityFactor_version.xsd
  * _Updates to xml examples_:
@@ -1308,7 +1350,7 @@ Version 1.10 - Base version plus minor fixes comprising
  * _Documentation Changes_:  [uml_diagram: done], [doc-done]
 
 ### 2019.03.11 CR-13  *PART1*:   Add _replacement_  value  to __LineType__ enumeration .
- * _Updates to xml schema_:     	    
+ * _Updates to xml schema_:
 	* netex_line_support.xsd
  * _Documentation Changes_:  [uml_diagram: done], [doc-done]
 
@@ -1323,14 +1365,14 @@ Version 1.10 - Base version plus minor fixes comprising
 	* _fixed_ - Subscription must be for a fixed term.
 	* _variable_ - Subscription can be for  an arbitrary term
 	* _openEnded_ - Subscription term is open ended.
- * Also cf UK-46  Add new __TypeOfPayment__ method.  
+ * Also cf UK-46  Add new __TypeOfPayment__ method.
  * Also Add __AutomatedUse__ attribute to __TypeofPaymentMethod__.
  * Also Add _directDebit_ and bankTransfer_ values   to __PaymentMethod__ enumeration values.
  * Also  __RESELLING__ parameter Add __typesOfPaymentMethods/TypeOfPaymentRef__ and move __PaymentMethods__ up hierarchy with new name (Old attribute on __REFUNDING__  deprecated)
  * Also Add _unused_ and _earlyTermination_ to  __Refunding__ __RefundType__ enumeration.
  * Also Add with specified window value to __PurchaseWhen__ enumeration attribute.
  * Also EURA-90 Add a new attribute  __MaximumNumberOfFailToCheckOutEvents__  to __PenaltyPolicy__.
- * _Updates to xml schema_:     	    
+ * _Updates to xml schema_:
 	* netex_usageParameterCharging_support.xsd
 	* netex_usageParameterCharging_version.xsd
 	* netex_usageParameterAfterSales_support.xsd
@@ -1346,7 +1388,7 @@ Version 1.10 - Base version plus minor fixes comprising
  * Add __StartConstraintType__With enum values  _fixed_, _variable_, _fixedWindow_
  * Also EURA-88 Flexible start window: Add new __FixedStartWindow__	attribute to __UsageValidityPeriod__ with contents
    __MaximumServicesBefore__. __FlexiblePeriodBefore__, __MaximumServicesAfter__, __FlexiblePeriodAfter__.
- * _Updates to xml schema_:     	    
+ * _Updates to xml schema_:
 	* netex_usageParameterTravel_support.xsd
 	* netex_usageParameterTravel_version.xsd
  * _Documentation Changes_:  [uml_diagram: done], [doc-done]
@@ -1354,14 +1396,14 @@ Version 1.10 - Base version plus minor fixes comprising
 ### 2019.03.11 UK-22  *Part3-FARES*:  Add new __PrivateCode__ attribute to __FarePrice__.
  * Also UK-22 Add new __Description__ attribute to __FareProductPrice__.
  * Also UK-22 Add new __InfoLinks__ attribute to __PriceableObject__.
- * _Updates to xml schema_:     	    
- 	* netex_farePrice_version.xsd  
+ * _Updates to xml schema_:
+ 	* netex_farePrice_version.xsd
  * _Documentation Changes_:  [uml_diagram: done], [doc-done]
 
 ### 2019.03.11 UK-55  *Part3-FARES*: Add new __TypeOfFareStructureElement__.
  * Also	UK-89 Add new __TypeOfFareStructureFactor__.
  * Also EURA-77 Fix: Corrections to __TypeOfFareProduct__.
- * _Updates to xml schema_:     	   
+ * _Updates to xml schema_:
  	* netex_fareStructureElement_support.xsd
  	* netex_fareStructureElement_version.xsd
  	* netex_fareStructure_support.xsd
@@ -1371,31 +1413,31 @@ Version 1.10 - Base version plus minor fixes comprising
 
 ### 2019.03.11 UK-31 *FRAMEWORK*  Fix: to attribute names on __TypeOfFrame__.
  * __TypeOfFrame__ Change data type on __ClassAttributeInFrame__ and __ClassRelationshipInFrame/Name__ attributes   from __NCName__ to __QNAME__.
- * _Updates to xml schema_:     	   
+ * _Updates to xml schema_:
  	* netex_versionFrame_version.xsd
  * _Documentation Changes_:  [uml_diagram: done], [doc-done]
 
 ### 2019.03.11 EURA-77 *Part3-FARES*:  Add new relationship between  __FareProduct__ and __Tariff__.
  * Add new __tariffs/TariffRef__  attribute to  __FareProduct__.
- * _Updates to xml schema_:     	   
+ * _Updates to xml schema_:
  	* netex_fareProduct_version.xsd
  * _Documentation Changes_:  [uml_diagram: done], [doc-done]
 
 ### 2019.03.11 EURA-71 *Part3-FARES*:   Add new  _superOffPeak_ and _specialEvent_  enumeration values  to __FareDemandType__.
- * _Updates to xml schema_:     	   
+ * _Updates to xml schema_:
  	* netex_usageParameterBooking_version.xsd
   * _Documentation Changes_:  [uml_diagram: done], [doc-done]
 
 ### 2019.03.11 EURA-76 *Part3-FARES*:  Add __IsFeeRefundable__ attribute to __Reserving__.
- * _Updates to xml schema_:     	   
+ * _Updates to xml schema_:
  	* netex_usageParameterBooking_version.xsd
   * _Documentation Changes_:  [uml_diagram: done], [doc-done]
 
 ### 2019.03.11  EURA-68 *Part3-FARES*:  Specify conditions for changing  group size.
  * __Exchanging__ usage parameter __TypeOfExchange__ attribute: add new  enumeration  value _changeGroupSize_.
- * Also __GroupTicket__ add new attribute __GroupSizeChanges__ with enum values _noChanges, free, charge, steppedCharge_.  
+ * Also __GroupTicket__ add new attribute __GroupSizeChanges__ with enum values _noChanges, free, charge, steppedCharge_.
  * Also for __Refunding__ usage parameter,   add  new _changeOfGroupSize_  value  to __RefundType__ enumeration.
- * _Updates to xml schema_:     	   
+ * _Updates to xml schema_:
  	* netex_usageParameterAfterSales_support.xsd
  	* netex_usageParameterEligibility_support.xsd
 	* netex_usageParameterEligibility_version.xsd
@@ -1403,7 +1445,7 @@ Version 1.10 - Base version plus minor fixes comprising
 
 ### 2019.03.10 UK-21 *Part3-FARES*:  Add  new __SalesOfferEntitlementGiven__ and __SalesOfferEntitlementRequired__  usage parameters.
  *  Add as new package because __SalesOfferPackage__ dependencies are downstream from __FareProduct__.
- * _Updates to xml schema_:     	   
+ * _Updates to xml schema_:
  	* netex_salesOfferPackageEntitlement_support.xsd (new)
 	* netex_salesOfferPackageEntitlement_version.xsd (new)
 	* netex_salesOfferPackage_version.xsd
@@ -1412,7 +1454,7 @@ Version 1.10 - Base version plus minor fixes comprising
  * _Documentation Changes_:  [uml_diagram: done], [doc-done]
 
 ### 2019.03.10 EURA-42 *Part3-FARES*: Add __Currency__ to __PricingRule__ (NB this does not solve other aspects of CR.
- * _Updates to xml schema_:     	   
+ * _Updates to xml schema_:
  	* netex_calculationParameters_version.xsd
  * _Documentation Changes_:  [uml_diagram: done], [doc-done]
 
@@ -1456,7 +1498,7 @@ Version 1.10 - Base version plus minor fixes comprising
  	* netex_usageParameterAfterSales_support.xsd
  * _Documentation Changes_:  [uml_diagram: done], [doc-done]
 
-### 2019.03.10  EURA-87 *Part3-FARES*: Specify if start  of validity is _variable_ or _fixed_.  
+### 2019.03.10  EURA-87 *Part3-FARES*: Specify if start  of validity is _variable_ or _fixed_.
   * Add new __StartConstraint__ attribute to __UsageValidityPeriod__  to  specify if start day  is _variable_ or _fixed_.
   * Add new values _variable_ /  _fixed_ to  __UsageStartConstraintTypeEnumeration__.
   * Add new  __startOnlyOn__  /  __DayType__ attribute so that any required day of week, day of month, month of year can be indicated.
@@ -1480,12 +1522,12 @@ Version 1.10 - Base version plus minor fixes comprising
  * _Documentation Changes_:  [uml_diagram: done], [doc-done]
 
 ### 2019.03.10 UK-08 *FRAMEWORK* Add new attribute __LayerRef__  to __VersionFrame__ and to __TypeOfFrame__.
- * _Updates to xml schema_:   	 
+ * _Updates to xml schema_:
  	* netex_layer_support.xsd
- 	* netex_versionFrame_version.xsd				 
+ 	* netex_versionFrame_version.xsd
 
 ### 2019.03.10 UK-28 *Part3-FARES*: Add new attribute __CustomerAccountRef__ to  __FareContract__.
- * _Updates to xml schema_:   	 
+ * _Updates to xml schema_:
  	* netex_salesContract_version.xsd
  	* netex_salesTransaction_version.xsd
 
@@ -1526,7 +1568,7 @@ Version 1.10 - Base version plus minor fixes comprising
 ### 2019.03.08 PART2 UK-44, UK-69 *Part3-FARES*: Improve support for defining large tariffs in  modular fashion
   * Add  new relationship  __groupsOfOperators/GroupsOfOperatorRef__  to __Network__.
 	* Also __UseToExclude__   attribute to __GroupOfOperators__.
-	* Also add new values  _flexible_ and _urban_ to __TypeOfLine__ enumeration.	 
+	* Also add new values  _flexible_ and _urban_ to __TypeOfLine__ enumeration.
 	* Add new __UseToExclude__ flag to __GroupOfLines__.
 	* Add new __UseToExclude__ flag to __GroupOfDistanceMatrixElements__.
   * _Updates to xml schema_:
@@ -1539,7 +1581,7 @@ Version 1.10 - Base version plus minor fixes comprising
 
 ### 2019.03.08  UK-14 *Part3-FARES*: Improvements to __FareZone__.
   * Add new __ScopingMethod__  attribute to __FareZone__ with   values  _explicitStops_,   _implicitSpatialProjection_, _implicitSpatialProjection._
-  * UK-13 Add new  __ZoneTopology__ enumeration  values   _annular_,   _sequence_, _overlappingSequence_.		 
+  * UK-13 Add new  __ZoneTopology__ enumeration  values   _annular_,   _sequence_, _overlappingSequence_.
   * UK-18 Specify  fare stages  on a   pattern: Add new __IsFareStage__ attribute to __FarePointInPattern__.
   * EURA  Allow stops to be excluded from a routing.    Add new  __IsForbidden__ attribute  to __FarePointInPattern__.
   * _Updates to xml schema_:
@@ -1552,22 +1594,22 @@ Version 1.10 - Base version plus minor fixes comprising
   * _Updates to xml schema_:
  	* netex_travelRights_support.xsd
  	* netex_travelRights_version.xsd
- 	* netex_salesDistribution_support.xsd  
+ 	* netex_salesDistribution_support.xsd
  * _Documentation Changes_:  [uml_diagram: done], [doc-done]
 
 ### 2019.03.07 NJSK *Part3-FARES*: UK-74 Add new enumerations to __TariffBasis__;  _zoneToZone_, _pointToPoint_, _discount_.
  * Also add documentation annotations   to existing annotations.
- * _Updates to xml schema_:  
+ * _Updates to xml schema_:
  	* netex_fareStructureElement_support.xsd
  * _Documentation Changes_:  [uml_diagram: done], [doc-done]
 
 ### 2019.03.07 NJSK Fix *FRAMEWORK* Make __InfrastructurePointRef__ and __InfrastructureLinkRef__ abstract.
- * _Updates to xml schema_:  
+ * _Updates to xml schema_:
  	* netex_networkInfrastructure_support.xsd
  * _Documentation Changes_:  [uml_diagram: NONE], [doc-NONE]
 
 ### 2019.03.07 NJSK-Fix *HOUSEKEEPING*  Delete spurious references in XMLSpy  _netext.ssp_  file.
-  * _Updates to other files_:  
+  * _Updates to other files_:
  	* netex.spp
  * _Documentation Changes_:  [uml_diagram: NONE], [doc-NONE]
 
@@ -1579,7 +1621,7 @@ Version 1.10 - Base version plus minor fixes comprising
 ### 2019.03.07 EURA-40 *Part3-FARES*: Add support for  Subscriptions.
  * Basic steps
 	* Subscriptions add new values  _onlineAccount_  and _postal_ to enumerations  of __DistributionChannelType__.
- 	* Add _subscriptionOnly_, also _onCheckIn_, _inAdvanceOnly_, _beforeBoardingOnly_ , _onBoardingOnly_  to  __PaymentMoment__ enum.  
+ 	* Add _subscriptionOnly_, also _onCheckIn_, _inAdvanceOnly_, _beforeBoardingOnly_ , _onBoardingOnly_  to  __PaymentMoment__ enum.
  	* Fix: add __PaymentMoment__ to __PurchaseWindow__.
   * _Updates to xml schema_:
  	* netex_salesDistribution_support.xsd
@@ -1587,7 +1629,7 @@ Version 1.10 - Base version plus minor fixes comprising
  * _Documentation Changes_:  [uml_diagram: done], [doc-done]
 
 ### 2019.03.05 UK-24 *FRAMEWORK-RC*: & *Part3-FARES*: Add open   __PaymentMethod__ as first class object  so that user defined methods can be added.
-  * Add _ePayDevice_, _ePayAccount_ and _mileagePoints_ to __PaymentMethod__ enum		
+  * Add _ePayDevice_, _ePayAccount_ and _mileagePoints_ to __PaymentMethod__ enum
   * _Updates to xml schema_:
  	* netex_travelRights_support.xsd
  	* netex_travelRights_version.xsd
@@ -1597,7 +1639,7 @@ Version 1.10 - Base version plus minor fixes comprising
 ### 2019.03.05 UK-96 *FRAMEWORK-CC*: Add   __prerequisites__ relationship to __VersionFrame__.
   * _Updates to xml schema_:
  	* netex_versionFrame_version.xsd
-  * _Updates to examples_:  
+  * _Updates to examples_:
   	* Many fares exampels updated to indicate prerequisites.
  * _Documentation Changes_:  [uml_diagram: done], [doc-done]
 
@@ -1611,7 +1653,7 @@ Version 1.10 - Base version plus minor fixes comprising
  	* netex_farePrice_version.xsd
  * _Documentation Changes_:  [uml_diagram: NONE], [doc-doane]
 
-### 2019.03.05 NJSK-Fix *PART1*: Make alternative name and date visible on __Direction__.  
+### 2019.03.05 NJSK-Fix *PART1*: Make alternative name and date visible on __Direction__.
  * _Updates to xml schema_:
  	* netex_route_version.xsd
  * _Documentation Changes_:  [uml_diagram: NONE], [doc-done]
@@ -1643,7 +1685,7 @@ __TypeOfConcessionRef__, __TypeOfUsageParameterRef__,  __VehicleType Ref__, __Ty
  	* netex_accessRightParameter_version.xsd
  * _Documentation Changes_:  [uml_diagram: done], [doc-done]
 
-### 2019.03.01 EURA-(nk) *Part3-FARES*: Add __DistanceMatrixInverseRef__ for backwards direction of reference. Revise constraints.  
+### 2019.03.01 EURA-(nk) *Part3-FARES*: Add __DistanceMatrixInverseRef__ for backwards direction of reference. Revise constraints.
  * _Updates to xml schema_:
  	* netex_distanceMatriElement_support.xsd
  	* netex_distanceMatriElement_version.xsd
@@ -1682,17 +1724,17 @@ __TypeOfConcessionRef__, __TypeOfUsageParameterRef__,  __VehicleType Ref__, __Ty
 ### 2019.02.21 UK-34 *Part3-FARES*: TRAVEL DOCUMENT  should not be in FARE FRAME  - remove.
  * _Updates to xml schema_:
  	* netex_travelDocument_version.xsd
-	* netex_fareFame_version.xsd                                             
+	* netex_fareFame_version.xsd
  * _Documentation Changes_:  [uml_diagram: done], [doc-done]
 
 ### 2019.02.21 UK-07 *Part3-FARES*: __FareTable__ - Allow direct containment of __FarePriceRef__.
  * Also UK-23 Add __FareSectionRef__ to  __FareTable / specifics__
  * _Updates to xml schema_:
 	* netex_fareTable_version.xsd
- * _Updates to xml examples_:Various to drop unecessary __cells__ wrapper tags	                                            
+ * _Updates to xml examples_:Various to drop unecessary __cells__ wrapper tags
  * _Documentation Changes_:  [uml_diagram: done], [doc-done]
 
-## 1.10 Summary of Changes since v1.09                                         
+## 1.10 Summary of Changes since v1.09
 
 
 ### 2019.02.21 .No-Fix *PART2*: Reapply 1.09  Fix Merge in correction  to spelling of __AccountingTime__.
@@ -1738,7 +1780,7 @@ __TypeOfConcessionRef__, __TypeOfUsageParameterRef__,  __VehicleType Ref__, __Ty
    	* netex_publication.xsd
  * _Documentation Changes_:  [uml_diagram: NONE], [doc-NONE]
 
-### 2019.02.18 NJSK-Fix *FRAMEWORK* Correct data type of __LayerRef__ and substitution group on __Layer__  and __CellRef__  
+### 2019.02.18 NJSK-Fix *FRAMEWORK* Correct data type of __LayerRef__ and substitution group on __Layer__  and __CellRef__
   * NB dependencies need sorting out - move layer to core framework?
   * _Updates to files_:
      	* netex_layer_support.xml
@@ -1753,18 +1795,18 @@ __TypeOfConcessionRef__, __TypeOfUsageParameterRef__,  __VehicleType Ref__, __Ty
 
 ### 2019.02.18  EXAMPLES - Add new  Fare examples [xsd only]
 #### Rail fares
-* Example: Distance rail tariff:  
+* Example: Distance rail tariff:
  	* Netex_era_distance_ro.xml
 * Example: Point to Point Multi-operator National tariff and  single operator regional products:
  	* Netex_era_toc_uk.xml
 * Example: Cross-border National tariff :
  	* Netex_crossborder_de.xml
 #### Bus fares
-* Example: Zone-to-zone bus fares:  
+* Example: Zone-to-zone bus fares:
  	* uk_fxc_trip_Metrobus_1.xml.xml
-* Example: Zonal day & season pass fares:  
+* Example: Zonal day & season pass fares:
  	* uk_fxc_pass_Metrobus_metrorider.xml
-* Example: Stage trip fares:  
+* Example: Stage trip fares:
  	* uk_fxc_trip_First_WoE_stage-distance_minimal1.xml
 * _Documentation Changes_:  [uml_diagram: NONE], [doc-NONE]
 
@@ -1772,7 +1814,7 @@ __TypeOfConcessionRef__, __TypeOfUsageParameterRef__,  __VehicleType Ref__, __Ty
  * Fix: Add __CellSpecificNetworkGroup__   to Fare Table Specifics,
  * Fix: Add __TariffZoneRef , LineRef, FareZoneRef,  TariffRef,  LineRef, ScheduledStopPointRef__ and   __FareStructureElementInSequenceRef__. __SectionRef__ to  __CellSpecificNetworkGroup__,
  * _Updates to xml schema_:
- * netex_fareTable_version.xsd  
+ * netex_fareTable_version.xsd
 	* netex_stopPlace_version.xsd
  * _Documentation Changes_:  [uml_diagram: done], [doc-done]
 
@@ -1783,7 +1825,7 @@ __TypeOfConcessionRef__, __TypeOfUsageParameterRef__,  __VehicleType Ref__, __Ty
      3. Fix keyref constraint on __FarePointInPattern_AnyVersionedKey__ - add __xxxPoints__.
      4. Fix keyref constraint on __LinkInJourneyPattern_AnyVersionedKey__ - drop __FarePointInPattern__.
      5. Fix constraint __ServiceLinkInJourneyPattern_UniqueBy_Id_Version_Order__ drop __ServiceServiceLinkInJourneyPattern__.
-     6. Fix __FarePointInPattern__ Key constraint        
+     6. Fix __FarePointInPattern__ Key constraint
 * _Updates to xml schema_:
    	* netex_publication.xsd
 * _Documentation Changes_:  [uml_diagram: NONE], [doc-NONE]
@@ -1797,7 +1839,7 @@ __TypeOfConcessionRef__, __TypeOfUsageParameterRef__,  __VehicleType Ref__, __Ty
 ### 2018.06.02  GITHUBBER  FRAMEWORK Add __Centroid__ to __GroupOfStopPlaces__.
  * _Updates to xml schema_:
 		* netex_stopPlace_version.xsd
- * _Documentation Changes_:  [uml_diagram: done], [doc-done]  
+ * _Documentation Changes_:  [uml_diagram: done], [doc-done]
 ----
 # 1.09 Summary of Changes since v1.08
 
@@ -1806,21 +1848,21 @@ __TypeOfConcessionRef__, __TypeOfUsageParameterRef__,  __VehicleType Ref__, __Ty
  * _Documentation Changes_:  [uml_diagram: done], [doc-done]
 
 ### 2018.06.02  1.09 *BUG* Fix __UsageParameterRef__  - should be abstract to prevent use  [xsd only]
- * _Updates to xml schema_: netex_usageParameter_Support-v1.1.xsd  
+ * _Updates to xml schema_: netex_usageParameter_Support-v1.1.xsd
  * _Documentation Changes_:  [uml_diagram: NONE], [doc-NONE]
 
 ### 2018.06.02 *BUG* Fix __ServiceDesignator__ & __JourneyDesignator__ - Make fromPoint value optional  .
- * _Updates to xml schema_: netex_vehicleJourney_Support-v1.1.xsd  
+ * _Updates to xml schema_: netex_vehicleJourney_Support-v1.1.xsd
   * _Documentation Changes_:  [uml_diagram: done], [doc-done]
    [DOCTODO] Also Add designator UML diagram to SPec
 
 
 ### 2018.06.02  1.10 *BUG* Fix Substitution group  __PointInJourneyPattern__.
- * _Updates to xml schema_: netex_journeyPattern-v1.1.xsd  
+ * _Updates to xml schema_: netex_journeyPattern-v1.1.xsd
  * _Documentation Changes_:  [uml_diagram: NONE], [doc-NONE]
 
 ### 2018.06.02 Add __ServiceDesignator__ to __GroupOfServicesMember__ [DOCTODO]
- *  _Updates to xml schema_: netex_serviceJourney_Version-v1.1.xsd  
+ *  _Updates to xml schema_: netex_serviceJourney_Version-v1.1.xsd
 
 ### 2018.06.01 CR049 Rename  to align with Transmodel.  Fix case of names  [xsd only]
  * TM6 Alignment: Rename __SalesPackage__ to __SalesOfferPackage__
@@ -1841,11 +1883,11 @@ __TypeOfConcessionRef__, __TypeOfUsageParameterRef__,  __VehicleType Ref__, __Ty
      	* Netex_tap_tsi_B3.xml
      	* Netex_tap_Train_Hotel_SalesPackage_2.xml
      	* Netex_101.21_TflGeographicFares_UnitZone_MultipleProducts
- * _Documentation Changes_:  [uml_diagram: done], [doc-done]          
+ * _Documentation Changes_:  [uml_diagram: done], [doc-done]
 
-### 2018.03.20 1.09  CR047 Fix __SupplementToFareProductRef__.  
+### 2018.03.20 1.09  CR047 Fix __SupplementToFareProductRef__.
  * Fix _ResultStepIdType_[xsd only]
- * _Updates to xml schema_: netex_farePrice_version & netex_FarePrice_support   
+ * _Updates to xml schema_: netex_farePrice_version & netex_FarePrice_support
  * _Documentation Changes_:  [uml_diagram: done], [doc-done]
 
 ### 2018.03.20 1.09  Fix Inheritance of __CompanionProfileRef__  to be a type of __UserProfileRef__  [xsd only]
@@ -1877,14 +1919,14 @@ __TypeOfConcessionRef__, __TypeOfUsageParameterRef__,  __VehicleType Ref__, __Ty
 * TM Alignment: Rename __TypeOfPassengerContract__ ==> __TypeOfFareContract__.
 * TM Alignment: Rename __TypeOfPassengerContractEntry__ ==> __TypeOfFareContractEntry__.
 * _Updates to xml schema_:
- 	* netex_fareContract_support-v1.1.xsd  
+ 	* netex_fareContract_support-v1.1.xsd
  	* netex_fareContract_version-v1.1.xsd
- 	* netex_salesTransaction_support-v1.1.xsd  
- 	* netex_salesTransaction_version-v1.1.xsd  
- 	* netex_salesTransactionFrame_version-v1.1.xsd  
- 	* netex_publication.xsd  
+ 	* netex_salesTransaction_support-v1.1.xsd
+ 	* netex_salesTransaction_version-v1.1.xsd
+ 	* netex_salesTransactionFrame_version-v1.1.xsd
+ 	* netex_publication.xsd
  	* netex_publication_timetable.xsd
-  * _Documentation Changes_:  [uml_diagram: done], [doc-done]  
+  * _Documentation Changes_:  [uml_diagram: done], [doc-done]
 
 ### 2017.12.20 CR049 Rename  to align with Transmodel [*uml:v96-nk4; doc:v39*]
 * TM Alignment: Rename __SalesPackage__ ==> __SalesOfferPackage__.
