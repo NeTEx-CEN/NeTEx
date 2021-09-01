@@ -35,10 +35,9 @@ There is also an _Oxygen_ project file:
 ----
 # Change Log
 
-=======
-Version 1.2.2 - New modes Revised changes with examples and constraints.
+Version 1.2.2 - New modes Revised changes with e xamples and constraints.
 
-### 2020.11.06  NewModes (norway):  Enhance Organisations
+### 2020.11.06  NewModes (norway):  Enhace Oragnisations
   * Add relationship between organisations:  * Add __RelatedOrganisation__, with __OrganisationRole__ enumerations.
   * Add reusable contact details
   * _Updates to xml schema_:
@@ -50,7 +49,7 @@ Version 1.2.2 - New modes Revised changes with examples and constraints.
     * netex_all_objects_generic.xsd
     * netex_salesDistribution_version.xsd
     * netex_publication.xsd
-    * NeTEx.SPP
+    * NeTEx,SPP
 
 ### 2020.11.06  Incorporate master udpates :
   * Issue #124,   allow mulimodalQuay.
@@ -82,7 +81,6 @@ Version 1.2.2 - New modes Revised changes with examples and constraints.
     * NEW netex_mobilityServiceConstraint_support.xsd
     * NEW netex_mobilityServiceConstraint_version.xsd
     * netex_distribution_support.xsd
->>>>>>> 15f92ac (NewModes (Norway) Add relatedOrganisation  and also resuable contacts)
     * netex_parking_support.xsd
     * netex_parking_version.xsd
     * netex_equipmentENergySupport_support.xsd
@@ -284,6 +282,28 @@ Version 1.2.2 - New modes Revised changes with examples and constraints.
    	* netex_serviceRestriction_version.xsd
    	* netex_usageParameterBooking_support.xsd
    	* netex_usageParameterBooking_version.xsd
+
+### 2020.10.09  NewModes:  Allow a colour to be associated with a parking etc.
+  * NewModes: Add  __Presentation__ to  __SiteElement__.
+  * _Updates to xml schema_:
+   	* netex_ifopt_site_version.xsd
+
+### 2020.10.07  NewModes  Add new frames
+  * NewModes: Add  __MobilityServiceFrame__ and __MobilityJourneyFrame__.
+  * Updates to xml schema_:
+    * netex_all_objects_part5_newModes.xsd
+   	* NEW netex_mobilityServiceFrame_version.xsd
+    * NEW netex_mobilityJourneyFrame_version.xsd
+
+### 2020.10.07  NewModes:  Make new mode elements assignable as fare parameters.
+  * Add  parameters to  __ValidityParameterAssignments__.
+  * _Updates to xml schema_:
+    * netex_all_objects_part5_newModes.xsd
+
+### 2020.10.07  NewModes:  Implement TM6.0 Fare entities not yet in NeTEx.
+  * Add  __MediumAccessDevice__, __CustomerPaymentMeans__.
+  * _Updates to xml schema_:
+=======
 
 ### 2020.10.09  NewModes:  Allow a colour to be associated with a parking etc.
   * NewModes: Add  __Presentation__ to  __SiteElement__.
