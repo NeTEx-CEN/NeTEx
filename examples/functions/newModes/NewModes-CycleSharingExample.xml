@@ -117,6 +117,14 @@
 								</Branding>
 							</values>
 						</ValueSet>
+						<ValueSet version="any" id="BikeEquip" classOfValues="TypeOfEequipment">
+							<Name>Bike equimebt</Name>
+							<values>
+								<TypeOfEquipment version="any" id="battery">
+									<Name>Battery</Name>
+								</TypeOfEquipment>
+							</values>
+						</ValueSet>
 					</typesOfValue>
 					<contacts>
 						<Contact version="any" id="mbike">
@@ -229,12 +237,29 @@
 							<SimpleVehicleTypeRef version="any" ref="pedal_cycle"/>
 							<CycleModelProfileRef version="any" ref="boneKitA"/>
 						</VehicleModel>
-						<VehicleModel version="any" id="boneShaker2">
+						<VehicleModel version="any" id="electric_boneshaker">
 							<Name>New Model Bike v2</Name>
 							<SimpleVehicleTypeRef version="any" ref="electric_cycle"/>
+							<equipmentProfiles>
+								<ChargingEquipmentProfileRef version="any" ref="ebike_charging"/>
+							</equipmentProfiles>
 							<CycleModelProfileRef version="any" ref="boneKitB"/>
 						</VehicleModel>
 					</vehicleModels>
+					<vehicleEquipmentProfiles>
+						<VehicleEquipmentProfile version="any" id="ebike">
+							<Units>2</Units>
+							<TypeOfEquipmentRef version="any" ref="battery"/>
+						</VehicleEquipmentProfile>
+						<ChargingEquipmentProfile version="any" id="ebike_charging">
+							<CouplingType>plug</CouplingType>
+							<PlugType>type2</PlugType>
+							<CurrentType>1-PhaseAC</CurrentType>
+							<MaximumChargingPower>240</MaximumChargingPower>
+							<PreparationDuration>PT1M</PreparationDuration>
+							<FinalisationDuration>PT1M</FinalisationDuration>
+						</ChargingEquipmentProfile>
+					</vehicleEquipmentProfiles>
 					<vehicleModelProfiles>
 						<CycleModelProfile version="any" id="boneKitA">
 							<Battery>false</Battery>
@@ -247,6 +272,15 @@
 						</CycleModelProfile>
 						<CycleModelProfile version="any" id="boneKitB">
 							<Battery>false</Battery>
+							<Lamps>true</Lamps>
+							<Helmet>false</Helmet>
+							<Pump>false</Pump>
+							<Locker>false</Locker>
+							<Basket>true</Basket>
+							<Lock>true</Lock>
+						</CycleModelProfile>
+						<CycleModelProfile version="any" id="ebike">
+							<Battery>true</Battery>
 							<Lamps>true</Lamps>
 							<Helmet>false</Helmet>
 							<Pump>false</Pump>
@@ -609,17 +643,53 @@
 								<Vehicle version="any" id="C01">
 									<OperatorRef version="any" ref="noc:MBIKE"/>
 									<SimpleVehicleTypeRef version="any" ref="electric_cycle"/>
-									<VehicleModelRef version="any" ref="boneShaker2"/>
+									<VehicleModelRef version="any" ref="electric_boneshaker"/>
+									<actualVehicleEquipments>
+										<BatteryEquipment version="any" id="C01_battery_1">
+											<TypeOfEquipmentRef version="any" ref="battery"/>
+											<BatteryCapacity>1000</BatteryCapacity>
+											<MaximumChargingPower>240</MaximumChargingPower>
+										</BatteryEquipment>
+										<BatteryEquipment version="any" id="C01_battery_2">
+											<TypeOfEquipmentRef version="any" ref="battery"/>
+											<BatteryCapacity>1000</BatteryCapacity>
+											<MaximumChargingPower>240</MaximumChargingPower>
+										</BatteryEquipment>
+									</actualVehicleEquipments>
 								</Vehicle>
 								<Vehicle version="any" id="C02">
 									<OperatorRef version="any" ref="noc:MBIKE"/>
 									<SimpleVehicleTypeRef version="any" ref="electric_cycle"/>
-									<VehicleModelRef version="any" ref="boneShaker2"/>
+									<VehicleModelRef version="any" ref="electric_boneshaker"/>
+									<actualVehicleEquipments>
+										<BatteryEquipment version="any" id="C02_battery_1">
+											<TypeOfEquipmentRef version="any" ref="battery"/>
+											<BatteryCapacity>1000</BatteryCapacity>
+											<MaximumChargingPower>240</MaximumChargingPower>
+										</BatteryEquipment>
+										<BatteryEquipment version="any" id="C02_battery_2">
+											<TypeOfEquipmentRef version="any" ref="battery"/>
+											<BatteryCapacity>1000</BatteryCapacity>
+											<MaximumChargingPower>240</MaximumChargingPower>
+										</BatteryEquipment>
+									</actualVehicleEquipments>
 								</Vehicle>
 								<Vehicle version="any" id="C03">
 									<OperatorRef version="any" ref="noc:MBIKE"/>
 									<SimpleVehicleTypeRef version="any" ref="electric_cycle"/>
-									<VehicleModelRef version="any" ref="boneShaker2"/>
+									<VehicleModelRef version="any" ref="electric_boneshaker"/>
+									<actualVehicleEquipments>
+										<BatteryEquipment version="any" id="C03_battery_1">
+											<TypeOfEquipmentRef version="any" ref="battery"/>
+											<BatteryCapacity>1000</BatteryCapacity>
+											<MaximumChargingPower>240</MaximumChargingPower>
+										</BatteryEquipment>
+										<BatteryEquipment version="any" id="C03_battery_2">
+											<TypeOfEquipmentRef version="any" ref="battery"/>
+											<BatteryCapacity>1000</BatteryCapacity>
+											<MaximumChargingPower>240</MaximumChargingPower>
+										</BatteryEquipment>
+									</actualVehicleEquipments>
 								</Vehicle>
 							</members>
 						</Fleet>
@@ -653,7 +723,6 @@
 						<VehicleSharingService version="any" id="metrobike">
 							<BrandingRef version="any" ref="myBrand"/>
 							<Name>Metro Bike Cycle share scheme</Name>
-							
 							<infoLinks>
 								<InfoLink typeOfInfoLink="info">http:metrobike.eu/info</InfoLink>
 								<InfoLink typeOfInfoLink="mobileAppDownload" targetPlatform="ios">http:metrobike.eu/ios</InfoLink>
@@ -1724,7 +1793,7 @@ This Shows sample Purchases
 														<TypeOfTravelDocumentRef version="any" ref="printed_ticket"/>
 														<VehicleSharingRef version="any" ref="cycle_share"/>
 														<SimpleVehicleTypeRef version="any" ref="electric_cycle"/>
-														<VehicleModelRef version="any" ref="boneShaker2"/>
+														<VehicleModelRef version="any" ref="electric_boneshaker"/>
 														<CycleModelProfileRef version="any" ref="boneKitB"/>
 														<VehicleSharingServiceRef version="any" ref="metrobike"/>
 														<VehicleRef version="any" ref="C01"/>
@@ -1801,7 +1870,7 @@ This Shows sample Purchases
 														<DistributionChannelRef version="any" ref="online"/>
 														<VehicleSharingRef version="any" ref="cycle_share"/>
 														<SimpleVehicleTypeRef version="any" ref="electric_cycle"/>
-														<VehicleModelRef version="any" ref="boneShaker2"/>
+														<VehicleModelRef version="any" ref="electric_boneshaker"/>
 														<CycleModelProfileRef version="any" ref="boneKitB"/>
 														<VehicleSharingServiceRef version="any" ref="metrobike"/>
 														<VehicleRef version="any" ref="C01"/>

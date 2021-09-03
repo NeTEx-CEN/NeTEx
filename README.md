@@ -39,12 +39,32 @@ A new Part5 is added for new modes, with examples
 The new Part 5 CEN Specification document describes the additions and changes.
 
 
+### 2021.09.02  NewModes: CommentAction Add __BatteryEquipment__ and ChargingEquipmentProfile__. 
+  * Add __BatteryEquipments__ to energy equipment. Add uniqueness constraint.
+  * Add ChargingEquipmentProfile__  and__TypeOfPlug__in new module.
+  * Add __MobilityServiceConstraintZone__ to Network access right validity parameters.
+  * _Updates to xml schema_:  
+    * ++ netex_nm_chargingEquipmentProfile_support.xsd
+    * ++ netex_nm_chargingEquipmentProfile_version.xsd
+    * netex_ifopt_nm_equipmentEnergy_support.xsd
+    * netex_ifopt_nm_equipmentEnergy_support.xsd
+    * netex_vehicleType_version.xsd
+    * netex_trainElement_version.xsd
+    * netex_netex_nm_mobilityConstraintZone_version.xsd
+    * netex_units.xsd
+    * netex_all_objects_reusableComponents.xsd
+    * netex_publication_version.xsd
+  * _Other updates_:
+    * NeTEx.spp
+    * NeTEx.xpr
+  * _Updates to xml examples_:
+    * NewModes-CycleSharingExample.xml 
 					 
-
+netex_reusableComponents/netex_all_objects_reusableComponents.xs
 
 ### 2021.09.01  NewModes: CommentAction Add __PoolOfVehicles__.
   * Add  __mustpickupanddropoffInSameZone_  value to __mobilityConstraintZone__ restiction values.  
-  * Add __PoolOfVehicles__ to Mobility Service Zonstraint zone package. Add uniqueness constraint.
+  * Add __PoolOfVehicles__ to Mobility Service Constraint zone package. Add uniqueness constraint.
   * Add __PoolOfVehicles__to __MobilityServiceFrame__.
   * Add __MobilityServiceConstraintZone__ to Network access right validity parameters.
   * _Updates to xml schema_:  
