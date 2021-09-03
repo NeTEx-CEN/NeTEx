@@ -769,7 +769,11 @@ A new Part5 is added for new modes, with examples
 The new Part 5 CEN Specification document describes the additions and changes.
 
 
-### 2021.09.02  NewModes: CommentAction Add __BatteryEquipment__ and ChargingEquipmentProfile__. 
+### 2021.09.03  NewModes: CommentAction Add __MustReturnToSameBay__  attribute to __PoolOfVehicles__. 
+  * _Updates to xml schema_:  
+    * ++ netex_netex_nm_mobilityConstraintZone_version.xsd
+    
+### 2021.09.02  NewModes: CommentAction Add __BatteryEquipment__ and __ChargingEquipmentProfile__. 
   * Add __BatteryEquipments__ to energy equipment. Add uniqueness constraint.
   * Add ChargingEquipmentProfile__  and__TypeOfPlug__in new module.
   * Add __MobilityServiceConstraintZone__ to Network access right validity parameters.
