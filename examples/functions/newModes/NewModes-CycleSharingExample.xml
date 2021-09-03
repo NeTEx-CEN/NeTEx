@@ -624,11 +624,36 @@
 							</members>
 						</Fleet>
 					</fleets>
+					<poolsOfVehicles>
+						<PoolOfVehicles version="any" id="metrobike_pool_1">
+							<Name>Restricted Pool -zone</Name>
+							<VehicleSharingServiceRef version="any" ref="metrobike"/>
+							<MobilityServiceConstraintZoneRef version="any" ref="bring_back_to_zone"/>
+							<vehicles>
+								<VehicleRef version="any" ref="B01"/>
+								<VehicleRef version="any" ref="B03"/>
+								<VehicleRef version="any" ref="B05"/>
+							</vehicles>
+						</PoolOfVehicles>
+						<PoolOfVehicles version="any" id="metrobike_pool_2">
+							<Name>Restricted Pool - parking</Name>
+							<VehicleSharingServiceRef version="any" ref="metrobike"/>
+							<ParkingRef version="any" ref="bike_station_beta"/>
+							<parkingComponents>
+								<VehicleSharingParkingAreaRef version="any" ref="bike_station_beta_B1"/>
+							</parkingComponents>
+							<vehicles>
+								<VehicleRef version="any" ref="P03"/>
+								<VehicleRef version="any" ref="P04"/>
+							</vehicles>
+						</PoolOfVehicles>
+					</poolsOfVehicles>
 					<!-- === Availabels ervices  === -->
 					<mobilityServices>
 						<VehicleSharingService version="any" id="metrobike">
 							<BrandingRef version="any" ref="myBrand"/>
 							<Name>Metro Bike Cycle share scheme</Name>
+							
 							<infoLinks>
 								<InfoLink typeOfInfoLink="info">http:metrobike.eu/info</InfoLink>
 								<InfoLink typeOfInfoLink="mobileAppDownload" targetPlatform="ios">http:metrobike.eu/ios</InfoLink>
@@ -643,6 +668,7 @@
 								<OnlineServiceRef version="any" ref="metrobike_online"/>
 							</proposedByServices>
 							<VehicleSharingRef version="any" ref="cycle_share"/>
+							<SharingPolicyUrl>>http:metrobike.eu/policy</SharingPolicyUrl>
 							<MinimumSharingPeriod>PT30M</MinimumSharingPeriod>
 							<MaximumSharingPeriod>PT24H</MaximumSharingPeriod>
 							<fleets>
@@ -716,6 +742,15 @@
 								<VehicleTypeZoneRestriction version="any" id="general_use">
 									<ZoneUse>allUsesAllowed</ZoneUse>
 									<SimpleVehicleTypeRef version="any" ref="pedal_cycle"/>
+								</VehicleTypeZoneRestriction>
+							</vehicleRestrictions>
+						</MobilityServiceConstraintZone>
+						<MobilityServiceConstraintZone version="any" id="bring_back_to_zone">
+							<Name>Must bring back to same zone</Name>
+							<VehicleSharingServiceRef version="any" ref="metrobike"/>
+							<vehicleRestrictions>
+								<VehicleTypeZoneRestriction version="any" id="bring_back">
+									<ZoneUse>mustPickUpAndDropOffInSameZone</ZoneUse>
 								</VehicleTypeZoneRestriction>
 							</vehicleRestrictions>
 						</MobilityServiceConstraintZone>
@@ -1535,7 +1570,6 @@ This Shows sample Purchases
 								<TelCountryCode>31</TelCountryCode>
 							</Phone>
 							<PhoneVerified>2020-02-28T16:00:00</PhoneVerified>
-
 							<customerAccounts>
 								<CustomerAccount version="any" id="mbt:Cust444@AC7651" created="2020-02-28T13:00:00">
 									<Name>hotrider</Name>
