@@ -17,12 +17,21 @@
 				<Coverage>Europe</Coverage>
 				<Creator>First Drafted for NeTEx version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.  mailto:schemer@netex.org.uk</Creator>
 				<Date>
+					<Modified>2021-09-02</Modified>NewModes: Add BatteyEquipment and TypeOfBatteryCHemistry. Add ChargingEquipmentProfile, TypeOfPlug
+				</Date>
+        <Date>
 					<Modified>2021-09-01</Modified>NewModes: AddPOOL OF VEHICLEs
 				</Date>
-                <Date>
+        <Date>
 					<Modified>2021-08-03</Modified>Add PARKING BAY CONDITION and RENTAL AVAILABILITY
 				</Date>
-                <Date>
+				<Date>
+					<Modified>2021-09-01</Modified>NewModes: Add PoolOfVehicles
+				</Date>
+				<Date>
+					<Modified>2021-08-03</Modified>Add PARKING BAY CONDITION and RENTAL AVAILABILITY
+				</Date>
+				<Date>
 					<Modified>2021-07-09</Modified>Revise name sto allign with TM
 							VehicleRentalOperation --> VehicleRental, VehicleSharingOperation --> VehicleSharing, VehiclePoolingOperation --> VehiclePooling
 				</Date>
@@ -1501,8 +1510,7 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-
-	<!-- =====RelatedOrganisation============================== -->
+		<!-- =====RelatedOrganisation============================== -->
 		<!-- =====RelatedOrganisation unique========================== -->
 		<xsd:unique name="RelatedOrganisation_UniqueBy_Id_Version">
 			<xsd:annotation>
@@ -1523,8 +1531,6 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-
-
 		<!-- =====Address Constraints========================= -->
 		<!-- =====Address============================== -->
 		<xsd:keyref name="Address_AnyKeyRef" refer="netex:Address_AnyVersionedKey">
@@ -2727,6 +2733,48 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
+		<!-- =====BatteryEquipment====(NM)================ -->
+		<!-- =====BatteryEquipment unique========================== -->
+		<xsd:unique name="BatteryEquipment_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [BatteryEquipment Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:BatteryEquipment"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====BatteryEquipment Key ========================== -->
+		<xsd:keyref name="BatteryEquipment_AnyKeyRef" refer="netex:BatteryEquipment_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:BatteryEquipmentRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="BatteryEquipment_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:BatteryEquipment"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====TypeOfBatteryChemistry====(NM)================ -->
+		<!-- =====TypeOfBatteryChemistry unique========================== -->
+		<xsd:unique name="TypeOfBatteryChemistry_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [TypeOfBatteryChemistry Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:TypeOfBatteryChemistry"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====TypeOfBatteryChemistry Key ========================== -->
+		<xsd:keyref name="TypeOfBatteryChemistry_AnyKeyRef" refer="netex:TypeOfBatteryChemistry_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:TypeOfBatteryChemistryRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="TypeOfBatteryChemistry_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:TypeOfBatteryChemistry"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
 		<!-- =====LOCAL SERVICE constraints========================= -->
 		<!-- =====AssistanceBookingService=========================== -->
 		<!-- =====AssistanceBookingService unique========================== -->
@@ -3325,7 +3373,7 @@ Correct COnstraints for PointOnRoute
 		</xsd:keyref>
 		<!-- =====UicOperatingPeriod Key ========================== -->
 		<xsd:key name="UicOperatingPeriod_AnyVersionedKey">
-		<xsd:selector xpath=".//netex:OperatingPeriod | .//netex:UicOperatingPeriod"/>
+			<xsd:selector xpath=".//netex:OperatingPeriod | .//netex:UicOperatingPeriod"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
@@ -3509,6 +3557,48 @@ Correct COnstraints for PointOnRoute
 		</xsd:keyref>
 		<xsd:key name="VehicleEquipmentProfile_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:VehicleEquipmentProfile"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====ChargingEquipmentProfile============================== -->
+		<!-- =====ChargingEquipmentProfile unique========================== -->
+		<xsd:unique name="ChargingEquipmentProfile_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [ChargingEquipmentProfile Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:ChargingEquipmentProfile"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====ChargingEquipmentProfile Key ========================== -->
+		<xsd:keyref name="ChargingEquipmentProfile_KeyRef" refer="netex:ChargingEquipmentProfile_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:ChargingEquipmentProfileRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="ChargingEquipmentProfile_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:ChargingEquipmentProfile"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====TypeOfPlug============================== -->
+		<!-- =====TypeOfPlug unique========================== -->
+		<xsd:unique name="TypeOfPlug_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [TypeOfPlug Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:TypeOfPlug"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====TypeOfPlug Key ========================== -->
+		<xsd:keyref name="TypeOfPlug_KeyRef" refer="netex:TypeOfPlug_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:TypeOfPlugRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="TypeOfPlug_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:TypeOfPlug"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
@@ -4467,15 +4557,15 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@ref"/>
 			<xsd:field xpath="@version"/>
 			<xsd:field xpath="@order"/>
-		</xsd:keyref>		
+		</xsd:keyref>
+
 		<xsd:key name="ParkingAreaCapacityAssignment_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:ParkingAreaCapacityAssignment"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 			<xsd:field xpath="@order"/>
 		</xsd:key>
-	
-		
+
 		<!-- =====RentalAvailability============================== -->
 		<!-- =====RentalAvailability unique========================== -->
 		<xsd:unique name="RentalAvailability_UniqueBy_Id_Version">
@@ -4556,7 +4646,7 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
 		<xsd:key name="ParkingBayStatus_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:ParkingBayStatus" />
+			<xsd:selector xpath=".//netex:ParkingBayStatus"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
@@ -6164,7 +6254,7 @@ Correct COnstraints for PointOnRoute
 			<xsd:selector xpath=".//netex:PoolOfVehicles"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
-		</xsd:key>		
+		</xsd:key>
 		<!-- =====ServiceExclusion============================== -->
 		<!-- =====ServiceExclusion unique========================== -->
 		<xsd:unique name="ServiceExclusion_UniqueBy_Id_Version">
