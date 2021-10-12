@@ -3,6 +3,29 @@
 
 ## Core, Part 1 (Network),  Part 2 (Timetables), Part3 (Fares) Schemas
 
+Version 1.20 - Base version plus  further minor fixes comprising##
+
+
+FIX -  FareClassEnumeration #100
+### 2020.07.28   FIX  Issue #100*FRAMEWORK*:Corect the substitution group on OrganisationUnit
+	* netex_framework/netex_genericFramework/netex_organisation_version.xsd
+
+FIX -  FareClassEnumeration #75
+### 2020.06.21   FIX  Issue #75*FRAMEWORK*:Remove space from end of secondClass enumeration value
+	* netex_framework/netex_reusableComponents/netex_serviceRestrictions_support.xsd
+
+FIX -  Recursive includes #73
+### 2020.06.21 PARTIAL  FIX  Issue #73*PART2*:Recursive includes: NJSK  Remove cyclic inclusion dependency  
+	* netex_flexibleService Journey.xml  
+
+### 2020.06.21 FIX  Issue #78 *PART2*:Journey Coupling: NJSK  __JourneyCouple__ / __MainPartRef__ should be of type  __JourneyPartRef__
+  * _Updates to xml schema_:  
+	* netex_coupledJourney.xml  
+
+### 2020.06.21 FIX  Issue #92 *FRAMEWORK*:LinkProjection NJSK Expose the missing __EntityInVersion__ elements on the __LinkProjection__ derivation
+  * _Updates to xml schema_:  
+	* netex_projectionVersion.xml  
+
 Version 1.10 - Base version plus minor fixes comprising
   * Norway contributions,  
   * The approved 1.1 CRs 1-50
@@ -26,7 +49,7 @@ The individual  XML files  are arranged hierarchically in folders, in a similar 
 ## Getting Started
 There are two main root schemas:
   - **netex_publication** : Embeds NeTEx XML model elements in a bulk output file format for use in asynchronous publication. The intended content scope can be indicated by a filter object.
-  - **netex_siri.xsd** : Embeds NeTEx XML model elements in the SIRI protocol  for dynamic exchange of elements between servers. Both Request/response or publish / subscribe is supported
+  - **netex_siri.xsd** : Embeds NeTEx XML model elements in the SIRI protocol for dynamic exchange of elements between servers. Both Request/response or publish / subscribe is supported
 
 In addition:
 
@@ -38,12 +61,12 @@ There are **XML examples** of the use of both protocols, see */examples* subdire
 There is an _Altova XMLSpy_ project file in the root directory  that provides an organised view  of the schema and examples:
   - NeTEx.spp
 
-There is also an _Oxygen_  project file:
+There is also an _Oxygen_ project file:
   - NeTEx.xpr
 ----
 # Change Log
 
-### 2019.05.17 FIX  *PART3:FARES*: NJSK  __FarePointInPattern__Fix case on __isFareStage__ and __isForbidden__  
+### 2019.05.17 FIX  *PART3:FARES*: NJSK  __FarePointInPattern__  Fix case on __isFareStage__ and __isForbidden__  
   * _Updates to xml schema_:  
 	* netex_production.xml  
 
@@ -118,7 +141,7 @@ There is also an _Oxygen_  project file:
 	* netex_accessRightParameter_version.xml  
 	* netex_travelSpecificationSummary_version.xml
 
-### 2019.04.18 FIX  *Parts1,2,3*: NJSK  FIx Tdy up Designators.
+### 2019.04.18 FIX  *Parts1,2,3*: NJSK  Fix: Tidy up Designators.
   * __AccessRightParameter: Add __AddressRef__,  __TopoographicPlaceRef__ and __PlaceUseEnum__.
   * Modularise __ServiceDesignator__ and __JourneyDesignator__ (no functional change).
   * Add __JourneyDesignator__ to __InterchangeRule__ and __GroupOfServiceJourneysMember__.
@@ -241,7 +264,7 @@ There is also an _Oxygen_  project file:
 	* netex_interchange_version.xsd
   * _Documentation Changes_:  [uml_diagram: ok], [doc-ok]
 
-### 2019.04.04  __FIXDoc__  *Part3-FARES-AR*: NJSK Fi Further tidy ups arising from doc.
+### 2019.04.04  __FIXDoc__  *Part3-FARES-AR*: NJSK Further tidy ups arising from doc.
   * Add new value to __PreassignedFareProduct / Product__ enumeration;  _shortTrip_.
   * Add new value to __AmountOfPriceUnit / ProductType__ numeration; _storedValue_.
   * Add new  attribute __ProductType__ to  __UsageDiscountRight__ with values _mileagePoints, usageRebate, other_.
