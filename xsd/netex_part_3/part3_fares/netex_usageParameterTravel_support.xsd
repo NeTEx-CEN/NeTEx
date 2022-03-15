@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_usageParameterTravel_support">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_usageParameterTravel_support">
 	<xsd:include schemaLocation="netex_usageParameter_support.xsd"/>
 	<!-- ======================================================================= -->
 	<xsd:annotation>
@@ -697,6 +698,57 @@ Rail transport, Roads and Road transport
 			<xsd:enumeration value="countNightsAway"/>
 			<xsd:enumeration value="both"/>
 			<xsd:enumeration value="either"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- === ONBOARD VALIDITY====================================================== -->
+	<xsd:simpleType name="OnboardValidityIdType">
+		<xsd:annotation>
+			<xsd:documentation>Type for identifier of a ONBOARD VALIDITY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="UsageParameterIdType"/>
+	</xsd:simpleType>
+	<xsd:element name="OnboardValidityRef" type="OnboardValidityRefStructure" substitutionGroup="UsageParameterRef">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a ONBOARD VALIDITY.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="OnboardValidityRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for Reference to a ONBOARD VALIDITY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="UsageParameterRefStructure">
+				<xsd:attribute name="ref" type="OnboardValidityIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Identifier of a ONBOARD VALIDITY.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:simpleType name="OnboardValidityTypeEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for ONBOARD VALIDITY</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="validAtBoardingTime">
+				<xsd:annotation>
+					<xsd:documentation>The access right is considered to be valid temporally on the same PT RIDE LEG if it was valid at boarding time. 
+						Typically used when the traveller is required to validate when boarding on each PT RIDE LEG.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="validAtStartOfServiceJourney">
+				<xsd:annotation>
+					<xsd:documentation>The access right is considered to be valid temporally on the same PT RIDE LEG if it was valid at this SERVICE JOURNEY's first SCHEDULED STOP POINT. 
+						Typically used when the traveller can board a vehicle without validating as long as the traveller already have a temporally valid access right.
+					In addition, since the actual place of boarding is unknown, the controller may ask the traveller's departure stop in and compare the answer to the JOURNEY PATTERN STOP TIMES</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="validAtAllTimesWhileOnboard">
+				<xsd:annotation>
+					<xsd:documentation>The access right must be temporally valid at all times when the passenger is onboard. Typically used when the traveller can board a vehicle without validating as long as the traveller already have a temporally valid access right.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
 		</xsd:restriction>
 	</xsd:simpleType>
 </xsd:schema>
