@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ifopt="http://www.ifopt.org.uk/ifopt" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_facility_support">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ifopt="http://www.ifopt.org.uk/ifopt" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_facility_support">
 	<xsd:include schemaLocation="../netex_responsibility/netex_relationship.xsd"/>
 	<xsd:annotation>
 		<xsd:appinfo>
@@ -24,7 +24,7 @@
 					<Modified>2017-05-25</Modified>Add buggy and umbrella to accessibility tools
 				</Date>
 				<Date>
-					<Modified>2017-11-10</Modified>Update Nuiaance list to match UML
+					<Modified>2017-11-10</Modified>Update Nuisance list to match UML
 				</Date>
 				<Date>
 					<Modified>2019-03-25</Modified>Fix #43 by Skinkie from 2019.01.07  Fix typo on _tactilePlatformEdges. 
@@ -33,12 +33,20 @@
 					<Modified>2019-03-25</Modified>NL32 CD #61 Add new values  to (Site)  AccessFacility enum;  wheelchairLift, automaticRamp and slidingStep.
 					 NJSK Review: Keep Site and Service aspects separate; add separate VehicleAccessFacility enum with values   unknown, wheelchairLift,  manualRamp, automaticRamp,  steps, slidingStep,  narrowEntrance,  lowFloorAccess, validator.
 				</Date>
- 					<Date>
+				<Date>
 					<Modified>2019-04-14</Modified>Fix Add new values ti PassengerInfromation LienStatus and realTimeDIsruption
-				</Date>		
+				</Date>
+				<Date>
+					<Modified>2020-10-16</Modified>New modes 0- add ski racks to Luggagefacility enum values
+					     Fix Add missing animalsAllowed     values to NuisanceFacility
+					     Add unspecifed to Gender list
+				</Date>
+				<Date>
+					<Modified>2021-04-15</Modified>New modes: Align Hirefacility values with spec and add values scooterHire, vehicleHire, boatHire and other.
+				</Date>
 				<Date>
 					<Modified>2021-07-07</Modified>Add values to NuisanceFacility, MobilityFacility, LuggageCarriageFacility and AccommodationFacility
-				</Date>					
+				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the FACILITY subtypes </p>
@@ -55,7 +63,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
-					 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2021</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -374,6 +382,7 @@ Rail transport, Roads and Road transport
 		<xsd:restriction base="xsd:string">
 			<xsd:enumeration value="female"/>
 			<xsd:enumeration value="male"/>
+			<xsd:enumeration value="unspecified"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="HireFacilityEnumeration">
@@ -382,11 +391,15 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:restriction base="xsd:NMTOKEN">
 			<xsd:enumeration value="unknown"/>
+			<xsd:enumeration value="scooterHire"/>
+			<xsd:enumeration value="vehicleHire"/>
 			<xsd:enumeration value="carHire"/>
 			<xsd:enumeration value="motorCycleHire"/>
 			<xsd:enumeration value="cycleHire"/>
 			<xsd:enumeration value="taxi"/>
+			<xsd:enumeration value="boatHire"/>
 			<xsd:enumeration value="recreationDeviceHire"/>
+			<xsd:enumeration value="other"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="LuggageCarriageEnumeration">
@@ -398,6 +411,8 @@ Rail transport, Roads and Road transport
 			<xsd:enumeration value="noBaggageStorage"/>
 			<xsd:enumeration value="baggageStorage"/>
 			<xsd:enumeration value="luggageRacks"/>
+			<xsd:enumeration value="skiRacks"/>
+			<xsd:enumeration value="skiRacksOnRear"/>
 			<xsd:enumeration value="extraLargeLuggageRacks"/>
 			<xsd:enumeration value="baggageVan"/>
 			<xsd:enumeration value="noCycles"/>
@@ -487,6 +502,7 @@ Rail transport, Roads and Road transport
 			<xsd:enumeration value="childfreeArea"/>
 			<xsd:enumeration value="animalsAllowed"/>
 			<xsd:enumeration value="noAnimals"/>
+			<xsd:enumeration value="animalsAllowed"/>
 			<xsd:enumeration value="breastfeedingFriendly"/>
 			<xsd:enumeration value="mobilePhoneUseZone"/>
 			<xsd:enumeration value="mobilePhoneFreeZone"/>
@@ -512,12 +528,17 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:restriction base="xsd:NMTOKEN">
 			<xsd:enumeration value="unknown"/>
+			<xsd:enumeration value="valetParking"/>
 			<xsd:enumeration value="carWash"/>
-			<xsd:enumeration value="valetPark"/>
+			<xsd:enumeration value="valetCarWash"/>
 			<xsd:enumeration value="carValetClean"/>
 			<xsd:enumeration value="oilChange"/>
 			<xsd:enumeration value="engineWarming"/>
 			<xsd:enumeration value="petrol"/>
+			<xsd:enumeration value="batteryCare"/>
+			<xsd:enumeration value="recharging"/>
+			<xsd:enumeration value="tyreCheck"/>
+			<xsd:enumeration value="other"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="MedicalFacilityEnumeration">

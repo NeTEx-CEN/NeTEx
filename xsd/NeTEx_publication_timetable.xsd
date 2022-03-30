@@ -2782,6 +2782,28 @@ Provides a general purose wrapper for NeTEx data content.</xsd:documentation>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
+	<!-- =====OperatingPeriod unique========================== -->
+		<xsd:unique name="UicOperatingPeriod_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [UicOperatingPeriod Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:UicOperatingPeriod"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+			<!-- =====UicOperatingPeriod Key ========================== -->
+		</xsd:unique>
+		<xsd:keyref name="UicOperatingPeriod_KeyRef" refer="netex:UicOperatingPeriod_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:UicOperatingPeriodRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<!-- =====UicOperatingPeriod Key ========================== -->
+		<xsd:key name="UicOperatingPeriod_AnyVersionedKey">
+		<xsd:selector xpath=".//netex:OperatingPeriod | .//netex:UicOperatingPeriod"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>		
+		
 		<!-- =====DayTypeAssignment============================== -->
 		<!-- =====DayTypeAssignment unique========================== -->
 		<xsd:unique name="DayTypeAssignment_UniqueBy_Id_Version_Order">
