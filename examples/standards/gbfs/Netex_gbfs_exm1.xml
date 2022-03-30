@@ -1,0 +1,822 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- ==== SImple GTFS Operator  Example ====== 
+This Example provides an example of mapping of a GTFS Agency.txt file to NeTEx
+
+The data comes from the sample-feed.zip available at   http://code.google.com/transit/spec/transit_feed_specification.html
+
+September 2011 add agency_fare_url
+
+1. DATA
+ 
+2. MAPPING
+
+A GTFS Agency maps to a NeTEx AUTHORITY 
+GTFS Data copyright Google Inc
+
+version 1.1 revised ids
+ NeTEx (C) CEN Copyright 2021
+-->
+<PublicationDelivery xmlns="http://www.netex.org.uk/netex" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gml="http://www.opengis.net/gml/3.2" version="1.0" xsi:schemaLocation="http://www.netex.org.uk/netex ../../../xsd/NeTEx_publication.xsd">
+	<PublicationTimestamp>2001-12-17T09:30:47.0Z</PublicationTimestamp>
+	<ParticipantRef>SYS001</ParticipantRef>
+	<!--- ======WHAT WAS REQUESTED ========== -->
+	<PublicationRefreshInterval>P3M</PublicationRefreshInterval>
+	<Description>Example of GBFS   data</Description>
+	<!--- =============== RESULTS =========== -->
+	<dataObjects>
+		<CompositeFrame version="any" id="EXM01">
+			<!--- ======= CODESPACEs======== -->
+			<codespaces>
+				<Codespace id="mygtfsxm">
+					<Xmlns>mygtfsxm_cs</Xmlns>
+					<XmlnsUrl>http://www.demoagency.com/</XmlnsUrl>
+					<Description>Demo Agency</Description>
+				</Codespace>
+				<Codespace id="gbfs">
+					<Xmlns>gbfs_cs</Xmlns>
+					<XmlnsUrl>http://www.gbfs.org/</XmlnsUrl>
+					<Description>GBFS metadatay</Description>
+				</Codespace>
+			</codespaces>
+			<!--- =======FRAME DEFAULTS======== -->
+			<FrameDefaults>
+				<DefaultCodespaceRef ref="mygtfsxm"/>
+			</FrameDefaults>
+			<frames>
+				<ResourceFrame version="any" id="EXM01">
+					<!-- 
+B.6.3	system_information.json - Example
+GBFS file: system_information.json:
+{
+	"last_updated":1611598155,
+	"ttl":1800,
+	"version": "2.2",
+	"data":{
+		"system_id":"EXM01",
+		"language":"en",
+
+		"phone_number":"1-800-555-1234",
+		"name":"Example Ride",
+		"operator":"Example Sharing, Inc",
+		"start_date":"2010-06-10",
+		"purchase_url":"https://www.exampleride.org",
+		"timezone":"US/Central",
+		"license_url":"https://exampleride.org/data-license.html",
+		"short_name":"Example Ride",
+		"email":"customerservice@exampleride.org",
+		"url":"http://www.exampleride.org",
+		"feed_contact_email": datafeed@exampleride.org,
+
+		"rental_apps":{
+			"android": {
+				"discovery_url":"coma.bcrent.android//"
+				"store_url": "https://play.google.com/store/apps/details?id=com.abcrent.android" 
+			}
+			"ios": {
+				"discovery_url":"coma.bcrent.ios//"
+				"store_url": "https://apps.apple.com/apps/apple-stire/id123456" 
+			}
+		}		"system_id":"exampleride",
+		"language":"en",
+	}
+}
+-->
+					<dataSources>
+						<DataSource version="any" id="EXM01">
+							<!-- GBFS feed_contact_email -->
+							<Email>datafeed@exampleride.org</Email>
+							<!-- GBFS licence_id -->
+							<DataLicenceCode type="SPX" ref="GSCYQ"/>
+							<!-- GBFS licence_url -->
+							<DataLicenceUrl>https://exampleride.org/data-license.html</DataLicenceUrl>
+						</DataSource>
+					</dataSources>
+					<typesOfValue>
+						<Branding version="any" id="EXM01">
+							<!-- GBFS attribution_organization_name -->
+							<Name>feed licence attribution organization name</Name>
+							<!-- GBFS attribution_url -->
+							<Url>https://exampleride.org/data-license-attribution.html</Url>
+						</Branding>
+					</typesOfValue>
+					<organisations>
+						<!-- ==== ORGANISATIONS ==== -->
+						<Operator version="any" id="EXM01">
+							<BrandingRef version="any" ref="EXM01"/>
+							<!-- GBFS operator -->
+							<Name>Example Sharing, Inc</Name>
+							<ContactDetails>
+								<!-- GBFS email -->
+								<Email>customerservice@exampleride.org</Email>
+								<Phone>1-800-555-1234</Phone>
+								<Url>http://www.exampleride.org</Url>
+							</ContactDetails>
+							<OrganisationType>operator</OrganisationType>
+						</Operator>
+					</organisations>
+					<modesOfOperation>
+						<VehicleSharing version="any" id="EXM01">
+							<Name>Example Ride</Name>
+							<Description>Vehicle sharing</Description>
+							<VehicleSharingType>vehicleSharing</VehicleSharingType>
+						</VehicleSharing>
+					</modesOfOperation>
+					<vehicleTypes>
+						<!--		
+					B.6.4	vehicle_types.json - Example
+GBFS file: vehicle_types.json:
+{
+	"last_updated": 1609866247,
+	"ttl": 0,
+	"version": "2.2",
+	"data": {
+		"vehicle_types": [
+			{
+				"vehicle_type_id": "abc123",
+				"form_factor": "bicycle",
+				"propulsion_type": "human",
+				"name": "Example Basic Bike"
+			},
+			{
+				"vehicle_type_id": "def456",
+				"form_factor": "scooter",
+				"propulsion_type": "electric",
+				"name": "Example E-scooter V2",
+				"max_range_meters": 12345
+			},
+			{`
+				"vehicle_type_id": "car1",
+				"form_factor": "car",
+				"propulsion_type": "combustion",
+				"name": "Four-door Sedan",
+				"max_range_meters": 523992
+			}
+		]
+	}
+} -->
+						<SimpleVehicleType version="any" id="abc123">
+							<!-- GBFS vehicle_type_id -->
+							<Name>Example Basic Bike</Name>
+							<!-- GBFS name -->
+							<PropulsionType>human</PropulsionType>
+							<!-- GBFS propulsion_type -->
+							<VehicleCategory>cycle</VehicleCategory>
+							<!-- GBFS form_factor -->
+						</SimpleVehicleType>
+						<SimpleVehicleType version="any" id="def456">
+							<!-- GBFS vehicle_type_id -->
+							<Name>E-scooter</Name>
+							<!-- GBFS name -->
+							<PropulsionType>electric</PropulsionType>
+							<!-- GBFS propulsion_type -->
+							<MaximumRange>12345</MaximumRange>
+							<!-- GBFS max_range_meters -->
+							<VehicleCategory>scooter</VehicleCategory>
+							<!-- GBFS form_factor -->
+						</SimpleVehicleType>
+						<SimpleVehicleType version="any" id="car1">
+							<!-- GBFS vehicle_type_id -->
+							<Name>Foor-door Sedan</Name>
+							<!-- GBFS name -->
+							<PropulsionType>combustion</PropulsionType>
+							<!-- GBFS propulsion_type -->
+							<MaximumRange>523992</MaximumRange>
+							<!-- GBFS max_range_meters -->
+							<VehicleCategory>car</VehicleCategory>
+							<!-- GBFS form_factor -->
+						</SimpleVehicleType>
+					</vehicleTypes>
+				</ResourceFrame>
+				<!--==== Mobility Service ====-->
+				<MobilityServiceFrame version="any" id="EXM01">
+					<prerequisites>
+						<ResourceFrameRef version="any" ref="EXM01"/>
+					</prerequisites>
+					<!--=== Available services ===-->
+					<mobilityServices>
+						<VehicleSharingService version="any" id="EXM01">
+							<Name lang="en">Example Ride</Name>
+							<!-- GBFS name -->
+							<infoLinks>
+								<InfoLink typeOfInfoLink="info">coma.bcrent.android//</InfoLink>
+								<InfoLink typeOfInfoLink="info" targetPlatform="ios">coma.bcrent.ios</InfoLink>
+								<InfoLink typeOfInfoLink="mobileAppDownload" targetPlatform="ios">https://apps.apple.com/apps/apple-stire/id123456</InfoLink>
+								<InfoLink typeOfInfoLink="info" targetPlatform="android">https://play.google.com/store/apps/details?id=com.abcrent.ios</InfoLink>
+								<InfoLink typeOfInfoLink="mobileAppDownload" targetPlatform="android">coma.bcrent.android</InfoLink>
+							</infoLinks>
+							<ShortName>Example ride</ShortName>
+							<!-- GBFS short_name -->
+							<StartDate>2010-06-10</StartDate>
+							<!-- GBFS start_date -->
+							<VehicleSharingRef version="any" ref="EXM01"/>
+						</VehicleSharingService>
+					</mobilityServices>
+					<!-- === GEOFENCING (geofencing_zones.json) === -->
+					<mobilityServiceConstraintZones>
+						<!--					
+B.6.9	geofencing_zones.json - Example
+GBFS file: geofencing_zones.json.
+{
+	"last_updated":1604198100,
+	"ttl":60,
+	"version": "2.2",
+	"data":{
+		"geofencing_zones":{
+			"type":"FeatureCollection",
+			"features":[
+				{
+					type":"Feature",
+					geometry":{
+						"type":"MultiPolygon",
+						"coordinates":[
+							[
+								[
+									[
+										-122.578067,
+										45.562982
+									],
+									[
+										-122.661838,
+										45.562741
+									],
+									[
+										-122.661151,
+										45.504542
+									],
+									[
+										-122.578926,
+										45.5046625
+									],
+									[
+										-122.578067,
+										45.562982
+									]
+								]
+							],
+							[
+								[
+									[
+										-122.650680,
+										45.548197
+									],
+									[
+										-122.650852,
+										45.534731
+									],
+									[
+										-122.630939,
+										45.535212
+									],
+									[
+										-122.630424,
+										45.548197
+									],
+									[
+										-122.650680,
+										45.548197
+									]
+								]
+							]
+						]
+					},
+					properties":{
+						"name":"NE 24th/NE Knott",
+						"start":1593878400,
+						"end":1593907260,
+						"rules":[
+							{
+								"vehicle_type_id":[
+									moped1",
+									car1"
+								],
+								"ride_allowed":false,
+								"ride_through_allowed":true,
+								"maximum_speed_kph":10
+							}
+						]
+					}
+				}
+			]
+		}
+	}
+}
+
+ -->
+						<MobilityServiceConstraintZone version="any" id="mscz_01">
+							<validityConditions>
+								<AvailabilityCondition version="any" id="mscz_01">
+									<Name>NE 24th/NE Knott</Name>
+									<!-- GBFS: name -->
+									<FromDate>2020-01-01T00:00:00Z</FromDate>
+									<!-- GBFS: start -->
+									<ToDate>2021-01-01T00:00:00Z</ToDate>
+									<!-- GBFS: end -->
+								</AvailabilityCondition>
+							</validityConditions>
+							<Name>Use of zone</Name>
+							<types>
+								<TypeOfZoneRef ref="tzr_FeatureCollection"/>
+								<!-- GBFS: type -->
+							</types>
+							<gml:Polygon gml:id="mscz_01">
+								<!-- GBFS: geometry -->
+								<gml:name>Polygon1</gml:name>
+								<gml:interior>
+									<gml:LinearRing>
+										<!-- GBFS: coordinates -->
+										<gml:pos srsName="wgs84" srsDimension="2">-122.578067 45.562982</gml:pos>
+										<gml:pos srsName="wgs84" srsDimension="2">-122.661838 45.562741</gml:pos>
+										<gml:pos srsName="wgs84" srsDimension="2">-122.661151 45.504542</gml:pos>
+										<gml:pos srsName="wgs84" srsDimension="2">-122.578926 45.5046625</gml:pos>
+										<gml:pos srsName="wgs84" srsDimension="2">-122.578067 45.562982</gml:pos>
+									</gml:LinearRing>
+								</gml:interior>
+								<gml:interior>
+									<gml:LinearRing>
+										<!-- GBFS: coordinates -->
+										<gml:pos srsName="wgs84" srsDimension="2">-122.650680 45.548197</gml:pos>
+										<gml:pos srsName="wgs84" srsDimension="2">-122.650852 45.534731</gml:pos>
+										<gml:pos srsName="wgs84" srsDimension="2">-122.630939 45.504542</gml:pos>
+										<gml:pos srsName="wgs84" srsDimension="2">-122.630424 45.548197</gml:pos>
+										<gml:pos srsName="wgs84" srsDimension="2">-122.650680 45.548197</gml:pos>
+									</gml:LinearRing>
+								</gml:interior>
+							</gml:Polygon>
+							<vehicleRestrictions>
+								<VehicleTypeZoneRestriction>
+									<ZoneUse>forbiddenZone</ZoneUse>
+									<!-- GBFS ride_allowed -->
+								</VehicleTypeZoneRestriction>
+								<VehicleTypeZoneRestriction>
+									<ZoneUse>allUsesAllowed</ZoneUse>
+									<!-- GBFS ride_through_allowed -->
+								</VehicleTypeZoneRestriction>
+								<VehicleTypeZoneRestriction>
+									<MaximumSpeed>10</MaximumSpeed>
+									<!-- GBFS maximum_speed_kph -->
+								</VehicleTypeZoneRestriction>
+								<VehicleTypeZoneRestriction>
+									<SimpleVehicleTypeRef ref="moped1"/>
+									<!-- GBFS vehicle_type_id -->
+								</VehicleTypeZoneRestriction>
+								<VehicleTypeZoneRestriction>
+									<SimpleVehicleTypeRef ref="car1"/>
+									<!-- GBFS vehicle_type_id -->
+								</VehicleTypeZoneRestriction>
+							</vehicleRestrictions>
+						</MobilityServiceConstraintZone>
+					</mobilityServiceConstraintZones>
+				</MobilityServiceFrame>
+				<SiteFrame version="1.0" id="sf_01">
+					<parkings>
+						<!-- 
+B.6.5	station_information.json - Examples
+GBFS file: station_information.json:
+B.6.5.1	Example 1: Physical station
+{
+	"last_updated": 1609866247,
+	"ttl": 0,
+	"version": "2.2",
+	"data": {
+		"stations": [
+			{
+				"station_id": "pga",
+				"name": "Parking garage A",
+				"lat": 12.345678,
+				"lon": 45.678901,
+				"vehicle_type_capacity": {
+					"abc123": 7,
+					"def456": 9
+				}
+			}
+		]
+	}
+}
+
+-->
+						<Parking version="any" id="pga">
+							<Name lang="en">Parking garage A</Name>
+							<Description>Physical station</Description>
+							<Centroid>
+								<Location id="l_01">
+									<Longitude>12.345678</Longitude>
+									<Latitude>45.678901</Latitude>
+								</Location>
+							</Centroid>
+							<parkingProperties>
+								<ParkingProperties version="any" id="pga">
+									<ParkingVehicleTypes>cycle motorScooter</ParkingVehicleTypes>
+								</ParkingProperties>
+								<!--
+B.6.6	system_hours.json - Example
+GBFS file: system_hours.json.
+{
+	"last_updated": 1609866247,
+	"ttl": 86400,
+	"version": "2.2",
+	"data": {
+		"rental_hours": [
+			{
+				"user_types": [ "member" ],
+				"days": ["sat", "sun"],
+				"start_time": "00:00:00",
+				"end_time": "23:59:59"
+			},
+			{
+				"user_types": [ "nonmember" ],
+				"days": ["sat", "sun"],
+				"start_time": "05:00:00",
+				"end_time": "23:59:59"
+			},
+			{
+				"user_types": [ "member", "nonmember" ],
+				"days": ["mon", "tue", "wed", "thu", "fri"],
+				"start_time": "00:00:00",
+				"end_time": "23:59:59"
+			}
+		]
+	}
+} -->
+								<ParkingProperties version="any" id="pga_avail_01">
+									<validityConditions>
+										<AvailabilityCondition id="pga_avail_01" version="any">
+											<dayTypes>
+												<DayType version="any" id="dt_01">
+													<properties>
+														<PropertyOfDay>
+															<DaysOfWeek>Saturday Sunday</DaysOfWeek>
+														</PropertyOfDay>
+													</properties>
+												</DayType>
+											</dayTypes>
+											<timebands>
+												<Timeband version="any" id="tb_01">
+													<StartTime>00:00:00</StartTime>
+													<!-- GBFS start_time -->
+													<EndTime>23:59:59</EndTime>
+													<!-- GBFS end_time -->
+												</Timeband>
+											</timebands>
+										</AvailabilityCondition>
+									</validityConditions>
+									<ParkingUserTypes>registered</ParkingUserTypes>
+									<!-- GBFS user_types -->
+								</ParkingProperties>
+								<ParkingProperties version="any" id="pga_avail_02">
+									<validityConditions>
+										<AvailabilityCondition id="pga_avail_22" version="any">
+											<dayTypes>
+												<DayType version="any" id="dt_02">
+													<properties>
+														<PropertyOfDay>
+															<DaysOfWeek>Saturday Sunday</DaysOfWeek>
+														</PropertyOfDay>
+													</properties>
+												</DayType>
+											</dayTypes>
+											<timebands>
+												<Timeband version="any" id="tb_02">
+													<StartTime>05:00:00</StartTime>
+													<!-- GBFS start_time -->
+													<EndTime>23:59:59</EndTime>
+													<!-- GBFS end_time -->
+												</Timeband>
+											</timebands>
+										</AvailabilityCondition>
+									</validityConditions>
+									<ParkingUserTypes>other</ParkingUserTypes>
+									<!-- GBFS user_types -->
+								</ParkingProperties>
+								<ParkingProperties version="any" id="pga_avail_03">
+									<validityConditions>
+										<AvailabilityCondition id="pga_avail_03" version="any">
+											<dayTypes>
+												<DayType version="any" id="dt_03">
+													<properties>
+														<PropertyOfDay>
+															<DaysOfWeek>Monday Tuesday Wednesday Thursday Friday</DaysOfWeek>
+															<!-- GBFS days -->
+														</PropertyOfDay>
+													</properties>
+												</DayType>
+											</dayTypes>
+											<timebands>
+												<Timeband version="any" id="tb_03">
+													<StartTime>00:00:00</StartTime>
+													<!-- GBFS start_time -->
+													<EndTime>23:59:59</EndTime>
+													<!-- GBFS end_time -->
+												</Timeband>
+											</timebands>
+										</AvailabilityCondition>
+									</validityConditions>
+									<ParkingUserTypes>allUsers</ParkingUserTypes>
+									<!-- GBFS user_types -->
+								</ParkingProperties>
+							</parkingProperties>
+							<parkingAreas>
+								<VehicleSharingParkingArea version="any" id="pga_01">
+									<TotalCapacity>7</TotalCapacity>
+									<ParkingProperties id="pga_01" version="any">
+										<vehicleTypes>
+											<SimpleVehicleTypeRef ref="abc123"/>
+										</vehicleTypes>
+									</ParkingProperties>
+								</VehicleSharingParkingArea>
+								<VehicleSharingParkingArea version="any" id="pga_02">
+									<TotalCapacity>9</TotalCapacity>
+									<ParkingProperties id="pga_02" version="any">
+										<vehicleTypes>
+											<SimpleVehicleTypeRef ref="def456"/>
+										</vehicleTypes>
+									</ParkingProperties>
+								</VehicleSharingParkingArea>
+							</parkingAreas>
+						</Parking>
+						<!-- GBFS file: station_information.json:
+B.6.5.2	Example 2: Virtual station
+{
+	"last_updated":1609866247,
+	"ttl":0,
+	"version":"2.2",
+	"data":{
+		"stations":[
+			{
+				"station_id":"station12",
+				"station_name":"SE Belmont & SE 10 th",
+				"is_valet_station":false,
+				"is_virtual_station":true,
+				"station_area":{
+					"type":"MultiPolygon",
+					"coordinates":[
+						[
+							[
+								[
+									-122.655775,
+									45.516445
+								],
+								[
+									-122.655705,
+									45.516445
+								],
+								[
+									-122.655705,
+									45.516495
+								],
+								[
+									-122.655775,
+									45.516495
+								],
+								[
+									-122.655775,
+									45.516445
+								]
+							]
+						]
+					]
+				},
+				"capacity":16,
+				"vehicle_capacity":{
+					"abc123":8,
+					"def456":8,
+					"ghi789":16
+				}
+			}
+		]
+	}
+} -->
+						<Parking version="any" id="station12">
+							<Name lang="en">SE Belmont and SE 10 th</Name>
+							<Description>Virtual station</Description>
+							<gml:Polygon gml:id="polygon_01">
+								<!-- GBFS: station_area -->
+								<gml:name>MultiPolygon</gml:name>
+								<gml:interior>
+									<gml:LinearRing>
+										<gml:pos srsName="wgs84" srsDimension="2">-122.578067 45.562982</gml:pos>
+										<gml:pos srsName="wgs84" srsDimension="2">-122.661838 45.562741</gml:pos>
+										<gml:pos srsName="wgs84" srsDimension="2">-122.661151 45.504542</gml:pos>
+										<gml:pos srsName="wgs84" srsDimension="2">-122.578926 45.504662</gml:pos>
+										<gml:pos srsName="wgs84" srsDimension="2">-122.578067 45.562982</gml:pos>
+									</gml:LinearRing>
+								</gml:interior>
+							</gml:Polygon>
+							<Covered>outdoors</Covered>
+							<facilities>
+								<SiteFacilitySet version="any" id="station12">
+									<Staffing>unmanned</Staffing>
+								</SiteFacilitySet>
+							</facilities>
+							<TotalCapacity>16</TotalCapacity>
+							<parkingProperties>
+								<ParkingProperties version="any" id="station12">
+									<ParkingVehicleTypes>cycle motorScooter car</ParkingVehicleTypes>
+									<ParkingVisibility>unmarked</ParkingVisibility>
+									<!-- implies GBFS is_virtual_station -->
+								</ParkingProperties>
+							</parkingProperties>
+							<parkingAreas>
+								<VehicleSharingParkingArea version="any" id="station12_01">
+									<TotalCapacity>8</TotalCapacity>
+									<ParkingProperties id="station12_01" version="any">
+										<vehicleTypes>
+											<SimpleVehicleTypeRef ref="abc123"/>
+										</vehicleTypes>
+									</ParkingProperties>
+								</VehicleSharingParkingArea>
+								<VehicleSharingParkingArea version="any" id="station12_02">
+									<TotalCapacity>8</TotalCapacity>
+									<ParkingProperties id="station12_02" version="any">
+										<vehicleTypes>
+											<SimpleVehicleTypeRef ref="def456"/>
+										</vehicleTypes>
+									</ParkingProperties>
+								</VehicleSharingParkingArea>
+								<VehicleSharingParkingArea version="any" id="station12_03">
+									<TotalCapacity>16</TotalCapacity>
+									<ParkingProperties id="station12_03" version="any">
+										<vehicleTypes>
+											<SimpleVehicleTypeRef ref="ghi789"/>
+										</vehicleTypes>
+									</ParkingProperties>
+								</VehicleSharingParkingArea>
+							</parkingAreas>
+						</Parking>
+					</parkings>
+				</SiteFrame>
+				<ServiceCalendarFrame version="1.0" id="EXM01">
+					<!--
+B.6.7	system_calendar.json -  Example
+GBFS file: system_calendar.json.
+{
+	"last_updated":1604333830,
+	"ttl":86400,
+	"version": "2.2",
+	"data":{
+		"calendars":[
+			{
+				"start_month":4,
+				"start_day":1,
+				"start_year":2020,
+				"end_month":11,
+				"end_day":5,
+				"end_year":2020
+			}
+		]
+	}
+} -->
+					<ServiceCalendar version="any" id="EXM01">
+						<FromDate>2021-01-01</FromDate>
+						<ToDate>2021-12-31</ToDate>
+					</ServiceCalendar>
+				</ServiceCalendarFrame>
+				<FareFrame version="any" id="plan2">
+					<!--
+GBFS file: system _pricing_plans.json.
+{
+	"last_updated": 1609866247,
+	"ttl": 0,
+	"version": "2.2",
+	"data": {
+		"plans": [
+			{
+				"plan_id": "plan2",
+				"name": "One-Way",
+				"currency": "USD",
+				"price": 2,
+				"is_taxable": false,
+				"description": "Includes 10km, overage fees apply after 10km.",
+				"per_km_pricing": [
+					{
+						"start": 10,
+						"rate": 1,
+						"interval": 1,
+						"end": 25
+					},
+					{
+						"start": 25,
+						"rate": 0.5,
+						"interval": 1
+					},
+					{
+						"start": 25,
+						"rate": 3,
+						"interval": 5
+					}
+				]
+			}
+		]
+	}
+}
+
+
+
+-->
+					<tariffs>
+						<Tariff version="any" id="plan2">
+							<VehicleSharingServiceRef version="any" ref="EXM01"/>
+							<geographicalIntervals>
+								<GeographicalInterval version="any" id="gi_01">
+									<StartGeographicalValue>10</StartGeographicalValue>
+									<!-- GBFS start -->
+									<EndGeographicalValue>25</EndGeographicalValue>
+									<!-- GBFS end -->
+									<NumberOfUnits>1</NumberOfUnits>
+									<!-- GBFS rate -->
+								</GeographicalInterval>
+								<GeographicalInterval version="any" id="gi_02">
+									<StartGeographicalValue>25</StartGeographicalValue>
+									<NumberOfUnits>1</NumberOfUnits>
+								</GeographicalInterval>
+								<GeographicalInterval version="any" id="gi_03">
+									<StartGeographicalValue>25</StartGeographicalValue>
+									<NumberOfUnits>5</NumberOfUnits>
+								</GeographicalInterval>
+							</geographicalIntervals>
+							<fareStructureElements>
+								<FareStructureElement version="any" id="plan2_access">
+									<TypeOfFareStructureElementRef ref="fxc:access"/>
+									<geographicalIntervals>
+										<GeographicalIntervalRef version="any" ref="gi_01"/>
+										<GeographicalIntervalRef version="any" ref="gi_02"/>
+										<GeographicalIntervalRef version="any" ref="gi_03"/>
+									</geographicalIntervals>
+								</FareStructureElement>
+							</fareStructureElements>
+						</Tariff>
+					</tariffs>
+					<fareProducts>
+						<PreassignedFareProduct version="any" id="plan2">
+							<Name>One-Way</Name>
+							<Description>Includes 10km, overage fees apply after 10km.</Description>
+							<validableElements>
+								<ValidableElement version="any" id="plan2_travel">
+									<Name>Single ride</Name>
+									<fareStructureElements>
+										<FareStructureElementRef version="any" ref="plan2_access"/>
+									</fareStructureElements>
+								</ValidableElement>
+							</validableElements>
+							<accessRightsInProduct>
+								<AccessRightInProduct version="any" id="plan2" order="1">
+									<ValidableElementRef version="any" ref="plan2_travel"/>
+								</AccessRightInProduct>
+							</accessRightsInProduct>
+							<ProductType>singleTrip</ProductType>
+						</PreassignedFareProduct>
+					</fareProducts>
+					<salesOfferPackages>
+						<SalesOfferPackage version="any" id="plan2">
+							<BrandingRef version="any" ref="EXM01"/>
+							<Name>One-Way</Name>
+							<distributionAssignments>
+								<DistributionAssignment version="any" id="plan2" order="1">
+									<DistributionChannelType>atStop</DistributionChannelType>
+									<TicketingServiceFacilityList>purchase</TicketingServiceFacilityList>
+									<PaymentMethods>debitCard creditCard epayDevice</PaymentMethods>
+								</DistributionAssignment>
+							</distributionAssignments>
+							<salesOfferPackageElements>
+								<SalesOfferPackageElement version="any" id="plan2" order="1">
+									<TypeOfTravelDocumentRef ref="etoken"/>
+									<PreassignedFareProductRef version="any" ref="plan2"/>
+								</SalesOfferPackageElement>
+							</salesOfferPackageElements>
+						</SalesOfferPackage>
+					</salesOfferPackages>
+				</FareFrame>
+				<FareFrame version="any" id="plan2_prices">
+					<FrameDefaults>
+						<DefaultCurrency>EUR</DefaultCurrency>
+						<!-- GBFS currency -->
+					</FrameDefaults>
+					<fareTables>
+						<FareTable version="any" id="plan2">
+							<pricesFor>
+								<PreassignedFareProductRef version="any" ref="plan2"/>
+							</pricesFor>
+							<prices>
+								<GeographicalIntervalPrice version="any" id="gi_01">
+									<Amount>1.00</Amount>
+									<GeographicalIntervalRef version="any" ref="gi_01"/>
+								</GeographicalIntervalPrice>
+								<GeographicalIntervalPrice version="any" id="gi_02">
+									<Amount>0.50</Amount>
+									<GeographicalIntervalRef version="any" ref="gi_02"/>
+								</GeographicalIntervalPrice>
+								<GeographicalIntervalPrice version="any" id="gi_03">
+									<Amount>3.00</Amount>
+									<GeographicalIntervalRef version="any" ref="gi_03"/>
+								</GeographicalIntervalPrice>
+								<FareProductPrice version="any" id="plan2_01">
+									<Amount>2.00</Amount>
+									<PreassignedFareProductRef version="any" ref="plan2"/>
+								</FareProductPrice>
+							</prices>
+						</FareTable>
+					</fareTables>
+				</FareFrame>
+			</frames>
+		</CompositeFrame>
+	</dataObjects>
+</PublicationDelivery>
