@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2009 sp1 (http://www.altova.com) by Nicholas Knowles (Kizoom) -->
 <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:core="http://www.govtalk.gov.uk/core" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_relationship">
 	<xsd:include schemaLocation="netex_relationship_support.xsd"/>
 	<xsd:annotation>
@@ -15,6 +14,12 @@
 				<Date>
 					<Modified>2014-03-31</Modified>
 				</Date>
+				<Date>
+					<Modified>2019-03-02</Modified>Correction to comment. No material change.
+				</Date>
+				<Date>
+					<Modified>2019-04-15</Modified>Fix Add typesOfValue_refs to enable type of Frame
+				</Date>
 				<Description>
 					<p>NeTEx Network Exchange - This subschema defines NeTEx relationship types.</p>
 				</Description>
@@ -27,7 +32,7 @@
 				<Language>[ISO 639-2/B] ENG</Language>
 				<Publisher>Kizoom Software Ltd, 16 High Holborn, London WC1V 6BX</Publisher>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2014</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -60,12 +65,12 @@ Rail transport, Roads and Road transport
 		<xsd:restriction base="xsd:NMTOKEN">
 			<xsd:enumeration value="all">
 				<xsd:annotation>
-					<xsd:documentation>This is a definition of a new entity.</xsd:documentation>
+					<xsd:documentation>This  incldues definitions of  one ore more new entities.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 			<xsd:enumeration value="changesOnly">
 				<xsd:annotation>
-					<xsd:documentation>This is a deletion of an existing entity.</xsd:documentation>
+					<xsd:documentation>This is just the modifications (addition, revision, deletion); entities which are unchanged are omitted.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:enumeration>
 		</xsd:restriction>
@@ -83,7 +88,7 @@ Rail transport, Roads and Road transport
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<!-- ======================================================================= -->
+	<!-- =====TYPE OF VALUE ============================================== -->
 	<xsd:element name="TypeOfValueRef" type="TypeOfValueRefStructure" abstract="true" substitutionGroup="VersionOfObjectRef">
 		<xsd:annotation>
 			<xsd:documentation>Reference to a TYPE OF VALUE. Implementation of a one to one relationship by reference to  TYPE OF VALUE.</xsd:documentation>
@@ -104,6 +109,18 @@ Rail transport, Roads and Road transport
 		</xsd:simpleContent>
 	</xsd:complexType>
 	<!-- ======================================================================= -->
+	<xsd:complexType name="typeOfEntityRefs_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of references to a TYPE OF VALUE</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="oneToManyRelationshipStructure">
+				<xsd:sequence>
+					<xsd:element ref="TypeOfEntityRef" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 	<xsd:element name="TypeOfEntityRef" type="TypeOfValueRefStructure" abstract="true" substitutionGroup="TypeOfValueRef">
 		<xsd:annotation>
 			<xsd:documentation>Reference to a TYPE OF ENTITY.</xsd:documentation>

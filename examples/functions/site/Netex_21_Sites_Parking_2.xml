@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <!-- ==== SImple PARKING  Example ====== 
 This Example provides a  example of a PARKING scoded using th NeTEx schema
-
-
+ 
 
    NB Dates and locations are bogus data.   Pathlinks and Navigation patsh are ommitted. 
 
@@ -37,9 +36,8 @@ Overview
 Details
 The example  comprises
 
-   
-
-(C) CEN Copyright 2010, 2011
+v1.1 revised ids and corrections
+(C) CEN Copyright 2010, 2019
 -->
 <PublicationDelivery xmlns="http://www.netex.org.uk/netex" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://www.netex.org.uk/netex ../../../xsd/NeTEx_publication.xsd">
 	<PublicationTimestamp>2001-12-17T09:30:47.0Z</PublicationTimestamp>
@@ -52,11 +50,11 @@ The example  comprises
 	<PublicationRefreshInterval>PT5M0S</PublicationRefreshInterval>
 	<!--- =============== RESULTS =========== -->
 	<dataObjects>
-		<SiteFrame version="any" id="SiteFrame:SF01">
+		<SiteFrame version="any" id="mypark:SF01">
 			<validityConditions>
-				<AvailabilityCondition version="any" id="AvailabilityCondition:PP01_OpeningHours">
+				<AvailabilityCondition version="any" id="mypark:PP01@Opening_Hours">
 					<dayTypes>
-						<DayType version="any" id="DayType:EveryDay">
+						<DayType version="any" id="mypark:EveryDay">
 							<Name>Every day</Name>
 							<properties>
 								<PropertyOfDay>
@@ -67,15 +65,15 @@ The example  comprises
 						<DayTypeRef ref=""/>
 					</dayTypes>
 					<timebands>
-						<Timeband version="any" id="Timeband:OpeningHours">
+						<Timeband version="any" id="mypark:PP01@Opening_Hours@range">
 							<StartTime>06:30:00</StartTime>
 							<EndTime>12:00:00</EndTime>
 						</Timeband>
 					</timebands>
 				</AvailabilityCondition>
-				<AvailabilityCondition version="any" id="AvailabilityCondition:PP01_ExitHours">
+				<AvailabilityCondition version="any" id="mypark:PP01@Exit_Hours">
 					<dayTypes>
-						<DayType version="any" id="DayType:24HrsEveryDay">
+						<DayType version="any" id="mypark:24_Hours_every_day">
 							<Name>Every day</Name>
 							<properties>
 								<PropertyOfDay>
@@ -89,24 +87,24 @@ The example  comprises
 			</validityConditions>
 			<!-- ==  CODESPACEs = -->
 			<codespaces>
-				<Codespace id="mypark">
+				<Codespace id="mypark_data">
 					<Xmlns>mypark</Xmlns>
 					<XmlnsUrl>http://www.pkgdata.co.uk/data</XmlnsUrl>
 					<Description>Other interchange DATA SOURCE </Description>
 				</Codespace>
-				<Codespace id="nptg">
-					<Xmlns>nptg</Xmlns>
+				<Codespace id="nptgLocality_data">
+					<Xmlns>nptgLocality</Xmlns>
 					<XmlnsUrl>http://www.nptg.co.uk/data</XmlnsUrl>
 					<Description>NPTG gazetteer  DATA SOURCE </Description>
 				</Codespace>
 			</codespaces>
 			<!--- =======FRAME DEFAULTS======== -->
 			<FrameDefaults>
-				<DefaultCodespaceRef ref="mypark"/>
+				<DefaultCodespaceRef ref="mypark_data"/>
 			</FrameDefaults>
 			<!--- =====Places========= -->
 			<topographicPlaces>
-				<TopographicPlace version="any" id="nptg:TopographicPlace:TP_0032A">
+				<TopographicPlace version="any" id="nptgLocality:TP_0032A">
 					<Name>Barcester Town</Name>
 					<Descriptor>
 						<Name>Barcester</Name>
@@ -115,9 +113,9 @@ The example  comprises
 			</topographicPlaces>
 			<parkings>
 				<!--- ====MULTISTOREY CAR PARK========== -->
-				<Parking version="any" id="Parking:PP01" dataSourceRef="parkopedia">
+				<Parking version="any" id="mypark:PP01" dataSourceRef="parkopedia">
 					<validityConditions>
-						<AvailabilityConditionRef version="any" ref="AvailabilityCondition:PP01_OpeningHours"/>
+						<AvailabilityConditionRef version="any" ref="mypark:PP01@Opening_Hours"/>
 					</validityConditions>
 					<Name>Barcester  CIty centre  Car Park</Name>
 					<ShortName>CIty Car Park</ShortName>
@@ -128,7 +126,7 @@ The example  comprises
 							<Latitude>-90</Latitude>
 						</Location>
 					</Centroid>
-					<gml:Polygon gml:id="ID_1" srsName="wgs84" srsDimension="2">
+					<gml:Polygon gml:id="PP01_ID_1" srsName="wgs84" srsDimension="2">
 						<gml:exterior>
 							<gml:LinearRing>
 								<gml:pos srsName="wgs84" srsDimension="2">3.14159265358979E0 3.14159265358979E0</gml:pos>
@@ -148,14 +146,14 @@ The example  comprises
 					</gml:Polygon>
 					<Url>http://www.barpark.co.uk</Url>
 					<Image>http://ww.mycarpark.com/prettypicture.jpg</Image>
-					<PostalAddress version="any" id="PostalAddress:PP01_01">
+					<PostalAddress version="any" id="mypark:PP01@address">
 						<CountryRef ref="uk">String</CountryRef>
 						<HouseNumber>27</HouseNumber>
 						<Street>High Street</Street>
 						<Town>Barcester</Town>
 						<PostCode>BXC 24P</PostCode>
 					</PostalAddress>
-					<AccessibilityAssessment version="any" id="AccessibilityAssessment:PP01_01">
+					<AccessibilityAssessment version="any" id="mypark:PP01">
 						<MobilityImpairedAccess>partial</MobilityImpairedAccess>
 						<limitations>
 							<AccessibilityLimitation>
@@ -177,44 +175,44 @@ The example  comprises
 					<Lighting>wellLit</Lighting>
 					<AllAreasWheelchairAccessible>false</AllAreasWheelchairAccessible>
 					<facilities>
-						<!-- === IN  LINE : could be separatet and reused -->
-						<SiteFacilitySet version="any" id="mybus:SiteFacilitySet:SSP_02456A">
+						<!-- === IN  LINE : could be separate and reused -->
+						<SiteFacilitySet version="any" id="mypark:PP01">
 							<AccessibilityToolList>buggy wheelchair </AccessibilityToolList>
 							<CarServiceFacilityList>carWash</CarServiceFacilityList>
 							<SanitaryFacilityList>toilet wheelChairAccessToilet</SanitaryFacilityList>
 						</SiteFacilitySet>
 					</facilities>
-					<TopographicPlaceRef version="any" ref="nptg:TopographicPlace:TP_0032A"/>
+					<TopographicPlaceRef version="any" ref="nptgLocality:TP_0032A"/>
 					<SiteType>retail</SiteType>
 					<AtCentre>true</AtCentre>
 					<levels>
-						<Level version="any" id="Level:PP1_01">
+						<Level version="any" id="mypark:PP01@Level@01">
 							<Name>Street Level</Name>
 						</Level>
-						<Level version="any" id="Level:PP1_02">
+						<Level version="any" id="mypark:PP01@Level@02">
 							<Name>Level 1</Name>
 						</Level>
-						<Level version="any" id="Level:PP1_03">
+						<Level version="any" id="mypark:PP01@Level@03">
 							<Name>Level 3 (Walkway to STore)</Name>
 						</Level>
 					</levels>
 					<entrances>
-						<ParkingPassengerEntrance version="any" id="ParkingPassengerEntrance:PP_E01">
+						<ParkingPassengerEntrance version="any" id="mypark:PP01@EP01">
 							<validityConditions>
-								<AvailabilityConditionRef version="any" ref="AvailabilityCondition:PP01_ExitHours"/>
+								<AvailabilityConditionRef version="any" ref="mypark:PP01@Exit_Hours"/>
 							</validityConditions>
 							<Name>Main Entrance from street</Name>
 							<Description lang="en">External Entrance Street level from High Street </Description>
-							<ParentZoneRef version="any" ref="Parking:PP01"/>
-							<LevelRef version="any" ref="Level:PP1_01"/>
+							<ParentZoneRef version="any" ref="mypark:PP01"/>
+							<LevelRef version="any" ref="mypark:PP01@Level@01"/>
 							<placeEquipments>
-								<RampEquipment version="any" id="RampEquipment:PP_E01">
+								<RampEquipment version="any" id="mypark:PP01@EP01@ramp">
 									<DirectionOfUse>both</DirectionOfUse>
 									<Gradient>22</Gradient>
 									<GradientType>steep</GradientType>
 									<VisualGuidanceBands>true</VisualGuidanceBands>
 								</RampEquipment>
-								<EntranceEquipment version="any" id="EntranceEquipment:PP_E01">
+								<EntranceEquipment version="any" id="mypark:PP01@EP01@entrance">
 									<Door>true</Door>
 									<KeptOpen>true</KeptOpen>
 									<WheelchairPassable>true</WheelchairPassable>
@@ -228,16 +226,16 @@ The example  comprises
 							<Width>4.0</Width>
 							<Height>8.0</Height>
 						</ParkingPassengerEntrance>
-						<ParkingPassengerEntrance version="any" id="ParkingPassengerEntrance:PP_E02">
+						<ParkingPassengerEntrance version="any" id="mypark:PP01@EP02">
 							<validityConditions>
-								<AvailabilityConditionRef version="any" ref="AvailabilityCondition:PP01_OpeningHours"/>
+								<AvailabilityConditionRef version="any" ref="mypark:PP01@Opening_Hours"/>
 							</validityConditions>
 							<Name>Walkway  Entrance from store</Name>
 							<Description lang="en">External Entrance Walkway to store.</Description>
-							<ParentZoneRef version="any" ref="Parking:PP01"/>
-							<LevelRef version="any" ref="Level:PP1_03"/>
+							<ParentZoneRef version="any" ref="mypark:PP01"/>
+							<LevelRef version="any" ref="mypark:PP01@Level@03"/>
 							<placeEquipments>
-								<EntranceEquipment version="any" id="EntranceEquipment:PP_E02">
+								<EntranceEquipment version="any" id="mypark:PP01@EP02@entrance">
 									<Door>true</Door>
 									<KeptOpen>false</KeptOpen>
 									<AutomaticDoor>true</AutomaticDoor>
@@ -252,15 +250,15 @@ The example  comprises
 							<Width>3.0</Width>
 							<Height>7.0</Height>
 						</ParkingPassengerEntrance>
-						<ParkingEntranceForVehicles version="any" id="ParkingEntranceForVehicles:PP_E11_Entrance">
+						<ParkingEntranceForVehicles version="any" id="mypark:PP01@EV11@Entrance">
 							<validityConditions>
-								<AvailabilityConditionRef version="any" ref="AvailabilityCondition:PP01_OpeningHours"/>
+								<AvailabilityConditionRef version="any" ref="mypark:PP01@Opening_Hours"/>
 							</validityConditions>
 							<Name>Main Vehicle Entrance from street</Name>
-							<ParentZoneRef version="any" ref="Parking:PP01"/>
-							<LevelRef version="any" ref="Level:PP1_01"/>
+							<ParentZoneRef version="any" ref="mypark:PP01"/>
+							<LevelRef version="any" ref="mypark:PP01@Level@01"/>
 							<checkConstraints>
-								<CheckConstraint version="any" id="CheckConstraint:PP1_01_in">
+								<CheckConstraint version="any" id="mypark:PP01@EV11@Entrance">
 									<Name>Access Queue</Name>
 									<CheckDirection>forwards</CheckDirection>
 									<CheckProcess>ingress</CheckProcess>
@@ -268,30 +266,30 @@ The example  comprises
 									<AccessFeatureType>barrier</AccessFeatureType>
 									<Congestion>queue</Congestion>
 									<delays>
-										<CheckConstraintDelay version="any" id="CheckConstraintDelay:PP1_E11_in_peek">
+										<CheckConstraintDelay version="any" id="mypark:PP01@EV11@Entrance@peak">
 											<validityConditions>
-												<ValidityTriggerRef ref="AvailabilityCondition:Peek"/>
+												<ValidityTriggerRef ref="mypark:Peek"/>
 											</validityConditions>
 											<Name>pek delay</Name>
-											<CheckConstraintRef ref="CheckConstraint:PP1_01_in"/>
+											<CheckConstraintRef version="any" ref="mypark:PP01@EV11@Entrance"/>
 											<MinimumLikelyDelay>PT5M</MinimumLikelyDelay>
 											<AverageDelay>PT7M</AverageDelay>
 											<MaximumLikelyDelay>PT15M</MaximumLikelyDelay>
 										</CheckConstraintDelay>
-										<CheckConstraintDelay version="any" id="CheckConstraintDelay:PP1_E11_in_Offpeek">
+										<CheckConstraintDelay version="any" id="mypark:PP01@EV11@Entrance@off_peak">
 											<validityConditions>
-												<ValidityTriggerRef ref="AvailabilityCondition:OffPeek"/>
+												<ValidityTriggerRef ref="mypark:Off_peak"/>
 											</validityConditions>
 											<Name>Off peak delay</Name>
-											<CheckConstraintRef ref="CheckConstraint:PP1_01_in"/>
+											<CheckConstraintRef version="any" ref="mypark:PP01@EV11@Entrance"/>
 											<MinimumLikelyDelay>PT1M</MinimumLikelyDelay>
 											<AverageDelay>PT2M</AverageDelay>
 											<MaximumLikelyDelay>PT5M</MaximumLikelyDelay>
 										</CheckConstraintDelay>
 									</delays>
 									<throughput>
-										<CheckConstraintThroughput version="any" id="CheckConstraintThroughput:PP1_E11_in_peek">
-											<CheckConstraintRef version="any" ref="CheckConstraint:PP1_01_in"/>
+										<CheckConstraintThroughput version="any" id="mypark:PP01@EV11@Entrance@peak">
+											<CheckConstraintRef version="any" ref="mypark:PP01@EV11@Entrance"/>
 											<Period>PT10M</Period>
 											<MaximumPassengers>30</MaximumPassengers>
 											<AveragePassengers>20</AveragePassengers>
@@ -300,7 +298,7 @@ The example  comprises
 								</CheckConstraint>
 							</checkConstraints>
 							<placeEquipments>
-								<EntranceEquipment version="any" id="EntranceEquipment:PP_E11_Entrance">
+								<EntranceEquipment version="any" id="mypark:PP01@EV11@Entrance">
 									<KeptOpen>false</KeptOpen>
 									<Barrier>true</Barrier>
 									<AutomaticDoor>true</AutomaticDoor>
@@ -314,15 +312,15 @@ The example  comprises
 							<Width>14.0</Width>
 							<Height>12.0</Height>
 						</ParkingEntranceForVehicles>
-						<ParkingEntranceForVehicles version="any" id="ParkingEntranceForVehicles:PP_E12_Exit">
+						<ParkingEntranceForVehicles version="any" id="mypark:PP01@EV12@Exit">
 							<validityConditions>
-								<AvailabilityConditionRef version="any" ref="AvailabilityCondition:PP01_ExitHours"/>
+								<AvailabilityConditionRef version="any" ref="mypark:PP01@Opening_Hours"/>
 							</validityConditions>
 							<Name>Main Vehicle Exit to street</Name>
-							<ParentZoneRef version="any" ref="Parking:PP01"/>
-							<LevelRef version="any" ref="Level:PP1_01"/>
+							<ParentZoneRef version="any" ref="mypark:PP01"/>
+							<LevelRef version="any" ref="mypark:PP01@Level@01"/>
 							<checkConstraints>
-								<CheckConstraint version="any" id="CheckConstraint:PP1_01_out">
+								<CheckConstraint version="any" id="mypark:PP01@EV12@Exit">
 									<Name>Access Queue</Name>
 									<CheckDirection>forwards</CheckDirection>
 									<CheckProcess>ingress</CheckProcess>
@@ -330,30 +328,30 @@ The example  comprises
 									<AccessFeatureType>barrier</AccessFeatureType>
 									<Congestion>queue</Congestion>
 									<delays>
-										<CheckConstraintDelay version="any" id="CheckConstraintDelay:PP1_E12_out_peek">
+										<CheckConstraintDelay version="any" id="mypark:PP01@EV12@Exit@peak">
 											<validityConditions>
-												<ValidityTriggerRef ref="AvailabilityCondition:Peek"/>
+												<ValidityTriggerRef ref="mypark:Peek"/>
 											</validityConditions>
 											<Name>pek delay</Name>
-											<CheckConstraintRef ref="CheckConstraint:PP1_E12_out"/>
+											<CheckConstraintRef ref="mypark:PP01@EV12@Exit"/>
 											<MinimumLikelyDelay>PT5M</MinimumLikelyDelay>
 											<AverageDelay>PT7M</AverageDelay>
 											<MaximumLikelyDelay>PT15M</MaximumLikelyDelay>
 										</CheckConstraintDelay>
-										<CheckConstraintDelay version="any" id="CheckConstraintDelay:PP1_E12_out_Offpeek">
+										<CheckConstraintDelay version="any" id="mypark:PP01@EV12@Exit@Off_peak">
 											<validityConditions>
-												<ValidityTriggerRef ref="AvailabilityCondition:OffPeek"/>
+												<ValidityTriggerRef ref="mypark:Off_peak"/>
 											</validityConditions>
 											<Name>Off peak delay</Name>
-											<CheckConstraintRef ref="CheckConstraint:PP1_E12_out"/>
+											<CheckConstraintRef ref="mypark:PP01@EV12@Exit"/>
 											<MinimumLikelyDelay>PT1M</MinimumLikelyDelay>
 											<AverageDelay>PT2M</AverageDelay>
 											<MaximumLikelyDelay>PT5M</MaximumLikelyDelay>
 										</CheckConstraintDelay>
 									</delays>
 									<throughput>
-										<CheckConstraintThroughput version="any" id="CheckConstraintThroughput:PP1_E12_out">
-											<CheckConstraintRef ref="CheckConstraint:PP1_E12_out"/>
+										<CheckConstraintThroughput version="any" id="mypark:PP01@EV12@Exit">
+											<CheckConstraintRef ref="mypark:PP01@EV12@Exit"/>
 											<Period>PT10M</Period>
 											<MaximumPassengers>20</MaximumPassengers>
 											<AveragePassengers>15</AveragePassengers>
@@ -362,7 +360,7 @@ The example  comprises
 								</CheckConstraint>
 							</checkConstraints>
 							<placeEquipments>
-								<EntranceEquipment version="any" id="EntranceEquipment:PP_E12_Exit">
+								<EntranceEquipment version="any" id="mypark:PP01@EV12@Exit">
 									<KeptOpen>false</KeptOpen>
 									<Barrier>true</Barrier>
 									<EntranceRequiresTicket>true</EntranceRequiresTicket>
@@ -378,9 +376,9 @@ The example  comprises
 							<Width>14.0</Width>
 							<Height>12.0</Height>
 						</ParkingEntranceForVehicles>
-						<ParkingEntranceForVehicles version="any" id="ParkingEntranceForVehicles:PP_X01_02">
+						<ParkingEntranceForVehicles version="any" id="mypark:PP01@EV01+02">
 							<Name>Entrance from level 1 to level 2</Name>
-							<ParentZoneRef version="any" ref="Parking:PP01"/>
+							<ParentZoneRef version="any" ref="mypark:PP01"/>
 							<Label>Up To Level 1</Label>
 							<IsExternal>false</IsExternal>
 							<IsEntry>true</IsEntry>
@@ -388,9 +386,9 @@ The example  comprises
 							<Width>14.0</Width>
 							<Height>12.0</Height>
 						</ParkingEntranceForVehicles>
-						<ParkingEntranceForVehicles version="any" id="ParkingEntranceForVehicles:PP_X02_03">
+						<ParkingEntranceForVehicles version="any" id="mypark:PP01@EV02+03">
 							<Name>Entrance from level 2 to level 3</Name>
-							<ParentZoneRef version="any" ref="Parking:PP01"/>
+							<ParentZoneRef version="any" ref="mypark:PP01"/>
 							<Label>Up To Level 2 </Label>
 							<IsExternal>false</IsExternal>
 							<IsEntry>true</IsEntry>
@@ -398,9 +396,9 @@ The example  comprises
 							<Width>14.0</Width>
 							<Height>12.0</Height>
 						</ParkingEntranceForVehicles>
-						<ParkingEntranceForVehicles version="any" id="ParkingEntranceForVehicles:PP_X02_01">
+						<ParkingEntranceForVehicles version="any" id="mypark:PP01@EV02+01">
 							<Name>Entrance Dwon from level 2 to level 1</Name>
-							<ParentZoneRef version="any" ref="Parking:PP01"/>
+							<ParentZoneRef version="any" ref="mypark:PP01"/>
 							<Label>Down  To Level 1</Label>
 							<IsExternal>false</IsExternal>
 							<IsEntry>false</IsEntry>
@@ -408,9 +406,9 @@ The example  comprises
 							<Width>14.0</Width>
 							<Height>12.0</Height>
 						</ParkingEntranceForVehicles>
-						<ParkingEntranceForVehicles version="any" id="ParkingEntranceForVehicles:PP_X03_02">
+						<ParkingEntranceForVehicles version="any" id="mypark:PP01@EV03+02">
 							<Name>Entrance  Down from level 3 to level 2</Name>
-							<ParentZoneRef version="any" ref="Parking:PP01"/>
+							<ParentZoneRef version="any" ref="mypark:PP01"/>
 							<Label>Down  To Level 2 </Label>
 							<IsExternal>false</IsExternal>
 							<IsEntry>false</IsEntry>
@@ -420,11 +418,11 @@ The example  comprises
 						</ParkingEntranceForVehicles>
 					</entrances>
 					<equipmentPlaces>
-						<EquipmentPlace version="any" id="EquipmentPlace:PP_01">
+						<EquipmentPlace version="any" id="mypark:PP01@QP01">
 							<Name>Location of Ticket Machines</Name>
 							<equipmentPositions>
-								<EquipmentPosition version="any" id="EquipmentPosition:PP_01">
-									<EquipmentRef version="any" ref="TicketingEquipment:PP_01"/>
+								<EquipmentPosition version="any" id="mypark:PP01@QPP01">
+									<EquipmentRef version="any" ref="mypark:PP01@Q01"/>
 									<Description>location of ticket machines </Description>
 									<Location>
 										<Longitude>1.00</Longitude>
@@ -435,7 +433,7 @@ The example  comprises
 						</EquipmentPlace>
 					</equipmentPlaces>
 					<placeEquipments>
-						<TicketingEquipment version="any" id="TicketingEquipment:PP_01">
+						<TicketingEquipment version="any" id="mypark:PP01@Q01">
 							<TicketMachines>true</TicketMachines>
 							<NumberOfMachines>2</NumberOfMachines>
 							<HeightOfMachineInterface>1.20</HeightOfMachineInterface>
@@ -443,7 +441,7 @@ The example  comprises
 						</TicketingEquipment>
 					</placeEquipments>
 					<accesses>
-						<Access version="any" id="Access:PP_01">
+						<Access version="any" id="mypark:PP01@S01">
 							<Description>Walk to Station</Description>
 							<TransferDuration>
 								<DefaultDuration>PT10M</DefaultDuration>
@@ -452,11 +450,11 @@ The example  comprises
 							<BothWays>true</BothWays>
 							<From>
 								<TransportMode>rail</TransportMode>
-								<PlaceRef ref="napt:9100:00476"/>
+								<PlaceRef versionRef="EXTERNAL" ref="napt:9100:00476"/>
 							</From>
 							<To>
 								<TransportMode>selfDrive</TransportMode>
-								<PlaceRef ref="Parking:PP01"/>
+								<PlaceRef version="any" ref="mypark:PP01" xsi:type="ParkingRefStructure"/>
 							</To>
 						</Access>
 					</accesses>
@@ -483,54 +481,51 @@ The example  comprises
 					</PaymentByMobile>
 					<FreeParkingOutOfHours>false</FreeParkingOutOfHours>
 					<parkingProperties>
-						<ParkingProperties version="any" id="ParkingProperties:PP01">
+						<ParkingProperties version="any" id="mypark:PP01">
 							<ParkingUserTypes>all</ParkingUserTypes>
 							<ParkingStayList>all</ParkingStayList>
 							<MaximumStay>PT48H</MaximumStay>
 							<spaces>
-								<ParkingCapacity version="any" id="ParkingCapacity:PP01_01_disabled">
-									<ParentRef ref="Parking:PP01"/>
+								<ParkingCapacity version="any" id="mypark:PP01@C01_disabled">
+									<ParkingRef version="any" ref="mypark:PP01"/>
 									<ParkingUserType>registeredDisabled</ParkingUserType>
 									<ParkingVehicleType>passengerCar</ParkingVehicleType>
 									<ParkingStayType>unlimited</ParkingStayType>
 									<NumberOfSpaces>30</NumberOfSpaces>
 								</ParkingCapacity>
-								<ParkingCapacity version="any" id="ParkingCapacity:PP01_other">
-									<ParentRef ref="Parking:PP01_01_01"/>
+								<ParkingCapacity version="any" id="mypark:PP01@C02_other">
+									<ParentRef version="any" ref="mypark:PP01"/>
 									<ParkingUserType>allUsers</ParkingUserType>
 									<ParkingVehicleType>passengerCar</ParkingVehicleType>
 									<ParkingStayType>unlimited</ParkingStayType>
 									<NumberOfSpaces>220</NumberOfSpaces>
 								</ParkingCapacity>
 							</spaces>
-							<charges>
-								<ParkingTariffRef version="any" ref="ParkingTariff:PP01"/>
-							</charges>
 						</ParkingProperties>
 					</parkingProperties>
 					<parkingAreas>
-						<ParkingArea version="any" id="ParkingArea:PP01_01">
+						<ParkingArea version="any" id="mypark:PP01@A01">
 							<Name>Barcester CIty Centre  Car Park - Street Level</Name>
 							<ShortName>Street Level</ShortName>
-							<SiteRef ref="Parking:PP01"/>
-							<LevelRef ref="Level:PP1_01"/>
+							<SiteRef ref="mypark:PP01"/>
+							<LevelRef ref="mypark:PP01@Level@01"/>
 							<Label>S1</Label>
 							<MaximumLength>8</MaximumLength>
 							<MaximumWidth>3</MaximumWidth>
 							<MaximumHeight>2</MaximumHeight>
 							<MaximumWeight>15</MaximumWeight>
 							<TotalCapacity>100</TotalCapacity>
-							<ParkingProperties>
+							<ParkingProperties version="any" id="mypark:PP01@A01">
 								<ParkingStayList>midTerm</ParkingStayList>
 								<MaximumStay>PT48H</MaximumStay>
 								<spaces>
-									<ParkingCapacity version="any" id="ParkingCapacity:PP01_01_01">
+									<ParkingCapacity version="any" id="mypark:PP01@01_01">
 										<ParentRef ref=""/>
 										<ParkingUserType>all</ParkingUserType>
 										<ParkingVehicleType>passengerCar</ParkingVehicleType>
 										<NumberOfSpaces>85</NumberOfSpaces>
 									</ParkingCapacity>
-									<ParkingCapacity version="any" id="ParkingCapacity:PP01_01_02">
+									<ParkingCapacity version="any" id="mypark:PP01@01_02">
 										<ParentRef ref=""/>
 										<ParkingUserType>registeredDisabled</ParkingUserType>
 										<ParkingVehicleType>passengerCar</ParkingVehicleType>
@@ -539,29 +534,29 @@ The example  comprises
 								</spaces>
 							</ParkingProperties>
 							<entrances>
-								<ParkingEntranceRef version="any" ref="ParkingPassengerEntrance:PP_E01"/>
-								<ParkingEntranceForVehiclesRef version="any" ref="ParkingEntranceForVehicles:PP_E11_Entrance"/>
-								<ParkingEntranceForVehiclesRef version="any" ref="ParkingEntranceForVehicles:PP_E12_Exit"/>
-								<ParkingEntranceForVehiclesRef version="any" ref="ParkingEntranceForVehicles:PP_X01_02"/>
-								<ParkingEntranceForVehiclesRef version="any" ref="ParkingEntranceForVehicles:PP_X02_01"/>
+								<ParkingEntranceRef version="any" ref="mypark:PP01@EP01"/>
+								<ParkingEntranceForVehiclesRef version="any" ref="mypark:PP01@EV11@Entrance"/>
+								<ParkingEntranceForVehiclesRef version="any" ref="mypark:PP01@EV12@Exit"/>
+								<ParkingEntranceForVehiclesRef version="any" ref="mypark:PP01@EV01+02"/>
+								<ParkingEntranceForVehiclesRef version="any" ref="mypark:PP01@EV02+01"/>
 							</entrances>
 						</ParkingArea>
-						<ParkingArea version="any" id="ParkingArea:PP01_02">
+						<ParkingArea version="any" id="mypark:PP01@A02">
 							<Name>Barcester City Centret Car Park - Mezzanine  Level</Name>
 							<ShortName>Mezzanine</ShortName>
-							<SiteRef ref="Parking:PP01"/>
-							<LevelRef ref="Level:PP1_012"/>
+							<SiteRef ref="mypark:PP01"/>
+							<LevelRef ref="mypark:PP01@Level@012"/>
 							<Label>Parking 1</Label>
 							<MaximumLength>8</MaximumLength>
 							<MaximumWidth>3</MaximumWidth>
 							<MaximumHeight>2</MaximumHeight>
 							<MaximumWeight>10</MaximumWeight>
 							<TotalCapacity>50</TotalCapacity>
-							<ParkingProperties>
+							<ParkingProperties version="any" id="mypark:PP01@A02">
 								<ParkingStayList>midTerm</ParkingStayList>
 								<MaximumStay>PT48H</MaximumStay>
 								<spaces>
-									<ParkingCapacity version="any" id="ParkingCapacity:PP01_02_01">
+									<ParkingCapacity version="any" id="mypark:PP01@A02@C01">
 										<ParentRef ref=""/>
 										<ParkingUserType>all</ParkingUserType>
 										<ParkingVehicleType>passengerCar</ParkingVehicleType>
@@ -570,34 +565,34 @@ The example  comprises
 								</spaces>
 							</ParkingProperties>
 							<entrances>
-								<ParkingEntranceForVehiclesRef version="any" ref="ParkingEntranceForVehicles:PP_X02_03"/>
-								<ParkingEntranceForVehiclesRef version="any" ref="ParkingEntranceForVehicles:PP_X03_02"/>
-								<ParkingEntranceForVehiclesRef version="any" ref="ParkingEntranceForVehicles:PP_X01_02"/>
-								<ParkingEntranceForVehiclesRef version="any" ref="ParkingEntranceForVehicles:PP_X02_01"/>
+								<ParkingEntranceForVehiclesRef version="any" ref="mypark:PP01@EV02+03"/>
+								<ParkingEntranceForVehiclesRef version="any" ref="mypark:PP01@EV03+02"/>
+								<ParkingEntranceForVehiclesRef version="any" ref="mypark:PP01@EV01+02"/>
+								<ParkingEntranceForVehiclesRef version="any" ref="mypark:PP01@EV02+01"/>
 							</entrances>
 						</ParkingArea>
-						<ParkingArea version="any" id="ParkingArea:PP01_03">
-							<Name>Barcester City Centret Car Park - Store  Level</Name>
+						<ParkingArea version="any" id="mypark:PP01@A03">
+							<Name>Barchester City Centret Car Park - Store  Level</Name>
 							<ShortName>Parking 2</ShortName>
-							<SiteRef ref="Parking:PP01"/>
-							<LevelRef ref="Level:PP1_03"/>
+							<SiteRef ref="mypark:PP01"/>
+							<LevelRef ref="mypark:PP01@Level@03"/>
 							<Label>Parking 2</Label>
 							<MaximumLength>8</MaximumLength>
 							<MaximumWidth>3</MaximumWidth>
 							<MaximumHeight>2</MaximumHeight>
 							<MaximumWeight>10</MaximumWeight>
 							<TotalCapacity>100</TotalCapacity>
-							<ParkingProperties>
+							<ParkingProperties version="any" id="mypark:PP01@A03">
 								<ParkingStayList>midTerm</ParkingStayList>
 								<MaximumStay>PT48H</MaximumStay>
 								<spaces>
-									<ParkingCapacity version="any" id="ParkingCapacity:PP01_03_01">
+									<ParkingCapacity version="any" id="mypark:PP01@A03@C01">
 										<ParentRef ref=""/>
 										<ParkingUserType>all</ParkingUserType>
 										<ParkingVehicleType>passengerCar</ParkingVehicleType>
 										<NumberOfSpaces>85</NumberOfSpaces>
 									</ParkingCapacity>
-									<ParkingCapacity version="any" id="ParkingCapacity:PP01_03_02">
+									<ParkingCapacity version="any" id="mypark:PP01@A03@C02">
 										<ParentRef ref=""/>
 										<ParkingUserType>registeredDisabled</ParkingUserType>
 										<ParkingVehicleType>passengerCar</ParkingVehicleType>
@@ -606,30 +601,29 @@ The example  comprises
 								</spaces>
 							</ParkingProperties>
 							<entrances>
-								<ParkingEntranceRef version="any" ref="ParkingPassengerEntrance:PP_E03 "/>
-								<ParkingEntranceRef version="any" ref="ParkingPassengerEntrance:PP_E02_03 "/>
-								<ParkingEntranceForVehiclesRef version="any" ref="ParkingEntranceForVehicles:PP_X02_03"/>
-								<ParkingEntranceForVehiclesRef version="any" ref="ParkingEntranceForVehicles:PP_X03_02"/>
+								<ParkingEntranceRef version="any" ref="mypark:PP01@EP02 "/>
+								<ParkingEntranceForVehiclesRef version="any" ref="mypark:PP01@EV02+03"/>
+								<ParkingEntranceForVehiclesRef version="any" ref="mypark:PP01@EV03+02"/>
 							</entrances>
 						</ParkingArea>
 					</parkingAreas>
 					<vehicleEntrances>
-						<ParkingEntranceForVehiclesRef version="any" ref="ParkingEntranceForVehicles:PP_E11_Entrance"/>
-						<ParkingEntranceForVehiclesRef version="any" ref="ParkingEntranceForVehicles:PP_E12_Exit"/>
-						<ParkingEntranceForVehiclesRef version="any" ref="ParkingEntranceForVehicles:PP_X02_03"/>
-						<ParkingEntranceForVehiclesRef version="any" ref="ParkingEntranceForVehicles:PP_X03_02"/>
-						<ParkingEntranceForVehiclesRef version="any" ref="ParkingEntranceForVehicles:PP_X01_02"/>
-						<ParkingEntranceForVehiclesRef version="any" ref="ParkingEntranceForVehicles:PP_X02_01"/>
+						<ParkingEntranceForVehiclesRef version="any" ref="mypark:PP01@EV11@Entrance"/>
+						<ParkingEntranceForVehiclesRef version="any" ref="mypark:PP01@EV12@Exit"/>
+						<ParkingEntranceForVehiclesRef version="any" ref="mypark:PP01@EV02+03"/>
+						<ParkingEntranceForVehiclesRef version="any" ref="mypark:PP01@EV03+02"/>
+						<ParkingEntranceForVehiclesRef version="any" ref="mypark:PP01@EV01+02"/>
+						<ParkingEntranceForVehiclesRef version="any" ref="mypark:PP01@EV02+01"/>
 					</vehicleEntrances>
 				</Parking>
 				<!--- ====ON STREET CAR PARKING========== -->
-				<Parking version="any" id="Parking:PS22" dataSourceRef="parkopedia">
+				<Parking version="any" id="mypark:PS22" dataSourceRef="parkopedia">
 					<validityConditions>
-						<AvailabilityCondition version="any" id="AvailabilityCondition:ParkingChargeHours">
+						<AvailabilityCondition version="any" id="mypark:Parking_Charge_Hours">
 							<Name>Charged Parking times</Name>
 							<Description>Modnay to friday not PublicHolidays</Description>
 							<dayTypes>
-								<DayType version="any" id="DayType:WorkingDay">
+								<DayType version="any" id="mypark:WorkingDay">
 									<Name>Working day</Name>
 									<properties>
 										<PropertyOfDay>
@@ -641,7 +635,7 @@ The example  comprises
 								<DayTypeRef ref=""/>
 							</dayTypes>
 							<timebands>
-								<Timeband version="any" id="Timeband:ParkingChargeHours">
+								<Timeband version="any" id="mypark:Parking_Charge_Hours">
 									<StartTime>08:30:00</StartTime>
 									<EndTime>05:30:00</EndTime>
 								</Timeband>
@@ -652,7 +646,7 @@ The example  comprises
 					<ShortName>CIty Car Park</ShortName>
 					<Description>On street parking metered 8.30 to 6 pm Mondat to Friday  </Description>
 					<Url>http://www.barpccyparkingregs.co.uk</Url>
-					<AccessibilityAssessment version="any" id="AccessibilityAssessment:PS22_01">
+					<AccessibilityAssessment version="any" id="mypark:PS22@01">
 						<MobilityImpairedAccess>true</MobilityImpairedAccess>
 					</AccessibilityAssessment>
 					<AccessModes>foot</AccessModes>
@@ -660,13 +654,13 @@ The example  comprises
 					<Covered>outdoors</Covered>
 					<Lighting>wellLit</Lighting>
 					<AllAreasWheelchairAccessible>true</AllAreasWheelchairAccessible>
-					<TopographicPlaceRef version="any" ref="nptg:TopographicPlace:TP_0032A"/>
+					<TopographicPlaceRef version="any" ref="nptgLocality:TP_0032A"/>
 					<equipmentPlaces>
-						<EquipmentPlace version="any" id="EquipmentPlace:PS22">
+						<EquipmentPlace version="any" id="mypark:PS22@QP01">
 							<Name>Location of Ticket Machines</Name>
 							<equipmentPositions>
-								<EquipmentPosition version="any" id="EquipmentPosition:PS22">
-									<EquipmentRef version="any" ref="TicketingEquipment:PS22"/>
+								<EquipmentPosition version="any" id="mypark:PS22@QPP01@L01">
+									<EquipmentRef version="any" ref="mypark:PS22@QP01@L01"/>
 									<Description>location of ticket machines </Description>
 									<Location>
 										<Longitude>1.01</Longitude>
@@ -677,7 +671,7 @@ The example  comprises
 						</EquipmentPlace>
 					</equipmentPlaces>
 					<placeEquipments>
-						<TicketingEquipment version="any" id="TicketingEquipment:PS22">
+						<TicketingEquipment version="any" id="mypark:PS22@QP01@L01">
 							<TicketMachines>true</TicketMachines>
 							<NumberOfMachines>1</NumberOfMachines>
 							<HeightOfMachineInterface>1.20</HeightOfMachineInterface>
@@ -685,7 +679,7 @@ The example  comprises
 						</TicketingEquipment>
 					</placeEquipments>
 					<accesses>
-						<Access version="any" id="Access:PS_s2">
+						<Access version="any" id="mypark:PS22@S01">
 							<Description>Walk to Station</Description>
 							<TransferDuration>
 								<DefaultDuration>PT15M</DefaultDuration>
@@ -694,11 +688,11 @@ The example  comprises
 							<BothWays>true</BothWays>
 							<From>
 								<TransportMode>rail</TransportMode>
-								<PlaceRef ref="napt:9100:00476"/>
+								<PlaceRef versionRef="EXTERNAL" ref="napt:9100:00476"/>
 							</From>
 							<To>
 								<TransportMode>selfDrive</TransportMode>
-								<PlaceRef ref="Parking:PP01"/>
+								<PlaceRef version="any" ref="mypark:PP01" xsi:type="ParkingRefStructure"/>
 							</To>
 						</Access>
 					</accesses>
@@ -722,60 +716,56 @@ The example  comprises
 					</PaymentByMobile>
 					<FreeParkingOutOfHours>true</FreeParkingOutOfHours>
 					<parkingProperties>
-						<ParkingProperties version="any" id="ParkingProperties:PS22">
+						<ParkingProperties version="any" id="mypark:PS22">
 							<ParkingUserTypes>all</ParkingUserTypes>
 							<ParkingStayList>unlimited</ParkingStayList>
 							<spaces>
-								<ParkingCapacity version="any" id="ParkingCapacity:PS22_01_disabled">
-									<ParentRef ref="Parking:PS22"/>
+								<ParkingCapacity version="any" id="mypark:PS22@01_disabled">
+									<ParentRef version="any" ref="mypark:PS22"/>
 									<ParkingUserType>registeredDisabled</ParkingUserType>
 									<ParkingVehicleType>passengerCar</ParkingVehicleType>
 									<ParkingStayType>unlimited</ParkingStayType>
 									<NumberOfSpaces>5</NumberOfSpaces>
 								</ParkingCapacity>
-								<ParkingCapacity version="any" id="ParkingCapacity:PS22_01_other">
-									<ParentRef ref="Parking:PS22_01_01"/>
+								<ParkingCapacity version="any" id="mypark:PS22@01_other">
+									<ParentRef version="any" ref="mypark:PS22"/>
 									<ParkingUserType>allUsers</ParkingUserType>
 									<ParkingVehicleType>passengerCar</ParkingVehicleType>
 									<ParkingStayType>unlimited</ParkingStayType>
 									<NumberOfSpaces>45</NumberOfSpaces>
 								</ParkingCapacity>
 							</spaces>
-							<charges>
-								<ParkingTariffRef version="any" ref="ParkingTariff:PS22_other"/>
-								<ParkingTariffRef version="any" ref="ParkingTariff:PS22_disabled"/>
-							</charges>
 						</ParkingProperties>
 					</parkingProperties>
 					<parkingAreas>
-						<ParkingArea version="any" id="ParkingArea:PS22_01">
+						<ParkingArea version="any" id="mypark:PS22@01">
 							<Name>Street Level</Name>
 							<ShortName>S1</ShortName>
-							<SiteRef ref="Parking:PS22"/>
+							<SiteRef ref="mypark:PS22"/>
 							<ParkingPaymentCode>ABCD</ParkingPaymentCode>
 							<MaximumLength>8</MaximumLength>
 							<MaximumWidth>3</MaximumWidth>
 							<MaximumHeight>2</MaximumHeight>
 							<MaximumWeight>15</MaximumWeight>
 							<TotalCapacity>100</TotalCapacity>
-							<ParkingProperties>
+							<ParkingProperties version="any" id="mypark:PS22@01">
 								<ParkingStayList>midTerm</ParkingStayList>
 								<MaximumStay>PT48H</MaximumStay>
 								<spaces>
-									<ParkingCapacityRef version="any" ref="ParkingCapacity:PS22_01_disabled"/>
-									<ParkingCapacityRef version="any" ref="ParkingCapacity:PS22_01_other"/>
+									<ParkingCapacityRef version="any" ref="mypark:PS22@01_disabled"/>
+									<ParkingCapacityRef version="any" ref="mypark:PS22@01_other"/>
 								</spaces>
 							</ParkingProperties>
 						</ParkingArea>
 					</parkingAreas>
 				</Parking>
 				<!--- ====DISABLED CAR  PARKING BAYES  -->
-				<Parking version="any" id="Parking:PB44" dataSourceRef="parkopedia">
+				<Parking version="any" id="mypark:PB44" dataSourceRef="parkopedia">
 					<Name>Barcester  Town Hall disabled bays  street Parking </Name>
 					<ShortName>CIty Car Park</ShortName>
 					<Description>On street parking  Blued badge </Description>
 					<Url>http://www.bartwonhallparking.co.uk</Url>
-					<AccessibilityAssessment version="any" id="AccessibilityAssessment:PB44_01">
+					<AccessibilityAssessment version="any" id="mypark:PS22">
 						<MobilityImpairedAccess>true</MobilityImpairedAccess>
 					</AccessibilityAssessment>
 					<AccessModes>foot</AccessModes>
@@ -783,7 +773,7 @@ The example  comprises
 					<Covered>outdoors</Covered>
 					<Lighting>wellLit</Lighting>
 					<AllAreasWheelchairAccessible>true</AllAreasWheelchairAccessible>
-					<TopographicPlaceRef version="any" ref="nptg:TopographicPlace:TP_0032A"/>
+					<TopographicPlaceRef version="any" ref="nptgLocality:TP_0032A"/>
 					<ParkingType>urbanParking</ParkingType>
 					<ParkingLayout>roadside</ParkingLayout>
 					<PrincipalCapacity>3</PrincipalCapacity>
@@ -792,12 +782,12 @@ The example  comprises
 					<RechargingAvailable>false</RechargingAvailable>
 					<ParkingReservation>noReservations</ParkingReservation>
 					<parkingProperties>
-						<ParkingProperties version="any" id="ParkingProperties:PB44">
+						<ParkingProperties version="any" id="mypark:PB44">
 							<ParkingUserTypes>all</ParkingUserTypes>
 							<ParkingStayList>unlimited</ParkingStayList>
 							<spaces>
-								<ParkingCapacity version="any" id="ParkingCapacity:PB44_01_disabled">
-									<ParentRef ref="Parking:PB44"/>
+								<ParkingCapacity version="any" id="mypark:PS44@C01_disabled">
+									<ParentRef version="any" ref="mypark:PB44"/>
 									<ParkingUserType>registeredDisabled</ParkingUserType>
 									<ParkingVehicleType>passengerCar</ParkingVehicleType>
 									<ParkingStayType>shortStay</ParkingStayType>
@@ -807,23 +797,23 @@ The example  comprises
 						</ParkingProperties>
 					</parkingProperties>
 					<parkingAreas>
-						<ParkingArea version="any" id="ParkingArea:PB44_01">
+						<ParkingArea version="any" id="mypark:PB44@A01">
 							<Name>Disabled Bays</Name>
 							<ShortName>S1</ShortName>
 							<MaximumLength>8</MaximumLength>
 							<MaximumWidth>3</MaximumWidth>
 							<TotalCapacity>30</TotalCapacity>
-							<ParkingProperties>
+							<ParkingProperties version="any" id="mypark:PB44@01">
 								<ParkingStayList>midTerm</ParkingStayList>
 								<MaximumStay>PT3H</MaximumStay>
 								<spaces>
-									<ParkingCapacity version="any" id="ParkingCapacity:PB44_01_01">
+									<ParkingCapacity version="any" id="mypark:PB44@A01@C01">
 										<ParentRef ref=""/>
 										<ParkingUserType>all</ParkingUserType>
 										<ParkingVehicleType>passengerCar</ParkingVehicleType>
 										<NumberOfSpaces>85</NumberOfSpaces>
 									</ParkingCapacity>
-									<ParkingCapacity version="any" id="ParkingCapacity:PB44_01_02">
+									<ParkingCapacity version="any" id="mypark:PB44@A01@C02">
 										<ParentRef ref=""/>
 										<ParkingUserType>registeredDisabled</ParkingUserType>
 										<ParkingVehicleType>passengerCar</ParkingVehicleType>
@@ -832,14 +822,14 @@ The example  comprises
 								</spaces>
 							</ParkingProperties>
 							<bays>
-								<ParkingBay version="any" id="ParkingBay:PB44_01_01">
+								<ParkingBay version="any" id="mypark:PB44@A01@B001">
 									<Name>Disabled Bay 1</Name>
 									<Centroid>
 										<Location>
 											<gml:pos srsName="wgs84" srsDimension="2">3.14159265358979E0 3.14159265358979E0</gml:pos>
 										</Location>
 									</Centroid>
-									<gml:Polygon gml:id="abc">
+									<gml:Polygon gml:id="PB44_A01_B001">
 										<gml:exterior>
 											<gml:LinearRing>
 												<gml:pos srsName="wgs84" srsDimension="2">3.14159265358979E0 3.14159265358979E0</gml:pos>
@@ -857,8 +847,8 @@ The example  comprises
 											</gml:LinearRing>
 										</gml:interior>
 									</gml:Polygon>
-									<ParentZoneRef ref="ParkingArea:PB44_01"/>
-									<RoadAddress version="any" id="RoadAddress:PB44_01_01">
+									<ParentZoneRef version="any" ref="mypark:PB44@A01"/>
+									<RoadAddress version="any" id="mypark:PB44@A01@B001@address">
 										<RoadName>Twon Square</RoadName>
 										<BearingCompass>N</BearingCompass>
 										<OddNumberRange>
@@ -866,7 +856,7 @@ The example  comprises
 											<ToNumber>12</ToNumber>
 										</OddNumberRange>
 									</RoadAddress>
-									<AccessibilityAssessment version="any" id="AccessibilityAssessment:PB44_01_01">
+									<AccessibilityAssessment version="any" id="mypark:PB44@A01@B001">
 										<MobilityImpairedAccess>true</MobilityImpairedAccess>
 									</AccessibilityAssessment>
 									<AccessModes>foot</AccessModes>
@@ -874,20 +864,20 @@ The example  comprises
 									<Covered>outdoors</Covered>
 									<Lighting/>
 									<AllAreasWheelchairAccessible>true</AllAreasWheelchairAccessible>
-									<ClassOfUseRef ref="bluebadgeHolders"/>
+									<ClassOfUseRef versionRef="EXTERNAL" ref="blue_badge_Holders"/>
 									<ParkingVehicleType>passengerCar</ParkingVehicleType>
 									<Length>8</Length>
 									<Width>4</Width>
 									<RechargingAvailable>false</RechargingAvailable>
 								</ParkingBay>
-								<ParkingBay version="any" id="ParkingBay:PB44_01_02">
+								<ParkingBay version="any" id="mypark:PB44@A01@B002">
 									<Name>Disabled Bay 2</Name>
 									<Centroid>
 										<Location>
 											<gml:pos srsName="wgs84" srsDimension="2">3.14159265358979E0 3.14159265358979E0</gml:pos>
 										</Location>
 									</Centroid>
-									<gml:Polygon gml:id="abcd">
+									<gml:Polygon gml:id="PB44_A01_B002">
 										<gml:exterior>
 											<gml:LinearRing>
 												<gml:pos srsName="wgs84" srsDimension="2">3.14159265358979E0 3.14159265358979E0</gml:pos>
@@ -905,8 +895,8 @@ The example  comprises
 											</gml:LinearRing>
 										</gml:interior>
 									</gml:Polygon>
-									<ParentZoneRef ref="ParkingArea:PB44_01"/>
-									<RoadAddress version="any" id="RoadAddress:PB44_01_02">
+									<ParentZoneRef version="any" ref="mypark:PB44@A01"/>
+									<RoadAddress version="any" id="mypark:PB44@A01@B002@address">
 										<RoadName>Twon Square</RoadName>
 										<BearingCompass>N</BearingCompass>
 										<OddNumberRange>
@@ -914,7 +904,7 @@ The example  comprises
 											<ToNumber>12</ToNumber>
 										</OddNumberRange>
 									</RoadAddress>
-									<AccessibilityAssessment version="any" id="AccessibilityAssessment:PB44_01_02">
+									<AccessibilityAssessment version="any" id="mypark:PB44@A01@B002">
 										<MobilityImpairedAccess>true</MobilityImpairedAccess>
 									</AccessibilityAssessment>
 									<AccessModes>foot</AccessModes>
@@ -922,13 +912,13 @@ The example  comprises
 									<Covered>outdoors</Covered>
 									<Lighting/>
 									<AllAreasWheelchairAccessible>true</AllAreasWheelchairAccessible>
-									<ClassOfUseRef ref="bluebadgeHolders"/>
+									<ClassOfUseRef versionRef="EXTERNAL" ref="blue_badge_Holders"/>
 									<ParkingVehicleType>passengerCar</ParkingVehicleType>
 									<Length>8</Length>
 									<Width>4</Width>
 									<RechargingAvailable>false</RechargingAvailable>
 								</ParkingBay>
-								<ParkingBay version="any" id="ParkingBay:PB44_01_03">
+								<ParkingBay version="any" id="mypark:PB44@A01@B003">
 									<Name>Disabled Bay 3</Name>
 									<Centroid>
 										<Location>
@@ -953,8 +943,8 @@ The example  comprises
 											</gml:LinearRing>
 										</gml:interior>
 									</gml:Polygon>
-									<ParentZoneRef ref="ParkingArea:PB44_01"/>
-									<RoadAddress version="any" id="RoadAddress:PB44_01_03">
+									<ParentZoneRef version="any" ref="mypark:PB44@A01"/>
+									<RoadAddress version="any" id="mypark:PB44@A01@B003@addresss">
 										<RoadName>Twon Square</RoadName>
 										<BearingCompass>N</BearingCompass>
 										<OddNumberRange>
@@ -962,7 +952,7 @@ The example  comprises
 											<ToNumber>12</ToNumber>
 										</OddNumberRange>
 									</RoadAddress>
-									<AccessibilityAssessment version="any" id="AccessibilityAssessment:PB44_01_03">
+									<AccessibilityAssessment version="any" id="PB44@A01@B003">
 										<MobilityImpairedAccess>true</MobilityImpairedAccess>
 									</AccessibilityAssessment>
 									<AccessModes>foot</AccessModes>
@@ -970,7 +960,7 @@ The example  comprises
 									<Covered>outdoors</Covered>
 									<Lighting/>
 									<AllAreasWheelchairAccessible>true</AllAreasWheelchairAccessible>
-									<ClassOfUseRef ref="bluebadgeHolders"/>
+									<ClassOfUseRef versionRef="EXTERNAL" ref="blue_badge_Holders"/>
 									<ParkingVehicleType>passengerCar</ParkingVehicleType>
 									<Length>8</Length>
 									<Width>4</Width>
@@ -981,7 +971,27 @@ The example  comprises
 					</parkingAreas>
 				</Parking>
 				<!--- ====PARK AND RIDE  CAR PARK========== -->
-				<Parking version="any" id="Parking:PNR01" dataSourceRef="parkopedia">
+				<Parking version="any" id="mypark:PNR01" dataSourceRef="parkopedia">
+					<validityConditions>
+						<AvailabilityCondition id="mypark:PNR01" version="any">
+							<Name>open everyday dawn to dusk</Name>
+							<dayTypes>
+								<DayType id="mypark:PNR01" version="any">
+									<properties>
+										<PropertyOfDay>
+											<DaysOfWeek>Everyday</DaysOfWeek>
+										</PropertyOfDay>
+									</properties>
+									<timebands>
+										<Timeband id="mypark:PNR01" version="any">
+											<StartEvent>dawn</StartEvent>
+											<EndEvent>dusk</EndEvent>
+										</Timeband>
+									</timebands>
+								</DayType>
+							</dayTypes>
+						</AvailabilityCondition>
+					</validityConditions>
 					<Name>Barcester  PARK AND RIDE A</Name>
 					<ShortName>BARCEST P&amp;R A</ShortName>
 					<Description>PARK and ride outsde town  </Description>
@@ -1011,7 +1021,7 @@ The example  comprises
 					</gml:Polygon>
 					<Url>http://www.barpark.co.uk</Url>
 					<Image>http://ww.mycarpark.com/pnrprettypicture.jpg</Image>
-					<AccessibilityAssessment version="any" id="AccessibilityAssessment:PNR01_01">
+					<AccessibilityAssessment version="any" id="mypark:PNR01">
 						<MobilityImpairedAccess>partial</MobilityImpairedAccess>
 					</AccessibilityAssessment>
 					<AccessModes>foot</AccessModes>
@@ -1019,12 +1029,12 @@ The example  comprises
 					<Gated>openArea</Gated>
 					<Lighting>unlit</Lighting>
 					<AllAreasWheelchairAccessible>true</AllAreasWheelchairAccessible>
-					<TopographicPlaceRef version="any" ref="nptg:TopographicPlace:TP_0032A"/>
+					<TopographicPlaceRef version="any" ref="nptgLocality:TP_0032A"/>
 					<AtCentre>false</AtCentre>
 					<entrances>
-						<ParkingEntranceForVehicles version="any" id="ParkingEntranceForVehicles:PNR_E11_Entrance">
+						<ParkingEntranceForVehicles version="any" id="mypark:PNR01@EV01">
 							<Name>Main Vehicle Entrance from street</Name>
-							<ParentZoneRef version="any" ref="Parking:PNR01"/>
+							<ParentZoneRef version="any" ref="mypark:PNR01"/>
 							<Label>IN</Label>
 							<EntranceType>opening</EntranceType>
 							<IsExternal>true</IsExternal>
@@ -1035,11 +1045,11 @@ The example  comprises
 						</ParkingEntranceForVehicles>
 					</entrances>
 					<equipmentPlaces>
-						<EquipmentPlace version="any" id="EquipmentPlace:PNR_01">
+						<EquipmentPlace version="any" id="mypark:PNR01@Q01">
 							<Name>Location of Ticket Machines</Name>
 							<equipmentPositions>
-								<EquipmentPosition version="any" id="EquipmentPosition:PNR_01">
-									<EquipmentRef version="any" ref="TicketingEquipment:PNR_01"/>
+								<EquipmentPosition version="any" id="mypark:PNR01@Q01">
+									<EquipmentRef version="any" ref="mypark:PNR01@Q01@ticketing"/>
 									<Description>location of ticket machines </Description>
 									<Location>
 										<Longitude>1.00</Longitude>
@@ -1050,7 +1060,7 @@ The example  comprises
 						</EquipmentPlace>
 					</equipmentPlaces>
 					<placeEquipments>
-						<TicketingEquipment version="any" id="TicketingEquipment:PNR_01">
+						<TicketingEquipment version="any" id="mypark:PNR01@Q01@ticketing">
 							<TicketMachines>true</TicketMachines>
 							<NumberOfMachines>1</NumberOfMachines>
 							<HeightOfMachineInterface>1.20</HeightOfMachineInterface>
@@ -1058,7 +1068,7 @@ The example  comprises
 						</TicketingEquipment>
 					</placeEquipments>
 					<accesses>
-						<Access version="any" id="Access:PNR_01">
+						<Access version="any" id="mypark:PNR01@S01">
 							<Description>Bus  to Station</Description>
 							<TransferDuration>
 								<DefaultDuration>PT10M</DefaultDuration>
@@ -1067,11 +1077,11 @@ The example  comprises
 							<BothWays>true</BothWays>
 							<From>
 								<TransportMode>rail</TransportMode>
-								<PlaceRef ref="napt:9100:00476"/>
+								<PlaceRef versionRef="EXTERNAL" ref="napt:9100:00476"/>
 							</From>
 							<To>
 								<TransportMode>selfDrive</TransportMode>
-								<PlaceRef ref="Parking:PNR01"/>
+								<PlaceRef version="any" ref="mypark:PNR01" xsi:type="ParkingRefStructure"/>
 							</To>
 						</Access>
 					</accesses>
@@ -1091,175 +1101,179 @@ The example  comprises
 					<BookingUrl>http://www.bookmyparking.com</BookingUrl>
 					<FreeParkingOutOfHours>false</FreeParkingOutOfHours>
 					<parkingProperties>
-						<ParkingProperties version="any" id="ParkingProperties:PNR01">
+						<ParkingProperties version="any" id="mypark:PNR01">
 							<ParkingUserTypes>all</ParkingUserTypes>
 							<ParkingStayList>all</ParkingStayList>
 							<MaximumStay>PT48H</MaximumStay>
 							<spaces>
-								<ParkingCapacity version="any" id="ParkingCapacity:PNR01_01_all">
-									<ParentRef ref="Parking:PNR01"/>
+								<ParkingCapacity version="any" id="mypark:PNR01@C01_all">
+									<ParentRef ref="mypark:PNR01"/>
 									<ParkingUserType>all</ParkingUserType>
 									<ParkingVehicleType>passengerCar</ParkingVehicleType>
 									<ParkingStayType>unlimited</ParkingStayType>
 									<NumberOfSpaces>100</NumberOfSpaces>
 								</ParkingCapacity>
 							</spaces>
-							<charges>
-								<ParkingTariffRef version="any" ref="ParkingTariff:PNR01"/>
-							</charges>
 						</ParkingProperties>
 					</parkingProperties>
 					<vehicleEntrances>
-						<ParkingEntranceForVehiclesRef version="any" ref="ParkingEntranceForVehicles:PNR_E11_Entrance"/>
+						<ParkingEntranceForVehiclesRef version="any" ref="mypark:PNR01@EV01"/>
 					</vehicleEntrances>
 				</Parking>
 			</parkings>
 		</SiteFrame>
 		<!-- =================Fare FRAME ==================-->
-		<FareFrame version="any" id="FareFrame:FF01">
-			<Name>Parking Tariffs  </Name>
+		<FareFrame version="any" id="mypark:FF01">
+			<Name>Parking Tariffs</Name>
 			<FrameDefaults>
 				<DefaultCurrency>GBP</DefaultCurrency>
 			</FrameDefaults>
-			<PricingParameterSet version="any" id="PricingParameterSet:pkg">
+			<PricingParameterSet version="any" id="mypark:FF01">
 				<pricingRules>
-					<DiscountingRule version="any" id="DiscountingRule:Vat">
+					<DiscountingRule version="any" id="mypark:Vat">
 						<Name>VAT Tax rate</Name>
+						<TypeOfPricingRuleRef version="any" ref="mypark:vat@parking"/>
 						<DiscountAsPercentage>115</DiscountAsPercentage>
 					</DiscountingRule>
 				</pricingRules>
 			</PricingParameterSet>
 			<parkingTariffs>
 				<!-- MULTI STOREY CAR  PARK TARIFFS -->
-				<ParkingTariff version="any" id="ParkingTariff:PP01">
+				<ParkingTariff version="any" id="mypark:PP01">
 					<Description>Tariffs for central car park</Description>
 					<ParkingStayType>midTerm</ParkingStayType>
 					<ParkingVehicleTypes>passengerCar</ParkingVehicleTypes>
+					<appliesTo>
+						<ParkingRef version="any" ref="mypark:PP01"/>
+					</appliesTo>
 					<parkingChargeBands>
-						<ParkingChargeBand version="any" id="ParkingChargeBand:PP01_15M">
+						<ParkingChargeBand version="any" id="mypark:PP01@15M">
 							<ParkingVehicleType>all</ParkingVehicleType>
 							<MaximumStay>PT15M</MaximumStay>
 							<prices>
-								<ParkingPrice version="any" id="ParkingPrice:PP01_15M">
+								<ParkingPrice version="any" id="mypark:PP01@15M">
 									<Amount>0.25</Amount>
-									<DiscountingRuleRef version="any" ref="DiscountingRule:Vat"/>
+									<DiscountingRuleRef version="any" ref="mypark:Vat"/>
 								</ParkingPrice>
 							</prices>
 						</ParkingChargeBand>
-						<ParkingChargeBand version="any" id="ParkingChargeBand:PP01_30M">
+						<ParkingChargeBand version="any" id="mypark:PP01@30M">
 							<ParkingVehicleType>all</ParkingVehicleType>
 							<MaximumStay>PT30M</MaximumStay>
 							<prices>
-								<ParkingPrice version="any" id="ParkingPrice:PP01_30M">
+								<ParkingPrice version="any" id="mypark:PP01@30M">
 									<Amount>1.00</Amount>
-									<DiscountingRuleRef version="any" ref="DiscountingRule:Vat"/>
+									<DiscountingRuleRef version="any" ref="mypark:Vat"/>
 								</ParkingPrice>
 							</prices>
 						</ParkingChargeBand>
-						<ParkingChargeBand version="any" id="ParkingChargeBand:PP01_1H">
+						<ParkingChargeBand version="any" id="mypark:PP01@1H">
 							<ParkingVehicleType>all</ParkingVehicleType>
 							<MaximumStay>PT1H</MaximumStay>
 							<prices>
-								<ParkingPrice version="any" id="ParkingPrice:PP01_1H">
+								<ParkingPrice version="any" id="mypark:PP01@1H">
 									<Amount>1.00</Amount>
-									<DiscountingRuleRef version="any" ref="DiscountingRule:Vat"/>
+									<DiscountingRuleRef version="any" ref="mypark:Vat"/>
 								</ParkingPrice>
 							</prices>
 						</ParkingChargeBand>
-						<ParkingChargeBand version="any" id="ParkingChargeBand:PP01_2H">
+						<ParkingChargeBand version="any" id="mypark:PP01@2H">
 							<ParkingVehicleType>all</ParkingVehicleType>
 							<MaximumStay>PT2H</MaximumStay>
 							<prices>
-								<ParkingPrice version="any" id="ParkingPrice:PP01_2H">
+								<ParkingPrice version="any" id="mypark:PP01@2H">
 									<Amount>2.00</Amount>
-									<DiscountingRuleRef version="any" ref="DiscountingRule:Vat"/>
+									<DiscountingRuleRef version="any" ref="mypark:Vat"/>
 								</ParkingPrice>
 							</prices>
 						</ParkingChargeBand>
-						<ParkingChargeBand version="any" id="ParkingChargeBand:PP01_4H">
+						<ParkingChargeBand version="any" id="mypark:PP01@4H">
 							<ParkingVehicleType>all</ParkingVehicleType>
 							<MaximumStay>PT4H</MaximumStay>
 							<prices>
-								<ParkingPrice version="any" id="ParkingPrice:PP01_4H">
+								<ParkingPrice version="any" id="mypark:PP01@4H">
 									<Amount>3.00</Amount>
-									<DiscountingRuleRef version="any" ref="DiscountingRule:Vat"/>
+									<DiscountingRuleRef version="any" ref="mypark:Vat"/>
 								</ParkingPrice>
 							</prices>
 						</ParkingChargeBand>
-						<ParkingChargeBand version="any" id="ParkingChargeBand:PP01_6H">
+						<ParkingChargeBand version="any" id="mypark:PP01@6H">
 							<ParkingVehicleType>all</ParkingVehicleType>
 							<MaximumStay>PT6H</MaximumStay>
 							<prices>
-								<ParkingPrice version="any" id="ParkingPrice:PP01_6H">
+								<ParkingPrice version="any" id="mypark:PP01@6H">
 									<Amount>4.00</Amount>
-									<DiscountingRuleRef version="any" ref="DiscountingRule:Vat"/>
+									<DiscountingRuleRef version="any" ref="mypark:Vat"/>
 								</ParkingPrice>
 							</prices>
 						</ParkingChargeBand>
-						<ParkingChargeBand version="any" id="ParkingChargeBand:PP01_12H">
+						<ParkingChargeBand version="any" id="mypark:PP01@12H">
 							<ParkingVehicleType>all</ParkingVehicleType>
 							<MaximumStay>PT12H</MaximumStay>
 							<prices>
-								<ParkingPrice version="any" id="ParkingPrice:PP01_12H">
+								<ParkingPrice version="any" id="mypark:PP01@12H">
 									<Amount>10.00</Amount>
-									<DiscountingRuleRef version="any" ref="DiscountingRule:Vat"/>
+									<DiscountingRuleRef version="any" ref="mypark:Vat"/>
 								</ParkingPrice>
 							</prices>
 						</ParkingChargeBand>
-						<ParkingChargeBand version="any" id="ParkingChargeBand:PP01_24H">
+						<ParkingChargeBand version="any" id="mypark:PP01@24H">
 							<ParkingVehicleType>all</ParkingVehicleType>
 							<MaximumStay>PT24H</MaximumStay>
 							<prices>
-								<ParkingPrice version="any" id="ParkingPrice:PP01_24H">
+								<ParkingPrice version="any" id="mypark:PP01@24H">
 									<Amount>18.00</Amount>
-									<DiscountingRuleRef version="any" ref="DiscountingRule:Vat"/>
+									<DiscountingRuleRef version="any" ref="mypark:Vat"/>
 								</ParkingPrice>
 							</prices>
 						</ParkingChargeBand>
-						<ParkingChargeBand version="any" id="ParkingChargeBand:PP01_48H">
+						<ParkingChargeBand version="any" id="mypark:PP01@48H">
 							<ParkingVehicleType>all</ParkingVehicleType>
 							<MaximumStay>PT2H</MaximumStay>
 							<prices>
-								<ParkingPrice version="any" id="ParkingPrice:PP01_48H">
+								<ParkingPrice version="any" id="mypark:PP01@48H">
 									<Amount>24.00</Amount>
-									<DiscountingRuleRef version="any" ref="DiscountingRule:Vat"/>
+									<DiscountingRuleRef version="any" ref="mypark:Vat"/>
 								</ParkingPrice>
 							</prices>
 						</ParkingChargeBand>
 					</parkingChargeBands>
 				</ParkingTariff>
 				<!-- ON STREET   TARIFFS -->
-				<ParkingTariff version="any" id="ParkingTariff:PS22_other">
-					<Description>Tariffs for on PARK AND RIDED Parking  Working dates</Description>
+				<ParkingTariff version="any" id="mypark:PS22@other">
+					<Description>Tariffs for on PARK AND RIDE Parking  Working dates</Description>
 					<ParkingUserType>other</ParkingUserType>
 					<ParkingStayType>shortStay</ParkingStayType>
 					<ParkingVehicleTypes>passengerCar</ParkingVehicleTypes>
+					<appliesTo>
+						<ParkingRef version="any" ref="mypark:PNR01"/>
+					</appliesTo>
 					<parkingChargeBands>
-						<ParkingChargeBand version="any" id="ParkingChargeBand:PS22_15M_working">
+						<ParkingChargeBand version="any" id="mypark:PS22@15M_working">
 							<Description>25P an hour</Description>
 							<ParkingVehicleType>all</ParkingVehicleType>
 							<MaximumStay>PT15M</MaximumStay>
 							<prices>
-								<ParkingPrice version="any" id="ParkingPrice:PS22_15M_working">
+								<ParkingPrice version="any" id="mypark:PS22@15M_working">
 									<Amount>0.25</Amount>
-									<DiscountingRuleRef version="any" ref="DiscountingRule:Vat"/>
+									<DiscountingRuleRef version="any" ref="mypark:Vat"/>
 								</ParkingPrice>
 							</prices>
 						</ParkingChargeBand>
 					</parkingChargeBands>
 				</ParkingTariff>
-				<ParkingTariff version="any" id="ParkingTariff:PS22_disabled">
+				<ParkingTariff version="any" id="mypark:PS22@disabled">
 					<Description>Tariffs for on street Parking  Disabled</Description>
 					<ParkingUserType>registeredDisabled</ParkingUserType>
 					<ParkingStayType>shortStay</ParkingStayType>
 					<ParkingVehicleTypes>passengerCar</ParkingVehicleTypes>
 					<parkingChargeBands>
-						<ParkingChargeBand version="any" id="ParkingChargeBand:PS22_15M_other">
+						<ParkingChargeBand version="any" id="mypark:PS22@15M_other">
 							<Description>free</Description>
 							<ParkingVehicleType>all</ParkingVehicleType>
 							<MaximumStay>PT15M</MaximumStay>
 							<prices>
-								<ParkingPrice version="any" id="ParkingPrice:PS22_15M_other">
+								<ParkingPrice version="any" id="mypark:PS22@15M_other">
 									<Amount>0.0</Amount>
 								</ParkingPrice>
 							</prices>
@@ -1267,20 +1281,20 @@ The example  comprises
 					</parkingChargeBands>
 				</ParkingTariff>
 				<!-- PARK AND RIDE  TARIFFS -->
-				<ParkingTariff version="any" id="ParkingTariff:PNR01">
+				<ParkingTariff version="any" id="mypark:PNR01">
 					<Description>Tariffs for on street Parking  Disabled</Description>
 					<ParkingUserType>all</ParkingUserType>
 					<ParkingStayType>shortStay</ParkingStayType>
 					<ParkingVehicleTypes>passengerCar</ParkingVehicleTypes>
 					<parkingChargeBands>
-						<ParkingChargeBand version="any" id="ParkingChargeBand:PNR01">
+						<ParkingChargeBand version="any" id="mypark:PNR01@60M">
 							<Description>10p an hour </Description>
 							<ParkingVehicleType>all</ParkingVehicleType>
 							<MaximumStay>PT1H</MaximumStay>
 							<prices>
-								<ParkingPrice version="any" id="ParkingPrice:PNR01">
+								<ParkingPrice version="any" id="mypark:PNR01@60M">
 									<Amount>0.10</Amount>
-									<DiscountingRuleRef version="any" ref="DiscountingRule:Vat"/>
+									<DiscountingRuleRef version="any" ref="mypark:Vat"/>
 								</ParkingPrice>
 							</prices>
 						</ParkingChargeBand>
@@ -1288,5 +1302,23 @@ The example  comprises
 				</ParkingTariff>
 			</parkingTariffs>
 		</FareFrame>
+		<ResourceFrame version="any" id="mypark:Resources">
+			<typesOfValue>
+				<ValueSet version="any" id="mypark:Types_off_VAT_Categopry" classOfValues="TypeOfPricingRule">
+					<Name>Types of Tariff</Name>
+					<values>
+						<!--- ====Types OfTariff ========= -->
+						<TypeOfPricingRule version="any" id="mypark:vat@transportation">
+							<Name>Transportation</Name>
+							<TaxCategory>transportation</TaxCategory>
+						</TypeOfPricingRule>
+						<TypeOfPricingRule version="any" id="mypark:vat@parking">
+							<Name>Parking</Name>
+							<TaxCategory>parking</TaxCategory>
+						</TypeOfPricingRule>
+					</values>
+				</ValueSet>
+			</typesOfValue>
+		</ResourceFrame>
 	</dataObjects>
 </PublicationDelivery>
