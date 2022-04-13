@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_vehicleJourney_support">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_vehicleJourney_support">
 	<xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_pointAndLinkSequence_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_part_1/part1_tacticalPlanning/netex_stopAssignment_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_part_1/part1_tacticalPlanning/netex_servicePattern_support.xsd"/>
@@ -11,13 +11,19 @@
 				<Contributor>V1.0 Christophe Duquesne</Contributor>
 				<Contributor>Nicholas Knowles</Contributor>
 				<Coverage>Europe</Coverage>
-				<Creator>First drafted for version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.  mailto:schemer@siri.org.uk</Creator>
+				<Creator>First drafted for version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.  mailto:schemer@netex.org.uk</Creator>
 				<Date>
 					<Created>2010-09-04</Created>
 				</Date>
 				<Date>
-					<Modified>2011-02-05</Modified>
-					<!-- Name Space changes -->
+					<Modified>2011-02-05</Modified>Name Space changes
+				</Date>
+				<Date>
+					<Modified>2019-03-25</Modified>CR 51 CD Add VehiclJourneyStop Assignment
+				</Date>
+						<Date>
+					<Modified>2019-03-26</Modified>NL-27 Add default  TypeOfProductCategory and TypeOfService to Line.
+					  Move TypeOfProductCategory amnd TypeOfService from netex_vehicleJourney  to  Framework reusable components netex_travelRights  so they are visible from part 1
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -35,7 +41,7 @@
 					<Requires>http://www.netex.org.uk/schemas/2.0/xsd/netex_framework/netex_genericFramework/netex_pointAndLinkSequence_support.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2014</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -61,13 +67,14 @@ Rail transport, Roads and Road transport
 		<xsd:documentation>NeTEx: VEHICLE JOURNEY types.</xsd:documentation>
 	</xsd:annotation>
 	<!-- ======================================================================= -->
+	<!-- =====JOURNEY=== ============================== -->
 	<xsd:simpleType name="JourneyIdType">
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of a JOURNEY.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="LinkSequenceIdType"/>
 	</xsd:simpleType>
-	<xsd:element name="JourneyRef" type="JourneyRefStructure" substitutionGroup="LinkSequenceRef">
+	<xsd:element name="JourneyRef" type="JourneyRefStructure" abstract="true" substitutionGroup="LinkSequenceRef">
 		<xsd:annotation>
 			<xsd:documentation>Reference to a JOURNEY.</xsd:documentation>
 		</xsd:annotation>
@@ -86,7 +93,6 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
-	<!-- JOURNEY====================================================== -->
 	<!-- ======================================================================= -->
 	<!-- ===VEHICLE JOURNEY====================================================== -->
 	<xsd:simpleType name="VehicleJourneyIdType">
@@ -213,7 +219,7 @@ Rail transport, Roads and Road transport
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<!-- ======================================================================= -->
+	<!-- ==== TRAIN COMPONENT LABEL ASSIGNMENT ================================= -->
 	<xsd:simpleType name="TrainComponentLabelAssignmentIdType">
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of a TRAIN COMPONENT NUMBER ASSIGNNMENT.</xsd:documentation>
@@ -277,84 +283,7 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
-	<!-- ======================================================================= -->
-	<xsd:simpleType name="TypeOfServiceIdType">
-		<xsd:annotation>
-			<xsd:documentation>Type for identifier of a TYPE OF SERVICE.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="TypeOfValueIdType"/>
-	</xsd:simpleType>
-	<xsd:element name="TypeOfServiceRef" type="TypeOfServiceRefStructure" abstract="false" substitutionGroup="TypeOfEntityRef">
-		<xsd:annotation>
-			<xsd:documentation>Reference to a TYPE OF SERVICE.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:complexType name="TypeOfServiceRefStructure">
-		<xsd:annotation>
-			<xsd:documentation>Type for a reference to a TYPE OF SERVICE.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:simpleContent>
-			<xsd:restriction base="TypeOfValueRefStructure">
-				<xsd:attribute name="ref" type="TypeOfServiceIdType" use="required">
-					<xsd:annotation>
-						<xsd:documentation>Reference to a TYPE OF SERVICE.</xsd:documentation>
-					</xsd:annotation>
-				</xsd:attribute>
-			</xsd:restriction>
-		</xsd:simpleContent>
-	</xsd:complexType>
-	<xsd:complexType name="typeOfServiceRefs_RelStructure">
-		<xsd:annotation>
-			<xsd:documentation>Type for a list of TYPEs OF SERVICE.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:complexContent>
-			<xsd:extension base="oneToManyRelationshipStructure">
-				<xsd:sequence>
-					<xsd:element ref="TypeOfServiceRef" minOccurs="0" maxOccurs="unbounded"/>
-				</xsd:sequence>
-			</xsd:extension>
-		</xsd:complexContent>
-	</xsd:complexType>
-	<!-- ======================================================================= -->
-	<xsd:simpleType name="TypeOfProductCategoryIdType">
-		<xsd:annotation>
-			<xsd:documentation>Type for identifier of a TYPE OF PRODUCT CATEGORY.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="TypeOfValueIdType"/>
-	</xsd:simpleType>
-	<xsd:element name="TypeOfProductCategoryRef" type="TypeOfProductCategoryRefStructure" abstract="false" substitutionGroup="TypeOfValueRef">
-		<xsd:annotation>
-			<xsd:documentation>Reference to a TYPE OF PRODUCT CATEGORY. Product of a JOURNEY. e.g. ICS, Thales etc 
-See ERA B.4 7037 Characteristic description code.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:complexType name="TypeOfProductCategoryRefStructure">
-		<xsd:annotation>
-			<xsd:documentation>Type for a reference to a TYPE OF PRODUCT CATEGORY.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:simpleContent>
-			<xsd:restriction base="TypeOfValueRefStructure">
-				<xsd:attribute name="ref" type="TypeOfProductCategoryIdType" use="required">
-					<xsd:annotation>
-						<xsd:documentation>Reference to a TYPE OF PRODUCT CATEGORY.</xsd:documentation>
-					</xsd:annotation>
-				</xsd:attribute>
-			</xsd:restriction>
-		</xsd:simpleContent>
-	</xsd:complexType>
-	<xsd:complexType name="typeOfProductCategoryRefs_RelStructure">
-		<xsd:annotation>
-			<xsd:documentation>Type for a list of TYPEs OF PRODUCT CATEGORY.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:complexContent>
-			<xsd:extension base="oneToManyRelationshipStructure">
-				<xsd:sequence>
-					<xsd:element ref="TypeOfProductCategoryRef" minOccurs="0" maxOccurs="unbounded"/>
-				</xsd:sequence>
-			</xsd:extension>
-		</xsd:complexContent>
-	</xsd:complexType>
-	<!-- ======================================================================= -->
+	<!-- ========== TIMING ALGORITHM  ============================== -->
 	<xsd:simpleType name="TimingAlgorithmTypeIdType">
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of a TIMING ALGORITHM TYPE.</xsd:documentation>
@@ -375,6 +304,32 @@ See ERA B.4 7037 Characteristic description code.</xsd:documentation>
 				<xsd:attribute name="ref" type="TimingAlgorithmTypeIdType" use="required">
 					<xsd:annotation>
 						<xsd:documentation>Reference to a TIMING ALGORITHM TYPE.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!-- =====VEHICLE JOURNEY STOP ASSIGNMENT=================================== -->
+	<xsd:simpleType name="VehicleJourneyStopAssignmentIdType">
+		<xsd:annotation>
+			<xsd:documentation>Identifier of a VEHICLE JOURNEY STOP ASSIGNMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="PassengerStopAssignmentIdType"/>
+	</xsd:simpleType>
+	<xsd:element name="VehicleJourneyStopAssignmentRef" type="VehicleJourneyStopAssignmentRefStructure" substitutionGroup="PassengerStopAssignmentRef">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a VEHICLE JOURNEY STOP ASSIGNMENT.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="VehicleJourneyStopAssignmentRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a reference to a VEHICLE JOURNEY STOP ASSIGNMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="PassengerStopAssignmentRefStructure">
+				<xsd:attribute name="ref" type="VehicleJourneyStopAssignmentIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Identifier of a PASSENGER STOP ASSIGNMENT.</xsd:documentation>
 					</xsd:annotation>
 				</xsd:attribute>
 			</xsd:restriction>

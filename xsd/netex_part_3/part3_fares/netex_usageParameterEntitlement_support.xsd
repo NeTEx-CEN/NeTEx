@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_usageParameterEntitlement_support">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_usageParameterEntitlement_support">
 	<!-- ======================================================================= -->
 	<xsd:annotation>
 		<xsd:appinfo>
@@ -15,8 +15,10 @@
 					<Created>2010-09-04</Created>
 				</Date>
 				<Date>
-					<Modified>2011-02-05</Modified>
-					<!-- Name Space changes -->
+					<Modified>2011-02-05</Modified>Name Space changes  
+				</Date>
+				<Date>
+					<Modified>2019-03-12</Modified>UK-45 	Add support for constrints on dependent products 		
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -34,7 +36,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/xsd/netex_part_3/fares/netex_usageParameterEntitlement_support</Requires>
 				</Relation>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2014</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -99,19 +101,6 @@ Rail transport, Roads and Road transport
 		</xsd:simpleContent>
 	</xsd:complexType>
 	<!-- === ENTTITLEMENT GIven PARAMETER======================================= -->
-	<xsd:simpleType name="EntitlementTypeEnumeration">
-		<xsd:annotation>
-			<xsd:documentation>Allowed values for ENTITLEMENT TYPE Type.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="xsd:normalizedString">
-			<xsd:enumeration value="none"/>
-			<xsd:enumeration value="purchase"/>
-			<xsd:enumeration value="purchaseAtDiscount"/>
-			<xsd:enumeration value="use"/>
-			<xsd:enumeration value="other"/>
-		</xsd:restriction>
-	</xsd:simpleType>
-	<!-- === ENTTITLEMENT GIven PARAMETER======================================= -->
 	<xsd:complexType name="entitlementGivenRefs_RelStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for references to a ENTITLEMENT GIVEN PARAMETER.</xsd:documentation>
@@ -149,4 +138,141 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
+	<!-- === ENTTITLEMENT ENUMERATIONS====================================== -->
+	<xsd:simpleType name="EntitlementTypeEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for ENTITLEMENT TYPE Type.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="none"/>
+			<xsd:enumeration value="purchase"/>
+			<xsd:enumeration value="purchaseAtDiscount"/>
+			<xsd:enumeration value="use"/>
+			<xsd:enumeration value="other"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SamePeriodEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for Period ENTITLEMENT CONSTRAINT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="any"/>
+			<xsd:enumeration value="samePeriod"/>
+			<xsd:enumeration value="withinSamePeriod"/>
+			<xsd:enumeration value="sameDay"/>
+			<xsd:enumeration value="sameDayOfReturn"/>
+			<xsd:enumeration value="sameFareDay"/>
+			<xsd:enumeration value="nextDay"/>
+			<xsd:enumeration value="different"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SameStopEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for Stop ENTITLEMENT CONSTRAINT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="any"/>
+			<xsd:enumeration value="sameAsOrigin"/>
+			<xsd:enumeration value="sameAsDestination"/>
+			<xsd:enumeration value="sameAsOriginOrDestination"/>
+			<xsd:enumeration value="anyStopOnRoute"/>
+			<xsd:enumeration value="anyStopInZone"/>
+			<xsd:enumeration value="different"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SameZoneEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for Zone ENTITLEMENT CONSTRAINT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="any"/>
+			<xsd:enumeration value="same"/>
+			<xsd:enumeration value="sameAsOrigin"/>
+			<xsd:enumeration value="sameAsDestination"/>
+			<xsd:enumeration value="sameAsOriginOrDestination"/>
+			<xsd:enumeration value="within"/>
+			<xsd:enumeration value="containing"/>
+			<xsd:enumeration value="equivalent"/>
+			<xsd:enumeration value="different"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SameRouteEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for Route ENTITLEMENT CONSTRAINT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="any"/>
+			<xsd:enumeration value="same"/>
+			<xsd:enumeration value="oppositeDirection"/>
+			<xsd:enumeration value="different"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SameOperatorEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for Operator ENTITLEMENT CONSTRAINT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="any"/>
+			<xsd:enumeration value="same"/>
+			<xsd:enumeration value="participating"/>
+			<xsd:enumeration value="different"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SameClassOfUseEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for Class of Use ENTITLEMENT CONSTRAINT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="any"/>
+			<xsd:enumeration value="same"/>
+			<xsd:enumeration value="sameOrEquivalent"/>
+			<xsd:enumeration value="different"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SameJourneyEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for Journey ENTITLEMENT CONSTRAINT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="any"/>
+			<xsd:enumeration value="same"/>
+			<xsd:enumeration value="similar"/>
+			<xsd:enumeration value="different"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SameTypeOfProductCategoryEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for Type of Product category ENTITLEMENT CONSTRAINT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="any"/>
+			<xsd:enumeration value="same"/>
+			<xsd:enumeration value="sameOrEquivalent"/>
+			<xsd:enumeration value="different"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SameTypeOfTravelDocumentEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for Type of Trave lDocument ENTITLEMENT CONSTRAINT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="any"/>
+			<xsd:enumeration value="same"/>
+			<xsd:enumeration value="sameMedia"/>
+			<xsd:enumeration value="sameSmartcard"/>
+			<xsd:enumeration value="sameMobileApp"/>
+			<xsd:enumeration value="different"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SameUserEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for User ENTITLEMENT CONSTRAINT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="samePerson"/>
+			<xsd:enumeration value="differentPerson"/> 
+			<xsd:enumeration value="anyOne"/>
+			<xsd:enumeration value="specific"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 </xsd:schema>

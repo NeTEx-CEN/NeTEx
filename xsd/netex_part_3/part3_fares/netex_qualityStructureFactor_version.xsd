@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_qualityStructureFactor_version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_qualityStructureFactor_version">
 	<xsd:include schemaLocation="../../netex_part_1/part1_tacticalPlanning/netex_timeDemandType_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_part_1/part1_tacticalPlanning/netex_servicePattern_support.xsd"/>
 	<xsd:include schemaLocation="netex_qualityStructureFactor_support.xsd"/>
@@ -22,8 +22,11 @@
 					<Created>2010-09-04</Created>
 				</Date>
 				<Date>
-					<Modified>2011-02-05</Modified>
-					<!-- Name Space changes -->
+					<Modified>2011-02-05</Modified>Name Space changes
+				</Date>
+				<Date>
+					<Modified>2019-03-11</Modified>EURA-72 Add arrivalTtime to TimeAtAstop and indicate into / out of / through constraint.. 
+					 Also Make Start Time at STop Optional
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -41,7 +44,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2014</Copyright>
+						<Copyright>CEN, Crown Copyright 2009-2019</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -116,9 +119,11 @@ Rail transport, Roads and Road transport
 							<xsd:group ref="PriceableObjectGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
+							<xsd:element ref="PrivateCode" minOccurs="0"/>
+							<xsd:element ref="TypeOfFareStructureFactorRef" minOccurs="0"/>
 							<xsd:element name="Factor" type="xsd:anyType" minOccurs="0">
 								<xsd:annotation>
-									<xsd:documentation>Factor value assoictaed with init.</xsd:documentation>
+									<xsd:documentation>Factor value associated with QUALITY STRUCTURE FACTOR.</xsd:documentation>
 								</xsd:annotation>
 							</xsd:element>
 						</xsd:sequence>
@@ -150,7 +155,7 @@ Rail transport, Roads and Road transport
 		<xsd:sequence>
 			<xsd:element name="Value" type="xsd:anyType" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Value associated with quality factor.</xsd:documentation>
+					<xsd:documentation>Value associated with QUALITY STRUCTURE FACTOR.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="prices" type="qualityStructureFactorPrices_RelStructure" minOccurs="0">
@@ -187,6 +192,9 @@ Rail transport, Roads and Road transport
 			<xsd:complexContent>
 				<xsd:restriction base="QualityStructureFactorPrice_VersionedChildStructure">
 					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
 						<xsd:sequence>
 							<xsd:group ref="VersionedChildGroup"/>
 						</xsd:sequence>
@@ -254,9 +262,11 @@ Rail transport, Roads and Road transport
 							<xsd:group ref="PriceableObjectGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
+							<xsd:element ref="PrivateCode" minOccurs="0"/>
+							<xsd:element ref="TypeOfFareStructureFactorRef" minOccurs="0"/>
 							<xsd:element name="Factor" type="xsd:anyType" minOccurs="0">
 								<xsd:annotation>
-									<xsd:documentation>Factor value assoictaed with init.</xsd:documentation>
+									<xsd:documentation>Factor value associated with FARE EDMAND FACTOR.</xsd:documentation>
 								</xsd:annotation>
 							</xsd:element>
 						</xsd:sequence>
@@ -295,6 +305,11 @@ Rail transport, Roads and Road transport
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element ref="TimeDemandTypeRef" minOccurs="0"/>
+			<xsd:element name="StopUseConstraint" type="StopUseConstraintEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Nature of constraint on uses of stop</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element name="startTimesAtStopPoints" type="startTimeAtStopPoints_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Start times at SCHEDULED STOP POINTS refining  FARE DEMAND FACTOR.</xsd:documentation>
@@ -334,6 +349,15 @@ Rail transport, Roads and Road transport
 							<xsd:group ref="PriceableObjectGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
+							<xsd:element ref="PrivateCode" minOccurs="0"/>
+							<xsd:element ref="TypeOfFareStructureFactorRef" minOccurs="0"/>
+							<xsd:element name="Factor" type="xsd:anyType" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Factor value associated with FARE QUOTA FACTOR</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+						</xsd:sequence>
+						<xsd:sequence>
 							<xsd:group ref="QualityStructureFactorGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
@@ -369,7 +393,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
-	<!-- ==== FARE DEMAND  FACTOR.============================= -->
+	<!-- ====START TIME AT STOP (For FARE DEMAD FACTOR) .============================= -->
 	<xsd:complexType name="startTimeAtStopPoints_RelStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for a list of START TIME AT STOP POINT.</xsd:documentation>
@@ -385,15 +409,13 @@ Rail transport, Roads and Road transport
 	</xsd:complexType>
 	<xsd:element name="StartTimeAtStopPoint" abstract="false" substitutionGroup="VersionedChild">
 		<xsd:annotation>
-			<xsd:documentation>The value of a QUALITY INTERVAL or a DISTANCE MATRIX ELEMENT expressed by a QUALITY UNIT.</xsd:documentation>
+			<xsd:documentation>A time at which a Fare demand  time band ( peak, off peak, etc  ) is deemed to begin  or end for trips at a particular SCHEDULED STOP POINT.
+</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
 				<xsd:restriction base="StartTimeAtStopPoint_VersionedChildStructure">
 					<xsd:sequence>
-						<xsd:sequence>
-							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
-						</xsd:sequence>
 						<xsd:sequence>
 							<xsd:group ref="VersionedChildGroup"/>
 						</xsd:sequence>
@@ -425,14 +447,14 @@ Rail transport, Roads and Road transport
 		<xsd:sequence>
 			<xsd:element ref="FareDemandFactorRef" minOccurs="0"/>
 			<xsd:element ref="ScheduledStopPointRef"/>
-			<xsd:element name="StartTime" type="xsd:time">
+			<xsd:element name="StartTime" type="xsd:time" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Time at stop at whichh Fare demand period starts.</xsd:documentation>
+					<xsd:documentation>Time at stop at which FARE DEMAND PERIOD starts.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="EndTime" type="xsd:time" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Time at stop at whichh Fare demand period ends.</xsd:documentation>
+					<xsd:documentation>Time at stop at whichARE DEMAND PERIODends.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="DayOffset" type="DayOffsetType" default="0" minOccurs="0">
