@@ -19,6 +19,29 @@
 				<Date>
 					<Modified>2013-01-11</Modified>
 				</Date>
+				<Date>
+					<Modified>2018-10-01</Modified>NK: Correct  substitution group on FarePointInPattern  to PointInLinkSequence
+				</Date>
+				<Date>
+					<Modified>2019-10-01</Modified>UK-20 Add contains relationship
+				</Date>
+				<Date>
+					<Modified>2019-02-25</Modified>UK-05 Fix: Introduce a dummy Tariffzone  so that Fare zone can be a specialisation of TariffZone. Workaround to XMLSPY issue.
+				</Date>
+				<Date>
+					<Modified>20109-02-25</Modified>UK-14  Add extra  ScopingMethod  attribute to FareZone with enum values   explicitStops,   implicitSpatialProjection, implicitSpatialProjection
+							UK-18  Specify  fare stages  ona   pattern: Add extra attributes to FarePointInPattern     IsFareStage   
+							EURA  Allow stops to be excluded from a routing    Add extra attributes to FarePointInPattern      _IsForbidden_ 
+						</Date>
+				<Date>
+					<Modified>2019-03-09</Modified>EURA-43 Add extra relationships to FareZone:AuthorityRef / OperatorRef,   GroupOfOperatorsRef, 
+				</Date>
+				<Date>
+					<Modified>2019-05-17</Modified>Fix case in isFareSTage and isForbidden 
+				</Date>
+				<Date>
+					<Modified>2020-10-05</Modified>New Modes: Widen VehicleType to TransportType
+				</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. FARE ZONE types.</p>
 				</Description>
@@ -31,7 +54,7 @@
 				<Language>[ISO 639-2/B] ENG</Language>
 				<Publisher>CEN SWG 9 , 16 High Holborn, London WC1V 6BX</Publisher>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2017</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -292,7 +315,7 @@ Rail transport, Roads and Road transport
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:element name="FarePointInPattern" substitutionGroup="VersionedChild">
+	<xsd:element name="FarePointInPattern" substitutionGroup="PointInLinkSequence">
 		<xsd:annotation>
 			<xsd:documentation>A POINT IN PATTERN which represents the start or end of a FARE SECTION.</xsd:documentation>
 		</xsd:annotation>
@@ -324,9 +347,20 @@ Rail transport, Roads and Road transport
 									<xsd:documentation>Relative position for showing this FARE POINT IN JOURNEY PATTERN in an itinerary when there is a choice according to rail conventions. For example, (A /B) * C versus (B/A) * C. See allowed values below.</xsd:documentation>
 								</xsd:annotation>
 							</xsd:element>
-							<xsd:element name="InterchangeAllowed" type="xsd:boolean" minOccurs="0">
+							<xsd:element name="IsForbidden" type="xsd:boolean" default="false" minOccurs="0">
 								<xsd:annotation>
-									<xsd:documentation>Whether interchange to another service is allowed at this point.</xsd:documentation>
+									<xsd:documentation>Whether use of  fare point is forbidden- can be used to  explicitly exclude certain routings  Default is false.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="InterchangeAllowed" type="xsd:boolean" default="true" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Whether interchange to another service is allowed at this point.
+ Default is true.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="IsFareStage" type="xsd:boolean" default="true" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Whether stop is considered to be a fare stage. +v1.1</xsd:documentation>
 								</xsd:annotation>
 							</xsd:element>
 						</xsd:sequence>
@@ -359,12 +393,23 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element name="PresentationPosition" type="SeriesPresentationEnumeration" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Relative positiion to be b given to name of point when presenting it in a list of stops (Left, right etc)</xsd:documentation>
+					<xsd:documentation>Relative positiion to be given to name of point when presenting it in a list of stops (Left, right etc). Allows TAP itinerary to be constructed. </xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="InterchangeAllowed" type="xsd:boolean" minOccurs="0">
+			<xsd:element name="IsForbidden" type="xsd:boolean" default="false" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Whether interchange to another service is allowed at this point.</xsd:documentation>
+					<xsd:documentation>Whether use of  fare point is forbidden- can be used to  explicitly exclude certain routings  Default is false.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="InterchangeAllowed" type="xsd:boolean" default="true" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether interchange to another service is allowed at this point.
+ Default is true.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IsFareStage" type="xsd:boolean" default="true" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether stop is considered to be a fare stage</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -449,7 +494,7 @@ Rail transport, Roads and Road transport
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->
-	<xsd:element name="FareZone" abstract="false" substitutionGroup="Zone">
+	<xsd:element name="FareZone" abstract="false" substitutionGroup="TariffZone_">
 		<xsd:annotation>
 			<xsd:documentation>A specialization of TARIFF ZONE to include FARE SECTIONs.</xsd:documentation>
 		</xsd:annotation>
@@ -486,9 +531,21 @@ Rail transport, Roads and Road transport
 									<xsd:documentation>Classification of zone topology.</xsd:documentation>
 								</xsd:annotation>
 							</xsd:element>
+							<xsd:element name="ScopingMethod" type="ScopingMethodEnumeration" default="explicitStops" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Indication of how member stops of a FARE ZONE are specified (ExplicitStops, ImplicitSpatialProjection etc) .  Default is ExplicitStops</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element ref="TransportOrganisationRef" minOccurs="0"/>
+							<xsd:element ref="GroupOfOperatorsRef" minOccurs="0"/>
 							<xsd:element name="fareSections" type="fareSections_RelStructure" minOccurs="0">
 								<xsd:annotation>
 									<xsd:documentation>FARE SECTIONS in FARE ZONE.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="contains" type="tariffZoneRefs_RelStructure" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Other fare zone that are wholly  included in the  FARE ZONE.</xsd:documentation>
 								</xsd:annotation>
 							</xsd:element>
 							<xsd:element name="neighbours" type="fareZoneRefs_RelStructure" minOccurs="0">
@@ -528,9 +585,21 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Classification of zone topology.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="ScopingMethod" type="ScopingMethodEnumeration" default="explicitStops" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indication of how member stops of a FARE ZONE are specified (ExplicitStops, ImplicitSpatialProjection etc) .  Default is ExplicitStops</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="TransportOrganisationRef" minOccurs="0"/>
+			<xsd:element ref="GroupOfOperatorsRef" minOccurs="0"/>
 			<xsd:element name="fareSections" type="fareSections_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>FARE SECTIONS in FARE ZONE.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="contains" type="tariffZoneRefs_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Other fare zone that are wholly  included in the  FARE ZONE.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="neighbours" type="fareZoneRefs_RelStructure" minOccurs="0">

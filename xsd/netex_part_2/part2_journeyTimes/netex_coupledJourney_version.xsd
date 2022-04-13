@@ -33,6 +33,9 @@
 				<Date>
 					<Modified>2017-11-1  CR044 Journey Part - Add  day offset to Journey Part Couple  </Modified>
 				</Date>
+				<Date>
+					<Modified>2020-06-21  Issue JourneyPart #78 -NJSK:  MainJourneyPartRef should be a JourneyPartRef, not a  JourneyPartCoupleRef  </Modified>
+				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the COUPLED JOURNEY types.</p>
@@ -180,24 +183,7 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Reference to parent of which this is part. If given by context does not need to be stated.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="MainPartRef" type="JourneyPartCoupleRefStructure">
-				<xsd:annotation>
-					<xsd:documentation>Main JOURNEY PART for journey.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element ref="JourneyPartCoupleRef" minOccurs="0"/>
-			<xsd:element ref="TrainNumberRef" minOccurs="0"/>
-			<xsd:element ref="BlockPartRef" minOccurs="0"/>
-			<xsd:element name="FromStopPointRef" type="ScheduledStopPointRefStructure" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Point at which this JOURNEY PART starts.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="ToStopPointRef" type="ScheduledStopPointRefStructure" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Point at which this JOURNEY PART ends.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
+			<xsd:group ref="JourneyPartReferencesGroup"/>
 			<xsd:group ref="JourneyPartTimeGroup"/>
 			<xsd:element name="VehicleOrientation" type="xsd:boolean" default="true" minOccurs="0">
 				<xsd:annotation>
@@ -215,6 +201,31 @@ of the corresponding VEHICLE TYPE. true for forward.</xsd:documentation>
 			<xsd:element name="journeyPartPositions" type="journeyPartPositions_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Positions in Train of JOURNEY PART.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="JourneyPartReferencesGroup">
+		<xsd:annotation>
+			<xsd:documentation>Reference Elements for JOURNEY PART.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="MainPartRef" type="JourneyPartRefStructure">
+				<xsd:annotation>
+					<xsd:documentation>Main JOURNEY PART for journey.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="JourneyPartCoupleRef" minOccurs="0"/>
+			<xsd:element ref="TrainNumberRef" minOccurs="0"/>
+			<xsd:element ref="BlockPartRef" minOccurs="0"/>
+			<xsd:element name="FromStopPointRef" type="ScheduledStopPointRefStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Point at which this JOURNEY PART starts.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ToStopPointRef" type="ScheduledStopPointRefStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Point at which this JOURNEY PART ends.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -506,6 +517,9 @@ of the corresponding VEHICLE TYPE. true for forward.</xsd:documentation>
 			<xsd:complexContent>
 				<xsd:restriction base="PurposeOfJourneyPartition_ValueStructure">
 					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
 						<xsd:sequence>
 							<xsd:group ref="DataManagedObjectGroup"/>
 						</xsd:sequence>

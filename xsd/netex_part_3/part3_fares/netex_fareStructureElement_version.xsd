@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_fareStructureElement_version">
-	<xsd:include schemaLocation="netex_fareStructureElement_support.xsd"/>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_fareStructureElement_version">
 	<xsd:include schemaLocation="netex_validableElement_version.xsd"/>
 	<!-- ======================================================================= -->
 	<xsd:include schemaLocation="netex_timeStructureFactor_version.xsd"/>
-	<xsd:include schemaLocation="netex_distanceMatrixElement_version.xsd"/>
+	<xsd:include schemaLocation="netex_distanceMatrixElement_version.xsd"/> 
 	<!-- ======================================================================= -->
 	<xsd:annotation>
 		<xsd:appinfo>
@@ -19,12 +18,19 @@
 					<Created>2010-09-04</Created>
 				</Date>
 				<Date>
-					<Modified>2011-02-05</Modified>
-					<!-- Name Space changes -->
+					<Modified>2011-02-05</Modified> Name Space changes 
 				</Date>
-				<Date><Modified>2017-10-10</Modified>Fix Allow multime   timeIntervals and GeographicIntervals in FareStructureElement as per UML
+				<Date>
+					<Modified>2017-10-10</Modified>Fix Allow multime   timeIntervals and GeographicIntervals in FareStructureElement as per UML
 				</Date>
-				<Date><Modified>2017-10-10</Modified> Add Tariff notices, , document links and Line as Tariff info
+				<Date>
+					<Modified>2017-10-10</Modified> Add Tariff notices, , document links and Line as Tariff info
+				</Date>
+				<Date>
+					<Modified>2019-03-11</Modified>UK-55 Add new TypeOfFareStructureElement.
+				</Date>
+				<Date>
+					<Modified>2020-10-12</Modified>NewModes add LocalService and MobilityService to Tariff applicability 
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -42,7 +48,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2014</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2020</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -207,7 +213,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element name="documentLinks" type="infoLinks_RelStructure" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Timetable documents associated with the Tariff  e.g pdf files</xsd:documentation>
+					<xsd:documentation>Timetable documents associated with the Tariff  e.g pdf files +v1.1</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -243,10 +249,19 @@ Rail transport, Roads and Road transport
 		<xsd:annotation>
 			<xsd:documentation>Applicability Elements for TARIFF.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:choice>
-			<xsd:element ref="LineRef"/>
-			<xsd:element ref="GroupOfLinesRef"/>
-		</xsd:choice>
+		<xsd:sequence>
+			<xsd:choice minOccurs="0">
+				<xsd:element ref="LineRef"/>
+				<xsd:element ref="GroupOfLinesRef"/>
+			</xsd:choice>
+			<xsd:choice minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>+v1.2.2</xsd:documentation>
+				</xsd:annotation>
+				<xsd:element ref="MobilityServiceRef"/>
+				<xsd:element ref="LocalServiceRef"/>
+			</xsd:choice>
+		</xsd:sequence>
 	</xsd:group>
 	<xsd:group name="TariffGeographicalGroup">
 		<xsd:annotation>
@@ -316,6 +331,7 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>GROUPs of DISTANCE MATRIX ELEMENTs making up TARIFF.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			 
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:group name="TariffPriceGroup">
@@ -336,6 +352,43 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
+	<!-- ==TYPE OF TARIFF======================================================= -->
+	<xsd:element name="TypeOfTariff" abstract="false" substitutionGroup="TypeOfEntity">
+		<xsd:annotation>
+			<xsd:documentation>A classification of TARIFFs according to their functional purpose.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="TypeOfTariff_ValueStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="TypeOfValueGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="TypeOfTariffIdType"/>
+					<xsd:attribute name="nameOfClassifiedEntityClass" type="NameOfClass" use="optional" fixed="Tariff">
+						<xsd:annotation>
+							<xsd:documentation>Name of Class of the ENTITY. Allows reflection. Fixed for each ENTITY type.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="TypeOfTariff_ValueStructure" abstract="false">
+		<xsd:annotation>
+			<xsd:documentation>Type for a TYPE OF TARIFF.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="TypeOfEntity_VersionStructure"/>
+		</xsd:complexContent>
+	</xsd:complexType>
 	<!-- ====FARE STRUCTURE ELEMENT.============================================= -->
 	<xsd:complexType name="fareStructureElements_RelStructure">
 		<xsd:annotation>
@@ -407,6 +460,7 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Basis for tariff using element.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element ref="TypeOfFareStructureElementRef" minOccurs="0"/>
 			<xsd:group ref="FareStructureElementFactorGroup">
 				<xsd:annotation>
 					<xsd:documentation>FARE STRUCTURE FACTOR Elements for a FARE STRUCTURE ELEMENT.</xsd:documentation>
@@ -605,39 +659,47 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="FareStructureElementRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
-	<!-- ==TYPE OF TARIFF======================================================= -->
-	<xsd:element name="TypeOfTariff" abstract="false" substitutionGroup="TypeOfEntity">
+	<!-- ====TYPE OF FARE STRUCTURE ELEMENT======================================= -->
+	<xsd:element name="TypeOfFareStructureElement" abstract="false" substitutionGroup="TypeOfEntity">
 		<xsd:annotation>
-			<xsd:documentation>A classification of TARIFFs according to their functional purpose.</xsd:documentation>
+			<xsd:documentation>A classification of FARE STRUCTURE ELEMENTs expressing their general functionalities .
+</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
-				<xsd:restriction base="TypeOfTariff_ValueStructure">
+				<xsd:restriction base="TypeOfFareStructureElement_VersionStructure">
 					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
 						<xsd:sequence>
 							<xsd:group ref="DataManagedObjectGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
 							<xsd:group ref="TypeOfValueGroup"/>
 						</xsd:sequence>
+						<xsd:sequence/>
 					</xsd:sequence>
-					<xsd:attribute name="id" type="TypeOfTariffIdType"/>
-					<xsd:attribute name="nameOfClassifiedEntityClass" type="NameOfClass" use="optional" fixed="Tariff">
-						<xsd:annotation>
-							<xsd:documentation>Name of Class of the ENTITY. Allows reflection. Fixed for each ENTITY type.</xsd:documentation>
-						</xsd:annotation>
-					</xsd:attribute>
+					<xsd:attribute name="id" type="TypeOfFareStructureElementIdType"/>
 				</xsd:restriction>
 			</xsd:complexContent>
 		</xsd:complexType>
 	</xsd:element>
-	<xsd:complexType name="TypeOfTariff_ValueStructure" abstract="false">
+	<xsd:complexType name="TypeOfFareStructureElement_VersionStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for a TYPE OF TARIFF.</xsd:documentation>
+			<xsd:documentation>Type for TYPE OF FARE STRUCTURE ELEMENT.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
-			<xsd:extension base="TypeOfEntity_VersionStructure"/>
+			<xsd:extension base="TypeOfEntity_VersionStructure">
+				<xsd:group ref="TypeOfFareStructureElementGroup"/>
+			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
+	<xsd:group name="TypeOfFareStructureElementGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for TYPE OF FARE STRUCTURE ELEMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence/>
+	</xsd:group>
 	<!-- ======================================================================= -->
 </xsd:schema>
