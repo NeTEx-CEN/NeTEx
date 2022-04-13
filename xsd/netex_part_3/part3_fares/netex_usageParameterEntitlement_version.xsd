@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_usageParameterEntitlement_version">
-	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_topographicPlace_support.xsd"/>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_usageParameterEntitlement_version">
 	<xsd:include schemaLocation="netex_usageParameterEntitlement_support.xsd"/>
+	<xsd:include schemaLocation="netex_usageParameterEligibility_support.xsd"/>
 	<xsd:include schemaLocation="netex_usageParameter_version.xsd"/>
 	<!-- ======================================================================= -->
 	<xsd:annotation>
@@ -18,9 +18,14 @@
 					<Created>2010-09-04</Created>
 				</Date>
 				<Date>
-					<Modified>2011-02-05</Modified>
-					<!-- Name Space changes -->
+					<Modified>2011-02-05</Modified>Name Space changes 
 				</Date>
+				<Date>
+					<Modified>2019-03-12</Modified>UK-45 	Add support for constraints on dependent products 		
+				 </Date>
+				<Date>
+					<Modified>2019-04-04</Modified>UK-45 	Add support for constraints on dependent products: revise Uer constraint
+				 </Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the ENTITLEMENT USAGE PARAMETER    types.</p>
@@ -30,14 +35,14 @@
 					<Syntax>http://www.w3.org/2001/XMLSchema</Syntax>
 					<Description>XML schema, W3C Recommendation 2001</Description>
 				</Format>
-				<Identifier>{http://www.netex.org.uk/schemas/1.0/xsd/netex_part_3/part3_fares}netex_usageParameterBooking_version.xsd</Identifier>
+				<Identifier>{http://www.netex.org.uk/schemas/1.0/xsd/netex_part_3/part3_fares}netex_usageParameterEntitlement_version.xsd</Identifier>
 				<Language>[ISO 639-2/B] ENG</Language>
 				<Publisher>Kizoom, 109-123 Clifton Street, London EC4A 4LD </Publisher>
 				<Relation>
 					<Requires>http://www.netex.org.uk/schemas/1.0/xsd/netex_part_3/fares/netex_usageParameterEntitlement_support</Requires>
 				</Relation>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2014</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -65,7 +70,7 @@ Rail transport, Roads and Road transport
 	<!-- ====ENTITLEMENT GIVEN================================================= -->
 	<xsd:element name="EntitlementGiven" abstract="false" substitutionGroup="UsageParameter_">
 		<xsd:annotation>
-			<xsd:documentation>A right to a SERVICE ACCESS RIGHT igiven by a FARE  PRODUCT.</xsd:documentation>
+			<xsd:documentation>A right to a SERVICE ACCESS RIGHT is given by a FARE  PRODUCT.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -109,15 +114,11 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Elements for ENTITLEMENT GIVEN Group.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element ref="ServiceAccessRightRef" minOccurs="0"/>
+			<xsd:group ref="ServiceAccessRightRefGroup"/>
+			<xsd:group ref="EntitlementCommonPropertiesGroup"/>
 			<xsd:element name="EntitlementType" type="EntitlementTypeEnumeration" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Type of Entitlement given.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="MinimumQualificationPeriod" type="xsd:duration" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Minimum duration  that required  product must be held to be eligible.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -169,10 +170,142 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Elements for ENTITLEMENT REQUIRED Group.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element ref="ServiceAccessRightRef" minOccurs="0"/>
+			<xsd:group ref="ServiceAccessRightRefGroup"/>
+			<xsd:group ref="EntitlementCommonPropertiesGroup"/>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ======================================================================= -->
+	<xsd:group name="EntitlementCommonPropertiesGroup">
+		<xsd:annotation>
+			<xsd:documentation>Common Elements for ENTITLEMENTs Group</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
 			<xsd:element name="MinimumQualificationPeriod" type="xsd:duration" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Minimum duration  that required  product must be held to be eligible.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="EntitlementConstraint" type="EntitlementConstraintStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Limits on choices associated with entitlement +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="EntitlementConstraintStructure">
+		<xsd:annotation>
+			<xsd:documentation>Entitlement constraints related product or offe.  +v1.1.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:group ref="TimeRelativeConstraintGroup">
+				<xsd:annotation>
+					<xsd:documentation>Constraints on time and journey aspects of related products and offers.
+</xsd:documentation>
+				</xsd:annotation>
+			</xsd:group>
+			<xsd:group ref="NetworkRelativeConstraintGroup">
+				<xsd:annotation>
+					<xsd:documentation>Constraints on network access aspects of related products and offers.
+</xsd:documentation>
+				</xsd:annotation>
+			</xsd:group>
+			<xsd:group ref="ServiceRelativeConstraintGroup"/>
+			<xsd:group ref="EligibilityRelativeConstraintGroup">
+				<xsd:annotation>
+					<xsd:documentation>Eligibility constraints on related product or offer..</xsd:documentation>
+				</xsd:annotation>
+			</xsd:group>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="TimeRelativeConstraintGroup">
+		<xsd:annotation>
+			<xsd:documentation>Temporal constraints on related product or offer..</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="PeriodConstraint" type="SamePeriodEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Constraints on  valdity period.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="NetworkRelativeConstraintGroup">
+		<xsd:annotation>
+			<xsd:documentation>Network constraints on related product or offer..</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="OriginConstraint" type="SameStopEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Constraints on origin SCHEDULED STOP POINT</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DestinationConstraint" type="SameStopEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Constraints on  destination SCHEDULED STOP POINT</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TariffZoneConstraint" type="SameZoneEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Constraints on TARIFF ZONE.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="RouteConstraint" type="SameRouteEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Constraints on ROUTE</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DirectionConstraint" type="SameRouteEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Constraints on DIRECTION.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="OperatorConstraint" type="SameOperatorEnumeration" default="participating" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Constraints on OPERATOR.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="ServiceRelativeConstraintGroup">
+		<xsd:annotation>
+			<xsd:documentation>Service constraints on related product or offer..</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="TypeOfProductCategoryConstraint" type="SameTypeOfProductCategoryEnumeration" default="sameOrEquivalent" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Constraints on  TYPE OF PRODUCT CATEGORY</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ClassOfUseConstraint" type="SameClassOfUseEnumeration" default="sameOrEquivalent" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Constraints on CLASS OF USE.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TypeOfTravelDocumentConstraint" type="SameTypeOfTravelDocumentEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Constraints on  TYPE OF TRAVEL DOCUMENT</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="JourneyConstraint" type="SameJourneyEnumeration" default="same" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Constraints on   SERVICE JOURNEYs  to be used.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="EligibilityRelativeConstraintGroup">
+		<xsd:annotation>
+			<xsd:documentation>Service constraints on related product or offer..</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="UserConstraint" type="SameUserEnumeration" default="samePerson" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Constraints on  USER. Default is samePerson. </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="specificToProfiles" type="userProfileRefs_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>USER PROFILEs to which entitlement applies</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>

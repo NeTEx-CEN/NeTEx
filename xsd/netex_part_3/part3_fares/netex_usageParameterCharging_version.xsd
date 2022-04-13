@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_usageParameterCharging_version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_usageParameterCharging_version">
 	<xsd:include schemaLocation="netex_usageParameterCharging_support.xsd"/>
+	<xsd:include schemaLocation="netex_timeStructureFactor_support.xsd"/>
 	<xsd:include schemaLocation="netex_usageParameter_version.xsd"/>
 	<!-- ======================================================================= -->
 	<xsd:annotation>
@@ -16,8 +17,17 @@
 					<Created>2010-09-04</Created>
 				</Date>
 				<Date>
-					<Modified>2011-02-05</Modified>
-					<!-- Name Space changes -->
+					<Modified>2011-02-05</Modified>Name Space changes 
+				</Date>
+				<Date>
+					<Modified>2019-03-11</Modified>EURA-40 Add Subscribing  Usage Parameter with various attributes.
+						Add GracePeriod to ChargingPolicy
+				</Date>
+				<Date>
+					<Modified>2019-03-11</Modified>EURA-90 Add a MaximumNumberOfFailToCheckOutEvents  to PenaltyPolicy  
+				</Date>
+				<Date>
+					<Modified>2020-10-16</Modified>Add a DepositPolicyAttribute to ChargingPolicy
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -35,7 +45,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/xsd/netex_part_3/fares/netex_usageParameterEligibility_support</Requires>
 				</Relation>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2014</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2020</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -114,7 +124,22 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element name="ExpireAfterPeriod" type="xsd:duration" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Any expiry period on collecting a rebate or adjustment.</xsd:documentation>
+					<xsd:documentation>Any expiry period on the right to  collec a rebate or adjustment.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="PaymentGracePeriod" type="xsd:duration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Period after purchase by which time payment must be settled. +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="BillingPolicy" type="TravelBillingPolicyEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Policy for billing frequency.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DepositPolicy" type="DepositPolicyEnumeration" default="none" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Policy for deposits. +v1.2.2</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -179,6 +204,111 @@ Rail transport, Roads and Road transport
 			<xsd:element name="MinimumTimeBeforeReentry" type="xsd:duration" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Minimum time before reentry at the same station.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MaximumNumberOfFailToCheckOutEvents" type="xsd:integer" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Lmit on the  number of fail-to-checkout events allowed before suspension. +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ==== SUBSCRIBING USER PARAMETER ================================================ -->
+	<xsd:element name="Subscribing" abstract="false" substitutionGroup="UsageParameter_">
+		<xsd:annotation>
+			<xsd:documentation>Parameters relating to paying by Subscribing for a product. +v1.1</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="Subscribing_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="PriceableObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="UsageParameterGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="SubscribingGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="SubscribingIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="Subscribing_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for SUBSCRIBING.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="UsageParameter_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="SubscribingGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="SubscribingGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for SUBSCRIBING Group.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:group ref="SubscribingTermGroup"/>
+			<xsd:group ref="SubscribingPaymentGroup"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="SubscribingTermGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements relating to term of subscription.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="SubscriptionTermType" type="SubscriptionTermTypeEnumeration" default="fixed" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Type of susbcription term, e.g. fixed, variable, etc.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MinimumSubscriptionPeriod" type="xsd:duration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Minimum duration allowed for a subscription.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MaximumSubscriptionPeriod" type="xsd:duration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Maximum duration allowed for a subscription.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="SubscriptionRenewalPolicy" type="SubscriptionRenewalPolicyEnumeration" default="automatic" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Subscription renewal policy.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="SubscribingPaymentGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements relating to payment of subscription.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="possibleInstallmenttIntervals" type="timeIntervalRefs_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Allowed billing Intervals for payment in installment.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="InstallmentPaymentMethods" type="PaymentMethodListOfEnumerations" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Allowed means of payment of installations as standard value.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="installmentTypesOfPaymentMethod" type="TypeOfPaymentMethodRefs_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Allowed means of payment of installations as TYPE OF PAYMENT METHOD.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
