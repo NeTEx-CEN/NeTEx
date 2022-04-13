@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_usageParameterEligibility_support">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_usageParameterEligibility_support">
 	<!-- ======================================================================= -->
 	<xsd:annotation>
 		<xsd:appinfo>
@@ -52,9 +52,12 @@ OnCeasingEnumeration - Allowed values
 				</Date>
 				<Date>
 					<Modified>2019-04-04</Modified>UK-45   Add  constraint mechanism  to Entitlements so that supplements and dependent products have same parameters  
-					  ad list of userProfiles structure
-			 	</Date>				
-				
+					  ad list of userProfiles structure		
+				</Date>
+				<Date>
+					<Modified>2020-10-12</Modified>New Modes add TypeOfProofRequired value to allow open values
+					     add member and other to usreTyp enum values
+			 	</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the ELIGIBILITY USAGE PARAMETER    types.</p>
@@ -71,7 +74,7 @@ OnCeasingEnumeration - Allowed values
 					<Requires>http://www.netex.org.uk/schemas/1.0/xsd/netex_part_3/fares/netex_usageParameterProduct_support</Requires>
 				</Relation>
 				<Rights>Unclassified
-					<Copyright>CEN, Crown Copyright 2009-2019</Copyright>
+					<Copyright>CEN, Crown Copyright 2009-2020</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -191,6 +194,9 @@ Rail transport, Roads and Road transport
 			<xsd:enumeration value="jobSeeker"/>
 			<xsd:enumeration value="employee"/>
 			<xsd:enumeration value="animal"/>
+			<xsd:enumeration value="guideDog"/>
+			<xsd:enumeration value="member"/>
+			<xsd:enumeration value="other"/>
 			<xsd:enumeration value="anyone"/>
 		</xsd:restriction>
 	</xsd:simpleType>
@@ -396,6 +402,38 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:list itemType="ProofOfIdentityEnumeration"/>
 	</xsd:simpleType>
+	<!-- ==== TYPE OF PROOF   ================================================== -->
+	<xsd:complexType name="typesOfProofRefs_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of TYOP OF PRROF .</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="oneToManyRelationshipStructure">
+				<xsd:sequence>
+					<xsd:element ref="TypeOfProofRef" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:simpleType name="TypeOfProofIdType">
+		<xsd:annotation>
+			<xsd:documentation>Type for identifier of a TYPE OF PROOF.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="TypeOfValueIdType"/>
+	</xsd:simpleType>
+	<xsd:element name="TypeOfProofRef" type="TypeOfProofRefStructure" abstract="false" substitutionGroup="TypeOfValueRef">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a TYPE OF PROOF. +v1.2.2</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="TypeOfProofRefStructure" abstract="false">
+		<xsd:annotation>
+			<xsd:documentation>Type for a reference to a TYPE OF PROOF.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="TypeOfValueRefStructure"/>
+		</xsd:simpleContent>
+	</xsd:complexType>
 	<!-- ===  RESIDENTIAL QUALIFICATION ============================================== -->
 	<xsd:simpleType name="ResidentialQualificationIdType">
 		<xsd:annotation>
