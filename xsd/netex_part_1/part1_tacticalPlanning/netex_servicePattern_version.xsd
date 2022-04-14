@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <!-- edited with XMLSpy v2011 rel. 2 sp1 (x64) (http://www.altova.com) by Christophe Duquesne (Dryade) -->
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_servicePattern_version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_servicePattern_version">
 	<!-- ======================================================================= -->
 	<xsd:include schemaLocation="netex_servicePattern_support.xsd"/>
 	<xsd:include schemaLocation="../part1_tacticalPlanning/netex_fareZone_support.xsd"/>
@@ -22,8 +22,7 @@
 					<Created>2010-09-04</Created>
 				</Date>
 				<Date>
-					<Modified>2011-02-05</Modified>
-					<!-- Name Space changes -->
+					<Modified>2011-02-05</Modified>Name Space changes 
 				</Date>
 				<Date>
 					<Modified>2017-05-19</Modified>CRT040
@@ -44,6 +43,14 @@
 				<Date>
 					<Modified>2019-03-25</Modified> NL48  CD #64  Add new attributes for   advertising of stop; Print and Dynamic to StopPointInPattern.
 				</Date>
+				<Date>
+					<Modified>2020-10-05</Modified> New Modes: Change to allow all modes for connection end.
+					Add mode of operation for VehicleEntrance
+					Add VEHICLE MEETING POINT TO CONNECTION END
+				</Date>
+				<Date><Modified>2019-03-01</Modified>Comment SBB20
+				     	Extension of ConnectionEnd (submode and transportOrganisation)
+				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the SERVICE PATTERN types.</p>
@@ -60,7 +67,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
-						<Copyright>CEN, Crown Copyright 2009-2019</Copyright>
+						<Copyright>CEN, Crown Copyright 2009-2020</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -176,7 +183,7 @@ Rail transport, Roads and Road transport
 	<!-- ======================================================================= -->
 	<xsd:element name="ScheduledStopPoint" abstract="false" substitutionGroup="Point">
 		<xsd:annotation>
-			<xsd:documentation> A POINT where passengers can board or alight from vehicles.</xsd:documentation>
+			<xsd:documentation> A POINT where passengers can board or alight from vehicles. It is open, which hierarchical level such a point has. It can represent a single door (BoardingPosition) or a whole ZONE. The association to the physical model is done with STOP ASSIGNMENTs.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -571,16 +578,33 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Type for a CONNECTION END.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="TransportMode" type="AllVehicleModesOfTransportEnumeration" default="all" minOccurs="0">
+			<xsd:element name="TransportMode" type="AllModesEnumeration" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>MODE of end Point of CONNECTION. Default is all modes. Can be derived.</xsd:documentation>
+					<xsd:documentation>MODE of end Point of CONNECTION. Default is all modes, MODE of SCHEDULED STOP POINT can be derived.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="ScheduledStopPointRef" type="ScheduledStopPointRefStructure" minOccurs="0">
+			<xsd:element ref="Submode" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Identifier of  specific SCHEDULED STOP POINT at end of CONNECTION.</xsd:documentation>
+					<xsd:documentation>SUBMODE of end Point of CONNECTION. SUBMODE of SCHEDULED STOP POINT can be derived.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element ref="TransportOrganisationRef" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>TransportOrganisation to which the end of CONNECTION applies.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:choice>
+				<xsd:element name="ScheduledStopPointRef" type="ScheduledStopPointRefStructure" minOccurs="0">
+					<xsd:annotation>
+						<xsd:documentation>Specific SCHEDULED STOP POINT at end of CONNECTION.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="VehicleMeetingPointRef" type="PointRefStructure" minOccurs="0">
+					<xsd:annotation>
+						<xsd:documentation>VEHICLE MEETING POINT at END OF CONENCTION.   +V1.2.2. NB This is typed only to POINT to avoid forward dependency</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:choice>
 		</xsd:sequence>
 	</xsd:complexType>
 	<!-- ===SERVICE PATTERN===================================================== -->

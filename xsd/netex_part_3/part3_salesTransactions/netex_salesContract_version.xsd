@@ -8,6 +8,7 @@
 	<xsd:include schemaLocation="netex_customerEligibility_version.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_securityList_version.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_address_version.xsd"/>
+	<xsd:include schemaLocation="netex_customerPaymentMeans_version.xsd"/>
 	<!-- ======================================================================= -->
 	<xsd:annotation>
 		<xsd:appinfo>
@@ -30,6 +31,7 @@
 					  Rename Passenger Contract Event to PassengerContractEntry.
 					  Add Customer Account
 					  Add Customer Eligibilities 
+					  Add CUstomer Payment mans
 				</Date>
 				<Date>
 					<Modified>2017-08-10</Modified> Align with TM6
@@ -50,6 +52,13 @@
 						Add email to CustomerContact details
 						Add customerPurchasePackageRefs to CustomerAccount. This canbe derived from FarContractEntries
 				</Date>
+				<Date>
+					<Modified>2020.05.10</Modified>New Modes: Add MediumAccess DEvicesfor Account
+					  Add smoker to Customer.
+				</Date>
+				<Date>
+					<Modified>2021.01.10</Modified>New Modes: Add EMail and Phone  verification flag
+				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the SALES FARE CONTRACT types.</p>
@@ -66,11 +75,11 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
-					 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2020</Copyright>
 				</Rights>
 				<Source>
 					<ul>
-						<li>Derived from the Transmodel, VDV, TransXChange, NEPTUNE, BISON and Trident standards.</li>
+						<li>Derived from the Transmodel standards.</li>
 					</ul>
 				</Source>
 				<Status>Version 1.0 Draft for approval</Status>
@@ -92,6 +101,7 @@ Rail transport, Roads and Road transport
 		<xsd:documentation>NeTEx SALES CONTRACT  types.</xsd:documentation>
 	</xsd:annotation>
 	<!-- ===ENTITY IN VERSION IN FRAME====Used in SERVICE FRAME)=================================================== -->
+	<xsd:include schemaLocation="netex_mediumApplication_support.xsd"/>
 	<xsd:group name="FareContractsInFrameGroup">
 		<xsd:annotation>
 			<xsd:documentation>Elements for SALES TRANSACTION in Frame.</xsd:documentation>
@@ -251,7 +261,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element name="Gender" type="GenderEnumeration" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Genfer of CUSTOMER.</xsd:documentation>
+					<xsd:documentation>Gender of CUSTOMER.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="Height" type="LengthType" minOccurs="0">
@@ -262,6 +272,11 @@ Rail transport, Roads and Road transport
 			<xsd:element name="Photo" type="xsd:anyURI" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Photo of CUSTOMER.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Smoker" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether the customer likes to smoke. +1.2.2</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -276,7 +291,21 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Email address of CUSTOMER. +v1.1</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="Phone" type="TelephoneContactStructure" minOccurs="0"/>
+			<xsd:element name="EmailVerified" type="xsd:dateTime" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Email address of CUSTOMER last verified +v1.2.2</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Phone" type="TelephoneContactStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Phone number. (Usually personal  mobile phone). </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="PhoneVerified" type="xsd:dateTime" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Phone of CUSTOMER last verified +v1.2.2</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element ref="PostalAddress" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
@@ -682,6 +711,17 @@ Rail transport, Roads and Road transport
 			<xsd:element name="customerPurchasePackages" type="customerPurchasePackageRefs_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>CUSTOMER PURCHASE PACKAGES  for CUSTOMER ACCOUT.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="CustomerPaymentMeansRef" minOccurs="0"/>
+			<xsd:element name="paymentMeans" type="customerPaymentMeans_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>PAYMENT MEANS for CUSTOMER ACCOUNT. +v1.2.2</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="mediumAccessDevices" type="mediumAccessDeviceRefs_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>MEDIUM APPLICATION INSTANCES for CUSTOMER ACCOUNT. +v1.2.2</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
