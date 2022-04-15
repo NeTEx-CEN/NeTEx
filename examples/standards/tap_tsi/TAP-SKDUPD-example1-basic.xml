@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PublicationDelivery xmlns="http://www.netex.org.uk/netex" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:siri="http://www.siri.org.uk/siri" version="1.0" xsi:schemaLocation="http://www.netex.org.uk/netex ../../../xsd/NeTEx_publication.xsd">
+	<!--  P  SKDUPD  Timetable Data Example  
+=============
+This Example shows an example of  encoding a TAPTSI B4. Timetable SKDUPD file in MERITS format   as NeTEx XML.
+
+The input  MERITS data stream is given here 
+
+PRD+3:11:1:3:::ALPHA TANGO+0060**80'		
+RFR+AVI:33'									
+ROP+273:2021-08-23/2021-08-28::101111’	    
+POR+006070001+*0503+*1+5'						 
+ASD+7'					 
+ASD+44::0453'			 
+TRF+1’					 
+POR+006070013+0445:::1*0400:::1+3*3+17'        
+MES+190:KMT'									 
+ASD+9'         
+RFR+AUE:45'    		
+RLS+13+7'     	
+TCE+10+1'       		
+RFR+AUE:60'									
+RLS+13+7'       				
+TCE+30+X02'    
+RFR+AUE:75'                
+RLS+13+7' 
+TCE++X04'					 
+
+POR+006070016+0500+'					 
+MES+200:KMT'         -->
+	<PublicationTimestamp>2022-12-17T09:30:46.0Z</PublicationTimestamp>
+	<ParticipantRef>SYS001</ParticipantRef>
+	<PublicationRequest version="1.0">
+		<RequestTimestamp>2022-12-17T09:30:46.0Z</RequestTimestamp>
+		<ParticipantRef>SYS002</ParticipantRef>
+	</PublicationRequest>
+	<PublicationRefreshInterval>P3M</PublicationRefreshInterval>
+	<dataObjects>
+		<!--- =============== RESULTS =========== -->
+		<CompositeFrame version="any" id="SKDUPD_basic_example">
+			<!--  Narrative:  The result data is organised within a COMPOSITE FRAME, containing other frames -->
+			<Name>Data for Simple SKDUPD example</Name>
+			<!--- ======= CODESPACEs======== -->
+			<!--  Narrative:  The code spaces declare a globally unique context for the identifiers of data elements. This allows many 
+                  different data sets to be combined without clashes even if they use the same data sets -->
+			<codespaces>
+				<Codespace id="op_cs">
+					<Xmlns>op</Xmlns>
+					<XmlnsUrl>http://www.operator.gr/</XmlnsUrl>
+					<Description>Operator's data - specific to operator</Description>
+				</Codespace>
+				<Codespace id="uic_cs">
+					<Xmlns>uic</Xmlns>
+					<XmlnsUrl>http://www.uic.org/</XmlnsUrl>
+					<Description>UIC stop  and RU/operator data - standardised across companies within UIC scope</Description>
+				</Codespace>
+			</codespaces>
+			<!--- =======FRAME DEFAULTS======== -->
+			<FrameDefaults>
+				<!-- Narrative: IThis codespace will be assumed for all elements that do not declare one -->
+				<DefaultCodespaceRef ref="op_cs"/>
+			</FrameDefaults>
+			<frames>
+				<TimetableFrame version="any" id="SKDUPD_basic_example">
+					<Name>Uic Example of a very simple train timetable</Name>
+					<VehicleModes>rail</VehicleModes>
+					<vehicleJourneys>
+						<DatedServiceJourney version="any" id="3">
+							<!-- PRD+3:11:1:3:::ALPHA TANGO+0060**80' -->
+							<Name>ALPHA TANGO</Name>
+							<TypeOfProductCategoryRef versionRef="EXTERNAL" ref="84"/>
+							<TypeOfServiceRef versionRef="EXTERNAL" ref="3"/>
+							<DepartureTime>05:03:00</DepartureTime>
+							<!--  Narrative: Operator of service (ie TAPTSI  RU.)  This is an external reference -->
+							<!-- 	POR+006070001+*0503+*1+5'			-->
+							<OperatorRef versionRef="EXTERNAL" ref="uic:0060"/>
+							<trainNumbers>
+								<!--  Narrative: One or more train numbers may be associated with Journey. These are declared separately
+								as entities in their own right and referenced from the joruney or joruney part with which they are associated  -->
+								<!-- RFR+AVI:33' -->
+								<TrainNumberRef version="any" ref="3">Advertised as 33</TrainNumberRef>
+							</trainNumbers>
+							<parts>
+								<JourneyPart version="any" id="3@006070001+006070016" order="1">
+									<!--  Narrative:  The JOURNEY PART (sepcifies properties that apply for part of a journey -->
+									<!-- ODI+006070001*006070016+1*3'      -->
+									<ParentJourneyRef version="any" ref="3">Alpha Tango</ParentJourneyRef>
+									<MainPartRef version="any" ref="3@006070001+006070016"/>
+									<!--  Narrative: span of journey part  -->
+									<FromStopPointRef versionRef="EXTERNAL" ref="006070001"/>
+									<ToStopPointRef versionRef="EXTERNAL" ref="006070016"/>
+									<!--  Narrative:  The stated times allows indication to be given whether part begins at arrival,
+									 departure or other time
+									currently a start time is mandatory - Would be more efficient if optional  and assumed to be from departure till arrival -->
+									<StartTime>05:03:00</StartTime>
+									<EndTime>05:00:00</EndTime>
+									<!--  Narrative:  We can indicate that the portpos of teh part is to specify which facilities are available -->
+									<PurposeOfJourneyPartitionRef versionRef="EXTERNAL" ref="facilities"/>
+									<facilities>
+										<ServiceFacilitySet version="any" id="Facilities-006070001+00607001-1*3">
+											<!-- ODI+006070001*006070016+1*3'      -->
+											<FamilyFacilityList>nurseryService</FamilyFacilityList>
+											<!-- ASD+30'    (30 Nursery  service) -->
+											<FareClasses>firstClass secondClass</FareClasses>
+											<!-- SER+4:::13', SER+5:::12'(4	First-class seats) (5	Second-class seats) -->
+											<MealFacilityList>breakfast</MealFacilityList>
+											<!-- ASD+5'  (5 Breakfast>M) -->
+											<LuggageCarriageFacilityList>cyclesAllowed</LuggageCarriageFacilityList>
+											<!-- SER+26'  (26	Bicycle transport) -->
+											<accommodations>
+												<Accommodation version="any" id="Facilities-006070001+00607001-1*3">
+													<AccommodationFacility>pullmanCoach</AccommodationFacility>
+													<!-- ASD+46'   (46	Pullmann coach) -->
+												</Accommodation>
+											</accommodations>
+										</ServiceFacilitySet>
+									</facilities>
+								</JourneyPart>
+								<JourneyPart version="any" id="3@006070001+006070013" order="1">
+									<!-- ODI+006070001*006070016+1*3'      -->
+									<ParentJourneyRef version="any" ref="3">Alpha Tango</ParentJourneyRef>
+									<MainPartRef version="any" ref="3@006070001+006070013"/>
+									<FromStopPointRef versionRef="EXTERNAL" ref="006070001"/>
+									<ToStopPointRef versionRef="EXTERNAL" ref="006070013"/>
+									<StartTime>05:03:00</StartTime>
+									<EndTime>04:45:00</EndTime>
+									<PurposeOfJourneyPartitionRef versionRef="EXTERNAL" ref="facilities"/>
+									<!-- ODI+006070001*006070013+1*2'    	TM Facility available between
+PDT++:::84:::'     ( TAPTSI B.4.7009  84 regional train)	
+-->
+								</JourneyPart>
+								<JourneyPart version="any" id="3@006070013+006070016" order="1">
+									<!-- ODI+006070013*006070016+2*3'
+PDT++:::58:::'     (TAPTSI B.4.7009  58 TRN Intercités) -->
+									<!-- 	POR+006070013+0445:::1*0400:::1+3*3+17'    
+											ASD+9'                          	9 Restaurant			
+											ASD+44::0330'					44	Telephone, 
+											ASD+45:0505'			45	Power supply  -->
+									<ParentJourneyRef version="any" ref="3">Alpha Tango</ParentJourneyRef>
+									<MainPartRef version="any" ref="3@006070001+006070016"/>
+									<FromStopPointRef versionRef="EXTERNAL" ref="006070013"/>
+									<ToStopPointRef versionRef="EXTERNAL" ref="006070016"/>
+									<StartTime>04:45:00</StartTime>
+									<EndTime>04:00:00</EndTime>
+									<EndTimeDayOffset>1</EndTimeDayOffset>
+									<PurposeOfJourneyPartitionRef versionRef="EXTERNAL" ref="facilities"/>
+									<facilities>
+										<ServiceFacilitySet version="any" id="Facilities">
+											<!-- POR+006070013+0445:::1*0400:::1+3*3 -->
+											<CateringFacilityList>restaurant</CateringFacilityList>
+											<!-- 	ASD+9'  (9 restaurant) -->
+											<PassengerCommsFacilityList>powerSupplySockets  telephone</PassengerCommsFacilityList>
+											<!-- 	ASD+44' , ASD+45' (44 Power supply, 45 telephone)    -->
+										</ServiceFacilitySet>
+									</facilities>
+								</JourneyPart>
+							</parts>
+							<calls>
+								<!--  Narrative: Individual visits to stop-->
+								<Call version="any" id="3" order="1">
+									<!-- 	POR+006070001+*0503+*1+5'			-->
+									<!--  (POR+UIC+ARRIVAL::OFFSET_A*DEPARTURE::OFFSET_D+PLATFORM_A*PLATFORM_D+PROPERTY) -->
+									<ScheduledStopPointRef versionRef="EXTERNAL" ref="006070001"/>
+									<OnwardServiceLinkView>
+										<ToPointRef versionRef="EXTERNAL" ref="006070013"/>
+										<Distance>190</Distance>
+										<!--  MES+190:KMT' -->
+									</OnwardServiceLinkView>
+									<Arrival>
+										<!-- TRF+1’					TRF+1 boarding only -->
+										<ForAlighting>false</ForAlighting>
+									</Arrival>
+									<Departure>
+										<Time>05:03:00</Time>
+										<QuayAssignmentView>
+											<!--  Narrative: Platform  - can be tied to physical definition if you want -->
+											<QuayRef versionRef="EXTERNAL" ref="006070001@1"/>
+											<Label>1</Label>
+										</QuayAssignmentView>
+									</Departure>
+								</Call>
+								<Call version="any" id="3" order="2">
+									<ScheduledStopPointRef versionRef="EXTERNAL" ref="006070013"/>
+									<!-- POR+006070013+0445:::1*0400:::1+3*3+17' 
+										TRF+4'      	-->
+									<OnwardServiceLinkView>
+										<ToPointRef version="any" ref="006070016"/>
+										<Distance>200</Distance>
+										<!--  MES+200:KMT' -->
+									</OnwardServiceLinkView>
+									<Arrival>
+										<Time>04:45:00</Time>
+										<!--  Narrative: Next day-->
+										<DayOffset>1</DayOffset>
+										<!-- TRF+1’					TRF+1 boarding only -->
+										<ForAlighting>false</ForAlighting>
+										<QuayAssignmentView>
+											<Label>3</Label>
+										</QuayAssignmentView>
+									</Arrival>
+									<Departure>
+										<Time>04:00:00</Time>
+										<DayOffset>1</DayOffset>
+										<ForBoarding>false</ForBoarding>
+										<QuayAssignmentView>
+											<Label>3</Label>
+										</QuayAssignmentView>
+									</Departure>
+								</Call>
+								<Call version="any" id="3" order="3">
+									<!-- POR+006070016+0500+'		-->
+									<ScheduledStopPointRef versionRef="EXTERNAL" ref="006070016"/>
+									<Arrival>
+										<Time>05:00:00</Time>
+										<!--  Narrative: NB Next day as relative to day of start of journey, not day at previous stop-->
+										<DayOffset>1</DayOffset>
+									</Arrival>
+									<Departure>
+										<ForBoarding>false</ForBoarding>
+									</Departure>
+								</Call>
+							</calls>
+							<facilities>
+								<ServiceFacilitySet version="any" id="1@reservation">
+									<TypeOfFacilityRef versionRef="EXTERNAL" ref="R11"/>
+									<ServiceReservationFacilityList>noReservationsPossible</ServiceReservationFacilityList>
+									<!--	R11 TafTsi B.4.7037: 11	Reservation possible -->
+									<UicProductCharacteristicList>tariffCommunVoyageurs</UicProductCharacteristicList>
+									<!-- Tariff 1 Taf TSI B4.7139: 	1	TCV -->
+								</ServiceFacilitySet>
+							</facilities>
+							<checkConstraints>
+								<CheckConstraint version="any" id="3@006070001@vehicle_loading">
+									<!-- 	POR+006070001+*0503+*1+5'					 
+									?   ASD+7'		(7 -   Loading of vehicles on a train of accompanied motorcars   -->
+									<Name>Vehicle Loading</Name>
+									<PlaceRef version="any" ref="006070001"/>
+									<CheckProcess>vehicleLoading</CheckProcess>
+									<delays>
+										<CheckConstraintDelay version="any" id="3@006070001">
+											<MinimumLikelyDelay>PT40M</MinimumLikelyDelay>
+										</CheckConstraintDelay>
+									</delays>
+								</CheckConstraint>
+								<CheckConstraint version="any" id="3@006070001@checkin">
+									<!-- 	POR+006070001+*0503+*1+5'					  
+										?	SD+44::0453'   (4  Passenger Check in time for specific service) -->
+									<Name>Check in</Name>
+									<PlaceRef version="any" ref="006070001"/>
+									<CheckProcess>boarding</CheckProcess>
+									<delays>
+										<CheckConstraintDelay version="any" id="3@006070001@checkin">
+											<MinimumLikelyDelay>PT10M</MinimumLikelyDelay>
+										</CheckConstraintDelay>
+									</delays>
+								</CheckConstraint>
+								<CheckConstraint version="any" id="3@006070013@border">
+									<!-- 	POR+006070013+0445:::1*0400:::1+3*3+17'       -->
+									<PlaceRef version="any" ref="006070013"/>
+									<CheckProcess>incomingPassportControl</CheckProcess>
+								</CheckConstraint>
+								<CheckConstraint version="any" id="3@006070016@vehicle_unloading">
+									<!-- 	POR+006070016+0500+'					 
+									?  ASD+45:0540’  	(7 -   Loading of vehicles on a train of accompanied motorcars   -->
+									<Name>Vehicle Unloading</Name>
+									<PlaceRef version="any" ref="006070016"/>
+									<CheckProcess>vehicleUnloading</CheckProcess>
+									<delays>
+										<CheckConstraintDelay version="any" id="3@006070016">
+											<MinimumLikelyDelay>PT40M</MinimumLikelyDelay>
+										</CheckConstraintDelay>
+									</delays>
+								</CheckConstraint>
+							</checkConstraints>
+							<UicOperatingPeriod id="3" version="any">
+								<FromDate>2006-11-04T12:00:00</FromDate>
+								<ToDate>2006-11-04T12:00:00</ToDate>
+								<ValidDayBits>1</ValidDayBits>
+							</UicOperatingPeriod>
+						</DatedServiceJourney>
+					</vehicleJourneys>
+					<trainNumbers>
+						<TrainNumber version="any" id="3">
+							<!-- RFR+AVI:33' -->
+							<ForAdvertisement>33</ForAdvertisement>
+							<ForProduction>3</ForProduction>
+						</TrainNumber>
+					</trainNumbers>
+					<journeyInterchanges>
+						<ServiceJourneyInterchange version="any" id="3@45">
+							<!-- POR+006070013+0445:::1*0400:::1+3*3+17' 
+						RFR+AUE:45'
+						RLS+13+7'     					(13 = disconnect, 7 = timing between services) 
+						TCE+10+1'-->
+							<StaySeated>false</StaySeated>
+							<ConnectionCertainty>notGuaranteed</ConnectionCertainty>
+							<!-- 	TCE+10+1' -->
+							<MinimumTransferTime>PT10M</MinimumTransferTime>
+							<!-- 	TCE+10+1' -->
+							<FromPointRef version="any" ref="006070013"/>
+							<ToPointRef version="any" ref="006070013"/>
+							<FromJourneyRef version="any" ref="3">ALPHA TANGO</FromJourneyRef>
+							<ToJourneyRef versionRef="EXTERNAL" ref="45"/>
+							<!-- RFR+AUE:45' -->
+						</ServiceJourneyInterchange>
+						<ServiceJourneyInterchange version="any" id="3@60">
+							<!--					POR+006070013+0445:::1*0400:::1+3*3+17' 
+						RFR+AUE:60'     
+						RLS+13+7'     		(13 = disconnect, 7 = timing between services) 
+						TCE+30+X02'  (taf tsi B.4.4049 -  x02 normally guaranteed  ) -->
+							<StaySeated>false</StaySeated>
+							<ConnectionCertainty>normallyGuaranteed</ConnectionCertainty>
+							<!-- 	TCE+30+X02'  -->
+							<MinimumTransferTime>PT30M</MinimumTransferTime>
+							<!-- 	TCE+30+X02' -->
+							<FromPointRef version="any" ref="006070013"/>
+							<ToPointRef version="any" ref="006070013"/>
+							<FromJourneyRef version="any" ref="3">ALPHA TANGO</FromJourneyRef>
+							<ToJourneyRef versionRef="EXTERNAL" ref="60"/>
+							<!-- RFR+AUE:60' -->
+						</ServiceJourneyInterchange>
+						<ServiceJourneyInterchange version="any" id="3@75">
+							<!-- POR+006070013+0445:::1*0400:::1+3*3+17' 
+						RFR+AUE:75'
+						RLS+13+7'   (13 = disconnect, 7 = timing between services) 
+						TCE+10+1'-->
+							<StaySeated>false</StaySeated>
+							<ConnectionCertainty>guaranteed</ConnectionCertainty>
+							<!-- TCE+10+1' -->
+							<MinimumTransferTime>PT10M</MinimumTransferTime>
+							<!-- TCE+10+1' -->
+							<FromPointRef version="any" ref="006070013"/>
+							<ToPointRef version="any" ref="006070013"/>
+							<FromJourneyRef version="any" ref="3">ALPHA TANGO</FromJourneyRef>
+							<ToJourneyRef versionRef="EXTERNAL" ref="75"/>
+							<!-- RFR+AUE:75' -->
+						</ServiceJourneyInterchange>
+					</journeyInterchanges>
+				</TimetableFrame>
+				<FareFrame version="any" id="uic:SKDUPD_basic_example">
+					<!-- NARRATIVE - bORDER POINTS ARE A SEPARATE LAYER -->
+					<Name>Border points are noted for fares</Name>
+					<borderPoints>
+						<BorderPoint version="any" id="uic:006070013_border">
+							<!-- POR+006070013+0445:::1*0400:::1+3*3+17'     -->
+							<Name>Station 2 Border point</Name>
+						</BorderPoint>
+					</borderPoints>
+					<fareScheduledStopPoints>
+						<FareScheduledStopPoint version="any" id="uic:006070013">
+							<Name>Station 2</Name>
+							<StopType>railStation</StopType>
+							<BorderPointRef version="any" ref="uic:006070013_border"/>
+						</FareScheduledStopPoint>
+					</fareScheduledStopPoints>
+				</FareFrame>
+			</frames>
+		</CompositeFrame>
+	</dataObjects>
+</PublicationDelivery>
