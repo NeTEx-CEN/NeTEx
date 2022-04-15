@@ -1,0 +1,537 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PublicationDelivery xmlns="http://www.netex.org.uk/netex" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:siri="http://www.siri.org.uk/siri" version="1.0" xsi:schemaLocation="http://www.netex.org.uk/netex ../../../xsd/NeTEx_publication.xsd">
+	<!--
+ x Profile: TSDUPD  Location Data Example  1
+=============
+This Example shows an example of  encoding a TAPTSI Location TSDUPD file  in NeTEx XML.
+Additional 'Narrative' comments are included 
+
+Overall comment:
+  A TAPTSI Location may correspond to two separate concepts in NeTEx - a SCHEDULED STOP POINT(timetable stop)  and a STOP PLACE (Physical STop)
+
+The following is the EDIFACT tag stream, with Transmodel / Netex Equivalents shown on the right
+ The same EDIFACT tags are also embedded as comments in this example adjacent to their NeTEx equivalents
+				
+ALS+29+007300101:Piraeus+375656N+233833E’    TM: STOP PLACE/ SCHEDULED STOP POINT  ID + Name + Coordinates 
+                                                   ALS 29+ STOP PLACE TYPE = RAilway STation
+												   0073  = OPERATOR
+                                                   007300101  = SCHEDULED STOP POINT  |  STOP PLACE .id 
+												   Piraeus  = SCHEDULED STOP POINT |  STOP PLACE.id 
+												   375656N+233833 = SCHEDULED STOP POINT | STOP sop place /LOCATION.Longitude, Latitude
+P+273:2021-08-12/2999-12-31’				 TM: VALIDITY CONDITION
+
+POP+87:0005’								 TM: Default SITE CONNECTION + transfer time
+
+CNY+GR’										 TM: COUNTRY = gr
+
+TIZ+EET:2’									 TM: STOP PLACE / Time zone
+
+IFT+X02+Piraeus’							 TM: STOP PLACE / Alternative Names
+IFT+AGW+Pir_general’
+IFT+AGW::::FR+Pir_French’
+IFT+AGW::::IT+Pir_Italian’
+
+PRD+::::54::0008’							TM: SITE CONNECTION by MODE  + Time?
+PRD+::::::0006+*1073’						TM: DEFAULT  CONNECTION by OPERATOR + Time ?
+
+PRD+:::53:::0007’                          TM: SITE CONNECTION by MODE  + Time?
+PRD+::::::0005+1073’ 						TM: DEFAULT  CONNECTION by OPERATOR +  5m Time ?
+
+PRD+:::68:84::0009+1073*1180’  			   TM: INTERCHANGE RULE  bu MODE, Operator/Operator  +  9M transferTime
+                                                  NB CURRENTLY HAVE TO USE WORKAROUND
+
+RFR+X01:007300101’						 TM: TARIFF ZONE
+
+RFR+AWN:007350001’							TM:     CONNECTION + transfer time 
+MES+8:MIN’
+RLS+13+6’										Walk
+
+	PRD+:::53:54+1186*X292’
+SER+21’									TM  facilty /accessibilty   or ACcessibility Assessment
+SER+28’
+
+RFR+AWN:007350001’						TM:  CONNECTION  with time
+RLS+13+14'  
+
+==============================
+These lists show some of the codes that are used. 
+European Railway Agency  Explanation of codes
+ERA/TD/2012-16/INT Annex B.50 of TAP TSI Page 40-41
+
+8.5.1 Location data in TSDUPD format
+Summary of the segments used in TSDUPD and corresponding abbreviations:
+ADS Address (*)
+ALS Additional location information
+ASD Service details
+CNY Country information
+CON Contact information (*)
+ERI Application error information (*)
+FRQ Frequency
+HDR Header information
+IFT Interactive free text
+	Mandatory. Name of the location in the language specified in 3453.
+	When element E971/4451 is set to X02 (Location short name), the length of location must not exceed 17 characters.
+LNG Language
+MES Measurements
+MSD Message action details
+NME Name (*)
+ORG Originator of request details
+POP Period of operation 
+	87 = necessary connection time
+	273 = period of operation
+	748 = opening hours
+
+POR Location and/or related time information
+PRD Product identification
+RFR Reference
+	Railway use	This segment triggers Group 5. It is used to identify a location reference related to the loca-tion described in ALS.
+	The relationship between locations is given by element 1153.This can be:
+	•	Where 1153 = X01, element 1154 contains a reservation identifier for the ALS location (1153 = X01).In this case the remaining segments of Group 5 (MES and RLS) are not used.
+	•	Where element 1153 = AWN, elements 1154 contains the timetable identifier of a location (location name code) to which the location described in ALS is related In this case element 
+
+RLS Relationship
+		RLS+13+6'	There is a (pedestrian) connection from x   to y in context
+
+SER Facility information 
+  TafTsi B.4..9039
+	Value	Name
+	2	First-class sleepers
+	3	Standard class sleepers
+	4	First-class seats
+	5	Second-class seats
+	6	First-class couchettes
+	7	Second-class couchettes
+	8	Sleeperette
+	9	Restaurant
+	11	First-class sleeper, single
+	12	First-class sleeper, special
+	13	First-class sleeper, double
+	14	Vehicle transport
+	15	Second-class, sleeper, T2
+	16	Second-class sleeper, T3
+	17	Second-class sleeper T4
+	18	First-class sleeper, single, shower
+	19	First-class sleeper, double, shower
+	20	Non-smoker service
+	21	Heavily disabled
+	24	Baby room
+	26	Bicycle transport
+	28	Wheelchair access
+	33	Video coach
+	34	Mini-bar
+	36	Panorama coach
+	44	Telephone
+	45	Power supply
+	46	Pullmann coach
+	47	Bar
+	48	Family compartment
+	50	Buffet machine
+	54	Premium class
+	55	Preferente
+	56	Turista
+	57	First-class sleeper, single, shower, WC
+	58	First-class sleeper, double shower, WC, 
+	59	Second class sleeper, T3, shower, WC
+	60	Second class sleeper double
+	61	Second class sleeper double shower/toilets
+	62	Second-class, couchette, two-bed, C2
+	63	Second-class, couchette, four-bed, C4
+	64	Second-class, couchette, six-bed, C6
+	65	Second class couchette wheelchair
+	101	Metro connection
+	102	Taxi connection
+	103	Bus connection
+	104	Tram connection
+	105	2nd Class couchette five beds C5
+ 
+taf tsi B.4.4049 - Name: Certainty description code
+X01 Connection guaranteed  
+X02 Connection normally guaranteed
+X03 Connection not guaranteed  
+X04 Connection never  guaranteed
+
+TIZ Time zone information
+TRF Traffic restriction details
+UIH Interactive message header
+UIT Interactive message trailer 
+
+TapTsi B.4.7009 
+	3 Plane 
+	8 high speed train  
+	9 Intercity  
+	10 Interregional   
+	11 Regional regional 
+	12 (sub)Urban regional train 
+	13 Night train 
+	14 Motor rail service transporting passenger's 
+	15 Mountain train  
+	16 Historic train  
+	31 Coach group G 
+	32 Bus
+	33 Ship   
+	34 Ordered and shared taxi 
+	35 Tram Tram 
+	36 Underground  
+	37 Train General indication of train as
+	46 TAJ TAJ Day car train
+	47 TAC TAC Car sleeper train, motor rail (CST) 
+	48 SAE SAE Unaccompanied car service, motor rail 
+	49 EIC EkspresIC  
+	50 EC EuroCity 
+	51 ICE ICE 
+	52 AVE AVE 
+	53 EIL EUROSTAR Eurostar
+	54 Talgo
+	55 OTU Oresundstog Oresundstog
+	56 TGV TGV TGV Bruxelles – Lille / Province
+	57 TGV TGV TGV Geneve - Méditerranée
+	58 TRN Intercités Intercités
+	59 AE ALLEGRO  
+	60 ECB EuroCity Brenner 
+	62 Suburban service
+	63 IC Intercity  
+	64 Hotel Train
+	65 Ferry hydrofoil
+	66 IC Intercity Inter City Lyn
+	67 TRN
+	68 International
+	69 Express
+	70 EN EuroNight Euro Night
+	71 HST High-speed train High-speed train
+	72 TRN TRAIN Train SNCF
+	73 TGV Sud-Est
+	74 TGV Atlantique
+	75 TGV T Nord
+	76 TGV LYRIA TGL
+	77 TGV Duplex
+	79 TGV Est
+	80 TGV Interconnexion
+	81 TGV France-Espagne 
+	82 THALYS Thalys
+	83 Ferry hovercraft
+	84 regional train
+	85 WTE Wilhelm Tell Express
+	86 CNL City Night Line
+	87 PENDO
+
+
+(C) DAT4PT 2022
+  -->
+	<PublicationTimestamp>2022-12-17T09:30:46.0Z</PublicationTimestamp>
+	<ParticipantRef>SYS001</ParticipantRef>
+	<!-- ======WHAT WAS REQUESTED ========== -->
+	<PublicationRequest version="1.0">
+		<!-- Narrative: The header records metadata about  when   the data  was generated and which system emitted it.-->
+		<RequestTimestamp>2022-12-17T09:30:47.0Z</RequestTimestamp>
+		<ParticipantRef>SYS002</ParticipantRef>
+	</PublicationRequest>
+	<Description>UIC Location data example</Description>
+	<!--- =============== RESULTS =========== -->
+	<dataObjects>
+		<CompositeFrame version="1" id="TSDUPD-example">
+			<Description>Draft example to map a TSDUPD location data set into NeTEx.</Description>
+			<!--  Narrative:  The result data is organised within a COMPOSITE FRAME, containing other frames -->
+			<!--- ======= CODESPACEs======== -->
+			<!--  Narrative:  The code spaces declare a globally unique context for the identifiers of data elements. This allows many 
+                  different data sets to be combined without clashes even if they use the same data sets -->
+			<codespaces>
+				<Codespace id="op_cs">
+					<Xmlns>op</Xmlns>
+					<XmlnsUrl>http://www.operator.gr/</XmlnsUrl>
+					<Description>Operator's data - specific to operator</Description>
+				</Codespace>
+				<Codespace id="uic_cs">
+					<Xmlns>uic</Xmlns>
+					<XmlnsUrl>http://www.uic.org/</XmlnsUrl>
+					<Description>UIC stop  and RU/operator data - standardised across companies</Description>
+				</Codespace>
+			</codespaces>
+			<!--- =======FRAME DEFAULTS======== -->
+			<FrameDefaults>
+				<!-- Narrative: This codespace will be assumed for all elements that do not declare one -->
+				<DefaultCodespaceRef ref="op_cs"></DefaultCodespaceRef>
+			</FrameDefaults>
+			<frames>
+				<SiteFrame version="any" id="TSDUPD-example">
+					<!-- Narrative:  A frame used to declare  the physical stops and related entities  -->
+					<!-- =========== Topographic Places==== -->
+					<topographicPlaces>
+						<TopographicPlace version="1" id="gr@piraeus’">
+							<!-- Narrative: Additional declaration a topographic place  (Not in TAPTSI  -->
+							<Descriptor>
+								<Name>Piraeus</Name>
+							</Descriptor>
+						</TopographicPlace>
+					</topographicPlaces>
+					<!-- =========== StopPlaces  ==== -->
+					<stopPlaces>
+						<StopPlace version="any" id="uic:007300101">
+							<!--  Narrative:  Declares the physical stop -->
+							<!-- ALS+29+007300101:Piraeus+375656N+233833E’   -->
+							<validityConditions>
+								<AvailabilityCondition version="any" id="uic:007300101">
+									<!-- POP+273:2021-08-12/2999-12-31’  -->
+									<FromDate>2021-08-12T12:00:00</FromDate>
+									<ToDate>2999-12-31T12:00:00</ToDate>
+								</AvailabilityCondition>
+							</validityConditions>
+							<Name>Piraeus</Name>
+							<!-- IFT+X02+Piraeus’ -->
+							<ShortName>Piraeus</ShortName>
+							<Centroid>
+								<Location>
+									<!-- ALS+29+007300101:Piraeus+375656N+233833E’   -->
+									<Longitude>+23.3833</Longitude>
+									<Latitude>+37.5656</Latitude>
+								</Location>
+							</Centroid>
+							<AccessibilityAssessment version="any" id="uic:007300101">
+								<!-- Narrative - High level accessibility attributes for Piraes station -->
+								<!-- SER+21’,  SER+28’ -->
+								<MobilityImpairedAccess>true</MobilityImpairedAccess>
+								<limitations>
+									<AccessibilityLimitation>
+										<WheelchairAccess>true</WheelchairAccess>
+									</AccessibilityLimitation>
+								</limitations>
+							</AccessibilityAssessment>
+							<alternativeNames>
+								<AlternativeName version="any" id="uic:6000036_fr">
+									<!-- IFT+AGW::::FR+Pir_French’ I ’-->
+									<Lang>fr</Lang>
+									<NameType>translation</NameType>
+									<Name lang="fr">Pir_Frenc</Name>
+								</AlternativeName>
+								<AlternativeName version="any" id="uic:6000036_it">
+									<!-- IFT+AGW::::IT+Pir_Italian’-->
+									<Lang>it</Lang>
+									<NameType>translation</NameType>
+									<Name lang="it">Pir_Italian’--</Name>
+								</AlternativeName>
+							</alternativeNames>
+							<facilities>
+								<SiteFacilitySet version="any" id="uic:007300101">
+									<!-- SER+21’,  SER+28’ -->
+									<AssistanceFacilityList>wheelchairUse boardingAssistance</AssistanceFacilityList>
+									<MobilityFacilityList>suitableForHeaviliyDisabled</MobilityFacilityList>
+									<!-- others are possible -->
+								</SiteFacilitySet>
+							</facilities>
+							<TopographicPlaceRef version="1" ref="gr@piraeus’">Added info to   into Place </TopographicPlaceRef>
+							<Locale>
+								<!--TIZ+EET:2’  -->
+								<TimeZoneOffset>+1</TimeZoneOffset>
+							</Locale>
+							<OperatorRef versionRef="EXTERNAL" ref="uic:0073"/>
+							<!-- ALS+29+ ... -->
+							<TransportMode>rail</TransportMode>
+							<StopPlaceType>railStation</StopPlaceType>
+						</StopPlace>
+					</stopPlaces>
+				</SiteFrame>
+				<ServiceFrame version="any" id="TSDUPD-example">
+					<Name>Location / STation TSDUPD example </Name>
+					<scheduledStopPoints>
+						<ScheduledStopPoint version="any" id="uic:007300101">
+							<!--  Narrative:  Declares the timetable stop -->
+							<alternativeTexts>
+								<!--  Narrative:  DTranslatiosn of namep -->
+								<AlternativeText attributeName="Name" version="any" id="uic:007300101" useForLanguage="fr" order="1">
+									<!-- IFT+AGW::::FR+Pir_French’ I ’-->
+									<Text lang="fr">Pir_French</Text>
+								</AlternativeText>
+								<AlternativeText attributeName="Name" version="any" id="uic:007300101" useForLanguage="it" order="2">
+									<!-- IFT+AGW::::IT+Pir_Italian’-->
+									<Text lang="it">Pir_Italian</Text>
+								</AlternativeText>
+							</alternativeTexts>
+							<Name lang="en">Piraeus</Name>
+							<!-- 	IFT+X02+Piraeus’ -->
+							<Location>
+								<!-- ALS+29+007300101:Piraeus+375656N+233833E’ -->
+								<Longitude>+23.3833</Longitude>
+								<Latitude>+37.5656</Latitude>
+							</Location>
+							<tariffZones>
+								<!-- Narrative: Assigns Piereas to a tariff zone that has can be used as a reservation code 
+                                  A tariff zone can be shared with other stops. ( If it was just an alias code for the individual stop -->
+								<!-- RFR+X01:007300101’		-->
+								<TariffZoneRef version="any" ref="uic:007300101_tariff"/>
+							</tariffZones>
+							<!-- IFT+X02+Piraeus’ -->
+							<ShortName>Piraeus</ShortName>
+							<PublicCode>PIR</PublicCode>
+							<StopType>railStation</StopType>
+							<!-- CNY+GR’ -->
+							<CountryRef ref="gr"/>
+						</ScheduledStopPoint>
+					</scheduledStopPoints>
+					<connections>
+						<!-- Narrative:  Declaration of connection times at station -->
+						<SiteConnection version="any" id="007300101">
+							<Name>Default internal transfer duration for Piraeus</Name>
+							<!-- Narrative:  General default for Piraeus -->
+							<TransferDuration>
+								<DefaultDuration>PT5M</DefaultDuration>
+								<!-- POP+87:0005 -->
+								<!-- 87 = Necessary connection Time -->
+							</TransferDuration>
+							<BothWays>true</BothWays>
+							<From>
+								<ScheduledStopPointRef version="any" ref="uic:007300101"/>
+							</From>
+							<To>
+								<ScheduledStopPointRef version="any" ref="uic:007300101"/>
+							</To>
+						</SiteConnection>
+						<DefaultConnection version="any" id="007300101@intercity_rail">
+							<!-- Narrative:  Declaration of mode specific connection times at station -->
+							<!-- NB: Netex :  Declaration of connection times at station -->
+							<Name>Default internal transfer duration for Piraeus for intercity</Name>
+							<Description>CHECK - MAY BE WRONG INTERPRETATION: SEE INTERACHNAGE RULE </Description>
+							<TransferDuration>
+								<DefaultDuration>PT8M</DefaultDuration>
+								<!-- PRD+::::54::0008’	-->
+							</TransferDuration>
+							<BothWays>true</BothWays>
+							<From>
+								<TransportMode>rail</TransportMode>
+							</From>
+							<To>
+								<TransportMode>intercityRail</TransportMode>
+								<!-- TapTsi B.4.7009    	54 Talgo -->
+								<!-- TapTsi B.4.7009  63 IC Intercity  68 International -->
+							</To>
+						</DefaultConnection>
+						<DefaultConnection version="any" id="007300101@urban_rail">
+						<!-- Narrative : if this is general default for any station, use  DEFAULT CONNECTION 
+                              If specific to Piraeus use a SITE CONNECTION or INTERCHANGE RULE  - se e below-->
+                               <!-- NB mode is  not alwAYS  equivalent to PRODUCT    COULD BE IMPROVED -->
+							<Name>Default internal transfer duration for   for intercity</Name>
+							<Description>CHECK - MAY BE WRONG INTERPRETATION</Description>
+							<TransferDuration>
+								<DefaultDuration>PT7M</DefaultDuration>
+								<!-- 	PRD+:::53:::0007’	-->
+							</TransferDuration>
+							<BothWays>true</BothWays>
+							<From>
+								<TransportMode>all</TransportMode>
+							</From>
+							<To>
+								<TransportMode>urbanRail</TransportMode>
+							</To>
+						</DefaultConnection>
+						<Connection version="any" id="007300101+007350001’">
+							<Name>  Possibility of transfer and duration for from  Piraeus to other stop  007350001’</Name>
+							<!-- 	RFR+AWN:007350001’ 	MES+8:MIN’-->
+							<TransferDuration>
+								<!-- 		MES+8:MIN’-->
+								<DefaultDuration>PT8M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>true</BothWays>
+							<From>
+								<TransportMode>rail</TransportMode>
+								<ScheduledStopPointRef version="any" ref="uic:007300101"/>
+							</From>
+							<To>
+								<TransportMode>rail</TransportMode>
+								<ScheduledStopPointRef versionRef="EXTERNAL" ref="uic:007350001’"/>
+							</To>
+						</Connection>
+					</connections>
+					<tariffZones>
+						<TariffZone version="any" id="uic:007300101_tariff">
+							<!-- Narrative: This could be declared externally (EDIFACT stream  does not declare) -->
+							<!-- RFR+X01:007300101’		-->
+							<Name> Piraeus Tariff Zone</Name>
+							<members>
+								<!-- Narrative: There could be other stations in the group.  -->
+								<ScheduledStopPointRef version="any" ref="uic:007300101">Piraeus</ScheduledStopPointRef>
+							</members>
+						</TariffZone>
+					</tariffZones>
+					<stopAssignments>
+						<PassengerStopAssignment version="any" id="uic:007300101" order="1">
+							<!-- Narrative: this shows how a timetabled stop (SCHEDULED STOP POINT) can be explicitly  associated  with a physical stop (STOP PLACE.  If they are given the same identifers, this could be inferred -->
+							<Name>Piraeus</Name>
+							<!-- 	IFT+X02+Piraeus’ -->
+							<Description>Assign Timetable Station to Physical station. </Description>
+							<ScheduledStopPointRef version="any" ref="uic:007300101"/>
+							<StopPlaceRef version="any" ref="uic:007300101"/>
+							<!--		<QuayRef version="any" ref="uic:6000036@2"/>  -->
+						</PassengerStopAssignment>
+					</stopAssignments>
+				</ServiceFrame>
+				<TimetableFrame version="any" id="TSDUPD-example">
+					<!-- =========== interchanges-->
+					<interchangeRules>
+						<InterchangeRule version="any" id="007300101@54">
+							<!-- Narrative: Here we use interchange rule to declare product specific transfer times -->
+							<!-- NB This is not quite equivalent and could eb improved -->
+							<Name>Transfer to service type  54</Name>
+							<!-- 	PRD+:::53:::0007’	-->
+							<MinimumTransferTime>PT8M</MinimumTransferTime>
+							<DistributorFilter>
+								<OperatorRef versionRef="EXTERNAL" ref="uic:54"/>
+								<LineInDirectionRef>
+									<ExternalDirectionRef type="uicType" ref="54"/>
+									<!-- TapTsi B.4.7009 54 Talgo ! -->
+									<!-- NB Work around to handle this case NeTEX needs to add additional filter -->
+								</LineInDirectionRef>
+								<ScheduledStopPointRef version="any" ref="uic:007300101"/>
+							</DistributorFilter>
+						</InterchangeRule>
+						<InterchangeRule version="any" id="007300101@any+1073’">
+							<!-- Narrative: Here we use interchange rule to declare operator specific transfer times -->
+							<Name>Transfer to operator 1073 </Name>
+							<!-- PRD+::::::0006+*1073’ -->
+							<MinimumTransferTime>PT6M</MinimumTransferTime>
+							<DistributorFilter>
+								<TransportMode>rail</TransportMode>
+								<OperatorRef versionRef="EXTERNAL" ref="uic:1073"/>
+								<AllLines/>
+								<ScheduledStopPointRef version="any" ref="uic:007300101"/>
+							</DistributorFilter>
+						</InterchangeRule>
+						<InterchangeRule version="any" id="007300101@1073+any">
+							<Name>Transfer from operator 1073 </Name>
+							<!--  PRD+::::::0005+1073’ 	-->
+							<MinimumTransferTime>PT5M</MinimumTransferTime>
+							<FeederFilter>
+								<TransportMode>rail</TransportMode>
+								<OperatorRef versionRef="EXTERNAL" ref="uic:1073"/>
+								<AllLines/>
+								<ScheduledStopPointRef version="any" ref="uic:007300101"/>
+							</FeederFilter>
+						</InterchangeRule>
+						<InterchangeRule version="any" id="007300101@1073+1180">
+							<Name>Transfer between operator 1073  and operator 1180</Name>
+							<!-- ?	PRD+:::68:84::0009+1073*1180’	 -->
+							<MinimumTransferTime>PT9M</MinimumTransferTime>
+							<FeederFilter>
+								<TransportMode>rail</TransportMode>
+								<OperatorRef versionRef="EXTERNAL" ref="uic:1073"/>
+								<LineInDirectionRef>
+									<ExternalDirectionRef type="uicType" ref="68"/>
+									<!-- TapTsi B.4.7009    68  Internationa; -->
+									<!-- NB Work around to handle this case GAP NeTEX needs to add additional filter  for Product /service type-->
+								</LineInDirectionRef>
+								<ScheduledStopPointRef version="any" ref="uic:007300101"/>
+							</FeederFilter>
+							<DistributorFilter>
+								<TransportMode>rail</TransportMode>
+								<OperatorRef versionRef="EXTERNAL" ref="uic:1180"/>
+								<LineInDirectionRef>
+									<ExternalDirectionRef type="uicType" ref="84"/>
+									<!-- TapTsi B.4.7009 84  Regional Train; -->
+									<!-- NB  Work around to handle this case GAP NeTEX needs to add additional filter for Product /service type-->
+								</LineInDirectionRef>
+								<ScheduledStopPointRef version="any" ref="uic:007300101"/>
+							</DistributorFilter>
+						</InterchangeRule>
+					</interchangeRules>
+				</TimetableFrame>
+			</frames>
+		</CompositeFrame>
+	</dataObjects>
+</PublicationDelivery>

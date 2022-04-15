@@ -1,0 +1,1290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PublicationDelivery xmlns="http://www.netex.org.uk/netex" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:siri="http://www.siri.org.uk/siri" version="1.1" xsi:schemaLocation="http://www.netex.org.uk/netex ../../../xsd/NeTEx_publication.xsd">
+	<PublicationTimestamp>2001-12-17T09:30:47.0Z</PublicationTimestamp>
+	<ParticipantRef>SYS001</ParticipantRef>
+	<!--
+EIRE NeTEx Profile: NPTG Data Example
+=============
+This Example shows an small extract of actual  NaPTAN   data for some Irish  NaPTAN Stop Points  and Stop AReas   encoded  in NeTEx  format
+	Both physical stop encodings (as NeTEx STOP PLACES & QUAYs in a SITE FRAME ) and timetabled stop encodings (as NeTEx  STOP POINTs and STOP AREAs) are given.
+
+Some of the original NapTAN encoding is included as comments
+A simplified version is also available as a separate XML document  that leaves out comments and NapTAN type annotations.
+
+ It includes: 
+	 Example of an onstreet bus stop (NaPTAN STopArea Belcoo, + NaPTAN STopPoint Belcoo
+	 Example of an onstreet bus pair, in stop area (NaPTAN STopArea Sean McDermott Street, + NaPTAN STopPoint Sean McDermott Street + NaPTAN STopPoint MalboroughSTreet
+	 Example of an onstreet bus pair, no stop area(No NAPTAN STOP AREA, + NaPTAN STopPoint Dungannon + NaPTAN STopPoint Dungannon
+	 Example of nested StopAreas  NaPTAN STopArea Belcoo, parent  NaPTAN STopArea Blacklion
+     Example of a rail station stop area  (NaPtanSTopArea for Carlow rail STation   
+
+The example includes an encoding of a standard set of data values that can be used to describe teh profile and validate additional Irish code values
+
+(C) NTA 2020
+
+==========================================
+1. Overview:
+
+1.1 NaPTan Stop Points
+
+NaPTAN describes both   timetabled and physical   aspects of  stop in a  single entity, Stop Point.   a NaPTAN stop point thus represents variously a Station,  a stop on the street, an entrance 
+NeTEx separates  the concepts of the stop in the schedule     (SCHEDULED STOP POINT )  from the concept  of a stop as a physical  localtion  or group of locations  (STOP PLACE, QUAY, BOARDING POINT, ENTRANCE)
+
+              
+A NeTEx  STOP PLACE (and QUAY) can be  associated   with a  SCHEDULED STOP POINT.   using a STOP ASSIGNMENT
+
+1.2 NaPTan Stop  Areas
+
+  Each NaPTAN StopArea can be represented by a  NeTEx STOP AREA.  In particular this is useful where StopAreas are used to group multimodal stops at an interchange,
+
+  In Irish NapTAN usage, each StopARe also typcially inidcates a STpopPlace (ie rail station or on street pair) .
+
+1.3 Administrative areas
+
+The Administrative are is indicated by a ResponsibiltySetRef .  A separate responsibility set is defined in NPTG for each admin area. 
+
+================================
+2.  Summary
+
+2.1  A COMPOSITE FRAME is used  to hold the whole data set, with TYPE OF FRAME = IE_NAPTAN_data
+
+:::::::::::::
+2.2 A SERVICE FRAME is used to hold the main stop content data ( STOP PLACEs and STOP AREAs etc ,) :  with TYPE OF FRAME = nptg:IE_NAPTAN_profile_payload_data
+       NapTAn data is groupeed by AREA, so for demo purposes a Separate farme is used for each Administrative Area
+				 
+2.3 Each NaPTAN stop area  is mapped to an element of a  NeTEx STOP AREA, and identified with the same identifier  Ni.e. AtcoCode as in NaPTA
+			-	NaPTAN  StopArea  => NeTEx StopArea
+			-	NaPTAN ParentStopAreaRef => NeTEx ParentStopAreaRef. 
+
+The Type of the NaPTAN StopArea can   be represented with a  NeTExTypeOfZone code
+
+2.4 Each NaPTAN point type is mapped to an element of a  NeTEx STOP PLACE, and identified with the same identifier i.e. AtcoCode.
+
+The NaPTAN StopClassification and StopType can be used to determine how each type of stop is handled
+
+2.4.1    Each NaPTAN StopPoint that is an interchange   (i.e. of NaPTAN ‘access area’ stop type RLY, MET, etc) can be represented by a NeTEx STOP PLACE.
+			-	NaPTAN StopPoint (AccessArea) => NeTEx StopPlace.
+
+2.4.2    Each NaPTAN StopPoint that is a platform or other physical point of access (i.e. of NaPTAN stop type, BCS, PLT, etc ) can be represented by a NeTEx QUAY within a STOP PLACE given by the associated NaPTAN interchange.
+			-	NaPTAN StopPoint (Physical Stop) =>NeTEx StopPlace / Quay.
+
+2.4.3    Each NaPTAN StopPoint that is an entrance to an interchange (.e. of NaPTAN stop type BSE, RSE, FER, etc ) can be represented by a NeTEx ENTRANCE within a STOP PLACE given by the associated NaPTAN interchange
+			-	NaPTAN StopPoint (Entrance) =>NeTEx  StopPlace / Entrance.
+
+2.4.4  Each NaPTAN StopPoint that is not part of an interchange (mostly just on-street bus stops of type  BCT,) can be represented by a NeTEx QUAY; in this case an additional STOP PLACE will have to be created to contain it.  Pairs of on street stops (as indicated by a NaPTAN Stop Are of type GCLS) can be assigned to a single STOP PLACE
+
+
+2.5 Each NaPTAN point type is also mapped to  NeTEx SCHEDULED STOP POINT.   
+              ATtributes that relate to the timeing (eg default wait tim) can be assigned to the   CHEDULED STOP POINT.
+ 
+2.6  A NeTEx STOP PLACE ASSIGNMENT is used to created to explicitly link the STOP PLACE  attributes to its assoicated  SCHEDULED STOP POINT  .   
+::::::::::::::::::::::
+3.0 Metadata
+3.1.  A Resource FRAME is used  to provide a set of  Frame Type to annotate the frames data can be validated
+				This defines  values for TYPEs OF FRAME,  
+3.2.  A Resource FRAME is used  to provide a set of  NaPTAN code values against which stop  data can be validated
+				This defines  values for  DATA SOURCEs, RESPONSIBILITY SETs,  TYPEs OF ZONE, TYPEs OF PLACE
+					e.g.  NaPTAN StopPoint.StopClassifcation    ==>  NeTEx TypeOfPlace, TypeOfZone
+
+3.3  A Resourcee FRAME is used  to provide a set of  NPTG  code values against which the  NPTG data elements  can be validated
+				This defines  values for  DATA SOURCEs, RESPONSIBILITY SETs,  TYPEs OF ZONE, TYPEs OF PLACE
+					e.g.   NPTG  SourceLocalityType    ==>  NeTEx TypeOfPlace
+  
+-->
+	<!--- ======WHAT WAS REQUESTED ========== -->
+	<PublicationRequest>
+		<RequestTimestamp>2017-01-01T00:00:00Z</RequestTimestamp>
+		<Description>Request for  NaPTan  data  are </Description>
+		<topics>
+			<NetworkFrameTopic>
+				<Current/>
+				<TypeOfFrameRef ref="eix:IE:NTA:TypeOfFrame_IE_PI_STOP_OFFER:EIRE_NP" versionRef="any"/>
+				<NetworkFilterByValue>
+					<objectReferences>
+						<TransportAdministrativeZoneRef ref="nptgAdminArea:700"/>
+						<TransportAdministrativeZoneRef ref="nptgAdminArea:086"/>
+						<TransportAdministrativeZoneRef ref="nptgAdminArea:110"/>
+					</objectReferences>
+					<NetworkRef ref="NAPTAN" versionRef="napt:v2.4"/>
+				</NetworkFilterByValue>
+			</NetworkFrameTopic>
+		</topics>
+	</PublicationRequest>
+	<!--- =============== RESULTS =========== -->
+	<dataObjects>
+		<CompositeFrame version="1" id="epd:IE:NTA:CompositeFrame_IE_PI_STOP_OFFER:NAPTAN-700+086+110:napt" responsibilitySetRef="napt:stop_data" dataSourceRef="napt:NTA">
+			<Name>Sample extract of NaPTAn data encoded a in NeTEx</Name>
+			<TypeOfFrameRef ref="eix:IE:NTA:TypeOfFrame_IE_PI_STOP_OFFER:EIRE_NP" version="eix:v1.0"/>
+			<!-- ==== CODESPACES == -->
+			<codespaces>
+				<CodespaceRef ref="eix_metadata"/>
+				<CodespaceRef ref="epd_data"/>
+				<CodespaceRef ref="napt_metadata"/>
+				<CodespaceRef ref="nptg_metadata"/>
+				<CodespaceRef ref="naptStop_data"/>
+			</codespaces>
+			<frames>
+				<!--   ======= PAYLOAD= ========================================================= -->
+				<!---   USING SEPARATE FRAMEs FOR EACH ADMIN   AREA   -->
+				<!--  ==== example STOPS FOR AdminArea 700  ========== -->
+				<SiteFrame id="epd:IE:NTA:SiteFr
+				ame_IE_PI_STOP:NAPTAN-700:napt" version="9.6" responsibilitySetRef="nptgAdminArea:700" dataSourceRef="napt:NTA">
+					<Name>Sample Stop and Stop Area data encoded NeTEx - Area 700</Name>
+					<TypeOfFrameRef ref="eix:IE:NTA:TypeOfFrame_IE_PI_STOP:EIRE_NP" version="eix:v1.0"/>
+					<FrameDefaults>
+						<DefaultCodespaceRef ref="naptStop_data"/>
+						<DefaultDataSourceRef ref="napt:NTA" version="napt:v2.4"/>
+						<DefaultResponsibilitySetRef ref="nptgAdminArea:700" versionRef="nptg:v2.1"/>
+					</FrameDefaults>
+					<!--  ======= NaPTAn Stop Data  ======   -->
+					<stopPlaces>
+						<StopPlace id="naptStopArea:852G000052" responsibilitySetRef="nptgAdminArea:852" created="2016-02-07T00:00:00" modification="new" changed="2016-08-18T11:08:06" version="18" status="active">
+							<!-- 	   NaPTAN encoding from which NeTEx encoding was taken:
+		<StopArea CreationDateTime="2106-02-07T00:00:00" Modification="new" ModificationDateTime="2016-08-18T11:08:06" RevisionNumber="18" Status="active">
+			<StopAreaCode>852G000052</StopAreaCode>
+			<Name xml:lang="en">Belcoo</Name>
+			<ParentStopAreaRef CreationDateTime="2019-12-20T13:22:22.4503623+01:00" Modification="new" ModificationDateTime="2019-12-20T13:22:22.4503623+01:00" Status="active">852G000056</ParentStopAreaRef>
+			<AdministrativeAreaRef>852</AdministrativeAreaRef>
+			<StopAreaType>GPBS</StopAreaType>
+			<Location>
+				<Translation>
+					<GridType>ITM</GridType>
+					<Easting>608351</Easting>
+					<Northing>838610</Northing>
+					<Longitude>-7.87171580603534</Longitude>
+					<Latitude>54.2961895173488</Latitude>
+				</Translation>
+			</Location>
+		</StopArea>
+-->
+							<Name lang="en">Belcoo</Name>
+							<ShortName lang="en">Belcoo</ShortName>
+							<types>
+								<TypeOfZoneRef version="napt:v2.1" ref="napt:StopAreaType@GPBS"/>
+							</types>
+							<Centroid>
+								<Location>
+									<Longitude>-7.871715806</Longitude>
+									<Latitude>54.29618952</Latitude>
+									<gml:pos srsName="ITM">608351  838610</gml:pos>
+								</Location>
+							</Centroid>
+							<StopPlaceType>onstreetBus</StopPlaceType>
+							<quays>
+								<Quay id="naptStop:7000B6310001" version="11">
+									<!-- 	   NaPTAN encoding from which NeTEx encoding was taken:
+	<StopPoint created="2106-02-07T00:00:00" modification="new" changed="2016-01-14T18:03:22" version="11" status="active">
+			<AtcoCode>7000B6310001</AtcoCode>
+			<PlateCode>631001</PlateCode>
+			<Descriptor>
+				<CommonName xml:lang="en">Belcoo</CommonName>
+				<ShortCommonName xml:lang="en">Belcoo</ShortCommonName>
+				<Street xml:lang="en">N16</Street>
+			</Descriptor>
+			<AlternativeDescriptors>
+				<Descriptor CreationDateTime="2019-12-20T12:48:19.2835736+01:00" ModificationDateTime="2019-12-20T12:48:19.2835736+01:00">
+					<ShortCommonName xml:lang="ga">Béal Cú</ShortCommonName>
+				</Descriptor>
+			</AlternativeDescriptors>
+			<Place>
+				<LocalityCentre>false</LocalityCentre>
+				<Location>
+					<Translation>
+						<GridType>ITM</GridType>
+						<Easting>608346</Easting>
+						<Northing>838613</Northing>
+						<Longitude>-7.87179252976785</Longitude>
+						<Latitude>54.296216555426</Latitude>
+					</Translation>
+				</Location>
+			</Place>
+			<StopClassification>
+				<StopType>BCT</StopType>
+				<OnStreet>
+					<Bus>
+						<BusStopType>MKD</BusStopType>
+						<TimingStatus>OTH</TimingStatus>
+						<MarkedPoint>
+							<Bearing>
+								<CompassPoint>NE</CompassPoint>
+							</Bearing>
+						</MarkedPoint>
+					</Bus>
+				</OnStreet>
+			</StopClassification>
+			<StopAreas>
+				<StopAreaRef CreationDateTime="2019-12-20T12:48:19.4083738+01:00" Modification="new" ModificationDateTime="2019-12-20T12:48:19.4083738+01:00" Status="active">852G000052</StopAreaRef>
+			</StopAreas>
+			<AdministrativeAreaRef>700</AdministrativeAreaRef>
+		</StopPoint>
+
+-->
+									<Name lang="en">Belcoo</Name>
+									<ShortName lang="en">Belcoo</ShortName>
+									<Centroid>
+										<Location>
+											<Longitude>-7.87179252976785</Longitude>
+											<Latitude>54.296216555426</Latitude>
+											<gml:pos srsName="ITM">608346 838613</gml:pos>
+										</Location>
+									</Centroid>
+									<placeTypes>
+										<TypeOfPlaceRef version="napt:v2.1" ref="napt:StopType@BCT"/>
+										<TypeOfPlaceRef version="napt:v2.1" ref="napt:StopType@MKD"/>
+									</placeTypes>
+									<alternativeNames>
+										<AlternativeName id="naptStop:260010966" version="11" created="2019-12-20T12:48:19.2835736+01:00" changed="2019-12-20T12:48:19.2835736+01:00">
+											<Name lang="ga">Béal Cú</Name>
+										</AlternativeName>
+									</alternativeNames>
+									<TransportMode>bus</TransportMode>
+									<PublicCode>631001</PublicCode>
+									<QuayType>busStop</QuayType>
+								</Quay>
+							</quays>
+						</StopPlace>
+						<StopPlace id="naptStop:700000009127-GBPS" responsibilitySetRef="nptgAdminArea:700" created="2016-02-07T00:00:00" modification="new" changed="2016-02-07T06:28:16" version="0" status="active">
+							<!-- 	   Created as new parent  -->
+							<Name lang="en">Dungannon</Name>
+							<types>
+								<TypeOfZoneRef version="napt:v2.1" ref="napt:StopAreaType@GPBS"/>
+							</types>
+							<StopPlaceType>onstreetBus</StopPlaceType>
+							<quays>
+								<Quay id="naptStop:700000009127" responsibilitySetRef="nptgAdminArea:700" created="2016-02-07T00:00:00" modification="new" changed="2016-02-07T06:28:16" version="0">
+									<!-- 	   NaPTAN encoding from which NeTEx encoding was taken:
+<StopPoint  ModificationDateTime="2106-02-07T06:28:16" RevisionNumber="0" Status="active">
+			<AtcoCode>700000009127</AtcoCode>
+			<Descriptor>
+				<CommonName xml:lang="en">Dungannon</CommonName>
+				<ShortCommonName xml:lang="en">Dungannon</ShortCommonName>
+			</Descriptor>
+			<AlternativeDescriptors>
+				<Descriptor CreationDateTime="2019-12-20T12:48:19.5955742+01:00" ModificationDateTime="2019-12-20T12:48:19.5955742+01:00">
+					<ShortCommonName xml:lang="ga">Dún Geanainn</ShortCommonName>
+				</Descriptor>
+			</AlternativeDescriptors>
+			<Place>
+				<LocalityCentre>false</LocalityCentre>
+				<Location>
+					<Translation>
+						<GridType>ITM</GridType>
+						<Easting>679402</Easting>
+						<Northing>862088</Northing>
+						<Longitude>-6.77414204945787</Longitude>
+						<Latitude>54.5010015533382</Latitude>
+					</Translation>
+				</Location>
+			</Place>
+			<StopClassification>
+				<StopType>BCT</StopType>
+				<OnStreet>
+					<Bus>
+						<BusStopType>MKD</BusStopType>
+						<TimingStatus>OTH</TimingStatus>
+					</Bus>
+				</OnStreet>
+			</StopClassification>
+			<AdministrativeAreaRef>700</AdministrativeAreaRef>
+		</StopPoint>
+-->
+									<Name lang="en">Dungannon</Name>
+									<ShortName lang="en">Dungannon</ShortName>
+									<Centroid>
+										<Location>
+											<Longitude>-6.77414204945787</Longitude>
+											<Latitude>-6.77414204945787</Latitude>
+											<gml:pos srsName="ITM">679402 862088</gml:pos>
+										</Location>
+									</Centroid>
+									<placeTypes>
+										<TypeOfPlaceRef version="napt:v2.1" ref="napt:StopType@BCT"/>
+										<TypeOfPlaceRef version="napt:v2.1" ref="napt:StopType@MKD"/>
+									</placeTypes>
+									<alternativeNames>
+										<AlternativeName id="naptStop:700000009127" version="11" created="2016-02-07T00:00:00" modification="new" changed="2016-02-07T06:28:16">
+											<Name lang="ga">Dún Geanain</Name>
+										</AlternativeName>
+									</alternativeNames>
+									<TransportMode>bus</TransportMode>
+									<QuayType>busStop</QuayType>
+								</Quay>
+								<Quay id="naptStop:700000009239" responsibilitySetRef="nptgAdminArea:700" created="2016-02-07T00:00:00" modification="new" changed="2017-03-14T16:36:41" version="14">
+									<!-- 	   NaPTAN encoding from which NeTEx encoding was taken:
+		<StopPoint CreationDateTime="2106-02-07T00:00:00" Modification="new" ModificationDateTime="2017-03-14T16:36:41" RevisionNumber="14" Status="active">
+			<AtcoCode>700000009239</AtcoCode>
+			<Descriptor>
+				<CommonName xml:lang="en">Dungannon</CommonName>
+				<ShortCommonName xml:lang="en">Dungannon</ShortCommonName>
+			</Descriptor>
+			<AlternativeDescriptors>
+				<Descriptor CreationDateTime="2019-12-20T12:48:19.6579743+01:00" ModificationDateTime="2019-12-20T12:48:19.6579743+01:00">
+					<ShortCommonName xml:lang="ga">Dún Geanainn</ShortCommonName>
+				</Descriptor>
+			</AlternativeDescriptors>
+			<Place>
+				<LocalityCentre>false</LocalityCentre>
+				<Location>
+					<Translation>
+						<GridType>ITM</GridType>
+						<Easting>679402</Easting>
+						<Northing>862088</Northing>
+						<Longitude>-6.77414204945787</Longitude>
+						<Latitude>54.5010015533382</Latitude>
+					</Translation>
+				</Location>
+			</Place>
+			<StopClassification>
+				<StopType>BCT</StopType>
+				<OnStreet>
+					<Bus>
+						<BusStopType>CUS</BusStopType>
+						<TimingStatus>OTH</TimingStatus>
+					</Bus>
+				</OnStreet>
+			</StopClassification>
+			<AdministrativeAreaRef>700</AdministrativeAreaRef>
+		</StopPoint>
+
+-->
+									<Name lang="en">Dungannon</Name>
+									<ShortName lang="en">Dungannon</ShortName>
+									<Centroid>
+										<Location>
+											<Longitude>-6.77414204945787</Longitude>
+											<Latitude>54.5010015533382</Latitude>
+											<gml:pos srsName="ITM">679402 862088</gml:pos>
+										</Location>
+									</Centroid>
+									<placeTypes>
+										<TypeOfPlaceRef version="napt:v2.1" ref="napt:StopType@BCT"/>
+										<TypeOfPlaceRef version="napt:v2.1" ref="napt:StopType@CUS"/>
+									</placeTypes>
+									<alternativeNames>
+										<AlternativeName id="naptStop:700000009127" version="11" created="2016-02-07T00:00:00" modification="new" changed="2016-02-07T06:28:16">
+											<Name lang="ga">Dún Geanain</Name>
+										</AlternativeName>
+									</alternativeNames>
+									<TransportMode>bus</TransportMode>
+									<QuayType>busStop</QuayType>
+								</Quay>
+							</quays>
+						</StopPlace>
+						<!--  more stops for area 700 here   -->
+					</stopPlaces>
+				</SiteFrame>
+				<ServiceFrame id="epd:IE:NTA:ServiceFrame_IE_PI_STOP:NAPTAN-700:napt" version="9.6" responsibilitySetRef="nptgAdminArea:700" dataSourceRef="napt:NTA">
+					<Name>Sample Stop and Stop Area data encoded NeTEx - Area 700</Name>
+					<TypeOfFrameRef ref="eix:IE:NTA:TypeOfFrame_IE_PI_STOP:EIRE_NP" version="eix:v1.0"/>
+					<FrameDefaults>
+						<DefaultCodespaceRef ref="naptStop_data"/>
+						<DefaultDataSourceRef ref="napt:NTA" version="napt:v2.4"/>
+						<DefaultResponsibilitySetRef ref="nptgAdminArea:700" versionRef="nptg:v2.1"/>
+					</FrameDefaults>
+					<!--  ======= NaPTAN Stop Data  ======   -->
+					<scheduledStopPoints>
+						<ScheduledStopPoint id="naptStop:7000B6310001" responsibilitySetRef="nptgAdminArea:700" created="2106-02-07T00:00:00" modification="new" changed="2016-01-14T18:03:22" version="11" status="active">
+							<alternativeTexts>
+								<AlternativeText id="naptStop:7000B6310001" version="11" created="2106-02-07T00:00:00" changed="2016-01-14T18:03:22">
+									<Text lang="ga">Béal Cú</Text>
+								</AlternativeText>
+							</alternativeTexts>
+							<Name lang="en">Belcoo</Name>
+							<Location>
+								<Longitude>-7.87179252976785</Longitude>
+								<Latitude>54.296216555426</Latitude>
+								<gml:pos srsName="ITM">608346 838613</gml:pos>
+							</Location>
+							<stopAreas>
+								<StopAreaRef version="18" ref="naptStopArea:852G000052"/>
+							</stopAreas>
+							<ShortName lang="en">Belcoo</ShortName>
+							<PublicCode>631001</PublicCode>
+							<StopType>onstreetBus</StopType>
+							<TopographicPlaceRef ref="nptgLocality:E0822013"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint id="naptStop:700000009127" responsibilitySetRef="nptgAdminArea:700" created="2106-02-07T00:00:00" modification="new" changed="2016-02-07T06:28:16" version="0" status="active">
+							<alternativeTexts>
+								<AlternativeText id="naptStop:7000B6310001" version="0" created="2106-02-07T00:00:00" changed="2016-02-07T06:28:16">
+									<Text lang="ga">Dún Geanain</Text>
+								</AlternativeText>
+							</alternativeTexts>
+							<Name lang="en">Dungannon</Name>
+							<Location>
+								<Longitude>-6.77414204945787</Longitude>
+								<Latitude>-6.77414204945787</Latitude>
+								<gml:pos srsName="ITM">679402 862088</gml:pos>
+							</Location>
+							<TimingPointStatus>notTimingPoint</TimingPointStatus>
+							<StopType>onstreetBus</StopType>
+							<RequestMethodType>noneRequired</RequestMethodType>
+							<AtCentre>false</AtCentre>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint id="naptStop:700000009239" responsibilitySetRef="nptgAdminArea:700" created="2106-02-07T00:00:00" modification="new" changed="2016-02-07T06:28:16" version="11" status="active">
+							<!-- 	   NaPTAN encoding from which NeTEx encoding was taken:
+		<StopPoint CreationDateTime="2106-02-07T00:00:00" Modification="new" ModificationDateTime="2017-03-14T16:36:41" RevisionNumber="14" Status="active">
+			<AtcoCode>700000009239</AtcoCode>
+			<Descriptor>
+				<CommonName xml:lang="en">Dungannon</CommonName>
+				<ShortCommonName xml:lang="en">Dungannon</ShortCommonName>
+			</Descriptor>
+			<AlternativeDescriptors>
+				<Descriptor CreationDateTime="2019-12-20T12:48:19.6579743+01:00" ModificationDateTime="2019-12-20T12:48:19.6579743+01:00">
+					<ShortCommonName xml:lang="ga">Dún Geanainn</ShortCommonName>
+				</Descriptor>
+			</AlternativeDescriptors>
+			<Place>
+				<LocalityCentre>false</LocalityCentre>
+				<Location>
+					<Translation>
+						<GridType>ITM</GridType>
+						<Easting>679402</Easting>
+						<Northing>862088</Northing>
+						<Longitude>-6.77414204945787</Longitude>
+						<Latitude>54.5010015533382</Latitude>
+					</Translation>
+				</Location>
+			</Place>
+			<StopClassification>
+				<StopType>BCT</StopType>
+				<OnStreet>
+					<Bus>
+						<BusStopType>CUS</BusStopType>
+						<TimingStatus>OTH</TimingStatus>
+					</Bus>
+				</OnStreet>
+			</StopClassification>
+			<AdministrativeAreaRef>700</AdministrativeAreaRef>
+		</StopPoint>
+
+-->
+							<alternativeTexts>
+								<AlternativeText id="naptStop:700000009239" version="11" created="2106-02-07T00:00:00" changed="2016-02-07T06:28:16">
+									<Text lang="ga">Dún Geanain</Text>
+								</AlternativeText>
+							</alternativeTexts>
+							<Name lang="en">Dungannon</Name>
+							<Location>
+								<Longitude>-6.77414204945787</Longitude>
+								<Latitude>54.5010015533382</Latitude>
+								<gml:pos srsName="ITM">679402 862088</gml:pos>
+							</Location>
+							<TimingPointStatus>notTimingPoint</TimingPointStatus>
+							<StopType>onstreetBus</StopType>
+							<RequestMethodType>handSignal</RequestMethodType>
+							<AtCentre>false</AtCentre>
+						</ScheduledStopPoint>
+					</scheduledStopPoints>
+					<stopAreas>
+						<StopArea id="naptStopArea:852G000052" responsibilitySetRef="nptgAdminArea:852" created="2016-02-07T00:00:00" modification="new" changed="2016-08-18T11:08:06" version="18" status="active">
+							<!-- 	   NaPTAN encoding from which NeTEx encoding was taken:
+		<StopArea CreationDateTime="2106-02-07T00:00:00" Modification="new" ModificationDateTime="2016-08-18T11:08:06" RevisionNumber="18" Status="active">
+			<StopAreaCode>852G000052</StopAreaCode>
+			<Name xml:lang="en">Belcoo</Name>
+			<ParentStopAreaRef CreationDateTime="2019-12-20T13:22:22.4503623+01:00" Modification="new" ModificationDateTime="2019-12-20T13:22:22.4503623+01:00" Status="active">852G000056</ParentStopAreaRef>
+			<AdministrativeAreaRef>852</AdministrativeAreaRef>
+			<StopAreaType>GPBS</StopAreaType>
+			<Location>
+				<Translation>
+					<GridType>ITM</GridType>
+					<Easting>608351</Easting>
+					<Northing>838610</Northing>
+					<Longitude>-7.87171580603534</Longitude>
+					<Latitude>54.2961895173488</Latitude>
+				</Translation>
+			</Location>
+		</StopArea>
+-->
+							<Name lang="en">Belcoo</Name>
+							<types>
+								<TypeOfZoneRef version="napt:v2.1" ref="napt:StopAreaType@GPBS"/>
+							</types>
+							<Centroid>
+								<Location>
+									<Longitude>-7.871715806</Longitude>
+									<Latitude>54.29618952</Latitude>
+									<gml:pos srsName="ITM">608351  838610</gml:pos>
+								</Location>
+							</Centroid>
+							<ParentStopAreaRef version="29" ref="naptStopArea:852G000056"/>
+						</StopArea>
+						<StopArea id="naptStopArea:852G000056" responsibilitySetRef="nptgAdminArea:852" created="2016-02-07T00:00:00" modification="new" changed="2016-08-18T11:08:06" version="29" status="active">
+							<Name lang="en">Blacklion</Name>
+							<types>
+								<TypeOfZoneRef version="napt:v2.1" ref="napt:StopAreaType@GPBS"/>
+							</types>
+							<Centroid>
+								<Location>
+									<Longitude>-7.876338685</Longitude>
+									<Latitude>54.29137812</Latitude>
+									<gml:pos srsName="ITM">608051	838074</gml:pos>
+								</Location>
+							</Centroid>
+						</StopArea>
+					</stopAreas>
+				</ServiceFrame>
+				<!--  ==== example STOPS FOR AdminArea 821  ========== -->
+				<SiteFrame id="epd:IE:NTA:SiteFrame_IE_PI_STOP:NAPTAN-822:napt" version="9.6" responsibilitySetRef="nptgAdminArea:822" dataSourceRef="napt:NTA">
+					<Name>Sample Stop and Stop Area data encoded NeTEx - Area 822</Name>
+					<TypeOfFrameRef ref="eix:IE:NTA:TypeOfFrame_IE_PI_STOP:EIRE_NP" version="eix:v1.0"/>
+					<FrameDefaults>
+						<DefaultCodespaceRef ref="naptStop_data"/>
+						<DefaultDataSourceRef ref="napt:NTA" version="napt:v2.4"/>
+						<DefaultResponsibilitySetRef ref="nptgAdminArea:822" versionRef="nptg:v2.1"/>
+					</FrameDefaults>
+					<!--  ======= NaPTAn Stop Data  ======   -->
+					<stopPlaces>
+						<StopPlace id="naptStopArea:822G000045" responsibilitySetRef="nptgAdminArea:822" created="2006-02-07T00:00:00" modification="new" changed="2016-01-14T18:03:22" version="11" status="active">
+							<Name lang="en">Sean McDermott Street
+</Name>
+							<types>
+								<TypeOfZoneRef version="napt:v2.1" ref="napt:StopAreaType@GPBS"/>
+							</types>
+							<Centroid>
+								<Location>
+									<Longitude>-6.257016351</Longitude>
+									<Latitude>53.35278473</Latitude>
+									<gml:pos srsName="ITM">716037 735035</gml:pos>
+								</Location>
+							</Centroid>
+							<TopographicPlaceRef ref="nptgLocality:E0822013"/>
+							<quays>
+								<Quay id="naptStop:8220DB007608" responsibilitySetRef="nptgAdminArea:822" created="2006-02-07T00:00:00" modification="new" changed="2016-01-14T18:03:22" version="11" status="active">
+									<Name lang="en">Sean MacDermott Street</Name>
+									<ShortName lang="en">Sean MacDermott Street</ShortName>
+									<Centroid>
+										<Location>
+											<Longitude>-6.257225072</Longitude>
+											<Latitude>53.35282374</Latitude>
+											<gml:pos srsName="ITM">716023 735039</gml:pos>
+										</Location>
+									</Centroid>
+									<placeTypes>
+										<TypeOfPlaceRef version="napt:v2.1" ref="napt:StopType@BCT"/>
+										<TypeOfPlaceRef version="napt:v2.1" ref="napt:StopType@MKD"/>
+									</placeTypes>
+									<TransportMode>bus</TransportMode>
+									<PublicCode>7608</PublicCode>
+									<QuayType>busStop</QuayType>
+								</Quay>
+								<Quay id="naptStop:8220DB007590" created="2006-02-07T00:00:00" modification="new" changed="2016-01-14T18:03:22" version="11" status="active">
+									 <keyList>
+											<KeyValue typeOfKey="nta:UDRating">
+												<Key>UD</Key>
+												<Value></Value>
+											</KeyValue>
+										</keyList>
+									<Name lang="en">Marlborough Street</Name>
+									<ShortName lang="en">Marlborough Stree</ShortName>
+									<Centroid>
+										<Location>
+											<Longitude>-6.257789724</Longitude>
+											<Latitude>53.35260728</Latitude>
+											<gml:pos srsName="ITM">715986 735014</gml:pos>
+										</Location>
+									</Centroid>
+									<placeTypes>
+										<TypeOfPlaceRef version="napt:v2.1" ref="napt:StopType@BCT"/>
+										<TypeOfPlaceRef version="napt:v2.1" ref="napt:StopType@MKD"/>
+									</placeTypes>
+									<AccessibilityAssessment id="naptStop:8220DB007590"  version="11" >
+										
+										<MobilityImpairedAccess>true</MobilityImpairedAccess>
+										<limitations>
+											<AccessibilityLimitation>
+												<WheelchairAccess>true</WheelchairAccess>
+											</AccessibilityLimitation>
+										</limitations>
+									</AccessibilityAssessment>
+									<alternativeNames>
+										<AlternativeName id="naptStop:8220DB007590" created="2006-02-07T00:00:00" modification="new" changed="2016-01-14T18:03:22" version="11">
+											<Name lang="ga">Sráid Mhaoilbhríde</Name>
+										</AlternativeName>
+									</alternativeNames>
+									<TransportMode>bus</TransportMode>
+									<PublicCode>7590</PublicCode>
+									<QuayType>busStop</QuayType>
+								</Quay>
+							</quays>
+						</StopPlace>
+						<!--  more stops for area822 here   -->
+					</stopPlaces>
+				</SiteFrame>
+				<ServiceFrame id="epd:IE:NTA:ServiceFrame_IE_PI_STOP:NAPTAN-822:napt" version="9.6" responsibilitySetRef="nptgAdminArea:822" dataSourceRef="napt:NTA">
+					<Name>Sample Stop and Stop Area data encoded NeTEx - Area 822</Name>
+					<TypeOfFrameRef ref="eix:IE:NTA:TypeOfFrame_IE_PI_STOP:EIRE_NP" version="eix:v1.0"/>
+					<FrameDefaults>
+						<DefaultCodespaceRef ref="naptStop_data"/>
+						<DefaultDataSourceRef ref="napt:NTA" version="napt:v2.4"/>
+						<DefaultResponsibilitySetRef ref="nptgAdminArea:822" versionRef="nptg:v2.1"/>
+					</FrameDefaults>
+					<!--  ======= NaPTAn Stop Data  ======   -->
+					<scheduledStopPoints>
+						<ScheduledStopPoint id="naptStop:8220DB007608" responsibilitySetRef="nptgAdminArea:822" created="2006-02-07T00:00:00" modification="new" changed="2016-01-14T18:03:22" version="11" status="active">
+							<Name lang="en">Sean MacDermott Street</Name>
+							<Location>
+								<Longitude>-6.257225072</Longitude>
+								<Latitude>53.35282374</Latitude>
+								<gml:pos srsName="ITM">716023 735039</gml:pos>
+							</Location>
+							<stopAreas>
+								<StopAreaRef version="11" ref="naptStopArea:822G000045"/>
+							</stopAreas>
+							<ShortName lang="en">Sean MacDermott Street</ShortName>
+							<PublicCode>7608</PublicCode>
+							<StopType>onstreetBus</StopType>
+							<TopographicPlaceRef ref="nptgLocality:E0822013"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint id="naptStop:8220DB007590" responsibilitySetRef="nptgAdminArea:822" created="2006-02-07T00:00:00" modification="new" changed="2016-01-14T18:03:22" version="11" status="active">
+							<alternativeTexts>
+								<AlternativeText attributeName="Name" version="11" id="naptStop:8220DB007590">
+									<Text lang="ga">Sráid Mhaoilbhríde</Text>
+								</AlternativeText>
+							</alternativeTexts>
+							<Name lang="en">Marlborough Street</Name>
+							<Location>
+								<Longitude>-6.257789724</Longitude>
+								<Latitude>53.35260728</Latitude>
+								<gml:pos srsName="ITM">715986 735014</gml:pos>
+							</Location>
+							<stopAreas>
+								<StopAreaRef version="11" ref="naptStopArea:822G000045"/>
+							</stopAreas>
+							<ShortName lang="en">Marlborough Stree</ShortName>
+							<PublicCode>7590</PublicCode>
+							<StopType>onstreetBus</StopType>
+							<TopographicPlaceRef ref="nptgLocality:E0822013"/>
+						</ScheduledStopPoint>
+					</scheduledStopPoints>
+					<stopAreas>
+						<StopArea id="naptStopArea:822G000045" responsibilitySetRef="nptgAdminArea:822" created="2006-02-07T00:00:00" modification="new" changed="2016-01-14T18:03:22" version="11" status="active">
+							<Name lang="en">Sean McDermott Street
+</Name>
+							<ShortName lang="en">Carlow</ShortName>
+							<types>
+								<TypeOfZoneRef version="napt:v2.1" ref="napt:StopAreaType@GPBS"/>
+							</types>
+							<Centroid>
+								<Location>
+									<Longitude>-6.257016351</Longitude>
+									<Latitude>53.35278473</Latitude>
+									<gml:pos srsName="ITM">716037 735035</gml:pos>
+								</Location>
+							</Centroid>
+						</StopArea>
+					</stopAreas>
+				</ServiceFrame>
+				<!--  ==== example STOPS FOR AdminArea 822 ========== -->
+				<SiteFrame id="epd:IE:NTA:SiteFrame_IE_PI_STOP:NAPTAN-821:napt" version="9.6" responsibilitySetRef="nptgAdminArea:821" dataSourceRef="napt:NTA">
+					<Name>Sample Stop and Stop Area data encoded NeTEx - Area 821</Name>
+					<TypeOfFrameRef ref="eix:IE:NTA:TypeOfFrame_IE_PI_STOP:EIRE_NP" version="eix:v1.0"/>
+					<FrameDefaults>
+						<DefaultCodespaceRef ref="naptStop_data"/>
+						<DefaultDataSourceRef ref="napt:NTA" version="napt:v2.4"/>
+						<DefaultResponsibilitySetRef ref="nptgAdminArea:821" versionRef="nptg:v2.1"/>
+					</FrameDefaults>
+					<!--  ======= NaPTAN Stop Data  ======   -->
+					<stopPlaces>
+						<StopPlace id="naptStop:821G000014" responsibilitySetRef="nptgAdminArea:821" created="1970-01-01T00:00:00Z" modification="new" changed="2016-03-16T16:04:53" version="8" status="active">
+							<!-- 	   NaPTAN encoding from which NeTEx encoding was taken:
+	<StopArea CreationDateTime="1970-01-01T00:00:00" Modification="new" ModificationDateTime="2016-03-16T16:04:53" RevisionNumber="8" Status="active">
+			<StopAreaCode>821G000014</StopAreaCode>
+			<Name xml:lang="en">Carlow Train Station</Name>
+			<AdministrativeAreaRef>821</AdministrativeAreaRef>
+			<StopAreaType>GPBS</StopAreaType>
+			<Location>
+				<Translation>
+					<GridType>ITM</GridType>
+					<Easting>672559</Easting>
+					<Northing>677188</Northing>
+					<Longitude>-6.92299054219178</Longitude>
+					<Latitude>52.8407397228482</Latitude>
+				</Translation>
+			</Location>
+		</StopArea>
+ -->
+							<Name lang="en">Carlow Train Station</Name>
+							<ShortName lang="en">Carlow</ShortName>
+							<types>
+								<TypeOfZoneRef version="napt:v2.1" ref="napt:StopAreaType@GRLS"/>
+							</types>
+							<entrances>
+								<StopPlaceEntrance id="naptStop:260010966@entrance" version="11">
+									<Name lang="en">Carlow</Name>
+									<Centroid>
+										<Location>
+											<Longitude>-6.92299054219178</Longitude>
+											<Latitude>52.840739722848</Latitude>
+											<gml:pos srsName="ITM">672559 677188</gml:pos>
+										</Location>
+									</Centroid>
+									<TransportMode>rail</TransportMode>
+								</StopPlaceEntrance>
+							</entrances>
+							<StopPlaceType>onstreetBus</StopPlaceType>
+						</StopPlace>
+						<!--  more stops for area821  here   -->
+					</stopPlaces>
+				</SiteFrame>
+				<ServiceFrame id="epd:IE:NTA:ServiceFrame_IE_PI_STOP:NAPTAN-821:napt" version="9.6" responsibilitySetRef="nptgAdminArea:821" dataSourceRef="napt:NTA">
+					<Name>Sample Stop and Stop Area data encoded NeTEx - Area 821</Name>
+					<TypeOfFrameRef ref="eix:IE:NTA:TypeOfFrame_IE_PI_STOP:EIRE_NP" version="eix:v1.0"/>
+					<FrameDefaults>
+						<DefaultCodespaceRef ref="naptStop_data"/>
+						<DefaultDataSourceRef ref="napt:NTA" version="napt:v2.4"/>
+						<DefaultResponsibilitySetRef ref="nptgAdminArea:821" versionRef="nptg:v2.1"/>
+					</FrameDefaults>
+					<!--  ======= NaPTAn Stop Data  ======   -->
+					<scheduledStopPoints>
+						<ScheduledStopPoint id="naptStopArea:7000B6310001" responsibilitySetRef="nptgAdminArea:821" created="2006-02-07T00:00:00" modification="new" changed="2016-01-14T18:03:22" version="11" status="active">
+							<Name lang="en">Carlow Train Station</Name>
+							<Location>
+								<Longitude>-6.92299054219178</Longitude>
+								<Latitude>52.840739722848</Latitude>
+								<gml:pos srsName="ITM">672559 677188</gml:pos>
+							</Location>
+							<stopAreas>
+								<StopAreaRef version="11" ref="naptStopArea:7000B6310001"/>
+							</stopAreas>
+							<ShortName lang="en">Carlow</ShortName>
+							<StopType>railStation</StopType>
+						</ScheduledStopPoint>
+					</scheduledStopPoints>
+					<stopAreas>
+						<StopArea id="naptStopArea:7000B6310001" responsibilitySetRef="nptgAdminArea:821" created="2006-02-07T00:00:00" modification="new" changed="2016-01-14T18:03:22" version="11" status="active">
+							<Name lang="en">Carlow Train Station</Name>
+							<ShortName lang="en">Carlow</ShortName>
+							<types>
+							</types>
+							<Centroid>
+								<Location>
+									<Longitude>-6.92299054219178</Longitude>
+									<Latitude>52.840739722848</Latitude>
+									<gml:pos srsName="ITM">672559 677188</gml:pos>
+								</Location>
+							</Centroid>
+						</StopArea>
+					</stopAreas>
+				</ServiceFrame>
+			</frames>
+		</CompositeFrame>
+		<!--   === COMMON Irish FARE RESOURCES===  -->
+		<CompositeFrame id="eix:IE:NTA:TypeOfFrame_IE_PI_METADATA_OFFER:EIRENP:eix" version="eix:v1.0" responsibilitySetRef="eix:EIX_metadata" dataSourceRef="eix:NTA">
+			<ValidBetween>
+				<FromDate>2019-05-01T00:00:00</FromDate>
+				<ToDate>2022-12-31T12:00:00</ToDate>
+			</ValidBetween>
+			<Name>Irish EIRENP Passenger Information Profile common resources</Name>
+			<TypeOfFrameRef version="eix:v1.0" ref="eix:IE:NTA:TypeOfFrame_IE_PI_METADATA_OFFER:EIRE_NP"/>
+			<FrameDefaults>
+				<DefaultCodespaceRef ref="eix_metadata"/>
+				<DefaultDataSourceRef ref="eix:NTA" version="eix:v1.0"/>
+				<DefaultResponsibilitySetRef ref="eix:EIX_metadata" version="eix:v1.0"/>
+			</FrameDefaults>
+			<frames>
+				<!--   ======META DATA - COULD BE EXTERNALISED ======================================== -->
+				<!-- === Profile Frame Types ===  -->
+				<ResourceFrame id="eix:IE:NTA:ResourceFrame_IE_PI_METADATA_FRAMES:EIREN_NP" version="eix:v1.0" responsibilitySetRef="eix:EIX_metadata" dataSourceRef="eix:NTA">
+					<Name>Irish EIRENP  Fare profile Frame types and codepaces</Name>
+					<codespaces>
+						<Codespace id="eix_metadata">
+							<Xmlns>eix</Xmlns>
+							<XmlnsUrl>netex.ie/eix</XmlnsUrl>
+							<Description>Irish  Profile metadata</Description>
+						</Codespace>
+						<Codespace id="epd_data">
+							<Xmlns>epd</Xmlns>
+							<XmlnsUrl>http://fnetex-cen.eu/epd</XmlnsUrl>
+							<Description>European Passenger Information profile data -use for Irish frame names</Description>
+						</Codespace>
+					</codespaces>
+					<dataSources>
+						<DataSource id="eix:NTA" version="eix:v1.0">
+							<Email>standards@netex.org.uk</Email>
+						</DataSource>
+					</dataSources>
+					<!-- ========Responsibility Sets========== -->
+					<responsibilitySets>
+						<ResponsibilitySet version="eix:v1.0" id="eix:EIX_metadata">
+							<Name>Common</Name>
+							<roles>
+								<ResponsibilityRoleAssignment version="eix:v1.0" id="eix:EIX_metadata:NTA">
+									<DataRoleType>creates distributes</DataRoleType>
+									<StakeholderRoleType>DataRegistrar</StakeholderRoleType>
+									<ResponsibleOrganisationRef ref="nptg:NTA" versionRef="nptg:v2.1"/>
+									<ResponsibleAreaRef ref="nptgRegion:EIRE" versionRef="nptg:v2.1"/>
+								</ResponsibilityRoleAssignment>
+							</roles>
+						</ResponsibilitySet>
+					</responsibilitySets>
+					<typesOfValue>
+						<!-- ======== TYPE S OF   FRAME========= -->
+						<ValueSet version="eix:1.0" id="eix:Types_of_Specific_Frame_Basic" classOfValues="TypeOfFrame">
+							<Name>Types of EIRENP Specific  Frame Basic </Name>
+							<values>
+								<!-- === ANCILLARY  ==== -->
+								<TypeOfFrame version="eix:v1.0" id="eix:IE:NTA:TypeOfFrame_IE_PI_COMMON:EIRE_NP">
+									<Name>Irish EIRENP  common Local resources</Name>
+									<FrameClassRef nameOfClass="ResourceFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="eix:v1.0" id="eix:IE:NTA:TypeOfFrame_IE_PI_CALENDAR:EIRE_NP">
+									<Name>Irish EIRENP  Service calendar</Name>
+									<FrameClassRef nameOfClass="ServiceCalendarFrame"/>
+								</TypeOfFrame>
+								<!-- === PAYLOAD  ==== -->
+								<TypeOfFrame version="eix:v1.0" id="eix:IE:NTA:TypeOfFrame_IE_PI_STOP:EIRE_NP">
+									<Name>Irish EIRENP Stops: NapTAN Stop Place  and NPTG Locations Frame</Name>
+									<FrameClassRef nameOfClass="SiteFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="eix:v1.0" id="eix:IE:NTA:TypeOfFrame_IE_PI_NETWORK:EIRE_NP">
+									<Name>Irish EIRENP Network</Name>
+									<FrameClassRef nameOfClass="ServiceFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="eix:v1.0" id="eix:IE:NTA:TypeOfFrame_IE_PI_TIMETABLE:EIRE_NP">
+									<Name>Irish EIRENP Tietable: N</Name>
+									<FrameClassRef nameOfClass="TimetableFrame"/>
+								</TypeOfFrame>
+								<!-- === METADATA   ==== -->
+								<TypeOfFrame version="eix:v1.0" id="eix:IE:NTA:TypeOfFrame_IE_PI_METADATA:EIRE_NP">
+									<Name>Irish Bus Profile common resources</Name>
+									<FrameClassRef nameOfClass="ResourceFrame"/>
+								</TypeOfFrame>
+							</values>
+						</ValueSet>
+						<ValueSet version="eix::v2.4" id="eix:Types_of_Offer_Frame_Basic" classOfValues="TypeOfFrame">
+							<Name>Types of Irish Offer Frame</Name>
+							<values>
+								<!-- === COMPOSITE ====  -->
+								<TypeOfFrame version="eix:v1.0" id="eix:IE:NTA:TypeOfFrame_IE_PI_STOP_OFFER:EIRE_NP">
+									<Name>Irish EIRENP   composite container STOP OFFER</Name>
+									<FrameClassRef nameOfClass="CompositeFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="eix:v1.0" id="eix:IE:NTA:TypeOfFrame_IE_PI_LINE_OFFER:EIRE_NP">
+									<Name>Irish EIRENP   composite container LINE OFFER</Name>
+									<FrameClassRef nameOfClass="CompositeFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="eix:v1.0" id="eix:IE:NTA:TypeOfFrame_IE_PI_NETWORK_OFFER:EIRE_NP">
+									<Name>Irish EIRENP   composite container LINE OFFER</Name>
+									<FrameClassRef nameOfClass="CompositeFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="eix:v1.0" id="eix:IE:NTA:TypeOfFrame_IE_PI_METADATA_OFFER:EIRE_NP">
+									<Name>Irish EIRENP composite used to group other Irish metadta</Name>
+									<FrameClassRef nameOfClass="CompositeFrame"/>
+								</TypeOfFrame>
+							</values>
+						</ValueSet>
+						<!-- ======== TYPE S OF   FRAME========= -->
+						<ValueSet version="eix:1.0" id="eix:Types_of_Specific_Frame_for_Fares" classOfValues="TypeOfFrame">
+							<Name>Types of EIRENP Specific  Frame</Name>
+							<values>
+								<!-- === PAYLOAD  ==== -->
+								<TypeOfFrame version="eix:v1.0" id="eix:IE:NTA:TypeOfFrame_IE_PI_FARE_COMMON:EIRE_NP">
+									<Name>Irish Bus Profile fare common paramaters</Name>
+									<FrameClassRef nameOfClass="FareFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="eix:v1.0" id="eix:IE:NTA:TypeOfFrame_IE_PI_FARE_NETWORK:EIRE_NP">
+									<Name>Irish Bus Profile fare network</Name>
+									<FrameClassRef nameOfClass="ServiceFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="eix:v1.0" id="eix:IE:NTA:TypeOfFrame_IE_PI_FARE_PRODUCT:EIRE_NP">
+									<Name>Irish EIRENP Fare Porducts Frame</Name>
+									<FrameClassRef nameOfClass="FareFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="eix:v1.0" id="eix:IE:NTA:TypeOfFrame_IE_PI_FARE_PRICE:EIRE_NP">
+									<Name>Irish EIRENP Fare Prices Frame</Name>
+									<FrameClassRef nameOfClass="FareFrame"/>
+								</TypeOfFrame>
+							</values>
+						</ValueSet>
+						<ValueSet version="eix:v1.0" id="eix:Types_of_Offer_Frame_for_Fares" classOfValues="TypeOfFrame">
+							<Name>Types of Irish Offer Frame</Name>
+							<values>
+								<!-- === COMPOSITE ====  -->
+								<TypeOfFrame version="eix:v1.0" id="eix:IE:NTA:TypeOfFrame_IE_PI_STOP_FARE_OFFER:EIRE_NP">
+									<Name>Irish EIRENP   composite container STOP OFFER</Name>
+									<FrameClassRef nameOfClass="CompositeFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="eix:v1.0" id="eix:IE:NTA:TypeOfFrame_IE_PI_LINE_FARE_OFFER:EIRE_NP">
+									<Name>Irish EIRENP   composite container LINE OFFER</Name>
+									<FrameClassRef nameOfClass="CompositeFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="eix:v1.0" id="eix:IE:NTA:TypeOfFrame_IE_PI_NETWORK_FARE_OFFER:EIRE_NP">
+									<Name>Irish EIRENP   composite container NETWORK OFFER</Name>
+									<FrameClassRef nameOfClass="CompositeFrame"/>
+								</TypeOfFrame>
+							</values>
+						</ValueSet>
+						<ValueSet version="eix:v1.0" id="eix:Types_of_Transaction_Frame" classOfValues="TypeOfFrame">
+							<Name>Types of Irish Trasnaction  Frame</Name>
+							<values>
+								<TypeOfFrame version="eix:v1.0" id="eix:IE:NTA:TypeOfFrame_IE_PI_FARE_TRANSACTIONS:EIRE_NP">
+									<Name>Irish Bus Profile Operator sample transactions</Name>
+									<FrameClassRef nameOfClass="SalesTransactionFrame"/>
+								</TypeOfFrame>
+							</values>
+						</ValueSet>
+					</typesOfValue>
+				</ResourceFrame>
+				<!-- === NaPTAN Common fixed definitions  ===  -->
+				<ResourceFrame version="napt:v2.4" id="eix:IE:NTA:ResourceFrame_IE_PI_METADATA:NaPTAN:napt" responsibilitySetRef="napt:NaPTAN_metadata" dataSourceRef="napt:NTA">
+					<ValidBetween>
+						<FromDate>2005-01-01T00:00:00</FromDate>
+					</ValidBetween>
+					<Name>Static NaPTAN code values</Name>
+					<Description>This frame contains code  values used to validate NaPTAN data.</Description>
+					<TypeOfFrameRef version="eix:v1.0" ref="eix:IE:NTA:TypeOfFrame_IE_PI_METADATA:EIRE_NP"/>
+					<codespaces>
+						<Codespace id="napt_metadata">
+							<Xmlns>napt</Xmlns>
+							<XmlnsUrl>http://www.naptan.org.uk</XmlnsUrl>
+							<Description>Irish National Public Transport Access Nodes     codes</Description>
+						</Codespace>
+						<!-- A single napt: space could beused for codes, Napatn stops and Naptan stop areas (since th code  values do not overlap) ,  but we use more sepciic ones for clarity  -->
+						<Codespace id="naptStop_data">
+							<Xmlns>naptStop</Xmlns>
+							<XmlnsUrl>http://www.naptan.org.uk/stops</XmlnsUrl>
+							<Description>Irish National Public Transport Access Nodes: Stops.</Description>
+						</Codespace>
+					</codespaces>
+					<FrameDefaults>
+						<DefaultCodespaceRef ref="napt_metadata"/>
+						<DefaultDataSourceRef ref="napt:NTA" version="napt:v2.4"/>
+						<DefaultResponsibilitySetRef ref="napt:NaPTAN_metadata" version="napt:v2.4"/>
+					</FrameDefaults>
+					<versions>
+						<Version id="napt:v2.4" version="any">
+							<Description>NaPTAN  version 2.4</Description>
+							<VersionType>baseline</VersionType>
+						</Version>
+					</versions>
+					<dataSources>
+						<DataSource id="napt:NTA" version="napt:v2.4">
+							<Email>standards@nationaltransportauthority.ie</Email>
+						</DataSource>
+					</dataSources>
+					<!-- ========Responsibility Sets========== -->
+					<responsibilitySets>
+						<ResponsibilitySet version="napt:v2.4" id="napt:NaPTAN_metadata">
+							<Name>Common</Name>
+							<roles>
+								<ResponsibilityRoleAssignment version="napt:v2.4" id="napt:NaPTAN_metadata">
+									<DataRoleType>creates distributes</DataRoleType>
+									<StakeholderRoleType>DataRegistrar</StakeholderRoleType>
+									<ResponsibleOrganisationRef ref="nptg:NTA" version="nptg:v2.1"/>
+									<ResponsibleAreaRef ref="nptgRegion:EIRE" nameOfRefClass="TransportAdministrativeZone" versionRef="0" xsi:type="TransportAdministrativeZoneRefStructure">Irish </ResponsibleAreaRef>
+								</ResponsibilityRoleAssignment>
+							</roles>
+						</ResponsibilitySet>
+						<ResponsibilitySet version="napt:v2.4" id="napt:stop_data">
+							<Name>Common</Name>
+							<roles>
+								<ResponsibilityRoleAssignment version="napt:v2.4" id="napt:naptan_data">
+									<DataRoleType>creates distributes</DataRoleType>
+									<StakeholderRoleType>Other</StakeholderRoleType>
+									<ResponsibleOrganisationRef ref="nptg:NTA" version="nptg:v2.1"/>
+									<ResponsibleAreaRef ref="nptgRegion:EIRE" nameOfRefClass="TransportAdministrativeZone" versionRef="0" xsi:type="TransportAdministrativeZoneRefStructure">Irish </ResponsibleAreaRef>
+								</ResponsibilityRoleAssignment>
+							</roles>
+						</ResponsibilitySet>
+					</responsibilitySets>
+					<!-- ==== Fixed values == -->
+					<typesOfValue>
+						<!-- ==== Fixed values == -->
+						<ValueSet version="napt:v2.4" id="napt:NaPTAN_Stop_Classifications_StopPlace" classOfValues="TypeOfPlace">
+							<Name>NaPTan Stop StopClassifications</Name>
+							<values>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopType@BST">
+									<Name> Bus Station Access ARea.</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopType@AIR">
+									<Name>Airport   </Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopType@FER">
+									<Name>Ferry Terminal     </Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopType@RLY">
+									<Name>Rail Station  </Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopType@MET">
+									<Name>Metro Station</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.4" id="napt:StopType@LCB">
+									<Name>Lift Station</Name>
+								</TypeOfPlace>
+							</values>
+						</ValueSet>
+						<ValueSet version="napt:v2.4" id="napt:NaPTAN_Stop_Classifications_StopPlaceEntrance" classOfValues="TypeOfPlace">
+							<Name>NaPTan Stop StopClassifications</Name>
+							<values>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopType@BSE">
+									<Name>Bus Station Entrance</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopType@FTD">
+									<Name>Ferry Terminal   Entrance </Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopType@RSE">
+									<Name>Rail Station Entrance</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopType@TMU">
+									<Name>Metro Station Entrance</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.4" id="napt:StopType@LSE">
+									<Name>Lift Station Entrance</Name>
+								</TypeOfPlace>
+							</values>
+						</ValueSet>
+						<ValueSet version="napt:v2.4" id="napt:NaPTAN_Stop_Classifications_Quay" classOfValues="TypeOfPlace">
+							<Name>NaPTan Stop StopClassifications</Name>
+							<values>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopType@BCT">
+									<Name>Naptan Bus COach Tram stop on street </Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopType@BCS">
+									<Name> Bus / Coach bay / stand / stance within Bus / Coach Stations.</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopType@BCQ">
+									<Name> Variabel Bay.</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopType@GAT">
+									<Name>Airside Gate </Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopType@FBT">
+									<Name>Ferry Berth</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopType@RPL">
+									<Name>Rail Platform</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopType@PLT">
+									<Name>Metro Platform</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.4" id="napt:StopType@LPL">
+									<Name>Lift Station  Platform</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopType@TXR">
+									<Name>Taxi Rank</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopType@STR">
+									<Name>Shared Taxi Rank</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.4" id="napt:StopType@SDA">
+									<Name>Set Down Area</Name>
+								</TypeOfPlace>
+							</values>
+						</ValueSet>
+						<ValueSet version="napt:v2.4" id="napt:NaPTAN_Bus_Stop_Types" classOfValues="TypeOfPlace">
+							<Name>NapTAn STope Types   s</Name>
+							<values>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopType@MKD">
+									<Name>Marked stopr</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopType@HAR">
+									<Name>Hail and Ride</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopType@CUS">
+									<Name>stom (unmarked, or only marked on road).</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="napt:v2.1" id="napt:StopType@FLX">
+									<Name>Unmarked stop </Name>
+								</TypeOfPlace>
+							</values>
+						</ValueSet>
+						<ValueSet version="napt:v2.4" id="napt:NaPTAN_StopArea_Classifications" classOfValues="TypeOfZone">
+							<Name>NaPTan Stop StopClassifications</Name>
+							<values>
+								<TypeOfZone version="napt:v2.1" id="napt:StopAreaType@GPBS">
+									<Name>Paired on-street Bus / Coach / Tram stops.</Name>
+								</TypeOfZone>
+								<TypeOfZone version="napt:v2.1" id="napt:StopAreaType@GCLS">
+									<Name>Clustered on-street Bus / Coach / Tram stops.</Name>
+								</TypeOfZone>
+								<TypeOfZone version="napt:v2.1" id="napt:StopAreaType@GAIR">
+									<Name>Airport Building.</Name>
+								</TypeOfZone>
+								<TypeOfZone version="napt:v2.1" id="napt:StopAreaType@GBCS">
+									<Name>Bus / Coach Station.</Name>
+								</TypeOfZone>
+								<TypeOfZone version="napt:v2.1" id="napt:StopAreaType@GFTD">
+									<Name>Ferry Terminal / Dock Building.</Name>
+								</TypeOfZone>
+								<TypeOfZone version="napt:v2.1" id="napt:StopAreaType@GTMU">
+									<Name>Tram / Metro / Underground Station.</Name>
+								</TypeOfZone>
+								<TypeOfZone version="napt:v2.1" id="napt:StopAreaType@GRLS">
+									<Name>Railway station.</Name>
+								</TypeOfZone>
+								<TypeOfZone version="napt:v2.1" id="napt:StopAreaType@GMLT">
+									<Name>Multimode Interchange.</Name>
+								</TypeOfZone>
+								<TypeOfZone version="napt:v2.1" id="napt:StopAreaType@GOTH">
+									<Name>Other Structure.</Name>
+								</TypeOfZone>
+								<TypeOfZone version="napt:v2.1" id="napt:StopAreaType@GCCH">
+									<Name>Coach Service Coverage.</Name>
+								</TypeOfZone>
+								<TypeOfZone version="napt:v2.4" id="napt:StopAreaType@GLCB">
+									<Name> Lift or Cablecar station (+NaPT v2.4)</Name>
+								</TypeOfZone>
+							</values>
+						</ValueSet>
+					</typesOfValue>
+				</ResourceFrame>
+				<ResourceFrame version="nptg:v2.1" id="eix:IE:NTA:ResourceFrame_IE_PI_METADATA:NPTG:nptg" responsibilitySetRef="nptg:NPTG_metadata" dataSourceRef="nptg:NTA">
+					<ValidBetween>
+						<FromDate>2004-01-01T00:00:00</FromDate>
+					</ValidBetween>
+					<Name>Static code values for Irish NPTG data</Name>
+					<Description>This frame contains code  valuesused to validate the NPTG</Description>
+					<TypeOfFrameRef version="eix:v1.0" ref="eix:IE:NTA:TypeOfFrame_IE_PI_METADATA:EIRE_NP"/>
+					<codespaces>
+						<Codespace id="nptg_metadata">
+							<Xmlns>nptg</Xmlns>
+							<XmlnsUrl>http://www.nptg.org.uk/nptg</XmlnsUrl>
+							<Description>Irish National Public Transport gazetteer     fixed codes.   .</Description>
+						</Codespace>
+						<Codespace id="nptgLocality_data">
+							<Xmlns>nptgLocality</Xmlns>
+							<XmlnsUrl>http://nptg.org.uk/locations</XmlnsUrl>
+							<Description>National Public Transport gazetteer locations</Description>
+						</Codespace>
+						<Codespace id="nptgTariffZone_data">
+							<Xmlns>nptgTariffZone</Xmlns>
+							<XmlnsUrl>http://nptg.org.uk/tariffZones</XmlnsUrl>
+							<Description>National Public Transport gazetteer plus bus zones</Description>
+						</Codespace>
+						<Codespace id="nptgAdminArea_data">
+							<Xmlns>nptgAdminArea</Xmlns>
+							<XmlnsUrl>http://www.nptg.org.uk/adminAreas</XmlnsUrl>
+							<Description>Irish National Public Transport gazetteer. Codes of administrative areas, are unique within the Irish .</Description>
+						</Codespace>
+					</codespaces>
+					<FrameDefaults>
+						<DefaultCodespaceRef ref="nptg_metadata"/>
+						<DefaultDataSourceRef ref="nptg:NTA" version="nptg:v2.1"/>
+						<DefaultResponsibilitySetRef ref="nptg:NPTG_metadata" version="nptg:v2.1"/>
+					</FrameDefaults>
+					<versions>
+						<Version id="nptg:v2.1" version="any">
+							<Description>NPTG version 2.1</Description>
+							<VersionType>baseline</VersionType>
+						</Version>
+					</versions>
+					<dataSources>
+						<DataSource id="nptg:NTA" version="nptg:v2.1">
+							<Email>standards@nationtransportauthority.ie</Email>
+						</DataSource>
+					</dataSources>
+					<!-- ========Responsibility Sets========== -->
+					<responsibilitySets>
+						<ResponsibilitySet version="nptg:v2.1" id="nptg:NPTG_metadata">
+							<Name>Common</Name>
+							<roles>
+								<ResponsibilityRoleAssignment version="nptg:v2.1" id="nptg:NPTG_metadata">
+									<DataRoleType>creates distributes</DataRoleType>
+									<StakeholderRoleType>DataRegistrar</StakeholderRoleType>
+									<ResponsibleOrganisationRef ref="nptg:NTA" version="nptg:v2.1"/>
+									<ResponsibleAreaRef ref="nptgRegion:IE" nameOfRefClass="TransportAdministrativeZone" versionRef="0" xsi:type="TransportAdministrativeZoneRefStructure">Irish </ResponsibleAreaRef>
+								</ResponsibilityRoleAssignment>
+							</roles>
+						</ResponsibilitySet>
+						<ResponsibilitySet version="nptg:v2.1" id="nptg:NPTG_data">
+							<Name>Common</Name>
+							<roles>
+								<ResponsibilityRoleAssignment version="nptg:v2.1" id="nptg:NPTG_data">
+									<DataRoleType>creates distributes</DataRoleType>
+									<StakeholderRoleType>EntityLegalOwnership</StakeholderRoleType>
+									<ResponsibleOrganisationRef ref="nptg:NTA" version="nptg:v2.1"/>
+									<ResponsibleAreaRef ref="nptg:IE">TODO</ResponsibleAreaRef>
+								</ResponsibilityRoleAssignment>
+							</roles>
+						</ResponsibilitySet>
+					</responsibilitySets>
+					<!-- ==== Fixed values == -->
+					<typesOfValue>
+						<!-- ====Frame Types   == -->
+						<ValueSet version="nptg:v2.1" id="nptg:IE_NPTG_profile@Types_of_frame" classOfValues="TypeOfFrame">
+							<Name>Types of frame for Irish NKTG profile</Name>
+							<values>
+								<TypeOfFrame version="nptg:v2.1" id="nptg:IE_NPTG_profile_payload">
+									<Name>NPTG Locations and  Tariff Zones Frame</Name>
+									<FrameClassRef nameOfClass="SiteFrame"/>
+								</TypeOfFrame>
+								<TypeOfFrame version="nptg:v2.1" id="nptg:IE_NPTG_profile_admin_context">
+									<Name>NPTG Admin areas for NPTG </Name>
+									<FrameClassRef nameOfClass="ResourceFrame"/>
+									<ModificationSet>all</ModificationSet>
+								</TypeOfFrame>
+							</values>
+						</ValueSet>
+						<!-- ==== Fixed values == -->
+						<ValueSet version="nptg:v2.1" id="nptg:IE_NPTG_profile@Place_types" classOfValues="TypeOfPlace">
+							<Name>NPTG Place Types   s</Name>
+							<values>
+								<TypeOfPlace version="nptg:v2.1" id="nptg:SourceLocalityType@Lo">
+									<Name>NPTG Source Loc  = Lo</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="nptg:v2.1" id="nptg:SourceLocalityType@Co">
+									<Name>NPTG Source Loc  = Co</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="nptg:v2.1" id="nptg:SourceLocalityType@Pa">
+									<Name>NPTG Source Loc  = Pa</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="nptg:v2.1" id="nptg:SourceLocalityType@ar">
+									<Name>NPTG Source Loc  = ar</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="nptg:v2.1" id="nptg:SourceLocalityType@Add">
+									<Name>NPTG Source Loc  = Add</Name>
+								</TypeOfPlace>
+								<TypeOfPlace version="nptg:v2.1" id="nptg:SourceLocalityType@U">
+									<Name>NPTG Source Loc  = U</Name>
+								</TypeOfPlace>
+							</values>
+						</ValueSet>
+						<ValueSet version="nptg:v2.1" id="nptg:IE_NPTG_profile@Organisation_part_types" classOfValues="TypeOfZone">
+							<Name>NPTG Organisation Part Types   s</Name>
+							<values>
+								<TypeOfZone version="nptg:v2.1" id="nptg:Region">
+									<Name>An NPTG Region</Name>
+								</TypeOfZone>
+								<TypeOfZone version="nptg:v2.1" id="nptg:AdministrativeArea@National">
+									<Name>An NPTG Administrative Area with National scope (e.g. 910, 920 etc)</Name>
+								</TypeOfZone>
+								<TypeOfZone version="nptg:v2.1" id="nptg:AdministrativeArea@Local">
+									<Name>An NPTG Administrative Area with Local scope</Name>
+								</TypeOfZone>
+								<TypeOfZone version="nptg:v2.1" id="nptg:NptgDistrict">
+									<Name>An NPTG District</Name>
+								</TypeOfZone>
+								<TypeOfZone version="nptg:v2.1" id="nptg:NptgLocality">
+									<Name>An NPTG Locality</Name>
+								</TypeOfZone>
+								<TypeOfZone version="nptg:v2.1" id="nptg:PlusBusZone">
+									<Name>An PlusBus Tariff Zone</Name>
+								</TypeOfZone>
+							</values>
+						</ValueSet>
+						<ValueSet version="nptg:v2.1" id="nptg:IE_NPTG_profile@Sms_codes" classOfValues="TypeOfCodespaceAssignment">
+							<Name>NPTG Codespace Assignment Types</Name>
+							<values>
+								<TypeOfCodespaceAssignment version="nptg:v2.1" id="nptg:naptan_prefix">
+									<Name>NPTG Stop prefix</Name>
+								</TypeOfCodespaceAssignment>
+								<TypeOfCodespaceAssignment version="nptg:v2.1" id="nptg:naptan_sms">
+									<Name>NPTG  Stop SMS prefix</Name>
+								</TypeOfCodespaceAssignment>
+								<TypeOfCodespaceAssignment version="nptg:v2.1" id="nptg:naptan_cleardown">
+									<Name>NPTG  stop cleardown range  </Name>
+								</TypeOfCodespaceAssignment>
+							</values>
+						</ValueSet>
+					</typesOfValue>
+					<organisations>
+						<!---  NTA  -->
+						<GeneralOrganisation id="nptg:NTA" modification="new" status="active" responsibilitySetRef="nptg:NPTG" version="nptg:v2.1">
+							<Name>Irish National Transport Authority</Name>
+						</GeneralOrganisation>
+					</organisations>
+				</ResourceFrame>
+			</frames>
+		</CompositeFrame>
+	</dataObjects>
+</PublicationDelivery>

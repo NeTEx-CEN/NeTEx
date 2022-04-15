@@ -1,0 +1,1249 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<PublicationDelivery version="1.2.2" xsi:schemaLocation="http://www.netex.org.uk/netex ../../../xsd/NeTEx_publication.xsd" xmlns="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<!-- NewModes example of an car club car  sharing scheme
+         Cars available from parking stations ALpha & Beta in Area metropolis
+         SHort term use - can be returned anywhere 
+             
+         Products (1) Care club    hire, 
+                      Stepped pricing TIME INTERVALs  2 hours
+0.5 day
+													 1 day  
+													 2 day
+													3 day
+                      Penalty fees for late return , loss etc 
+                      SALES PACKAGES  (a) membership
+                                      (b) mobile app for preregistered users.
+ 
+	 
+
+(C) CEN 2021
+-->
+	<PublicationTimestamp>2021-12-17T09:30:47.0Z</PublicationTimestamp>
+	<ParticipantRef>SYS001</ParticipantRef>
+	<!-- ======WHAT WAS REQUESTED ========== -->
+	<PublicationRequest version="1.0">
+		<RequestTimestamp>2021-12-17T09:30:46.0Z</RequestTimestamp>
+		<ParticipantRef>SYS002</ParticipantRef>
+		<Description>Request for Carclub tariff</Description>
+		<topics>
+			<NetworkFrameTopic>
+				<selectionValidityConditions>
+					<AvailabilityCondition version="any" id="r1">
+						<FromDate>2021-01-01T00:00:00Z</FromDate>
+					</AvailabilityCondition>
+				</selectionValidityConditions>
+				<NetworkFilterByValue>
+					<LayerRef ref="fxc:fareNetwork_fareProducts_farePrices"/>
+					<objectReferences>
+						<OperatorRef version="any" ref="coc:MCR"/>
+						<VehicleSharingRef version="any" ref="car_club"/>
+					</objectReferences>
+				</NetworkFilterByValue>
+			</NetworkFrameTopic>
+		</topics>
+	</PublicationRequest>
+	<PublicationRefreshInterval>P1M</PublicationRefreshInterval>
+	<Description>Example of Car Club   with prices</Description>
+	<!-- =============== RESULTS =========== -->
+	<dataObjects>
+		<CompositeFrame version="1.0" id="mc:car_club_example" dataSourceRef="mc:my_car" responsibilitySetRef="mc:tariffs">
+			<ValidBetween>
+				<FromDate>2021-01-01T00:00:00</FromDate>
+				<ToDate>2021-12-31T12:00:00</ToDate>
+			</ValidBetween>
+			<Name>Car Club  Example</Name>
+			<Description>This is an example showing how one might encode   a Car Club scheme "My Car"  in NeTEx.  It includes some  prices.</Description>
+			<!--==== CODESPACEs ==== -->
+			<codespaces>
+				<CodespaceRef ref="mc_data"/>
+			</codespaces>
+			<!--==== FRAME DEFAULTS ==== -->
+			<FrameDefaults>
+				<!---  The default means that actually we could leave off all id s that belong to the mc: namespace. -->
+				<DefaultCodespaceRef ref="mc_data"/>
+				<DefaultDataSourceRef ref="mc:my_car" version="any"/>
+				<DefaultCurrency>EUR</DefaultCurrency>
+			</FrameDefaults>
+			<frames>
+				<!--==== OPERATOR COMMON RESOURCES==== -->
+				<ResourceFrame version="1.0" id="mc:car_club_example" responsibilitySetRef="mc:network_data">
+					<Name>Operator specific  common resources</Name>
+					<codespaces>
+						<Codespace id="mc_data">
+							<Xmlns>mc</Xmlns>
+							<XmlnsUrl>http://www.mycar.com</XmlnsUrl>
+							<Description>Mycar data</Description>
+						</Codespace>
+					</codespaces>
+					<dataSources>
+						<DataSource id="mc:my_car" version="any">
+							<Email>feedback@mycar.com</Email>
+						</DataSource>
+					</dataSources>
+					<!-- ========Responsibility Sets========== -->
+					<responsibilitySets>
+						<ResponsibilitySet version="any" id="mc:tariffs">
+							<Name>Operator Tariffs</Name>
+							<roles>
+								<ResponsibilityRoleAssignment version="any" id="mc:tariff_data@creates">
+									<DataRoleType>creates</DataRoleType>
+									<StakeholderRoleType>FareManagement</StakeholderRoleType>
+									<ResponsibleOrganisationRef ref="coc:MCR" version="any">My Car</ResponsibleOrganisationRef>
+								</ResponsibilityRoleAssignment>
+							</roles>
+						</ResponsibilitySet>
+						<ResponsibilitySet version="any" id="mc:network_data">
+							<Name>Operator data</Name>
+							<roles>
+								<ResponsibilityRoleAssignment version="any" id="mc:network_data@creates">
+									<DataRoleType>creates</DataRoleType>
+									<StakeholderRoleType>Planning</StakeholderRoleType>
+									<ResponsibleOrganisationRef ref="coc:MCR" version="any">My Car</ResponsibleOrganisationRef>
+								</ResponsibilityRoleAssignment>
+							</roles>
+						</ResponsibilitySet>
+					</responsibilitySets>
+					<!--==== CODE VALUES  ==== -->
+					<typesOfValue>
+						<ValueSet version="any" id="AllBranding" classOfValues="Branding">
+							<Name>MyCar</Name>
+							<values>
+								<Branding version="any" id="myBrand">
+									<Name>My Car</Name>
+									<Url>https://www.mycar.com/static/images/colorways/myc/logo.png</Url>
+								</Branding>
+							</values>
+						</ValueSet>
+					</typesOfValue>
+					<contacts>
+						<Contact version="any" id="MCR">
+							<ContactDetails>
+								<Email>info@mycar.com</Email>
+								<Phone>+32 1293 449191</Phone>
+							</ContactDetails>
+							<ContactType>information</ContactType>
+						</Contact>
+					</contacts>
+					<organisations>
+						<!-- ==== ORGANISATIONS ==== -->
+						<Operator version="any" id="coc:MCR">
+							<PublicCode>MBK</PublicCode>
+							<Name>My Car</Name>
+							<ShortName>My Car</ShortName>
+							<TradingName>My Car Gmbh</TradingName>
+							<ContactDetails>
+								<ContactRef version="any" ref="MCR"/>
+							</ContactDetails>
+							<OrganisationType>operator</OrganisationType>
+							<relatedOrganisations>
+								<RelatedOrganisation version="any" id="coc:MCR">
+									<OnlineServiceOperatorRef version="any" ref="floggit"/>
+									<OrganisationRoleType>distributor</OrganisationRoleType>
+								</RelatedOrganisation>
+							</relatedOrganisations>
+							<Address>
+								<Street>Alpha1</Street>
+								<Town>Metropolis</Town>
+								<PostCode>RH10 9UA</PostCode>
+								<PostalRegion>Metroland</PostalRegion>
+							</Address>
+							<PrimaryMode>selfDrive</PrimaryMode>
+							<SelfDriveSubmode>hireCar</SelfDriveSubmode>
+							<VehicleSharingRef version="any" ref="car_club"/>
+						</Operator>
+						<OnlineServiceOperator version="any" id="floggit">
+							<Name>Online transport services</Name>
+							<TradingName>Web Floggers SA</TradingName>
+							<ContactDetails>
+								<Email>barrowboy@floggit.com</Email>
+							</ContactDetails>
+							<OrganisationType>onlineProvider</OrganisationType>
+							<Address>
+								<Street>Rue des Postes.</Street>
+								<Town>Betaville</Town>
+								<PostalRegion>Metroland</PostalRegion>
+							</Address>
+						</OnlineServiceOperator>
+					</organisations>
+					<modesOfOperation>
+						<VehicleSharing version="any" id="car_club">
+							<Name>Car Club</Name>
+							<Description>Cars available from fixed stations charge per period</Description>
+							<submodes>
+								<Submode version="any" id="car_club">
+									<TransportMode>selfDrive</TransportMode>
+									<SelfDriveSubmode>hireCar</SelfDriveSubmode>
+								</Submode>
+							</submodes>
+							<VehicleSharingType>vehicleSharing</VehicleSharingType>
+						</VehicleSharing>
+					</modesOfOperation>
+					<vehicleTypes>
+						<SimpleVehicleType version="any" id="small_car">
+							<Name>Small car</Name>
+							<ReversingDirection>false</ReversingDirection>
+							<SelfPropelled>true</SelfPropelled>
+							<PropulsionType>electric</PropulsionType>
+							<FuelType>battery</FuelType>
+							<TransportMode>selfDrive</TransportMode>
+							<PassengerCapacity version="any" id="car_club">
+								<SeatingCapacity>4</SeatingCapacity>
+							</PassengerCapacity>
+							<Length>3.5</Length>
+							<Height>1.6</Height>
+							<Weight>600</Weight>
+							<LicenceRequirements>full</LicenceRequirements>
+							<VehicleCategory>smallCar</VehicleCategory>
+							<MinimumAge>18</MinimumAge>
+						</SimpleVehicleType>
+					</vehicleTypes>
+					<vehicleModels>
+						<VehicleModel version="any" id="mini_whiz">
+							<Name>Model A</Name>
+							<SimpleVehicleTypeRef version="any" ref="small_car"/>
+							<CarModelProfileRef version="any" ref="model_a"/>
+						</VehicleModel>
+					</vehicleModels>
+					<vehicleModelProfiles>
+						<CarModelProfile version="any" id="model_a">
+							<ChildSeat>none</ChildSeat>
+							<Seats>4</Seats>
+							<Doors>2</Doors>
+							<Transmission>automatic</Transmission>
+							<SatNav>true</SatNav>
+							<AirConditioning>true</AirConditioning>
+							<Convertible>false</Convertible>
+							<UsbPowerSockets>false</UsbPowerSockets>
+							<RoofRack>false</RoofRack>
+							<SkiRack>false</SkiRack>
+						</CarModelProfile>
+					</vehicleModelProfiles>
+				</ResourceFrame>
+				<!--==== NETWORK ==== -->
+				<SiteFrame version="1.0" id="mc:car_club_example" responsibilitySetRef="mc:network_data">
+					<Name>Network data used by My Car 1</Name>
+					<prerequisites>
+						<ResourceFrameRef version="1.0" ref="mc:car_club_example"/>
+					</prerequisites>
+					<topographicPlaces>
+						<TopographicPlace version="any" id="Alphaville">
+							<Centroid>
+								<Location id="Alphaville">
+									<Longitude>1.35250</Longitude>
+									<Latitude>52.44692</Latitude>
+									<gml:pos srsName="UKOS">376748  167119</gml:pos>
+								</Location>
+							</Centroid>
+							<Descriptor>
+								<Name>Alphaville</Name>
+							</Descriptor>
+						</TopographicPlace>
+					</topographicPlaces>
+					<parkings>
+						<Parking version="any" id="car_station_alpha">
+							<Name lang="en">Car Station Alpha</Name>
+							<infoLinks>
+								<InfoLink typeOfInfoLink="info" targetPlatform="ios">http:mycar.com/ios/car_station_alpha</InfoLink>
+								<InfoLink typeOfInfoLink="info" targetPlatform="android">http:mycar.com/android/car_station_alpha</InfoLink>
+								<InfoLink typeOfInfoLink="info" targetPlatform="eb">http:mycar.com/web/car_station_alpha</InfoLink>
+							</infoLinks>
+							<CrossRoad>Main Street</CrossRoad>
+							<Landmark>Main Railway Station</Landmark>
+							<Covered>outdoors</Covered>
+							<Gated>openArea</Gated>
+							<Lighting>wellLit</Lighting>
+							<TopographicPlaceRef version="any" ref="Alphaville"/>
+							<OperatorRef version="any" ref="coc:MCR"/>
+							<ParkingType>rentalCarParking</ParkingType>
+							<ParkingVehicleTypes>car</ParkingVehicleTypes>
+							<vehicleTypes>
+								<SimpleVehicleTypeRef version="any" ref="small_car"/>
+							</vehicleTypes>
+							<ParkingLayout>roadside</ParkingLayout>
+							<TotalCapacity>02</TotalCapacity>
+							<parkingProperties>
+								<ParkingProperties version="any" id="car_station_alpha">
+									<ParkingUserTypes>rental</ParkingUserTypes>
+									<ParkingVehicleTypes>car</ParkingVehicleTypes>
+									<ParkingVisibility>demarcated</ParkingVisibility>
+								</ParkingProperties>
+							</parkingProperties>
+							<parkingAreas>
+								<VehicleSharingParkingArea version="any" id="car_station_alpha_A1">
+									<TotalCapacity>2</TotalCapacity>
+									<bays>
+										<MonitoredVehicleSharingParkingBay version="any" id="car_station_alpha_A1@01">
+											<ParkingVehicleType>car</ParkingVehicleType>
+											<SimpleVehicleTypeRef version="any" ref="small_car"/>
+											<RechargingAvailable>true</RechargingAvailable>
+										</MonitoredVehicleSharingParkingBay>
+										<MonitoredVehicleSharingParkingBay version="any" id="car_station_alpha_A1@02">
+											<ParkingVehicleType>car</ParkingVehicleType>
+											<SimpleVehicleTypeRef version="any" ref="small_car"/>
+											<RechargingAvailable>true</RechargingAvailable>
+										</MonitoredVehicleSharingParkingBay>
+									</bays>
+								</VehicleSharingParkingArea>
+							</parkingAreas>
+						</Parking>
+						<Parking version="any" id="car_station_beta">
+							<Name lang="en">Car Station Beta</Name>
+							<CrossRoad>Main Street</CrossRoad>
+							<Landmark>Town Hall</Landmark>
+							<Covered>outdoors</Covered>
+							<TopographicPlaceRef version="any" ref="Alphaville"/>
+							<OperatorRef version="any" ref="coc:MCR"/>
+							<ParkingType>rentalCarParking</ParkingType>
+							<ParkingVehicleTypes>car</ParkingVehicleTypes>
+							<vehicleTypes>
+								<SimpleVehicleTypeRef version="any" ref="small_car"/>
+							</vehicleTypes>
+							<ParkingLayout>roadside</ParkingLayout>
+							<TotalCapacity>02</TotalCapacity>
+							<parkingProperties>
+								<ParkingProperties version="any" id="car_station_beta">
+									<ParkingUserTypes>rental</ParkingUserTypes>
+									<ParkingVehicleTypes>car</ParkingVehicleTypes>
+									<ParkingVisibility>demarcated</ParkingVisibility>
+								</ParkingProperties>
+							</parkingProperties>
+							<parkingAreas>
+								<VehicleSharingParkingArea version="any" id="car_station_beta_B1">
+									<TotalCapacity>2</TotalCapacity>
+									<bays>
+										<MonitoredVehicleSharingParkingBay version="any" id="car_station_beta_B1@01">
+											<ParkingVehicleType>car</ParkingVehicleType>
+											<SimpleVehicleTypeRef version="any" ref="small_car"/>
+											<RechargingAvailable>true</RechargingAvailable>
+										</MonitoredVehicleSharingParkingBay>
+										<MonitoredVehicleSharingParkingBay version="any" id="car_station_beta_B1@02">
+											<ParkingVehicleType>car</ParkingVehicleType>
+											<SimpleVehicleTypeRef version="any" ref="small_car"/>
+											<RechargingAvailable>true</RechargingAvailable>
+										</MonitoredVehicleSharingParkingBay>
+									</bays>
+								</VehicleSharingParkingArea>
+							</parkingAreas>
+						</Parking>
+					</parkings>
+					<tariffZones>
+						<TariffZone version="any" id="AllMetropolis">
+							<Name lang="en">All Metropolis</Name>
+						</TariffZone>
+					</tariffZones>
+				</SiteFrame>
+				<!--==== SERVICE CALENDAR ==== -->
+				<ServiceCalendarFrame version="1.0" id="mc:car_club_example" responsibilitySetRef="mc:network_data">
+					<Name>Day Type devinitions</Name>
+					<ServiceCalendar version="any" id="car_club_example">
+						<dayTypes>
+							<DayType version="any" id="working_day">
+								<Name>Working Day</Name>
+								<properties>
+									<PropertyOfDay>
+										<DaysOfWeek>Weekdays</DaysOfWeek>
+										<HolidayTypes>WorkingDay</HolidayTypes>
+									</PropertyOfDay>
+								</properties>
+							</DayType>
+							<DayType version="any" id="non_working_day">
+								<Name>Working Day</Name>
+								<properties>
+									<PropertyOfDay>
+										<DaysOfWeek>Saturday Sunday</DaysOfWeek>
+										<HolidayTypes>AnyDay</HolidayTypes>
+									</PropertyOfDay>
+									<PropertyOfDay>
+										<DaysOfWeek>Weekdays</DaysOfWeek>
+										<HolidayTypes>AnyHoliday</HolidayTypes>
+									</PropertyOfDay>
+								</properties>
+							</DayType>
+						</dayTypes>
+					</ServiceCalendar>
+				</ServiceCalendarFrame>
+				<!--==== Mobility Service ==== -->
+				<MobilityServiceFrame version="1.0" id="mc:car_club_example" responsibilitySetRef="mc:network_data">
+					<prerequisites>
+						<ResourceFrameRef version="1.0" ref="mc:car_club_example"/>
+						<ServiceCalendarFrameRef version="1.0" ref="mc:car_club_example"/>
+					</prerequisites>
+					<fleets>
+						<Fleet version="any" id="mycar_fleet">
+							<Name>The My Car fleet</Name>
+							<members>
+								<Vehicle version="any" id="car_01">
+									<OperatorRef version="any" ref="coc:MCR"/>
+									<SimpleVehicleTypeRef version="any" ref="small_car"/>
+									<VehicleModelRef version="any" ref="mini_whiz"/>
+									<CarModelProfileRef version="any" ref="model_a"/>
+									<actualVehicleEquipments>
+										<VehicleReleaseEquipment version="any" id="P01@release">
+											<OutOfService>false</OutOfService>
+											<RemoteControl>true</RemoteControl>
+											<LocalControl>true</LocalControl>
+											<LockingMechanism>immobilisingLock</LockingMechanism>
+										</VehicleReleaseEquipment>
+									</actualVehicleEquipments>
+								</Vehicle>
+								<Vehicle version="any" id="car_02">
+									<OperatorRef version="any" ref="coc:MCR"/>
+									<SimpleVehicleTypeRef version="any" ref="small_car"/>
+									<VehicleModelRef version="any" ref="mini_whiz"/>
+									<CarModelProfileRef version="any" ref="model_a"/>
+									<actualVehicleEquipments>
+										<VehicleReleaseEquipment version="any" id="P02@release">
+											<OutOfService>false</OutOfService>
+											<RemoteControl>false</RemoteControl>
+											<LocalControl>true</LocalControl>
+											<LockingMechanism>immobilisingLock</LockingMechanism>
+										</VehicleReleaseEquipment>
+									</actualVehicleEquipments>
+								</Vehicle>
+							</members>
+						</Fleet>
+					</fleets>
+					<!-- === Availabels ervices  === -->
+					<mobilityServices>
+						<VehicleSharingService version="any" id="my_car_club">
+							<BrandingRef version="any" ref="myBrand"/>
+							<Name>My Car Club</Name>
+							<infoLinks>
+								<InfoLink typeOfInfoLink="info">http:mycar.com/info</InfoLink>
+								<InfoLink typeOfInfoLink="mobileAppDownload" targetPlatform="ios">http:mycar.com/ios</InfoLink>
+								<InfoLink typeOfInfoLink="mobileAppDownload" targetPlatform="android">http:mycar.com/android</InfoLink>
+								<InfoLink typeOfInfoLink="mobileAppDownload" targetPlatform="ios">http:mycar.com/ios</InfoLink>
+								<InfoLink typeOfInfoLink="mobileAppDownload" targetPlatform="android">http:mycar.com/android</InfoLink>
+							</infoLinks>
+							<OperatorRef version="any" ref="coc:MCR"/>
+							<BookingRequired>false</BookingRequired>
+							<RegistrationRequired>false</RegistrationRequired>
+							<proposedByServices>
+								<OnlineServiceRef version="any" ref="mycar_online"/>
+							</proposedByServices>
+							<VehicleSharingRef version="any" ref="car_club"/>
+							<MinimumSharingPeriod>PT30M</MinimumSharingPeriod>
+							<MaximumSharingPeriod>PT24H</MaximumSharingPeriod>
+							<fleets>
+								<FleetRef version="any" ref="mycar_fleet"/>
+							</fleets>
+						</VehicleSharingService>
+					</mobilityServices>
+					<onlineServices>
+						<OnlineService version="any" id="mycar_online">
+							<Name>Online registration for My Car</Name>
+							<OnlineServiceOperatorRef version="any" ref="floggit"/>
+							<proposingServices>
+								<VehicleSharingServiceRef version="any" ref="my_car_club"/>
+							</proposingServices>
+						</OnlineService>
+					</onlineServices>
+					<vehicleMeetingPlaceAssignments>
+						<VehicleSharingPlaceAssignment version="any" id="metrobik@car_station_alpha_A1" order="1">
+							<VehicleSharingServiceRef version="any" ref="my_car_club"/>
+							<VehicleSharingParkingAreaRef version="any" ref="car_station_alpha_A1"/>
+						</VehicleSharingPlaceAssignment>
+						<VehicleSharingPlaceAssignment version="any" id="car_station_beta" order="1">
+							<VehicleSharingServiceRef version="any" ref="my_car_club"/>
+							<VehicleSharingParkingAreaRef version="any" ref="car_station_beta_B1"/>
+						</VehicleSharingPlaceAssignment>
+					</vehicleMeetingPlaceAssignments>
+				</MobilityServiceFrame>
+				<!--==== FARES ==== -->
+				<FareFrame version="1.0" id="mc:car_club_example-single_session" dataSourceRef="mc:my_car" responsibilitySetRef="mc:tariffs">
+					<Name>My Car single session </Name>
+					<prerequisites>
+						<MobilityServiceFrameRef version="1.0" ref="mc:car_club_example"/>
+						<SiteFrameRef version="1.0" ref="mc:car_club_example"/>
+					</prerequisites>
+					<!--==== Fare Structure ==== -->
+					<tariffs>
+						<Tariff version="any" id="my_car@membership">
+							<Name>My Car Club Membership - Tariff</Name>
+							<documentLinks>
+								<InfoLink typeOfInfoLink="info">https://mycar.com/membership.pdf</InfoLink>
+							</documentLinks>
+							<OperatorRef version="any" ref="coc:MCR"/>
+							<VehicleSharingServiceRef version="any" ref="my_car_club"/>
+							<timeIntervals>
+								<TimeInterval version="any" id="my_car@1-year">
+									<Name>One Year</Name>
+									<Duration>P1Y</Duration>
+								</TimeInterval>
+							</timeIntervals>
+							<fareStructureElements>
+								<FareStructureElement version="any" id="my_car@membership@access">
+									<Name>Access rights</Name>
+									<TypeOfFareStructureElementRef versionRef="EXTERNAL" ref="fxc:can_access"/>
+									<GenericParameterAssignment version="any" order="1" id="my_car@membership@access">
+										<TypeOfAccessRightAssignmentRef versionRef="EXTERNAL" ref="fxc:condition_of_use"/>
+										<LimitationGroupingType>AND</LimitationGroupingType>
+										<limitations>
+											<EntitlementGiven version="any" id="mycar_online@membership@entitlements_given">
+												<PreassignedFareProductRef version="any" ref="my_car@single_session"/>
+												<EntitlementConstraint>
+													<UserConstraint>samePerson</UserConstraint>
+												</EntitlementConstraint>
+												<EntitlementType>purchase</EntitlementType>
+											</EntitlementGiven>
+										</limitations>
+									</GenericParameterAssignment>
+								</FareStructureElement>
+								<FareStructureElement version="any" id="my_car@membership@durations">
+									<Name>Any where in Zone</Name>
+									<TypeOfFareStructureElementRef ref="fxc:access_when"/>
+									<timeIntervals>
+										<TimeIntervalRef version="any" ref="my_car@1-year"/>
+									</timeIntervals>
+								</FareStructureElement>
+								<FareStructureElement version="any" id="my_car@membership@eligibility">
+									<Name>Eligible user types</Name>
+									<TypeOfFareStructureElementRef versionRef="EXTERNAL" ref="fxc:eligibility"/>
+									<GenericParameterAssignment order="1" id="my_car@membership@eligibility" version="any">
+										<TypeOfAccessRightAssignmentRef versionRef="EXTERNAL" ref="fxc:eligible"/>
+										<limitations>
+											<!---  ===ELIGIBILITY USAGE PARAMETERS =========    -->
+											<UserProfile version="any" id="adult_driver">
+												<Name>Qualified driver</Name>
+												<UserType>adult</UserType>
+												<MinimumAge>18</MinimumAge>
+												<typesOfProofRequiredRef>
+													<TypeOfProofRef versionRef="external" ref="driving_licence"/>
+												</typesOfProofRequiredRef>
+											</UserProfile>
+										</limitations>
+									</GenericParameterAssignment>
+								</FareStructureElement>
+								<FareStructureElement version="any" id="my_car@membership@conditions_of_travel">
+									<Name>Conditions on travel</Name>
+									<TypeOfFareStructureElementRef versionRef="EXTERNAL" ref="fxc:travel_conditions"/>
+									<GenericParameterAssignment version="any" order="1" id="my_car@membership@conditions_of_travel">
+										<Name>Conditions of travel</Name>
+										<TypeOfAccessRightAssignmentRef versionRef="EXTERNAL" ref="fxc:condition_of_use"/>
+										<LimitationGroupingType>AND</LimitationGroupingType>
+										<limitations>
+											<Transferability version="any" id="my_car@membership@transferability">
+												<Name>Not Transferable  </Name>
+												<CanTransfer>false</CanTransfer>
+											</Transferability>
+										</limitations>
+									</GenericParameterAssignment>
+								</FareStructureElement>
+								<FareStructureElement version="any" id="my_car@membership@conditions_of_sale">
+									<Name>Conditions of sale</Name>
+									<TypeOfFareStructureElementRef versionRef="EXTERNAL" ref="fxc:sale_conditions"/>
+									<GenericParameterAssignment version="any" order="1" id="my_car@membership@conditions_of_sale">
+										<Name>Conditions of sale</Name>
+										<TypeOfAccessRightAssignmentRef versionRef="EXTERNAL" ref="fxc:condition_of_sale"/>
+										<LimitationGroupingType>AND</LimitationGroupingType>
+										<limitations>
+											<Refunding version="any" id="my_car@membership@charging_policy@refunding">
+												<Allowed>none</Allowed>
+											</Refunding>
+										</limitations>
+									</GenericParameterAssignment>
+								</FareStructureElement>
+							</fareStructureElements>
+						</Tariff>
+						<Tariff version="any" id="my_car@single_session">
+							<Name>My Car 1 - Tariff</Name>
+							<documentLinks>
+								<InfoLink typeOfInfoLink="info">https://mycar.com/tariff.pdf</InfoLink>
+								<InfoLink typeOfInfoLink="map">https://mycar.com/tariffMap.pdf</InfoLink>
+							</documentLinks>
+							<OperatorRef version="any" ref="coc:MCR"/>
+							<VehicleSharingServiceRef version="any" ref="my_car_club"/>
+							<timeIntervals>
+								<TimeInterval version="any" id="my_car@2-hours">
+									<Name>First 2hours</Name>
+									<Duration>PT2H</Duration>
+								</TimeInterval>
+								<TimeInterval version="any" id="my_car@12-hours">
+									<Name>Half day</Name>
+									<Duration>PT12H</Duration>
+								</TimeInterval>
+								<TimeInterval version="any" id="my_car@1-day">
+									<Name>1 dayr</Name>
+									<Duration>P1D</Duration>
+								</TimeInterval>
+							</timeIntervals>
+							<fareStructureElements>
+								<FareStructureElement version="any" id="my_car@single_session@access">
+									<Name>Anywhere in Zone</Name>
+									<TypeOfFareStructureElementRef ref="fxc:access"/>
+									<GenericParameterAssignment version="any" order="01" id="my_car@single_session@access">
+										<TypeOfAccessRightAssignmentRef versionRef="EXTERNAL" ref="fxc:can_access"/>
+										<ValidityParameterGroupingType>AND</ValidityParameterGroupingType>
+										<validityParameters>
+											<TariffZoneRef version="any" ref="AllMetropolis"/>
+											<VehicleSharingServiceRef version="any" ref="my_car_club"/>
+										</validityParameters>
+									</GenericParameterAssignment>
+								</FareStructureElement>
+								<FareStructureElement version="any" id="my_car@single_session@durations">
+									<Name>Any where in Zone</Name>
+									<TypeOfFareStructureElementRef ref="fxc:access_when"/>
+									<timeIntervals>
+										<TimeIntervalRef version="any" ref="my_car@2-hours"/>
+										<TimeIntervalRef version="any" ref="my_car@12-hours"/>
+										<TimeIntervalRef version="any" ref="my_car@1-day"/>
+									</timeIntervals>
+								</FareStructureElement>
+								<FareStructureElement version="any" id="my_car@single_session@eligibility">
+									<Name>Eligible user types</Name>
+									<TypeOfFareStructureElementRef versionRef="EXTERNAL" ref="fxc:eligibility"/>
+									<GenericParameterAssignment order="1" id="my_car@single_session@eligibility" version="any">
+										<TypeOfAccessRightAssignmentRef versionRef="EXTERNAL" ref="fxc:eligible"/>
+										<limitations>
+											<!---  ===ELIGIBILITY USAGE PARAMETERS =========    -->
+											<UserProfileRef version="any" ref="adult_driver"/>
+										</limitations>
+									</GenericParameterAssignment>
+								</FareStructureElement>
+								<FareStructureElement version="any" id="my_car@single_session@conditions_of_travel">
+									<Name>Conditions on travel</Name>
+									<TypeOfFareStructureElementRef versionRef="EXTERNAL" ref="fxc:travel_conditions"/>
+									<GenericParameterAssignment version="any" order="1" id="my_car@single_session@conditions_of_travel">
+										<Name>Conditions of travel</Name>
+										<TypeOfAccessRightAssignmentRef versionRef="EXTERNAL" ref="fxc:condition_of_use"/>
+										<LimitationGroupingType>AND</LimitationGroupingType>
+										<limitations>
+											<UsageValidityPeriod version="any" id="my_car@single_session@usageValidity">
+												<ValidityPeriodType>singleTrip</ValidityPeriodType>
+												<UsageTrigger>activation</UsageTrigger>
+												<UsageEnd>productExpiry</UsageEnd>
+												<ActivationMeans>accessCode</ActivationMeans>
+											</UsageValidityPeriod>
+											<FrequencyOfUse version="any" id="my_car@single_session@frequency">
+												<Name>One trip  </Name>
+												<FrequencyOfUseType>single</FrequencyOfUseType>
+												<MaximalFrequency>1</MaximalFrequency>
+											</FrequencyOfUse>
+											<Transferability version="any" id="my_car@single_session@transferability">
+												<Name>Is Transferable - Transferee bust be eligible</Name>
+												<CanTransfer>false</CanTransfer>
+												<SharedUsage>singleUser</SharedUsage>
+											</Transferability>
+										</limitations>
+									</GenericParameterAssignment>
+								</FareStructureElement>
+								<FareStructureElement version="any" id="my_car@single_session@conditions_of_sale">
+									<Name>Conditions of sale</Name>
+									<TypeOfFareStructureElementRef versionRef="EXTERNAL" ref="fxc:sale_conditions"/>
+									<GenericParameterAssignment version="any" order="1" id="my_car@single_session@conditions_of_sale">
+										<Name>Conditions of sale</Name>
+										<TypeOfAccessRightAssignmentRef versionRef="EXTERNAL" ref="fxc:condition_of_sale"/>
+										<LimitationGroupingType>AND</LimitationGroupingType>
+										<limitations>
+											<ChargingPolicy version="any" id="my_car@single_session@charging_policy@Deposit">
+												<Name>Deposit</Name>
+												<DepositPolicy>depositBlocked</DepositPolicy>
+											</ChargingPolicy>
+											<RentalPenaltyPolicy version="any" id="my_car@single_session@hire_penalty@late_return">
+												<Name>Charge for late return</Name>
+												<RentalPenaltyPolicyType>lateVehicleReturn</RentalPenaltyPolicyType>
+											</RentalPenaltyPolicy>
+											<Refunding version="any" id="my_car@single_session@refunding">
+												<Allowed>partial</Allowed>
+											</Refunding>
+										</limitations>
+									</GenericParameterAssignment>
+								</FareStructureElement>
+							</fareStructureElements>
+						</Tariff>
+					</tariffs>
+					<!--==== Fare Usage Parameters ==== -->
+					<!--==== Fare Product ==== -->
+					<fareProducts>
+						<SaleDiscountRight version="any" id="mycar_online@membership">
+							<BrandingRef version="any" ref="myBrand"/>
+							<Name>1 years membership of My Car online</Name>
+							<OnlineServiceOperatorRef version="any" ref="floggit"/>
+							<validableElements>
+								<ValidableElement version="any" id="my_car@membership@travel">
+									<Name>Single  ride</Name>
+									<fareStructureElements>
+										<FareStructureElementRef version="any" ref="my_car@membership@access"/>
+										<FareStructureElementRef version="any" ref="my_car@membership@durations"/>
+										<FareStructureElementRef version="any" ref="my_car@membership@eligibility"/>
+										<FareStructureElementRef version="any" ref="my_car@membership@conditions_of_travel"/>
+										<FareStructureElementRef version="any" ref="my_car@membership@conditions_of_sale"/>
+									</fareStructureElements>
+								</ValidableElement>
+							</validableElements>
+						</SaleDiscountRight>
+						<PreassignedFareProduct version="any" id="my_car@single_session">
+							<Name>One off care hire session</Name>
+							<infoLinks>
+								<InfoLink targetPlatform="ios" typeOfInfoLink="mobileAppInstallCheck">https://mycar.com/hirecheck_ios.htm</InfoLink>
+								<InfoLink targetPlatform="android" typeOfInfoLink="mobileAppInstallCheck">https://mycar.com/hirecheck_android.htm </InfoLink>
+								<InfoLink targetPlatform="ios" typeOfInfoLink="mobileAppDownload">https://mycar.com/hire_ios.htm</InfoLink>
+								<InfoLink targetPlatform="android" typeOfInfoLink="mobileAppDownload">https://mycar.com/hire_android.htm </InfoLink>
+							</infoLinks>
+							<ChargingMomentType>beforeTravelThenAdjustAtEndOfTravel</ChargingMomentType>
+							<OperatorRef version="any" ref="coc:MCR"/>
+							<ConditionSummary>
+								<FareStructureType>networkFlatFare</FareStructureType>
+								<TariffBasis>flat</TariffBasis>
+								<IsRefundable>false</IsRefundable>
+								<RequiresDeposit>true</RequiresDeposit>
+								<NoCashPayment>true</NoCashPayment>
+								<RequiresReservation>true</RequiresReservation>
+							</ConditionSummary>
+							<!--==== VALIDABLE ELEMENTs ==== -->
+							<validableElements>
+								<ValidableElement version="any" id="my_car@single_session@travel">
+									<Name>Single  ride</Name>
+									<fareStructureElements>
+										<FareStructureElementRef version="any" ref="my_car@single_session@access"/>
+										<FareStructureElementRef version="any" ref="my_car@single_session@durations"/>
+										<FareStructureElementRef version="any" ref="my_car@single_session@eligibility"/>
+										<FareStructureElementRef version="any" ref="my_car@single_session@conditions_of_travel"/>
+										<FareStructureElementRef version="any" ref="my_car@single_session@conditions_of_sale"/>
+									</fareStructureElements>
+								</ValidableElement>
+							</validableElements>
+							<!--==== ACCESS RIGHTs ===== -->
+							<accessRightsInProduct>
+								<AccessRightInProduct version="any" id="my_car@single_session" order="1">
+									<ValidableElementRef version="any" ref="my_car@single_session@travel"/>
+								</AccessRightInProduct>
+							</accessRightsInProduct>
+							<ProductType>singleTrip</ProductType>
+						</PreassignedFareProduct>
+						<!--==== Other Products ==== -->
+					</fareProducts>
+					<!--==== Distribution Parameters ==== -->
+					<distributionChannels>
+						<DistributionChannel version="any" id="mobile_application">
+							<Name>Mobile application</Name>
+							<DistributionChannelType>mobileDevice</DistributionChannelType>
+							<OnlineServiceOperatorRef version="any" ref="floggit"/>
+							<PaymentMethods>debitCard creditCard  </PaymentMethods>
+							<DistributionRights>sell</DistributionRights>
+						</DistributionChannel>
+						<DistributionChannel version="any" id="online">
+							<Name>internet web acces</Name>
+							<DistributionChannelType>online</DistributionChannelType>
+							<OnlineServiceOperatorRef version="any" ref="floggit"/>
+							<PaymentMethods>debitCard creditCard  directDebit </PaymentMethods>
+							<DistributionRights>sell inform</DistributionRights>
+						</DistributionChannel>
+					</distributionChannels>
+					<fulfilmentMethods>
+						<FulfilmentMethod version="any" id="mobile_device">
+							<Name>Collect from machine</Name>
+							<FulfilmentMethodType>mobileApp</FulfilmentMethodType>
+							<typesOfTravelDocument>
+								<TypeOfTravelDocumentRef version="any" ref="mobile_application_data"/>
+							</typesOfTravelDocument>
+						</FulfilmentMethod>
+					</fulfilmentMethods>
+					<typesOfTravelDocuments>
+						<TypeOfTravelDocument version="any" id="mobile_application_data">
+							<Name>Mobile app with access code</Name>
+							<MediaType>mobileApp</MediaType>
+							<MachineReadable>nfc</MachineReadable>
+						</TypeOfTravelDocument>
+					</typesOfTravelDocuments>
+					<!--==== Sales Packages==== -->
+					<salesOfferPackages>
+						<SalesOfferPackage version="any" id="mycar_online@membership-SOP@mobile_app">
+							<BrandingRef version="any" ref="myBrand"/>
+							<Name>My Car club membership</Name>
+							<salesOfferPackageElements>
+								<SalesOfferPackageElement version="any" id="mycar_online@membership-SOP@mobile_app" order="1">
+									<TypeOfTravelDocumentRef version="any" ref="mobile_application_data"/>
+									<SaleDiscountRightRef version="any" ref="mycar_online@membership"/>
+								</SalesOfferPackageElement>
+							</salesOfferPackageElements>
+						</SalesOfferPackage>
+						<SalesOfferPackage version="any" id="my_car@single_session-SOP@mobileApp">
+							<BrandingRef version="any" ref="myBrand"/>
+							<Name>My Car one off Mobile app purchase</Name>
+							<ConditionSummary>
+								<RequiresAccount>true</RequiresAccount>
+							</ConditionSummary>
+							<validityParameterAssignments>
+								<GenericParameterAssignment version="any" id="my_car@single_session-SOP@mobileApp" order="1">
+									<Name>Must be Registered member of floggit</Name>
+									<limitations>
+										<EntitlementRequired version="any" id="my_car@single_session-SOP@mobileApp@registered">
+											<SaleDiscountRightRef version="any" ref="mycar_online@membership"/>
+											<EntitlementConstraint>
+												<UserConstraint>samePerson</UserConstraint>
+											</EntitlementConstraint>
+										</EntitlementRequired>
+									</limitations>
+									<validityParameters>
+										<OnlineServiceRef version="any" ref="mycar_online"/>
+									</validityParameters>
+								</GenericParameterAssignment>
+							</validityParameterAssignments>
+							<distributionAssignments>
+								<DistributionAssignment version="any" id="my_car@single_session-SOP@mobileApp" order="1">
+									<Name>By Mobile app</Name>
+									<DistributionChannelRef version="any" ref="mobile_application"/>
+									<DistributionChannelType>mobileDevice</DistributionChannelType>
+									<TicketingServiceFacilityList>purchase refund</TicketingServiceFacilityList>
+									<FulfilmentMethodRef version="any" ref="mobile_device"/>
+								</DistributionAssignment>
+							</distributionAssignments>
+							<salesOfferPackageElements>
+								<SalesOfferPackageElement version="any" id="my_car@single_session-SOP@mobileApp" order="1">
+									<TypeOfTravelDocumentRef version="any" ref="mobile_application_data"/>
+									<PreassignedFareProductRef version="any" ref="my_car@single_session"/>
+								</SalesOfferPackageElement>
+							</salesOfferPackageElements>
+						</SalesOfferPackage>
+					</salesOfferPackages>
+				</FareFrame>
+				<FareFrame version="1.0" id="mc:car_club_example_prices" dataSourceRef="mc:my_car" responsibilitySetRef="mc:tariffs">
+					<FrameDefaults>
+						<DefaultCurrency>EUR</DefaultCurrency>
+					</FrameDefaults>
+					<prerequisites>
+						<FareFrameRef version="1.0" ref="mc:car_club_example-single_session"/>
+					</prerequisites>
+					<!--==== Pricing Parameters ====-->
+					<PricingParameterSet version="any" id="mc:car_club_example_Prices">
+						<pricingRules>
+							<DiscountingRule version="any" id="vat">
+								<Name>Vat </Name>
+								<MethodName>tax</MethodName>
+								<DiscountAsPercentage>-15</DiscountAsPercentage>
+							</DiscountingRule>
+						</pricingRules>
+					</PricingParameterSet>
+					<!--==== Fare Prices ==== -->
+					<fareTables>
+						<FareTable version="any" id="my_car_club">
+							<Name>My Car  prices</Name>
+							<OperatorRef version="any" ref="coc:MCR"/>
+							<limitations>
+								<UserProfileRef version="any" ref="adult_driver"/>
+							</limitations>
+							<specifics>
+								<TariffZoneRef version="any" ref="AllMetropolis"/>
+								<VehicleSharingServiceRef version="any" ref="my_car_club"/>
+							</specifics>
+							<includes>
+								<FareTable version="any" id="my_car@single_session">
+									<Name>My Car one off use prices</Name>
+									<pricesFor>
+										<SalesOfferPackageRef version="any" ref="my_car@single_session-SOP@mobileApp"/>
+									</pricesFor>
+									<usedIn>
+										<TariffRef version="any" ref="my_car@single_session"/>
+									</usedIn>
+									<includes>
+										<FareTable version="any" id="my_car@single_session@rental">
+											<prices>
+												<SalesOfferPackagePrice version="any" id="mycar_online@membership-SOP@mobile_app">
+													<Name>Membership 1 year</Name>
+													<Amount>30.00</Amount>
+													<SalesOfferPackageRef version="any" ref="mycar_online@membership-SOP@mobile_app"/>
+												</SalesOfferPackagePrice>
+												<UsageParameterPrice version="any" id="my_car@single_session@charging_policy@Deposit">
+													<Name>Deposit - blocked</Name>
+													<Amount>300.00</Amount>
+													<ChargingPolicyRef version="any" ref="my_car@single_session@charging_policy@Deposit"/>
+												</UsageParameterPrice>
+												<UsageParameterPrice version="any" id="my_car@single_session@charging_policy@Deposit_Refund">
+													<Name>Deposit - unblocked</Name>
+													<Amount>-300.00</Amount>
+													<ChargingPolicyRef version="any" ref="my_car@single_session@charging_policy@Deposit"/>
+												</UsageParameterPrice>
+												<TimeIntervalPrice version="any" id="my_car@2-hours">
+													<Amount>45.00</Amount>
+													<TimeIntervalRef version="any" ref="my_car@2-hours"/>
+												</TimeIntervalPrice>
+												<TimeIntervalPrice version="any" id="my_car@12-hours">
+													<Amount>60.00</Amount>
+													<TimeIntervalRef version="any" ref="my_car@12-hours"/>
+												</TimeIntervalPrice>
+												<TimeIntervalPrice version="any" id="my_car@1-day">
+													<Amount>90.00</Amount>
+													<TimeIntervalRef version="any" ref="my_car@1-day"/>
+												</TimeIntervalPrice>
+											</prices>
+										</FareTable>
+										<FareTable version="any" id="my_car@hire_penalty">
+											<Name>My Car penalty fees</Name>
+											<limitations>
+												<UserProfileRef version="any" ref="adult_driver"/>
+											</limitations>
+											<prices>
+												<UsageParameterPrice version="any" id="my_car@single_session@hire_penalty@late_return">
+													<Name>Late return</Name>
+													<Amount>100.00</Amount>
+													<RentalPenaltyPolicyRef version="any" ref="my_car@single_session@hire_penalty@late_return"/>
+												</UsageParameterPrice>
+											</prices>
+										</FareTable>
+									</includes>
+								</FareTable>
+							</includes>
+						</FareTable>
+					</fareTables>
+				</FareFrame>
+			</frames>
+		</CompositeFrame>
+		<!--==== SAMPLE TRANSACTIONS - NORMALLY IN A SEPARATE FILE ==== -->
+		<CompositeFrame id="mc:car_club_example_transaction_examples" version="1.0" responsibilitySetRef="mc:transaction_data" dataSourceRef="mc:my_car">
+			<!--  ===============
+This Shows  sample Purchases 
+
+   Sales Transactions would normally be exchanged separately from the reference data on whoich they are based
+-->
+			<Name>Sample Transactions for My Car trips </Name>
+			<prerequisites>
+				<CompositeFrameRef version="1.0" ref="mc:car_club_example"/>
+			</prerequisites>
+			<frames>
+				<MobilityJourneyFrame version="1.2" id="mct:sample_transactions">
+					<vehicleAccessCredentials>
+						<VehicleAccessCredentialsAssignment version="any" id="mct:Cust444@trans005@purchase_single_session" order="1">
+							<VehicleSharingServiceRef version="any" ref="my_car_club"/>
+							<MobileDeviceRef versionRef="External" ref="mct:317867122222"/>
+							<ServiceAccessCodeRef version="any" ref="mct:Good@Cust444@005@purchase_single_session"/>
+						</VehicleAccessCredentialsAssignment>
+					</vehicleAccessCredentials>
+					<parkingLogEntries>
+						<!--  Example log of changes from real time updates.  -->
+						<!--  Parking alpha   before checkout  -->
+						<RentalAvailability id="car_station_alpha@2021-10-08T11:15:00" version="any">
+							<Name>Before Checkout </Name>
+							<Date>2021-10-08T11:06:55</Date>
+							<ParkingRef version="any" ref="car_station_alpha"/>
+							<IsOperational>true</IsOperational>
+							<IsRenting>true</IsRenting>
+							<IsAcceptingReturns>true</IsAcceptingReturns>
+							<AvailableVehicles>5</AvailableVehicles>
+							<DisabledVehicles>2</DisabledVehicles>
+							<AvailableDocks>3</AvailableDocks>
+							<DisabledDocks>2</DisabledDocks>
+						</RentalAvailability>
+						<ParkingBayCondition id="car_station_alpha_A1@01@2021-10-08T11:15:00" version="any">
+							<Date>2021-10-08T11:15:00</Date>
+							<MonitoredVehicleSharingParkingBayRef version="any" ref="car_station_alpha_A1@01"/>
+							<Status>inUse</Status>
+						</ParkingBayCondition>
+						<ParkingBayCondition id="car_station_alpha_A1@02@2021-10-08T11:15:00" version="any">
+							<Date>2021-10-08T11:15:00</Date>
+							<MonitoredVehicleSharingParkingBayRef version="any" ref="car_station_alpha_A1@02"/>
+							<Status>inUse</Status>
+						</ParkingBayCondition>
+						<!--  Parking alpha after  checkout  -->
+						<RentalAvailability id="car_station_alpha@2021-10-08T11:07:20" version="any">
+							<Name>After Checkout </Name>
+							<Date>2021-10-08T11:07:20</Date>
+							<ParkingRef version="any" ref="car_station_alpha"/>
+							<IsOperational>true</IsOperational>
+							<IsRenting>true</IsRenting>
+							<IsAcceptingReturns>true</IsAcceptingReturns>
+							<AvailableVehicles>1</AvailableVehicles>
+							<AvailableDocks>1</AvailableDocks>
+						</RentalAvailability>
+						<ParkingBayCondition id="car_station_alpha_A1@01@2021-10-08T11:07:20" version="any">
+							<Date>2021-10-08T11:07:20</Date>
+							<MonitoredVehicleSharingParkingBayRef version="any" ref="car_station_alpha_A1@01"/>
+							<Status>available</Status>
+						</ParkingBayCondition>
+						<!-- Parking alpha  after return -->
+						<RentalAvailability id="car_station_alpha_A1@20@21-10-08T23:10:00" version="any">
+							<Name>After Return</Name>
+							<Date>2021-10-08T23:10:00</Date>
+							<ParkingRef version="any" ref="car_station_alpha"/>
+							<IsOperational>true</IsOperational>
+							<IsRenting>true</IsRenting>
+							<IsAcceptingReturns>true</IsAcceptingReturns>
+							<AvailableVehicles>2</AvailableVehicles>
+							<AvailableDocks>0</AvailableDocks>
+						</RentalAvailability>
+						<ParkingBayCondition id="car_station_alpha_A1@01@2021-10-08T23:10:00" version="any">
+							<Name>After Return</Name>
+							<Date>2021-10-08T23:10:00</Date>
+							<MonitoredVehicleSharingParkingBayRef version="any" ref="car_station_alpha_A1@01"/>
+							<Status>inUse</Status>
+						</ParkingBayCondition>
+					</parkingLogEntries>
+				</MobilityJourneyFrame>
+				<SalesTransactionFrame version="1.2" id="mct:sample_transactions">
+					<Name>My Car Sample Transactions</Name>
+					<codespaces>
+						<CodespaceRef ref="mc_data"/>
+						<Codespace id="mc_transactions">
+							<Xmlns>mct</Xmlns>
+							<XmlnsUrl>http://www.mycar.com/transactions</XmlnsUrl>
+							<Description>Operator transaction data</Description>
+						</Codespace>
+					</codespaces>
+					<!-- ===== Transaction data -->
+					<customers>
+						<Customer version="any" id="mct:Cust444">
+							<Surname>Johnson</Surname>
+							<FirstName>Boris</FirstName>
+							<Title>Mr</Title>
+							<Gender>male</Gender>
+							<Email>boris@brexit.eu</Email>
+							<EmailVerified>2021-02-28T15:00:00</EmailVerified>
+							<Phone>
+								<TelNationalNumber>07867122222</TelNationalNumber>
+								<TelCountryCode>41</TelCountryCode>
+							</Phone>
+							<PhoneVerified>2021-02-28T16:00:00</PhoneVerified>
+							<customerAccounts>
+								<CustomerAccount version="any" id="mct:Cust444@AC7651">
+									<Name>Bojo</Name>
+									<StartDate>2021-02-28T13:00:00</StartDate>
+									<CustomerAccountStatusType>active</CustomerAccountStatusType>
+									<customerPurchasePackages>
+										<CustomerPurchasePackageRef version="any" ref="mct:Good@Cust444@005"/>
+									</customerPurchasePackages>
+									<CustomerPaymentMeansRef version="any" ref="mct:Cust444@AC7651@p1"/>
+									<paymentMeans>
+										<CustomerPaymentMeans version="any" id="mct:Cust444@AC7651@p1">
+											<Name>B.Johnson Visa Card</Name>
+											<EmvCardRef versionRef="external" ref="visa:47594444555666"/>
+										</CustomerPaymentMeans>
+										<CustomerPaymentMeans version="any" id="mct:Cust444@AC7651@p2">
+											<Name>B.Johnson mobile device</Name>
+											<MobileDeviceRef versionRef="external" ref="mct:317867122222"/>
+										</CustomerPaymentMeans>
+									</paymentMeans>
+									<mediumAccessDevices>
+										<MobileDeviceRef versionRef="External" ref="mct:317867122222"/>
+									</mediumAccessDevices>
+								</CustomerAccount>
+							</customerAccounts>
+							<fareContracts>
+								<FareContract version="any" id="mct:Cust444@contract001">
+									<CustomerRef versionRef="EXTERNAL" ref="mct:Cust444"/>
+									<fareContractEntries>
+										<SalesTransaction version="any" id="mct:Cust444@contract001@t001@join_as_member">
+											<Name>Join As Member</Name>
+											<Date>2021-02-28T13:00:00</Date>
+											<TypeOfFareContractEntryRef versionRef="EXTERNAL" ref="fxc:product_purchase"/>
+											<Amount>30.00</Amount>
+											<travelSpecifications>
+												<OfferedTravelSpecification version="any" id="mct:Cust444@contract001@t001@join_as_member">
+													<Name>1 year membership</Name>
+													<Date>2021-02-28T13:00:00</Date>
+													<SalesTransactionRef version="any" ref="mct:Cust444@contract001@t001@join_as_member"/>
+													<SalesOfferPackagePriceRef version="any" ref="mycar_online@membership-SOP@mobile_app"/>
+													<Amount>34.50</Amount>
+													<ruleStepResults>
+														<RuleStepResult id="mct:Cust444@contract001@t001@join_as_member@tax" order="1">
+															<SalesOfferPackagePriceRef version="any" ref="mycar_online@membership-SOP@mobile_app"/>
+															<Amount>30.00</Amount>
+															<AdjustmentAmount>4.50</AdjustmentAmount>
+															<DiscountingRuleRef version="any" ref="vat"/>
+															<Narrative>Add 15% VAT</Narrative>
+														</RuleStepResult>
+													</ruleStepResults>
+													<StartOfValidity>2021-02-28T13:00:00</StartOfValidity>
+													<EndOfValidity>2022-02-28T13:00:00</EndOfValidity>
+													<TravelSpecificationSummaryView>
+														<Start>2021-02-28T13:00:00</Start>
+														<OperatorRef version="any" ref="coc:MCR"/>
+														<VehicleSharingServiceRef version="any" ref="my_car_club"/>
+													</TravelSpecificationSummaryView>
+													<specificParameterAssignments>
+														<SpecificParameterAssignment version="any" order="1" id="mct:Cust444@contract001@t001@purchase_member">
+															<Name>Join as member</Name>
+															<SalesOfferPackageRef version="any" ref="mycar_online@membership-SOP@mobile_app"/>
+															<TimeIntervalRef version="any" ref="my_car@1-day"/>
+														</SpecificParameterAssignment>
+													</specificParameterAssignments>
+												</OfferedTravelSpecification>
+											</travelSpecifications>
+											<customerPurchasePackages>
+												<CustomerPurchasePackageRef version="any" ref="mct:Good@Cust444@001"/>
+											</customerPurchasePackages>
+											<travelDocuments>
+												<TravelDocument version="any" id="mbt:ticket@m-0345">
+													<ValidBetween>
+														<FromDate>2021-02-28T13:00:00</FromDate>
+														<ToDate>2022-02-28T12:59:59</ToDate>
+													</ValidBetween>
+													<TypeOfTravelDocumentRef version="any" ref="mobile_application_data"/>
+												</TravelDocument>
+											</travelDocuments>
+										</SalesTransaction>
+										<SalesTransaction version="any" id="mct:Cust444@trans005@purchase_single_session">
+											<Name>Book and pay for  1-day use of a car</Name>
+											<Date>2021-10-01T10:10:00</Date>
+											<TypeOfFareContractEntryRef versionRef="EXTERNAL" ref="fxc:product_purchase"/>
+											<Amount>103.50</Amount>
+											<ruleStepResults>
+												<RuleStepResult id="mct:Cust444@trans005@purchase_single_session@tax" order="1">
+													<TimeIntervalPriceRef version="any" ref="my_car@1-day"/>
+													<Amount>90.00</Amount>
+													<AdjustmentAmount>13.50</AdjustmentAmount>
+													<DiscountingRuleRef version="any" ref="vat"/>
+													<Narrative>Add 15% VAT</Narrative>
+												</RuleStepResult>
+											</ruleStepResults>
+											<PaymentMethod>creditCard</PaymentMethod>
+											<travelSpecifications>
+												<OfferedTravelSpecification version="any" id="mct:Cust444@trans005@purchase_single_session">
+													<Date>2021-10-08T11:15:00</Date> <!-- date of travel -->
+													<SalesTransactionRef version="any" ref="mct:Cust444@trans005@purchase_single_session"/>
+													<TimeIntervalPriceRef version="any" ref="my_car@1-day"/>
+													<Amount>90.00</Amount>
+													<StartOfValidity>2021-10-08T11:15:00</StartOfValidity>
+													<TravelSpecificationSummaryView>
+														<Start>2021-10-08T11:15:00</Start>
+														<End>2021-10-09T11:14:59</End>
+														<Duration>P1D</Duration>
+														<VehicleSharingServiceRef version="any" ref="my_car_club"/>
+													</TravelSpecificationSummaryView>
+													<specificParameterAssignments>
+														<SpecificParameterAssignment version="any" order="1" id="mct:Cust444@trans005@purchase_single_session">
+															<Name>Single session</Name>
+															<ValidableElementRef version="any" ref="my_car@single_session@travel"/>
+															<PreassignedFareProductRef version="any" ref="my_car@single_session"/>
+															<FareStructureElementRef version="any" ref="my_car@single_session@access"/>
+															<SalesOfferPackageRef version="any" ref="my_car@single_session-SOP@mobileApp"/>
+															<validityParameters>
+																<OperatorRef version="any" ref="coc:MCR"/>
+																<OnlineServiceOperatorRef version="any" ref="floggit"/>
+																<DistributionChannelRef version="any" ref="mobile_application"/>
+																<FulfilmentMethodRef version="any" ref="mobile_device"/>
+																<TypeOfTravelDocumentRef version="any" ref="mobile_application_data"/>
+																<VehicleSharingRef version="any" ref="car_club"/>
+																<VehicleRef version="any" ref="car_01"/>
+																<CarModelProfileRef version="any" ref="model_a"/>
+																<VehicleSharingParkingAreaRef version="any" ref="car_station_alpha_A1"/>
+																<MonitoredVehicleSharingParkingBayRef version="any" ref="car_station_alpha_A1@01"/>
+																<VehicleSharingServiceRef version="any" ref="my_car_club"/>
+															</validityParameters>
+															<TimeIntervalRef version="any" ref="my_car@1-day"/>
+														</SpecificParameterAssignment>
+													</specificParameterAssignments>
+												</OfferedTravelSpecification>
+											</travelSpecifications>
+											<customerPurchasePackages>
+												<CustomerPurchasePackageRef version="any" ref="mct:Good@Cust444@005"/>
+											</customerPurchasePackages>
+											<travelDocuments>
+												<ServiceAccessCodeRef version="any" ref="mct:Good@Cust444@005@purchase_single_session"/>
+											</travelDocuments>
+										</SalesTransaction>
+									</fareContractEntries>
+								</FareContract>
+							</fareContracts>
+						</Customer>
+					</customers>
+					<!-- CUSTOMER PURCHASE PACKAGES === -->
+					<customerPurchasePackages>
+						<CustomerPurchasePackage version="any" id="mct:Good@Cust444@001" created="2021-02-28T13:00:00">
+							<ValidBetween>
+								<FromDate>2021-02-28T13:00:00</FromDate>
+								<ToDate>2022-02-28T13:00:00</ToDate>
+							</ValidBetween>
+							<Name>Membership</Name>
+							<CustomerRef version="any" ref="mct:Cust444"/>
+							<CustomerAccountRef version="any" ref="mct:Cust444@AC7651"/>
+							<customerPurchasePackageElements>
+								<CustomerPurchasePackageElement version="any" id="mct:Good@Cust444@001" order="1" created="2021-02-28T13:00:00">
+									<SalesOfferPackageElementRef version="any" ref="mycar_online@membership-SOP@mobile_app"/>
+								</CustomerPurchasePackageElement>
+							</customerPurchasePackageElements>
+							<SalesTransactionRef version="any" ref="mct:Cust444@contract001@t001@join_as_member"/>
+							<prices>
+								<CustomerPurchasePackagePrice version="any" id="mct:Good@Cust444@001" created="2021-02-28T13:00:00">
+									<Amount>34.50</Amount>
+									<ruleStepResults>
+										<RuleStepResult id="mct:Good@Cust444@001@tax" order="1">
+											<SalesOfferPackagePriceRef version="any" ref="mycar_online@membership-SOP@mobile_app"/>
+											<Amount>30.00</Amount>
+											<AdjustmentAmount>4.50</AdjustmentAmount>
+											<DiscountingRuleRef version="any" ref="vat"/>
+											<Narrative>Add 15% VAT</Narrative>
+										</RuleStepResult>
+									</ruleStepResults>
+									<CustomerPurchasePackageRef version="any" ref="mct:Good@Cust444@001"/>
+								</CustomerPurchasePackagePrice>
+							</prices>
+							<MobileDeviceRef versionRef="external" ref="mct:317867122222"/>
+							<MediumApplicationInstanceRef versionRef="external" ref="mct:317867122222@mboik"/>
+						</CustomerPurchasePackage>
+						<CustomerPurchasePackage version="any" id="mct:Good@Cust444@005" created="2021-10-01T10:10:00"  changed="2021-10-08T23:10:00">
+							<ValidBetween>
+								<FromDate>2021-10-08T11:15:00</FromDate>
+								<ToDate>2021-10-08T23:59:59</ToDate>
+							</ValidBetween>
+							<Name>Day Hire on  2021-10-08  at 11:15:00 </Name>
+							<CustomerRef version="any" ref="mct:Cust444"/>
+							<CustomerAccountRef version="any" ref="mct:Cust444@AC7651"/>
+							<customerPurchasePackageElements>
+								<CustomerPurchasePackageElement version="any" id="mct:Good@Cust444@005" order="1" created="2021-10-01T10:10:00">
+									<SalesOfferPackageElementRef version="any" ref="my_car@single_session-SOP@mobileApp"/>
+									<elementAccesses>
+										<CustomerPurchasePackageElementAccess version="any" id="mct:Good@Cust444@005@02" created="2021-10-01T10:10:00">
+											<MarkedAs>unused</MarkedAs>
+											<AccessNumber>1</AccessNumber>
+										</CustomerPurchasePackageElementAccess>
+										<CustomerPurchasePackageElementAccess version="any" id="mct:Good@Cust444@005@02" created="2021-10-08T11:15:00">
+											<MarkedAs>activated</MarkedAs>
+											<AccessNumber>1</AccessNumber>
+										</CustomerPurchasePackageElementAccess>
+										<CustomerPurchasePackageElementAccess version="any" id="mct:Good@Cust444@005@02" created="2021-10-08T23:10:00">
+											<MarkedAs>expired</MarkedAs>
+											<AccessNumber>1</AccessNumber>
+										</CustomerPurchasePackageElementAccess>
+									</elementAccesses>
+									<validityParameterAssignments>
+										<CustomerPurchaseParameterAssignment version="any" id="mct:Good@Cust444@005" order="1">
+											<validityParameters>
+												<OperatorRef version="any" ref="coc:MCR"/>
+												<DistributionChannelRef version="any" ref="mobile_application"/>
+												<FulfilmentMethodRef version="any" ref="mobile_device"/>
+												<TypeOfTravelDocumentRef version="any" ref="mobile_application_data"/>
+												<VehicleSharingRef ref="car_club"/>
+												<VehicleSharingServiceRef version="any" ref="my_car_club"/>
+											</validityParameters>
+											<TimeIntervalRef version="any" ref="my_car@1-day"/>
+										</CustomerPurchaseParameterAssignment>
+									</validityParameterAssignments>
+								</CustomerPurchasePackageElement>
+							</customerPurchasePackageElements>
+							<SalesTransactionRef version="any" ref="mct:Cust444@trans005@purchase_single_session"/>
+							<prices>
+								<CustomerPurchasePackagePrice version="any" id="mct:Good@Cust444@005" created="2021-10-01T10:10:00">
+									<Amount>103.50</Amount>
+									<ruleStepResults>
+										<RuleStepResult id="mct:Good@Cust444@005@tax" order="1">
+											<TimeIntervalPriceRef version="any" ref="my_car@1-day"/>
+											<Amount>90.00</Amount>
+											<AdjustmentAmount>13.50</AdjustmentAmount>
+											<DiscountingRuleRef version="any" ref="vat"/>
+											<Narrative>Add 15% VAT</Narrative>
+										</RuleStepResult>
+									</ruleStepResults>
+									<CustomerPurchasePackageRef version="any" ref="mct:Good@Cust444@005"/>
+								</CustomerPurchasePackagePrice>
+							</prices>
+							<travelDocuments>
+								<ServiceAccessCode version="any" id="mct:Good@Cust444@005@purchase_single_session" created="2021-10-01T10:10:00">
+									<ValidBetween>
+										<FromDate>2021-10-08T11:15:00</FromDate>
+										<ToDate>2021-10-09T11:14:59</ToDate>
+									</ValidBetween>
+									<TypeOfTravelDocumentRef version="any" ref="mobile_application_data"/>
+									<CustomerPurchasePackageRef version="any" ref="mct:Good@Cust444@005"/>
+									<AccessCode>9876</AccessCode>
+									<VehicleAccessCredentialsAssignmentRef version="any" ref="mct:Cust444@trans005@purchase_day_pase"/>
+								</ServiceAccessCode>
+							</travelDocuments>
+							<MobileDeviceRef versionRef="external" ref="mct:317867122222"/>
+							<MediumApplicationInstanceRef versionRef="external" ref="mct:31786712244@mboik"/>
+						</CustomerPurchasePackage>
+					</customerPurchasePackages>
+				</SalesTransactionFrame>
+			</frames>
+		</CompositeFrame>
+	</dataObjects>
+</PublicationDelivery>
