@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <!-- edited with XMLSpy v2013 (x64) (http://www.altova.com) by Nicholas JS Knowles (Trapeze Group Limited) -->
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:core="http://www.govtalk.gov.uk/core" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_utility_types">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:core="http://www.govtalk.gov.uk/core" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_utility_types">
 	<xsd:annotation>
 		<xsd:appinfo>
 			<Metadata xmlns="http://www.govtalk.gov.uk/CM/gms-xs">
@@ -18,17 +18,40 @@
 					<Modified>2010-11-05</Modified>
 				</Date>
 				<Date>
-					<Modified>2017-03-27  CR0011 Add separate support for Printed coloures and fonts</Modified>
+					<Modified>2017-03-27</Modified>CR0011 Add separate support for Printed coloures and fonts.
 				</Date>
 				<Date>
-					<Modified>2017-03-27  CR0016 Add additional valyes to InfoLinkType </Modified>
+					<Modified>2017-03-27</Modified>CR0016 Add additional values to InfoLinkType.
 				</Date>
 				<Date>
-					<Modified>2017-11-08    CR0016 Add additional values  to InfoLinkType </Modified>
+					<Modified>2017-11-08</Modified>CR0016 Add additional values  to InfoLinkType.
 				</Date>
-				<Description>
-					<p>NeTEx - Network Exchange. This subschema defines utility base types.</p>
-				</Description>
+				<Date>
+					<Modified>2019-03-25</Modified>SBB21 CD #56. Add new ColourSystem attribute to Presentationa PrintPresentation. 
+					  NJSK Review ColourSystem and ColourName  should be  type xsd:normalizedString, not xsd:string.
+				</Date>
+				<Date>
+					<Modified>2019-03-25</Modified>SBB23 CD #57. Add new BackgroundColour and BackgroundColourName  attributes to Presentation and PrintPresentation  elements. 
+					  Add icon to TypeOfInfolink enum values 
+				</Date>
+				<Date>
+					<Modified>2019-03-30</Modified>FR49 CD #53 Accessibility Changes 
+					    NJSK revise: Add FontSizeEnum as a general property
+				</Date>
+				<Date>
+					<Modified>2019-03-30</Modified>Fi
+					    NJSK review: Add dataLicence to infoLink enum values
+				</Date>
+				<Date>
+					<Modified>2020-10-14</Modified>New modes: add mobileAppDOwnload value to infoLinkTypes
+				</Date>
+				<Date>
+					<Modified>2021-10-03</Modified>New modes: add  target platform to attributes of  infoLinkType 
+				</Date>
+				<Date>
+					<Modified>2021-04-14</Modified>New modes: AT#8 add  mobileAppInstallCheck to value to infoLinkTypes 
+				</Date>
+				<p>NeTEx - Network Exchange. This subschema defines utility base types.</p>
 				<Format>
 					<MediaType>text/xml</MediaType>
 					<Syntax>http://www.w3.org/2001/XMLSchema</Syntax>
@@ -38,7 +61,7 @@
 				<Language>[ISO 639-2/B] ENG</Language>
 				<Publisher>Kizoom Software Ltd, 16 High Holborn, London WC1V 6BX</Publisher>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2017</Copyright>
+						<Copyright>CEN, Crown Copyright 2009-2021</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -107,7 +130,7 @@ Rail transport, Roads and Road transport
 	</xsd:complexType>
 	<xsd:element name="AccountingCode" type="PrivateCodeStructure">
 		<xsd:annotation>
-			<xsd:documentation>An ACcounting code assigned to the Element (TAP TSI)</xsd:documentation>
+			<xsd:documentation>An Accounting code assigned to the Element (TAP TSI)</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<!-- ======================================================================= -->
@@ -226,22 +249,40 @@ Rail transport, Roads and Road transport
 		<xsd:sequence>
 			<xsd:element name="Colour" type="ColourValueType" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Default colour value for graphics associated with ENTITY - e.g. of a LINE.</xsd:documentation>
+					<xsd:documentation>Default RGB colour value for graphics associated with ENTITY - e.g. for a LINE.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="ColourName" type="xsd:string" minOccurs="0">
+			<xsd:element name="ColourName" type="xsd:normalizedString" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Name of Default colour value for graphics associated with entity.</xsd:documentation>
+					<xsd:documentation>Name of default colour value for graphics associated with ENTITY.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ColourSystem" type="xsd:normalizedString" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Name of colour system used for ColourName and TextColourName: for example, 
+					- RAL, https://en.wikipedia.org/wiki/RAL_colour_standard;
+					- DIN 6164 http://www.dtpstudio.de/atlas/farbsysteme/DIN%206164_bs00_3.htm; 
+					- Pantone (be aware that Pantone is proprietary), etc.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="BackgroundColour" type="ColourValueType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Default RGB background colour value for text and graphics associated with ENTITY - e.g. of a LINE.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="BackgroundColourName" type="xsd:normalizedString" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Name of the background colour (in ColourSystem) for text and graphics associated with entity.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="TextColour" type="ColourValueType" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Default colour value for text associated with entity.</xsd:documentation>
+					<xsd:documentation>Default colour value for text associated with ENTITY.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="TextColourName" type="xsd:string" minOccurs="0">
+			<xsd:element name="TextColourName" type="xsd:normalizedString" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Name of Default colour value for text associated with entity.</xsd:documentation>
+					<xsd:documentation>Name of default colour value (in ColourSystem) for text associated with ENTITY.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="TextFont" type="xsd:normalizedString" minOccurs="0">
@@ -256,7 +297,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element name="TextLanguage" type="xsd:language" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Default Language for presentation.</xsd:documentation>
+					<xsd:documentation>Default language for text.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="infoLinks" minOccurs="0">
@@ -290,24 +331,42 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Default colour value for printed  graphics associated with ENTITY - e.g. of a LINE, e.g. CMYK.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="ColourName" type="xsd:string" minOccurs="0">
+			<xsd:element name="ColourName" type="xsd:normalizedString" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Name of Default colour value for printed graphics associated with entity., eg Pentone name</xsd:documentation>
+					<xsd:documentation>Name of default colour value for printed graphics associated with entity., eg Pentone name</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ColourSystem" type="xsd:normalizedString" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Name of colour system used for printed ColourName and TextColourName: for example, 
+					- RAL, https://en.wikipedia.org/wiki/RAL_colour_standard;
+					- DIN 6164 http://www.dtpstudio.de/atlas/farbsysteme/DIN%206164_bs00_3.htm; 
+					- Pantone (be aware that Pantone is proprietary), etc.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="BackgroundColour" type="ColourValueType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Default RGB background colour value for printed text and graphics associated with ENTITY - e.g. of a LINE.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="BackgroundColourName" type="xsd:normalizedString" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Name of the backgropund colour value (in ColourSystem) for printed text and graphics associated with entity.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="TextColour" type="PrintColourValueType" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Default colour value for printed  text associated with entity. CMYK.</xsd:documentation>
+					<xsd:documentation>Default colour value for printed text associated with entity. CMYK.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="TextColourName" type="xsd:string" minOccurs="0">
+			<xsd:element name="TextColourName" type="xsd:normalizedString" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Name of Default colour value for printed  text associated with entity,  eg Pentone name.</xsd:documentation>
+					<xsd:documentation>Name of default colour value for printed  text associated with entity,  in specified ColourSystem.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="TextFont" type="xsd:normalizedString" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Identifier of font for printed  text.</xsd:documentation>
+					<xsd:documentation>Identifier of font for printed text.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="TextFontName" type="xsd:normalizedString" minOccurs="0">
@@ -317,7 +376,12 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element name="TextLanguage" type="xsd:language" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Default Language for print</xsd:documentation>
+					<xsd:documentation>Default language for printed text.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="FontSize" type="FontSizeEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Default language for printed text +v1.1.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -327,6 +391,18 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Type for a PrintColour Value.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:normalizedString"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="FontSizeEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for size of font. +v1.1</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="verySmall"/>
+			<xsd:enumeration value="small"/>
+			<xsd:enumeration value="medium"/>
+			<xsd:enumeration value="large"/>
+			<xsd:enumeration value="veryLarge"/>
+		</xsd:restriction>
 	</xsd:simpleType>
 	<!-- ======================================================================= -->
 	<xsd:simpleType name="CurrencyType">
@@ -365,7 +441,11 @@ Rail transport, Roads and Road transport
 			<xsd:enumeration value="document"/>
 			<xsd:enumeration value="timetableDocument"/>
 			<xsd:enumeration value="fareSheet"/>
+			<xsd:enumeration value="dataLicence"/>
+			<xsd:enumeration value="mobileAppDownload"/>
+			<xsd:enumeration value="mobileAppInstallCheck"/>
 			<xsd:enumeration value="map"/>
+			<xsd:enumeration value="icon"/>
 			<xsd:enumeration value="other"/>
 		</xsd:restriction>
 	</xsd:simpleType>
@@ -388,7 +468,19 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:simpleContent>
 			<xsd:extension base="xsd:anyURI">
-				<xsd:attribute name="typeOfInfoLink" type="TypeOfInfolinkEnumeration"/>
+				<xsd:attribute name="typeOfInfoLink">
+					<xsd:annotation>
+						<xsd:documentation>Functional classifcation of infolink</xsd:documentation>
+					</xsd:annotation>
+					<xsd:simpleType>
+						<xsd:list itemType="TypeOfInfolinkEnumeration"/>
+					</xsd:simpleType>
+				</xsd:attribute>
+				<xsd:attribute name="targetPlatform">
+					<xsd:annotation>
+						<xsd:documentation>Software platform for which link is targeted, eg ios, android</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
 			</xsd:extension>
 		</xsd:simpleContent>
 	</xsd:complexType>

@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PublicationDelivery xmlns="http://www.netex.org.uk/netex" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:siri="http://www.siri.org.uk/siri" version="1.0" xsi:schemaLocation="http://www.netex.org.uk/netex ../../../xsd/NeTEx_publication.xsd">
+	<!--
+ x Profile: TSDUPD  Location Data Example  
+=============
+This Example shows  an example of  encoding a TAPTSI Location TSDUPD file  
+
+The following is the EDIFACT tag stream used as input.
+
+ALS+26+008724855:PARIS'
+POP+273:2021-05-18/2999-12-31'
+CNY+FR'
+TIZ+CET:1'
+RFR+AWN:008711300'
+RLS+13+14'
+RFR+AWN:008727100'
+RLS+13+14'
+RFR+AWN:008727102'
+RLS+13+14'
+RFR+AWN:008727103'
+RLS+13+14'
+RFR+AWN:008738400'
+RLS+13+14'
+RFR+AWN:008739100'
+RLS+13+14'
+RFR+AWN:008739110'
+RLS+13+14'
+RFR+AWN:008754700'
+RLS+13+14'
+RFR+AWN:008754702'
+RLS+13+14'
+RFR+AWN:008768600'
+RLS+13+14'
+RFR+AWN:008768603'
+RLS+13+14'
+RFR+AWN:008768666'
+RLS+13+14'
+RFR+AWN:008775858'
+RLS+13+14'
+
+
+UIT+1+128'
+UIZ+2022-01-26T113352+1'
+
+
+ CSV data
+UIC_Code1	UIC_Code2	Duration	Duration_Unit	13	6_footPath_or_14_Hierarchy	Attributes_with_semicolon	Service_Brand1	Service_Brand2	Service_Provider1	Service_Provider2
+26	008724855	PARIS				2021-05-18	2999-12-31		FR	CET	1	
+
+
+The file contains four examples, each placed in a separate Composite Frame
+ 
+(C) DAT4PT 2022
+  -->
+	<PublicationTimestamp>2022-01-17T09:30:46.0Z</PublicationTimestamp>
+	<ParticipantRef>SYS001</ParticipantRef>
+	<!-- ======WHAT WAS REQUESTED ========== -->
+	<PublicationRequest version="1.0">
+		<RequestTimestamp>2022-12-17T09:30:47.0Z</RequestTimestamp>
+		<ParticipantRef>SYS002</ParticipantRef>
+	</PublicationRequest>
+	<Description>UIC Location data example</Description>
+	<!--- =============== RESULTS =========== -->
+	<dataObjects>
+		<ResourceFrame version="1" id="TSDUPD-example_UIC- Operators)">
+			<Name>Operators referenced in this data set.  NOte this could be dropped an external references used</Name>
+			<codespaces>
+				<Codespace id="uic_cs">
+					<Xmlns>uic</Xmlns>
+					<XmlnsUrl>http://www.uic.org/</XmlnsUrl>
+					<Description>UIC data</Description>
+				</Codespace>
+			</codespaces>
+			<!--- =======FRAME DEFAULTS======== -->
+			<FrameDefaults>
+				<DefaultCodespaceRef ref="uic_cs"/>
+			</FrameDefaults>
+			<organisations>
+				<Operator version="any" id="uic:0087">
+				</Operator>
+			</organisations>
+		</ResourceFrame>
+		<CompositeFrame version="1" id="TSDUPD-example_PARIS">
+			<Description>Draft example to map a TSDUPD location PARIS EXAMPLE into NeTEx.</Description>
+			<!--  
+UIC_Code1	UIC_Code2	Duration	Duration_Unit	13	6_footPath_or_14_Hierarchy	Attributes_with_semicolon	Service_Brand1	Service_Brand2	Service_Provider1	Service_Provider2
+26	008724855	PARIS				2021-05-18	2999-12-31		FR	CET	1	
+-->
+			<!--- =======FRAME DEFAULTS======== -->
+			<codespaces>
+				<Codespace id="op5_cs">
+					<Xmlns>op5</Xmlns>
+					<XmlnsUrl>http://www.operator.fr/</XmlnsUrl>
+					<Description>Operator data</Description>
+				</Codespace>
+				<CodespaceRef ref="uic_cs"/>
+			</codespaces>
+			<FrameDefaults>
+				<DefaultCodespaceRef ref="op5_cs"/>
+			</FrameDefaults>
+			<frames>
+				<SiteFrame version="any" id="TSDUPD-example_PARIS" responsibilitySetRef="0087">
+					<!-- =========== Topographic Places==== -->
+					<topographicPlaces>
+						<TopographicPlace version="any" id="Paris">
+							<!-- We can additionally link a Station to a topographic place-->
+							<Descriptor>
+								<Name>Paris</Name>
+							</Descriptor>
+							<CountryRef ref="fr"/>
+						</TopographicPlace>
+					</topographicPlaces>
+					<!-- =========== StopPlaces  ==== -->
+				</SiteFrame>
+				<ServiceFrame version="any" id="TSDUPD-example_PARIS" responsibilitySetRef="0087">
+					<scheduledStopPoints>
+						<!-- 	UIC_Code1	UIC_Code2	Duration	Duration_Unit	13	6_footPath_or_14_Hierarchy
+008724855	008711300			13	14
+008724855	008727100			13	14
+008724855	008727102			13	14 
+008724855	008727103			13	14
+008724855	008738400			13	14
+008724855	008739100			13	14
+008724855	008739110			13	14
+008724855	008754700			13	14
+008724855	008754702			13	14
+008724855	008768600			13	14
+008724855	008768603			13	14
+008724855	008768666			13	14
+008724855	008775858			13	14
+
+-->
+						<ScheduledStopPoint version="any" id="uic:008711300" responsibilitySetRef="0087">
+							<!-- RFR+AWN:008711300' 
+RLS+13+14' -->
+							<ValidBetween>
+								<FromDate>2021-02-11T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name lang="fr">PARIS EST</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008724855"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<CountryRef ref="fr"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic:008727100" responsibilitySetRef="0087">
+							<!-- RFR+AWN:008727100'
+RLS+13+14'  -->
+							<ValidBetween>
+								<FromDate>2021-02-11T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name lang="fr">PARIS NORD</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008724855"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<CountryRef ref="fr"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic:008727102" responsibilitySetRef="0087">
+							<!--  RFR+AWN:008727102'
+RLS+13+14' -->
+							<ValidBetween>
+								<FromDate>2021-02-11T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name lang="fr">GARE DU NORD</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008724855"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<CountryRef ref="fr"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic:008727103" responsibilitySetRef="0087">
+							<!-- RFR+AWN:008727103'
+RLS+13+14' -->
+							<ValidBetween>
+								<FromDate>2021-02-11T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name lang="fr">GARE DU NORD SURFACE</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008724855"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<CountryRef ref="fr"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic:008738400" responsibilitySetRef="0087">
+							<!-- RFR+AWN:008738400'
+RLS+13+14'  -->
+							<ValidBetween>
+								<FromDate>2021-02-11T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name lang="fr">PARIS ST LAZARE</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008724855"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<CountryRef ref="fr"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic:008739100" responsibilitySetRef="0087">
+							<!-- RFR+AWN:008739100'
+RLS+13+14'  -->
+							<ValidBetween>
+								<FromDate>2021-02-11T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name lang="fr">PARIS MONTPARNASSE 1 ET 2</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008724855"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<CountryRef ref="fr"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic:008739110" responsibilitySetRef="0087">
+							<!-- RFR+AWN:008739100'
+RLS+13+14'  -->
+							<ValidBetween>
+								<FromDate>2021-02-11T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name lang="fr">PARIS MONTPARNASSE 3 VAURIGARD</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008724855"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<CountryRef ref="fr"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic:008754700" responsibilitySetRef="0087">
+							<!--  RFR+AWN:008754700'
+RLS+13+14'  -->
+							<ValidBetween>
+								<FromDate>2021-02-11T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name lang="fr">PARIS AUSTERLITZ</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008724855"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<CountryRef ref="fr"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic:008754702" responsibilitySetRef="0087">
+							<!-- RFR+AWN:008754702'
+RLS+13+14' -->
+							<ValidBetween>
+								<FromDate>2021-02-11T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name lang="fr">PARIS AUSTERLITZ RER C</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008724855"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<CountryRef ref="fr"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic:008768600" responsibilitySetRef="0087">
+							<!-- RFR+AWN:008768600'
+RLS+13+14'-->
+							<ValidBetween>
+								<FromDate>2021-02-11T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name lang="fr">PARIS GARE DE LYON</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008724855"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<CountryRef ref="fr"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic:008768603" responsibilitySetRef="0087">
+							<!-- RFR+AWN:008768603'				
+RLS+13+14'  -->
+							<ValidBetween>
+								<FromDate>2021-02-11T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name lang="fr">GARE DE LYON BANLIEU</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008724855"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<CountryRef ref="fr"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic:008768666" responsibilitySetRef="0087">
+							<!-- RFR+AWN:008768666'
+RLS+13+14' -->
+							<ValidBetween>
+								<FromDate>2021-02-11T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name lang="fr">PARIS BERCY</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008724855"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<CountryRef ref="fr"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic:008775858" responsibilitySetRef="0087">
+							<!-- RFR+AWN:008775858'
+RLS+13+14' -->
+							<ValidBetween>
+								<FromDate>2021-02-11T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name lang="fr">PARIS GARE DE LYON RER</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008724855"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<CountryRef ref="fr"/>
+						</ScheduledStopPoint>
+					</scheduledStopPoints>
+					<tariffZones>
+						<TariffZone version="any" id="uic:008724855" responsibilitySetRef="0087">
+							<Name lang="fr">Paris</Name>
+							<Description>Paris AGglomeration of stations</Description>
+							<members>
+								<ScheduledStopPointRef version="any" ref="uic:008711300">PARIS EST</ScheduledStopPointRef>
+								<ScheduledStopPointRef version="any" ref="uic:008727100">PARIS NORD</ScheduledStopPointRef>
+								<ScheduledStopPointRef version="any" ref="uic:008727103">GARE DU NORD</ScheduledStopPointRef>
+								<ScheduledStopPointRef version="any" ref="uic:008738400">GARE DU NORD SURFACE</ScheduledStopPointRef>
+								<ScheduledStopPointRef version="any" ref="uic:008738400">PARIS ST LAZARE</ScheduledStopPointRef>
+								<ScheduledStopPointRef version="any" ref="uic:008739100">PARIS MONTPARNASSE 1 ET 2</ScheduledStopPointRef>
+								<ScheduledStopPointRef version="any" ref="uic:008739110">PARIS MONTPARNASSE 3 VAURIGARD</ScheduledStopPointRef>
+								<ScheduledStopPointRef version="any" ref="uic:008754700">PARIS AUSTERLITZ</ScheduledStopPointRef>
+								<ScheduledStopPointRef version="any" ref="uic:008754702">PARIS AUSTERLITZ RER C</ScheduledStopPointRef>
+								<ScheduledStopPointRef version="any" ref="uic:008768600">PARIS GARE DE LYON</ScheduledStopPointRef>
+								<ScheduledStopPointRef version="any" ref="uic:008768603">GARE DE LYON BANLIEU</ScheduledStopPointRef>
+								<ScheduledStopPointRef version="any" ref="uic:008768666">PARIS BERCY</ScheduledStopPointRef>
+								<ScheduledStopPointRef version="any" ref="uic:008775858">PARIS GARE DE LYON RER</ScheduledStopPointRef>
+							</members>
+						</TariffZone>
+					</tariffZones>
+				</ServiceFrame>
+			</frames>
+		</CompositeFrame>
+	</dataObjects>
+</PublicationDelivery>

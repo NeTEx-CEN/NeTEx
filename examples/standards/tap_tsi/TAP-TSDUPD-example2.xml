@@ -1,0 +1,1553 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PublicationDelivery xmlns="http://www.netex.org.uk/netex" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:siri="http://www.siri.org.uk/siri" version="1.0" xsi:schemaLocation="http://www.netex.org.uk/netex ../../../xsd/NeTEx_publication.xsd">
+	<!--
+ x Profile: TSDUPD  Location Data Example  
+=============
+This Example shows  examples of  encoding a TAPTSI Location TSDUPD files  
+ 
+UIC_Code1	UIC_Code2	Duration	Duration_Unit	13	6_footPath_or_14_Hierarchy	Attributes_with_semicolon	Service_Brand1	Service_Brand2	Service_Provider1	Service_Provider2
+
+29	008600683	Hilleroed		555536N	121839E	2018-09-07	2999-12-31	0004	DK	CET	1	008600683
+       (For Hilleroed   We show two different intrepretations that might have been intended)
+
+29	008301700	MILANO CENTRALE	MILANO	452911N	091215E	2021-08-06	2999-12-31	0015	IT	CET	1	008300111
+29	008301699	MILANO CENTRALE (TR. NORD MILA	MILANO			1987-12-31	2008-12-01	0010	IT	CET	1	
+
+29	008300003	PIEDIMULERA	PIEDIMULERA	460128N	081540E	2021-10-07	2999-12-31	0005	IT	CET	1	008300014
+
+26	008724855	PARIS				2021-05-18	2999-12-31		FR	CET	1	
+
+
+The file contains four examples, each placed in a separate Composite Frame
+ 
+(C) DAT4PT 2022
+  -->
+	<PublicationTimestamp>2022-01-17T09:30:46.0Z</PublicationTimestamp>
+	<ParticipantRef>SYS001</ParticipantRef>
+	<!-- ======WHAT WAS REQUESTED ========== -->
+	<PublicationRequest version="1.0">
+		<RequestTimestamp>2022-12-17T09:30:47.0Z</RequestTimestamp>
+		<ParticipantRef>SYS002</ParticipantRef>
+	</PublicationRequest>
+	<Description>UIC Location data example</Description>
+	<!--- =============== RESULTS =========== -->
+	<dataObjects>
+		<ResourceFrame version="1" id="TSDUPD-example_UIC- Operators)">
+			<Name>Operators referenced in this data set.  NOte this could be dropped an external references used</Name>
+			<codespaces>
+				<Codespace id="uic_cs">
+					<Xmlns>uic</Xmlns>
+					<XmlnsUrl>http://www.uic.org/</XmlnsUrl>
+					<Description>UIC data</Description>
+				</Codespace>
+			</codespaces>
+			<!--- =======FRAME DEFAULTS======== -->
+			<FrameDefaults>
+				<DefaultCodespaceRef ref="uic_cs"/>
+			</FrameDefaults>
+			<organisations>
+				<Operator version="any" id="uic:0064">
+				</Operator>
+				<Operator version="any" id="uic:0083">
+				</Operator>
+				<Operator version="any" id="uic:0086">
+				</Operator>
+				<Operator version="any" id="uic:0087">
+				</Operator>
+				<Operator version="any" id="uic:1180">
+				</Operator>
+				<Operator version="any" id="uic:1187">
+				</Operator>
+			</organisations>
+		</ResourceFrame>
+		<CompositeFrame version="1" id="TSDUPD-example_Hilleroed_1-Station+Quays)">
+			<Description>Draft example to map a TSDUPD location data set into NeTEx.</Description>
+			<!-- 
+UIC_Code1	UIC_Code2	Duration	Duration_Unit	13	6_footPath_or_14_Hierarchy	Attributes_with_semicolon	Service_Brand1	Service_Brand2	Service_Provider1	Service_Provider2
+
+29	008600683	Hilleroed		555536N	121839E	2018-09-07	2999-12-31	0004	DK	CET	1	008600683 
+
+UIC_Code1	UIC_Code2	Duration	Duration_Unit	13	6_footPath_or_14_Hierarchy
+008600683	008650683	3	MIN	13	6
+008600683	008650683			13	14
+008600683	008651683	3	MIN	13	6
+008600683	008651683			13	14
+008600683	008658683	3	MIN	13	6
+
+                      In this first variant encoding we assume that there is just one physical station and four platforms 
+                      We also assume that there is only one scheduled stop point that is used in the timetable
+-->
+			<!--- ======= CODESPACEs======== -->
+			<codespaces>
+				<Codespace id="e1_cs">
+					<Xmlns>e1</Xmlns>
+					<XmlnsUrl>http://www.operator.dk/</XmlnsUrl>
+					<Description>Operator data</Description>
+				</Codespace>
+				<CodespaceRef ref="uic_cs"/>
+			</codespaces>
+			<!--- =======FRAME DEFAULTS======== -->
+			<FrameDefaults>
+				<DefaultCodespaceRef ref="e1_cs"/>
+			</FrameDefaults>
+			<frames>
+				<SiteFrame version="any" id="TSDUPD-example_Hilleroed_1-Station+Quays" responsibilitySetRef="0086">
+					<!-- =========== Topographic Places==== -->
+					<topographicPlaces>
+						<TopographicPlace version="any" id="e1:Hilleroed">
+							<!-- We can additionally link a Station to a tophraphic place-->
+							<Descriptor>
+								<Name>Hilleroed</Name>
+							</Descriptor>
+							<CountryRef ref="dk"/>
+						</TopographicPlace>
+					</topographicPlaces>
+					<!-- =========== StopPlaces  ==== -->
+					<stopPlaces>
+						<StopPlace version="any" id="uic:008600683">
+							<ValidBetween>
+								<FromDate>2018-09-07T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name>Hilleroed</Name>
+							<ShortName>Hilleroed</ShortName>
+							<Description>
+Hillerød station   is the terminus of four railways lines:
+* An S-train line (Nordbanen) from Copenhagen, operated by DSB
+* Frederiksværkbanen, operated by Lokaltog
+* Gribskovbanen, operated by Lokaltog
+* Lille Nord towards Helsingør, operated by Lokaltog
+Though there are track connections between the four railways, they are seldom used; each has its own dedicated dead-end platform tracks.
+
+The bus terminal in front of the station is a major hub for transportation throughout northeastern Zealand.
+</Description>
+							<Centroid>
+								<Location>
+									<Longitude>+55.5536</Longitude>
+									<Latitude>+12.1839</Latitude>
+								</Location>
+							</Centroid>
+							<AccessibilityAssessment version="any" id="uic:008600683">
+								<MobilityImpairedAccess>true</MobilityImpairedAccess>
+								<limitations>
+									<AccessibilityLimitation>
+										<WheelchairAccess>true</WheelchairAccess>
+									</AccessibilityLimitation>
+								</limitations>
+							</AccessibilityAssessment>
+							<alternativeNames>
+								<AlternativeName version="any" id="uic:008600683_dk">
+									<Lang>dk</Lang>
+									<NameType>translation</NameType>
+									<Name lang="dk">Hillerød</Name>
+								</AlternativeName>
+							</alternativeNames>
+							<facilities>
+								<SiteFacilitySet version="any" id="uic:008600683">
+									<AssistanceFacilityList>wheelchairUse boardingAssistance</AssistanceFacilityList>
+									<!-- others are possible -->
+								</SiteFacilitySet>
+							</facilities>
+							<TopographicPlaceRef version="any" ref="e1:Hilleroed"/>
+							<Locale>
+								<TimeZoneOffset>+1</TimeZoneOffset>
+								<TimeZone>CET</TimeZone>
+							</Locale>
+							<OperatorRef version="any" ref="uic:0086"/>
+							<TransportMode>rail</TransportMode>
+							<StopPlaceType>railStation</StopPlaceType>
+							<quays>
+								<Quay version="any" id="uic:008650683" dataSourceRef="uic:1186">
+								</Quay>
+								<Quay version="any" id="uic:008651683" dataSourceRef="uic:1186">
+								</Quay>
+								<Quay version="any" id="uic:008658683" dataSourceRef="uic:1186">
+								</Quay>
+								<Quay version="any" id="uic:008659683" dataSourceRef="uic:1186">
+								</Quay>
+							</quays>
+						</StopPlace>
+					</stopPlaces>
+				</SiteFrame>
+				<ServiceFrame version="any" id="TSDUPD-example_Hilleroed_1-Station+Quays" responsibilitySetRef="0086">
+					<scheduledStopPoints>
+						<ScheduledStopPoint version="any" id="uic:008600683" responsibilitySetRef="0086">
+							<ValidBetween>
+								<FromDate>2018-09-07T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<alternativeTexts>
+								<AlternativeText attributeName="Name" version="any" id="uic:008600683" useForLanguage="dk" order="1">
+									<Text lang="dk">Hillerod</Text>
+								</AlternativeText>
+							</alternativeTexts>
+							<Name lang="en">Hilleroed</Name>
+							<Location>
+								<Longitude>+55.5536</Longitude>
+								<Latitude>+12.1839</Latitude>
+							</Location>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008600683_tariff"/>
+							</tariffZones>
+							<ShortName>Hilleroed</ShortName>
+							<StopType>railStation</StopType>
+							<CountryRef ref="dk"/>
+							<TopographicPlaceRef version="any" ref="e1:Hilleroed"/>
+						</ScheduledStopPoint>
+					</scheduledStopPoints>
+					<connections>
+						<!-- 	UIC_Code1	UIC_Code2	Duration	Duration_Unit	13	6_footPath_or_14_Hierarchy
+008600683	008650683	3	MIN	13	6
+008600683	008650683			13	14
+008600683	008651683	3	MIN	13	6
+008600683	008651683			13	14
+008600683	008658683	3	MIN	13	6
+008600683	008659683	3	MIN	13	6
+-->
+						<SiteConnection version="any" id="e1:008600683+008650683" responsibilitySetRef="0086">
+							<Name>Internal transfer  Hilleroed to 008650683</Name>
+							<Distance>155</Distance>
+							<TransferDuration>
+								<DefaultDuration>PT3M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>true</BothWays>
+							<From>
+								<TransportMode>rail</TransportMode>
+								<StopPlaceRef version="any" ref="uic:008600683"/>
+							</From>
+							<To>
+								<TransportMode>rail</TransportMode>
+								<StopPlaceRef version="any" ref="uic:008600683"/>
+								<QuayRef versionRef="EXTERNAL" ref="uic:008650683"/>
+							</To>
+						</SiteConnection>
+						<SiteConnection version="any" id="e1:008600683+008651683" responsibilitySetRef="0086">
+							<Name>Internal transfer  Hilleroed to 008651683</Name>
+							<Distance>155</Distance>
+							<TransferDuration>
+								<DefaultDuration>PT3M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>true</BothWays>
+							<From>
+								<TransportMode>rail</TransportMode>
+								<StopPlaceRef version="any" ref="uic:008600683"/>
+							</From>
+							<To>
+								<TransportMode>rail</TransportMode>
+								<StopPlaceRef version="any" ref="uic:008600683"/>
+								<QuayRef versionRef="EXTERNAL" ref="uic:008651683"/>
+							</To>
+						</SiteConnection>
+						<SiteConnection version="any" id="e1:008600683+008658683" responsibilitySetRef="0086">
+							<Name>Internal transfer  Hilleroed to 008658683</Name>
+							<Distance>186</Distance>
+							<TransferDuration>
+								<DefaultDuration>PT3M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>false</BothWays>
+							<From>
+								<TransportMode>rail</TransportMode>
+								<StopPlaceRef version="any" ref="uic:008600683"/>
+							</From>
+							<To>
+								<TransportMode>rail</TransportMode>
+								<StopPlaceRef version="any" ref="uic:008600683"/>
+								<QuayRef versionRef="EXTERNAL" ref="uic:008658683"/>
+							</To>
+						</SiteConnection>
+						<SiteConnection version="any" id="e1:008600683+008659683" responsibilitySetRef="0086">
+							<Name>Internal transfer  Hilleroed to 008659683</Name>
+							<Distance>186</Distance>
+							<TransferDuration>
+								<DefaultDuration>PT3M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>true</BothWays>
+							<From>
+								<TransportMode>rail</TransportMode>
+								<StopPlaceRef version="any" ref="uic:008600683"/>
+							</From>
+							<To>
+								<TransportMode>rail</TransportMode>
+								<StopPlaceRef version="any" ref="uic:008600683"/>
+								<QuayRef versionRef="EXTERNAL" ref="uic:008659683"/>
+							</To>
+						</SiteConnection>
+						<DefaultConnection version="any" id="e1:007300101@intercity_rail" responsibilitySetRef="0086"> 
+							<Name>Default internal transfer duration for Hilleroed for intercity</Name>
+							<Distance>186</Distance>
+							<TransferDuration>
+								<DefaultDuration>PT8M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>false</BothWays>
+							<From>
+								<TransportMode>all</TransportMode>
+							</From>
+							<To>
+								<TransportMode>intercityRail</TransportMode>
+							</To>
+						</DefaultConnection>
+						<DefaultConnection version="any" id="e1:008600683@urban_rail" responsibilitySetRef="0086">
+							<Name>Default internal transfer duration for Hilleroed for intercity</Name>
+							<TransferDuration>
+								<DefaultDuration>PT7M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>true</BothWays>
+							<From>
+								<TransportMode>all</TransportMode>
+							</From>
+							<To>
+								<TransportMode>urbanRail</TransportMode>
+							</To>
+						</DefaultConnection>
+					</connections>
+					<tariffZones>
+						<TariffZone version="any" id="uic:008600683_tariff" responsibilitySetRef="0086"> 
+							<Name>Hilleroed</Name>
+						</TariffZone>
+					</tariffZones>
+					<stopAssignments>
+						<PassengerStopAssignment version="any" id="uic:008600683" order="1" responsibilitySetRef="0086">
+							<Name>Hilleroed</Name>
+							<Description>Assign timetable Station to Physical station. </Description>
+							<ScheduledStopPointRef version="any" ref="uic:008600683"/>
+							<StopPlaceRef version="any" ref="uic:008600683"/>
+						</PassengerStopAssignment>
+					</stopAssignments>
+				</ServiceFrame>
+			</frames>
+		</CompositeFrame>
+		<CompositeFrame version="1" id="TSDUPD-example_Hilleroed_2-Station+Hierarchy)">
+			<Description>Draft example to map a TSDUPD location data set into NeTEx.</Description>
+			<!--  29	008600683	Hilleroed		555536N	121839E	2018-09-07	2999-12-31	0004	DK	CET	1	008600683 
+                      In this  second variant interpretation we assume that there is an aggregation of four separate stations
+ 
+                      We also assume that there is  a separate scheduled stop point for each station, thus four stop points, wuth connections bewteen them  -->
+			<!--- ======= CODESPACEs======== -->
+			<codespaces>
+				<Codespace id="e2_cs">
+					<Xmlns>e2</Xmlns>
+					<XmlnsUrl>http://www.operator.dk/</XmlnsUrl>
+					<Description>Operator data</Description>
+				</Codespace>
+				<Codespace id="uic2_cs">
+					<!-- this is so we can have an alternative example with duplicate stops -->
+					<Xmlns>uic2</Xmlns>
+					<XmlnsUrl>http://www.uic.org/</XmlnsUrl>
+					<Description>UIC data</Description>
+				</Codespace>
+			</codespaces>
+			<!--- =======FRAME DEFAULTS======== -->
+			<FrameDefaults>
+				<DefaultCodespaceRef ref="e2_cs"/>
+			</FrameDefaults>
+			<frames>
+				<SiteFrame version="any" id="TSDUPD-example_Hilleroed_2-Station+Hierarchy" responsibilitySetRef="0086">
+					<!-- =========== Topographic Places==== -->
+					<topographicPlaces>
+						<TopographicPlace version="any" id="e2:Hilleroed">
+							<!-- We can additionally link a Station to a tophraphic place-->
+							<Descriptor>
+								<Name>Hilleroed</Name>
+							</Descriptor>
+							<CountryRef ref="dk"/>
+						</TopographicPlace>
+					</topographicPlaces>
+					<!-- =========== StopPlaces  ==== -->
+					<stopPlaces>
+						<StopPlace version="any" id="uic2:008600683">
+							<ValidBetween>
+								<FromDate>2018-09-07T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name>Hilleroed</Name>
+							<ShortName>Hilleroed</ShortName>
+							<Description>
+Hillerød station   is the terminus of four railways lines:
+* An S-train line (Nordbanen) from Copenhagen, operated by DSB
+* Frederiksværkbanen, operated by Lokaltog
+* Gribskovbanen, operated by Lokaltog
+* Lille Nord towards Helsingør, operated by Lokaltog
+Though there are track connections between the four railways, they are seldom used; each has its own dedicated dead-end platform tracks.
+
+The bus terminal in front of the station is a major hub for transportation throughout northeastern Zealand.
+</Description>
+							<Centroid>
+								<Location>
+									<Longitude>+55.5536</Longitude>
+									<Latitude>+12.1839</Latitude>
+								</Location>
+							</Centroid>
+							<AccessibilityAssessment version="any" id="uic2:008600683">
+								<MobilityImpairedAccess>true</MobilityImpairedAccess>
+								<limitations>
+									<AccessibilityLimitation>
+										<WheelchairAccess>true</WheelchairAccess>
+									</AccessibilityLimitation>
+								</limitations>
+							</AccessibilityAssessment>
+							<alternativeNames>
+								<AlternativeName version="any" id="uic2:008600683_dk">
+									<Lang>dk</Lang>
+									<NameType>translation</NameType>
+									<Name lang="dk">Hillerød</Name>
+								</AlternativeName>
+							</alternativeNames>
+							<facilities>
+								<SiteFacilitySet version="any" id="uic2:008600683">
+									<AssistanceFacilityList>wheelchairUse boardingAssistance</AssistanceFacilityList>
+									<!-- others are possible -->
+								</SiteFacilitySet>
+							</facilities>
+							<TopographicPlaceRef version="any" ref="e2:Hilleroed"/>
+							<Locale>
+								<TimeZoneOffset>+1</TimeZoneOffset>
+								<TimeZone>CET</TimeZone>
+							</Locale>
+							<OperatorRef version="any" ref="uic:0086"/>
+							<TransportMode>rail</TransportMode>
+							<StopPlaceType>railStation</StopPlaceType>
+							<mainTerminusForPlaces>
+								<TopographicPlaceRef version="any" ref="e2:Hilleroed"/>
+							</mainTerminusForPlaces>
+						</StopPlace>
+						<StopPlace version="any" id="uic2:008650683">
+							<Name>Hilleroed</Name>
+							<OperatorRef version="any" ref="uic:0086"/>
+							<ParentSiteRef version="any" ref="uic2:008650683"/>
+							<TransportMode>rail</TransportMode>
+							<StopPlaceType>railStation</StopPlaceType>
+						</StopPlace>
+						<StopPlace version="any" id="uic2:008651683">
+							<Name>Hilleroed</Name>
+							<OperatorRef version="any" ref="uic:0086"/>
+							<ParentSiteRef version="any" ref="uic2:008650683"/>
+							<TransportMode>rail</TransportMode>
+							<StopPlaceType>railStation</StopPlaceType>
+						</StopPlace>
+						<StopPlace version="any" id="uic2:008658683">
+							<Name>Hilleroed</Name>
+							<OperatorRef version="any" ref="uic:0086"/>
+							<ParentSiteRef version="any" ref="uic2:008650683"/>
+							<TransportMode>rail</TransportMode>
+							<StopPlaceType>railStation</StopPlaceType>
+						</StopPlace>
+						<StopPlace version="any" id="uic2:008659683">
+							<Name>Hilleroed</Name>
+							<OperatorRef version="any" ref="uic:0086"/>
+							<ParentSiteRef version="any" ref="uic2:008650683"/>
+							<TransportMode>rail</TransportMode>
+							<StopPlaceType>railStation</StopPlaceType>
+						</StopPlace>
+					</stopPlaces>
+				</SiteFrame>
+				<ServiceFrame version="any" id="TSDUPD-example_Hilleroed_2-Station+Hierarchy" responsibilitySetRef="0086">
+					<scheduledStopPoints>
+						<ScheduledStopPoint version="any" id="uic2:008600683" dataSourceRef="uic:1186">
+							<ValidBetween>
+								<FromDate>2018-09-07T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<alternativeTexts>
+								<AlternativeText attributeName="Name" version="any" id="uic2:008600683" useForLanguage="dk" order="1">
+									<Text lang="dk">Hillerod</Text>
+								</AlternativeText>
+							</alternativeTexts>
+							<Name lang="en">Hilleroed</Name>
+							<Location>
+								<Longitude>+55.5536</Longitude>
+								<Latitude>+12.1839</Latitude>
+							</Location>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic2:008600683_tariff"/>
+							</tariffZones>
+							<ShortName>Hilleroed</ShortName>
+							<StopType>railStation</StopType>
+							<CountryRef ref="dk"/>
+							<AtCentre>true</AtCentre>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic2:008650683" dataSourceRef="uic:1186">
+							<ValidBetween>
+								<FromDate>2018-09-07T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name lang="en">Hilleroed</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic2:008600683_tariff"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<CountryRef ref="dk"/>
+							<TopographicPlaceRef version="any" ref="e2:Hilleroed"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic2:008651683" dataSourceRef="uic:1186">
+							<ValidBetween>
+								<FromDate>2018-09-07T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name lang="en">Hilleroed</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic2:008600683_tariff"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<CountryRef ref="dk"/>
+							<TopographicPlaceRef version="any" ref="e2:Hilleroed"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic2:008658683" dataSourceRef="uic:1186">
+							<ValidBetween>
+								<FromDate>2018-09-07T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name lang="en">Hilleroed</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic2:008600683_tariff"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<CountryRef ref="dk"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic2:008659683" dataSourceRef="uic:1186">
+							<ValidBetween>
+								<FromDate>2018-09-07T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name lang="en">Hilleroed</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic2:008600683_tariff"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<CountryRef ref="dk"/>
+						</ScheduledStopPoint>
+					</scheduledStopPoints>
+					<stopAreas>
+						<StopArea version="any" id="uic2:008600683" dataSourceRef="uic:1186">
+							<ValidBetween>
+								<FromDate>2018-09-07T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name lang="en">Hilleroed</Name>
+							<Description>grouping of five  stops as Hillerod interchange</Description>
+							<members>
+								<ScheduledStopPointRef version="any" ref="uic2:008600683"/>
+								<ScheduledStopPointRef version="any" ref="uic2:008650683"/>
+								<ScheduledStopPointRef version="any" ref="uic2:008651683"/>
+								<ScheduledStopPointRef version="any" ref="uic2:008658683"/>
+								<ScheduledStopPointRef version="any" ref="uic2:008659683"/>
+							</members>
+						</StopArea>
+					</stopAreas>
+					<connections>
+						<!-- 	UIC_Code1	UIC_Code2	Duration	Duration_Unit	13	6_footPath_or_14_Hierarchy
+008600683	008650683	3	MIN	13	6
+008600683	008650683			13	14
+008600683	008651683	3	MIN	13	6
+008600683	008651683			13	14
+008600683	008658683	3	MIN	13	6
+008600683	008659683	3	MIN	13	6
+-->
+						<Connection version="any" id="e2:008600683+008650683">
+							<Name>Internal transfer  Hilleroed to 008650683</Name>
+							<Distance>155</Distance>
+							<TransferDuration>
+								<DefaultDuration>PT3M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>true</BothWays>
+							<From>
+								<ScheduledStopPointRef version="any" ref="uic2:008600683"/>
+							</From>
+							<To>
+								<ScheduledStopPointRef version="any" ref="uic2:008650683"/>
+							</To>
+						</Connection>
+						<Connection version="any" id="e2:008600683+008651683">
+							<Name>Internal transfer  Hilleroed to 008651683</Name>
+							<Distance>155</Distance>
+							<TransferDuration>
+								<DefaultDuration>PT3M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>true</BothWays>
+							<From>
+								<ScheduledStopPointRef version="any" ref="uic2:008600683"/>
+							</From>
+							<To>
+								<TransportMode>rail</TransportMode>
+								<ScheduledStopPointRef version="any" ref="uic2:008651683"/>
+							</To>
+						</Connection>
+						<Connection version="any" id="e2:008600683+008658683">
+							<Name>Internal transfer  Hilleroed to 008658683</Name>
+							<Distance>186</Distance>
+							<TransferDuration>
+								<DefaultDuration>PT3M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>false</BothWays>
+							<From>
+								<ScheduledStopPointRef version="any" ref="uic2:008600683"/>
+							</From>
+							<To>
+								<ScheduledStopPointRef version="any" ref="uic2:008658683"/>
+							</To>
+						</Connection>
+						<Connection version="any" id="e2:008600683+008659683">
+							<Name>Internal transfer  Hilleroed to 008659683</Name>
+							<Distance>186</Distance>
+							<TransferDuration>
+								<DefaultDuration>PT3M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>true</BothWays>
+							<From>
+								<ScheduledStopPointRef version="any" ref="uic2:008600683"/>
+							</From>
+							<To>
+								<ScheduledStopPointRef version="any" ref="uic2:008659683"/>
+							</To>
+						</Connection>
+						<DefaultConnection version="any" id="e2:007300101@intercity_rail">
+							<Name>Default internal transfer duration for Hilleroed for intercity</Name>
+							<Distance>186</Distance>
+							<TransferDuration>
+								<DefaultDuration>PT8M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>false</BothWays>
+							<From>
+								<TransportMode>all</TransportMode>
+							</From>
+							<To>
+								<TransportMode>intercityRail</TransportMode>
+							</To>
+						</DefaultConnection>
+						<DefaultConnection version="any" id="e2:008600683@urban_rail">
+							<Name>Default internal transfer duration for Hilleroed for intercity</Name>
+							<TransferDuration>
+								<DefaultDuration>PT7M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>true</BothWays>
+							<From>
+								<TransportMode>all</TransportMode>
+							</From>
+							<To>
+								<TransportMode>urbanRail</TransportMode>
+							</To>
+						</DefaultConnection>
+					</connections>
+					<tariffZones>
+						<TariffZone version="any" id="uic2:008600683_tariff">
+							<Name>Hilleroed</Name>
+						</TariffZone>
+					</tariffZones>
+					<stopAssignments>
+						<PassengerStopAssignment version="any" id="uic2:008600683" order="1">
+							<Name>Hilleroed</Name>
+							<Description>Assign timetable Station to Physical station. </Description>
+							<ScheduledStopPointRef version="any" ref="uic2:008600683"/>
+							<StopPlaceRef version="any" ref="uic2:008600683"/>
+						</PassengerStopAssignment>
+						<PassengerStopAssignment version="any" id="uic2:008651683" order="1">
+							<ScheduledStopPointRef version="any" ref="uic2:008651683"/>
+							<StopPlaceRef version="any" ref="uic2:008651683"/>
+						</PassengerStopAssignment>
+						<PassengerStopAssignment version="any" id="uic2:008658683" order="1">
+							<ScheduledStopPointRef version="any" ref="uic2:008658683"/>
+							<StopPlaceRef version="any" ref="uic2:008658683"/>
+						</PassengerStopAssignment>
+						<PassengerStopAssignment version="any" id="uic2:008659683" order="1">
+							<ScheduledStopPointRef version="any" ref="uic2:008659683"/>
+							<StopPlaceRef version="any" ref="uic2:008659683"/>
+						</PassengerStopAssignment>
+					</stopAssignments>
+				</ServiceFrame>
+			</frames>
+		</CompositeFrame>
+		<CompositeFrame version="1" id="TSDUPD-example_MILANO">
+			<Description>Ezample od encoding TSDUPD Milano example data set into NeTEx.</Description>
+			<!-- 			29	008301700	MILANO CENTRALE	MILANO	452911N	091215E	2021-08-06	2999-12-31	0015	IT	CET	1	008300111
+29	008301699	MILANO CENTRALE (TR. NORD MILA	MILANO			1987-12-31	2008-12-01	0010	IT	CET	1	-->
+			<!--- ======= CODESPACEs======== -->
+			<codespaces>
+				<Codespace id="op3_cs">
+					<Xmlns>op3</Xmlns>
+					<XmlnsUrl>http://www.operator.it/</XmlnsUrl>
+					<Description>Operator data</Description>
+				</Codespace>
+				<CodespaceRef ref="uic_cs"/>
+			</codespaces>
+			<!--- =======FRAME DEFAULTS======== -->
+			<FrameDefaults>
+				<DefaultCodespaceRef ref="op3_cs"/>
+			</FrameDefaults>
+			<frames>
+				<SiteFrame version="any" id="TSDUPD-example_MILANO">
+					<!-- =========== Topographic Places==== -->
+					<topographicPlaces>
+						<TopographicPlace version="any" id="Milano">
+							<Descriptor>
+								<Name lang="it">Milano</Name>
+							</Descriptor>
+							<CountryRef ref="it"/>
+						</TopographicPlace>
+					</topographicPlaces>
+					<!-- =========== StopPlaces  ==== -->
+					<stopPlaces>
+						<StopPlace version="any" id="uic:008301700">
+							<!-- 			29	008301700	MILANO CENTRALE	MILANO	452911N	091215E	2021-08-06	2999-12-31	0015	IT	CET	1	008300111 -->
+							<!--- ======= CODESPACEs======== -->
+							<ValidBetween>
+								<FromDate>2021-08-06T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name>MILANO CENTRALE MILANO</Name>
+							<ShortName>MILANO CENTRALE</ShortName>
+							<Centroid>
+								<Location>
+									<Longitude>+45.2911</Longitude>
+									<Latitude>+09.1215</Latitude>
+								</Location>
+							</Centroid>
+							<AccessibilityAssessment version="any" id="uic:008301700">
+								<MobilityImpairedAccess>true</MobilityImpairedAccess>
+								<limitations>
+									<AccessibilityLimitation>
+										<WheelchairAccess>true</WheelchairAccess>
+									</AccessibilityLimitation>
+								</limitations>
+							</AccessibilityAssessment>
+							<alternativeNames>
+								<AlternativeName version="any" id="uic:008301700@de">
+									<Lang>de</Lang>
+									<NameType>translation</NameType>
+									<Name lang="de">Mailand Hauptbahnhof</Name>
+								</AlternativeName>
+								<AlternativeName version="any" id="uic:008301700@es">
+									<Lang>es</Lang>
+									<NameType>translation</NameType>
+									<Name lang="es">Milan Estacion Central</Name>
+								</AlternativeName>
+								<AlternativeName version="any" id="uic:008301700@fr">
+									<Lang>fr</Lang>
+									<NameType>translation</NameType>
+									<Name lang="fr">Milan Gare Centrale</Name>
+								</AlternativeName>
+							</alternativeNames>
+							<facilities>
+								<SiteFacilitySet version="any" id="uic:008301700">
+									<TypeOfFacilityRef versionRef="EXTERNAL" ref="F23">F23  - Heavily disbaled </TypeOfFacilityRef>
+									<MobilityFacilityList>suitableForHeaviliyDisabled suitableForWheelchairs</MobilityFacilityList>
+								</SiteFacilitySet>
+							</facilities>
+							<TopographicPlaceRef version="any" ref="Milano"/>
+							<Locale>
+								<TimeZoneOffset>-1</TimeZoneOffset>
+								<TimeZone>CET</TimeZone>
+							</Locale>
+							<OperatorRef version="any" ref="uic:0083"/>
+							<TransportMode>rail</TransportMode>
+							<tariffZones>
+								<TariffZoneRef versionRef="EXTERNAL" ref="008300111"/>
+							</tariffZones>
+							<StopPlaceType>railStation</StopPlaceType>
+						</StopPlace>
+						<StopPlace version="any" id="uic:008301699" changed="2022-11-17T08:07:00Z">
+							<!-- 		29	008301699	MILANO CENTRALE (TR. NORD MILA	MILANO			1987-12-31	2008-12-01	0010	IT	CET	1	-->
+							<!--- ======= CODESPACEs======== -->
+							<ValidBetween>
+								<FromDate>1987-12-31T00:00:00</FromDate>
+								<ToDate>2008-12-01T23:59:59</ToDate>
+							</ValidBetween>
+							<Name>MILANO CENTRALE (TR. NORD MILANO)</Name>
+							<ShortName>MILANO NORD </ShortName>
+							<Centroid>
+								<Location>
+									<Longitude>+45.2911</Longitude>
+									<Latitude>+09.1215</Latitude>
+								</Location>
+							</Centroid>
+							<Locale>
+								<TimeZoneOffset>-1</TimeZoneOffset>
+								<TimeZone>CET</TimeZone>
+							</Locale>
+							<OperatorRef version="any" ref="uic:0083"/>
+							<TransportMode>rail</TransportMode>
+							<tariffZones>
+								<TariffZoneRef versionRef="EXTERNAL" ref="008300111"/>
+							</tariffZones>
+							<StopPlaceType>railStation</StopPlaceType>
+						</StopPlace>
+					</stopPlaces>
+				</SiteFrame>
+				<ServiceFrame version="any" id="TSDUPD-example_MILANO">
+					<scheduledStopPoints>
+						<ScheduledStopPoint version="any" id="uic:008301700">
+							<ValidBetween>
+								<FromDate>2021-08-06T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<alternativeTexts>
+								<AlternativeText attributeName="Name" version="any" id="uic:008301700" useForLanguage="de" order="1">
+									<Text lang="de">Mailand Hauptbahnhof</Text>
+								</AlternativeText>
+								<AlternativeText attributeName="Name" version="any" id="uic:008301700" useForLanguage="es" order="1">
+									<Text lang="es">Milan Estacion Central</Text>
+								</AlternativeText>
+								<AlternativeText attributeName="Name" version="any" id="uic:008301700" useForLanguage="fr" order="1">
+									<Text lang="fr">Milan Gare Centrale</Text>
+								</AlternativeText>
+							</alternativeTexts>
+							<Name lang="it">Milano Centrale</Name>
+							<Location>
+								<Longitude>+45.2911</Longitude>
+								<Latitude>+09.1215</Latitude>
+							</Location>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008300111"/>
+							</tariffZones>
+							<ShortName>Milano</ShortName>
+							<StopType>railStation</StopType>
+							<CountryRef ref="it"/>
+							<AtCentre>true</AtCentre>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic:008301699">
+							<ValidBetween>
+								<FromDate>1987-12-31T00:00:00</FromDate>
+								<ToDate>2008-12-01T23:59:59</ToDate>
+							</ValidBetween>
+							<Name lang="it">MILANO CENTRALE (TR. NORD MILANO)</Name>
+							<Location>
+								<Longitude>+45.2911</Longitude>
+								<Latitude>+09.1215</Latitude>
+							</Location>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008300111"/>
+							</tariffZones>
+							<ShortName>Milano</ShortName>
+							<StopType>railStation</StopType>
+							<CountryRef ref="it"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic:008301631">
+							<Name lang="it">MILANO PORTA GENOVA</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008300111"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<CountryRef ref="it"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic:008301645">
+							<Name lang="it">MILANO P.GARIBALI</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008300111"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<CountryRef ref="it"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic:008301647">
+							<Name lang="it">MILANO P.GARIBALI PASSENTE</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008300111"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<CountryRef ref="it"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic:008301649">
+							<Name lang="it">MILANO PORTA VENEZIA</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008300111"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<CountryRef ref="it"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic:008301701">
+							<Name lang="it">MILANO LAMBrATE</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008300111"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<CountryRef ref="it"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic:008301820">
+							<Name lang="it">MILANO ROGOREDO</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008300111"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<CountryRef ref="it"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic:00839902">
+							<Name lang="it">MILANO CITY</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008300111"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<CountryRef ref="it"/>
+						</ScheduledStopPoint>
+					</scheduledStopPoints>
+					<connections>
+						<SiteConnection version="any" id="uic:008301700">
+							<ValidBetween>
+								<FromDate>2016-05-26T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name>Default Transfer time</Name>
+							<TransferDuration>
+								<DefaultDuration>PT15M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>true</BothWays>
+						</SiteConnection>
+						<SiteConnection version="any" id="uic:008301699">
+							<ValidBetween>
+								<FromDate>2016-05-26T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name>Default Transfer time</Name>
+							<TransferDuration>
+								<DefaultDuration>PT10M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>true</BothWays>
+						</SiteConnection>
+						<!--
+UIC_Code1	UIC_Code2	Duration	Duration_Unit	13	6_footPath_or_14_Hierarchy	Attributes_with_semicolon	Service_Brand1	Service_Brand2	Service_Provider1	Service_Provider2
+008301700	008301631	30	MIN	13	6					
+008301700	008301645	15	MIN	13	6					
+008301700	008301647	15	MIN	13	6					
+008301700	008301649	35	MIN	13	6					
+008301700	008301701	20	MIN	13	6					
+008301700	008301820	20	MIN	13	6					
+008301699	008301700	10	MIN	13	6					
+008301699	008301700	20	MIN	13	6	21;				  -->
+						<Connection version="any" id="008301700+008301631" dataSourceRef="uic:1183">
+							<ValidBetween>
+								<FromDate>2021-11-17T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<ValidBetween>
+							</ValidBetween>
+							<TransferDuration>
+								<DefaultDuration>PT30M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>true</BothWays>
+							<From>
+								<TransportMode>rail</TransportMode>
+								<ScheduledStopPointRef version="any" ref="uic:008301700"/>
+							</From>
+							<To>
+								<TransportMode>rail</TransportMode>
+								<ScheduledStopPointRef versionRef="EXTERNAL" ref="uic:008301631">Milanao Porta Genova</ScheduledStopPointRef>
+							</To>
+						</Connection>
+						<Connection version="any" id="008301700+008301645" dataSourceRef="uic:1183">
+							<ValidBetween>
+								<FromDate>2021-11-17T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<TransferDuration>
+								<DefaultDuration>PT15M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>true</BothWays>
+							<From>
+								<TransportMode>rail</TransportMode>
+								<ScheduledStopPointRef version="any" ref="uic:008301700"/>
+							</From>
+							<To>
+								<TransportMode>rail</TransportMode>
+								<ScheduledStopPointRef versionRef="EXTERNAL" ref="uic:008301645">MILANO P GARIBALDI</ScheduledStopPointRef>
+							</To>
+						</Connection>
+						<Connection version="any" id="008301700+008301647" dataSourceRef="uic:1183">
+							<ValidBetween>
+								<FromDate>2021-11-17T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<TransferDuration>
+								<DefaultDuration>PT15M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>true</BothWays>
+							<From>
+								<TransportMode>rail</TransportMode>
+								<ScheduledStopPointRef version="any" ref="uic:008301700">MILANO P Venezia</ScheduledStopPointRef>
+							</From>
+							<To>
+								<TransportMode>rail</TransportMode>
+								<ScheduledStopPointRef versionRef="EXTERNAL" ref="uic:008301647"/>
+							</To>
+						</Connection>
+						<Connection version="any" id="008301700+008301649" dataSourceRef="uic:1183">
+							<ValidBetween>
+								<FromDate>2021-11-17T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<TransferDuration>
+								<DefaultDuration>PT15M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>true</BothWays>
+							<From>
+								<TransportMode>rail</TransportMode>
+								<ScheduledStopPointRef version="any" ref="uic:008301700"/>
+							</From>
+							<To>
+								<TransportMode>rail</TransportMode>
+								<ScheduledStopPointRef versionRef="EXTERNAL" ref="uic:008301649">MILANO PORTE VENXIANO</ScheduledStopPointRef>
+							</To>
+						</Connection>
+						<Connection version="any" id="008301700+008301701" dataSourceRef="uic:1183">
+							<ValidBetween>
+								<FromDate>2021-11-17T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<TransferDuration>
+								<DefaultDuration>PT20M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>true</BothWays>
+							<From>
+								<TransportMode>rail</TransportMode>
+								<ScheduledStopPointRef version="any" ref="uic:008301700"/>
+							</From>
+							<To>
+								<TransportMode>rail</TransportMode>
+								<ScheduledStopPointRef versionRef="EXTERNAL" ref="uic:008301701">MILANO LAMBRATE</ScheduledStopPointRef>
+							</To>
+						</Connection>
+						<Connection version="any" id="008301700+008301820" dataSourceRef="uic:1183">
+							<ValidBetween>
+								<FromDate>2021-11-17T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<TransferDuration>
+								<DefaultDuration>PT20M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>true</BothWays>
+							<From>
+								<TransportMode>rail</TransportMode>
+								<ScheduledStopPointRef version="any" ref="uic:008301700"/>
+							</From>
+							<To>
+								<TransportMode>rail</TransportMode>
+								<ScheduledStopPointRef versionRef="EXTERNAL" ref="uic:008301820">MILANO ROGOREDO</ScheduledStopPointRef>
+							</To>
+						</Connection>
+						<Connection version="any" id="008301700+008399002" dataSourceRef="uic:1183">
+							<ValidBetween>
+								<FromDate>2013-12-02T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<TransferDuration>
+								<DefaultDuration>PT15M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>true</BothWays>
+							<From>
+								<TransportMode>rail</TransportMode>
+								<ScheduledStopPointRef version="any" ref="uic:008301700"/>
+							</From>
+							<To>
+								<TransportMode>rail</TransportMode>
+								<ScheduledStopPointRef versionRef="EXTERNAL" ref="uic:008399002">MILANO CITY</ScheduledStopPointRef>
+							</To>
+						</Connection>
+						<!--  Operator to operator -->
+						<SiteConnection version="any" id="008301700@0083+0064" dataSourceRef="uic:1183" changed="2021-11-17T08:07:00">
+							<Name>Default Transfer time BETWEEN OPERATORS</Name>
+							<TransferDuration>
+								<DefaultDuration>PT11M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>true</BothWays>
+							<From>
+								<OperatorRef version="any" ref="uic:0083"/>
+							</From>
+							<To>
+								<OperatorRef version="any" ref="uic:0064"/>
+							</To>
+						</SiteConnection>
+					</connections>
+					<tariffZones>
+						<TariffZone version="any" id="uic:008300111">
+							<Name>Milano Centrale</Name>
+						</TariffZone>
+					</tariffZones>
+					<stopAssignments>
+						<PassengerStopAssignment version="any" id="uic:008301700" order="1">
+							<Name>Milano Centrale</Name>
+							<Description>Assign timetable Station to Physical station. </Description>
+							<ScheduledStopPointRef version="any" ref="uic:008301700"/>
+							<StopPlaceRef version="any" ref="uic:008301700"/>
+						</PassengerStopAssignment>
+					</stopAssignments>
+				</ServiceFrame>
+				<TimetableFrame version="any" id="TSDUPD-example_MILANO">
+					<vehicleJourneys>
+						<VehicleJourney version="any" id="X295">
+							<TypeOfProductCategoryRef versionRef="EXTERNAL" ref="84">Regional Train</TypeOfProductCategoryRef>
+							<!--	 84 Tf/pTSI B.4.7009  84 - Regional Train  -->
+						</VehicleJourney>
+					</vehicleJourneys>
+					<journeyInterchanges>
+						<!---
+UIC_Code	Service_Brand1	Service_Brand2	Time	Service_Provider1	Service_Provider2
+008600683			0004	1186	1186
+008600683			0002	1186	X284
+008600683			0004	1186	X295
+008600683			0006	1186	X298
+008600683			0004	X284	1186
+008600683			0002	X284	X284
+008600683			0002	X284	X295
+008600683			0006	X295	1186
+008600683			0002	X295	X284
+008600683			0004	X295	X295
+008600683			0002	X295	X298
+008600683	84	84	0004	X295	X295
+008600683			0004	X298	1186
+008600683			0002	X298	X284
+008600683			0002	X298	X295
+008600683			0002	X298	X298
+008301700			0011	0083	0064  
+-->
+						<ServiceJourneyInterchange version="any" id="008600683@1186+1186">
+							<StandardTransferTime>PT4M</StandardTransferTime>
+							<FromJourneyRef versionRef="EXTERNAL" ref="1186"/>
+							<ToJourneyRef versionRef="EXTERNAL" ref="1186"/>
+						</ServiceJourneyInterchange>
+						<ServiceJourneyInterchange version="any" id="008600683@1186+X284">
+							<StandardTransferTime>PT2M</StandardTransferTime>
+							<FromJourneyRef versionRef="EXTERNAL" ref="1186"/>
+							<ToJourneyRef versionRef="EXTERNAL" ref="X284"/>
+						</ServiceJourneyInterchange>
+						<ServiceJourneyInterchange version="any" id="008600683@1186+X295">
+							<StandardTransferTime>PT4M</StandardTransferTime>
+							<FromJourneyRef versionRef="EXTERNAL" ref="1186"/>
+							<ToJourneyRef version="any" ref="X295"/>
+						</ServiceJourneyInterchange>
+						<ServiceJourneyInterchange version="any" id="008600683@1186+X298">
+							<StandardTransferTime>PT6M</StandardTransferTime>
+							<FromJourneyRef versionRef="EXTERNAL" ref="1186"/>
+							<ToJourneyRef versionRef="EXTERNAL" ref="X298"/>
+						</ServiceJourneyInterchange>
+						<ServiceJourneyInterchange version="any" id="008600683@X284+1186">
+							<StandardTransferTime>PT4M</StandardTransferTime>
+							<FromJourneyRef versionRef="EXTERNAL" ref="X284"/>
+							<ToJourneyRef versionRef="EXTERNAL" ref="1186"/>
+						</ServiceJourneyInterchange>
+						<ServiceJourneyInterchange version="any" id="008600683@X284+X284">
+							<StandardTransferTime>PT2M</StandardTransferTime>
+							<FromJourneyRef versionRef="EXTERNAL" ref="X284"/>
+							<ToJourneyRef versionRef="EXTERNAL" ref="X284"/>
+						</ServiceJourneyInterchange>
+						<ServiceJourneyInterchange version="any" id="008600683@X284+X295">
+							<StandardTransferTime>PT2M</StandardTransferTime>
+							<FromJourneyRef versionRef="EXTERNAL" ref="X284"/>
+							<ToJourneyRef version="any" ref="X295"/>
+						</ServiceJourneyInterchange>
+						<ServiceJourneyInterchange version="any" id="008600683@X295+1186">
+							<StandardTransferTime>PT6M</StandardTransferTime>
+							<FromJourneyRef version="any" ref="X295"/>
+							<ToJourneyRef versionRef="EXTERNAL" ref="1186"/>
+						</ServiceJourneyInterchange>
+						<ServiceJourneyInterchange version="any" id="008600683@X295+X284">
+							<StandardTransferTime>PT2M</StandardTransferTime>
+							<FromJourneyRef version="any" ref="X295"/>
+							<ToJourneyRef versionRef="EXTERNAL" ref="X284"/>
+						</ServiceJourneyInterchange>
+						<ServiceJourneyInterchange version="any" id="008600683@X295+X295">
+							<StandardTransferTime>PT4M</StandardTransferTime>
+							<FromJourneyRef version="any" ref="X295"/>
+							<ToJourneyRef version="any" ref="X295"/>
+						</ServiceJourneyInterchange>
+						<ServiceJourneyInterchange version="any" id="008600683@X295+X298">
+							<StandardTransferTime>PT2M</StandardTransferTime>
+							<FromJourneyRef version="any" ref="X295"/>
+							<ToJourneyRef versionRef="EXTERNAL" ref="X298"/>
+						</ServiceJourneyInterchange>
+						<ServiceJourneyInterchange version="any" id="008600683@X298+X284">
+							<StandardTransferTime>PT2M</StandardTransferTime>
+							<FromJourneyRef versionRef="EXTERNAL" ref="X298"/>
+							<ToJourneyRef versionRef="EXTERNAL" ref="X284"/>
+						</ServiceJourneyInterchange>
+						<ServiceJourneyInterchange version="any" id="008600683@X298+X295">
+							<StandardTransferTime>PT2M</StandardTransferTime>
+							<FromJourneyRef versionRef="EXTERNAL" ref="X298"/>
+							<ToJourneyRef version="any" ref="X295"/>
+						</ServiceJourneyInterchange>
+						<ServiceJourneyInterchange version="any" id="008600683@X298+X298">
+							<StandardTransferTime>PT2M</StandardTransferTime>
+							<FromJourneyRef versionRef="EXTERNAL" ref="X298"/>
+							<ToJourneyRef versionRef="EXTERNAL" ref="X298"/>
+						</ServiceJourneyInterchange>
+						<ServiceJourneyInterchange version="any" id="008301700@0083+0064">
+							<StandardTransferTime>PT11M</StandardTransferTime>
+							<FromJourneyRef versionRef="EXTERNAL" ref="0083"/>
+							<ToJourneyRef versionRef="EXTERNAL" ref="0064"/>
+						</ServiceJourneyInterchange>
+					</journeyInterchanges>
+				</TimetableFrame>
+			</frames>
+		</CompositeFrame>
+		<CompositeFrame version="1" id="TSDUPD-example_PIEDIMULERA">
+			<Description>Draft example to map a TSDUPD location  PIEDIMULERA   into NeTEx.</Description>
+			<!--Function_Code	UIC_Code	Location_Name	Location_Short_Name	Latitude	Longitude	Valid_From	Valid_To	Default_Transfert_Time	Country	Timezone1	Timezone2	Reservation_Code 
+29	008300003	PIEDIMULERA	PIEDIMULERA	460128N	081540E	2021-10-07	2999-12-31	0005	IT	CET	1	008300014 -->
+			<!--- ======= CODESPACEs======== -->
+			<codespaces>
+				<Codespace id="op4_cs">
+					<Xmlns>op4_cs</Xmlns>
+					<XmlnsUrl>http://www.operator.it/</XmlnsUrl>
+					<Description>Operator data</Description>
+				</Codespace>
+				<CodespaceRef ref="uic_cs"/>
+			</codespaces>
+			<!--- =======FRAME DEFAULTS======== -->
+			<FrameDefaults>
+				<DefaultCodespaceRef ref="op4_cs"/>
+			</FrameDefaults>
+			<frames>
+				<SiteFrame version="1" id="TSDUPD-example_PIEDIMULERA">
+					<stopPlaces>
+						<StopPlace version="any" id="uic:008300003">
+							<ValidBetween>
+								<FromDate>2021-10-07T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name>PIEDIMULERA</Name>
+							<ShortName>PIEDIMULERA </ShortName>
+							<Centroid>
+								<Location>
+									<Longitude>+46.0128</Longitude>
+									<Latitude>+08.1540</Latitude>
+								</Location>
+							</Centroid>
+							<Locale>
+								<TimeZoneOffset>-1</TimeZoneOffset>
+								<TimeZone>CET</TimeZone>
+							</Locale>
+							<OperatorRef version="any" ref="uic:0083"/>
+							<TransportMode>rail</TransportMode>
+							<tariffZones>
+								<TariffZoneRef versionRef="EXTERNAL" ref="008300014"/>
+							</tariffZones>
+							<StopPlaceType>railStation</StopPlaceType>
+						</StopPlace>
+					</stopPlaces>
+				</SiteFrame>
+				<ServiceFrame version="any" id="TSDUPD-example_PIEDIMULERA">
+					<scheduledStopPoints>
+						<ScheduledStopPoint version="any" id="uic:008300003">
+							<ValidBetween>
+								<FromDate>2021-08-06T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name lang="it">PIEDIMULERA</Name>
+							<Location>
+								<Longitude>+46.0128</Longitude>
+								<Latitude>+08.1540</Latitude>
+							</Location>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008300014"/>
+							</tariffZones>
+							<ShortName>PIEDIMULERA</ShortName>
+							<StopType>railStation</StopType>
+							<CountryRef ref="it"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic:008300004">
+							<ValidBetween>
+								<FromDate>2016-04-29T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name lang="it">PIEVE VERGONTE</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008300014"/>
+							</tariffZones>
+							<ShortName>PIEVE VERGONTE</ShortName>
+							<StopType>railStation</StopType>
+							<CountryRef ref="it"/>
+						</ScheduledStopPoint>
+					</scheduledStopPoints>
+					<connections>
+						<!--
+UIC_Code1	UIC_Code2	Duration	Duration_Unit	13	6_footPath_or_14_Hierarchy	Attributes_with_semicolon	Service_Brand1	Service_Brand2	Service_Provider1	Service_Provider2
+ 	
+008300003	008300004	40	MIN	13	6		101	71	1187	1180 -->
+						<SiteConnection version="any" id="008300003+008300003">
+							<Name>Default Transfer time</Name>
+							<TransferDuration>
+								<DefaultDuration>PT15M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>true</BothWays>
+						</SiteConnection>
+						<Connection version="any" id="008300003+008300004" dataSourceRef="uic:1183">
+							<ValidBetween>
+								<FromDate>2016-04-29T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name>Default internal transfers  Piedimulera</Name>
+							<TransferDuration>
+								<DefaultDuration>PT40M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>true</BothWays>
+							<From>
+								<TransportMode>rail</TransportMode>
+								<ScheduledStopPointRef version="any" ref="uic:008300003">Piedimulera</ScheduledStopPointRef>
+							</From>
+							<To>
+								<TransportMode>rail</TransportMode>
+								<ScheduledStopPointRef version="any" ref="uic:008300004">Pieve Vergonte</ScheduledStopPointRef>
+							</To>
+						</Connection>
+					</connections>
+					<tariffZones>
+						<TariffZone version="any" id="uic:008300014">
+							<Name>PIEDIMULERA</Name>
+						</TariffZone>
+					</tariffZones>
+				</ServiceFrame>
+				<TimetableFrame version="1" id="TSDUPD-example_PIEDIMULERA">
+					<interchangeRules>
+						<InterchangeRule version="any" id="008300003+008300004">
+							<ConnectionRef version="any" ref="008300003+008300004"/>
+							<Planned>true</Planned>
+							<MinimumTransferTime>PT34M</MinimumTransferTime>
+							<MaximumTransferTime>PT40M</MaximumTransferTime>
+							<FeederFilter>
+								<OperatorRef version="any" ref="uic:1187"/>
+								<!-- TO ADD
+								<TypeOfServiceRef  versionRef="EXTERNAL" ref="101">101 Night Train</TypeOfServiceRef>  -->
+								<LineInDirectionRef>
+									<LineRef versionRef="EXTERNAL" ref="101"/>
+									<!--Hack Workaround -->
+								</LineInDirectionRef>
+							</FeederFilter>
+							<DistributorFilter>
+								<OperatorRef version="any" ref="uic:1180"/>
+								<!--	<TypeOfServiceRef  versionRef="EXTERNAL" ref="71">71 High Speed Train</TypeOfServiceRef>  -->
+								<LineInDirectionRef>
+									<LineRef versionRef="EXTERNAL" ref="71"/>
+									<!--Hack Workaround -->
+								</LineInDirectionRef>
+							</DistributorFilter>
+						</InterchangeRule>
+					</interchangeRules>
+				</TimetableFrame>
+			</frames>
+		</CompositeFrame>
+	<CompositeFrame version="1" id="TSDUPD-example_PARIS">
+			<Description>Draft example to map a TSDUPD location PARIS EXAMPLE into NeTEx.</Description>
+			<!--  
+UIC_Code1	UIC_Code2	Duration	Duration_Unit	13	6_footPath_or_14_Hierarchy	Attributes_with_semicolon	Service_Brand1	Service_Brand2	Service_Provider1	Service_Provider2
+26	008724855	PARIS				2021-05-18	2999-12-31		FR	CET	1	
+-->
+			<!--- =======FRAME DEFAULTS======== -->
+			<codespaces>
+				<Codespace id="op5_cs">
+					<Xmlns>op5</Xmlns>
+					<XmlnsUrl>http://www.operator.fr/</XmlnsUrl>
+					<Description>Operator data</Description>
+				</Codespace>
+				<CodespaceRef ref="uic_cs"/>
+			</codespaces>
+			<FrameDefaults>
+				<DefaultCodespaceRef ref="op5_cs"/>
+			</FrameDefaults>
+			<frames>
+				<SiteFrame version="any" id="TSDUPD-example_PARIS" responsibilitySetRef="0087">
+					<!-- =========== Topographic Places==== -->
+					<topographicPlaces>
+						<TopographicPlace version="any" id="Paris">
+							<!-- We can additionally link a Station to a topographic place-->
+							<Descriptor>
+								<Name>Paris</Name>
+							</Descriptor>
+							<CountryRef ref="fr"/>
+						</TopographicPlace>
+					</topographicPlaces>
+					<!-- =========== StopPlaces  ==== -->
+				</SiteFrame>
+				<ServiceFrame version="any" id="TSDUPD-example_PARIS" responsibilitySetRef="0087">
+					<scheduledStopPoints>
+						<!-- 	UIC_Code1	UIC_Code2	Duration	Duration_Unit	13	6_footPath_or_14_Hierarchy
+008724855	008711300			13	14
+008724855	008727100			13	14
+008724855	008727102			13	14 
+008724855	008727103			13	14
+008724855	008738400			13	14
+008724855	008739100			13	14
+008724855	008739110			13	14
+008724855	008754700			13	14
+008724855	008754702			13	14
+008724855	008768600			13	14
+008724855	008768603			13	14
+008724855	008768666			13	14
+008724855	008775858			13	14
+
+-->
+						<ScheduledStopPoint version="any" id="uic:008711300" responsibilitySetRef="0087">
+							<ValidBetween>
+								<FromDate>2021-02-11T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name lang="fr">PARIS EST</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008724855"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<CountryRef ref="fr"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic:008727100" responsibilitySetRef="0087">
+							<ValidBetween>
+								<FromDate>2021-02-11T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name lang="fr">PARIS NORD</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008724855"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<CountryRef ref="fr"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic:008727102" responsibilitySetRef="0087">
+							<ValidBetween>
+								<FromDate>2021-02-11T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name lang="fr">GARE DU NORD</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008724855"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<CountryRef ref="fr"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic:008727103" responsibilitySetRef="0087">
+							<ValidBetween>
+								<FromDate>2021-02-11T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name lang="fr">GARE DU NORD SURFACE</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008724855"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<CountryRef ref="fr"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic:008738400" responsibilitySetRef="0087">
+							<ValidBetween>
+								<FromDate>2021-02-11T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name lang="fr">PARIS ST LAZARE</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008724855"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<CountryRef ref="fr"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic:008739100" responsibilitySetRef="0087">
+							<ValidBetween>
+								<FromDate>2021-02-11T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name lang="fr">PARIS MONTPARNASSE 1 ET 2</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008724855"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<CountryRef ref="fr"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic:008739110" responsibilitySetRef="0087">
+							<ValidBetween>
+								<FromDate>2021-02-11T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name lang="fr">PARIS MONTPARNASSE 3 VAURIGARD</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008724855"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<CountryRef ref="fr"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic:008754700" responsibilitySetRef="0087">
+							<ValidBetween>
+								<FromDate>2021-02-11T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name lang="fr">PARIS AUSTERLITZ</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008724855"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<CountryRef ref="fr"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic:008754702" responsibilitySetRef="0087">
+							<ValidBetween>
+								<FromDate>2021-02-11T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name lang="fr">PARIS AUSTERLITZ RER C</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008724855"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<CountryRef ref="fr"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic:008768600" responsibilitySetRef="0087">
+							<ValidBetween>
+								<FromDate>2021-02-11T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name lang="fr">PARIS GARE DE LYON</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008724855"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<CountryRef ref="fr"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic:008768603" responsibilitySetRef="0087">
+							<ValidBetween>
+								<FromDate>2021-02-11T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name lang="fr">GARE DE LYON BANLIEU</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008724855"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<CountryRef ref="fr"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic:008768666" responsibilitySetRef="0087">
+							<ValidBetween>
+								<FromDate>2021-02-11T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name lang="fr">PARIS BERCY</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008724855"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<CountryRef ref="fr"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic:008775858" responsibilitySetRef="0087">
+							<ValidBetween>
+								<FromDate>2021-02-11T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name lang="fr">PARIS GARE DE LYON RER</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008724855"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<CountryRef ref="fr"/>
+						</ScheduledStopPoint>
+					</scheduledStopPoints>
+					<tariffZones>
+						<TariffZone version="any" id="uic:008724855" responsibilitySetRef="0087">
+							<Name lang="fr">Paris</Name>
+							<Description>Paris AGglomeration of stations</Description>
+							<members>
+								<ScheduledStopPointRef version="any" ref="uic:008711300">PARIS EST</ScheduledStopPointRef>
+								<ScheduledStopPointRef version="any" ref="uic:008727100">PARIS NORD</ScheduledStopPointRef>
+								<ScheduledStopPointRef version="any" ref="uic:008727103">GARE DU NORD</ScheduledStopPointRef>
+								<ScheduledStopPointRef version="any" ref="uic:008738400">GARE DU NORD SURFACE</ScheduledStopPointRef>
+								<ScheduledStopPointRef version="any" ref="uic:008738400">PARIS ST LAZARE</ScheduledStopPointRef>
+								<ScheduledStopPointRef version="any" ref="uic:008739100">PARIS MONTPARNASSE 1 ET 2</ScheduledStopPointRef>
+								<ScheduledStopPointRef version="any" ref="uic:008739110">PARIS MONTPARNASSE 3 VAURIGARD</ScheduledStopPointRef>
+								<ScheduledStopPointRef version="any" ref="uic:008754700">PARIS AUSTERLITZ</ScheduledStopPointRef>
+								<ScheduledStopPointRef version="any" ref="uic:008754702">PARIS AUSTERLITZ RER C</ScheduledStopPointRef>
+								<ScheduledStopPointRef version="any" ref="uic:008768600">PARIS GARE DE LYON</ScheduledStopPointRef>
+								<ScheduledStopPointRef version="any" ref="uic:008768603">GARE DE LYON BANLIEU</ScheduledStopPointRef>
+								<ScheduledStopPointRef version="any" ref="uic:008768666">PARIS BERCY</ScheduledStopPointRef>
+								<ScheduledStopPointRef version="any" ref="uic:008775858">PARIS GARE DE LYON RER</ScheduledStopPointRef>
+							</members>
+						</TariffZone>
+					</tariffZones>
+				</ServiceFrame>
+			</frames>
+		</CompositeFrame>	</dataObjects>
+</PublicationDelivery>

@@ -2,11 +2,13 @@
 <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_salesContract_version">
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_facility_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_loggable_version.xsd"/>
+	<xsd:include schemaLocation="netex_customerPurchasePackage_support.xsd"/>
 	<xsd:include schemaLocation="netex_retailConsortium_support.xsd"/>
 	<xsd:include schemaLocation="netex_salesContract_support.xsd"/>
 	<xsd:include schemaLocation="netex_customerEligibility_version.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_securityList_version.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_address_version.xsd"/>
+	<xsd:include schemaLocation="netex_customerPaymentMeans_version.xsd"/>
 	<!-- ======================================================================= -->
 	<xsd:annotation>
 		<xsd:appinfo>
@@ -21,28 +23,41 @@
 					<Created>2010-09-04</Created>
 				</Date>
 				<Date>
-					<Modified>2011-02-05</Modified>
-					<!-- Name Space changes -->
+					<Modified>2011-02-05</Modified>Name Space changes 
 				</Date>
 				<Date>
-					<Modified>2017-08-10</Modified>
-					<!-- Align with TM6
+					<Modified>2017-08-10</Modified>  Align with TM6
 					  Make Passenger Contract Event a type of LogEntry.
 					  Rename Passenger Contract Event to PassengerContractEntry.
 					  Add Customer Account
-					  Add Customer Eligibilities
-					-->
+					  Add Customer Eligibilities 
+					  Add CUstomer Payment mans
 				</Date>
 				<Date>
-					<Modified>2017-08-10</Modified>
-					<!-- Align with TM6
+					<Modified>2017-08-10</Modified> Align with TM6
 					  Rename Passenger Contract   to FareContract.
 					  Rename Passenger Contract Event to FareContractEntry.
 					  Rename Passenger Contract Security Listing  to FareContractSecurityListing
 					  Rename Type of Passenger Contract  to TypeOfFareContract.
-					  Rename Type of Passenger Contract Wntry  to TypeOfFareContractEntry .
-					  Adjust References in Dependent packages.
-					-->
+					  Rename Type of Passenger Contract Entry  to TypeOfFareContractEntry .
+					  Adjust References in Dependent packages. 
+				</Date>
+				<Date>
+					<Modified>2018-06-10</Modified> Fix for  Align with TM6         correct use of case on fareContracts
+				</Date>
+				<Date>
+					<Modified>2019-03-10</Modified> UK-28  Add reference to CustomerAccount to FareContract
+						Add fareContracts / CustomerAccount to Customer 
+						Remove FareContractEntries from CustomerAccount  : Use relationship on FareCOntract
+						Add email to CustomerContact details
+						Add customerPurchasePackageRefs to CustomerAccount. This canbe derived from FarContractEntries
+				</Date>
+				<Date>
+					<Modified>2020.05.10</Modified>New Modes: Add MediumAccess DEvicesfor Account
+					  Add smoker to Customer.
+				</Date>
+				<Date>
+					<Modified>2021.01.10</Modified>New Modes: Add EMail and Phone  verification flag
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -60,11 +75,11 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2017</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2020</Copyright>
 				</Rights>
 				<Source>
 					<ul>
-						<li>Derived from the Transmodel, VDV, TransXChange, NEPTUNE, BISON and Trident standards.</li>
+						<li>Derived from the Transmodel standards.</li>
 					</ul>
 				</Source>
 				<Status>Version 1.0 Draft for approval</Status>
@@ -85,7 +100,8 @@ Rail transport, Roads and Road transport
 		</xsd:appinfo>
 		<xsd:documentation>NeTEx SALES CONTRACT  types.</xsd:documentation>
 	</xsd:annotation>
-	<!-- ===ENTIITY IN VERSION IN FRAME====Used in SERVICE FRAME)=================================================== -->
+	<!-- ===ENTITY IN VERSION IN FRAME====Used in SERVICE FRAME)=================================================== -->
+	<xsd:include schemaLocation="netex_mediumApplication_support.xsd"/>
 	<xsd:group name="FareContractsInFrameGroup">
 		<xsd:annotation>
 			<xsd:documentation>Elements for SALES TRANSACTION in Frame.</xsd:documentation>
@@ -101,7 +117,7 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>CUSTOMER ACCOUNTs  in FRAME.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="FareContracts" type="FareContractsInFrame_RelStructure" minOccurs="0">
+			<xsd:element name="fareContracts" type="fareContractsInFrame_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>FARE CONTRACTs  in FRAME.</xsd:documentation>
 				</xsd:annotation>
@@ -120,7 +136,7 @@ Rail transport, Roads and Road transport
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:complexType name="FareContractsInFrame_RelStructure">
+	<xsd:complexType name="fareContractsInFrame_RelStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for containment in frame of SALES FARE CONTRACTs.</xsd:documentation>
 		</xsd:annotation>
@@ -160,7 +176,8 @@ Rail transport, Roads and Road transport
 	</xsd:complexType>
 	<xsd:element name="Customer" abstract="false" substitutionGroup="DataManagedObject">
 		<xsd:annotation>
-			<xsd:documentation>An identified person or organisation involved in a fare process. There may be a FARE CONTRACT between the CUSTOMER and the OPERATOR or the AUTHORITY ruling the consumption of services.</xsd:documentation>
+			<xsd:documentation>An identified person or organisation involved in a fare process. There may be a FARE CONTRACT between the CUSTOMER and the OPERATOR or the AUTHORITY ruling the consumption of services.
+ 		</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -203,13 +220,14 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:group ref="CustomerParticularsGroup"/>
+			<xsd:group ref="CustomerContactGroup"/>
 			<xsd:group ref="CustomerProfileGroup"/>
 			<xsd:element name="customerAccounts" type="customerAccounts_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>CUSTOMER ACCOUNTs belonging to customer.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="FareContracts" type="FareContracts_RelStructure" minOccurs="0">
+			<xsd:element name="fareContracts" type="fareContracts_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>FARE CONTRACTs belonging to customer.</xsd:documentation>
 				</xsd:annotation>
@@ -243,7 +261,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element name="Gender" type="GenderEnumeration" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Genfer of CUSTOMER.</xsd:documentation>
+					<xsd:documentation>Gender of CUSTOMER.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="Height" type="LengthType" minOccurs="0">
@@ -256,7 +274,38 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Photo of CUSTOMER.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="Phone" type="TelephoneContactStructure" minOccurs="0"/>
+			<xsd:element name="Smoker" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether the customer likes to smoke. +1.2.2</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="CustomerContactGroup">
+		<xsd:annotation>
+			<xsd:documentation>Contact Elements for CUSTOMER.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Email" type="EmailAddressType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Email address of CUSTOMER. +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="EmailVerified" type="xsd:dateTime" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Email address of CUSTOMER last verified +v1.2.2</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Phone" type="TelephoneContactStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Phone number. (Usually personal  mobile phone). </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="PhoneVerified" type="xsd:dateTime" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Phone of CUSTOMER last verified +v1.2.2</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element ref="PostalAddress" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
@@ -278,7 +327,7 @@ Rail transport, Roads and Road transport
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ====FARE CONTRACT  -->
-	<xsd:complexType name="FareContracts_RelStructure">
+	<xsd:complexType name="fareContracts_RelStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for a list of FARE CONTRACTs.</xsd:documentation>
 		</xsd:annotation>
@@ -293,7 +342,10 @@ Rail transport, Roads and Road transport
 	</xsd:complexType>
 	<xsd:element name="FareContract" abstract="false" substitutionGroup="DataManagedObject">
 		<xsd:annotation>
-			<xsd:documentation>A contract with a particular (but possibly anonymous) customer, ruling the consumption of transport services (and joint services). A FARE CONTRACT may be designed for a fixed SALES OFFER PACKAGE (e.g. ticket) or to allow successive purchases of SALES OFFER PACKAGEs.</xsd:documentation>
+			<xsd:documentation>A contract with a particular (but possibly anonymous) customer, ruling the consumption of transport services (and joint services). A FARE CONTRACT may be designed for a fixed SALES OFFER PACKAGE (e.g. ticket) or to allow successive purchases of SALES OFFER PACKAGEs.
+
+
+</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -361,8 +413,9 @@ Rail transport, Roads and Road transport
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element ref="CustomerRef" minOccurs="0"/>
+			<xsd:element ref="CustomerAccountRef" minOccurs="0"/>
 			<xsd:element ref="TypeOfFareContractRef" minOccurs="0"/>
-			<xsd:element name="FareContractEntries" type="FareContractEntries_RelStructure" minOccurs="0">
+			<xsd:element name="fareContractEntries" type="fareContractEntries_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Events in CONTRACT.</xsd:documentation>
 				</xsd:annotation>
@@ -370,7 +423,7 @@ Rail transport, Roads and Road transport
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ====P ASSENGER CONTRACT ENTRY-->
-	<xsd:complexType name="FareContractEntries_RelStructure">
+	<xsd:complexType name="fareContractEntries_RelStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for a list of FARE CONTRACT ENTRYs.</xsd:documentation>
 		</xsd:annotation>
@@ -390,7 +443,9 @@ Rail transport, Roads and Road transport
 	</xsd:element>
 	<xsd:element name="FareContractEntry" abstract="true" substitutionGroup="FareContractEntry_">
 		<xsd:annotation>
-			<xsd:documentation>A log entry describing an event referring to the life of a FARE CONTRACT: initial contracting, sales, validation entries, etc. A subset of a FARE CONTRACT ENTRY is often materialised on a TRAVEL DOCUMENT.</xsd:documentation>
+			<xsd:documentation>A log entry describing an event referring to the life of a FARE CONTRACT: initial contracting, sales, validation entries, etc. A subset of a FARE CONTRACT ENTRY is often materialised on a TRAVEL DOCUMENT.
+
+</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -504,7 +559,8 @@ Rail transport, Roads and Road transport
 					<xsd:element ref="TypeOfFareContractEntryRef"/>
 					<xsd:element ref="TypeOfFareContractEntry">
 						<xsd:annotation>
-							<xsd:documentation>A TYPE OF FARE CONTRACT ENTRY specifying access rights for the FARE CONTRACT ENTRY ELEMENTs within the range of this UNIT: 0-5 km, 4-6 zones etc.</xsd:documentation>
+							<xsd:documentation>A TYPE OF FARE CONTRACT ENTRY specifying access rights for the FARE CONTRACT ENTRY ELEMENTs within the range of this UNIT: 0-5 km, 4-6 zones etc.
+</xsd:documentation>
 						</xsd:annotation>
 					</xsd:element>
 				</xsd:choice>
@@ -558,7 +614,10 @@ Rail transport, Roads and Road transport
 	</xsd:complexType>
 	<xsd:element name="CustomerAccount" abstract="false" substitutionGroup="DataManagedObject">
 		<xsd:annotation>
-			<xsd:documentation>A contract with a particular (but possibly anonymous) customer, ruling the consumption of transport services (and joint services). A CUSTOMER ACCOUNT may be designed for a fixed SALES OFFER PACKAGE (e.g. ticket) or to allow successive purchases of SALES OFFER PACKAGEs.</xsd:documentation>
+			<xsd:documentation>A contract with a particular (but possibly anonymous) customer, ruling the consumption of transport services (and joint services). A CUSTOMER ACCOUNT may be designed for a fixed SALES OFFER PACKAGE (e.g. ticket) or to allow successive purchases of SALES OFFER PACKAGEs.
+
+
+</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -621,11 +680,48 @@ Rail transport, Roads and Road transport
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element ref="CustomerRef" minOccurs="0"/>
+			<xsd:group ref="CustomerAccountPropertiesGroup"/>
+			<xsd:group ref="CustomerAccountContentsGroup"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="CustomerAccountPropertiesGroup">
+		<xsd:annotation>
+			<xsd:documentation>Property Elements for CUSTOMER ACCOUNT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
 			<xsd:element ref="TypeOfCustomerAccountRef" minOccurs="0"/>
 			<xsd:element ref="CustomerAccountStatusRef" minOccurs="0"/>
-			<xsd:element name="FareContractEntries" type="FareContractEntries_RelStructure" minOccurs="0">
+			<xsd:element name="CustomerAccountStatusType" type="AccountStatusTypeEnumeration" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Log Entries for CONTRACT.</xsd:documentation>
+					<xsd:documentation>Standard values for account status. +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="CustomerAccountContentsGroup">
+		<xsd:annotation>
+			<xsd:documentation>PropContent Elements for CUSTOMER ACCOUNT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="fareContracts" type="fareContracts_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>FARE CONTRACTs for CUSTOMER ACCOUNT +v1.1.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="customerPurchasePackages" type="customerPurchasePackageRefs_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>CUSTOMER PURCHASE PACKAGES  for CUSTOMER ACCOUT.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="CustomerPaymentMeansRef" minOccurs="0"/>
+			<xsd:element name="paymentMeans" type="customerPaymentMeans_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>PAYMENT MEANS for CUSTOMER ACCOUNT. +v1.2.2</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="mediumAccessDevices" type="mediumAccessDeviceRefs_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>MEDIUM APPLICATION INSTANCES for CUSTOMER ACCOUNT. +v1.2.2</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
