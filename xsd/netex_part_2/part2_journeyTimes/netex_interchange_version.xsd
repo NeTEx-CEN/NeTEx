@@ -21,10 +21,16 @@
 					<Created>2010-09-04</Created>
 				</Date>
 				<Date>
-					<Modified>2011-02-05</Modified>
-					<!-- Name Space changes -->
+					<Modified>2011-02-05</Modified>Name Space changes 
 				</Date>
-				<Date><Modified>2017-12-04</Modified>Add day Offsets
+				<Date>
+					<Modified>2017-12-04</Modified>Add day Offsets
+				</Date>
+				<Date>
+					<Modified>2019-04-04</Modified>NJSK Fix: Add missing ConnectionCertainty element that is in doc
+				</Date>
+								<Date>
+					<Modified>2019-04-12</Modified>NJSK Fix: Add missing FrompPointInPattern and ToPointInPattern  element that are in doc
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -42,7 +48,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2014</Copyright>
+						 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -164,6 +170,16 @@ Rail transport, Roads and Road transport
 			<xsd:element name="ToJourneyRef" type="VehicleJourneyRefStructure">
 				<xsd:annotation>
 					<xsd:documentation>VEHICLE JOURNEY  that distributes from JOURNEY MEETING.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="FromPointInJourneyPatternRef" type="PointInJourneyPatternRefStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>POINT IN JOURNEY PATTERN ofr  feeder  journey JOURNEY PATTERN.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ToPointInJourneyPatternRef" type="PointInJourneyPatternRefStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>POINT IN JOURNEY PATTERN ofr  distributorjourney JOURNEY PATTERN.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:group ref="JourneyMeetingPropertiesGroup"/>
@@ -518,6 +534,11 @@ Default is false.</xsd:documentation>
 					<xsd:documentation>Whether INTERCHANGE  is controlled in real-time. Default is true.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="ConnectionCertainty" type="ConnectionCertaintyEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Nature of gurantee to  conenction.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:simpleType name="InterchangePriorityType">
@@ -525,33 +546,6 @@ Default is false.</xsd:documentation>
 			<xsd:documentation>INTERCHANGE priority.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:integer"/>
-	</xsd:simpleType>
-	<xsd:simpleType name="ConnectionCertaintyEnumeration">
-		<xsd:annotation>
-			<xsd:documentation>Allowed values for  Guaranteed.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="xsd:NMTOKEN">
-			<xsd:enumeration value="guaranteed">
-				<xsd:annotation>
-					<xsd:documentation>ERA X01: The connection is guaranteed under any circumstances.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="normallyGuaranteed">
-				<xsd:annotation>
-					<xsd:documentation>ERA X02: The connection is normally guaranteed, although the connection time available is shorter than the location connection time.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="notGuaranteed">
-				<xsd:annotation>
-					<xsd:documentation>ERA X03: The connection is not guaranteed, although the connection time available is longer than the location connection time.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="neverGuaranteed">
-				<xsd:annotation>
-					<xsd:documentation>ERA X04: The connection is never guaranteed, although the connection time available is longer than the location connection time.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-		</xsd:restriction>
 	</xsd:simpleType>
 	<!-- ======================================================================= -->
 	<xsd:complexType name="serviceJourneyInterchanges_RelStructure">

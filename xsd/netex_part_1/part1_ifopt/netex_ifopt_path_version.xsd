@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
 <!-- 2007 03 23 Add repeating name -->
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:siri="http://www.siri.org.uk/siri" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_ifopt_path_version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:siri="http://www.siri.org.uk/siri" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_ifopt_path_version">
 	<xsd:include schemaLocation="netex_ifopt_path_support.xsd"/>
 	<xsd:include schemaLocation="netex_ifopt_site_version.xsd"/>
 	<!-- ============================================== -->
@@ -23,6 +23,18 @@
 				<Date>
 					<Modified>2007-03-22</Modified>
 				</Date>
+				<Date>
+					<Modified>2019-03-25</Modified>FR49 CD #65  Accessibility changes
+					 CD add new attributes to PathLink : Width, FlooringType,  RightSideBorder,  LeftSideBordert, TiltAngle, CodedTilt, TactileWarningStrip,  TactileGuidingStrip	
+					 NK Review: Reorder so as to place like elements toigether, add sub Groups to organize  
+ 				</Date>
+				<Date>
+					<Modified>2019-03-28</Modified>FR49 CD #65  Accessibility changes
+					 NJSK Doc rewviewe 
+					 Revise name of ___PathLink___   ___Width___ to ___MinimumWidth__, add enw attribute ___MinimumHeight___
+					 Revise name of  ___PathLink___  new attribute ___CodedTilt___ to ___TiltType___ to be consistent 				
+ 				    Also add new attributes ___MaximumGradient___ and MaximumGradientType___ to  ___PathLink___   	
+ 				</Date>
 				<Description>
 					<Title>NeTEx Network Exchange - PATH types.</Title>
 					<p>
@@ -40,7 +52,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/ifopt/netex_ifopt_xxxxx.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2014</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -71,6 +83,20 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Common elements of a PATH.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
+			<xsd:group ref="PathNavigationGroup"/>
+			<xsd:group ref="PathDescriptionGroup"/>
+			<xsd:element name="MaximumFlowPerMinute" type="xsd:nonNegativeInteger" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Maximum number of passengers who can traverse PATH LINK per minute.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="PathNavigationGroup">
+		<xsd:annotation>
+			<xsd:documentation>Common Navigation elements of a PATH.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
 			<xsd:element name="Towards" type="MultilingualString" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Direction heading to show for PATH LINK when travelling  in its FROM / TO sense.</xsd:documentation>
@@ -86,9 +112,19 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Number of steps to take PATH LINK.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="MinimumHeight" type="LengthType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Minimum Height of PATH LINK. +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MinimumWidth" type="LengthType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Minimum Width of PATH LINK. +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element name="AllowedUse" type="PathDirectionEnumeration" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Allowed Direction of use: one way or two way. Default is two way.</xsd:documentation>
+					<xsd:documentation>Allowed direction of use: one way or two way. Default is two way.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="Transition" type="TransitionEnumeration" minOccurs="0">
@@ -96,6 +132,33 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Whether PATH LINK is up down or level in from to direction.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="Gradient" type="xsd:integer" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Maximum gradient in degrees  (in the direction of the PATH LINK way). +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GradientType" type="GradientEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Coded value of the maximum gradient.+v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TiltAngle" type="xsd:integer" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Maximum Tilt angle in degrees between -20 and 20 (in the direction of the PATH LINK way). +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TiltType" type="TiltTypeEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Coded value of the maximum  tilt.  See allowed va;ues. +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="PathDescriptionGroup">
+		<xsd:annotation>
+			<xsd:documentation>Common Description elements of a PATH.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
 			<xsd:element name="AccessFeatureType" type="AccessFeatureEnumeration" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Type of physical feature of PATH LINK.</xsd:documentation>
@@ -106,9 +169,29 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Type of passage feature of PATH LINK.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="MaximumFlowPerMinute" type="xsd:nonNegativeInteger" minOccurs="0">
+			<xsd:element name="FlooringType" type="FlooringTypeEnumeration" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Maximum number of passengers who can traverse PATH LINK per minute.</xsd:documentation>
+					<xsd:documentation>Type of flooring of the walking surface. +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="RightSideBorder" type="BorderTypeEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Type of border on the right side (in the direction of the PATH LINK).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="LeftSideBorder" type="BorderTypeEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Type of border on the left side (in the direction of the PATH LINK). +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TactileWarningStrip" type="TactileWarningStripEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Nature of the  tactile warning strips (in the direction of the PATH LINK). +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TactileGuidingStrip" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indicates whether there are guiding strips. +v1.1</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="Width" type="LengthType" minOccurs="0">
@@ -335,7 +418,11 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Elements of a SITE PATH LINK.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="Label" type="MultilingualString" minOccurs="0"/>
+			<xsd:element name="Label" type="MultilingualString" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Additional public label for the SITE PATH LINK</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->

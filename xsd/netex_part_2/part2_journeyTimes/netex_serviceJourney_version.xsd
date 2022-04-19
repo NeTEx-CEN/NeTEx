@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
 <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_serviceJourney_Version">
 	<xsd:include schemaLocation="netex_vehicleJourney_version.xsd"/>
 	<xsd:include schemaLocation="netex_flexibleService_version.xsd"/>
@@ -21,14 +20,19 @@
 					<Created>2010-09-04</Created>
 				</Date>
 				<Date>
-					<Modified>2011-02-05</Modified>
-					<!-- Name Space changes -->
+					<Modified>2011-02-05</Modified>Name Space changes
 				</Date>
 				<Date>
-					<Modified>2017-02-05 CR006 Allow refernce to FlexibleServiceProperties as choice with embedding</Modified>
+					<Modified>2017-02-05</Modified>CR006 Allow reference to FlexibleServiceProperties as choice with embedding
 				</Date>
 				<Date>
-					<Modified>2017-05-025 PR  Correct defintion of SERVICE JOURNEY. Doc change only.</Modified>
+					<Modified>2017-05-25</Modified>PR  Correct definition of SERVICE JOURNEY. Doc change only.
+				</Date>
+				<Date>
+					<Modified>2018-06-01</Modified>CR057 Add VehicleJourney By Value Reference
+				</Date>
+				<Date>
+					<Modified>2018-06-01</Modified>FIX  Add Topographical Place to endpoint for GROUP OF SERVICES
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -46,7 +50,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2017</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -75,7 +79,7 @@ Rail transport, Roads and Road transport
 	<!-- ===ENTIITY IN VERSION IN FRAME====(Used in SERVICE FRAME)=================================================== -->
 	<xsd:complexType name="groupsOfServicesInFrame_RelStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for containment in frame of  GROUP OF SERVICEs.</xsd:documentation>
+			<xsd:documentation>Type for containment in frame of GROUP OF SERVICEs.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="containmentAggregationStructure">
@@ -416,6 +420,7 @@ The VIEW includes derived ancillary data from referenced entities.</xsd:document
 			<xsd:element ref="VehicleTypeRef" minOccurs="0"/>
 			<xsd:group ref="ServiceJourneyEndpointsGroup"/>
 			<xsd:group ref="ServiceJourneyAdvertisementGroup"/>
+			<xsd:group ref="FlexibleServiceCharacteristicsGroup"/>
 			<xsd:group ref="BookingArrangementsGroup"/>
 		</xsd:sequence>
 	</xsd:group>
@@ -500,12 +505,12 @@ The VIEW includes derived ancillary data from referenced entities.</xsd:document
 				<xsd:element ref="DirectionRef"/>
 				<xsd:element ref="DirectionView"/>
 			</xsd:choice>
-			<xsd:element name="Origin" type="EndPoint_DerivedViewStructure" minOccurs="0">
+			<xsd:element name="Origin" type="GroupOfServicesEndPoint_DerivedViewStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Origin associated with this GROUP OF SERVICEs.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="Destination" type="EndPoint_DerivedViewStructure" minOccurs="0">
+			<xsd:element name="Destination" type="GroupOfServicesEndPoint_DerivedViewStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Destination associated with this GROUP OF SERVICEs.</xsd:documentation>
 				</xsd:annotation>
@@ -518,7 +523,7 @@ The VIEW includes derived ancillary data from referenced entities.</xsd:document
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->
-	<xsd:complexType name="EndPoint_DerivedViewStructure" abstract="false">
+	<xsd:complexType name="GroupOfServicesEndPoint_DerivedViewStructure" abstract="false">
 		<xsd:annotation>
 			<xsd:documentation>Type for SIMPLE SCHEDULED STOP POINT VIEW.</xsd:documentation>
 		</xsd:annotation>
@@ -532,6 +537,7 @@ The VIEW includes derived ancillary data from referenced entities.</xsd:document
 					</xsd:element>
 					<xsd:element ref="ScheduledStopPointRef" minOccurs="0"/>
 					<xsd:element ref="DestinationDisplayRef" minOccurs="0"/>
+					<xsd:element ref="TopographicPlaceView" minOccurs="0"/>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -568,6 +574,8 @@ The VIEW includes derived ancillary data from referenced entities.</xsd:document
 					<xsd:choice>
 						<xsd:element ref="JourneyRef"/>
 						<xsd:element ref="TrainNumberRef"/>
+						<xsd:element ref="JourneyDesignator"/>
+						<xsd:element ref="ServiceDesignator"/>
 					</xsd:choice>
 					<xsd:element name="noticeAssignments" type="noticeAssignmentViews_RelStructure" minOccurs="0">
 						<xsd:annotation>

@@ -21,7 +21,26 @@
 				<Date>
 					<Modified>2011-12-16</Modified>
 				</Date>
-				<Date><Modified>2017-05-25</Modified>  NPR make Gender optional 
+				<Date>
+					<Modified>2017-05-25</Modified>NPR make Gender optional 
+				</Date>
+				<Date>
+					<Modified>2019-03-25</Modified>Fix #38 Skinkie. Fix typo on KeyScheme.  NB this will break existing XML. 
+				</Date>
+				<Date>
+					<Modified>2019-03-25</Modified>FR49 CD #65  Accessibility changes
+					 CD add new attribute to ___PassengerSafetyEquipment___;  ___AcousticAnnouncementsTrigger___  with values _onDemand,   automatic_.	 
+					 CD add new attribute to ___PassengerSafetyEquipment___; ___AnnouncementsTriggeringMethod___  with values _presenceDetector,  app, internetPage, specificDevice, pushButton_.	 
+					 CD add new attributes to ___SanitaryEquipment___;  ___CallButtonAvailable___ , ___SupportBarHeigth____.	, ___LockedAccess___. 
+					 	 NJSK Review: Correct typo on SupportBarHeigth, reorder elements
+ 				</Date>
+				<Date>
+					<Modified>2019-03-29</Modified>FR49 CD #65  Accessibility changes
+					 NSKK Review: 	Add missing ___ChangeAvailable___ attribute
+					 NJSK Review : revises name to be AudioANnouncementsType, AudioTriggerMethod
+				</Date>
+				<Date>
+					<Modified>2019-04-06</Modified>Fix Add back missing attribute to SanitaryEquipment: NumberofToilets 
 				</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines EQUIPMENT base types.</p>
@@ -35,7 +54,7 @@
 				<Language>[ISO 639-2/B] ENG</Language>
 				<Publisher>Kizoom Software Ltd, 16 High Holborn, London WC1V 6BX</Publisher>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2014</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -145,12 +164,55 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Gender required to use facility.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element ref="SanitaryFacilityList"/>
+			<xsd:element ref="SanitaryFacilityList" minOccurs="0"/>
 			<xsd:element name="NumberOfToilets" type="xsd:integer" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Number of toilets available.</xsd:documentation>
+					<xsd:documentation>Number of Toilets</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:group ref="SanitaryEquipmentPaymentGroup"/>
+			<xsd:element name="WheelchairTurningCircle" type="LengthType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Turning circle radius for a wheelchair.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="SupportBarHeight" type="LengthType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Height of the support bar (when there is one). +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="CallButtonAvailable" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether a call button is available. +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="SharpsDisposal" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether there is a facility for the disposal of sharps in toilet.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Staffing" type="StaffingEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Staffing of facility.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="LockedAccess" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether toilet may be locked end thus a key is needed (or an equivalent tool) to access.+v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="KeyScheme" type="xsd:normalizedString" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Key issuing scheme under which facility is accessible.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="SanitaryEquipmentPaymentGroup">
+		<xsd:annotation>
+			<xsd:documentation>PaymentElements for a SANITARY EQUIPMENT type.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
 			<xsd:element name="FreeToUse" type="xsd:boolean" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Whether toilets are free to use.</xsd:documentation>
@@ -171,24 +233,9 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Methods of payment allowed.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="WheelchairTurningCircle" type="LengthType" minOccurs="0">
+			<xsd:element name="ChangeAvailable" type="xsd:boolean" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Turning circle radius for a wheelchair.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="SharpsDisposal" type="xsd:boolean" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Whether there is a facility for the disposal of sharps in toilet.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="Staffing" type="StaffingEnumeration" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Staffing of facility.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="KeySCheme" type="xsd:normalizedString" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation> scheme under which facility is accessible.</xsd:documentation>
+					<xsd:documentation>Whether chaneg is available. +v1.1</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="CallButtonAvailable" type="xsd:boolean" minOccurs="0">
@@ -275,9 +322,9 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Whether there is a panic button.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="SosPhones" type="xsd:boolean" minOccurs="0">
+			<xsd:element name="SosPanel" type="xsd:boolean" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Whether there are SOS phones.</xsd:documentation>
+					<xsd:documentation>Whether there is an SOS panel.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="HeightOfSosPanel" type="LengthType" minOccurs="0">
@@ -290,9 +337,24 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Type of Lighting in area.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="AudioAnnouncements" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether there are Audio Announcements. +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element name="AcousticAnnouncements" type="xsd:boolean" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Whether there are Acoustic Announcements.</xsd:documentation>
+					<xsd:documentation>DEPRECATED - Renamed to AudioAnnouncements for consistency.  Old value kept for backwards compatibility - will be dropped in future release. </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="AudioAnnouncementType" type="AudioAnnouncementTypeEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Triggering type for Audio Announcements. +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="AudioAnnouncementsTrigger" type="AudioTriggerMethodEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>How to trigger Acoustic Announcements. +v1.1</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="AcousticAnnouncementsTrigger" type="AcousticAnnouncementsTriggerEnumeration" minOccurs="0">
@@ -442,9 +504,9 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Elements for a RUBBISH DISPOSAL EQUIPMENT type.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="SharpsDispsal" type="xsd:boolean" minOccurs="0">
+			<xsd:element name="SharpsDisposal" type="xsd:boolean" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Whether there is CCTV.</xsd:documentation>
+					<xsd:documentation>Whether there are disposal facilities for needles or medical sharps.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="Recycling" type="xsd:boolean" minOccurs="0">
