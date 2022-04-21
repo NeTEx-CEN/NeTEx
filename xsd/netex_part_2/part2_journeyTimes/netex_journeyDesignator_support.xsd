@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_journeyDesignator_support">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_journeyDesignator_support">
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_dayType_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_transportOrganisation_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_part_1/part1_networkDescription/netex_line_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_part_1/part1_networkDescription/netex_route_support.xsd"/>
 	<xsd:include schemaLocation="netex_vehicleJourney_support.xsd"/>
@@ -13,13 +14,21 @@
 				<Contributor>V1.0 Christophe Duquesne</Contributor>
 				<Contributor>Nicholas Knowles</Contributor>
 				<Coverage>Europe</Coverage>
-				<Creator>First drafted for version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.  mailto:schemer@siri.org.uk</Creator>
+				<Creator>First drafted for version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.  mailto:schemer@netex.org.uk</Creator>
 				<Date>
 					<Created>2010-09-04</Created>
 				</Date>
 				<Date>
-					<Modified>2011-02-05</Modified>
-					<!-- Name Space changes -->
+					<Modified>2011-02-05</Modified>Name Space changes  
+				</Date>
+				<Date>
+					<Modified>2018-06-01</Modified>Designator  FromPoint should be optional 
+				</Date>
+				<Date>
+					<Modified>2020-10-08</Modified>NewModes: Widen OoperatorRef to TransportOrganisationRef
+				</Date>
+				<Date>
+					<Modified>2019-04-18</Modified>Fix: Add Transport Organisation to designator, also add grousp so as to make usage clearer.
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -37,7 +46,7 @@
 					<Requires>http://www.netex.org.uk/schemas/2.0/xsd/netex_framework/netex_reusableComponents/netex_dayType_support.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2014</Copyright>
+ <Copyright>CEN, Crown Copyright 2009-2020</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -85,15 +94,15 @@ Rail transport, Roads and Road transport
 	<!-- ======================================================================= -->
 	<xsd:element name="JourneyDesignator" type="JourneyDesignatorStructure">
 		<xsd:annotation>
-			<xsd:documentation>Value reference to a SERVICE JOURNEY. Provides an alternative way of identifying a Journey.</xsd:documentation>
+			<xsd:documentation>Value reference to a JOURNEY. Provides an alternative way of identifying a Journey between TIMING POINTS</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="JourneyDesignatorStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for a value reference to a SERVICE JOURNEY.</xsd:documentation>
+			<xsd:documentation>Type for a value reference to a JOURNEY.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="FromPointRef" type="TimingPointRefStructure">
+			<xsd:element name="FromPointRef" type="TimingPointRefStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Origin of Journey.</xsd:documentation>
 				</xsd:annotation>
@@ -109,6 +118,15 @@ Rail transport, Roads and Road transport
 	<xsd:group name="DesignatorGroup">
 		<xsd:annotation>
 			<xsd:documentation>Elements for a Designator.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:group ref="DesignatorTimeGroup"/>
+			<xsd:group ref="DesignatorNetworkGroup"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="DesignatorTimeGroup">
+		<xsd:annotation>
+			<xsd:documentation>Time Elements for a Designator.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element name="Date" type="xsd:date" minOccurs="0">
@@ -137,6 +155,14 @@ Rail transport, Roads and Road transport
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element ref="DayTypeRef" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="DesignatorNetworkGroup">
+		<xsd:annotation>
+			<xsd:documentation>Network Elements for a Designator.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="TransportOrganisationRef" minOccurs="0"/>
 			<xsd:element ref="LineRef" minOccurs="0"/>
 			<xsd:element ref="DirectionRef" minOccurs="0"/>
 			<xsd:element name="AlternativeJourneyRef" type="xsd:normalizedString" minOccurs="0">
@@ -149,7 +175,7 @@ Rail transport, Roads and Road transport
 	<!-- ======================================================================= -->
 	<xsd:element name="ServiceDesignator" type="ServiceDesignatorStructure">
 		<xsd:annotation>
-			<xsd:documentation>Value reference to a SERVICE JOURNEY. Provides an alternative way of identifying a Journey.</xsd:documentation>
+			<xsd:documentation>Value reference to a SERVICE JOURNEY. Provides an alternative way of identifying a Journey between SCHEDULED STOP POINTS</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="ServiceDesignatorStructure">
@@ -157,7 +183,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Type for a value reference to a SERVICE JOURNEY.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="FromPointRef" type="ScheduledStopPointRefStructure">
+			<xsd:element name="FromPointRef" type="ScheduledStopPointRefStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Origin of Journey.</xsd:documentation>
 				</xsd:annotation>

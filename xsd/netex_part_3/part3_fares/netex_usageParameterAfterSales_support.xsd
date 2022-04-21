@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_usageParameterAfterSales_support">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_usageParameterAfterSales_support">
 	<!-- ======================================================================= -->
 	<xsd:include schemaLocation="netex_usageParameter_support.xsd"/>
 	<xsd:annotation>
@@ -16,8 +16,30 @@
 					<Created>2013-04-14</Created>
 				</Date>
 				<Date>
-					<Modified>2011-02-05</Modified>
-					<!-- Name Space changes -->
+					<Modified>2011-02-05</Modified>Name Space changes
+				</Date>
+				<Date>
+					<Modified>2019-03-10</Modified>EURA-91 Add sameProductLongerJourney and sameProductShorterJourney to enumerated values for TypeOfExchange. attribute on   Exchanging element.
+									Also EURA 68 -  add canTypeOfExchange.  changeGroupSize value	,  , and On RefundingElement  changeOfGroupSize to RefundTypeENumeration 				
+				</Date>
+				<Date>
+					<Modified>2019-03-10</Modified>EURA 65 - Add a SharedUsage attribute to Transferability  to specify whether multiple users may use a product at the same time. oneAtATime, severalAtATime, severalSpecifiedCompanionsAtATime
+				</Date>
+				<Date>
+					<Modified>2019-03-11</Modified>EURA-87 partial cancellations 
+					   * Add RefundPolicy enum with values , illnes, redunancy, maternity, etc
+					   * Add Effective from   enum with values 
+					  * Add and RefundBasis  enum with values  unuseddays, unsuedweeks, unused, months, other
+						 Subscriptions  - Add withinSpecified window value to PurchaseWhen enumeration attribute 
+					     EURA-40 Suubscribing add unused and earlyTermination to RefundTypeEnumeration
+					     
+				</Date>
+				<Date>
+					<Modified>2019-03-12</Modified>NORWAY-102 *FARES*   Add  new enum values to  Exchanging  \  ExchangeableTo
+						 * Values _upgradeToSpecifiedFare_, _downgradeToSpecifedFare_, _equivalentProduct_ ( 
+				</Date>
+				<Date>
+					<Modified>2019-03-12</Modified>NORWAY-103 *FARES*   Add purchaseGracePeriod  new enum value   to  Reselling  \  ResellWhen 
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -35,7 +57,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2014</Copyright>
+				 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -118,6 +140,7 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:restriction base="xsd:normalizedString">
 			<xsd:enumeration value="never"/>
+			<xsd:enumeration value="withinPurchaseGracePeriod"/>
 			<xsd:enumeration value="beforeStartOfValidity"/>
 			<xsd:enumeration value="afterStartOfValidity"/>
 			<xsd:enumeration value="afterEndOfValidity"/>
@@ -125,7 +148,21 @@ Rail transport, Roads and Road transport
 			<xsd:enumeration value="afterFirstUse"/>
 			<xsd:enumeration value="beforeValidation"/>
 			<xsd:enumeration value="afterValidation"/>
+			<xsd:enumeration value="withinSpecifiedWindow"/>
 			<xsd:enumeration value="anyTime"/>
+			<xsd:enumeration value="other"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="EffectiveFromEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for EffectiveFrom</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="never"/>
+			<xsd:enumeration value="nextInterval"/>
+			<xsd:enumeration value="nextInstallment"/>
+			<xsd:enumeration value="anyTime"/>
+			<xsd:enumeration value="other"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<!-- === EXCHANGING PARAMETER====================================================== -->
@@ -162,7 +199,14 @@ Rail transport, Roads and Road transport
 			<xsd:enumeration value="anyProduct"/>
 			<xsd:enumeration value="sameProductSameDay"/>
 			<xsd:enumeration value="sameProductAnyDay"/>
+			<xsd:enumeration value="sameProductLongerJourney"/>
+			<xsd:enumeration value="sameProductShorterJourney"/>
 			<xsd:enumeration value="upgradeToStandardFare"/>
+			<xsd:enumeration value="upgradeToSpecifiedFare"/>
+			<xsd:enumeration value="downgradeToSpecifiedFare"/>
+			<xsd:enumeration value="equivalentProduct"/>
+			<xsd:enumeration value="changeGroupSize"/>
+			<xsd:enumeration value="other"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<!-- === REFUNDING PARAMETER====================================================== -->
@@ -196,11 +240,87 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Allowed values for Refunding Type.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:normalizedString">
-			<xsd:enumeration value="unused"/>
-			<xsd:enumeration value="delay"/>
-			<xsd:enumeration value="cancellation"/>
-			<xsd:enumeration value="partialJourney"/>
+			<xsd:enumeration value="unused">
+				<xsd:annotation>
+					<xsd:documentation>Refund for unused ticket or pass.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="delay">
+				<xsd:annotation>
+					<xsd:documentation>Refund is for delayed journey.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="cancellation">
+				<xsd:annotation>
+					<xsd:documentation>Refund is for cancelled journey.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="partialJourney">
+				<xsd:annotation>
+					<xsd:documentation>Refund is for unusued section of a journey.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="earlyTermination">
+				<xsd:annotation>
+					<xsd:documentation>Partial refund is for  early termination of a period pass or season ticket.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="changeOfGroupSize">
+				<xsd:annotation>
+					<xsd:documentation>Refund for change of group size.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
 			<xsd:enumeration value="other"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RefundPolicyEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for Refund Policy</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="any"/>
+			<xsd:enumeration value="illness"/>
+			<xsd:enumeration value="death"/>
+			<xsd:enumeration value="maternity"/>
+			<xsd:enumeration value="redundancy"/>
+			<xsd:enumeration value="changeOfEmployment"/>
+			<xsd:enumeration value="changeOfResidence"/>
+			<xsd:enumeration value="none"/>
+			<xsd:enumeration value="other"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RefundPolicyListOfEnumerations">
+		<xsd:annotation>
+			<xsd:documentation>List of Refund Policy values.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:list itemType="RefundPolicyEnumeration"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="PartialRefundBasisEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for Refund Basis.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="unusedDays">
+				<xsd:annotation>
+					<xsd:documentation>Refund is given for any unused days. </xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="unusedWeeks">
+				<xsd:annotation>
+					<xsd:documentation>Refund is given for any unused weeks </xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="unusedMonths">
+				<xsd:annotation>
+					<xsd:documentation>Refund is given for any unused months</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="unusedSemesters"/>
+			<xsd:enumeration value="other">
+				<xsd:annotation>
+					<xsd:documentation>Other basis. </xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<!-- === REPLACING PARAMETER====================================================== -->
@@ -255,4 +375,26 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
+	<xsd:simpleType name="SharedUsageEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for Shared Usage.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="singleUser">
+				<xsd:annotation>
+					<xsd:documentation>Only one user may use the product at a time. E.g. a mobile app carnet of tickets may only restricted to  be used by the mobile device  holder. </xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="concurrentUsers">
+				<xsd:annotation>
+					<xsd:documentation>Several users  may use the same product at a time. E.g. a carnet of tickets may be shared with several  users other than the purchaser.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="concurrentDesignatedUsers">
+				<xsd:annotation>
+					<xsd:documentation>Several users (but only of a specifed type of companion) may use the same product at a time. E.g.  a mobile app carnet of tickets may be shared with children but not others.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
 </xsd:schema>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_fareStructure_version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_fareStructure_version">
 	<xsd:include schemaLocation="netex_fareStructure_support.xsd"/>
 	<xsd:include schemaLocation="netex_farePrice_version.xsd"/>
 	<!-- ======================================================================= -->
@@ -16,8 +16,13 @@
 					<Created>2010-09-04</Created>
 				</Date>
 				<Date>
-					<Modified>2011-02-05</Modified>
-					<!-- Name Space changes -->
+					<Modified>2011-02-05</Modified> Name Space changes  
+				</Date>
+				<Date>
+					<Modified>2019-03-10</Modified>UK-38 Add MinimumAccess and MaximumAccess to FareStructureElementinSequence
+				</Date>
+				<Date>
+					<Modified>2019-03-11</Modified>UK-74 Add new TypeOfFareStructureFactor
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -35,7 +40,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2014</Copyright>
+				 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -58,7 +63,7 @@ Rail transport, Roads and Road transport
 				<Type>Standard</Type>
 			</Metadata>
 		</xsd:appinfo>
-		<xsd:documentation>NeTEX: FARE STRUCTURE  types.</xsd:documentation>
+		<xsd:documentation>NeTEX: FARE STRUCTURE Common  types.</xsd:documentation>
 	</xsd:annotation>
 	<!-- === FARE ELEMENT IN SEQUENCE.=================================== -->
 	<xsd:element name="FareElementInSequence" abstract="false" substitutionGroup="VersionedChild" id="FareElementInSequence">
@@ -131,6 +136,16 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Whether access is limited.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="MinimumAccess" type="xsd:nonNegativeInteger" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Minimum number of times use of this element must occur in a given trip. =v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MaximumAccess" type="xsd:nonNegativeInteger" default="1" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Maximum number of times use of this element mayoccur in a given trip. +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element name="AccessNumber" type="xsd:integer" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Number of access.</xsd:documentation>
@@ -138,7 +153,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
-	<!-- ====FARE STRUCTURE ELEMENT.============================================= -->
+	<!-- ====FARE STRUCTURE FACTOR .============================================= -->
 	<xsd:complexType name="fareStructureFactors_RelStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for a list of FARE STRUCTURE FACTORs.</xsd:documentation>
@@ -174,6 +189,8 @@ Rail transport, Roads and Road transport
 							<xsd:group ref="PriceableObjectGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
+							<xsd:element ref="PrivateCode" minOccurs="0"/>
+							<xsd:element ref="TypeOfFareStructureFactorRef" minOccurs="0"/>
 							<xsd:element name="Factor" type="xsd:anyType" minOccurs="0">
 								<xsd:annotation>
 									<xsd:documentation>Factor value assoictaed with init.</xsd:documentation>
@@ -201,12 +218,56 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Elements for a FARE ELEMENT IN SEQUENCE.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
+			<xsd:element ref="PrivateCode" minOccurs="0"/>
+			<xsd:element ref="TypeOfFareStructureFactorRef" minOccurs="0"/>
 			<xsd:element name="Factor" type="xsd:anyType" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Factor value assoictaed with init.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
+	</xsd:group>
+	<!-- ====TYPE OF FARE STRUCTURE FACTOR======================================= -->
+	<xsd:element name="TypeOfFareStructureFactor" abstract="false" substitutionGroup="TypeOfEntity">
+		<xsd:annotation>
+			<xsd:documentation>A classification of FARE STRUCTURE FACTORs expressing their general functionalities .
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="TypeOfFareStructureFactor_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="TypeOfValueGroup"/>
+						</xsd:sequence>
+						<xsd:sequence/>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="TypeOfFareStructureFactorIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="TypeOfFareStructureFactor_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for TYPE OF FARE STRUCTURE FACTOR.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="TypeOfEntity_VersionStructure">
+				<xsd:group ref="TypeOfFareStructureFactorGroup"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="TypeOfFareStructureFactorGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for TYPE OF FARE STRUCTURE FACTOR.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence/>
 	</xsd:group>
 	<!-- ====FARE INTERVAL ============================================ -->
 	<xsd:element name="FareInterval" abstract="false" substitutionGroup="PriceableObject">
@@ -255,6 +316,9 @@ Rail transport, Roads and Road transport
 			<xsd:complexContent>
 				<xsd:restriction base="FareUnit_VersionStructure">
 					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
 						<xsd:sequence>
 							<xsd:group ref="DataManagedObjectGroup"/>
 						</xsd:sequence>

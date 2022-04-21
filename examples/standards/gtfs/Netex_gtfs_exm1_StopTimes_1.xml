@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- ==== SImple Network Example ====== 
-This Example provIdes an example of a GTFS StopTimes.txt file
-from the sample-feed.zip available at 
-  http://code.google.com/transit/spec/transit_feed_specification.html
+<!-- ====  GTFS StopTimes to NeTEx  Example ====== 
+This Example provides an example of mapping of a   GTFS StopTimes.txt file to NeTEx
 
- 
+The data comes from the sample-feed.zip available at   http://code.google.com/transit/spec/transit_feed_specification.html
+
 1. DATA
-    It comprises
 
+StopTimes.txt
 trip_Id,arrival_time,departure_time,stop_Id,stop_sequence,stop_headsign,pickup_type,drop_off_type,shape_dist_traveled
 STBA,6:00:00,6:00:00,STAGECOACH,1, Nye County Airport,1,0,
 STBA,6:20:00,6:20:00,BEATTY_AIRPORT,2,,0,1,
@@ -45,32 +44,31 @@ Headsign , pick up type and droppoff type valeus added to data
 A GTFS StopTime  mays to a NeTEx  CALL of  a SERVICE JOURNEY 
 
 GTFS												NeTEx
-trip_Id,												<ServiceJourney version="any"> @id
-arrival_time,   									<ServiceJourney version="any"> <Call> <Arrival> <Time>
-departure_time, 								<ServiceJourney version="any"> <Call> <Departure> <Time>
-stop_Id,											<ServiceJourney version="any"> <Call> <ScheduledStopPointRef> 
-stop_sequence,  								<ServiceJourney version="any"> <Call> <Order>
-stop_headsign,  								<ServiceJourney version="any"> <Call> <DestinationDisplayView><Name> 
-pickup_type, 	0  = regular pick up	<ServiceJourney version="any"> <Call> <Departure> <ForBoarding true
-						1  = no pick up			<ServiceJourney version="any"> <Call> <Departure> <ForBoarding> false
-						2  = phone				<ServiceJourney version="any"> <Call> <Departure> <Flexible> true
-						3  = driver					<ServiceJourney version="any"> <Call> <RequestStop> true  
-drop_off_type,  	0  = regular drop off	<ServiceJourney version="any"> <Call> <Arrival> <ForAlighting> true
-						1  = no drop off			<ServiceJourney version="any"> <Call> <Arrival> <ForAlighting> false
-						2  = phone				<ServiceJourney version="any"> <Call> <Arrival> <IsFlexible> true
-						3  = driver					<ServiceJourney version="any"> <Call> <RequestStop> true 
-shape_dist_traveled  									<ServiceJourney version="any"> <Call> <OnwardLink> <Distance>
-
+trip_Id,												<ServiceJourney #trip_id> @id
+arrival_time,   									<ServiceJourney #trip_id> <Call #trip_id #order><Arrival> <Time> #arrival_time
+departure_time, 								<ServiceJourney #trip_id> <Call #trip_id #order><Departure> <Time> #departure_time
+stop_Id,											<ServiceJourney #trip_id> <Call #trip_id #order><ScheduledStopPointRef #stop_Id> 
+stop_sequence,  								<ServiceJourney #trip_id> <Call #trip_id #order><Order> #stop_sequence
+stop_headsign,  								<ServiceJourney #trip_id> <Call #trip_id #order><DestinationDisplayView><Name> #stop_headsign
+pickup_type, 	0  = regular pick up	<ServiceJourney #trip_id> <Call #trip_id #order><Departure> <ForBoarding true
+						1  = no pick up			<ServiceJourney #trip_id> <Call #trip_id #order><Departure> <ForBoarding> false
+						2  = phone				<ServiceJourney #trip_id> <Call #trip_id #order><Departure> <Flexible> true
+						3  = driver					<ServiceJourney #trip_id> <Call #trip_id #order><RequestStop> true  
+drop_off_type,  	0  = regular drop off	<ServiceJourney #trip_id> <Call #trip_id #order><Arrival> <ForAlighting> true
+						1  = no drop off			<ServiceJourney #trip_id> <Call #trip_id #order><Arrival> <ForAlighting> false
+						2  = phone				<ServiceJourney #trip_id> <Call #trip_id #order><Arrival> <IsFlexible> true
+						3  = driver					<ServiceJourney #trip_id> <Call #trip_id #order><RequestStop> true 
+shape_dist_traveled  							<ServiceJourney #trip_id> <Call #trip_id #order> <OnwardServiceLinkView> <Distance> #shape_dist_traveled
  
-
 3. Notes
 
  - NeTEx will normally always embed CALLS within a SERVICE JOURNEY
      i.e. combine the Trips.txt and StopTimes.txt into a single file
  
- GTFS Data copyright Google Inc
+GTFS Data copyright Google Inc
 
- NeTEx (C) CEN Copyright 2010
+version 1.1 revised ids
+NeTEx (C) CEN Copyright 2010,2019
 -->
 <PublicationDelivery xmlns="http://www.netex.org.uk/netex" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://www.netex.org.uk/netex ../../../xsd/NeTEx_publication.xsd">
 	<PublicationTimestamp>2011-12-17T09:30:47.0Z</PublicationTimestamp>
@@ -84,7 +82,7 @@ shape_dist_traveled  									<ServiceJourney version="any"> <Call> <OnwardLink>
 	<Description>Example of GTFS Stop times data  (stop_times.txt file)</Description>
 	<!--- =============== RESULTS =========== -->
 	<dataObjects>
-		<TimetableFrame version="any" id="mygtfsxm:TimetableFrame:DTA">
+		<TimetableFrame version="any" id="mygtfsxm:DTA">
 			<!--- ======= CODESPACEs======== -->
 			<codespaces>
 				<Codespace id="mygtfsxm">
@@ -99,10 +97,10 @@ shape_dist_traveled  									<ServiceJourney version="any"> <Call> <OnwardLink>
 				<DefaultCurrency>USD</DefaultCurrency>
 			</FrameDefaults>
 			<vehicleJourneys>
-				<ServiceJourney version="any" id="mygtfsxm:ServiceJourney:STBA">
+				<ServiceJourney version="any" id="mygtfsxm:STBA">
 					<calls>
-						<Call version="any" id="mygtfsxm:ServiceJourney:STBA" order="1">
-							<ScheduledStopPointRef ref="mygtfsxm:ScheduledStopPoint:STAGECOACH"/>
+						<Call version="any" id="mygtfsxm:STBA" order="1">
+							<ScheduledStopPointRef ref="mygtfsxm:STAGECOACH"/>
 							<Arrival>
 								<Time>06:00:00</Time>
 								<ForAlighting>false</ForAlighting>
@@ -114,8 +112,8 @@ shape_dist_traveled  									<ServiceJourney version="any"> <Call> <OnwardLink>
 								<Name>Nye CountyAirport</Name>
 							</DestinationDisplayView>
 						</Call>
-						<Call version="any" id="mygtfsxm:ServiceJourney:STBA" order="2">
-							<ScheduledStopPointRef ref="mygtfsxm:ScheduledStopPoint:BEATTY_AIRPORT"/>
+						<Call version="any" id="mygtfsxm:STBA" order="2">
+							<ScheduledStopPointRef ref="mygtfsxm:BEATTY_AIRPORT"/>
 							<OnwardServiceLinkView>
 								<Distance>5</Distance>
 							</OnwardServiceLinkView>
@@ -130,10 +128,10 @@ shape_dist_traveled  									<ServiceJourney version="any"> <Call> <OnwardLink>
 						</Call>
 					</calls>
 				</ServiceJourney>
-				<ServiceJourney version="any" id="mygtfsxm:ServiceJourney:CITY1">
+				<ServiceJourney version="any" id="mygtfsxm:CITY1">
 					<calls>
-						<Call version="any" id="mygtfsxm:ServiceJourney:CITY1" order="1">
-							<ScheduledStopPointRef ref="mygtfsxm:ScheduledStopPoint:STAGECOACH"/>
+						<Call version="any" id="mygtfsxm:CITY1" order="1">
+							<ScheduledStopPointRef ref="mygtfsxm:STAGECOACH"/>
 							<Arrival>
 								<Time>06:00:00</Time>
 							</Arrival>
@@ -141,8 +139,8 @@ shape_dist_traveled  									<ServiceJourney version="any"> <Call> <OnwardLink>
 								<Time>06:00:00</Time>
 							</Departure>
 						</Call>
-						<Call version="any" id="mygtfsxm:ServiceJourney:CITY1" order="2">
-							<ScheduledStopPointRef ref="mygtfsxm:ScheduledStopPoint:NANAA"/>
+						<Call version="any" id="mygtfsxm:CITY1" order="2">
+							<ScheduledStopPointRef ref="mygtfsxm:NANAA"/>
 							<Arrival>
 								<Time>06:05:00</Time>
 							</Arrival>
@@ -150,8 +148,8 @@ shape_dist_traveled  									<ServiceJourney version="any"> <Call> <OnwardLink>
 								<Time>06:07:00</Time>
 							</Departure>
 						</Call>
-						<Call version="any" id="mygtfsxm:ServiceJourney:CITY1" order="3">
-							<ScheduledStopPointRef ref="mygtfsxm:ScheduledStopPoint:NADAV"/>
+						<Call version="any" id="mygtfsxm:CITY1" order="3">
+							<ScheduledStopPointRef ref="mygtfsxm:NADAV"/>
 							<Arrival>
 								<Time>06:12:00</Time>
 							</Arrival>
@@ -159,8 +157,8 @@ shape_dist_traveled  									<ServiceJourney version="any"> <Call> <OnwardLink>
 								<Time>06:14:00</Time>
 							</Departure>
 						</Call>
-						<Call version="any" id="mygtfsxm:ServiceJourney:CITY1" order="4">
-							<ScheduledStopPointRef ref="mygtfsxm:ScheduledStopPoint:DADAN"/>
+						<Call version="any" id="mygtfsxm:CITY1" order="4">
+							<ScheduledStopPointRef ref="mygtfsxm:DADAN"/>
 							<Arrival>
 								<Time>06:19:00</Time>
 							</Arrival>
@@ -168,8 +166,8 @@ shape_dist_traveled  									<ServiceJourney version="any"> <Call> <OnwardLink>
 								<Time>06:21:00</Time>
 							</Departure>
 						</Call>
-						<Call version="any" id="mygtfsxm:ServiceJourney:CITY1" order="5">
-							<ScheduledStopPointRef ref="mygtfsxm:ScheduledStopPoint:EMSI"/>
+						<Call version="any" id="mygtfsxm:CITY1" order="5">
+							<ScheduledStopPointRef ref="mygtfsxm:EMSI"/>
 							<Arrival>
 								<Time>06:26:00</Time>
 							</Arrival>
@@ -179,10 +177,10 @@ shape_dist_traveled  									<ServiceJourney version="any"> <Call> <OnwardLink>
 						</Call>
 					</calls>
 				</ServiceJourney>
-				<ServiceJourney version="any" id="mygtfsxm:ServiceJourney:CITY2">
+				<ServiceJourney version="any" id="mygtfsxm:CITY2">
 					<calls>
-						<Call version="any" id="mygtfsxm:ServiceJourney:CITY2" order="1">
-							<ScheduledStopPointRef ref="mygtfsxm:ScheduledStopPoint:EMSI"/>
+						<Call version="any" id="mygtfsxm:CITY2" order="1">
+							<ScheduledStopPointRef ref="mygtfsxm:EMSI"/>
 							<Arrival>
 								<Time>06:28:00</Time>
 							</Arrival>
@@ -190,8 +188,8 @@ shape_dist_traveled  									<ServiceJourney version="any"> <Call> <OnwardLink>
 								<Time>06:30:00</Time>
 							</Departure>
 						</Call>
-						<Call version="any" id="mygtfsxm:ServiceJourney:CITY2" order="2">
-							<ScheduledStopPointRef ref="mygtfsxm:ScheduledStopPoint:DADAN"/>
+						<Call version="any" id="mygtfsxm:CITY2" order="2">
+							<ScheduledStopPointRef ref="mygtfsxm:DADAN"/>
 							<Arrival>
 								<Time>06:35:00</Time>
 							</Arrival>
@@ -199,8 +197,8 @@ shape_dist_traveled  									<ServiceJourney version="any"> <Call> <OnwardLink>
 								<Time>06:37:00</Time>
 							</Departure>
 						</Call>
-						<Call version="any" id="mygtfsxm:ServiceJourney:CITY2" order="3">
-							<ScheduledStopPointRef ref="mygtfsxm:ScheduledStopPoint:NADAV"/>
+						<Call version="any" id="mygtfsxm:CITY2" order="3">
+							<ScheduledStopPointRef ref="mygtfsxm:NADAV"/>
 							<Arrival>
 								<Time>06:42:00</Time>
 							</Arrival>
@@ -208,8 +206,8 @@ shape_dist_traveled  									<ServiceJourney version="any"> <Call> <OnwardLink>
 								<Time>06:44:00</Time>
 							</Departure>
 						</Call>
-						<Call version="any" id="mygtfsxm:ServiceJourney:CITY2" order="4">
-							<ScheduledStopPointRef ref="mygtfsxm:ScheduledStopPoint:NANAA"/>
+						<Call version="any" id="mygtfsxm:CITY2" order="4">
+							<ScheduledStopPointRef ref="mygtfsxm:NANAA"/>
 							<Arrival>
 								<Time>06:49:00</Time>
 							</Arrival>
@@ -217,8 +215,8 @@ shape_dist_traveled  									<ServiceJourney version="any"> <Call> <OnwardLink>
 								<Time>06:51:00</Time>
 							</Departure>
 						</Call>
-						<Call version="any" id="mygtfsxm:ServiceJourney:CITY2" order="5">
-							<ScheduledStopPointRef ref="mygtfsxm:ScheduledStopPoint:STAGECOACH"/>
+						<Call version="any" id="mygtfsxm:CITY2" order="5">
+							<ScheduledStopPointRef ref="mygtfsxm:STAGECOACH"/>
 							<Arrival>
 								<Time>06:56:00</Time>
 							</Arrival>
@@ -228,10 +226,10 @@ shape_dist_traveled  									<ServiceJourney version="any"> <Call> <OnwardLink>
 						</Call>
 					</calls>
 				</ServiceJourney>
-				<ServiceJourney version="any" id="mygtfsxm:ServiceJourney:AB1">
+				<ServiceJourney version="any" id="mygtfsxm:AB1">
 					<calls>
-						<Call version="any" id="mygtfsxm:ServiceJourney:AB1" order="1">
-							<ScheduledStopPointRef ref="mygtfsxm:ScheduledStopPoint:BEATTY_AIRPORT"/>
+						<Call version="any" id="mygtfsxm:AB1" order="1">
+							<ScheduledStopPointRef ref="mygtfsxm:BEATTY_AIRPORT"/>
 							<Arrival>
 								<Time>08:00:00</Time>
 							</Arrival>
@@ -239,8 +237,8 @@ shape_dist_traveled  									<ServiceJourney version="any"> <Call> <OnwardLink>
 								<Time>08:00:00</Time>
 							</Departure>
 						</Call>
-						<Call version="any" id="mygtfsxm:ServiceJourney:AB1" order="2">
-							<ScheduledStopPointRef ref="mygtfsxm:ScheduledStopPoint:BULLFROG"/>
+						<Call version="any" id="mygtfsxm:AB1" order="2">
+							<ScheduledStopPointRef ref="mygtfsxm:BULLFROG"/>
 							<Arrival>
 								<Time>08:10:00</Time>
 							</Arrival>
@@ -250,10 +248,10 @@ shape_dist_traveled  									<ServiceJourney version="any"> <Call> <OnwardLink>
 						</Call>
 					</calls>
 				</ServiceJourney>
-				<ServiceJourney version="any" id="mygtfsxm:ServiceJourney:AB2">
+				<ServiceJourney version="any" id="mygtfsxm:AB2">
 					<calls>
-						<Call version="any" id="mygtfsxm:ServiceJourney:AB2" order="1">
-							<ScheduledStopPointRef ref="mygtfsxm:ScheduledStopPoint:BULLFROG"/>
+						<Call version="any" id="mygtfsxm:AB2" order="1">
+							<ScheduledStopPointRef ref="mygtfsxm:BULLFROG"/>
 							<Arrival>
 								<Time>12:05:00</Time>
 							</Arrival>
@@ -261,8 +259,8 @@ shape_dist_traveled  									<ServiceJourney version="any"> <Call> <OnwardLink>
 								<Time>12:05:00</Time>
 							</Departure>
 						</Call>
-						<Call version="any" id="mygtfsxm:ServiceJourney:AB2" order="2">
-							<ScheduledStopPointRef ref="mygtfsxm:ScheduledStopPoint:BEATTY_AIRPORT"/>
+						<Call version="any" id="mygtfsxm:AB2" order="2">
+							<ScheduledStopPointRef ref="mygtfsxm:BEATTY_AIRPORT"/>
 							<Arrival>
 								<Time>12:15:00</Time>
 							</Arrival>
@@ -272,10 +270,10 @@ shape_dist_traveled  									<ServiceJourney version="any"> <Call> <OnwardLink>
 						</Call>
 					</calls>
 				</ServiceJourney>
-				<ServiceJourney version="any" id="mygtfsxm:ServiceJourney:BFC1">
+				<ServiceJourney version="any" id="mygtfsxm:BFC1">
 					<calls>
-						<Call version="any" id="mygtfsxm:ServiceJourney:BFC1" order="1">
-							<ScheduledStopPointRef ref="mygtfsxm:ScheduledStopPoint:BULLFROG"/>
+						<Call version="any" id="mygtfsxm:BFC1" order="1">
+							<ScheduledStopPointRef ref="mygtfsxm:BULLFROG"/>
 							<Arrival>
 								<Time>08:20:00</Time>
 							</Arrival>
@@ -283,8 +281,8 @@ shape_dist_traveled  									<ServiceJourney version="any"> <Call> <OnwardLink>
 								<Time>08:20:00</Time>
 							</Departure>
 						</Call>
-						<Call version="any" id="mygtfsxm:ServiceJourney:BFC1" order="2">
-							<ScheduledStopPointRef ref="mygtfsxm:ScheduledStopPoint:FUR_CREEK_RES"/>
+						<Call version="any" id="mygtfsxm:BFC1" order="2">
+							<ScheduledStopPointRef ref="mygtfsxm:FUR_CREEK_RES"/>
 							<Arrival>
 								<Time>09:20:00</Time>
 							</Arrival>
@@ -294,10 +292,10 @@ shape_dist_traveled  									<ServiceJourney version="any"> <Call> <OnwardLink>
 						</Call>
 					</calls>
 				</ServiceJourney>
-				<ServiceJourney version="any" id="mygtfsxm:ServiceJourney:BFC2">
+				<ServiceJourney version="any" id="mygtfsxm:BFC2">
 					<calls>
-						<Call version="any" id="mygtfsxm:ServiceJourney:BFC2" order="1">
-							<ScheduledStopPointRef ref="mygtfsxm:ScheduledStopPoint:FUR_CREEK_RES"/>
+						<Call version="any" id="mygtfsxm:BFC2" order="1">
+							<ScheduledStopPointRef ref="mygtfsxm:FUR_CREEK_RES"/>
 							<Arrival>
 								<Time>11:00:00</Time>
 							</Arrival>
@@ -305,8 +303,8 @@ shape_dist_traveled  									<ServiceJourney version="any"> <Call> <OnwardLink>
 								<Time>11:00:00</Time>
 							</Departure>
 						</Call>
-						<Call version="any" id="mygtfsxm:ServiceJourney:BFC2" order="2">
-							<ScheduledStopPointRef ref="mygtfsxm:ScheduledStopPoint:BULLFROG"/>
+						<Call version="any" id="mygtfsxm:BFC2" order="2">
+							<ScheduledStopPointRef ref="mygtfsxm:BULLFROG"/>
 							<Arrival>
 								<Time>12:00:00</Time>
 							</Arrival>
@@ -316,10 +314,10 @@ shape_dist_traveled  									<ServiceJourney version="any"> <Call> <OnwardLink>
 						</Call>
 					</calls>
 				</ServiceJourney>
-				<ServiceJourney version="any" id="mygtfsxm:ServiceJourney:AAMV1">
+				<ServiceJourney version="any" id="mygtfsxm:AAMV1">
 					<calls>
-						<Call version="any" id="mygtfsxm:ServiceJourney:AAMV1" order="1">
-							<ScheduledStopPointRef ref="mygtfsxm:ScheduledStopPoint:BEATTY_AIRPORT"/>
+						<Call version="any" id="mygtfsxm:AAMV1" order="1">
+							<ScheduledStopPointRef ref="mygtfsxm:BEATTY_AIRPORT"/>
 							<Arrival>
 								<Time>08:00:00</Time>
 							</Arrival>
@@ -327,8 +325,8 @@ shape_dist_traveled  									<ServiceJourney version="any"> <Call> <OnwardLink>
 								<Time>08:00:00</Time>
 							</Departure>
 						</Call>
-						<Call version="any" id="mygtfsxm:ServiceJourney:AAMV1" order="2">
-							<ScheduledStopPointRef ref="mygtfsxm:ScheduledStopPoint:AMV"/>
+						<Call version="any" id="mygtfsxm:AAMV1" order="2">
+							<ScheduledStopPointRef ref="mygtfsxm:AMV"/>
 							<Arrival>
 								<Time>09:00:00</Time>
 							</Arrival>
@@ -338,10 +336,10 @@ shape_dist_traveled  									<ServiceJourney version="any"> <Call> <OnwardLink>
 						</Call>
 					</calls>
 				</ServiceJourney>
-				<ServiceJourney version="any" id="mygtfsxm:ServiceJourney:AAMV2">
+				<ServiceJourney version="any" id="mygtfsxm:AAMV2">
 					<calls>
-						<Call version="any" id="mygtfsxm:ServiceJourney:AAMV2" order="1">
-							<ScheduledStopPointRef ref="mygtfsxm:ScheduledStopPoint:AMV"/>
+						<Call version="any" id="mygtfsxm:AAMV2" order="1">
+							<ScheduledStopPointRef ref="mygtfsxm:AMV"/>
 							<Arrival>
 								<Time>10:00:00</Time>
 							</Arrival>
@@ -349,8 +347,8 @@ shape_dist_traveled  									<ServiceJourney version="any"> <Call> <OnwardLink>
 								<Time>10:00:00</Time>
 							</Departure>
 						</Call>
-						<Call version="any" id="mygtfsxm:ServiceJourney:AAMV2" order="2">
-							<ScheduledStopPointRef ref="mygtfsxm:ScheduledStopPoint:BEATTY_AIRPORT"/>
+						<Call version="any" id="mygtfsxm:AAMV2" order="2">
+							<ScheduledStopPointRef ref="mygtfsxm:BEATTY_AIRPORT"/>
 							<Arrival>
 								<Time>11:00:00</Time>
 							</Arrival>
@@ -360,10 +358,10 @@ shape_dist_traveled  									<ServiceJourney version="any"> <Call> <OnwardLink>
 						</Call>
 					</calls>
 				</ServiceJourney>
-				<ServiceJourney version="any" id="mygtfsxm:ServiceJourney:AAMV3">
+				<ServiceJourney version="any" id="mygtfsxm:AAMV3">
 					<calls>
-						<Call version="any" id="mygtfsxm:ServiceJourney:AAMV3" order="1">
-							<ScheduledStopPointRef ref="mygtfsxm:ScheduledStopPoint:BEATTY_AIRPORT"/>
+						<Call version="any" id="mygtfsxm:AAMV3" order="1">
+							<ScheduledStopPointRef ref="mygtfsxm:BEATTY_AIRPORT"/>
 							<Arrival>
 								<Time>13:00:00</Time>
 							</Arrival>
@@ -371,8 +369,8 @@ shape_dist_traveled  									<ServiceJourney version="any"> <Call> <OnwardLink>
 								<Time>13:00:00</Time>
 							</Departure>
 						</Call>
-						<Call version="any" id="mygtfsxm:ServiceJourney:AAMV3" order="2">
-							<ScheduledStopPointRef ref="mygtfsxm:ScheduledStopPoint:AMV"/>
+						<Call version="any" id="mygtfsxm:AAMV3" order="2">
+							<ScheduledStopPointRef ref="mygtfsxm:AMV"/>
 							<Arrival>
 								<Time>14:00:00</Time>
 							</Arrival>
@@ -382,10 +380,10 @@ shape_dist_traveled  									<ServiceJourney version="any"> <Call> <OnwardLink>
 						</Call>
 					</calls>
 				</ServiceJourney>
-				<ServiceJourney version="any" id="mygtfsxm:ServiceJourney:AAMV4">
+				<ServiceJourney version="any" id="mygtfsxm:AAMV4">
 					<calls>
-						<Call version="any" id="mygtfsxm:ServiceJourney:AAMV4" order="1">
-							<ScheduledStopPointRef ref="mygtfsxm:ScheduledStopPoint:AMV"/>
+						<Call version="any" id="mygtfsxm:AAMV4" order="1">
+							<ScheduledStopPointRef ref="mygtfsxm:AMV"/>
 							<Arrival>
 								<Time>15:00:00</Time>
 							</Arrival>
@@ -393,8 +391,8 @@ shape_dist_traveled  									<ServiceJourney version="any"> <Call> <OnwardLink>
 								<Time>15:00:00</Time>
 							</Departure>
 						</Call>
-						<Call version="any" id="mygtfsxm:ServiceJourney:AAMV4" order="2">
-							<ScheduledStopPointRef ref="mygtfsxm:ScheduledStopPoint:BEATTY_AIRPORT"/>
+						<Call version="any" id="mygtfsxm:AAMV4" order="2">
+							<ScheduledStopPointRef ref="mygtfsxm:BEATTY_AIRPORT"/>
 							<Arrival>
 								<Time>16:00:00</Time>
 							</Arrival>

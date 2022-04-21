@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_vehicleJourney_version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_vehicleJourney_version">
 	<xsd:include schemaLocation="../../netex_part_1/part1_networkDescription/netex_route_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_part_1/part1_networkDescription/netex_line_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_part_1/part1_ifopt/netex_ifopt_vehicleStopping_support.xsd"/>
@@ -26,14 +26,29 @@
 					<Created>2010-09-04</Created>
 				</Date>
 				<Date>
-					<Modified>2011-02-05</Modified>
-					<!-- Name Space changes -->
+					<Modified>2011-02-05</Modified>Name Space changes
 				</Date>
 				<Date>
-					<Modified>2017-03-28  CR0030 Vehicle Journey Service Times: add DepartureDayOffset </Modified>
+					<Modified>2017-03-28</Modified>CR0030 Vehicle Journey Service Times: add DepartureDayOffset
 				</Date>
 				<Date>
-					<Modified>2017-05-27  PR correct definition of VehicleJourney_   Doc change only </Modified>
+					<Modified>2017-05-27</Modified>PR correct definition of VehicleJourney.   Doc change only.
+				</Date>
+				<Date>
+					<Modified>2017-05-27</Modified>PR correct definition of VehicleJourney.   Doc change only.
+				</Date>
+				<Date>
+					<Modified>2019-03-25</Modified>CR 51 CD Add VehicleJourneyStop Assignment.
+							NJSK Review CR51:  make vehicleJourneyStopAssignmentsInFrame_RelStructure lower camel case consistent with NeTEx conventions. 
+							NJSK Review CR51:  Allow inlining of  vehicleJourneyStopAssignments within VehicleJourney.
+							NJSK Also correct camel case on trainComponentLabelAssignents  trainComponentLabelAssignents_RelStructure.
+				</Date>
+				<Date>
+					<Modified>2019-04-12</Modified>Fix Add missingl Label to TarinCOmpinentLAbel Assignment
+				</Date>
+				<Date>
+					<Modified>2020-10-05</Modified> New Modes: Add Vehicle  mode  to VehicleType
+					   Replace VehicleTypeRef with TransportTypeRef so as to be more general
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -51,7 +66,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2017</Copyright>
+						 <Copyright>CEN, Crown Copyright 2009-2020</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -79,7 +94,7 @@ Rail transport, Roads and Road transport
 	<!-- ===ENTIITY IN VERSION IN FRAME====Used in SERVICE FRAME)=================================================== -->
 	<xsd:complexType name="trainNumbersInFrame_RelStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for containment in frame of TRAIN NUMBER.</xsd:documentation>
+			<xsd:documentation>Type for containment in frame of TRAIN NUMBERs.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="containmentAggregationStructure">
@@ -90,7 +105,23 @@ Rail transport, Roads and Road transport
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<!-- ===Journey  Pattern===================================================== -->
+	<xsd:complexType name="vehicleJourneyStopAssignmentsInFrame_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for containment in frame of VEHICLE JOURNEY STOP ASSIGNMENTs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="VehicleJourneyStopAssignment" maxOccurs="unbounded">
+						<xsd:annotation>
+							<xsd:documentation>The allocation of a SCHEDULED STOP POINT (i.e. a SCHEDULED STOP POINT of a SERVICE PATTERN or JOURNEY PATTERN) to a specific STOP PLACE or QUAY, for either a Passenger JOURNEY or VEHICLE SERVICE.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- === BEHICL JOURNEY =================================================== -->
 	<xsd:element name="VehicleJourney_" type="Journey_VersionStructure" abstract="true" substitutionGroup="Journey_">
 		<xsd:annotation>
 			<xsd:documentation>Dummy VEHICLE JOURNEY supertype.</xsd:documentation>
@@ -173,9 +204,14 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>JOURNEY PARTs  of a JOURNEY - for a multi part JOURNEY only.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="TrainComponentLabelAssignments" type="TrainComponentLabelAssignments_RelStructure" minOccurs="0">
+			<xsd:element name="trainComponentLabelAssignments" type="trainComponentLabelAssignments_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Labelling of carriages for Train associated with JOURNEY.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="vehicleJourneyStopAssignments" type="vehicleJourneyStopAssignments_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Niormal  VEHICLE STOP ASSIGNMENTs  for VEHICLE JOURNEY, +v1.1</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -272,7 +308,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
-	<!-- ======================================================================= -->
+	<!-- =====TEMPLATE VEHICLE JOURNEY=========================================== -->
 	<xsd:element name="TemplateVehicleJourney" abstract="false" substitutionGroup="VehicleJourney_" id="TemplateTemplateVehicleJourney">
 		<xsd:annotation>
 			<xsd:documentation>A repeating VEHICLE JOURNEY for which a frequency has been specified, either as a HEADWAY JOURNEY GROUP (e.g. every 20 minutes) or a RHYTHMICAL JOURNEY GROUP  (e.g. at 15, 27 and 40 minutes past the hour). It may thus represent multiple journeys.</xsd:documentation>
@@ -330,7 +366,7 @@ Rail transport, Roads and Road transport
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->
-	<!-- ====trains=================================================================== -->
+	<!-- ==== TRAIN NUMBER ============================================================== -->
 	<xsd:element name="TrainNumber" abstract="false" substitutionGroup="DataManagedObject">
 		<xsd:annotation>
 			<xsd:documentation>Specification of codes assigned to particular VEHICLE JOURNEYs when operated by TRAINs of COMPOUND TRAINs according to a functional purpose (passenger information, operation follow-up, etc).</xsd:documentation>
@@ -388,10 +424,10 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
-	<!-- ======================================================================= -->
-	<xsd:complexType name="TrainComponentLabelAssignments_RelStructure">
+	<!-- ===== TRAIN COMPONENT LABEL ASSIGNMENT ==================================== -->
+	<xsd:complexType name="trainComponentLabelAssignments_RelStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for containment  of RAIN COMPONENT NUMBER ASSIGNNMENs.</xsd:documentation>
+			<xsd:documentation>Type for containment  of TRAIN COMPONENT NUMBER ASSIGNMENTs.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="containmentAggregationStructure">
@@ -411,6 +447,9 @@ Rail transport, Roads and Road transport
 				<xsd:restriction base="TrainComponentLabelAssignment_VersionStructure">
 					<xsd:sequence>
 						<xsd:sequence>
+							<xsd:sequence>
+								<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+							</xsd:sequence>
 							<xsd:sequence>
 								<xsd:group ref="DataManagedObjectGroup"/>
 							</xsd:sequence>
@@ -444,11 +483,16 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Elements for TRAIN COMPONENT NUMBER ASSIGNNMENT Group.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
+			<xsd:element name="Label" type="MultilingualString" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Label to assign.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element ref="VehicleJourneyRef" minOccurs="0"/>
 			<xsd:element ref="TrainComponentRef"/>
 		</xsd:sequence>
 	</xsd:group>
-	<!-- ======================================================================= -->
+	<!-- ======== VEHICLE TYPE STOP ASSIGNMENT ========================== -->
 	<xsd:complexType name="vehicleTypeStopAssignments_RelStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for containment  of  VEHICLE TYPE STOP ASSIGNNMENTs.</xsd:documentation>
@@ -496,7 +540,7 @@ Rail transport, Roads and Road transport
 	</xsd:element>
 	<xsd:complexType name="VehicleTypeStopAssignment_VersionStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for TRAIN COMPONENT NUMBER ASSIGNNMENT.</xsd:documentation>
+			<xsd:documentation>Type for VEHICLE TYPE STOP ASSIGNNMENT.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="Assignment_VersionStructure">
@@ -508,7 +552,7 @@ Rail transport, Roads and Road transport
 	</xsd:complexType>
 	<xsd:group name="VehicleTypeStopAssignmentGroup">
 		<xsd:annotation>
-			<xsd:documentation>Elements for TRAIN COMPONENT NUMBER ASSIGNNMENT Group.</xsd:documentation>
+			<xsd:documentation>Elements for VEHICLE TYPE STOP  ASSIGNNMENT Group.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element name="VehicleOrientation" type="VehicleOrientationEnumeration" default="forwards" minOccurs="0">
@@ -518,10 +562,10 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element ref="VehicleStoppingPositionRef" minOccurs="0"/>
 			<xsd:element ref="VehicleJourneyRef" minOccurs="0"/>
-			<xsd:element ref="VehicleTypeRef"/>
+			<xsd:element ref="TransportTypeRef"/>
 		</xsd:sequence>
 	</xsd:group>
-	<!-- ======================================================================= -->
+	<!-- ========= TIMING ALGORITHM TYPE=========================================== -->
 	<xsd:element name="TimingAlgorithmType" substitutionGroup="TypeOfValue">
 		<xsd:annotation>
 			<xsd:documentation>Classification of a TIMING ALGORITHM.</xsd:documentation>
@@ -530,6 +574,9 @@ Rail transport, Roads and Road transport
 			<xsd:complexContent>
 				<xsd:restriction base="TimingAlgorithmType_ValueStructure">
 					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
 						<xsd:sequence>
 							<xsd:group ref="DataManagedObjectGroup"/>
 						</xsd:sequence>
@@ -550,6 +597,79 @@ Rail transport, Roads and Road transport
 			<xsd:extension base="TypeOfValue_VersionStructure"/>
 		</xsd:complexContent>
 	</xsd:complexType>
+	<!-- ======= VEHICLE JOURNEY STOP ASSIGNMENT ============================ -->
+	<xsd:complexType name="vehicleJourneyStopAssignments_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for containment of VEHICLE JOURNEY STOP ASSIGNMENTs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element ref="VehicleJourneyStopAssignmentRef"/>
+					<xsd:element ref="VehicleJourneyStopAssignment"/>
+				</xsd:choice>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="VehicleJourneyStopAssignment" abstract="false" substitutionGroup="StopAssignment">
+		<xsd:annotation>
+			<xsd:documentation>Change to a PASSENGER STOP ASSIGNMENT for a specific VEHICLE JOURNEY +v1.1</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="VehicleJourneyStopAssignment_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:sequence>
+								<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+							</xsd:sequence>
+							<xsd:sequence>
+								<xsd:group ref="DataManagedObjectGroup"/>
+							</xsd:sequence>
+							<xsd:sequence>
+								<xsd:group ref="AssignmentGroup"/>
+							</xsd:sequence>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="StopAssignmentGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="PassengerStopAssignmentGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="VehicleJourneyStopAssignmentGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="VehicleJourneyStopAssignmentIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="VehicleJourneyStopAssignment_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for VEHICLE JOURNER STOP ASSIGNMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="PassengerStopAssignment_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="VehicleJourneyStopAssignmentGroup">
+						<xsd:annotation>
+							<xsd:documentation>Elements for a VEHICLE JOURNEY STOP ASSIGNMENT.  Original Passenger STop Assignment for which this is a change.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:group>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="VehicleJourneyStopAssignmentGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a VEHICLE JOURNEY STOP ASSIGNMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="VehicleJourneyRef" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="PassengerStopAssignmentRef" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
 	<!-- ======================================================================= -->
 	<xsd:element name="VehicleJourneyStopAssignment" abstract="false" substitutionGroup="StopAssignment">
 		<xsd:annotation>

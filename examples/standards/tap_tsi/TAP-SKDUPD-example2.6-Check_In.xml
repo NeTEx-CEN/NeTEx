@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PublicationDelivery xmlns="http://www.netex.org.uk/netex" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:siri="http://www.siri.org.uk/siri" version="1.0" xsi:schemaLocation="http://www.netex.org.uk/netex ../../../xsd/NeTEx_publication.xsd">
+	<!--  P  SKDUPD  Timetable Data Example  
+=============
+This Example shows   examples of  encoding  TAPTSI Timetable SKDUPD files .
+
+Data is taken from  Example export csv export files and from slides  for the TapTSi examples.
+
+Each Example is placed in a separate Composite Frame   
+	SKDUPD_example_CheckIn
+
+The following is the EDIFACT tag stream used as input.
+
+PRD+74000015:::32:::Check in+X284'
+POP+273:2022-01-29/2022-04-16::100000010000001000000100000010000001000000100000010000001000000100000010000001'
+POR+008600824+*0806+'
+ASD+44::0803'
+TRF+1'
+POR+008600830+0846+'
+TRF+2'
+ODI+008600824*008600830+1*2'
+SER+26'
+ODI+008600824*008600830+1*2'
+SER+5'
+ODI+008600824*008600830+1*2'
+SER+72'
+
+The following is the root data transformed to a csv SKPUPD_TRAIN table
+
+ID	Service_number	Reservation	Tariff	Service_Mode	Service_Name	Service_Provider	not_used	Reservation_system	First_day	Last_day	Operation_days	Second_service_number
+
+6	74000015	32	Check in		X284		2022-01-29	2022-04-16	100000010000001000000100000010000001000000100000010000001000000100000010000001	
+
+(C) 2022 Data4PT
+
+-->
+	<PublicationTimestamp>2022-02-15T09:30:46.0Z</PublicationTimestamp>
+	<ParticipantRef>SYS001</ParticipantRef>
+	<!-- ======WHAT WAS REQUESTED ========== -->
+	<PublicationRequest version="1.0">
+		<RequestTimestamp>2022-02-15T09:30:46.0Z</RequestTimestamp>
+		<ParticipantRef>SYS002</ParticipantRef>
+	</PublicationRequest>
+	<PublicationRefreshInterval>P3M</PublicationRefreshInterval>
+	<dataObjects>
+		<CompositeFrame version="any" id="SKDUPD_example_6_CheckIn">
+			<Name>Example of Encoding for Simple SKDUPD CheckIn example in NeTEx </Name>
+			<!--- ======= CODESPACEs======== -->
+			<codespaces>
+				<Codespace id="op6_cs">
+					<Xmlns>op6</Xmlns>
+					<XmlnsUrl>http://www.operator.fi/</XmlnsUrl>
+					<Description>Operator's data</Description>
+				</Codespace>
+				<Codespace id="uic_cs">
+					<Xmlns>uic</Xmlns>
+					<XmlnsUrl>http://www.uic.org/</XmlnsUrl>
+					<Description>UIC data</Description>
+				</Codespace>
+			</codespaces>
+			<!--- =======FRAME DEFAULTS======== -->
+			<FrameDefaults>
+				<DefaultCodespaceRef ref="op6_cs"/>
+			</FrameDefaults>
+			<frames>
+				<ServiceFrame version="any" id="SKDUPD_example_6_CheckIn">
+					<scheduledStopPoints>
+						<ScheduledStopPoint version="any" id="uic:008600824">
+							<Name lang="dk">Nyekoebing G</Name>
+							<StopType>railStation</StopType>
+							<CountryRef ref="dk"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic:008600830">
+							<Name lang="dk">Gedser Faerge</Name>
+							<StopType>railStation</StopType>
+							<CountryRef ref="dk"/>
+						</ScheduledStopPoint>
+					</scheduledStopPoints>
+				</ServiceFrame>
+				<TimetableFrame version="any" id="SKDUPD_example_6CheckIn">
+					<vehicleJourneys>
+						<DatedServiceJourney version="any" id="6" changed="2022-01-26T09:51:00" dataSourceRef="uic:0060">
+							<!-- PRD+74000015:::32:::Check in+X284' -->
+							<!-- SKPUPD_TRAIN
+ID	Service_number	Reservation	Tariff	Service_Mode	Service_Name	Service_Provider	not_used	Reservation_system	First_day	Last_day	Operation_days	Second_service_number
+6	74000015			32	Check in	X284			2022-01-29	2022-04-16	100000010000001000000100000010000001000000100000010000001000000100000010000001	
+	-->
+							<Name>Check In</Name>
+							<TransportMode>bus</TransportMode>
+							<TransportSubmode>
+								<BusSubmode>expressBus</BusSubmode>
+							</TransportSubmode>
+							<TypeOfServiceRef versionRef="EXTERNAL" ref="32">bus</TypeOfServiceRef>
+							<!--  TapTsi B.4.7009   	32 Bus -->
+							<DepartureTime>08:06:00</DepartureTime>
+							<OperatorRef versionRef="EXTERNAL" ref="uic:X284">Movia</OperatorRef>
+							<trainNumbers>
+								<TrainNumberRef ref="74000015"/>
+							</trainNumbers>
+							<calls>
+								<!-- SKPUPD_POR
+ID	Stop_number	UIC	Arrival_time	Arrival_offset	Departure_time	Departure_offset	Platform_arrival	Platform_departure	Stop_property	Traffic_restriction	Distance	Loading_vehicles	Unloading_vehicles	check_out	check_in
+6	1	008600824			0806					1				803
+6	2	008600830	0846							2				
+  -->
+								<Call version="any" id="6" order="1">
+									<!-- POR+008600824+*0806+'
+ASD+44::0803'  -->
+									<ScheduledStopPointRef version="any" ref="uic:008600824">Nyekoebing G</ScheduledStopPointRef>
+									<Arrival>
+										<!-- TRF+1'  Boarding only -->
+										<ForAlighting>false</ForAlighting>
+									</Arrival>
+									<Departure>
+										<Time>08:06:00</Time>
+									</Departure>
+									<!-- Narrative: GAP can com pute from CHECK CONSTRAINT -->
+									<!-- ASD+44::0803' -->
+									<Note>Check in time 0803</Note>
+								</Call>
+								<Call version="any" id="6" order="2">
+									<!-- POR+008600830+0846+'  -->
+									<ScheduledStopPointRef version="any" ref="uic:008600830">Gedser Faerge</ScheduledStopPointRef>
+									<Arrival>
+										<Time>08:46:00</Time>
+									</Arrival>
+									<Departure>
+										<!--  TRF+2' -->
+										<ForBoarding>false</ForBoarding>
+									</Departure>
+								</Call>
+							</calls>
+							<facilities>
+								<!-- ODI+008600824*008600830+1*2' -->
+								<!-- SKDUPD_ODI
+ID	FromStopNumber	ToStopNumber	ASD_or_SER	Reservation_in_equipment	Equipment	Tariff_in_equipment		
+6	1	2	F26			
+6	1	2	F5			
+6	1	2	F72			-->
+								<ServiceFacilitySet version="any" id="6@F26">
+									<!-- SER+26' -->
+									<TypeOfFacilityRef versionRef="EXTERNAL" ref="F26"/>
+									<LuggageCarriageFacilityList>cyclesAllowed</LuggageCarriageFacilityList>
+									<!-- F26 TafTsi B.4.9039: 26	Bicycle transport -->
+								</ServiceFacilitySet>
+								<ServiceFacilitySet version="any" id="6@F5">
+									<!-- SER+5'  -->
+									<TypeOfFacilityRef versionRef="EXTERNAL" ref="F5"/>
+									<FareClasses>secondClass</FareClasses>
+									<!-- F5 TafTsi B.4.9039: 	5	Second-class seats -->
+								</ServiceFacilitySet>
+								<ServiceFacilitySet version="any" id="6@F72">
+									<!-- SER+72'  -->
+									<TypeOfFacilityRef versionRef="EXTERNAL" ref="F72"/>
+									<AccommodationFacilityList>familyCarriage</AccommodationFacilityList>
+									<!--	F72 TafTsi B.4.9039:	(72)  family carriage?      NB TO NOT LISTED IN  B.4.9039 -->
+								</ServiceFacilitySet>
+								<!-- FRom  SKPUPD_TRAIN -->
+								<ServiceFacilitySet version="any" id="6@reservation">
+									<TypeOfFacilityRef versionRef="EXTERNAL" ref="19"/>
+									<ServiceReservationFacilityList>reservationsCompulsory</ServiceReservationFacilityList>
+									<!--	R19 TafTsi B.4.7037: 	19	No reservation -->
+								</ServiceFacilitySet>
+							</facilities>
+							<checkConstraints>
+								<CheckConstraint version="any" id="6@008600824@checkin">
+									<!-- POR+008600824+*0806+'
+ASD+44::0803'  -->
+									<PlaceRef version="any" ref="uic:008600824"/>
+									<CheckProcess>boarding</CheckProcess>
+									<delays>
+										<CheckConstraintDelay version="any" id="6@008600824@checkin">
+											<Name>Checking minimum duration</Name>
+											<MinimumLikelyDelay>PT3M</MinimumLikelyDelay>
+										</CheckConstraintDelay>
+									</delays>
+									<!-- NB TODO NeTEx Should have checkin value. Missing. Use 'Boarding' for temporary workaround  -->
+								</CheckConstraint>
+							</checkConstraints>
+							<UicOperatingPeriod id="6" version="any">
+								<!-- POP+273:2022-01-29/2022-04-16::100000010000001000000100000010000001000000100000010000001000000100000010000001' -->
+								<FromDate>2022-01-29T00:00:00</FromDate>
+								<ToDate>2022-04-16T23:59:59</ToDate>
+								<ValidDayBits>100000010000001000000100000010000001000000100000010000001000000100000010000001</ValidDayBits>
+							</UicOperatingPeriod>
+						</DatedServiceJourney>
+					</vehicleJourneys>
+				</TimetableFrame>
+			</frames>
+		</CompositeFrame>
+	</dataObjects>
+</PublicationDelivery>

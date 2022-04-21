@@ -1,0 +1,621 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PublicationDelivery xmlns="http://www.netex.org.uk/netex" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:siri="http://www.siri.org.uk/siri" version="1.0" xsi:schemaLocation="http://www.netex.org.uk/netex ../../../xsd/NeTEx_publication.xsd">
+	<!--
+ x Profile: TSDUPD  Location Data Example  
+=============
+This Example shows  examples of  encoding a TAPTSI Location TSDUPD files  
+
+The following is the EDIFACT tag stream used as input.
+
+ALS+29+008301700:MILANO CENTRALE+452911N+091215E'
+POP+273:2021-08-06/2999-12-31'
+POP+87:0015'
+CNY+IT'
+TIZ+CET:1'
+IFT+X02+MILANO'
+IFT+AGW::::DE+Mailand Hauptbahnhof'
+IFT+AGW::::ES+Milan Estacion Central'
+IFT+AGW::::FR+Milan Gare Centrale'
+PRD+::::::0011+0083*0064'
+RFR+X01:008300111'
+RFR+AWN:008301631'
+MES+30:MIN'
+RLS+13+6'
+RFR+AWN:008301645'
+MES+15:MIN'
+RLS+13+6'
+RFR+AWN:008301647'
+MES+15:MIN'
+RLS+13+6'
+RFR+AWN:008301649'
+MES+35:MIN'
+RLS+13+6'
+RFR+AWN:008301701'
+MES+20:MIN'
+RLS+13+6'
+RFR+AWN:008301820'
+MES+20:MIN'
+RLS+13+6'
+
+This can be mapped to  csv tables, starting with the 
+ 
+UIC_Code1	UIC_Code2	Duration	Duration_Unit	13	6_footPath_or_14_Hierarchy	Attributes_with_semicolon	Service_Brand1	Service_Brand2	Service_Provider1	Service_Provider2
+
+29	008301700	MILANO CENTRALE	MILANO	452911N	091215E	2021-08-06	2999-12-31	0015	IT	CET	1	008300111
+29	008301699	MILANO CENTRALE (TR. NORD MILA	MILANO			1987-12-31	2008-12-01	0010	IT	CET	1	
+
+ 
+(C) DAT4PT 2022
+  -->
+	<PublicationTimestamp>2022-01-17T09:30:46.0Z</PublicationTimestamp>
+	<ParticipantRef>SYS001</ParticipantRef>
+	<!-- ======WHAT WAS REQUESTED ========== -->
+	<PublicationRequest version="1.0">
+		<RequestTimestamp>2022-12-17T09:30:47.0Z</RequestTimestamp>
+		<ParticipantRef>SYS002</ParticipantRef>
+	</PublicationRequest>
+	<Description>UIC Location data example</Description>
+	<!--- =============== RESULTS =========== -->
+	<dataObjects>
+		<ResourceFrame version="1" id="TSDUPD-example_UIC- Operators)">
+			<Name>Operators referenced in this data set.  NOte this could be dropped an external references used</Name>
+			<codespaces>
+				<Codespace id="uic_cs">
+					<Xmlns>uic</Xmlns>
+					<XmlnsUrl>http://www.uic.org/</XmlnsUrl>
+					<Description>UIC data</Description>
+				</Codespace>
+			</codespaces>
+			<!--- =======FRAME DEFAULTS======== -->
+			<FrameDefaults>
+				<DefaultCodespaceRef ref="uic_cs"/>
+			</FrameDefaults>
+			<organisations>
+				<Operator version="any" id="uic:0064">
+				</Operator>
+				<Operator version="any" id="uic:0083">
+				</Operator>
+				<Operator version="any" id="uic:0086">
+				</Operator>
+				<Operator version="any" id="uic:1180">
+				</Operator>
+				<Operator version="any" id="uic:1187">
+				</Operator>
+			</organisations>
+		</ResourceFrame>
+		<CompositeFrame version="1" id="TSDUPD-example_MILANO">
+			<Description>Ezample od encoding TSDUPD Milano example data set into NeTEx.</Description>
+			<!-- 			29	008301700	MILANO CENTRALE	MILANO	452911N	091215E	2021-08-06	2999-12-31	0015	IT	CET	1	008300111
+29	008301699	MILANO CENTRALE (TR. NORD MILA	MILANO			1987-12-31	2008-12-01	0010	IT	CET	1	-->
+			<!--- ======= CODESPACEs======== -->
+			<codespaces>
+				<Codespace id="op3_cs">
+					<Xmlns>op3</Xmlns>
+					<XmlnsUrl>http://www.operator.it/</XmlnsUrl>
+					<Description>Operator data</Description>
+				</Codespace>
+				<CodespaceRef ref="uic_cs"/>
+			</codespaces>
+			<!--- =======FRAME DEFAULTS======== -->
+			<FrameDefaults>
+				<DefaultCodespaceRef ref="op3_cs"/>
+			</FrameDefaults>
+			<frames>
+				<SiteFrame version="any" id="TSDUPD-example_MILANO">
+					<!-- =========== Topographic Places==== -->
+					<topographicPlaces>
+						<TopographicPlace version="any" id="Milano">
+							<Descriptor>
+								<Name lang="it">Milano</Name>
+							</Descriptor>
+							<CountryRef ref="it"/>
+						</TopographicPlace>
+					</topographicPlaces>
+					<!-- =========== StopPlaces  ==== -->
+					<stopPlaces>
+						<StopPlace version="any" id="uic:008301700">
+							<!-- ALS+29+008301700:MILANO CENTRALE+452911N+091215E'  -->
+							<!-- 			29	008301700	MILANO CENTRALE	MILANO	452911N	091215E	2021-08-06	2999-12-31	0015	IT	CET	1	008300111 -->
+							<!--- ======= CODESPACEs======== -->
+							<ValidBetween>
+								<!--	POP+273:2021-08-06/2999-12-31'  -->
+								<FromDate>2021-08-06T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name>MILANO CENTRALE MILANO</Name>
+							<ShortName>MILANO CENTRALE</ShortName>
+							<Centroid>
+								<Location>
+									<Longitude>+45.2911</Longitude>
+									<Latitude>+09.1215</Latitude>
+								</Location>
+							</Centroid>
+							<AccessibilityAssessment version="any" id="uic:008301700">
+								<MobilityImpairedAccess>true</MobilityImpairedAccess>
+								<limitations>
+									<AccessibilityLimitation>
+										<WheelchairAccess>true</WheelchairAccess>
+									</AccessibilityLimitation>
+								</limitations>
+							</AccessibilityAssessment>
+							<alternativeNames>
+								<!-- 	IFT+X02+MILANO'
+									IFT+AGW::::DE+Mailand Hauptbahnhof'
+									IFT+AGW::::ES+Milan Estacion Central'
+									IFT+AGW::::FR+Milan Gare Centrale' -->
+								<AlternativeName version="any" id="uic:008301700@de">
+									<Lang>de</Lang>
+									<NameType>translation</NameType>
+									<Name lang="de">Mailand Hauptbahnhof</Name>
+								</AlternativeName>
+								<AlternativeName version="any" id="uic:008301700@es">
+									<Lang>es</Lang>
+									<NameType>translation</NameType>
+									<Name lang="es">Milan Estacion Central</Name>
+								</AlternativeName>
+								<AlternativeName version="any" id="uic:008301700@fr">
+									<Lang>fr</Lang>
+									<NameType>translation</NameType>
+									<Name lang="fr">Milan Gare Centrale</Name>
+								</AlternativeName>
+							</alternativeNames>
+							<facilities>
+								<SiteFacilitySet version="any" id="uic:008301700">
+									<TypeOfFacilityRef versionRef="EXTERNAL" ref="F23">F23  - Heavily disbaled </TypeOfFacilityRef>
+									<MobilityFacilityList>suitableForHeaviliyDisabled suitableForWheelchairs</MobilityFacilityList>
+								</SiteFacilitySet>
+							</facilities>
+							<TopographicPlaceRef version="any" ref="Milano"/>
+							<Locale>
+								<!-- TIZ+CET:1' -->
+								<TimeZoneOffset>-1</TimeZoneOffset>
+								<TimeZone>CET</TimeZone>
+							</Locale>
+							<OperatorRef version="any" ref="uic:0083"/>
+							<TransportMode>rail</TransportMode>
+							<tariffZones>
+								<TariffZoneRef versionRef="EXTERNAL" ref="008300111"/>
+							</tariffZones>
+							<StopPlaceType>railStation</StopPlaceType>
+						</StopPlace>
+						<StopPlace version="any" id="uic:008301699" changed="2022-11-17T08:07:00Z">
+							<!-- 		29	008301699	MILANO CENTRALE (TR. NORD MILA	MILANO			1987-12-31	2008-12-01	0010	IT	CET	1	-->
+							<!--- ======= CODESPACEs======== -->
+							<ValidBetween>
+								<FromDate>1987-12-31T00:00:00</FromDate>
+								<ToDate>2008-12-01T23:59:59</ToDate>
+							</ValidBetween>
+							<Name>MILANO CENTRALE (TR. NORD MILANO)</Name>
+							<ShortName>MILANO NORD </ShortName>
+							<Centroid>
+								<Location>
+									<Longitude>+45.2911</Longitude>
+									<Latitude>+09.1215</Latitude>
+								</Location>
+							</Centroid>
+							<Locale>
+								<!-- TIZ+CET:1' -->
+								<TimeZoneOffset>-1</TimeZoneOffset>
+								<TimeZone>CET</TimeZone>
+							</Locale>
+							<OperatorRef version="any" ref="uic:0083"/>
+							<TransportMode>rail</TransportMode>
+							<tariffZones>
+								<TariffZoneRef versionRef="EXTERNAL" ref="008300111"/>
+							</tariffZones>
+							<StopPlaceType>railStation</StopPlaceType>
+						</StopPlace>
+					</stopPlaces>
+				</SiteFrame>
+				<ServiceFrame version="any" id="TSDUPD-example_MILANO">
+					<scheduledStopPoints>
+						<ScheduledStopPoint version="any" id="uic:008301700">
+							<ValidBetween>
+								<!--	POP+273:2021-08-06/2999-12-31'  -->
+								<FromDate>2021-08-06T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<alternativeTexts>
+								<AlternativeText attributeName="Name" version="any" id="uic:008301700" useForLanguage="de" order="1">
+									<Text lang="de">Mailand Hauptbahnhof</Text>
+								</AlternativeText>
+								<AlternativeText attributeName="Name" version="any" id="uic:008301700" useForLanguage="es" order="1">
+									<Text lang="es">Milan Estacion Central</Text>
+								</AlternativeText>
+								<AlternativeText attributeName="Name" version="any" id="uic:008301700" useForLanguage="fr" order="1">
+									<Text lang="fr">Milan Gare Centrale</Text>
+								</AlternativeText>
+							</alternativeTexts>
+							<Name lang="it">Milano Centrale</Name>
+							<Location>
+								<Longitude>+45.2911</Longitude>
+								<Latitude>+09.1215</Latitude>
+							</Location>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008300111"/>
+							</tariffZones>
+							<ShortName>Milano</ShortName>
+							<StopType>railStation</StopType>
+							<CountryRef ref="it"/>
+							<AtCentre>true</AtCentre>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic:008301699">
+							<ValidBetween>
+								<FromDate>1987-12-31T00:00:00</FromDate>
+								<ToDate>2008-12-01T23:59:59</ToDate>
+							</ValidBetween>
+							<Name lang="it">MILANO CENTRALE (TR. NORD MILANO)</Name>
+							<Location>
+								<Longitude>+45.2911</Longitude>
+								<Latitude>+09.1215</Latitude>
+							</Location>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008300111"/>
+							</tariffZones>
+							<ShortName>Milano</ShortName>
+							<StopType>railStation</StopType>
+							<!-- CNY+IT'  -->
+							<CountryRef ref="it"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic:008301631">
+							<Name lang="it">MILANO PORTA GENOVA</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008300111"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<!-- CNY+IT'  -->
+							<CountryRef ref="it"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic:008301645">
+							<Name lang="it">MILANO P.GARIBALI</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008300111"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<!-- CNY+IT'  -->
+							<CountryRef ref="it"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic:008301647">
+							<Name lang="it">MILANO P.GARIBALI PASSENTE</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008300111"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<!-- CNY+IT'  -->
+							<CountryRef ref="it"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic:008301649">
+							<Name lang="it">MILANO PORTA VENEZIA</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008300111"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<CountryRef ref="it"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic:008301701">
+							<Name lang="it">MILANO LAMBrATE</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008300111"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<CountryRef ref="it"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic:008301820">
+							<Name lang="it">MILANO ROGOREDO</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008300111"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<CountryRef ref="it"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic:00839902">
+							<Name lang="it">MILANO CITY</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic:008300111"/>
+							</tariffZones>
+							<StopType>railStation</StopType>
+							<!-- CNY+IT'  -->
+							<CountryRef ref="it"/>
+						</ScheduledStopPoint>
+					</scheduledStopPoints>
+					<connections>
+						<SiteConnection version="any" id="uic:008301700">
+							<!-- POP+87:0015'  -->
+							<ValidBetween>
+								<FromDate>2016-05-26T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name>Default Transfer time</Name>
+							<TransferDuration>
+								<DefaultDuration>PT15M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>true</BothWays>
+						</SiteConnection>
+						<SiteConnection version="any" id="uic:008301699">
+							<ValidBetween>
+								<FromDate>2016-05-26T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name>Default Transfer time</Name>
+							<TransferDuration>
+								<DefaultDuration>PT10M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>true</BothWays>
+						</SiteConnection>
+						<!--
+UIC_Code1	UIC_Code2	Duration	Duration_Unit	13	6_footPath_or_14_Hierarchy	Attributes_with_semicolon	Service_Brand1	Service_Brand2	Service_Provider1	Service_Provider2
+008301700	008301631	30	MIN	13	6					
+008301700	008301645	15	MIN	13	6					
+008301700	008301647	15	MIN	13	6					
+008301700	008301649	35	MIN	13	6					
+008301700	008301701	20	MIN	13	6					
+008301700	008301820	20	MIN	13	6					
+008301699	008301700	10	MIN	13	6					
+008301699	008301700	20	MIN	13	6	21;				  -->
+						<Connection version="any" id="008301700+008301631" dataSourceRef="uic:1183">
+							<ValidBetween>
+								<FromDate>2021-11-17T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<ValidBetween>
+							</ValidBetween>
+							<TransferDuration>
+								<DefaultDuration>PT30M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>true</BothWays>
+							<From>
+								<TransportMode>rail</TransportMode>
+								<ScheduledStopPointRef version="any" ref="uic:008301700"/>
+							</From>
+							<To>
+								<TransportMode>rail</TransportMode>
+								<ScheduledStopPointRef versionRef="EXTERNAL" ref="uic:008301631">Milanao Porta Genova</ScheduledStopPointRef>
+							</To>
+						</Connection>
+						<Connection version="any" id="008301700+008301645" dataSourceRef="uic:1183">
+							<ValidBetween>
+								<FromDate>2021-11-17T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<TransferDuration>
+								<DefaultDuration>PT15M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>true</BothWays>
+							<From>
+								<TransportMode>rail</TransportMode>
+								<ScheduledStopPointRef version="any" ref="uic:008301700"/>
+							</From>
+							<To>
+								<TransportMode>rail</TransportMode>
+								<ScheduledStopPointRef versionRef="EXTERNAL" ref="uic:008301645">MILANO P GARIBALDI</ScheduledStopPointRef>
+							</To>
+						</Connection>
+						<Connection version="any" id="008301700+008301647" dataSourceRef="uic:1183">
+							<ValidBetween>
+								<FromDate>2021-11-17T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<TransferDuration>
+								<DefaultDuration>PT15M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>true</BothWays>
+							<From>
+								<TransportMode>rail</TransportMode>
+								<ScheduledStopPointRef version="any" ref="uic:008301700">MILANO P Venezia</ScheduledStopPointRef>
+							</From>
+							<To>
+								<TransportMode>rail</TransportMode>
+								<ScheduledStopPointRef versionRef="EXTERNAL" ref="uic:008301647"/>
+							</To>
+						</Connection>
+						<Connection version="any" id="008301700+008301649" dataSourceRef="uic:1183">
+							<ValidBetween>
+								<FromDate>2021-11-17T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<TransferDuration>
+								<DefaultDuration>PT15M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>true</BothWays>
+							<From>
+								<TransportMode>rail</TransportMode>
+								<ScheduledStopPointRef version="any" ref="uic:008301700"/>
+							</From>
+							<To>
+								<TransportMode>rail</TransportMode>
+								<ScheduledStopPointRef versionRef="EXTERNAL" ref="uic:008301649">MILANO PORTE VENXIANO</ScheduledStopPointRef>
+							</To>
+						</Connection>
+						<Connection version="any" id="008301700+008301701" dataSourceRef="uic:1183">
+							<ValidBetween>
+								<FromDate>2021-11-17T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<TransferDuration>
+								<DefaultDuration>PT20M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>true</BothWays>
+							<From>
+								<TransportMode>rail</TransportMode>
+								<ScheduledStopPointRef version="any" ref="uic:008301700"/>
+							</From>
+							<To>
+								<TransportMode>rail</TransportMode>
+								<ScheduledStopPointRef versionRef="EXTERNAL" ref="uic:008301701">MILANO LAMBRATE</ScheduledStopPointRef>
+							</To>
+						</Connection>
+						<Connection version="any" id="008301700+008301820" dataSourceRef="uic:1183">
+							<ValidBetween>
+								<FromDate>2021-11-17T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<TransferDuration>
+								<DefaultDuration>PT20M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>true</BothWays>
+							<From>
+								<TransportMode>rail</TransportMode>
+								<ScheduledStopPointRef version="any" ref="uic:008301700"/>
+							</From>
+							<To>
+								<TransportMode>rail</TransportMode>
+								<ScheduledStopPointRef versionRef="EXTERNAL" ref="uic:008301820">MILANO ROGOREDO</ScheduledStopPointRef>
+							</To>
+						</Connection>
+						<Connection version="any" id="008301700+008399002" dataSourceRef="uic:1183">
+							<ValidBetween>
+								<FromDate>2013-12-02T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<TransferDuration>
+								<DefaultDuration>PT15M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>true</BothWays>
+							<From>
+								<TransportMode>rail</TransportMode>
+								<ScheduledStopPointRef version="any" ref="uic:008301700"/>
+							</From>
+							<To>
+								<TransportMode>rail</TransportMode>
+								<ScheduledStopPointRef versionRef="EXTERNAL" ref="uic:008399002">MILANO CITY</ScheduledStopPointRef>
+							</To>
+						</Connection>
+						<!--  Operator to operator -->
+						<SiteConnection version="any" id="008301700@0083+0064" dataSourceRef="uic:1183" changed="2021-11-17T08:07:00">
+							<Name>Default Transfer time BETWEEN OPERATORS</Name>
+							<TransferDuration>
+								<DefaultDuration>PT11M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>true</BothWays>
+							<From>
+								<OperatorRef version="any" ref="uic:0083"/>
+							</From>
+							<To>
+								<OperatorRef version="any" ref="uic:0064"/>
+							</To>
+						</SiteConnection>
+					</connections>
+					<tariffZones>
+						<TariffZone version="any" id="uic:008300111" responsibilitySetRef="0083">
+						<!-- PRD+::::::0011+0083*0064' -->
+							<Name>Milano Centrale</Name>
+						</TariffZone>
+					</tariffZones>
+					<stopAssignments>
+						<PassengerStopAssignment version="any" id="uic:008301700" order="1">
+							<Name>Milano Centrale</Name>
+							<Description>Assign timetable Station to Physical station. </Description>
+							<ScheduledStopPointRef version="any" ref="uic:008301700"/>
+							<StopPlaceRef version="any" ref="uic:008301700"/>
+						</PassengerStopAssignment>
+					</stopAssignments>
+				</ServiceFrame>
+				<TimetableFrame version="any" id="TSDUPD-example_MILANO">
+					<vehicleJourneys>
+						<VehicleJourney version="any" id="X295">
+							<TypeOfProductCategoryRef versionRef="EXTERNAL" ref="84">Regional Train</TypeOfProductCategoryRef>
+							<!--	 84 Tf/pTSI B.4.7009  84 - Regional Train  -->
+						</VehicleJourney>
+					</vehicleJourneys>
+					<journeyInterchanges>
+						<!---
+UIC_Code	Service_Brand1	Service_Brand2	Time	Service_Provider1	Service_Provider2
+008600683			0004	1186	1186
+008600683			0002	1186	X284
+008600683			0004	1186	X295
+008600683			0006	1186	X298
+008600683			0004	X284	1186
+008600683			0002	X284	X284
+008600683			0002	X284	X295
+008600683			0006	X295	1186
+008600683			0002	X295	X284
+008600683			0004	X295	X295
+008600683			0002	X295	X298
+008600683	84	84	0004	X295	X295
+008600683			0004	X298	1186
+008600683			0002	X298	X284
+008600683			0002	X298	X295
+008600683			0002	X298	X298
+008301700			0011	0083	0064  
+-->
+						<ServiceJourneyInterchange version="any" id="008600683@1186+1186">
+							<StandardTransferTime>PT4M</StandardTransferTime>
+							<FromJourneyRef versionRef="EXTERNAL" ref="1186"/>
+							<ToJourneyRef versionRef="EXTERNAL" ref="1186"/>
+						</ServiceJourneyInterchange>
+						<ServiceJourneyInterchange version="any" id="008600683@1186+X284">
+							<StandardTransferTime>PT2M</StandardTransferTime>
+							<FromJourneyRef versionRef="EXTERNAL" ref="1186"/>
+							<ToJourneyRef versionRef="EXTERNAL" ref="X284"/>
+						</ServiceJourneyInterchange>
+						<ServiceJourneyInterchange version="any" id="008600683@1186+X295">
+							<StandardTransferTime>PT4M</StandardTransferTime>
+							<FromJourneyRef versionRef="EXTERNAL" ref="1186"/>
+							<ToJourneyRef version="any" ref="X295"/>
+						</ServiceJourneyInterchange>
+						<ServiceJourneyInterchange version="any" id="008600683@1186+X298">
+							<StandardTransferTime>PT6M</StandardTransferTime>
+							<FromJourneyRef versionRef="EXTERNAL" ref="1186"/>
+							<ToJourneyRef versionRef="EXTERNAL" ref="X298"/>
+						</ServiceJourneyInterchange>
+						<ServiceJourneyInterchange version="any" id="008600683@X284+1186">
+							<StandardTransferTime>PT4M</StandardTransferTime>
+							<FromJourneyRef versionRef="EXTERNAL" ref="X284"/>
+							<ToJourneyRef versionRef="EXTERNAL" ref="1186"/>
+						</ServiceJourneyInterchange>
+						<ServiceJourneyInterchange version="any" id="008600683@X284+X284">
+							<StandardTransferTime>PT2M</StandardTransferTime>
+							<FromJourneyRef versionRef="EXTERNAL" ref="X284"/>
+							<ToJourneyRef versionRef="EXTERNAL" ref="X284"/>
+						</ServiceJourneyInterchange>
+						<ServiceJourneyInterchange version="any" id="008600683@X284+X295">
+							<StandardTransferTime>PT2M</StandardTransferTime>
+							<FromJourneyRef versionRef="EXTERNAL" ref="X284"/>
+							<ToJourneyRef version="any" ref="X295"/>
+						</ServiceJourneyInterchange>
+						<ServiceJourneyInterchange version="any" id="008600683@X295+1186">
+							<StandardTransferTime>PT6M</StandardTransferTime>
+							<FromJourneyRef version="any" ref="X295"/>
+							<ToJourneyRef versionRef="EXTERNAL" ref="1186"/>
+						</ServiceJourneyInterchange>
+						<ServiceJourneyInterchange version="any" id="008600683@X295+X284">
+							<StandardTransferTime>PT2M</StandardTransferTime>
+							<FromJourneyRef version="any" ref="X295"/>
+							<ToJourneyRef versionRef="EXTERNAL" ref="X284"/>
+						</ServiceJourneyInterchange>
+						<ServiceJourneyInterchange version="any" id="008600683@X295+X295">
+							<StandardTransferTime>PT4M</StandardTransferTime>
+							<FromJourneyRef version="any" ref="X295"/>
+							<ToJourneyRef version="any" ref="X295"/>
+						</ServiceJourneyInterchange>
+						<ServiceJourneyInterchange version="any" id="008600683@X295+X298">
+							<StandardTransferTime>PT2M</StandardTransferTime>
+							<FromJourneyRef version="any" ref="X295"/>
+							<ToJourneyRef versionRef="EXTERNAL" ref="X298"/>
+						</ServiceJourneyInterchange>
+						<ServiceJourneyInterchange version="any" id="008600683@X298+X284">
+							<StandardTransferTime>PT2M</StandardTransferTime>
+							<FromJourneyRef versionRef="EXTERNAL" ref="X298"/>
+							<ToJourneyRef versionRef="EXTERNAL" ref="X284"/>
+						</ServiceJourneyInterchange>
+						<ServiceJourneyInterchange version="any" id="008600683@X298+X295">
+							<StandardTransferTime>PT2M</StandardTransferTime>
+							<FromJourneyRef versionRef="EXTERNAL" ref="X298"/>
+							<ToJourneyRef version="any" ref="X295"/>
+						</ServiceJourneyInterchange>
+						<ServiceJourneyInterchange version="any" id="008600683@X298+X298">
+							<StandardTransferTime>PT2M</StandardTransferTime>
+							<FromJourneyRef versionRef="EXTERNAL" ref="X298"/>
+							<ToJourneyRef versionRef="EXTERNAL" ref="X298"/>
+						</ServiceJourneyInterchange>
+						<ServiceJourneyInterchange version="any" id="008301700@0083+0064">
+							<StandardTransferTime>PT11M</StandardTransferTime>
+							<FromJourneyRef versionRef="EXTERNAL" ref="0083"/>
+							<ToJourneyRef versionRef="EXTERNAL" ref="0064"/>
+						</ServiceJourneyInterchange>
+					</journeyInterchanges>
+				</TimetableFrame>
+			</frames>
+		</CompositeFrame>
+	</dataObjects>
+</PublicationDelivery>
