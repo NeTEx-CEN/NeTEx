@@ -15,6 +15,10 @@
 	<xsd:include schemaLocation="netex_validableElement_support.xsd"/>
 	<xsd:include schemaLocation="netex_qualityStructureFactor_support.xsd"/>
 	<xsd:include schemaLocation="netex_timeStructureFactor_support.xsd"/>
+	<xsd:include schemaLocation="netex_distanceMatrixElement_version.xsd"/>
+	<xsd:include schemaLocation="netex_usageParametersAll_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_part_2/part2_journeyTimes/netex_serviceJourney_support.xsd"/>
+	<xsd:include schemaLocation="netex_fareProduct_support.xsd"/>
 	<xsd:include schemaLocation="netex_salesDistribution_support.xsd"/>
 	<xsd:include schemaLocation="netex_salesOfferPackageEntitlement_support.xsd"/>
 	<xsd:include schemaLocation="netex_salesOfferPackage_support.xsd"/>
@@ -108,6 +112,12 @@
 					 - Fare: add MediumAccessDevice and ApplicationInstance
 				</Date>
 				<Date>
+					<Modified>2020-12-08</Modified>FIX - Add optional TimebandRef and ServiceCalendarRef to TemporalValidityParametersGroup
+				</Date>
+				<Date>
+					<Modified>2021-01-25</Modified>Add GroupOfTariffZonesRef to NetworkValidityParametersGroup
+				</Date>
+				<Date>
 					<Modified>2021-09-01</Modified>FIX - Post newmodes merge  Remove ambigous use of VehicleModes (drop from Organisation validity parameters).
 					    Add MobilityServiceConstraintZone to Network validity parameters.
 				</Date>
@@ -134,7 +144,7 @@
 						<li>Derived from the Transmodel, VDV, TransXChange, NEPTUNE, BISON and Trident standards.</li>
 					</ul>
 				</Source>
-				<Status>Version 1.0 Draft for approval</Status>
+				<Status>Version 1.0</Status>
 				<Subject>
 					<Category>Arts, recreation and travel, Tourism, Travel (tourism), Transport,
 Air transport, Airports,
@@ -270,7 +280,10 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="TariffRef" minOccurs="0"/>
 			<xsd:element ref="FareStructureElementRef" minOccurs="0"/>
 			<xsd:element ref="FareElementInSequenceRef" minOccurs="0"/>
-			<xsd:element ref="DistanceMatrixElementRef" minOccurs="0"/>
+			<xsd:choice  minOccurs="0">
+				<xsd:element ref="DistanceMatrixElementRef"/>
+				<xsd:element ref="DynamicDistanceMatrixElement"/>
+			</xsd:choice>
 			<xsd:element ref="DistanceMatrixElementInverseRef" minOccurs="0"/>
 			<xsd:element ref="DistanceMatrixElementView" minOccurs="0"/>
 			<xsd:element ref="SalesOfferPackageRef" minOccurs="0"/>
@@ -347,9 +360,11 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="DayTypeRef" minOccurs="0"/>
+			<xsd:element ref="TimebandRef" minOccurs="0"/>
 			<xsd:element ref="GroupOfTimebandsRef" minOccurs="0"/>
 			<xsd:element ref="OperatingDayRef" minOccurs="0"/>
 			<xsd:element ref="OperatingPeriodRef" minOccurs="0"/>
+			<xsd:element ref="ServiceCalendarRef" minOccurs="0"/>
 			<xsd:element ref="ValidityConditionRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
@@ -428,6 +443,7 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="GroupOfLinesRef" minOccurs="0"/>
 			<xsd:element ref="LineRef" minOccurs="0"/>
 			<xsd:element ref="TypeOfLineRef" minOccurs="0"/>
+			<xsd:element ref="GroupOfTariffZonesRef" minOccurs="0"/>
 			<xsd:element ref="TariffZoneRef" minOccurs="0"/>
 			<xsd:element ref="FareZoneRef" minOccurs="0"/>
 			<xsd:element ref="FareSectionRef" minOccurs="0"/>
