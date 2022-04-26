@@ -1,0 +1,1218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PublicationDelivery xmlns="http://www.netex.org.uk/netex" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:siri="http://www.siri.org.uk/siri" version="1.0" xsi:schemaLocation="http://www.netex.org.uk/netex ../../../xsd/NeTEx_publication.xsd">
+	<!--
+ x Profile: TSDUPD  Location Data Example  
+=============
+This Example shows  an example of  encoding a TAPTSI Location TSDUPD file  
+
+Hillerød station   is the terminus of four railways lines:
+* An S-train line (Nordbanen) from Copenhagen, operated by DSB
+* Frederiksværkbanen, operated by Lokaltog
+* Gribskovbanen, operated by Lokaltog
+* Lille Nord towards Helsingør, operated by Lokaltog
+Though there are track connections between the four railways, they are seldom used; each has its own dedicated dead-end platform tracks.
+
+
+The bus terminal in front of the station is a major hub for transportation throughout northeastern Zealand.
+
+For Hillerød   We show two different intrepretations that might have been intended
+
+  (a) a Single station, with  Quays for each "substation"
+
+  (b) Multiple separate stations, linked by 
+
+ 
+The following is the EDIFACT tag stream used as input.
+
+ALS+29+008600683:Hilleroed+555536N+121839E'
+POP+273:2018-09-07/2999-12-31'
+POP+87:0004'
+CNY+DK'
+TIZ+CET:1'
+IFT+AGW+HI'
+PRD+::::::0004+1186*1186'
+PRD+::::::0002+1186*X284'
+PRD+::::::0004+1186*X295'
+PRD+::::::0006+1186*X298'
+PRD+::::::0004+X284*1186'
+PRD+::::::0002+X284*X284'
+PRD+::::::0002+X284*X295'
+PRD+::::::0006+X295*1186'
+PRD+::::::0002+X295*X284'
+PRD+::::::0004+X295*X295'
+PRD+::::::0002+X295*X298'
+PRD+:::84:84::0004+X295*X295'
+PRD+::::::0004+X298*1186'
+PRD+::::::0002+X298*X284'
+PRD+::::::0002+X298*X295'
+PRD+::::::0002+X298*X298'
+RFR+X01:008600683'
+RFR+AWN:008650683'
+MES+3:MIN'
+RLS+13+6'
+RFR+AWN:008650683'
+RLS+13+14'
+RFR+AWN:008651683'
+MES+3:MIN'
+RLS+13+6'
+RFR+AWN:008651683'
+RLS+13+14'
+RFR+AWN:008658683'
+MES+3:MIN'
+RLS+13+6'
+RFR+AWN:008659683'
+MES+3:MIN'
+RLS+13+6'
+
+The following is a tht data transformed to a csv tavle
+ 
+UIC_Code1	UIC_Code2	Duration	Duration_Unit	13	6_footPath_or_14_Hierarchy	Attributes_with_semicolon	Service_Brand1	Service_Brand2	Service_Provider1	Service_Provider2
+
+29	008600683	Hilleroed		555536N	121839E	2018-09-07	2999-12-31	0004	DK	CET	1	008600683
+
+ 
+(C) DAT4PT 2022
+  -->
+	<PublicationTimestamp>2022-01-17T09:30:46.0Z</PublicationTimestamp>
+	<ParticipantRef>SYS001</ParticipantRef>
+	<!-- ======WHAT WAS REQUESTED ========== -->
+	<PublicationRequest version="1.0">
+		<RequestTimestamp>2022-12-17T09:30:47.0Z</RequestTimestamp>
+		<ParticipantRef>SYS002</ParticipantRef>
+		<topics>
+			<NetworkFrameTopic>
+				<Current/>
+				<TypeOfFrameRef versionRef="EXTERNAL" ref="TSDUPD"/>
+			</NetworkFrameTopic>
+		</topics>
+	</PublicationRequest>
+	<Description>UIC Location data example</Description>
+	<!--- =============== RESULTS =========== -->
+	<dataObjects>
+		<ResourceFrame version="1" id="TSDUPD-example_UIC- Operators)">
+			<Name>Operators referenced in this data set.  NOte this could be dropped an external references used</Name>
+			<codespaces>
+				<Codespace id="uic_cs">
+					<Xmlns>uic</Xmlns>
+					<XmlnsUrl>http://www.uic.org/</XmlnsUrl>
+					<Description>UIC data</Description>
+				</Codespace>
+			</codespaces>
+			<!--- =======FRAME DEFAULTS======== -->
+			<FrameDefaults>
+				<DefaultCodespaceRef ref="uic_cs"/>
+			</FrameDefaults>
+			<organisations>
+				<Operator version="any" id="uic:0064">
+				</Operator>
+				<Operator version="any" id="uic:0083">
+				</Operator>
+				<Operator version="any" id="uic:0086">
+				</Operator>
+				<Operator version="any" id="uic:1180">
+				</Operator>
+				<Operator version="any" id="uic:1186">
+				</Operator>
+				<Operator version="any" id="uic:1187">
+				</Operator>
+				<Operator version="any" id="uic:X284">
+				</Operator>
+				<Operator version="any" id="uic:X285">
+				</Operator>
+				<Operator version="any" id="uic:X295">
+				</Operator>
+				<Operator version="any" id="uic:X298">
+				</Operator>
+			</organisations>
+		</ResourceFrame>
+		<CompositeFrame version="1" id="TSDUPD-example_Hilleroed_1-Station+Quays)">
+			<Description>Draft example to map a TSDUPD location data set into NeTEx.
+			In this first variant encoding we assume that there is just one physical station and four platforms 
+                      We also assume that there is only one scheduled stop point that is used in the timetable</Description>
+			<!-- 
+UIC_Code1	UIC_Code2	Duration	Duration_Unit	13	6_footPath_or_14_Hierarchy	Attributes_with_semicolon	Service_Brand1	Service_Brand2	Service_Provider1	Service_Provider2
+
+29	008600683	Hilleroed		555536N	121839E	2018-09-07	2999-12-31	0004	DK	CET	1	008600683 
+
+UIC_Code1	UIC_Code2	Duration	Duration_Unit	13	6_footPath_or_14_Hierarchy
+008600683	008650683	3	MIN	13	6
+008600683	008650683			13	14
+008600683	008651683	3	MIN	13	6
+008600683	008651683			13	14
+008600683	008658683	3	MIN	13	6
+
+                      
+-->
+			<!--- ======= CODESPACEs======== -->
+			<codespaces>
+				<Codespace id="uic1_cs">
+					<Xmlns>uic1</Xmlns>
+					<XmlnsUrl>http://www.uic.org/</XmlnsUrl>
+					<Description>UIC stop data - variant 1</Description>
+				</Codespace>
+				<Codespace id="e1_cs">
+					<Xmlns>e1</Xmlns>
+					<XmlnsUrl>http://www.operator.dk/</XmlnsUrl>
+					<Description>Operator data</Description>
+				</Codespace>
+				<CodespaceRef ref="uic_cs"/>
+				<CodespaceRef ref="uic1_cs"/>
+			</codespaces>
+			<!--- =======FRAME DEFAULTS======== -->
+			<FrameDefaults>
+				<DefaultCodespaceRef ref="e1_cs"/>
+			</FrameDefaults>
+			<frames>
+				<SiteFrame version="any" id="TSDUPD-example_Hilleroed_1-Station+Quays" responsibilitySetRef="0086">
+					<!-- =========== Topographic Places==== -->
+					<topographicPlaces>
+						<TopographicPlace version="any" id="e1:Hilleroed">
+							<!-- We can additionally link a Station to a topographic place-->
+							<Descriptor>
+								<Name>Hilleroed</Name>
+							</Descriptor>
+							<CountryRef ref="dk"/>
+						</TopographicPlace>
+					</topographicPlaces>
+					<!-- =========== StopPlaces  ==== -->
+					<stopPlaces>
+						<StopPlace version="any" id="uic1:008600683">
+							<!-- ALS+29+008600683:Hilleroed+555536N+121839E' -->
+							<ValidBetween>
+								<!--POP+273:2018-09-07/2999-12-31'  -->
+								<FromDate>2018-09-07T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name>Hilleroed</Name>
+							<ShortName>Hilleroed</ShortName>
+							<Description>
+Hillerød station   is the terminus of four railways lines:
+* An S-train line (Nordbanen) from Copenhagen, operated by DSB
+* Frederiksværkbanen, operated by Lokaltog
+* Gribskovbanen, operated by Lokaltog
+* Lille Nord towards Helsingør, operated by Lokaltog
+Though there are track connections between the four railways, they are seldom used; each has its own dedicated dead-end platform tracks.
+
+The bus terminal in front of the station is a major hub for transportation throughout northeastern Zealand.
+</Description>
+							<Centroid>
+								<Location>
+									<!-- ALS+29+008600683:Hilleroed+555536N+121839E' -->
+									<Longitude>+55.5536</Longitude>
+									<Latitude>+12.1839</Latitude>
+								</Location>
+							</Centroid>
+							<PostalAddress version="any" id="uic:008600683">
+								<!-- CNY+DK' -->
+								<CountryRef ref="dk"/>
+							</PostalAddress>
+							<AccessibilityAssessment version="any" id="uic:008600683">
+								<MobilityImpairedAccess>true</MobilityImpairedAccess>
+								<limitations>
+									<AccessibilityLimitation>
+										<WheelchairAccess>true</WheelchairAccess>
+									</AccessibilityLimitation>
+								</limitations>
+							</AccessibilityAssessment>
+							<alternativeNames>
+								<AlternativeName version="any" id="uic:008600683_dk">
+									<Lang>dk</Lang>
+									<NameType>translation</NameType>
+									<Name lang="dk">Hillerød</Name>
+								</AlternativeName>
+							</alternativeNames>
+							<facilities>
+								<SiteFacilitySet version="any" id="uic:008600683">
+									<AssistanceFacilityList>wheelchairUse boardingAssistance</AssistanceFacilityList>
+									<!-- others are possible -->
+								</SiteFacilitySet>
+							</facilities>
+							<TopographicPlaceRef version="any" ref="e1:Hilleroed"/>
+							<Locale>
+								<!-- TIZ+CET:1' -->
+								<TimeZoneOffset>+1</TimeZoneOffset>
+								<TimeZone>CET</TimeZone>
+							</Locale>
+							<OperatorRef version="any" ref="uic:0086"/>
+							<!-- IFT+AGW+HI' -->
+							<PublicCode>HI</PublicCode>
+							<TransportMode>rail</TransportMode>
+							<StopPlaceType>railStation</StopPlaceType>
+							<!-- ALS+29+    -->
+							<quays>
+								<Quay version="any" id="uic:008650683" dataSourceRef="uic:1186">
+								</Quay>
+								<Quay version="any" id="uic:008651683" dataSourceRef="uic:1186">
+								</Quay>
+								<Quay version="any" id="uic:008658683" dataSourceRef="uic:1186">
+								</Quay>
+								<Quay version="any" id="uic:008659683" dataSourceRef="uic:1186">
+								</Quay>
+							</quays>
+						</StopPlace>
+					</stopPlaces>
+				</SiteFrame>
+				<ServiceFrame version="any" id="TSDUPD-example_Hilleroed_1-Station+Quays" responsibilitySetRef="0086">
+					<scheduledStopPoints>
+						<ScheduledStopPoint version="any" id="uic1:008600683" responsibilitySetRef="0086">
+							<!-- ALS+29+008600683:Hilleroed+555536N+121839E' -->
+							<ValidBetween>
+								<!--POP+273:2018-09-07/2999-12-31'  -->
+								<FromDate>2018-09-07T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<alternativeTexts>
+								<AlternativeText attributeName="Name" version="any" id="uic1:008600683" useForLanguage="dk" order="1">
+									<Text lang="dk">Hillerod</Text>
+								</AlternativeText>
+							</alternativeTexts>
+							<Name lang="en">Hilleroed</Name>
+							<Location>
+								<!-- ALS+29+008600683:Hilleroed+555536N+121839E' -->
+								<Longitude>+55.5536</Longitude>
+								<Latitude>+12.1839</Latitude>
+							</Location>
+							<tariffZones>
+								<!-- RFR+AWN:008650683'  -->
+								<TariffZoneRef version="any" ref="uic1:008600683_tariff"/>
+							</tariffZones>
+							<ShortName>Hilleroed</ShortName>
+							<!-- ALS+29+    -->
+							<StopType>railStation</StopType>
+							<!-- CNY+DK' -->
+							<CountryRef ref="dk"/>
+							<TopographicPlaceRef version="any" ref="e1:Hilleroed"/>
+						</ScheduledStopPoint>
+					</scheduledStopPoints>
+					<connections>
+						<DefaultConnection version="any" id="e1:008600683+008650683" responsibilitySetRef="0086">
+							<!--  POP+87:0004'  -->
+							<TransferDuration>
+								<DefaultDuration>PT4M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>true</BothWays>
+							<From>
+								<TransportMode>rail</TransportMode>
+							</From>
+							<To>
+								<TransportMode>rail</TransportMode>
+							</To>
+						</DefaultConnection>
+						<!-- 	UIC_Code1	UIC_Code2	Duration	Duration_Unit	13	6_footPath_or_14_Hierarchy
+008600683	008650683	3	MIN	13	6
+008600683	008650683			13	14
+008600683	008651683	3	MIN	13	6
+008600683	008651683			13	14
+008600683	008658683	3	MIN	13	6
+008600683	008659683	3	MIN	13	6
+-->
+						<SiteConnection version="any" id="e1:008600683+008650683" responsibilitySetRef="0086">
+							<!-- RFR+X01:008600683'
+RFR+AWN:008650683'
+MES+3:MIN'
+RLS+13+6'
+RFR+AWN:008650683'
+RLS+13+14' -->
+							<Name>Internal transfer  Hilleroed to 008650683</Name>
+							<Distance>155</Distance>
+							<TransferDuration>
+								<DefaultDuration>PT3M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>true</BothWays>
+							<From>
+								<TransportMode>rail</TransportMode>
+								<StopPlaceRef version="any" ref="uic1:008600683"/>
+							</From>
+							<To>
+								<TransportMode>rail</TransportMode>
+								<StopPlaceRef version="any" ref="uic1:008600683"/>
+								<QuayRef versionRef="EXTERNAL" ref="uic1:008650683"/>
+							</To>
+						</SiteConnection>
+						<SiteConnection version="any" id="e1:008600683+008651683" responsibilitySetRef="0086">
+							<!-- RFR+AWN:008651683'
+MES+3:MIN'
+RLS+13+6'
+RFR+AWN:008651683' 
+RLS+13+14'  -->
+							<Name>Internal transfer  Hilleroed to 008651683</Name>
+							<Distance>155</Distance>
+							<TransferDuration>
+								<DefaultDuration>PT3M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>true</BothWays>
+							<From>
+								<TransportMode>rail</TransportMode>
+								<StopPlaceRef version="any" ref="uic1:008600683"/>
+							</From>
+							<To>
+								<TransportMode>rail</TransportMode>
+								<StopPlaceRef version="any" ref="uic1:008600683"/>
+								<QuayRef versionRef="EXTERNAL" ref="uic1:008651683"/>
+							</To>
+						</SiteConnection>
+						<SiteConnection version="any" id="e1:008600683+008658683" responsibilitySetRef="0086">
+							<!-- RFR+AWN:008658683'
+MES+3:MIN'
+RLS+13+6' -->
+							<Name>Internal transfer  Hilleroed to 008658683</Name>
+							<Distance>186</Distance>
+							<TransferDuration>
+								<DefaultDuration>PT3M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>false</BothWays>
+							<From>
+								<TransportMode>rail</TransportMode>
+								<StopPlaceRef version="any" ref="uic1:008600683"/>
+							</From>
+							<To>
+								<TransportMode>rail</TransportMode>
+								<StopPlaceRef version="any" ref="uic1:008600683"/>
+								<QuayRef versionRef="EXTERNAL" ref="uic1:008658683"/>
+							</To>
+						</SiteConnection>
+						<SiteConnection version="any" id="e1:008600683+008659683" responsibilitySetRef="0086">
+							<!-- FR+AWN:008659683'
+MES+3:MIN'
+RLS+13+6' -->
+							<Name>Internal transfer  Hilleroed to 008659683</Name>
+							<Distance>186</Distance>
+							<TransferDuration>
+								<DefaultDuration>PT3M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>true</BothWays>
+							<From>
+								<TransportMode>rail</TransportMode>
+								<StopPlaceRef version="any" ref="uic1:008600683"/>
+							</From>
+							<To>
+								<TransportMode>rail</TransportMode>
+								<StopPlaceRef version="any" ref="uic1:008600683"/>
+								<QuayRef versionRef="EXTERNAL" ref="uic1:008659683"/>
+							</To>
+						</SiteConnection>
+					</connections>
+					<tariffZones>
+						<TariffZone version="any" id="uic1:008600683_tariff" responsibilitySetRef="0086">
+							<Name>Hilleroed</Name>
+						</TariffZone>
+					</tariffZones>
+					<stopAssignments>
+						<PassengerStopAssignment version="any" id="uic1:008600683" order="1" responsibilitySetRef="0086">
+							<Name>Hilleroed</Name>
+							<Description>Assign timetable Station to Physical station. </Description>
+							<ScheduledStopPointRef version="any" ref="uic1:008600683"/>
+							<StopPlaceRef version="any" ref="uic1:008600683"/>
+						</PassengerStopAssignment>
+					</stopAssignments>
+				</ServiceFrame>
+				<TimetableFrame version="any" id="TSDUPD-example_Hilleroed_1-Station+Quays" responsibilitySetRef="0086">
+					<Description>To encode the operator specific transfer times, we use an interchange rule</Description>
+					<interchangeRules>
+						<!-- PRD+::::::0004+1186*1186'
+					PRD+::::::0002+1186*X284'
+					PRD+::::::0004+1186*X295'
+					PRD+::::::0006+1186*X298'
+					PRD+::::::0004+X284*1186'
+					PRD+::::::0002+X284*X284'
+					PRD+::::::0002+X284*X295'
+					PRD+::::::0006+X295*1186'
+					PRD+::::::0002+X295*X284'
+					PRD+::::::0004+X295*X295'
+					PRD+::::::0002+X295*X298'
+					PRD+:::84:84::0004+X295*X295'
+					PRD+::::::0004+X298*1186'
+					PRD+::::::0002+X298*X284'
+					PRD+::::::0002+X298*X295'
+					PRD+::::::0002+X298*X298'   -->
+						<InterchangeRule version="any" id="e1:1186+1186">
+							<!-- PRD+::::::0004+1186*1186'   -->
+							<MinimumTransferTime>PT4M</MinimumTransferTime>
+							<FeederFilter>
+								<OperatorRef version="any" ref="uic:1186"/>
+								<AllLines/>
+							</FeederFilter>
+							<DistributorFilter>
+								<OperatorRef version="any" ref="uic:1186"/>
+								<AllLines/>
+							</DistributorFilter>
+						</InterchangeRule>
+						<InterchangeRule version="any" id="e1:1186+X284">
+							<!-- PRD+::::::0002+1186*X284'  -->
+							<MinimumTransferTime>PT2M</MinimumTransferTime>
+							<FeederFilter>
+								<OperatorRef version="any" ref="uic:1186"/>
+								<AllLines/>
+							</FeederFilter>
+							<DistributorFilter>
+								<OperatorRef version="any" ref="uic:X284"/>
+								<AllLines/>
+							</DistributorFilter>
+						</InterchangeRule>
+						<InterchangeRule version="any" id="e1:1186+X295">
+							<!-- PRD+::::::0004+1186*X295'   -->
+							<MinimumTransferTime>PT4M</MinimumTransferTime>
+							<FeederFilter>
+								<OperatorRef version="any" ref="uic:1186"/>
+								<AllLines/>
+							</FeederFilter>
+							<DistributorFilter>
+								<OperatorRef version="any" ref="uic:X295"/>
+								<AllLines/>
+							</DistributorFilter>
+						</InterchangeRule>
+						<InterchangeRule version="any" id="e1:1186+X298">
+							<!-- PRD+::::::0006+1186*X298'  -->
+							<MinimumTransferTime>PT6M</MinimumTransferTime>
+							<FeederFilter>
+								<OperatorRef version="any" ref="uic:1186"/>
+								<AllLines/>
+							</FeederFilter>
+							<DistributorFilter>
+								<OperatorRef version="any" ref="uic:X298"/>
+								<AllLines/>
+							</DistributorFilter>
+						</InterchangeRule>
+						<InterchangeRule version="any" id="e1:X284+1186">
+							<!--   PRD+::::::0004+X284*1186'  -->
+							<MinimumTransferTime>PT4M</MinimumTransferTime>
+							<FeederFilter>
+								<OperatorRef version="any" ref="uic:X284"/>
+								<AllLines/>
+							</FeederFilter>
+							<DistributorFilter>
+								<OperatorRef version="any" ref="uic:1186"/>
+								<AllLines/>
+							</DistributorFilter>
+						</InterchangeRule>
+						<InterchangeRule version="any" id="e1:X284+X284">
+							<!--   PRD+::::::0002+X284*X284'  -->
+							<MinimumTransferTime>PT2M</MinimumTransferTime>
+							<FeederFilter>
+								<OperatorRef version="any" ref="uic:X284"/>
+								<AllLines/>
+							</FeederFilter>
+							<DistributorFilter>
+								<OperatorRef version="any" ref="uic:X284"/>
+								<AllLines/>
+							</DistributorFilter>
+						</InterchangeRule>
+						<InterchangeRule version="any" id="e1:X284+X295">
+							<!--   PRD+::::::0002+X284*X295'  -->
+							<MinimumTransferTime>PT2M</MinimumTransferTime>
+							<FeederFilter>
+								<OperatorRef version="any" ref="uic:X284"/>
+								<AllLines/>
+							</FeederFilter>
+							<DistributorFilter>
+								<OperatorRef version="any" ref="uic:X295"/>
+								<AllLines/>
+							</DistributorFilter>
+						</InterchangeRule>
+						<InterchangeRule version="any" id="e1:X295+1186">
+							<!--  		PRD+::::::0006+X295*1186'   -->
+							<MinimumTransferTime>PT6M</MinimumTransferTime>
+							<FeederFilter>
+								<OperatorRef version="any" ref="uic:X295"/>
+								<AllLines/>
+							</FeederFilter>
+							<DistributorFilter>
+								<OperatorRef version="any" ref="uic:1186"/>
+								<AllLines/>
+							</DistributorFilter>
+						</InterchangeRule>
+						<InterchangeRule version="any" id="e1:X295+X284">
+							<!--  	PRD+::::::0002+X295*X284' -->
+							<MinimumTransferTime>PT2M</MinimumTransferTime>
+							<FeederFilter>
+								<OperatorRef version="any" ref="uic:X295"/>
+								<AllLines/>
+							</FeederFilter>
+							<DistributorFilter>
+								<OperatorRef version="any" ref="uic:X284"/>
+								<AllLines/>
+							</DistributorFilter>
+						</InterchangeRule>
+						<InterchangeRule version="any" id="e1:X295+X295">
+							<!--  	PRD+::::::0004+X295*X295' -->
+							<MinimumTransferTime>PT4M</MinimumTransferTime>
+							<FeederFilter>
+								<OperatorRef version="any" ref="uic:X295"/>
+								<AllLines/>
+							</FeederFilter>
+							<DistributorFilter>
+								<OperatorRef version="any" ref="uic:X295"/>
+								<AllLines/>
+							</DistributorFilter>
+						</InterchangeRule>
+						<InterchangeRule version="any" id="e1:X295+X298">
+							<!--  PRD+::::::0002+X295*X298' -->
+							<MinimumTransferTime>PT2M</MinimumTransferTime>
+							<FeederFilter>
+								<OperatorRef version="any" ref="uic:X295"/>
+								<AllLines/>
+							</FeederFilter>
+							<DistributorFilter>
+								<OperatorRef version="any" ref="uic:X298"/>
+								<AllLines/>
+							</DistributorFilter>
+						</InterchangeRule>
+						<InterchangeRule version="any" id="e1:84@X295+X295">
+							<!--  	PRD+:::84:84::0004+X295*X295' -->
+							<MinimumTransferTime>PT4M</MinimumTransferTime>
+							<FeederFilter>
+								<OperatorRef version="any" ref="uic:X295"/>
+								<AllLines/>
+								<JourneyDesignator>
+									<!--NB  is a workaround to encode the "brand"   ie category of service.  GAP -->
+									<LineRef versionRef="EXTERNAL" ref="84"/>
+								</JourneyDesignator>
+							</FeederFilter>
+							<DistributorFilter>
+								<OperatorRef version="any" ref="uic:X295"/>
+								<AllLines/>
+							</DistributorFilter>
+						</InterchangeRule>
+						<InterchangeRule version="any" id="e1:X298+1186">
+							<!--    PRD+::::::0004+X298*1186'   -->
+							<MinimumTransferTime>PT4M</MinimumTransferTime>
+							<FeederFilter>
+								<OperatorRef version="any" ref="uic:X284"/>
+								<AllLines/>
+							</FeederFilter>
+							<DistributorFilter>
+								<OperatorRef version="any" ref="uic:1186"/>
+								<AllLines/>
+							</DistributorFilter>
+						</InterchangeRule>
+						<InterchangeRule version="any" id="e1:X298+X284">
+							<!--   	PRD+::::::0002+X298*X295'  -->
+							<MinimumTransferTime>PT2M</MinimumTransferTime>
+							<FeederFilter>
+								<OperatorRef version="any" ref="uic:X298"/>
+								<AllLines/>
+							</FeederFilter>
+							<DistributorFilter>
+								<OperatorRef version="any" ref="uic:X284"/>
+								<AllLines/>
+							</DistributorFilter>
+						</InterchangeRule>
+						<InterchangeRule version="any" id="e1:X298+X295">
+							<!--   PRD+::::::0002+X295*X298'   -->
+							<MinimumTransferTime>PT2M</MinimumTransferTime>
+							<FeederFilter>
+								<OperatorRef version="any" ref="uic:X298"/>
+								<AllLines/>
+							</FeederFilter>
+							<DistributorFilter>
+								<OperatorRef version="any" ref="uic:X295"/>
+								<AllLines/>
+							</DistributorFilter>
+						</InterchangeRule>
+						<InterchangeRule version="any" id="e1:X298+X298">
+							<!--   PRD+::::::0002+X298*X298'   -->
+							<MinimumTransferTime>PT2M</MinimumTransferTime>
+							<FeederFilter>
+								<OperatorRef version="any" ref="uic:X298"/>
+								<AllLines/>
+							</FeederFilter>
+							<DistributorFilter>
+								<OperatorRef version="any" ref="uic:X298"/>
+								<AllLines/>
+							</DistributorFilter>
+						</InterchangeRule>
+					</interchangeRules>
+				</TimetableFrame>
+			</frames>
+		</CompositeFrame>
+		<CompositeFrame version="1" id="TSDUPD-example_Hilleroed_2-Station+Hierarchy)">
+			<Description>Draft example to map a TSDUPD location data set into NeTEx.</Description>
+			<!--  29	008600683	Hilleroed		555536N	121839E	2018-09-07	2999-12-31	0004	DK	CET	1	008600683 
+                      In this  second variant interpretation we assume that there is an aggregation of four separate stations
+ 
+                      We also assume that there is  a separate scheduled stop point for each station, thus four stop points, wuth connections bewteen them  -->
+			<!--- ======= CODESPACEs======== -->
+			<codespaces>
+				<Codespace id="e2_cs">
+					<Xmlns>e2</Xmlns>
+					<XmlnsUrl>http://www.operator.dk/</XmlnsUrl>
+					<Description>Operator data</Description>
+				</Codespace>
+				<Codespace id="uic2_cs">
+					<!-- this is so we can have an alternative example with duplicate stops -->
+					<Xmlns>uic2</Xmlns>
+					<XmlnsUrl>http://www.uic.org/</XmlnsUrl>
+					<Description>UIC stop data 2nd variant</Description>
+				</Codespace>
+				<CodespaceRef ref="uic_cs">UIC operators</CodespaceRef>
+			</codespaces>
+			<!--- =======FRAME DEFAULTS======== -->
+			<FrameDefaults>
+				<DefaultCodespaceRef ref="e2_cs"/>
+			</FrameDefaults>
+			<frames>
+				<SiteFrame version="any" id="TSDUPD-example_Hilleroed_2-Station+Hierarchy" responsibilitySetRef="0086">
+					<!-- =========== Topographic Places==== -->
+					<topographicPlaces>
+						<TopographicPlace version="any" id="e2:Hilleroed">
+							<!-- We can additionally link a Station to a tophraphic place-->
+							<Descriptor>
+								<Name>Hilleroed</Name>
+							</Descriptor>
+							<CountryRef ref="dk"/>
+						</TopographicPlace>
+					</topographicPlaces>
+					<!-- =========== StopPlaces  ==== -->
+					<stopPlaces>
+						<StopPlace version="any" id="uic2:008600683">
+							<ValidBetween>
+								<FromDate>2018-09-07T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name>Hilleroed</Name>
+							<ShortName>Hilleroed</ShortName>
+							<Description>
+Hillerød station   is the terminus of four railways lines:
+* An S-train line (Nordbanen) from Copenhagen, operated by DSB
+* Frederiksværkbanen, operated by Lokaltog
+* Gribskovbanen, operated by Lokaltog
+* Lille Nord towards Helsingør, operated by Lokaltog
+Though there are track connections between the four railways, they are seldom used; each has its own dedicated dead-end platform tracks.
+
+The bus terminal in front of the station is a major hub for transportation throughout northeastern Zealand.
+</Description>
+							<Centroid>
+								<Location>
+									<Longitude>+55.5536</Longitude>
+									<Latitude>+12.1839</Latitude>
+								</Location>
+							</Centroid>
+							<AccessibilityAssessment version="any" id="uic2:008600683">
+								<MobilityImpairedAccess>true</MobilityImpairedAccess>
+								<limitations>
+									<AccessibilityLimitation>
+										<WheelchairAccess>true</WheelchairAccess>
+									</AccessibilityLimitation>
+								</limitations>
+							</AccessibilityAssessment>
+							<alternativeNames>
+								<AlternativeName version="any" id="uic2:008600683_dk">
+									<Lang>dk</Lang>
+									<NameType>translation</NameType>
+									<Name lang="dk">Hillerød</Name>
+								</AlternativeName>
+							</alternativeNames>
+							<facilities>
+								<SiteFacilitySet version="any" id="uic2:008600683">
+									<AssistanceFacilityList>wheelchairUse boardingAssistance</AssistanceFacilityList>
+									<!-- others are possible -->
+								</SiteFacilitySet>
+							</facilities>
+							<TopographicPlaceRef version="any" ref="e2:Hilleroed"/>
+							<Locale>
+								<!-- TIZ+CET:1' -->
+								<TimeZoneOffset>+1</TimeZoneOffset>
+								<TimeZone>CET</TimeZone>
+							</Locale>
+							<OperatorRef version="any" ref="uic:0086"/>
+							<TransportMode>rail</TransportMode>
+							<!-- ALS+29  -->
+							<StopPlaceType>railStation</StopPlaceType>
+							<mainTerminusForPlaces>
+								<TopographicPlaceRef version="any" ref="e2:Hilleroed"/>
+							</mainTerminusForPlaces>
+						</StopPlace>
+						<StopPlace version="any" id="uic2:008650683">
+							<Name>Hilleroed</Name>
+							<OperatorRef version="any" ref="uic:0086"/>
+							<ParentSiteRef version="any" ref="uic2:008650683"/>
+							<TransportMode>rail</TransportMode>
+							<!-- ALS+29+    -->
+							<StopPlaceType>railStation</StopPlaceType>
+						</StopPlace>
+						<StopPlace version="any" id="uic2:008651683">
+							<Name>Hilleroed</Name>
+							<OperatorRef version="any" ref="uic:0086"/>
+							<ParentSiteRef version="any" ref="uic2:008650683"/>
+							<TransportMode>rail</TransportMode>
+							<!-- ALS+29+    -->
+							<StopPlaceType>railStation</StopPlaceType>
+						</StopPlace>
+						<StopPlace version="any" id="uic2:008658683">
+							<Name>Hilleroed</Name>
+							<OperatorRef version="any" ref="uic:0086"/>
+							<ParentSiteRef version="any" ref="uic2:008650683"/>
+							<TransportMode>rail</TransportMode>
+							<!-- ALS+29+    -->
+							<StopPlaceType>railStation</StopPlaceType>
+						</StopPlace>
+						<StopPlace version="any" id="uic2:008659683">
+							<Name>Hilleroed</Name>
+							<OperatorRef version="any" ref="uic:0086"/>
+							<ParentSiteRef version="any" ref="uic2:008650683"/>
+							<TransportMode>rail</TransportMode>
+							<!-- ALS+29+    -->
+							<StopPlaceType>railStation</StopPlaceType>
+						</StopPlace>
+					</stopPlaces>
+				</SiteFrame>
+				<ServiceFrame version="any" id="TSDUPD-example_Hilleroed_2-Station+Hierarchy" responsibilitySetRef="0086">
+					<scheduledStopPoints>
+						<ScheduledStopPoint version="any" id="uic2:008600683" dataSourceRef="uic:1186">
+							<ValidBetween>
+								<FromDate>2018-09-07T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<alternativeTexts>
+								<AlternativeText attributeName="Name" version="any" id="uic2:008600683" useForLanguage="dk" order="1">
+									<Text lang="dk">Hillerod</Text>
+								</AlternativeText>
+							</alternativeTexts>
+							<Name lang="en">Hilleroed</Name>
+							<Location>
+								<Longitude>+55.5536</Longitude>
+								<Latitude>+12.1839</Latitude>
+							</Location>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic2:008600683_tariff"/>
+							</tariffZones>
+							<ShortName>Hilleroed</ShortName>
+							<!-- ALS+29+    -->
+							<StopType>railStation</StopType>
+							<!-- CNY+DK' -->
+							<CountryRef ref="dk"/>
+							<AtCentre>true</AtCentre>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic2:008650683" dataSourceRef="uic:1186">
+							<ValidBetween>
+								<FromDate>2018-09-07T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name lang="en">Hilleroed</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic2:008600683_tariff"/>
+							</tariffZones>
+							<!-- ALS+29+    -->
+							<StopType>railStation</StopType>
+							<!-- CNY+DK' -->
+							<CountryRef ref="dk"/>
+							<TopographicPlaceRef version="any" ref="e2:Hilleroed"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic2:008651683" dataSourceRef="uic:1186">
+							<ValidBetween>
+								<FromDate>2018-09-07T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name lang="en">Hilleroed</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic2:008600683_tariff"/>
+							</tariffZones>
+							<!-- ALS+29+    -->
+							<StopType>railStation</StopType>
+							<!-- CNY+DK' -->
+							<CountryRef ref="dk"/>
+							<TopographicPlaceRef version="any" ref="e2:Hilleroed"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic2:008658683" dataSourceRef="uic:1186">
+							<ValidBetween>
+								<FromDate>2018-09-07T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name lang="en">Hilleroed</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic2:008600683_tariff"/>
+							</tariffZones>
+							<!-- ALS+29+    -->
+							<StopType>railStation</StopType>
+							<!-- CNY+DK' -->
+							<CountryRef ref="dk"/>
+						</ScheduledStopPoint>
+						<ScheduledStopPoint version="any" id="uic2:008659683" dataSourceRef="uic:1186">
+							<ValidBetween>
+								<FromDate>2018-09-07T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name lang="en">Hilleroed</Name>
+							<tariffZones>
+								<TariffZoneRef version="any" ref="uic2:008600683_tariff"/>
+							</tariffZones>
+							<!-- ALS+29+    -->
+							<StopType>railStation</StopType>
+							<!-- CNY+DK' -->
+							<CountryRef ref="dk"/>
+						</ScheduledStopPoint>
+					</scheduledStopPoints>
+					<stopAreas>
+						<StopArea version="any" id="uic2:008600683" dataSourceRef="uic:1186">
+							<ValidBetween>
+								<FromDate>2018-09-07T00:00:00</FromDate>
+								<ToDate>2999-12-31T23:59:59</ToDate>
+							</ValidBetween>
+							<Name lang="en">Hilleroed</Name>
+							<Description>grouping of five  stops as Hilleroed interchange</Description>
+							<members>
+								<ScheduledStopPointRef version="any" ref="uic2:008600683"/>
+								<ScheduledStopPointRef version="any" ref="uic2:008650683"/>
+								<ScheduledStopPointRef version="any" ref="uic2:008651683"/>
+								<ScheduledStopPointRef version="any" ref="uic2:008658683"/>
+								<ScheduledStopPointRef version="any" ref="uic2:008659683"/>
+							</members>
+						</StopArea>
+					</stopAreas>
+					<connections>
+						<!-- 	UIC_Code1	UIC_Code2	Duration	Duration_Unit	13	6_footPath_or_14_Hierarchy
+008600683	008650683	3	MIN	13	6
+008600683	008650683			13	14
+008600683	008651683	3	MIN	13	6
+008600683	008651683			13	14
+008600683	008658683	3	MIN	13	6
+008600683	008659683	3	MIN	13	6
+-->
+						<Connection version="any" id="e2:008600683+008650683">
+							<!-- RFR+X01:008600683'
+RFR+AWN:008650683'
+MES+3:MIN'
+RLS+13+6' -->
+							<Name>Internal transfer  Hilleroed to 008650683</Name>
+							<Distance>155</Distance>
+							<TransferDuration>
+								<DefaultDuration>PT3M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>true</BothWays>
+							<From>
+								<ScheduledStopPointRef version="any" ref="uic2:008600683"/>
+							</From>
+							<To>
+								<ScheduledStopPointRef version="any" ref="uic2:008650683"/>
+							</To>
+						</Connection>
+						<Connection version="any" id="e2:008600683+008651683">
+							<!-- RFR+AWN:008651683'
+MES+3:MIN'
+RLS+13+6'   
+RFR+AWN:008651683'
+RLS+13+14' -->
+							<Name>Internal transfer  Hilleroed to 008651683</Name>
+							<Distance>155</Distance>
+							<TransferDuration>
+								<DefaultDuration>PT3M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>true</BothWays>
+							<From>
+								<ScheduledStopPointRef version="any" ref="uic2:008600683"/>
+							</From>
+							<To>
+								<TransportMode>rail</TransportMode>
+								<ScheduledStopPointRef version="any" ref="uic2:008651683"/>
+							</To>
+						</Connection>
+						<Connection version="any" id="e2:008600683+008658683">
+							<!-- RFR+AWN:008658683'
+MES+3:MIN'
+RLS+13+6'-->
+							<Name>Internal transfer  Hilleroed to 008658683</Name>
+							<Distance>186</Distance>
+							<TransferDuration>
+								<DefaultDuration>PT3M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>false</BothWays>
+							<From>
+								<ScheduledStopPointRef version="any" ref="uic2:008600683"/>
+							</From>
+							<To>
+								<ScheduledStopPointRef version="any" ref="uic2:008658683"/>
+							</To>
+						</Connection>
+						<Connection version="any" id="e2:008600683+008659683">
+							<!-- RFR+AWN:008659683'
+MES+3:MIN'
+RLS+13+6' -->
+							<Name>Internal transfer  Hilleroed to 008659683</Name>
+							<Distance>186</Distance>
+							<TransferDuration>
+								<DefaultDuration>PT3M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>true</BothWays>
+							<From>
+								<ScheduledStopPointRef version="any" ref="uic2:008600683"/>
+							</From>
+							<To>
+								<ScheduledStopPointRef version="any" ref="uic2:008659683"/>
+							</To>
+						</Connection>
+						<DefaultConnection version="any" id="e2:007300101@intercity_rail">
+							<Name>Default internal transfer duration for Hilleroed for intercity</Name>
+							<Distance>186</Distance>
+							<TransferDuration>
+								<DefaultDuration>PT8M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>false</BothWays>
+							<From>
+								<TransportMode>all</TransportMode>
+							</From>
+							<To>
+								<TransportMode>intercityRail</TransportMode>
+							</To>
+						</DefaultConnection>
+						<DefaultConnection version="any" id="e2:008600683@urban_rail">
+							<Name>Default internal transfer duration for Hilleroed for intercity</Name>
+							<TransferDuration>
+								<DefaultDuration>PT7M</DefaultDuration>
+							</TransferDuration>
+							<BothWays>true</BothWays>
+							<From>
+								<TransportMode>all</TransportMode>
+							</From>
+							<To>
+								<TransportMode>urbanRail</TransportMode>
+							</To>
+						</DefaultConnection>
+					</connections>
+					<tariffZones>
+						<TariffZone version="any" id="uic2:008600683_tariff">
+							<!-- RFR+AWN:008650683'  -->
+							<Name>Hilleroed</Name>
+						</TariffZone>
+					</tariffZones>
+					<stopAssignments>
+						<PassengerStopAssignment version="any" id="uic2:008600683" order="1">
+							<Name>Hilleroed</Name>
+							<Description>Assign timetable Station to Physical station. </Description>
+							<ScheduledStopPointRef version="any" ref="uic2:008600683"/>
+							<StopPlaceRef version="any" ref="uic2:008600683"/>
+						</PassengerStopAssignment>
+						<PassengerStopAssignment version="any" id="uic2:008651683" order="1">
+							<ScheduledStopPointRef version="any" ref="uic2:008651683"/>
+							<StopPlaceRef version="any" ref="uic2:008651683"/>
+						</PassengerStopAssignment>
+						<PassengerStopAssignment version="any" id="uic2:008658683" order="1">
+							<ScheduledStopPointRef version="any" ref="uic2:008658683"/>
+							<StopPlaceRef version="any" ref="uic2:008658683"/>
+						</PassengerStopAssignment>
+						<PassengerStopAssignment version="any" id="uic2:008659683" order="1">
+							<ScheduledStopPointRef version="any" ref="uic2:008659683"/>
+							<StopPlaceRef version="any" ref="uic2:008659683"/>
+						</PassengerStopAssignment>
+					</stopAssignments>
+				</ServiceFrame>
+				<TimetableFrame version="any" id="TSDUPD-example_Hilleroed_2-Station+Hierarchy" responsibilitySetRef="0086">
+					<Description>To encode the operator specific transfer times, we use an interchange rule</Description>
+					<interchangeRules>
+						<!-- PRD+::::::0004+1186*1186'
+					PRD+::::::0002+1186*X284'
+					PRD+::::::0004+1186*X295'
+					PRD+::::::0006+1186*X298'
+					PRD+::::::0004+X284*1186'
+					PRD+::::::0002+X284*X284'
+					PRD+::::::0002+X284*X295'
+					PRD+::::::0006+X295*1186'
+					PRD+::::::0002+X295*X284'
+					PRD+::::::0004+X295*X295'
+					PRD+::::::0002+X295*X298'
+					PRD+:::84:84::0004+X295*X295'
+					PRD+::::::0004+X298*1186'
+					PRD+::::::0002+X298*X284'
+					PRD+::::::0002+X298*X295'
+					PRD+::::::0002+X298*X298'   -->
+						<InterchangeRule version="any" id="32:1186+1186">
+							<!-- PRD+::::::0004+1186*1186'   -->
+							<MinimumTransferTime>PT4M</MinimumTransferTime>
+							<FeederFilter>
+								<OperatorRef version="any" ref="uic:1186"/>
+								<AllLines/>
+							</FeederFilter>
+							<DistributorFilter>
+								<OperatorRef version="any" ref="uic:1186"/>
+								<AllLines/>
+							</DistributorFilter>
+						</InterchangeRule>
+						<InterchangeRule version="any" id="32:1186+X284">
+							<!-- PRD+::::::0002+1186*X284'  -->
+							<MinimumTransferTime>PT2M</MinimumTransferTime>
+							<FeederFilter>
+								<OperatorRef version="any" ref="uic:1186"/>
+								<AllLines/>
+							</FeederFilter>
+							<DistributorFilter>
+								<OperatorRef version="any" ref="uic:X284"/>
+								<AllLines/>
+							</DistributorFilter>
+						</InterchangeRule>
+						<InterchangeRule version="any" id="32:1186+X295">
+							<!-- PRD+::::::0004+1186*X295'   -->
+							<MinimumTransferTime>PT4M</MinimumTransferTime>
+							<FeederFilter>
+								<OperatorRef version="any" ref="uic:1186"/>
+								<AllLines/>
+							</FeederFilter>
+							<DistributorFilter>
+								<OperatorRef version="any" ref="uic:X295"/>
+								<AllLines/>
+							</DistributorFilter>
+						</InterchangeRule>
+						<InterchangeRule version="any" id="32:1186+X298">
+							<!-- PRD+::::::0006+1186*X298'  -->
+							<MinimumTransferTime>PT6M</MinimumTransferTime>
+							<FeederFilter>
+								<OperatorRef version="any" ref="uic:1186"/>
+								<AllLines/>
+							</FeederFilter>
+							<DistributorFilter>
+								<OperatorRef version="any" ref="uic:X298"/>
+								<AllLines/>
+							</DistributorFilter>
+						</InterchangeRule>
+						<InterchangeRule version="any" id="32:X284+1186">
+							<!--   PRD+::::::0004+X284*1186'  -->
+							<MinimumTransferTime>PT4M</MinimumTransferTime>
+							<FeederFilter>
+								<OperatorRef version="any" ref="uic:X284"/>
+								<AllLines/>
+							</FeederFilter>
+							<DistributorFilter>
+								<OperatorRef version="any" ref="uic:1186"/>
+								<AllLines/>
+							</DistributorFilter>
+						</InterchangeRule>
+						<InterchangeRule version="any" id="32:X284+X284">
+							<!--   PRD+::::::0002+X284*X284'  -->
+							<MinimumTransferTime>PT2M</MinimumTransferTime>
+							<FeederFilter>
+								<OperatorRef version="any" ref="uic:X284"/>
+								<AllLines/>
+							</FeederFilter>
+							<DistributorFilter>
+								<OperatorRef version="any" ref="uic:X284"/>
+								<AllLines/>
+							</DistributorFilter>
+						</InterchangeRule>
+						<InterchangeRule version="any" id="32:X284+X295">
+							<!--   PRD+::::::0002+X284*X295'  -->
+							<MinimumTransferTime>PT2M</MinimumTransferTime>
+							<FeederFilter>
+								<OperatorRef version="any" ref="uic:X284"/>
+								<AllLines/>
+							</FeederFilter>
+							<DistributorFilter>
+								<OperatorRef version="any" ref="uic:X295"/>
+								<AllLines/>
+							</DistributorFilter>
+						</InterchangeRule>
+						<InterchangeRule version="any" id="32:X295+1186">
+							<!--  		PRD+::::::0006+X295*1186'   -->
+							<MinimumTransferTime>PT6M</MinimumTransferTime>
+							<FeederFilter>
+								<OperatorRef version="any" ref="uic:X295"/>
+								<AllLines/>
+							</FeederFilter>
+							<DistributorFilter>
+								<OperatorRef version="any" ref="uic:1186"/>
+								<AllLines/>
+							</DistributorFilter>
+						</InterchangeRule>
+						<InterchangeRule version="any" id="32:X295+X284">
+							<!--  	PRD+::::::0002+X295*X284' -->
+							<MinimumTransferTime>PT2M</MinimumTransferTime>
+							<FeederFilter>
+								<OperatorRef version="any" ref="uic:X295"/>
+								<AllLines/>
+							</FeederFilter>
+							<DistributorFilter>
+								<OperatorRef version="any" ref="uic:X284"/>
+								<AllLines/>
+							</DistributorFilter>
+						</InterchangeRule>
+						<InterchangeRule version="any" id="32:X295+X295">
+							<!--  	PRD+::::::0004+X295*X295' -->
+							<MinimumTransferTime>PT4M</MinimumTransferTime>
+							<FeederFilter>
+								<OperatorRef version="any" ref="uic:X295"/>
+								<AllLines/>
+							</FeederFilter>
+							<DistributorFilter>
+								<OperatorRef version="any" ref="uic:X295"/>
+								<AllLines/>
+							</DistributorFilter>
+						</InterchangeRule>
+						<InterchangeRule version="any" id="32:X295+X298">
+							<!--  PRD+::::::0002+X295*X298' -->
+							<MinimumTransferTime>PT2M</MinimumTransferTime>
+							<FeederFilter>
+								<OperatorRef version="any" ref="uic:X295"/>
+								<AllLines/>
+							</FeederFilter>
+							<DistributorFilter>
+								<OperatorRef version="any" ref="uic:X298"/>
+								<AllLines/>
+							</DistributorFilter>
+						</InterchangeRule>
+						<InterchangeRule version="any" id="32:84@X295+X295">
+							<!--  	PRD+:::84:84::0004+X295*X295' -->
+							<MinimumTransferTime>PT4M</MinimumTransferTime>
+							<FeederFilter>
+								<OperatorRef version="any" ref="uic:X295"/>
+								<AllLines/>
+								<JourneyDesignator>
+									<!--NB  is a workaround to encode the "brand"   ie category of service.  GAP -->
+									<LineRef versionRef="EXTERNAL" ref="84"/>
+								</JourneyDesignator>
+							</FeederFilter>
+							<DistributorFilter>
+								<OperatorRef version="any" ref="uic:X295"/>
+								<AllLines/>
+							</DistributorFilter>
+						</InterchangeRule>
+						<InterchangeRule version="any" id="32:X298+1186">
+							<!--    PRD+::::::0004+X298*1186'   -->
+							<MinimumTransferTime>PT4M</MinimumTransferTime>
+							<FeederFilter>
+								<OperatorRef version="any" ref="uic:X284"/>
+								<AllLines/>
+							</FeederFilter>
+							<DistributorFilter>
+								<OperatorRef version="any" ref="uic:1186"/>
+								<AllLines/>
+							</DistributorFilter>
+						</InterchangeRule>
+						<InterchangeRule version="any" id="32:X298+X284">
+							<!--   	PRD+::::::0002+X298*X295'  -->
+							<MinimumTransferTime>PT2M</MinimumTransferTime>
+							<FeederFilter>
+								<OperatorRef version="any" ref="uic:X298"/>
+								<AllLines/>
+							</FeederFilter>
+							<DistributorFilter>
+								<OperatorRef version="any" ref="uic:X284"/>
+								<AllLines/>
+							</DistributorFilter>
+						</InterchangeRule>
+						<InterchangeRule version="any" id="32:X298+X295">
+							<!--   PRD+::::::0002+X295*X298'   -->
+							<MinimumTransferTime>PT2M</MinimumTransferTime>
+							<FeederFilter>
+								<OperatorRef version="any" ref="uic:X298"/>
+								<AllLines/>
+							</FeederFilter>
+							<DistributorFilter>
+								<OperatorRef version="any" ref="uic:X295"/>
+								<AllLines/>
+							</DistributorFilter>
+						</InterchangeRule>
+						<InterchangeRule version="any" id="32:X298+X298">
+							<!--   PRD+::::::0002+X298*X298'   -->
+							<MinimumTransferTime>PT2M</MinimumTransferTime>
+							<FeederFilter>
+								<OperatorRef version="any" ref="uic:X298"/>
+								<AllLines/>
+							</FeederFilter>
+							<DistributorFilter>
+								<OperatorRef version="any" ref="uic:X298"/>
+								<AllLines/>
+							</DistributorFilter>
+						</InterchangeRule>
+					</interchangeRules>
+				</TimetableFrame>
+			</frames>
+		</CompositeFrame>
+	</dataObjects>
+</PublicationDelivery>
