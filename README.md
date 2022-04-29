@@ -37,6 +37,7 @@ The schema is broken down systematically into small modular files; generally for
 ### Codestyle
 Any changes to the content must be formatted according to a set of rules. The formatting rules are described using [Eclipse WTP configuration files](eclipsecodestyle/xml.prefs). 
 These may be imported into an Eclipse based editor or configured manually in your preferred editor. The configuration file is *somewhat* self-explanatory, but the important rules are:
+* Character encoding shall be `UTF-8`
 * Line width is max 200 characters
 * Indentation is done using `space` (opposed to `tabs`)
 * Indentation level is 2 spaces
