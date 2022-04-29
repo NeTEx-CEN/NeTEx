@@ -31,6 +31,32 @@ The schema is broken down systematically into small modular files; generally for
  - netex_xxxx_suppport.xsd - containing data type  and ref structure definitions.
  - netex_xxxx_version.xsd - containing the element definitions.
 ----
+ 
+## Contributing
+
+### Codestyle
+Any changes to the content must be formatted according to a set of rules. The formatting rules are described using [Eclipse WTP configuration files](eclipsecodestyle/xml.prefs). 
+These may be imported into an Eclipse based editor or configured manually in your preferred editor. The configuration file is quite self-explanatory.
+
+#### Verifying and performing formatting on the command line
+
+* Prerequisite: A working [Maven installation](https://maven.apache.org/)
+
+Note: Format checks take quite a bit of time, and you may limit the reformatting/checks to a set of files by specifying 
+`-DspotlessFiles=xsd/path/to/changed/file.xsd,examples/path/to/changed/file.xml`
+
+To verify that the code is according to standard, run from the project root folder
+```
+mvn spotless:check
+```
+
+To actually format any discrepancies, run
+```
+mvn spotless:apply
+```
+
+Reference https://github.com/diffplug/spotless/blob/main/plugin-maven/README.md#eclipse-web-tools-platform
+
 # Changelog
 
 See [CHANGELOG](CHANGELOG.md)
