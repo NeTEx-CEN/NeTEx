@@ -36,23 +36,30 @@ The schema is broken down systematically into small modular files; generally for
 
 ### Codestyle
 Any changes to the content must be formatted according to a set of rules. The formatting rules are described using [Eclipse WTP configuration files](eclipsecodestyle/xml.prefs). 
-These may be imported into an Eclipse based editor or configured manually in your preferred editor. The configuration file is quite self-explanatory.
+These may be imported into an Eclipse based editor or configured manually in your preferred editor. The configuration file is *somewhat* self-explanatory, but the important rules are:
+* Line width is max 200 characters
+* Indentation is done using `space` (opposed to `tabs`)
+* Indentation level is 2 spaces
+
 
 #### Verifying and performing formatting on the command line
 
 * Prerequisite: A working [Maven installation](https://maven.apache.org/)
 
-Note: Format checks take quite a bit of time, and you may limit the reformatting/checks to a set of files by specifying 
+Note: Format checks take quite a bit of time for the examples folder (1 hour+), and you may limit the reformatting/checks to a set of files by specifying 
 `-DspotlessFiles=xsd/path/to/changed/file.xsd,examples/path/to/changed/file.xml`
+
+Note2: You may also specify that only files changed since latest commit on your base branch be formatted by specifying
+`-DratchetFrom=<your origin>/<branch_you_are_based_on>`, ie if you are creating a PR branch based on the current master: `-DratchetFrom=origin/master`
 
 To verify that the code is according to standard, run from the project root folder
 ```
-mvn spotless:check
+mvn spotless:check <see notes above>
 ```
 
 To actually format any discrepancies, run
 ```
-mvn spotless:apply
+mvn spotless:apply <see notes above>
 ```
 
 Reference https://github.com/diffplug/spotless/blob/main/plugin-maven/README.md#eclipse-web-tools-platform
