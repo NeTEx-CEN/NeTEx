@@ -1,5 +1,5 @@
 # NeTEx (Network Timetable EXchange) XML schema
-(C) 2009-2021  NeTEx, CEN, Crown Copyright
+(C) 2009-2022  NeTEx, CEN, Crown Copyright
 
 ## Schemas for: Core, Part 1 (Network),  Part 2 (Timetables), Part3 (Fares) and Part5 (NewModes).
                             
