@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_ifopt_equipmentAccess_version">
+<!-- edited with XMLSpy v2010 rel. 3 sp1 (http://www.altova.com) by Nicholas Knowles (Kizoom) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_ifopt_equipmentAccess_version">
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_facility_support.xsd"/>
+	<xsd:include schemaLocation="netex_ifopt_path_support.xsd"/> 
 	<xsd:include schemaLocation="netex_ifopt_equipmentAccess_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_equipmentPlace_version.xsd"/>
 	<!-- ======================================================================= -->
@@ -53,8 +54,10 @@
 					<Modified>2019-05-27</Modified>Doc tidy up 
 					Rename Accoustic(six)  to AUdio 
 					Correct comments
-				</Date>				
-				
+				</Date>
+				<Date>
+					<Modified>2021-07-14</Modified>Fix catch up - Make Access Equipment Abstarct 
+				</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines EQUIPMENT base types.</p>
 				</Description>
@@ -67,7 +70,7 @@
 				<Language>[ISO 639-2/B] ENG</Language>
 				<Publisher>Kizoom Software Ltd, 16 High Holborn, London WC1V 6BX</Publisher>
 				<Rights>Unclassified
-					 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2021</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -128,7 +131,7 @@ Rail transport, Roads and Road transport
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ====ACCESS=================================================================== -->
-	<xsd:element name="AccessEquipment" type="AccessEquipment_VersionStructure" substitutionGroup="InstalledEquipment">
+	<xsd:element name="AccessEquipment" type="AccessEquipment_VersionStructure" abstract="true" substitutionGroup="PlaceEquipment">
 		<xsd:annotation>
 			<xsd:documentation>Specialisation of PLACE EQUIPMENT dedicated to access (e.g. lifts, entrances, stairs, ramps, etc.).</xsd:documentation>
 		</xsd:annotation>
@@ -138,7 +141,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Type for an ACCESS EQUIPMENT.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
-			<xsd:extension base="InstalledEquipment_VersionStructure">
+			<xsd:extension base="PlaceEquipment_VersionStructure">
 				<xsd:sequence>
 					<xsd:group ref="AccessEquipmentGroup">
 						<xsd:annotation>
@@ -940,6 +943,16 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Whether equipment is suitable for cycles.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="ButtonsHeight" type="LengthType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indicates buttons height (in centimeter)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GroundMarkalignedWithButton" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indicates a tactile marker on floor under the buttons (or aligned with).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->
@@ -1195,7 +1208,7 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Door can be passed in a wheel chair.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="WheechairUnaided" type="xsd:boolean" minOccurs="0">
+			<xsd:element name="WheelchairUnaided" type="xsd:boolean" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Can be passed in a wheel chair unaided.</xsd:documentation>
 				</xsd:annotation>
@@ -1220,14 +1233,19 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Necessary force to open the door. +v1.1</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="AudioPassthroughIndicator" type="xsd:boolean" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Whether there is an audio signal indicating passing through. +v1.1</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
 			<xsd:element name="SuitableForCycles" type="xsd:boolean" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Whether equipment is suitable for cycles.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="AudioPassthroughIndicator" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether there is an audio signal indicating passing through</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="OpeningNecessaryForce" type="NecessaryForceEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Necessary force to open the door</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -1401,7 +1419,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element name="VisualGuidanceBands" type="xsd:boolean" default="false" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Whether crossing has tactile guidance strips.</xsd:documentation>
+					<xsd:documentation>Whether crossing has visual guidance bands or guidance strips.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="DroppedKerb" type="xsd:boolean" minOccurs="0">

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_ifopt_equipmentSigns_version">
+<!-- edited with XMLSpy v2010 rel. 3 sp1 (http://www.altova.com) by Nicholas Knowles (Kizoom) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_ifopt_equipmentSigns_version">
 	<xsd:include schemaLocation="netex_ifopt_equipmentSigns_support.xsd"/>
 	<xsd:include schemaLocation="netex_ifopt_equipmentPassenger_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_equipment_version.xsd"/>
@@ -25,7 +25,10 @@
 				<Date> 	
 						<Modified>2019-04-08</Modified>FR49 CD #65  Accessibility changes 				, 						 
 						 NJSK Review:  Correct Typos, correct PrintPresentation type
- 				</Date>
+				</Date>
+				<Date>
+					<Modified>2020-10-05</Modified> New Modes: Allow all vehicle modes fo mode.
+				</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines EQUIPMENT types for Place access.</p>
 				</Description>
@@ -109,7 +112,7 @@ Rail transport, Roads and Road transport
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ===SIGNS =================================================================== -->
-	<xsd:element name="SignEquipment" type="SignEquipment_VersionStructure" substitutionGroup="InstalledEquipment">
+	<xsd:element name="SignEquipment" type="SignEquipment_VersionStructure" substitutionGroup="PlaceEquipment">
 		<xsd:annotation>
 			<xsd:documentation>Specialisation of PLACE EQUIPMENT for signs (heading signs, etc.).</xsd:documentation>
 		</xsd:annotation>
@@ -119,7 +122,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Type for SIGN EQUIPMENT.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
-			<xsd:extension base="InstalledEquipment_VersionStructure">
+			<xsd:extension base="PlaceEquipment_VersionStructure">
 				<xsd:sequence>
 					<xsd:group ref="SignEquipmentGroup"/>
 				</xsd:sequence>
@@ -186,6 +189,11 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Luminance gap between text and background. A ratio of at least 3 is expected. +v1.1</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="FontSize" type="FontSizeEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Character font size.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>	
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->
@@ -311,7 +319,7 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Content of Stop.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="TransportMode" type="VehicleModeEnumeration" minOccurs="0">
+			<xsd:element name="TransportMode" type="AllVehicleModesOfTransportEnumeration" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Description of MODE of LINE.</xsd:documentation>
 				</xsd:annotation>
@@ -361,7 +369,7 @@ Rail transport, Roads and Road transport
 							<xsd:group ref="GeneralSignGroup"/>
 						</xsd:sequence>
 					</xsd:sequence>
-					<xsd:attribute name="id" type="HeadingSignIdType" use="optional">
+					<xsd:attribute name="id" type="GeneralSignIdType" use="optional">
 						<xsd:annotation>
 							<xsd:documentation>Identifier of ENTITY.</xsd:documentation>
 						</xsd:annotation>
