@@ -1,23 +1,19 @@
 version: 2
 aliases:
-- &install_xmllint
- name: install xml utils
- command: |
-   apt-get install libxml2-utils
 - &post_build
   name: Trigger downstream builds
   command: |
-    wget https://raw.githubusercontent.com/entur/circleci-toolbox-image-java11/master/tools/trigger_build_v2.sh -O .circleci/trigger_build_v2.sh
-    chmod +x .circleci/trigger_build_v2.sh
     echo 'export CIRCLE_SHA1="$CIRCLE_SHA1"' >> $BASH_ENV
     echo 'export CIRCLE_PROJECT_REPONAME="$CIRCLE_PROJECT_REPONAME"' >> $BASH_ENV
-    .circleci/trigger_build_v2.sh "entur/netex-java-model.git" "master" "$(git log -1 --pretty=%B)"
+    /tools/trigger_build_v2.sh "entur/netex-java-model.git" "master" "$(git log -1 --pretty=%B)"
 jobs:
   build:
     docker:
-    - image: cimg/base:2022.06
+    - image: eu.gcr.io/entur-system-1287/circleci-toolbox-image-java11
+      auth:
+       username: _json_key
+       password: $DOCKER_PASSWORD
     steps:
-    - run: *install_xmllint
     - checkout
     - run: echo "Running xmllint to validate schema"
     - run: xmllint --noout --schema xsd/NeTEx_publication.xsd examples/functions/calendar/*xml examples/functions/fares/*xml examples/functions/grouping/*xml examples/functions/patterns/*xml examples/functions/pointOfInterest/*xml examples/functions/simpleNetwork/*xml examples/functions/site/*xml examples/functions/stopPlace/*xml examples/functions/timetable/*xml examples/functions/validityCondition/*xml examples/functions/variant/*xml examples/functions/vehicleSchedule/*xml 
