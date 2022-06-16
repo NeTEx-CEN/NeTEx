@@ -3,41 +3,24 @@ aliases:
 - &post_build
   name: Trigger downstream builds
   command: |
+    wget https://raw.githubusercontent.com/entur/circleci-toolbox-image-java11/master/tools/trigger_build_v2.sh -O .circleci/trigger_build_v2.sh
+    chmod +x .circleci/trigger_build_v2.sh
     echo 'export CIRCLE_SHA1="$CIRCLE_SHA1"' >> $BASH_ENV
     echo 'export CIRCLE_PROJECT_REPONAME="$CIRCLE_PROJECT_REPONAME"' >> $BASH_ENV
-    echo 'export GITHUB_TOKEN="$GITHUB_TOKEN"' >> $BASH_ENV
-    /tools/trigger_build.sh "entur/netex-java-model.git" "master" "$(git log -1 --pretty=%B)"
+    .circleci/trigger_build_v2.sh "entur/netex-java-model.git" "master" "$(git log -1 --pretty=%B)"
 jobs:
   build:
     docker:
-    - image: eu.gcr.io/entur-system-1287/circleci-toolbox-image
-      auth:
-        username: _json_key
-        password: $DOCKER_PASSWORD
+    - image: cimg/base:2022.06
     steps:
     - checkout
     - run: echo "Running xmllint to validate schema"
     - run: xmllint --noout --schema xsd/NeTEx_publication.xsd examples/functions/calendar/*xml examples/functions/fares/*xml examples/functions/grouping/*xml examples/functions/patterns/*xml examples/functions/pointOfInterest/*xml examples/functions/simpleNetwork/*xml examples/functions/site/*xml examples/functions/stopPlace/*xml examples/functions/timetable/*xml examples/functions/validityCondition/*xml examples/functions/variant/*xml examples/functions/vehicleSchedule/*xml 
     - run: echo "Finished running xmllint"
-  trigger-dependants:
-    docker:
-      - image: eu.gcr.io/entur-system-1287/circleci-toolbox-image
-        auth:
-          username: _json_key
-          password: $DOCKER_PASSWORD
-    steps:
-      - run: *post_build
+    - run: *post_build
 workflows:
   version: 2
   install-validate:
     jobs:
     - build:
-        context: org-carbon
-    - trigger-dependants:
-        context: org-carbon
-        requires:
-          - build
-        filters:
-          branches:
-            only:
-            - master
+        context: global
