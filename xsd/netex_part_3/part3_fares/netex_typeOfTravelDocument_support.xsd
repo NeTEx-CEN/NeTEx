@@ -175,4 +175,90 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:list itemType="MachineReadableEnumeration"/>
 	</xsd:simpleType>
+	<xsd:simpleType name="TravelDocumentValidityScopeEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for TravelDocumentScope describing where TRAVEL DOCUMENT is valid.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="national"/>
+			<xsd:enumeration value="local"/>
+			<xsd:enumeration value="other"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="TravelDocumentProvider" abstract="false" substitutionGroup="DataManagedObject">
+		<xsd:annotation>
+			<xsd:documentation>Provider of TRAVEL DOCUMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="TravelDocumentProvider_VersionStructure">
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="TravelDocumentProvider_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Provider of TRAVEL DOCUMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="DataManagedObjectStructure">
+				<xsd:sequence>
+					<xsd:group ref="TravelDocumentProviderGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="TravelDocumentProviderGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a TRAVEL DOCUMENT PROVIDER.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="OrganisationRef" type="OrganisationRefStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>ORGANISATION providing the TRAVEL DOCUMENT.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="VerificationUrl" type="xsd:anyURI" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>URL for providers web service supporting verification of travel documents.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:element name="TravelDocumentRiskPolicy" abstract="false" substitutionGroup="DataManagedObject">
+		<xsd:annotation>
+			<xsd:documentation>The risk policy associated with a TRAVEL DOCUMENT.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="TravelDocumentRiskPolicy_VersionStructure">
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="TravelDocumentRiskPolicy_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>The risk policy associated with a TRAVEL DOCUMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="DataManagedObjectStructure">
+				<xsd:sequence>
+					<xsd:group ref="TravelDocumentRiskPolicyGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="TravelDocumentRiskPolicyGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a TRAVEL DOCUMENT RISK POLICY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="RiskLevel" type="xsd:int" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The risk level associated with a TRAVEL DOCUMENT.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
 </xsd:schema>
