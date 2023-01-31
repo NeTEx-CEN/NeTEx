@@ -53,7 +53,11 @@
         </Date>
 				<Date>
 					<Modified>2023-01-30</Modified>
-          TM CR: EnhancementL Add Accepted Driver Permit l
+          TM CR: EnhancementL Add Accepted Driver Permit  
+        </Date>
+				<Date>
+					<Modified>2023-01-30</Modified>
+          TM CR: EnhancementL Add Vehicle Equipment Profile Members
         </Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -72,7 +76,7 @@
 				</Relation>
 				<Rights>
           Unclassified
-          <Copyright>CEN, Crown Copyright 2009-2021</Copyright>
+          <Copyright>CEN, Crown Copyright 2009-2023</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -481,9 +485,9 @@
           </xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="acceptedDriverPermts" type="acceptedDriverPermits_RelStructure" minOccurs="0">
+			<xsd:element name="acceptedDriverPermits" type="acceptedDriverPermits_RelStructure" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Facilities of VEHICLE TYPE.</xsd:documentation>
+					<xsd:documentation>Types of Driver Licence that are accepted for Simple Vehicle Type.  +v2.0</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -1223,6 +1227,83 @@
 			</xsd:element>
 			<xsd:element ref="TypeOfEquipmentRef" minOccurs="0"/>
 			<xsd:element ref="PurposeOfEquipmentProfileRef" minOccurs="0"/>
+			<xsd:element name="vehicleEquipmentProfileMembers" type="vehicleEquipmentProfileMembers_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Members of Vehicle Profile.  +v2.0</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ======VEHICLE EQUIPMENT PROFILE MEMBER ====================================================== -->
+	<xsd:complexType name="vehicleEquipmentProfileMembers_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of VEHICLE EQUIPMENT PROFILE MEMBERs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="strictContainmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="VehicleEquipmentProfileMember" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="VehicleEquipmentProfileMember" substitutionGroup="VersionedChild">
+		<xsd:annotation>
+			<xsd:documentation>A element within a  VEHICLE EQUIPMENT PROFILE specifying the number of units of a given TYPE OF EQUIPMENT.
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="VehicleEquipmentProfileMember_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="VersionedChildGroup"/>
+						</xsd:sequence>
+						<xsd:group ref="VehicleEquipmentProfileMemberGroup"/>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="VehicleEquipmentProfileMemberIdType">
+						<xsd:annotation>
+							<xsd:documentation>Identifier of VEHICLE EQUIPMENT PROILE.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="VehicleEquipmentProfileMember_VersionStructure" abstract="false">
+		<xsd:annotation>
+			<xsd:documentation>Type for a VEHICLE EQUIPMENT PROFILE MEMBER.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="VersionedChildStructure">
+				<xsd:group ref="VehicleEquipmentProfileMemberGroup"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="VehicleEquipmentProfileMemberGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a VEHICLE EQUIPMENT PROFILE MEMBER.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Name" type="MultilingualString" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Name of VEHICLE EQUIPMENT PROFILE MEMBER.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Description" type="MultilingualString" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Description of VEHICLE EQUIPMENT PROFILE MEMBER.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MinimumUnits" type="xsd:integer" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Number of units of EQUIPMENT.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="TypeOfEquipmentRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ========= PURPOSE OF EQUIPMENT ============================================ -->
