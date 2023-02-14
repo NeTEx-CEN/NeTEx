@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_equipmentVehiclePassenger_support">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_equipmentVehiclePassenger_support">
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_equipment_support.xsd"/>
 	<xsd:annotation>
 		<xsd:appinfo>
@@ -7,15 +7,18 @@
 				<Aggregation>main schema</Aggregation>
 				<Audience>e-service developers</Audience>
 				<Coverage>Europe</Coverage>
-				<Creator>First drafted for version 1.0 CEN TC278 WG3 SG6 Editor Nicholas Knowles.  mailto:schemer@netex.org.uk</Creator>
+				<Creator>First drafted for version 1.0 CEN TC278 WG3 SG6 Editor Nicholas Knowles. mailto:schemer@netex.org.uk</Creator>
 				<Date>
 					<Created>2007-06-12</Created>
 				</Date>
 				<Date>
 					<Modified>2007-06-12</Modified>
 				</Date>
+				<Date>
+					<Modified>2023-02-12</Modified> Correct reference to WheelchairEquipmenRef to WheelchairVehicleEquipmentRef. Deprecate WheelchairEquipmenRef
+				</Date>
 				<Description>
-					<p>NeTEx - Network Exchange. This subschema defines VEHICLE EQUIPMENT   types for Place access.</p>
+					<p>NeTEx - Network Exchange. This subschema defines VEHICLE EQUIPMENT types for Place access.</p>
 				</Description>
 				<Format>
 					<MediaType>text/xml</MediaType>
@@ -25,8 +28,9 @@
 				<Identifier>{http://www.netex.org.uk/schemas/1.0/xsd/netex_framework/netex_reusableComponents}netex_equipmentVehiclePassenger_support.xsd</Identifier>
 				<Language>[ISO 639-2/B] ENG</Language>
 				<Publisher>Kizoom Software Ltd, 16 High Holborn, London WC1V 6BX</Publisher>
-				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2014</Copyright>
+				<Rights>
+          Unclassified
+          <Copyright>CEN, Crown Copyright 2009-2023</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -36,13 +40,15 @@
 				<Status>Version 1.0</Status>
 				<Subject>
 					<Category>Arts, recreation and travel, Tourism, Travel (tourism), Transport,
-Air transport, Airports,
-Ports and maritime transport, Ferries (marine),
-Public transport, Bus services, Coach services, Bus stops and stations,
-Rail transport, Railway stations and track, Train services, Underground trains,
-Business and industry, Transport, Air transport , Ports and maritime transport, Public transport,
-Rail transport, Roads and Road transport
-</Category>
+            Air transport, Airports,
+            Ports and maritime transport, Ferries (marine),
+            Public transport, Bus services, Coach
+            services, Bus stops and stations,
+            Rail transport, Railway stations and track, Train services, Underground trains,
+            Business and industry, Transport, Air transport , Ports and maritime
+            transport, Public transport,
+            Rail transport, Roads and Road transport
+          </Category>
 					<Project>CEN TC278 WG3 SG9.</Project>
 				</Subject>
 				<Title>NeTEx Network Exchange - VEHICLE EQUIPMENT identifier types.</Title>
@@ -113,10 +119,29 @@ Rail transport, Roads and Road transport
 	</xsd:simpleType>
 	<xsd:element name="WheelchairVehicleRef" type="WheelchairVehicleRefStructure" substitutionGroup="VehicleEquipmentRef">
 		<xsd:annotation>
-			<xsd:documentation>Reference to a WHEELCHAIR VEHICLE EQUIPMENT.</xsd:documentation>
+			<xsd:documentation>DEPRECATED</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="WheelchairVehicleRefStructure" abstract="false">
+		<xsd:annotation>
+			<xsd:documentation>DEPRECATED</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="VehicleEquipmentRefStructure">
+				<xsd:attribute name="ref" type="WheelchairVehicleEquipmentIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Identifier of a POINT.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:element name="WheelchairVehicleEquipmentRef" type="WheelchairVehicleRefStructure" substitutionGroup="VehicleEquipmentRef">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a WHEELCHAIR VEHICLE EQUIPMENT.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="WheelchairVehicleEquipmentRefStructure" abstract="false">
 		<xsd:annotation>
 			<xsd:documentation>Type for a reference to a WHEELCHAIR VEHICLE EQUIPMENT.</xsd:documentation>
 		</xsd:annotation>
@@ -133,7 +158,7 @@ Rail transport, Roads and Road transport
 	<!-- ======================================================================= -->
 	<xsd:simpleType name="AssistedBoardingLocationEnumeration">
 		<xsd:annotation>
-			<xsd:documentation>Allowed values for  assisted boarding locations.</xsd:documentation>
+			<xsd:documentation>Allowed values for assisted boarding locations.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:normalizedString">
 			<xsd:enumeration value="boardAtAnyDoor"/>
@@ -143,7 +168,7 @@ Rail transport, Roads and Road transport
 	</xsd:simpleType>
 	<xsd:simpleType name="AssistanceNeededEnumeration">
 		<xsd:annotation>
-			<xsd:documentation>Allowed values for  assistance needed.</xsd:documentation>
+			<xsd:documentation>Allowed values for assistance needed.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:normalizedString">
 			<xsd:enumeration value="levelAccess"/>
