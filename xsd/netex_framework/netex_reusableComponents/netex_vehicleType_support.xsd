@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_vehicleType_support">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_vehicleType_support">
 	<xsd:include schemaLocation="netex_equipment_support.xsd"/>
 	<!-- ======================================================================= -->
 	<xsd:annotation>
@@ -14,26 +14,34 @@
 				<Date>
 					<Created>2010-09-04</Created>
 				</Date>
-				<Date><Modified>2011-02-05</Modified>Name Space changes  
+				<Date>
+					<Modified>2011-02-05</Modified>Name Space changes  
 				</Date>
-				<Date><Modified>2012-04-15</Modified>Revise Passenger Capacity 
+				<Date>
+					<Modified>2012-04-15</Modified>Revise Passenger Capacity 
 				</Date>
-				<Date><Modified>2019-04-09</Modified>Add list of vehicle type refs for PARKING and general use
+				<Date>
+					<Modified>2019-04-09</Modified>Add list of vehicle type refs for PARKING and general use
 				</Date>
-				<Date><Modified>2020-08-11</Modified>Issue #110 Add missing fuel types			
+				<Date>
+					<Modified>2020-08-11</Modified>Issue #110 Add missing fuel types			
 				electricContact, battery, dieselBatteryHybrid, petrolBatteryHybrid, biodiesel, hydrogen, liquidGas, methane, ethanol
 				</Date>
-				<Date><Modified>2020-10-04</Modified>NewModes: Add list of VEHICLEs.
+				<Date>
+					<Modified>2020-10-04</Modified>NewModes: Add list of VEHICLEs.
 						Add TransportType, SimpleVehicleType
 						Add fuel types none, other, 
 						ADd Power Tpe enumeration
 						Add Vehicle PRofile
 				</Date>
-				<Date><Modified>2021-04-19</Modified>NewModes: GBFS compatibility Add car to vehicle Types
+				<Date>
+					<Modified>2021-04-19</Modified>NewModes: GBFS compatibility Add car to vehicle Types
 				</Date>
-				<Date><Modified>2021-07-07</Modified>NewModes: Add extra fuel types from APDS
+				<Date>
+					<Modified>2021-07-07</Modified>NewModes: Add extra fuel types from APDS
 				</Date>
-				<Date><Modified>2021-07-08</Modified>NewModes: Correction Add missing VehicleEquipmentProfile relationship to VehicleModel
+				<Date>
+					<Modified>2021-07-08</Modified>NewModes: Correction Add missing VehicleEquipmentProfile relationship to VehicleModel
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -552,6 +560,84 @@ Rail transport, Roads and Road transport
 				<xsd:attribute name="ref" type="PurposeOfEquipmentProfileIdType" use="required">
 					<xsd:annotation>
 						<xsd:documentation>Reference to a PURPOSE OF EQUIPMENT PROFILE.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!-- ===== VEHICLE PEQUIPMENT PROFILE MEMBER ================================================ -->
+	<xsd:simpleType name="VehicleEquipmentProfileMemberIdType">
+		<xsd:annotation>
+			<xsd:documentation>Type for identifier of a VEHICLE EQUIPMENT PROFILE MEMBER.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ObjectIdType"/>
+	</xsd:simpleType>
+	<xsd:element name="VehicleEquipmentProfileMemberRef" type="VehicleEquipmentProfileMemberRefStructure" substitutionGroup="VersionOfObjectRef">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a VEHICLE EQUIPMENT PROFILE MEMBER</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="VehicleEquipmentProfileMemberRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a reference to a VEHICLE EQUIPMENT PROFILE MEMBER.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="VersionOfObjectRefStructure">
+				<xsd:attribute name="ref" type="VehicleEquipmentProfileMemberIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Identifier of referenced VEHICLE EQUIPMENT PROFILE MEMBER</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!-- ==== TYPE OF DRIVER PERMIT  ==================================================== -->
+	<xsd:simpleType name="TypeOfDriverPermitIdType">
+		<xsd:annotation>
+			<xsd:documentation>Type for identifier of an TYPE OF DRIVER PERMIT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="TypeOfValueIdType"/>
+	</xsd:simpleType>
+	<xsd:element name="TypeOfDriverPermitRef" type="TypeOfDriverPermitRefStructure" substitutionGroup="TypeOfValueRef">
+		<xsd:annotation>
+			<xsd:documentation>Reference to an TYPE OF DRIVER PERMIT. +v2.0</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="TypeOfDriverPermitRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a reference to an TYPE OF DRIVER PERMIT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="TypeOfValueRefStructure">
+				<xsd:attribute name="ref" type="TypeOfDriverPermitIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Identifier of an TYPE OF DRIVER PERMIT.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!-- ==== ACCEPTED DRIVER PERMITE ==================================================== -->
+	<xsd:simpleType name="AcceptedDriverPermitIdType">
+		<xsd:annotation>
+			<xsd:documentation>Type for identifier of an ACCEPTED DRIVER PERMIT TYPE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ObjectIdType"/>
+	</xsd:simpleType>
+	<xsd:element name="AcceptedDriverPermitRef" type="AcceptedDriverPermitRefStructure" substitutionGroup="VersionOfObjectRef">
+		<xsd:annotation>
+			<xsd:documentation>Reference to an ACCEPTED DRIVER PERMIT TYPE. +v2.0</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="AcceptedDriverPermitRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a reference to an ACCEPTED DRIVER PERMIT TYPE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="VersionOfObjectRefStructure">
+				<xsd:attribute name="ref" type="AcceptedDriverPermitIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Identifier of an ACCEPTED DRIVER PERMIT TYPE.</xsd:documentation>
 					</xsd:annotation>
 				</xsd:attribute>
 			</xsd:restriction>
