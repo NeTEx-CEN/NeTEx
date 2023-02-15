@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  # Triggers the workflow on push or pull request events but only for the "master" branch
+  push:
+    branches: [ "master", "next" ]
+  pull_request:
+    branches: [ "master", "next" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo "Job was automatically triggered by a ${{ github.event_name }} event for branch ${{ github.ref }}"
+
+      - name: Check out repository code
+        uses: actions/checkout@v3
+        with:
+          # https://github.com/marketplace/actions/add-commit#working-with-prs
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Install xmllint and xsltproc
+        run: |
+          sudo apt-get update
+          sudo apt-get install libxml2-utils xsltproc
+
+      - name: Validate structure and lint XSD and XML files
+        run: ./.github/scripts/validate-and-lint.sh
+
+      - name: Validate OJP XML examples
+        run: ./.github/scripts/validate-examples.sh
+
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v9 # https://github.com/marketplace/actions/add-commit
+        with:
+          default_author: github_actions
+          message: 'Lint and update documentation tables'
