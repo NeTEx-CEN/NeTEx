@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ==== FSYO First Passes==== -->
+<PublicationDelivery version="1.1" xsi:schemaLocation="http://www.netex.org.uk/netex ../../../xsd/NeTEx_publication.xsd" xmlns="http://www.netex.org.uk/netex"
+  xmlns:siri="http://www.siri.org.uk/siri" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <PublicationTimestamp>2022-12-17T09:30:47.0Z</PublicationTimestamp>
+  <ParticipantRef>SYS001</ParticipantRef>
+	<!-- ======WHAT WAS REQUESTED ========== -->
+  <PublicationRefreshInterval>P1M</PublicationRefreshInterval>
+  <Description>Example evaluation contexts for parameter assignments</Description>
+	<!-- =============== RESULTS =========== -->
+  <dataObjects>
+    <CompositeFrame version="1" id="ENT:CompositeFrame:38" dataSourceRef="ENT:fare_data">
+      <frames>
+			  <FareFrame id="ENT:1" version="1">
+          <tariffs>
+            <Tariff version="1" id="ENT:Tariff:1">
+            
+             
+              <fareStructureElements>
+                <FareStructureElement version="1" id="ENT:FareStructureElement:1">
+                  <GenericParameterAssignment id="ENT:GenericParameterAssignment:1" version="1" order="1">
+                    <!-- A matching rule used by Offering service to decide whether or not to offer a product based on this journey. Result -->
+                    <ExecutionContext>
+                      <RuleType>MatchingRule</RuleType>
+                      <DecicionMakers>Offering</DecicionMakers>
+                      <StakeHolders>Offering</StakeHolders>
+                      <ValueType>Fixed</ValueType>
+                      
+                      <Category>Standard</Category>
+                    </ExecutionContext>
+                  </GenericParameterAssignment>
+                </FareStructureElement>
+
+                <FareStructureElement version="1" id="ENT:FareStructureElement:2">
+                  <GenericParameterAssignment id="ENT:GenericParameterAssignment:2" version="1" order="1">
+                    <!-- An access rule (= access rights) describing which zones to include. Decision made by Offering service, but outcome also valid for Ticketing -->
+                    <ExecutionContext>
+                      <RuleType>AccessRule</RuleType>
+                      <TicketingSubType>ActivationAndUsage</TicketingSubType>
+                      <DecicionMakers>Offering</DecicionMakers>
+                      <StakeHolders>Offering Ticketing</StakeHolders>
+                      <ValueType>Selection</ValueType>
+                      <TargetType>FareZone</TargetType>
+                      <Category>Standard</Category>
+                    </ExecutionContext>
+                  </GenericParameterAssignment>
+                </FareStructureElement>
+
+                <FareStructureElement version="1" id="ENT:FareStructureElement:3">
+                  <GenericParameterAssignment id="ENT:GenericParameterAssignment:3" version="1" order="1">
+                    <!-- An access rule (= access rights) describing which zones to include. Decision made by Offering service, but outcome also valid for Ticketing -->
+                    <ExecutionContext>
+                      <RuleType>AccessRule</RuleType>
+                      <TicketingSubType>ActivationAndUsage</TicketingSubType>
+                      <DecicionMakers>Offering</DecicionMakers>
+                      <StakeHolders>Offering Ticketing</StakeHolders>
+                      <ValueType>Selection</ValueType>
+                      <TargetType>FareZone</TargetType>
+                      <Category>Standard</Category>
+                    </ExecutionContext>
+                  </GenericParameterAssignment>
+                </FareStructureElement>
+
+                <FareStructureElement version="1" id="ENT:FareStructureElement:4">
+                  <GenericParameterAssignment id="ENT:GenericParameterAssignment:4" version="1" order="1">
+                    <!-- An access rule (= access rights) describing allowed travel at other PTAs transport means -->
+                    <ExecutionContext>
+                      <RuleType>AccessRule</RuleType>
+                      <TicketingSubType>ActivationAndUsage</TicketingSubType>
+                      <StakeHolders>Ticketing</StakeHolders>
+                      <ValueType>Fixed</ValueType>
+                      <Category>TariffCooperation</Category>
+                      <!-- only added if other GPA gives access right to zone A -->
+                      <ValidOnlyIf operator="contains"> <!-- Try to use existing constructs -->
+                        <GenericParameterAssignmentRef ref="ENT:GenericParameterAssignment:3"/>
+                        <Value>ATB:FareZone:A</Value>
+                      </ValidOnlyIf> 
+                      
+                    </ExecutionContext>
+                    <!-- example of validity parameters -->
+                    <validityParameters>
+                      <FareZoneRef ref="ATB:FareZone:A"/>
+                      <AuthorityRef ref="SJN:Authority:SJN"/>
+                    </validityParameters>
+                  </GenericParameterAssignment>
+                </FareStructureElement>
+
+                <FareStructureElement version="1" id="ENT:FareStructureElement:5">
+                  <GenericParameterAssignment id="ENT:GenericParameterAssignment:5" version="1" order="1">
+                    <!-- An transition rule (for non-activated tickets) describing overall ticket validity (ie 2 years), calculated at FULFILMENT time -->
+                    <ExecutionContext>
+                      <RuleType>TransitionRule</RuleType>
+                      <TicketingSubType>ActivationAndUsage</TicketingSubType>
+                      <StakeHolders>Ticketing</StakeHolders>
+                      <DecisionMakers>Ticketing</DecisionMakers>
+                      <ValueType>Fixed</ValueType>
+                      
+                      <Category>Standard</Category>
+                    </ExecutionContext>
+                    <limitations>
+                      <UsageValidityPeriod id="ENT:UsageValidity:1" version="1">
+                        <!-- 2 year validity with trigger FULFILMENT -->
+                      </UsageValidityPeriod>
+                    </limitations>
+                    
+                  </GenericParameterAssignment>
+                </FareStructureElement>
+                
+                
+
+              </fareStructureElements>
+            </Tariff>
+          </tariffs>
+        </FareFrame>
+      </frames>
+    </CompositeFrame>
+  </dataObjects>
+</PublicationDelivery>
