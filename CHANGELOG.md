@@ -6,8 +6,8 @@ A new Part5 is added for new modes, with examples
 The new Part 5 CEN Specification document describes the additions and changes.
 
 
-
-
+### 2023.02.15  Stretches: Add DUty and Stretch model elements and example
+### 2023.02.015  Add DeckPlan, Seating Plan etc model and example
 
 ### 2021.09.01  NewModes: CommentAction Add __PoolOfVehicles__.
 * Add  __mustpickupanddropoffInSameZone_  value to __mobilityConstraintZone__ restiction values.
