@@ -1,0 +1,875 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_dutyStretch_version">
+	<xsd:include schemaLocation="netex_dutyStretch_support.xsd"/>
+	<xsd:include schemaLocation="netex_duty_support.xsd"/>
+	<xsd:include schemaLocation="../part2_journeyTimes/netex_vehicleService_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_dayType_support.xsd"/>
+	<xsd:include schemaLocation="netex_accountableElement_version.xsd"/>
+	<!-- ======================================================================= -->
+	<xsd:annotation>
+		<xsd:appinfo>
+			<Metadata xmlns="http://www.govtalk.gov.uk/CM/gms-xs">
+				<Aggregation>main schema</Aggregation>
+				<Audience>e-service developers</Audience>
+				<Contributor>V1.0 Christophe Duquesne</Contributor>
+				<Contributor>Nicholas Knowles</Contributor>
+				<Coverage>Europe</Coverage>
+				<Creator>First drafted for NeTEx version 20 CEN TC278 WG3 SG9 Editor Nicholas Knowles.  mailto:schemer@netex.org.uk</Creator>
+				<Date>
+					<Created>2023-02-14</Created>
+				</Date>
+				<Date>
+					<Modified>023-02-145</Modified> Name Space changes  
+				</Date>
+				<Description>
+					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
+					<p>This sub-schema describes the DUTY STRETCH types.</p>
+				</Description>
+				<Format>
+					<MediaType>text/xml</MediaType>
+					<Syntax>http://www.w3.org/2001/XMLSchema</Syntax>
+					<Description>XML schema, W3C Recommendation 2001</Description>
+				</Format>
+				<Identifier>{http://www.netex.org.uk/schemas/1.0/xsd/netex_part_2/part2_vehicleService}netex_dutyStretch_version.xsd</Identifier>
+				<Language>[ISO 639-2/B] ENG</Language>
+				<Publisher>Kizoom, 109-123 Clifton Street, London EC4A 4LD </Publisher>
+				<Relation>
+					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
+				</Relation>
+				<Rights>Unclassified
+					 <Copyright>CEN, Crown Copyright 2009-2023</Copyright>
+				</Rights>
+				<Source>
+					<ul>
+						<li>Derived from the Transmodel, VDV, TransXChange, NEPTUNE, BISON and Trident standards.</li>
+					</ul>
+				</Source>
+				<Status>Version 1.0</Status>
+				<Subject>
+					<Category>Arts, recreation and travel, Tourism, Travel (tourism), Transport,
+Air transport, Airports,
+Ports and maritime transport, Ferries (marine),
+Public transport, Bus services, Coach services, Bus stops and stations,
+Rail transport, Railway stations and track, Train services, Underground trains,
+Business and industry, Transport, Air transport , Ports and maritime transport, Public transport,
+Rail transport, Roads and Road transport
+</Category>
+					<Project>CEN TC278 WG3 SG9.</Project>
+				</Subject>
+				<Title>NeTEx DUTY    types.</Title>
+				<Type>Standard</Type>
+			</Metadata>
+		</xsd:appinfo>
+		<xsd:documentation>NeTEx: DUTY STRETCH types.</xsd:documentation>
+	</xsd:annotation>
+	<!-- ======================================================================= -->
+	<xsd:group name="StretchFrameGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a STRETCH FRAME.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="typesOfTask" type="typesOfTaskInFrame_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>TYPES OF TASK in frame.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="breakFacilities" type="breakFacilitiesInFrame_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>TYPES OF TASK in frame.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="stretches" type="stretchesInFrame_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>STRETCHss in frame.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="spells" type="spellsInFrame_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>SPELLs in frame.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="pauses" type="pausesInFrame_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>SPELLs) in frame.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="stretchesInFrame_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for containment in frame of STRETCHes.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="Stretch" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="spellsInFrame_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for containment in frame of SPELLs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="Spell" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="pausesInFrame_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for containment in frame of PAUSEs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="Pause" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="typesOfTaskInFrame_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for containment in frame of TYPES OF TASK</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="TypeOfTask" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="breakFacilitiesInFrame_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for containment in frame of BREAK FACILITIES</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="BreakFacility" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ==== STRETCH ================================================== -->
+	<xsd:complexType name="stretches_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of STRETCHes.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element ref="StretchRef"/>
+					<xsd:element ref="Stretch"/>
+				</xsd:choice>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="Stretch" abstract="false" substitutionGroup="TimeAccountableActivity_">
+		<xsd:annotation>
+			<xsd:documentation>A period of a driver's DUTY during which (s)he is continuously working without a BREAK.  PAUSEs during which (s)he remains responsible for the vehicle may be included. +v2.0
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="Stretch_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="AccountableActivityGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="TimeAccountableActivityGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="StretchGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="StretchIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="Stretch_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a STRETCH.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="TimeAccountableActivity_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="StretchGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="StretchGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a STRETCH.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:group ref="TimeRangeGroup"/>
+			<xsd:element ref="DutyPartRef" minOccurs="0"/>
+			<xsd:element name="spells" type="spells_RelStructure" minOccurs="0"/>
+			<xsd:element name="breaks" type="breaks_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Breaks at end of in STRETCH</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ==== SPELL================================================== -->
+	<xsd:element name="Spell_" type="DataManagedObjectStructure" abstract="true" substitutionGroup="TimeAccountableActivity_">
+		<xsd:annotation>
+			<xsd:documentation>Dummy Supertype for SPELLs</xsd:documentation>
+		</xsd:annotation>
+		<!--
+		<xsd:unique name="AnyLine">
+			<xsd:selector xpath=".//netex:Line"/>
+			<xsd:field xpath="Id"/>
+		</xsd:unique>
+		<xsd:unique name="AnyLineDirection">
+			<xsd:selector xpath=".//netex:allowedDirections/DirectionRef"/>
+			<xsd:field xpath="@ref"/>
+		</xsd:unique>
+	<xsd:unique name="UniqueLineId">
+			<xsd:annotation>
+				<xsd:appinfo>Line identifiers must be unique for Type/Version</xsd:appinfo>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:Line"/>
+			<xsd:field xpath="@version"/>
+			<xsd:field xpath="./netex:Id"/>
+		</xsd:unique> -->
+	</xsd:element>
+	<xsd:complexType name="spells_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of SPELLs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="Spell_" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="Spell" abstract="true" substitutionGroup="Spell_">
+		<xsd:annotation>
+			<xsd:documentation>A continuous period in a STRETCH, when a driver is on duty on one vehicle or performing one other type of work. +v2.0
+
+
+.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="Spell_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="AccountableActivityGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="TimeAccountableActivityGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="SpellGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="SpellIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="Spell_VersionStructure" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation>Type for a SPELL.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="TimeAccountableActivity_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="SpellGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="SpellGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a SPELL.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="StretchRef" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ==== SPELL================================================== -->
+	<xsd:complexType name="drivingSpells_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of DRIVING SPELLs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element ref="DrivingSpellRef"/>
+					<xsd:element ref="DrivingSpell"/>
+				</xsd:choice>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="DrivingSpell" abstract="false" substitutionGroup="Spell_">
+		<xsd:annotation>
+			<xsd:documentation>A SPELL of driver work between reliefs during which (s)he is driving one vehicle. +v2.0
+.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="DrivingSpell_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="AccountableActivityGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="TimeAccountableActivityGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="SpellGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DrivingSpellGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="DrivingSpellIdType" use="optional">
+						<xsd:annotation>
+							<xsd:documentation>Identifier of ENTITY.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="DrivingSpell_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a DRIVING SPELL.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="Spell_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="DrivingSpellGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="DrivingSpellGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a DRIVING SPELL.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="BlockRef" minOccurs="0"/>
+			<xsd:element name="StartReliefOpportunityRef" type="ReliefOpportunityRefStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Start RELIEF OPPORTUNITY.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="EndReliefOpportunityRef" type="ReliefOpportunityRefStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>End RELIEF OPPORTUNITY.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="fillInTimes" type="fillInTimes_RelStructure" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ==== NON DRIVING SPELL================================================== -->
+	<xsd:element name="NonDrivingSpell" abstract="true" substitutionGroup="DataManagedObject">
+		<xsd:annotation>
+			<xsd:documentation>A SPELL of driver work, when a driver is performing some non-driving TASK or waiting on STAND-BY. +v2.0
+
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="NonDrivingSpell_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="AccountableActivityGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="TimeAccountableActivityGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="SpellGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="NonDrivingSpellGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="NonDrivingSpellIdType" use="optional">
+						<xsd:annotation>
+							<xsd:documentation>Identifier of NON DRIVING SPELL.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="NonDrivingSpell_VersionStructure" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation>Type for a NON DRIVING SPELL.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="Spell_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="NonDrivingSpellGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="NonDrivingSpellGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a NON DRIVING SPELL.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:group ref="TimeRangeGroup"/>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ==== STANDBY ================================================== -->
+	<xsd:element name="Standby" abstract="false" substitutionGroup="Spell_">
+		<xsd:annotation>
+			<xsd:documentation>A non-driving period of a driver's DUTY when (s)he must wait ready to take on any specified piece of work instantly. +v2.0
+.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="Standby_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="AccountableActivityGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="TimeAccountableActivityGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="SpellGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="NonDrivingSpellGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="StandbyGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="StandbyIdType" use="optional">
+						<xsd:annotation>
+							<xsd:documentation>Identifier of STANDBY.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="Standby_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a STANDBY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="NonDrivingSpell_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="StandbyGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="StandbyGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a STANDBY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence/>
+	</xsd:group>
+	<!-- ==== TASK ================================================== -->
+	<xsd:element name="Task" abstract="false" substitutionGroup="Spell_">
+		<xsd:annotation>
+			<xsd:documentation>A non-driving period of a driver's DUTY when (s)he must wait ready to take on any specified piece of work instantly. +v2.0
+.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="Task_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="AccountableActivityGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="TimeAccountableActivityGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="SpellGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="NonDrivingSpellGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="TaskGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="TaskIdType" use="optional">
+						<xsd:annotation>
+							<xsd:documentation>Identifier of TASK.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="Task_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a TASK.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="NonDrivingSpell_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="TaskGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="TaskGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a TASK.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="TypeOfTaskRef" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ===== FILL IN TIME ================================================= -->
+	<xsd:complexType name="fillInTimes_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of FILL IN TIMEs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="FillInTime" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="FillInTime" abstract="false">
+		<xsd:annotation>
+			<xsd:documentation>A non-productive period of driver time. This is either the result of the duty cutting procedure or is introduced to prolong a DRIVING SPELL to a minimum length. +v2.0
+
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="FillInTime_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="AccountableActivityGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="FillInTimeGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="FillInTimeIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="FillInTime_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for FILL IN TIME.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AccountableActivity_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="FillInTimeGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="FillInTimeGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a FILL IN TIME.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="DrivingSpellRef" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ===== BREAK ================================================= -->
+	<xsd:complexType name="pauses_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of PAUSEs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="Pause" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="Pause" abstract="false">
+		<xsd:annotation>
+			<xsd:documentation>A period of paid driver time at the end of a SERVICE JOURNEY or during or after a DEAD RUN when the driver is responsible for the VEHICLE, but resting in  the VEHICLE or in a designated BREAK FACILITY near the POINT where the VEHICLE has stopped. +v2.0
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="Pause_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="AccountableActivityGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="PauseGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="PauseIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="Pause_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for PAUSE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AccountableActivity_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="PauseGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="PauseGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a PAUSE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Duration" type="xsd:duration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Duration of  PAUSE.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="StretchRef" minOccurs="0"/>
+			<xsd:element ref="BreakFacilityRef" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ===== PAUSE ================================================= -->
+	<xsd:complexType name="breaks_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of BREAKs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="Break"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="Break" abstract="false">
+		<xsd:annotation>
+			<xsd:documentation>A period of time within a DUTY PART during which a driver is resting and is not responsible for a vehicle. This time will usually be spent at a BREAK FACILITY. +v2.0
+
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="Break_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="AccountableActivityGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="BreakGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="BreakIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="Break_VersionStructure" abstract="false">
+		<xsd:annotation>
+			<xsd:documentation>Type for BREAK.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AccountableActivity_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="BreakGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="BreakGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a BREAK.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Duration" type="xsd:duration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Duration of BREAK.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="StretchRef" minOccurs="0"/>
+			<xsd:element ref="BreakFacilityRef" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ==== TYPE OF TASK  ====================================================== -->
+	<xsd:element name="TypeOfTask" abstract="false" substitutionGroup="TypeOfEntity">
+		<xsd:annotation>
+			<xsd:documentation>A classification of TASKs. +v2.0.
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="TypeOfTask_ValueStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="TypeOfValueGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="TypeOfTaskGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="TypeOfTaskIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="TypeOfTask_ValueStructure" abstract="false">
+		<xsd:annotation>
+			<xsd:documentation>Type for a TYPE OF TASK.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="TypeOfEntity_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="TypeOfTaskGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="TypeOfTaskGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a TYPE OF TASK.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="StartTimebandRef" type="TimebandRefStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Start within TIME BAND.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="EndTimebandRef" type="TimebandRefStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>End  within TIME BAND</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ==== BREAK FACILITY====================================================== -->
+	<xsd:element name="BreakFacility" abstract="false" substitutionGroup="TypeOfEntity">
+		<xsd:annotation>
+			<xsd:documentation>A classification of BREAK FACILITIEs. +v2.0.
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="BreakFacility_ValueStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="TypeOfValueGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="BreakFacilityGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="BreakFacilityIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="BreakFacility_ValueStructure" abstract="false">
+		<xsd:annotation>
+			<xsd:documentation>Type for a BREAK FACILITY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="TypeOfEntity_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="BreakFacilityGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="BreakFacilityGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a BREAK FACILITY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence/>
+	</xsd:group>
+	<!-- ======================================================================= -->
+</xsd:schema>

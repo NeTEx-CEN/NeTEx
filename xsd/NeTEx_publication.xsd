@@ -845,12 +845,12 @@ Correct COnstraints for PointOnRoute
 		<!-- =====TypeOfPoint============================== -->
 		<!-- =====Point============================== -->
 		<xsd:keyref name="Point_AnyKeyRef" refer="netex:Point_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:PointRef | .//netex:ProjectedObjectRef"/>
+			<xsd:selector xpath=".//netex:PointRef | .//netex:ProjectedObjectRef |  .//netex:StartPointRef  |  .//netex:EndPointRef " />
 			<xsd:field xpath="@ref"/>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
 		<xsd:key name="Point_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:Point | .//netex:RoutePoint | .//netex:TimingPoint | .//netex:ReliefPoint | .//netex:ParkingPoint | .//netex:GaragePoint | .//netex:ScheduledStopPoint | .//netex:RoadJunction | .//netex:RailwayJunction | .//netex:WireJunction | .//netex:ActivationPoint | .//netex:BeaconPoint | .//netex:TrafficControlPoint | .//netex:PathJunction | .//netex:FareScheduledStopPoint | .//netex:BorderPoint | .//netex:VehicleMeetingPoint"/>
+			<xsd:selector xpath=".//netex:Point | .//netex:RoutePoint | .//netex:TimingPoint | .//netex:ReliefPoint | .//netex:ParkingPoint | .//netex:GaragePoint | .//netex:ScheduledStopPoint | .//netex:RoadJunction | .//netex:RailwayJunction | .//netex:WireJunction | .//netex:ActivationPoint | .//netex:BeaconPoint | .//netex:TrafficControlPoint | .//netex:PathJunction | .//netex:FareScheduledStopPoint | .//netex:BorderPoint | .//netex:VehicleMeetingPoint  | .//netex:FareScheduledStopPoint "/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
@@ -3184,13 +3184,13 @@ Correct COnstraints for PointOnRoute
 			<xsd:annotation>
 				<xsd:documentation>Every [Timeband Id + Version] must be unique within document.</xsd:documentation>
 			</xsd:annotation>
-			<xsd:selector xpath=".//netex:Timeband"/>
+			<xsd:selector xpath=".//netex:Timeband "/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:unique>
 		<!-- =====Timeband Key ========================== -->
 		<xsd:keyref name="Timeband_AnyKeyRef" refer="netex:Timeband_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:TimebandRef"/>
+			<xsd:selector xpath=".//netex:TimebandRef  | .//netex:StartTimebandRef | .//netex:EndTimebandRef | .//netex:StartUnpaidTimebandRef | .//netex:EndUnpaidTimebandRef"/>
 			<xsd:field xpath="@ref"/>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
@@ -5949,7 +5949,7 @@ Correct COnstraints for PointOnRoute
 		</xsd:unique>
 		<!-- =====ScheduledStopPoint Key ========================== -->
 		<xsd:keyref name="ScheduledStopPoint_KeyRef" refer="netex:ScheduledStopPoint_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:ScheduledStopPointRef | .//netex:ServiceLink/netex:FromPointRef | .//netex:ServiceLink/netex:ToPointRef | .//netex:FromStopPointRef | .//netex:ToStopPointRef | .//netex:NextStopPointRef | .//netex:AtStopPointRef | .//netex:StartStopPointRef | .//netex:EndStopPointRef | .//netex:FareScheduledStopPointRef | .//netex:AccountingStopPointRef | .//netex:AdjacentStopPointRef"/>
+			<xsd:selector xpath=".//netex:ScheduledStopPointRef | .//netex:ServiceLink/netex:FromPointRef | .//netex:ServiceLink/netex:ToPointRef | .//netex:FromStopPointRef | .//netex:ToStopPointRef | .//netex:NextStopPointRef | .//netex:AtStopPointRef | .//netex:StartStopPointRef | .//netex:EndStopPointRef |   .//netex:AccountingStopPointRef | .//netex:AdjacentStopPointRef"/>
 			<xsd:field xpath="@ref"/>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
@@ -7727,6 +7727,90 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@version"/>
 		</xsd:key>
 		<!-- =====DRIVER SCHEDULE Constraints========================= -->
+		<!-- =====AssignedDuty ============================== -->
+		<!-- =====AssignedDuty unique========================== -->
+		<xsd:unique name="AssignedDuty_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [AssignedDuty Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:AssignedDuty"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====AssignedDuty Key ========================== -->
+		<xsd:keyref name="AssignedDuty_KeyRef" refer="netex:AssignedDuty_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:AssignedDutyRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="AssignedDuty_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:AssignedDuty"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====SpareDuty ============================== -->
+		<!-- =====SpareDuty unique========================== -->
+		<xsd:unique name="SpareDuty_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [SpareDuty Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:SpareDuty"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====SpareDuty Key ========================== -->
+		<xsd:keyref name="SpareDuty_KeyRef" refer="netex:SpareDuty_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:SpareDutyRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="SpareDuty_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:SpareDuty"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====ContinuousDutyType ============================== -->
+		<!-- =====ContinuousDutyType unique========================== -->
+		<xsd:unique name="ContinuousDutyType_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [ContinuousDutyType Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:ContinuousDutyType"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====ContinuousDutyType Key ========================== -->
+		<xsd:keyref name="ContinuousDutyType_KeyRef" refer="netex:ContinuousDutyType_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:ContinuousDutyTypeRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="ContinuousDutyType_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:ContinuousDutyType"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====SplitDutyType ============================== -->
+		<!-- =====SplitDutyType unique========================== -->
+		<xsd:unique name="SplitDutyType_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [SplitDutyType Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:SplitDutyType"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====SplitDutyType Key ========================== -->
+		<xsd:keyref name="SplitDutyType_KeyRef" refer="netex:SplitDutyType_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:SplitDutyTypeRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="SplitDutyType_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:SplitDutyType"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
 		<!-- =====DutyPart ============================== -->
 		<!-- =====DutyPart unique========================== -->
 		<xsd:unique name="DutyPart_UniqueBy_Id_Version">
@@ -7748,45 +7832,45 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====AccountableElementPart ============================== -->
-		<!-- =====AccountableElementPart unique========================== -->
-		<xsd:unique name="AccountableElementPart_UniqueBy_Id_Version">
+		<!-- =====TimeAccountableActivityPart ============================== -->
+		<!-- =====TimeAccountableActivityPart unique========================== -->
+		<xsd:unique name="TimeAccountableActivityPart_UniqueBy_Id_Version">
 			<xsd:annotation>
-				<xsd:documentation>Every [AccountableElementPart Id + Version] must be unique within document.</xsd:documentation>
+				<xsd:documentation>Every [TimeAccountableActivityPart Id + Version] must be unique within document.</xsd:documentation>
 			</xsd:annotation>
-			<xsd:selector xpath=".//netex:AccountableElementPart"/>
+			<xsd:selector xpath=".//netex:TimeAccountableActivityPart"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:unique>
-		<!-- =====AccountableElementPart Key ========================== -->
-		<xsd:keyref name="AccountableElementPart_KeyRef" refer="netex:AccountableElementPart_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:AccountableElementPartRef"/>
+		<!-- =====TimeAccountableActivityPart Key ========================== -->
+		<xsd:keyref name="TimeAccountableActivityPart_KeyRef" refer="netex:TimeAccountableActivityPart_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:TimeAccountableActivityPartRef"/>
 			<xsd:field xpath="@ref"/>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
-		<xsd:key name="AccountableElementPart_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:AccountableElementPart"/>
+		<xsd:key name="TimeAccountableActivityPart_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:TimeAccountableActivityPart"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====AccountableElement ============================== -->
-		<!-- =====AccountableElement unique========================== -->
-		<xsd:unique name="AccountableElement_UniqueBy_Id_Version">
+		<!-- =====TimeAccountableActivity ============================== -->
+		<!-- =====TimeAccountableActivity unique========================== -->
+		<xsd:unique name="TimeAccountableActivity_UniqueBy_Id_Version">
 			<xsd:annotation>
-				<xsd:documentation>Every [AccountableElement Id + Version] must be unique within document.</xsd:documentation>
+				<xsd:documentation>Every [TimeAccountableActivity Id + Version] must be unique within document.</xsd:documentation>
 			</xsd:annotation>
-			<xsd:selector xpath=".//netex:AccountableElement"/>
+			<xsd:selector xpath=".//netex:TimeAccountableActivity"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:unique>
-		<!-- =====AccountableElement Key ========================== -->
-		<xsd:keyref name="AccountableElement_KeyRef" refer="netex:AccountableElement_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:AccountableElementRef"/>
+		<!-- =====TimeAccountableActivity Key ========================== -->
+		<xsd:keyref name="TimeAccountableActivity_KeyRef" refer="netex:TimeAccountableActivity_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:TimeAccountableActivityRef"/>
 			<xsd:field xpath="@ref"/>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
-		<xsd:key name="AccountableElement_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:AccountableElement"/>
+		<xsd:key name="TimeAccountableActivity_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:TimeAccountableActivity"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
@@ -10928,6 +11012,321 @@ Correct COnstraints for PointOnRoute
 		</xsd:keyref>
 		<xsd:key name="ServiceBookingArrangement_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:ServiceBookingArrangement"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<!-- =====Employee============================== -->
+		<!-- =====Employee unique========================== -->
+		<xsd:unique name="Employee_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [Employee Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:Employee"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====Employee Key ========================== -->
+		<xsd:keyref name="Employee_KeyRef" refer="netex:Employee_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:EmployeeRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="Employee_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:Employee"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====TypeOfQualification============================== -->
+		<!-- =====TypeOfQualification unique========================== -->
+		<xsd:unique name="TypeOfQualification_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [TypeOfQualification Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:TypeOfQualification"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====TypeOfQualification Key ========================== -->
+		<xsd:keyref name="TypeOfQualification_KeyRef" refer="netex:TypeOfQualification_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:TypeOfQualificationRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="TypeOfQualification_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:TypeOfQualification"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====Qualification============================== -->
+		<!-- =====Qualification unique========================== -->
+		<xsd:unique name="Qualification_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [Qualification Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:Qualification"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====Qualification Key ========================== -->
+		<xsd:keyref name="Qualification_KeyRef" refer="netex:Qualification_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:QualificationRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="Qualification_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:Qualification"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====Driver============================== -->
+		<!-- =====Driver unique========================== -->
+		<xsd:unique name="Driver_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [Driver Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:Driver"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====Driver Key ========================== -->
+		<xsd:keyref name="Driver_KeyRef" refer="netex:Driver_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:DriverRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="Driver_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:Driver"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====Stretch============================== -->
+		<!-- =====Stretch unique========================== -->
+		<xsd:unique name="Stretch_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [Stretch Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:Stretch"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====Stretch Key ========================== -->
+		<xsd:keyref name="Stretch_KeyRef" refer="netex:Stretch_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:StretchRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="Stretch_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:Stretch"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====DrivingSpell============================== -->
+		<!-- =====DrivingSpell unique========================== -->
+		<xsd:unique name="DrivingSpell_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [DrivingSpell Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:DrivingSpell"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====DrivingSpell Key ========================== -->
+		<xsd:keyref name="DrivingSpell_KeyRef" refer="netex:DrivingSpell_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:DrivingSpellRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="DrivingSpell_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:DrivingSpell"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====StandBy============================== -->
+		<!-- =====StandBy unique========================== -->
+		<xsd:unique name="StandBy_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [StandBy Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:StandBy"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====StandBy Key ========================== -->
+		<xsd:keyref name="StandBy_KeyRef" refer="netex:StandBy_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:StandByRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="StandBy_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:StandBy"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====Task============================== -->
+		<!-- =====Task unique========================== -->
+		<xsd:unique name="Task_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [Task Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:Task"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====Task Key ========================== -->
+		<xsd:keyref name="Task_KeyRef" refer="netex:Task_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:TaskRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="Task_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:Task"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====TypeOfTask============================== -->
+		<!-- =====TypeOfTask unique========================== -->
+		<xsd:unique name="TypeOfTask_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [TypeOfTask Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:TypeOfTask"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====TypeOfTask Key ========================== -->
+		<xsd:keyref name="TypeOfTask_KeyRef" refer="netex:TypeOfTask_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:TypeOfTaskRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="TypeOfTask_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:TypeOfTask"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====Break============================== -->
+		<!-- =====Break unique========================== -->
+		<xsd:unique name="Break_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [Break Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:Break"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====Break Key ========================== -->
+		<xsd:keyref name="Break_KeyRef" refer="netex:Break_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:BreakRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="Break_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:Break"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====Pause============================== -->
+		<!-- =====Pause unique========================== -->
+		<xsd:unique name="Pause_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [Pause Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:Pause"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====Pause Key ========================== -->
+		<xsd:keyref name="Pause_KeyRef" refer="netex:Pause_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:PauseRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="Pause_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:Pause"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====FillInTime============================== -->
+		<!-- =====FillInTime unique========================== -->
+		<xsd:unique name="FillInTime_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [FillInTime Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:FillInTime"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====FillInTime Key ========================== -->
+		<xsd:keyref name="FillInTime_KeyRef" refer="netex:FillInTime_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:FillInTimeRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="FillInTime_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:FillInTime"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====BreakFacility============================== -->
+		<!-- =====BreakFacility unique========================== -->
+		<xsd:unique name="BreakFacility_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [BreakFacility Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:BreakFacility"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====BreakFacility Key ========================== -->
+		<xsd:keyref name="BreakFacility_KeyRef" refer="netex:BreakFacility_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:BreakFacilityRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="BreakFacility_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:BreakFacility"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====TimeAllowance============================== -->
+		<!-- =====TimeAllowance unique========================== -->
+		<xsd:unique name="TimeAllowance_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [TimeAllowance Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:TimeAllowance"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====TimeAllowance Key ========================== -->
+		<xsd:keyref name="TimeAllowance_KeyRef" refer="netex:TimeAllowance_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:TimeAllowanceRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="TimeAllowance_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:TimeAllowance"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====TypeOfTimeAllowance============================== -->
+		<!-- =====TypeOfTimeAllowance unique========================== -->
+		<xsd:unique name="TypeOfTimeAllowance_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [TypeOfTimeAllowance Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:TypeOfTimeAllowance"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====TypeOfTimeAllowance Key ========================== -->
+		<xsd:keyref name="TypeOfTimeAllowance_KeyRef" refer="netex:TypeOfTimeAllowance_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:TypeOfTimeAllowanceRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="TypeOfTimeAllowance_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:TypeOfTimeAllowance"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
