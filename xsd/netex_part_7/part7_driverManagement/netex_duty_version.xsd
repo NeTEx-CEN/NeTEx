@@ -3,9 +3,8 @@
 	<xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_organisation_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_employee_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_dayType_support.xsd"/>
-	<xsd:include schemaLocation="netex_DutyType_support.xsd"/>
-	<xsd:include schemaLocation="../part2_frames/netex_timetableFrame_support.xsd"/>
-	<xsd:include schemaLocation="../part2_journeyTimes/netex_vehicleService_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_part_2/part2_frames/netex_timetableFrame_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_part_2/part2_journeyTimes/netex_vehicleService_support.xsd"/>
 	<xsd:include schemaLocation="netex_duty_support.xsd"/>
 	<xsd:include schemaLocation="netex_dutyType_version.xsd"/>
 	<xsd:include schemaLocation="netex_dutyStretch_version.xsd"/>
@@ -36,7 +35,7 @@
 					<Modified>2023-02-15</Modified>NJSK : Fix:  Add DayType to Duty 
 				</Date>
 				<Date>
-					<Modified>2023-02-15</Modified>Add missing Duty Elements: TYPE OF DUTY, SPLIT DUTY TYPE, CONTINUOUS DUTY TYPE TYPE
+					<Modified>2023-02-15</Modified>Add missing Duty Elements: TYPE OF DUTY, ASSIGNED DUTY, SpARE DUTY, SPLIT DUTY TYPE, CONTINUOUS DUTY TYPE
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -95,16 +94,6 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>DUTIes in frame.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="dutyParts" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>DUTY PARTs (Runs) in frame.</xsd:documentation>
-				</xsd:annotation>
-				<xsd:complexType>
-					<xsd:complexContent>
-						<xsd:extension base="dutyPartsInFrame_RelStructure"/>
-					</xsd:complexContent>
-				</xsd:complexType>
-			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:complexType name="dutiesInFrame_RelStructure">
@@ -113,9 +102,10 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="containmentAggregationStructure">
-				<xsd:sequence>
-					<xsd:element ref="Duty" maxOccurs="unbounded"/>
-				</xsd:sequence>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element ref="AssignedDuty"/>
+					<xsd:element ref="SpareDuty"/>
+				</xsd:choice>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
@@ -137,9 +127,16 @@ Rail transport, Roads and Road transport
 		</xsd:complexContent>
 	</xsd:complexType>
 	<!-- === DUTY ================================================== -->
-	<xsd:element name="Duty" abstract="false" substitutionGroup="DataManagedObject">
+	<xsd:element name="Duty_" type="DataManagedObjectStructure" abstract="true" substitutionGroup="TimeAccountableActivity_">
 		<xsd:annotation>
-			<xsd:documentation>The work to be performed by a driver on a particular DAY TYPE.</xsd:documentation>
+			<xsd:documentation>Dummy Type
+. +v2.0
+</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="Duty" abstract="true" substitutionGroup="Duty_">
+		<xsd:annotation>
+			<xsd:documentation>The work to be performed by a driver on a particular DAY TYPE. +v2.0</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -160,7 +157,7 @@ Rail transport, Roads and Road transport
 			</xsd:complexContent>
 		</xsd:complexType>
 	</xsd:element>
-	<xsd:complexType name="Duty_VersionStructure">
+	<xsd:complexType name="Duty_VersionStructure" abstract="true">
 		<xsd:annotation>
 			<xsd:documentation>Type for DUTY.</xsd:documentation>
 		</xsd:annotation>
@@ -191,14 +188,9 @@ Rail transport, Roads and Road transport
 			<xsd:group ref="DutyTimingGroup"/>
 			<xsd:element ref="TimetableFrameRef" minOccurs="0"/>
 			<xsd:element ref="OrganisationalUnitRef" minOccurs="0"/>
-			<xsd:element name="typesOfQualification" type="typesOfQualificationRefs_RelStructure" minOccurs="0">
+			<xsd:element name="requiresQualifications" type="typesOfQualificationRefs_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>TYPEs of QUALIFICATION  required to undertake DUTY.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="dutyParts" type="dutyParts_RelStructure" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Parts of a DUTY.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -225,6 +217,103 @@ Rail transport, Roads and Road transport
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
+	</xsd:group>
+	<!-- === ASSIGNED DUTY ================================================== -->
+	<xsd:element name="AssignedDuty" abstract="false" substitutionGroup="Duty_">
+		<xsd:annotation>
+			<xsd:documentation>A DUTY to which specific timed work has been assigned. +v2.0
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="AssignedDuty_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DutyGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="AssignedDutyGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="AssignedDutyIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="AssignedDuty_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for ASSIGNED DUTY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="Duty_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="AssignedDutyGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="AssignedDutyGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a ASSIGNED DUTY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="dutyParts" type="dutyParts_RelStructure">
+				<xsd:annotation>
+					<xsd:documentation>Parts of a ASSIGNED DUTY.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- === SPARE DUTY ================================================== -->
+	<xsd:element name="SpareDuty" abstract="false" substitutionGroup="Duty_">
+		<xsd:annotation>
+			<xsd:documentation>A DUTY to which specific timed work has not yet been assigned. +v2.0</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="SpareDuty_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DutyGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="SpareDutyGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="SpareDutyIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="SpareDuty_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for SPARE DUTY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="Duty_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="SpareDutyGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="SpareDutyGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a SPARE DUTY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence/>
 	</xsd:group>
 	<!-- ==== DUTY PARTS ================================================== -->
 	<xsd:complexType name="dutyParts_RelStructure">

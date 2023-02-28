@@ -2,9 +2,10 @@
 <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_dutyStretch_version">
 	<xsd:include schemaLocation="netex_dutyStretch_support.xsd"/>
 	<xsd:include schemaLocation="netex_duty_support.xsd"/>
-	<xsd:include schemaLocation="../part2_journeyTimes/netex_vehicleService_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_facility_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_dayType_support.xsd"/>
-	<xsd:include schemaLocation="netex_accountableElement_version.xsd"/>
+	<xsd:include schemaLocation="../../netex_part_2/part2_journeyTimes/netex_vehicleService_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_part_2/part2_vehicleService/netex_accountableActivity_version.xsd"/>
 	<!-- ======================================================================= -->
 	<xsd:annotation>
 		<xsd:appinfo>
@@ -19,7 +20,7 @@
 					<Created>2023-02-14</Created>
 				</Date>
 				<Date>
-					<Modified>023-02-145</Modified> Name Space changes  
+					<Modified>023-02-35</Modified>Add  FACILITY Set to BREAK FACILITY, revise time attributes
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -218,7 +219,11 @@ Rail transport, Roads and Road transport
 		<xsd:sequence>
 			<xsd:group ref="TimeRangeGroup"/>
 			<xsd:element ref="DutyPartRef" minOccurs="0"/>
-			<xsd:element name="spells" type="spells_RelStructure" minOccurs="0"/>
+			<xsd:element name="spells" type="spells_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>SPELLs in StRETCH.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element name="breaks" type="breaks_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Breaks at end of in STRETCH</xsd:documentation>
@@ -310,6 +315,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Elements for a SPELL.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
+			<xsd:group ref="TimeRangeGroup"/>
 			<xsd:element ref="StretchRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
@@ -392,7 +398,11 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>End RELIEF OPPORTUNITY.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="fillInTimes" type="fillInTimes_RelStructure" minOccurs="0"/>
+			<xsd:element name="fillInTimes" type="fillInTimes_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>FILL IN TIMEs for DRIVING SPELL.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ==== NON DRIVING SPELL================================================== -->
@@ -451,7 +461,11 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Elements for a NON DRIVING SPELL.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:group ref="TimeRangeGroup"/>
+			<xsd:element name="Duration" type="xsd:duration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Duration of BREAK.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ==== STANDBY ================================================== -->
@@ -759,6 +773,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Elements for a BREAK.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
+			<xsd:group ref="TimeRangeGroup"/>
 			<xsd:element name="Duration" type="xsd:duration" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Duration of BREAK.</xsd:documentation>
@@ -869,7 +884,9 @@ Rail transport, Roads and Road transport
 		<xsd:annotation>
 			<xsd:documentation>Elements for a BREAK FACILITY.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:sequence/>
+		<xsd:sequence>
+			<xsd:element ref="FacilitySetRef" minOccurs="0"/>
+		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->
 </xsd:schema>

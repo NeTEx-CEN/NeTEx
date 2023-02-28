@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_accountableElement_version">
-	<xsd:include schemaLocation="netex_accountableElement_support.xsd"/>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_accountableActivity_version">
+	<xsd:include schemaLocation="netex_accountableActivity_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_responsibility/netex_responsibility_version.xsd"/>
 	<!-- =================== ============================================ -->
 	<xsd:annotation>
@@ -53,13 +53,38 @@ Rail transport, Roads and Road transport
 </Category>
 					<Project>CEN TC278 WG3 SG9.</Project>
 				</Subject>
-				<Title>NeTEx TIME ACCOUNTABLE ACTIVITY    types.</Title>
+				<Title>NeTEx ACCOUNTABLE ACTIVITY    types.</Title>
 				<Type>Standard</Type>
 			</Metadata>
 		</xsd:appinfo>
-		<xsd:documentation>NeTEx: TIME ACCOUNTABLE ACTIVITY  types.</xsd:documentation>
+		<xsd:documentation>NeTEx: ACCOUNTABLE ACTIVITY  types.</xsd:documentation>
 	</xsd:annotation>
-	<!-- === TIME ACCOUNTABLE ACTIVITY  =========================================== -->
+	<!-- =================== ============================================ -->
+	<xsd:group name="TimeAllowanceFrameGroup">
+		<xsd:annotation>
+			<xsd:documentation>TIME ALLOWANCE Elements for a  FRAME.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="timeAgreements" type="timeAgreementsInFrame_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>TIME AGREEMENTs in frame.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="timeAgreementsInFrame_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for containment in frame of TIME AGREEMENTs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="TimeAgreement" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ===  ACCOUNTABLE ACTIVITY  =========================================== -->
 	<xsd:element name="AccountableActivity_" type="DataManagedObjectStructure" abstract="true" substitutionGroup="DataManagedObject">
 		<xsd:annotation>
 			<xsd:documentation>Dummy Supertype for ACCOUNTABLE ACTIVITY.</xsd:documentation>
@@ -220,7 +245,11 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Time to complete TIME ACCOUNTABLE ACTIVITY.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="timeAllowances" type="timeAllowances_RelStructure" minOccurs="0"/>
+			<xsd:element name="timeAllowances" type="timeAllowances_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>TIME ALLOWANCes for TIME ACCOUNTABLE ACTIVITY.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ==== TIME RANGE ====================================================== -->
@@ -236,7 +265,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element name="StartDayOffset" type="DayOffsetType" default="0" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Day offset for start time. Number of days after the current operating day for Duty y . Default is 0 for same day.</xsd:documentation>
+					<xsd:documentation>Day offset for start time. Number of days after the current operating day. Default is 0 for same day.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="EndTime" type="xsd:time" minOccurs="0">
@@ -313,6 +342,66 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Duration of  TIME ALLOWANCE.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element ref="TimeAgreementRef" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- === TIME AGREEMENT  =========================================== -->
+	<xsd:element name="TimeAgreement" abstract="false" substitutionGroup="DataManagedObject">
+		<xsd:annotation>
+			<xsd:documentation>A wage agreement under which a set of TIME ALLOWANCEs for specific DUTIEs and SPELLs have been agreed.
+. +v2.0</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="TimeAgreement_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="VersionedChildGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="TimeAgreementGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="TimeAgreementIdType"/>
+					<xsd:attribute name="modification" type="ModificationEnumeration" use="optional" default="new">
+						<xsd:annotation>
+							<xsd:documentation>Nature of last modification: new, revise, delete, unchanged, delta. Default is "new".</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="TimeAgreement_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for TIME AGREEMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="DataManagedObjectStructure">
+				<xsd:sequence>
+					<xsd:group ref="TimeAgreementGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="TimeAgreementGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for an TIME AGREEMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Name" type="MultilingualString" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Name of TIME AGREEMENT.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Description" type="MultilingualString" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Description of TIME AGREEMENT.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ==== TYPE OF ALLOWANCE ============================================== -->
@@ -333,6 +422,9 @@ Rail transport, Roads and Road transport
 						</xsd:sequence>
 						<xsd:sequence>
 							<xsd:group ref="TypeOfValueGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="TypeOfTimeAllowanceGroup"/>
 						</xsd:sequence>
 					</xsd:sequence>
 					<xsd:attribute name="id" type="TypeOfTimeAllowanceIdType"/>

@@ -4,14 +4,9 @@ This example shows the encoding of a Diver  Schedule with DUTIES, STRETCHES in b
 
 It gives an example of DUTIES, DUTY PARTS, 
 
-
 See SimpleVehicleSchedue01 example  for explanation of Blocks , vehicle journeys etc 
 
-
 NB The relief data data is bogus and the relationship to vehicle services doesnt fully make sense
-
- 
-
 
 Imagines a driver schedule  made up of two DUTies
 ...(1) DUTY dty_01_morning...Morning Duty (SPLIT DUTY TYPE)
@@ -55,7 +50,6 @@ B...12:05...13:30...14:40...17:15...18:25.......21:05
 A...12:15...13:40...14:50...17:25...18:35.......21:15
 
 
-
 The BLOCK starts and ends at at a garage G1, and goes to a parking P1 between blocks so  the runs are
 	GA, ABC, CBA, ABC, CP, PC, CBA, ABC, BCA, ABC, CP, PC,CBA, ABC, CBA,AG
 ..
@@ -83,8 +77,10 @@ P1..W10M....................12:55-:-:->13:05.........................16:30-:-:->
 ...G-grgpt1...................P1-pkgpt1............................P1-pkgpt1........................C.............. G-grgpt1...}
 ...........................RELIEF POINT C............................P1-pkgpt1.................................................}	 
 
-...ro_L24_01@r01 11:00....ro_L24_01@r02...12:55..................ro_L24_02@r01..16:30..........ro_L24_03@r02..16:30 ...........}:RELIEF OPPORTUNITIES
-..........................ro_L24_02@r01...13:40..................ro_L24_03@r01..16:30..........ro_L24L342@r01..16:30 .............}
+...ro_L24_01@r01 11:00....ro_L24_01@r02...12:55..................ro_L24_02@r01..16:30..........ro_L24_03@r02..18:05...........}:RELIEF OPPORTUNITIES
+..........................ro_L24_02@r01...13:40..................ro_L24_03@r01..16:30..........ro_L24_03@r03..18:30 .............}
+
+There are separae DUTIES for the MORNING and AFTERNOON
 
 <==dty_01_morning.=================>|||<===dty_02_afternoon.===================================================================>|||}::DUTIES
 ...06:00+13:00......................|||....13:00+22:00.......1..................................................................|||}
@@ -94,7 +90,7 @@ P1..W10M....................12:55-:-:->13:05.........................16:30-:-:->
 ...06:00+10:50...|..........13:00....||..13:00+18:00......................................||..18:00+22:00........................||} 
 ...prebreak......\......post break....\\____________......................................||.....................................||} 
 ..................\______________..................\\.....................................||.....................................||}
-.06:00+10:50.<=sby 01@01@01@01..\__________.........\\....................................||.....................................||}:SPELLS (DRIVING SPELL,STANDBY, TASK) 
+.06:00+10:50.<=sby 01@01@01@01..\_________..........\\....................................||.....................................||}:SPELLS (DRIVING SPELL,STANDBY, TASK) 
 .11:00+12:00.........<=drsp 01@01@01@02=>.\..........\\...................................||.....................................||} 
 ....................._____________________/...........\\..................................||.....................................||} 
 .13:00+12:10......./....<=brk_01@01@01@02@01>..........||.................................||.....................................||}
@@ -123,13 +119,14 @@ Imagines a day made up of two DUTies
 ...............TASK tsk_02@02@01@02 Cash up........................(22:00+22:10)
 
 
-There are RELIEF  OPPORTUNITIES
-...(1) xj:ro_L24_01@r01...11:00...BLOCK: ops:blk_L24_01...GARAGE POINT : grgpt1
-...(2) xj:ro_L24_01@r02...12:25...BLOCK: ops:blk_L24_01...PARKING POINT : pkgpt1
-...(2) xj:blk_L24_01@rl01	 11:10		       BLOCK:   ops:blk_L24_01	RELIEF POINT 				 pkgpt1	 grgpt1 
-...(2)  xj:vj_3o	 12:20		outbound       BLOCK:   ops:blk_L24_01		 
-
-
+There are seven RELIEF  OPPORTUNITIES
+...(1) xj:ro_L24_01@r01...11:00...BLOCK: ops:blk_L24_01...GARAGE POINT: G1-grgpt1
+...(2) xj:ro_L24_01@r02...12:55...BLOCK: ops:blk_L24_01...PARKING POINT: P1-pkgpt1
+...(3) xj:ro_L24_02@r01...13:40...BLOCK: ops:blk_L24_02...RELIEF POINT:	P1-pkgpt1 
+...(4) xj:ro_L24_02@r02...16:30...BLOCK: ops:blk_L24_02...RELIEF POINT:	P1-pkgpt1 
+...(5) xj:ro_L24_03@r01...16:30...BLOCK: ops:blk_L24_03...RELIEF POINT:	P1-pkgpt1  
+...(6) xj:ro_L24_03@r02...18:00...BLOCK: ops:blk_L24_03...RELIEF POINT:	P1-pkgpt1  
+...(7) xj:ro_L24_03@r03...18:30...BLOCK: ops:blk_L24_03...RELIEF POINT:	P1-pkgpt1   
 
 (C) 2023 CEN NeTEx
 
@@ -194,9 +191,69 @@ Overview
 				<DefaultCodespaceRef ref="kx"/>
 			</FrameDefaults>
 			<frames>
+				<!-- =====Resource frame===== -->
+				<ResourceFrame version="any" id="xj:rs_01">
+					<Name>Service calendar 01 to 03 2011</Name>
+					<typesOfValue>
+						<ValueSet version="any" id="xj:types_of_qualification" nameOfClass="TypeOfQualification">
+							<Name>Qualifications</Name>
+							<values>
+								<TypeOfQualification version="any" id="xj:toq_double_decker">
+									<Name>Certified Double Decker Bus driver</Name>
+								</TypeOfQualification>
+							</values>
+						</ValueSet>
+					</typesOfValue>
+					<siteFacilitySets>
+						<SiteFacilitySet version="any" id="xj:drop_in">
+							<CateringFacilityList>foodVendingMachine</CateringFacilityList>
+							<SanitaryFacilityList>toilet</SanitaryFacilityList>
+						</SiteFacilitySet>
+					</siteFacilitySets>
+				</ResourceFrame>
+				<InfrastructureFrame version="any" id="xif:InfrastructureFrame:iff_01">
+					<Name>Infra  Frame with garage def</Name>
+					<garages>
+						<Garage version="any" id="mybus:grg1">
+							<Name>Garage G1 </Name>
+							<Description/>
+							<members>
+								<GaragePointRef version="any" ref="mybus:grgpt1"/>
+							</members>
+						</Garage>
+					</garages>
+					<vehicleAndCrewPoints>
+						<GaragePoint version="any" id="mybus:grgpt1">
+							<Name>Garage Point in G1 (also a parking and relief point)</Name>
+						</GaragePoint>
+						<ParkingPoint version="any" id="mybus:pkgpt1">
+							<Name>Parking Point P1 (Also a relief point)</Name>
+						</ParkingPoint>
+					</vehicleAndCrewPoints>
+					<vehicleTypes>
+						<VehicleType version="any" created="2023-12-17T09:30:47.0Z" id="xj:vt-447">
+							<Name>Big red bus</Name>
+							<PassengerCapacity>
+								<SeatingCapacity>50</SeatingCapacity>
+								<StandingCapacity>20</StandingCapacity>
+								<WheelchairPlaceCapacity>2</WheelchairPlaceCapacity>
+							</PassengerCapacity>
+							<Length>30</Length>
+						</VehicleType>
+						<VehicleType version="any" created="2023-12-17T09:30:47.0Z" id="xj:vt-450">
+							<Name>Small blue red bus</Name>
+							<PassengerCapacity>
+								<SeatingCapacity>20</SeatingCapacity>
+								<StandingCapacity>120</StandingCapacity>
+								<WheelchairPlaceCapacity>0</WheelchairPlaceCapacity>
+							</PassengerCapacity>
+							<Length>20</Length>
+						</VehicleType>
+					</vehicleTypes>
+				</InfrastructureFrame>
 				<!-- =====Service Calendar frame===== -->
 				<ServiceCalendarFrame version="any" id="xj:scf_01">
-					<Name>Servicie calendar  01  to 03 2011</Name>
+					<Name>Service calendar 01 to 03 2011</Name>
 					<ServiceCalendar version="any" id="xj:sc_01">
 						<FromDate>2023-11-01</FromDate>
 						<ToDate>2024-03-31</ToDate>
@@ -270,7 +327,7 @@ Overview
 						</timebands>
 					</ServiceCalendar>
 				</ServiceCalendarFrame>
-				<!-- =====Service====== -->
+				<!-- ==== Service FRAME ===== -->
 				<ServiceFrame id="kx:svf_12" version="any">
 					<Name>Winter timetable for route 12  </Name>
 					<routeLinks>
@@ -516,7 +573,7 @@ Overview
 							</linksInSequence>
 						</ServicePattern>
 					</servicePatterns>
-							<timingLinks>
+					<timingLinks>
 						<TimingLink version="any" id="kx:tl_ssp_001_to_ssp_077">
 							<Name>Overalll Stop A to Stop C</Name>
 							<FromPointRef version="any" ref="mybus:ssp_001" xsi:type="ScheduledStopPointRefStructure"/>
@@ -524,7 +581,7 @@ Overview
 						</TimingLink>
 						<TimingLink version="any" id="kx:tl_grg1_to_ssp_001">
 							<Name>G1 to A</Name>
-							<FromPointRef version="any" ref="mybus:grgpt1" xsi:type="GaragePointRefStructure"/>					 
+							<FromPointRef version="any" ref="mybus:grgpt1" xsi:type="GaragePointRefStructure"/>
 							<ToPointRef version="any" ref="mybus:ssp_001" xsi:type="ScheduledStopPointRefStructure"/>
 						</TimingLink>
 						<TimingLink version="any" id="kx:tl_ssp_001_to_ssp_002">
@@ -545,11 +602,11 @@ Overview
 						<TimingLink version="any" id="kx:tl_ssp_077_to_pkg1">
 							<Name>C to P1</Name>
 							<FromPointRef version="any" ref="mybus:ssp_077" xsi:type="ScheduledStopPointRefStructure"/>
-							<ToPointRef version="any" ref="mybus:pkgpt1" xsi:type="ParkingPointRefStructure"/>	
+							<ToPointRef version="any" ref="mybus:pkgpt1" xsi:type="ParkingPointRefStructure"/>
 						</TimingLink>
 						<TimingLink version="any" id="kx:tl_pkg1_to_ssp_077">
 							<Name>P1 to  C</Name>
-							<FromPointRef version="any" ref="mybus:pkgpt1" xsi:type="ParkingPointRefStructure"/>	
+							<FromPointRef version="any" ref="mybus:pkgpt1" xsi:type="ParkingPointRefStructure"/>
 							<ToPointRef version="any" ref="mybus:ssp_077" xsi:type="ScheduledStopPointRefStructure"/>
 						</TimingLink>
 						<TimingLink version="any" id="kx:tl_ssp_077_to_ssp_002">
@@ -565,9 +622,10 @@ Overview
 						<TimingLink version="any" id="kx:tl_ssp_001_to_grg1">
 							<Name>A to G1</Name>
 							<FromPointRef version="any" ref="mybus:ssp_001" xsi:type="ScheduledStopPointRefStructure"/>
-							<ToPointRef version="any" ref="mybus:grgpt1" xsi:type="GaragePointRefStructure"/>	
+							<ToPointRef version="any" ref="mybus:grgpt1" xsi:type="GaragePointRefStructure"/>
 						</TimingLink>
-					</timingLinks>		<timingPatterns>
+					</timingLinks>
+					<timingPatterns>
 						<!--- TIMING PATTERN======== -->
 						<TimingPattern version="any" id="kx:tp_12o">
 							<Name>Line 12 outbound TIMING PATTERN</Name>
@@ -1629,7 +1687,7 @@ Overview
 						</DeadRun>
 					</vehicleJourneys>
 				</TimetableFrame>
-				<!--  ============= VEHICLE SCHEDULES  ============== -->
+				<!--  ==== VEHICLE SCHEDULE FRAME  ============== -->
 				<VehicleScheduleFrame version="any" id="ops:VSF_23_O">
 					<Name>BLOCKS Winter timetable for VS Line 12 Example</Name>
 					<!-- === BLOCKs  ==== ========  -->
@@ -1638,6 +1696,9 @@ Overview
 							<Description>First Block G1 out to  P1</Description>
 							<PreparationDuration>PT10M</PreparationDuration>
 							<FinishingDuration>PT10H</FinishingDuration>
+							<dayTypes>
+								<DayTypeRef version="any" ref="xj:DT_01"/>
+							</dayTypes>
 							<!--- VehicleTypeRef    -->
 							<VehicleTypeRef version="any" ref="xj:vt-447"/>
 							<StartPointRef ref="mybus:grgpt1"/>
@@ -1665,12 +1726,14 @@ Overview
 							</blockParts>
 							<reliefOpportunities>
 								<ReliefOpportunity version="any" id="xj:ro_L24_01@01">
-									<Time>12:15:00.0Z</Time>
+									<Time>11:10:00.0Z</Time>
 									<BlockRef version="any" ref="ops:blk_L24_01"/>
+									<GaragePointRef version="any" ref="mybus:grgpt1"/>
 								</ReliefOpportunity>
-										<ReliefOpportunity version="any" id="xj:ro_L24_01@02">
-									<Time>12:15:00.0Z</Time>
+								<ReliefOpportunity version="any" id="xj:ro_L24_01@02">
+									<Time>12:55:00.0Z</Time>
 									<BlockRef version="any" ref="ops:blk_L24_01"/>
+									<ParkingPointRef version="any" ref="mybus:pkgpt1"/>
 								</ReliefOpportunity>
 							</reliefOpportunities>
 						</Block>
@@ -1678,6 +1741,9 @@ Overview
 							<Description>Parking to Parking</Description>
 							<PreparationDuration>PT0M</PreparationDuration>
 							<FinishingDuration>PT0M</FinishingDuration>
+							<dayTypes>
+								<DayTypeRef version="any" ref="xj:DT_01"/>
+							</dayTypes>
 							<VehicleTypeRef version="any" ref="xj:vt-447"/>
 							<StartPointRef ref="mybus:pkgpt1"/>
 							<EndPointRef ref="mybus:pkgpt1"/>
@@ -1705,12 +1771,14 @@ Overview
 							</blockParts>
 							<reliefOpportunities>
 								<ReliefOpportunity version="any" id="xj:ro_L24_02@01">
-									<Time>12:15:00.0Z</Time>
+									<Time>13:40:00.0Z</Time>
 									<BlockRef version="any" ref="ops:blk_L24_02"/>
+									<ParkingPointRef version="any" ref="mybus:pkgpt1"/>
 								</ReliefOpportunity>
-										<ReliefOpportunity version="any" id="xj:ro_L24_02@@r02">
-									<Time>12:15:00.0Z</Time>
+								<ReliefOpportunity version="any" id="xj:ro_L24_02@02">
+									<Time>16:30:00.0Z</Time>
 									<BlockRef version="any" ref="ops:blk_L24_02"/>
+									<ParkingPointRef version="any" ref="mybus:pkgpt1"/>
 								</ReliefOpportunity>
 							</reliefOpportunities>
 						</Block>
@@ -1718,6 +1786,9 @@ Overview
 							<Description>Parking back to G1</Description>
 							<PreparationDuration>PT10M</PreparationDuration>
 							<FinishingDuration>PT0M</FinishingDuration>
+							<dayTypes>
+								<DayTypeRef version="any" ref="xj:DT_01"/>
+							</dayTypes>
 							<VehicleTypeRef version="any" ref="xj:vt-447"/>
 							<StartPointRef ref="mybus:pkgpt1"/>
 							<EndPointRef ref="mybus:grgpt1"/>
@@ -1742,11 +1813,31 @@ Overview
 									<VehicleTypeRef version="any" ref="xj:vt-447"/>
 								</BlockPart>
 							</blockParts>
+							<reliefOpportunities>
+								<ReliefOpportunity version="any" id="xj:ro_L24_03@01">
+									<Time>16:30:00.0Z</Time>
+									<BlockRef version="any" ref="ops:blk_L24_03"/>
+									<ParkingPointRef version="any" ref="mybus:pkgpt1"/>
+								</ReliefOpportunity>
+								<ReliefOpportunity version="any" id="xj:ro_L24_03@02">
+									<Time>18:00:00.0Z</Time>
+									<BlockRef version="any" ref="ops:blk_L24_03"/>
+									<ParkingPointRef version="any" ref="mybus:pkgpt1"/>
+								</ReliefOpportunity>
+								<ReliefOpportunity version="any" id="xj:ro_L24_03@03">
+									<Time>18:30:00.0Z</Time>
+									<BlockRef version="any" ref="ops:blk_L24_03"/>
+									<ParkingPointRef version="any" ref="mybus:pkgpt1"/>
+								</ReliefOpportunity>
+							</reliefOpportunities>
 						</Block>
 						<Block version="any" id="ops:blk_L24N_04">
 							<Description>G1 Night back to G1</Description>
 							<PreparationDuration>PT10M</PreparationDuration>
 							<FinishingDuration>PT0M</FinishingDuration>
+							<dayTypes>
+								<DayTypeRef version="any" ref="xj:DT_01"/>
+							</dayTypes>
 							<VehicleTypeRef version="any" ref="xj:vt-447"/>
 							<StartPointRef ref="mybus:grgpt1"/>
 							<EndPointRef ref="mybus:grgpt1"/>
@@ -1790,8 +1881,20 @@ Overview
 						</VehicleService>
 					</vehicleServices>
 				</VehicleScheduleFrame>
+				<!--  ==== DRIVER SCHEDULE FRAME  ============== -->
 				<DriverScheduleFrame version="any" id="xj:dtf_01">
 					<Name>Driver Schedules for Line 1</Name>
+					<timeAgreements>
+						<TimeAgreement version="any" id="xj:agreement_2022+2024">
+							<validityConditions>
+								<ValidBetween>
+									<FromDate>2022-01-01T00:00:00Z</FromDate>
+									<ToDate>2024-12-12T00:00:00Z</ToDate>
+								</ValidBetween>
+							</validityConditions>
+							<Name>Wage Agreement 2022-2024</Name>
+						</TimeAgreement>
+					</timeAgreements>
 					<!--- === DUTIES ===  -->
 					<dutyTypes>
 						<SplitDutyType version="any" id="ops:morning_with_tea_break">
@@ -1808,9 +1911,12 @@ Overview
 						</ContinuousDutyType>
 					</dutyTypes>
 					<duties>
-						<Duty version="any" id="ops:dty_01_morning">
+						<AssignedDuty version="any" id="ops:dty_01_morning">
 							<Description>First duty</Description>
 							<SplitDutyTypeRef version="any" ref="ops:morning_with_tea_break"/>
+							<requiresQualifications>
+								<TypeOfQualificationRef versionRef="any" ref="xj:toq_double_decker"/>
+							</requiresQualifications>
 							<dutyParts>
 								<DutyPart version="any" id="ops:dtypt_01@01">
 									<Name>Morning Shift</Name>
@@ -1844,23 +1950,26 @@ Overview
 													<AccountingTime>PT1H15M</AccountingTime>
 													<PreparationDuration>PT5M</PreparationDuration>
 													<FinishingDuration>PT10M</FinishingDuration>
-												<!--	<StartTime>10:50:00Z</StartTime>
-													<EndTime>12:00:00Z</EndTime> -->
 													<timeAllowances>
 														<TimeAllowance version="any" id="ops:ta_dsp_01@01@01@02">
 															<Duration>PT1H10M</Duration>
+															<TimeAgreementRef version="any" ref="xj:driving_agreement_2022+2024"/>
 														</TimeAllowance>
 													</timeAllowances>
+													<StartTime>10:50:00Z</StartTime>
+													<EndTime>12:00:00Z</EndTime>
 													<BlockRef version="any" ref="ops:blk_L24_01"/>
 													<StartReliefOpportunityRef version="any" ref="xj:r01"/>
 													<EndReliefOpportunityRef version="any" ref="xj:r01"/>
-												</DrivingSpell> 
+												</DrivingSpell>
 											</spells>
 											<breaks>
 												<Break version="any" id="ops:brk_01@01@01@01">
 													<Name>Tea Break end</Name>
 													<AccountingFactor>B127</AccountingFactor>
 													<AccountingTime>PT10M</AccountingTime>
+													<StartTime>12:00:00Z</StartTime>
+													<EndTime>12:10:00Z</EndTime>
 													<Duration>PT10M</Duration>
 													<BreakFacilityRef version="any" ref="ops:drop_in_center_01"/>
 												</Break>
@@ -1873,6 +1982,7 @@ Overview
 											<timeAllowances>
 												<TimeAllowance version="any" id="ops:ta_str_01@02">
 													<Duration>PT50M</Duration>
+													<TimeAgreementRef version="any" ref="xj:driving_agreement_2022+2024"/>
 												</TimeAllowance>
 											</timeAllowances>
 											<StartTime>12:10:00Z</StartTime>
@@ -1884,13 +1994,15 @@ Overview
 													<AccountingTime>PT1H</AccountingTime>
 													<PreparationDuration>PT2M</PreparationDuration>
 													<FinishingDuration>PT2M</FinishingDuration>
-														
 													<timeAllowances>
 														<TimeAllowance version="any" id="ops:dtypt_01@01@02@01">
 															<Duration>PT1H10M</Duration>
+															<TimeAgreementRef version="any" ref="xj:driving_agreement_2022+2024"/>
 														</TimeAllowance>
 													</timeAllowances>
-														<BlockRef version="any" ref="ops:blk_L24_02"/>
+													<StartTime>12:10:00Z</StartTime>
+													<EndTime>13:00:00Z</EndTime>
+													<BlockRef version="any" ref="ops:blk_L24_02"/>
 												</DrivingSpell>
 												<Task version="any" id="ops:tsk_01@01@02@02_cashup">
 													<Name>Cash up</Name>
@@ -1899,6 +2011,7 @@ Overview
 													<timeAllowances>
 														<TimeAllowance version="any" id="ops:ta_tsk_01@01@02@02">
 															<Duration>PT10M</Duration>
+															<TimeAgreementRef version="any" ref="xj:driving_agreement_2022+2024"/>
 														</TimeAllowance>
 													</timeAllowances>
 													<StartTime>13:02:00Z</StartTime>
@@ -1917,8 +2030,8 @@ Overview
 									</pauses>
 								</DutyPart>
 							</dutyParts>
-						</Duty>
-						<Duty version="any" id="ops:dty_02_afternoon">
+						</AssignedDuty>
+						<AssignedDuty version="any" id="ops:dty_02_afternoon">
 							<Description>Second duty</Description>
 							<ContinuousDutyTypeRef version="any" ref="ops:continuous_afternoon"/>
 							<dutyParts>
@@ -1952,7 +2065,9 @@ Overview
 															<Duration>PT5H</Duration>
 														</TimeAllowance>
 													</timeAllowances>
-														<BlockRef version="any" ref="ops:blk_L24_03"/>
+													<StartTime>03:00:00Z</StartTime>
+													<EndTime>16:00:00Z</EndTime>
+													<BlockRef version="any" ref="ops:blk_L24_03"/>
 													<StartReliefOpportunityRef version="any" ref="xj:r01"/>
 													<EndReliefOpportunityRef version="any" ref="xj:r01"/>
 												</DrivingSpell>
@@ -1990,7 +2105,9 @@ Overview
 															<Duration>PT3H</Duration>
 														</TimeAllowance>
 													</timeAllowances>
-														<BlockRef version="any" ref="ops:blk_L24_01"/>
+													<StartTime>19:00:00Z</StartTime>
+													<EndTime>22:00:00Z</EndTime>
+													<BlockRef version="any" ref="ops:blk_L24_01"/>
 													<StartReliefOpportunityRef version="any" ref="xj:r01"/>
 													<EndReliefOpportunityRef version="any" ref="xj:r01"/>
 												</DrivingSpell>
@@ -2003,7 +2120,7 @@ Overview
 															<Duration>PT10M</Duration>
 														</TimeAllowance>
 													</timeAllowances>
-													<StartTime>02:02:00Z</StartTime>
+													<StartTime>22:02:00Z</StartTime>
 													<EndTime>22:12:00Z</EndTime>
 													<TypeOfTaskRef version="any" ref="ops:register_cash_takings"/>
 												</Task>
@@ -2012,7 +2129,7 @@ Overview
 									</stretches>
 								</DutyPart>
 							</dutyParts>
-						</Duty>
+						</AssignedDuty>
 					</duties>
 					<!--- === STRETCHES ===  -->
 					<typesOfTask>
@@ -2029,6 +2146,7 @@ Overview
 					<breakFacilities>
 						<BreakFacility version="any" id="ops:drop_in_center_01">
 							<Name>Drop in centre on ALpha Road</Name>
+							<SiteFacilitySetRef version="any" ref="xj:drop_in"/>
 						</BreakFacility>
 					</breakFacilities>
 					<!--- === DRIVER TRIPS ===  -->
@@ -2063,46 +2181,6 @@ Overview
 						</DriverTrip>
 					</driverTrips>
 				</DriverScheduleFrame>
-				<InfrastructureFrame version="any" id="xif:InfrastructureFrame:iff_01">
-					<Name>Infra  Frame with garage def</Name>
-					<garages>
-						<Garage version="any" id="mybus:grg1">
-							<Name>Garage G1 </Name>
-							<Description/>
-							<members>
-								<GaragePointRef version="any" ref="mybus:grgpt1"/>
-							</members>
-						</Garage>
-					</garages>
-					<vehicleAndCrewPoints>
-						<GaragePoint version="any" id="mybus:grgpt1">
-							<Name>Garage Point in G1 (also a parking and relief point)</Name>
-						</GaragePoint>
-						<ParkingPoint version="any" id="mybus:pkgpt1">
-							<Name>Parking Point P1 (Also a relief point)</Name>
-						</ParkingPoint>
-					</vehicleAndCrewPoints>
-					<vehicleTypes>
-						<VehicleType version="any" created="2023-12-17T09:30:47.0Z" id="xj:vt-447">
-							<Name>Big red bus</Name>
-							<PassengerCapacity>
-								<SeatingCapacity>50</SeatingCapacity>
-								<StandingCapacity>20</StandingCapacity>
-								<WheelchairPlaceCapacity>2</WheelchairPlaceCapacity>
-							</PassengerCapacity>
-							<Length>30</Length>
-						</VehicleType>
-						<VehicleType version="any" created="2023-12-17T09:30:47.0Z" id="xj:vt-450">
-							<Name>Small blue red bus</Name>
-							<PassengerCapacity>
-								<SeatingCapacity>20</SeatingCapacity>
-								<StandingCapacity>120</StandingCapacity>
-								<WheelchairPlaceCapacity>0</WheelchairPlaceCapacity>
-							</PassengerCapacity>
-							<Length>20</Length>
-						</VehicleType>
-					</vehicleTypes>
-				</InfrastructureFrame>
 			</frames>
 		</CompositeFrame>
 	</dataObjects>

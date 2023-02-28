@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_duty_support">
-	<xsd:include schemaLocation="netex_accountableElement_support.xsd"/>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_driverTrip_support">
+	<xsd:include schemaLocation="../../netex_framework/netex_responsibility/netex_relationship_support.xsd"/>
 	<xsd:annotation>
 		<xsd:appinfo>
 			<Metadata xmlns="http://www.govtalk.gov.uk/CM/gms-xs">
@@ -11,13 +11,10 @@
 				<Coverage>Europe</Coverage>
 				<Creator>First drafted for NeTEx version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.  mailto:schemer@netex.org.uk</Creator>
 				<Date>
-					<Created>2010-09-04</Created>
+					<Created>2023-02-14</Created>
 				</Date>
 				<Date>
-					<Modified>2011-02-05</Modified> Name Space changes  
-				</Date>
-				<Date>
-					<Modified>2023-02-15</Modified>Add missing Duty Elements: TYPE OF DUTY, SPLIT DUTY TYPE, CONTINUOUS DUTY TYPE TYPE
+					<Modified>2023-02-14</Modified>Split out from Duty
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -28,7 +25,7 @@
 					<Syntax>http://www.w3.org/2001/XMLSchema</Syntax>
 					<Description>XML schema, W3C Recommendation 2001</Description>
 				</Format>
-				<Identifier>{http://www.netex.org.uk/schemas/1.0/xsd/netex_part_2/part2_vehicleService}netex_duty_support.xsd</Identifier>
+				<Identifier>{http://www.netex.org.uk/schemas/1.0/xsd/netex_part_2/part2_vehicleService}netex_driverTrip_support</Identifier>
 				<Language>[ISO 639-2/B] ENG</Language>
 				<Publisher>Kizoom, 109-123 Clifton Street, London EC4A 4LD </Publisher>
 				<Relation>
@@ -39,7 +36,7 @@
 				</Rights>
 				<Source>
 					<ul>
-						<li>Derived from the Transmodel, VDV, TransXChange, NEPTUNE, BISON and Trident standards.</li>
+						<li>Derived from the Transmodel, VDV,  standards.</li>
 					</ul>
 				</Source>
 				<Status>Version 1.0</Status>
@@ -58,56 +55,55 @@ Rail transport, Roads and Road transport
 				<Type>Standard</Type>
 			</Metadata>
 		</xsd:appinfo>
-		<xsd:documentation>NeTEx: DUTY identifier types.</xsd:documentation>
+		<xsd:documentation>NeTEx: DRIVER TRIP identifier types.</xsd:documentation>
 	</xsd:annotation>
-	<!-- ==== DUTY ======================================================= -->
-	<xsd:simpleType name="DutyIdType">
+	<!-- === DRIVER====================================================== -->
+	<xsd:simpleType name="DriverTripIdType">
 		<xsd:annotation>
-			<xsd:documentation>Type for identifier of a DUTY.</xsd:documentation>
+			<xsd:documentation>Type for identifier of a DRIVER TRIP.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="ObjectIdType"/>
 	</xsd:simpleType>
-	<xsd:element name="DutyRef" type="DutyRefStructure" substitutionGroup="VersionOfObjectRef">
+	<xsd:element name="DriverTripRef" type="DriverTripRefStructure" substitutionGroup="VersionOfObjectRef">
 		<xsd:annotation>
-			<xsd:documentation>Reference to a DUTY.</xsd:documentation>
+			<xsd:documentation>Reference to a DRIVER TRIP. +v2.0</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:complexType name="DutyRefStructure">
+	<xsd:complexType name="DriverTripRefStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for Reference to a DUTY.</xsd:documentation>
+			<xsd:documentation>Type for Reference to a DRIVER TRIP.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:simpleContent>
 			<xsd:restriction base="VersionOfObjectRefStructure">
-				<xsd:attribute name="ref" type="DutyIdType" use="required">
+				<xsd:attribute name="ref" type="DriverTripIdType" use="required">
 					<xsd:annotation>
-						<xsd:documentation>Identifier of a Duty.</xsd:documentation>
+						<xsd:documentation>Identifier of a DRIVER TRIP.</xsd:documentation>
 					</xsd:annotation>
 				</xsd:attribute>
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
-	<!-- ======================================================================= -->
-	<!-- ===== DUTY PART ==================================================== -->
-	<xsd:simpleType name="DutyPartIdType">
+	<!-- === DRIVER TRIP TIME -->
+	<xsd:simpleType name="DriverTripTimeIdType">
 		<xsd:annotation>
-			<xsd:documentation>Type for identifier of a DUTY PART.</xsd:documentation>
+			<xsd:documentation>Type for identifier of a DRIVER TRIP TIME.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="TimeAccountableActivityIdType"/>
+		<xsd:restriction base="ObjectIdType"/>
 	</xsd:simpleType>
-	<xsd:element name="DutyPartRef" type="DutyPartRefStructure" substitutionGroup="VersionOfObjectRef">
+	<xsd:element name="DriverTripTimeRef" type="DriverTripTimeRefStructure" substitutionGroup="VersionOfObjectRef">
 		<xsd:annotation>
-			<xsd:documentation>Reference to a DUTY PART.</xsd:documentation>
+			<xsd:documentation>Reference to a DRIVER TRIP TIME. +v2.0</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:complexType name="DutyPartRefStructure">
+	<xsd:complexType name="DriverTripTimeRefStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for Reference to a DUTY PART.</xsd:documentation>
+			<xsd:documentation>Type for Reference to a DRIVER TRIP TIME.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:simpleContent>
-			<xsd:restriction base="TimeAccountableActivityRefStructure">
-				<xsd:attribute name="ref" type="DutyPartIdType" use="required">
+			<xsd:restriction base="VersionOfObjectRefStructure">
+				<xsd:attribute name="ref" type="DriverTripTimeIdType" use="required">
 					<xsd:annotation>
-						<xsd:documentation>Identifier of a BLOCK PART.</xsd:documentation>
+						<xsd:documentation>Identifier of a DRIVER TRIP TIME.</xsd:documentation>
 					</xsd:annotation>
 				</xsd:attribute>
 			</xsd:restriction>
