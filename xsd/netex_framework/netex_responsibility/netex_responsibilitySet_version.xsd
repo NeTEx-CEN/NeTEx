@@ -228,10 +228,39 @@ Rail transport, Roads and Road transport
 		</xsd:sequence>
 	</xsd:group>
 	<!-- =====Assignments of Roles============================================================= -->
-	<xsd:element name="ResponsibilityRoleAssignment" type="ResponsibilityRoleAssignment_VersionedChildStructure">
+	<xsd:element name="ResponsibilityRoleAssignment">
 		<xsd:annotation>
 			<xsd:documentation>Assignment of a specific RESPONSIBILITY ROLE to a specific organisation and/or subdivision.</xsd:documentation>
 		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="ResponsibilityRoleAssignment_VersionedChildStructure">
+						<xsd:sequence>
+							<xsd:sequence>
+								<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+							</xsd:sequence>
+							<xsd:sequence>
+								<xsd:group ref="VersionedChildGroup"/>
+							</xsd:sequence>
+							<xsd:sequence>
+								<xsd:element ref="ResponsibilitySetRef" minOccurs="0"/>
+								<xsd:element name="Description" type="MultilingualString" minOccurs="0">
+									<xsd:annotation>
+										<xsd:documentation>Description of RESPONSIBILITY ROLE ASSIGNMENT.</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+								<xsd:group ref="ResponsibilityRolesGroup"/>
+								<xsd:group ref="ResponsiblePartiesGroup">
+									<xsd:annotation>
+										<xsd:documentation>Identification of holder of responsibility. May be specified to different levels of specificity.</xsd:documentation>
+									</xsd:annotation>
+								</xsd:group>
+							</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="ResponsibilityRoleAssignmentIdType" use="required"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
 	</xsd:element>
 	<xsd:complexType name="ResponsibilityRoleAssignment_VersionedChildStructure">
 		<xsd:annotation>
@@ -239,7 +268,7 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="VersionedChildStructure">
-				<xsd:sequence>
+				<xsd:sequence> <!-- TODO: This should become a group, and reused in restriction -->
 					<xsd:element ref="ResponsibilitySetRef" minOccurs="0"/>
 					<xsd:element name="Description" type="MultilingualString" minOccurs="0">
 						<xsd:annotation>

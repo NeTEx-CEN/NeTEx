@@ -287,11 +287,37 @@ Rail transport, Roads and Road transport
 	<!-- ===ALIAS As (DEPRECATED)======================================================== -->
 	<xsd:element name="SimpleAvailabilityCondition" abstract="false" substitutionGroup="ValidityCondition_">
 		<xsd:annotation>
-			<xsd:documentation>Simple version of an  AVAILABILITY CONDITION used in order to characterise a given VERSION of a VERSION FRAME. Comprises a simple period and DAY TYPE.</xsd:documentation>
+			<xsd:documentation>Simple version of an AVAILABILITY CONDITION used in order to characterise a given VERSION of a VERSION FRAME. Comprises a simple period and DAY TYPE.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
-				<xsd:extension base="ValidDuring_VersionStructure"/>
+				<xsd:restriction base="ValidDuring_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:group ref="ValidityConditionGroup"/>
+						<xsd:sequence> <!-- TODO: form group, change restriction -->
+							<xsd:element name="FromDate" type="xsd:dateTime" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Start date of AVAILABILITY CONDITION.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="ToDate" type="xsd:dateTime" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>End of AVAILABILITY CONDITION. Date is INCLUSIVE.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="ValidDuringGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="SimpleAvailabilityConditionIdType" use="required"/>
+				</xsd:restriction>
 			</xsd:complexContent>
 		</xsd:complexType>
 	</xsd:element>
