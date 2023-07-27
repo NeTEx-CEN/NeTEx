@@ -176,8 +176,7 @@ Rail transport, Roads and Road transport
 				<xsd:sequence>
 					<xsd:element ref="AccessRightParameterAssignment_" maxOccurs="unbounded">
 						<xsd:annotation>
-							<xsd:documentation>A sequence or set of CONTROLLABLE ELEMENTs to which rules for limitation of access rights and calculation of prices (fare structure) are applied.
-</xsd:documentation>
+							<xsd:documentation>A sequence or set of CONTROLLABLE ELEMENTs to which rules for limitation of access rights and calculation of prices (fare structure) are applied.</xsd:documentation>
 						</xsd:annotation>
 					</xsd:element>
 				</xsd:sequence>
@@ -189,10 +188,31 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>The assignment of a fare parameter (referring to geography, time, quality or usage) to an element of a fare system (access right, validated access, control mean, etc.).</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:element name="AccessRightParameterAssignment" type="AccessRightParameterAssignment_VersionStructure" abstract="false" substitutionGroup="AccessRightParameterAssignment_">
+	<xsd:element name="AccessRightParameterAssignment" abstract="false" substitutionGroup="AccessRightParameterAssignment_">
 		<xsd:annotation>
 			<xsd:documentation>The assignment of a fare parameter (referring to geography, time, quality or usage) to an element of a fare system (access right, validated access, control mean, etc.).</xsd:documentation>
 		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="AccessRightParameterAssignment_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="AssignmentGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="AccessRightParameterAssignmentGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="AccessRightParameterAssignmentIdType" use="required"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
 	</xsd:element>
 	<xsd:complexType name="AccessRightParameterAssignment_VersionStructure" abstract="true">
 		<xsd:annotation>

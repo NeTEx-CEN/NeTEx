@@ -405,13 +405,40 @@ Rail transport, Roads and Road transport
 		<xsd:annotation>
 			<xsd:documentation>Generic specialisation of LOCAL SERVICE for CUSTOMER SERVICEs (lost properties, meeting point, complaints, etc.).</xsd:documentation>
 		</xsd:annotation>
+		<!-- TODO: Matthias?
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="CustomerService_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EquipmentGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="LocalServiceGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="CustomerServiceIdType" use="required"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		-->
 	</xsd:element>
 	<xsd:complexType name="CustomerService_VersionStructure" abstract="false">
 		<xsd:annotation>
 			<xsd:documentation>Type for CUSTOMER SERVICE.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
-			<xsd:extension base="LocalService_VersionStructure"/>
+			<xsd:extension base="LocalService_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="CustomerServiceGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
 	<xsd:group name="CustomerServiceGroup">
@@ -441,6 +468,12 @@ Rail transport, Roads and Road transport
 						<xsd:sequence>
 							<xsd:group ref="LocalServiceGroup"/>
 						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="CustomerServiceGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="ComplaintsServiceGroup"/>
+						</xsd:sequence>
 					</xsd:sequence>
 					<xsd:attribute name="id" type="ComplaintsServiceIdType" use="required"/>
 				</xsd:restriction>
@@ -452,7 +485,11 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Type for a COMPLAINTS SERVICE.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
-			<xsd:extension base="CustomerService_VersionStructure"/>
+			<xsd:extension base="CustomerService_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="ComplaintsServiceGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
 	<xsd:group name="ComplaintsServiceGroup">
