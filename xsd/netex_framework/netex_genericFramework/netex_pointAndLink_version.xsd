@@ -115,10 +115,33 @@ Rail transport, Roads and Road transport
 		</xsd:complexContent>
 	</xsd:complexType>
 	<!-- ======================================================================= -->
-	<xsd:element name="Point" type="Point_VersionStructure" abstract="false" substitutionGroup="DataManagedObject">
+	<xsd:element name="Point_" type="Point_VersionStructure" abstract="true" substitutionGroup="DataManagedObject">
+		<xsd:annotation>
+			<xsd:documentation>A dummy Point.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="Point" abstract="false" substitutionGroup="Point_">
 		<xsd:annotation>
 			<xsd:documentation>A 0-dimensional node of the network used for the spatial description of the network. POINTs may be located by a LOCATION in a given LOCATING SYSTEM.</xsd:documentation>
 		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="Point_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="PointGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="PointIdType" use="required"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
 	</xsd:element>
 	<xsd:complexType name="Point_VersionStructure" abstract="false">
 		<xsd:annotation>
@@ -286,7 +309,7 @@ Rail transport, Roads and Road transport
 							<xsd:group ref="PointOnLinkGroup"/>
 						</xsd:sequence>
 					</xsd:sequence>
-					<xsd:attribute name="id" type="PointOnLinkIdType"/>
+					<xsd:attribute name="id" type="PointOnLinkIdType" use="required"/>
 				</xsd:restriction>
 			</xsd:complexContent>
 		</xsd:complexType>
@@ -332,12 +355,12 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:choice minOccurs="0">
 				<xsd:element ref="PointRef"/>
-				<xsd:element ref="Point"/>
+				<xsd:element ref="Point_"/>
 			</xsd:choice>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->
-	<xsd:element name="TypeOfPoint" abstract="false" substitutionGroup="TypeOfEntity">
+	<xsd:element name="TypeOfPoint" abstract="false" substitutionGroup="TypeOfEntity_">
 		<xsd:annotation>
 			<xsd:documentation>A classification of POINTs according to their functional purpose.</xsd:documentation>
 		</xsd:annotation>
@@ -355,7 +378,7 @@ Rail transport, Roads and Road transport
 							<xsd:group ref="TypeOfValueGroup"/>
 						</xsd:sequence>
 					</xsd:sequence>
-					<xsd:attribute name="id" type="TypeOfPointIdType"/>
+					<xsd:attribute name="id" type="TypeOfPointIdType" use="required"/>
 					<xsd:attribute name="nameOfClassifiedEntityClass" type="NameOfClass" use="optional" fixed="Point">
 						<xsd:annotation>
 							<xsd:documentation>Name of Class of the ENTITY. Allows reflection. Fixed for each ENTITY type.</xsd:documentation>
@@ -374,7 +397,7 @@ Rail transport, Roads and Road transport
 		</xsd:complexContent>
 	</xsd:complexType>
 	<!-- ======================================================================= -->
-	<xsd:element name="TypeOfLink" abstract="false" substitutionGroup="TypeOfEntity">
+	<xsd:element name="TypeOfLink" abstract="false" substitutionGroup="TypeOfEntity_">
 		<xsd:annotation>
 			<xsd:documentation>A classification of LINKs according to their functional purpose.</xsd:documentation>
 		</xsd:annotation>
@@ -392,7 +415,7 @@ Rail transport, Roads and Road transport
 							<xsd:group ref="TypeOfValueGroup"/>
 						</xsd:sequence>
 					</xsd:sequence>
-					<xsd:attribute name="id" type="TypeOfLinkIdType"/>
+					<xsd:attribute name="id" type="TypeOfLinkIdType" use="required"/>
 					<xsd:attribute name="nameOfClassifiedEntityClass" type="NameOfClass" use="optional" fixed="Link">
 						<xsd:annotation>
 							<xsd:documentation>Name of Class of the ENTITY. Allows reflection. Fixed for each ENTITY type.</xsd:documentation>
@@ -444,7 +467,7 @@ Rail transport, Roads and Road transport
 							<xsd:group ref="GroupOfPointsGroup"/>
 						</xsd:sequence>
 					</xsd:sequence>
-					<xsd:attribute name="id" type="GroupOfPointsIdType"/>
+					<xsd:attribute name="id" type="GroupOfPointsIdType" use="required"/>
 				</xsd:restriction>
 			</xsd:complexContent>
 		</xsd:complexType>
@@ -508,7 +531,7 @@ Rail transport, Roads and Road transport
 							<xsd:group ref="GroupOfLinksGroup"/>
 						</xsd:sequence>
 					</xsd:sequence>
-					<xsd:attribute name="id" type="GroupOfLinksIdType"/>
+					<xsd:attribute name="id" type="GroupOfLinksIdType" use="required"/>
 				</xsd:restriction>
 			</xsd:complexContent>
 		</xsd:complexType>

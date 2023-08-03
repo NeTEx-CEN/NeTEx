@@ -343,7 +343,7 @@ Rail transport, Roads and Road transport
 			<xsd:extension base="containmentAggregationStructure">
 				<xsd:choice maxOccurs="unbounded">
 					<xsd:element ref="EntranceRef"/>
-					<xsd:element ref="Entrance">
+					<xsd:element ref="Entrance_">
 						<xsd:annotation>
 							<xsd:documentation>Entrance to a SITE.</xsd:documentation>
 						</xsd:annotation>
@@ -352,14 +352,54 @@ Rail transport, Roads and Road transport
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:element name="Entrance" type="SiteEntrance_VersionStructure" abstract="false" substitutionGroup="SiteComponent">
+	<xsd:element name="Entrance_" type="SiteEntrance_VersionStructure" abstract="true" substitutionGroup="SiteComponent">
 		<xsd:annotation>
-			<xsd:documentation>A physical entrance or exit to/from a SITE. May be a door, barrier, gate or other recognizable point of access.</xsd:documentation>
+			<xsd:documentation>A dummy ENTRANCE.</xsd:documentation>
 		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="Entrance" abstract="false" substitutionGroup="Entrance_">
+		<xsd:annotation>
+			<xsd:documentation>A physical entrance or exit to/from a SITE. Maybe a door, barrier, gate or other recognizable point of access.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="SiteEntrance_VersionStructure">
+					<!--
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="GroupOfEntitiesGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="ZoneGroup"/>
+						</xsd:sequence>
+						<xsd:group ref="PlaceGroup"/>
+						<xsd:sequence>
+							<xsd:group ref="AddressablePlaceGroup"/>
+						</xsd:sequence>
+						<xsd:group ref="SiteElementGroup"/>
+						<xsd:sequence>
+							<xsd:group ref="SiteComponentGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="SiteEntranceGroup"/>
+							<xsd:group ref="ExternalEntranceGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+-->
+					<xsd:attribute name="id" type="EntranceIdType" use="required"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
 	</xsd:element>
 	<xsd:complexType name="SiteEntrance_VersionStructure" abstract="false">
 		<xsd:annotation>
-			<xsd:documentation>Type for SITE ENTRANCe.</xsd:documentation>
+			<xsd:documentation>Type for SITE ENTRANCE.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="SiteComponent_VersionStructure">
@@ -448,7 +488,7 @@ Rail transport, Roads and Road transport
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:element name="VehicleEntrance" abstract="true" substitutionGroup="Entrance">
+	<xsd:element name="VehicleEntrance" abstract="true" substitutionGroup="Entrance_">
 		<xsd:annotation>
 			<xsd:documentation>A physical entrance or exit to/from a SITE for a VEHICLE. May be a door, barrier, gate or other recognizable point of access.</xsd:documentation>
 		</xsd:annotation>
@@ -484,7 +524,7 @@ Rail transport, Roads and Road transport
 							<xsd:group ref="VehicleEntranceGroup"/>
 						</xsd:sequence>
 					</xsd:sequence>
-					<xsd:attribute name="id" type="VehicleEntranceIdType">
+					<xsd:attribute name="id" type="VehicleEntranceIdType" use="required">
 						<xsd:annotation>
 							<xsd:documentation>Identifier of VEHICLE ENTRANCE.</xsd:documentation>
 						</xsd:annotation>
@@ -553,7 +593,7 @@ Rail transport, Roads and Road transport
 							<xsd:group ref="LevelGroup"/>
 						</xsd:sequence>
 					</xsd:sequence>
-					<xsd:attribute name="id" type="LevelIdType"/>
+					<xsd:attribute name="id" type="LevelIdType" use="required"/>
 				</xsd:restriction>
 			</xsd:complexContent>
 		</xsd:complexType>
@@ -631,7 +671,7 @@ Rail transport, Roads and Road transport
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:element name="AccessZone" substitutionGroup="Zone">
+	<xsd:element name="AccessZone" substitutionGroup="Zone_">
 		<xsd:annotation>
 			<xsd:documentation>An identified storey (ground, first, basement, mezzanine, etc) within an interchange building or SITE on which SITE COMPONENTs reside. A PATH LINK may connect components on different ACCESS ZONEs.</xsd:documentation>
 		</xsd:annotation>
@@ -658,7 +698,7 @@ Rail transport, Roads and Road transport
 							<xsd:group ref="AccessZoneGroup"/>
 						</xsd:sequence>
 					</xsd:sequence>
-					<xsd:attribute name="id" type="AccessZoneIdType"/>
+					<xsd:attribute name="id" type="AccessZoneIdType" use="required"/>
 				</xsd:restriction>
 			</xsd:complexContent>
 		</xsd:complexType>
@@ -728,7 +768,7 @@ Rail transport, Roads and Road transport
 							<xsd:group ref="ServiceSiteGroup"/>
 						</xsd:sequence>
 					</xsd:sequence>
-					<xsd:attribute name="id" type="ServiceSiteIdType" use="optional">
+					<xsd:attribute name="id" type="ServiceSiteIdType" use="required">
 						<xsd:annotation>
 							<xsd:documentation>Identifier of ENTITY.</xsd:documentation>
 						</xsd:annotation>

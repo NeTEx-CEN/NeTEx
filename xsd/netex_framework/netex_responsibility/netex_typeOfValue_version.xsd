@@ -165,7 +165,7 @@ Rail transport, Roads and Road transport
 							<xsd:group ref="ValueSetGroup"/>
 						</xsd:sequence>
 					</xsd:sequence>
-					<xsd:attribute name="id" type="ValueSetIdType"/>
+					<xsd:attribute name="id" type="ValueSetIdType" use="required"/>
 				</xsd:restriction>
 			</xsd:complexContent>
 		</xsd:complexType>
@@ -213,14 +213,37 @@ Rail transport, Roads and Road transport
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->
-	<xsd:element name="TypeOfEntity" type="TypeOfEntity_VersionStructure" substitutionGroup="TypeOfValue">
+	<xsd:element name="TypeOfEntity_" type="TypeOfEntity_VersionStructure" abstract="true" substitutionGroup="TypeOfValue">
+		<xsd:annotation>
+			<xsd:documentation>A dummy TypeOfEntity.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TypeOfEntity" abstract="true" substitutionGroup="TypeOfEntity_">
 		<xsd:annotation>
 			<xsd:documentation>A Type of value used to classify an ENTITY.</xsd:documentation>
 		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="TypeOfEntity_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="TypeOfValueGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="TypeOfEntityIdType" use="required"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
 	</xsd:element>
 	<xsd:complexType name="TypeOfEntity_VersionStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for a TYPE OFENTITY. Abstract supertype  used to define open  classifications of  value types.</xsd:documentation>
+			<xsd:documentation>Type for a TYPE OF ENTITY. Abstract supertype used to define open  classifications of value types.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="TypeOfValue_VersionStructure">

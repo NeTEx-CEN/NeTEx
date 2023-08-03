@@ -108,10 +108,36 @@ Rail transport, Roads and Road transport
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ===SIGNS =================================================================== -->
-	<xsd:element name="SignEquipment" type="SignEquipment_VersionStructure" substitutionGroup="PlaceEquipment">
+	<xsd:element name="SignEquipment_" type="SignEquipment_VersionStructure" abstract="true" substitutionGroup="PlaceEquipment">
+		<xsd:annotation>
+			<xsd:documentation>A dummy SignEquipment.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SignEquipment" abstract="false" substitutionGroup="SignEquipment_">
 		<xsd:annotation>
 			<xsd:documentation>Specialisation of PLACE EQUIPMENT for signs (heading signs, etc.).</xsd:documentation>
 		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="SignEquipment_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EquipmentGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="SignEquipmentGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="SignEquipmentIdType" use="required"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
 	</xsd:element>
 	<xsd:complexType name="SignEquipment_VersionStructure" abstract="true">
 		<xsd:annotation>
@@ -193,7 +219,7 @@ Rail transport, Roads and Road transport
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->
-	<xsd:element name="PlaceSign" substitutionGroup="SignEquipment">
+	<xsd:element name="PlaceSign" substitutionGroup="SignEquipment_">
 		<xsd:annotation>
 			<xsd:documentation>Sign with Place name for a PLACE. E.g. 'Waterloo'</xsd:documentation>
 		</xsd:annotation>
@@ -222,7 +248,7 @@ Rail transport, Roads and Road transport
 							<xsd:element ref="PlaceRef" minOccurs="0"/>
 						</xsd:sequence>
 					</xsd:sequence>
-					<xsd:attribute name="id" type="PlaceSignIdType" use="optional">
+					<xsd:attribute name="id" type="PlaceSignIdType" use="required">
 						<xsd:annotation>
 							<xsd:documentation>Identifier of ENTITY.</xsd:documentation>
 						</xsd:annotation>
@@ -249,7 +275,7 @@ Rail transport, Roads and Road transport
 		</xsd:complexContent>
 	</xsd:complexType>
 	<!-- ======================================================================= -->
-	<xsd:element name="HeadingSign" substitutionGroup="SignEquipment">
+	<xsd:element name="HeadingSign" substitutionGroup="SignEquipment_">
 		<xsd:annotation>
 			<xsd:documentation>Specialisation of SIGN EQUIPMENT for headings providing information like direction name, line name, etc.</xsd:documentation>
 		</xsd:annotation>
@@ -278,7 +304,7 @@ Rail transport, Roads and Road transport
 							<xsd:group ref="HeadingSignGroup"/>
 						</xsd:sequence>
 					</xsd:sequence>
-					<xsd:attribute name="id" type="HeadingSignIdType" use="optional">
+					<xsd:attribute name="id" type="HeadingSignIdType" use="required">
 						<xsd:annotation>
 							<xsd:documentation>Identifier of ENTITY.</xsd:documentation>
 						</xsd:annotation>
@@ -341,7 +367,7 @@ Rail transport, Roads and Road transport
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->
-	<xsd:element name="GeneralSign" substitutionGroup="SignEquipment">
+	<xsd:element name="GeneralSign" substitutionGroup="SignEquipment_">
 		<xsd:annotation>
 			<xsd:documentation>Specialisation of SIGN EQUIPMENT sor signs which are not HEADING SIGNs nor PLACE SIGNs.</xsd:documentation>
 		</xsd:annotation>
@@ -365,7 +391,7 @@ Rail transport, Roads and Road transport
 							<xsd:group ref="GeneralSignGroup"/>
 						</xsd:sequence>
 					</xsd:sequence>
-					<xsd:attribute name="id" type="GeneralSignIdType" use="optional">
+					<xsd:attribute name="id" type="GeneralSignIdType" use="required">
 						<xsd:annotation>
 							<xsd:documentation>Identifier of ENTITY.</xsd:documentation>
 						</xsd:annotation>
