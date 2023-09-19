@@ -202,10 +202,10 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="DriverRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
-	<!-- ====DATED SERVICE JOURNEY====================================-->
+<!-- ====DATED SERVICE JOURNEY====================================-->
 	<xsd:element name="DatedServiceJourney" abstract="false" substitutionGroup="ServiceJourney_">
 		<xsd:annotation>
-			<xsd:documentation>A particular journey of a vehicle on a particular OPERATING DAY including all modifications possibly decided by the control staff. 
+			<xsd:documentation>A particular SERVICE JOURNEY on a particular OPERATING DAY including all modifications possibly decided by the control staff. 
 
 The VIEW includes derived ancillary data from referenced entities.</xsd:documentation>
 		</xsd:annotation>
@@ -250,10 +250,15 @@ The VIEW includes derived ancillary data from referenced entities.</xsd:document
 			<xsd:documentation>If the journey is an alteration to a timetable, indicates the original journey, and the nature of the difference.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:choice minOccurs="0">
-				<xsd:element ref="OperatingDayRef"/>
-				<xsd:element ref="UicOperatingPeriod"/>
-			</xsd:choice>
+			<xsd:element ref="JourneyRef" minOccurs="0"/>
+			<xsd:element name="replacedJourneys" minOccurs="0">
+				<xsd:complexType>
+					<xsd:sequence maxOccurs="unbounded">
+						<xsd:element name="DatedServiceJourneyRef" type="DatedVehicleJourneyRefStructure" minOccurs="0"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element ref="OperatingDayRef" minOccurs="1"/>
 			<xsd:element ref="DriverRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
