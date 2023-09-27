@@ -87,7 +87,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element ref="PassengerSafetyEquipment">
 				<xsd:annotation>
-					<xsd:documentation>Specialisation of PASSENGER EQUIPMENT for pasenger safety.</xsd:documentation>
+					<xsd:documentation>Specialisation of PASSENGER EQUIPMENT for passenger safety.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element ref="RubbishDisposalEquipment">
@@ -360,7 +360,7 @@ Rail transport, Roads and Road transport
 						<xsd:sequence>
 							<xsd:element name="Fixed" type="xsd:boolean" minOccurs="0">
 								<xsd:annotation>
-									<xsd:documentation>Whether the EQUIPMENT is fixed at a place or min a vehicle.</xsd:documentation>
+									<xsd:documentation>Whether the EQUIPMENT is fixed at a place or in a vehicle.</xsd:documentation>
 								</xsd:annotation>
 							</xsd:element>
 						</xsd:sequence>
@@ -419,6 +419,80 @@ Rail transport, Roads and Road transport
 			<xsd:element name="StopRequestTimeout" type="xsd:duration" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Timeout for a stop request. After this interval after pressing request button  a request will be ignored and a new request must be made.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ======================================================================= -->
+	<xsd:element name="PassengerBeaconEquipment" substitutionGroup="PassengerEquipment">
+		<xsd:annotation>
+			<xsd:documentation>Specialisation of PASSENGER EQUIPMENT for Beacons. For SSID or UUID always use PublicCode. Be aware that when using VEHICLE TYPE or VEHICLE PROFILE only the type of the beacon can be described. The information aboutn the relevent real beacon often can only be provided when the actual VEHICLE is known.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="PassengerBeaconEquipment_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EquipmentGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:element name="Fixed" type="xsd:boolean" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Whether the EQUIPMENT is fixed at a place or in a vehicle.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="PassengerBeaconEquipmentGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="PassengerBeaconEquipmentIdType" use="optional"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="PassengerBeaconEquipment_VersionStructure" abstract="false">
+		<xsd:annotation>
+			<xsd:documentation>Type for a BEACON EQUIPMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="PassengerEquipment_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="PassengerBeaconEquipmentGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="PassengerBeaconEquipmentGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a BEACON EQUIPMENT type. Beacons are under development so the Enumerations may change fast.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="AccessibilityAssessment" minOccurs="0"/>
+			<xsd:element name="BeaconType" type="BeaconTypeEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The type of the beacon</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="BeaconDirection" type="BeaconDirectionEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>If the Beacon is unidirectional or bidirectional</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="BeaconProtocol" type="BeaconProtocolEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The relevant Beacon Protocol used.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="BeaconBackendUrl" type="xsd:anyURI" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The  to reach the back end system for the usage of the beacon.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
