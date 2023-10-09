@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_dateVehicleJourney_version">
 	<xsd:include schemaLocation="netex_datedVehicleJourney_support.xsd"/>
 	<xsd:include schemaLocation="netex_serviceJourney_version.xsd"/>
@@ -18,11 +17,9 @@
 				<Date>
 					<Created>2010-09-04</Created>
 				</Date>
-				<Date>
-					<Modified>2011-02-05</Modified>Name Space changes  
+				<Date><Modified>2011-02-05</Modified>Name Space changes  
 				</Date>
-				<Date>
-					<Modified>2020-07-29</Modified>Issue #97 Add NormalDatedJourney and DatedVehicleJourney journeys  in timetableframe
+				<Date><Modified>2020-07-29</Modified>Issue #97 Add NormalDatedJourney and DatedVehicleJourney journeys  in timetableframe
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -183,11 +180,6 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>DATED CALLs  for JOURNEY.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="ServiceAlterationType" type="ServiceAlterationEnumeration" default="planned" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Type of Service alteration. Default is planned.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:group name="DatedVehicleJourneyReferencesGroup">
@@ -221,30 +213,13 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Reference to a JOURNEY PATTERN.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element ref="DriverRef" minOccurs="0">
-			<xsd:annotation>
-					<xsd:documentation>** DEPRECATED ** not to be used - It is expected that the driver's DUTY refer the DatedJourneyPattern, not the way arround !</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
+			<xsd:element ref="DriverRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
-	<xsd:complexType name="replacedJourneys_RelStructure">
-		<xsd:annotation>
-			<xsd:documentation>Type for a list of (NORMAL) DATED VEHICLE JOURNEY references.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:complexContent>
-			<xsd:extension base="containmentAggregationStructure">
-				<xsd:choice maxOccurs="unbounded">
-					<xsd:element ref="DatedVehicleJourneyRef" maxOccurs="1"/>
-					<xsd:element ref="NormalDatedVehicleJourneyRef" maxOccurs="1"/>
-				</xsd:choice>
-			</xsd:extension>
-		</xsd:complexContent>
-	</xsd:complexType>
 	<!-- ====DATED SERVICE JOURNEY====================================-->
 	<xsd:element name="DatedServiceJourney" abstract="false" substitutionGroup="ServiceJourney_">
 		<xsd:annotation>
-			<xsd:documentation>A particular SERVICE JOURNEY of a vehicle on a particular OPERATING DAY including all modifications possibly decided by the control staff. 
+			<xsd:documentation>A particular journey of a vehicle on a particular OPERATING DAY including all modifications possibly decided by the control staff. 
 
 The VIEW includes derived ancillary data from referenced entities.</xsd:documentation>
 		</xsd:annotation>
@@ -289,7 +264,11 @@ The VIEW includes derived ancillary data from referenced entities.</xsd:document
 			<xsd:documentation>If the journey is an alteration to a timetable, indicates the original journey, and the nature of the difference.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:group ref="DatedVehicleJourneyReferencesGroup"/>
+			<xsd:choice minOccurs="0">
+				<xsd:element ref="OperatingDayRef"/>
+				<xsd:element ref="UicOperatingPeriod"/>
+			</xsd:choice>
+			<xsd:element ref="DriverRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->
@@ -317,8 +296,11 @@ The VIEW includes derived ancillary data from referenced entities.</xsd:document
 						<xsd:sequence>
 							<xsd:group ref="DatedVehicleJourneyGroup"/>
 						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="NormalDatedVehicleJourneyGroup"/>
+						</xsd:sequence>
 					</xsd:sequence>
-					<xsd:attribute name="id" type="NormalDatedVehicleJourneyIdType" use="required">
+					<xsd:attribute name="id" type="NormalDatedVehicleJourneyIdType" use="optional">
 						<xsd:annotation>
 							<xsd:documentation>Identifier of NORMAL DATED VEHICLE JORUNEY.</xsd:documentation>
 						</xsd:annotation>
@@ -332,13 +314,25 @@ The VIEW includes derived ancillary data from referenced entities.</xsd:document
 			<xsd:documentation>Type for NORMAL DATED VEHICLE JOURNEY.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
-				<xsd:extension base="VehicleJourney_VersionStructure">
+			<xsd:extension base="DatedVehicleJourney_VersionStructure">
 				<xsd:sequence>
-					<xsd:group ref="DatedVehicleJourneyGroup"/>
+					<xsd:group ref="NormalDatedVehicleJourneyGroup"/>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
+	<xsd:group name="NormalDatedVehicleJourneyGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for NORMAL DATED VEHICLE JOURNEY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ServiceAlterationType" type="ServiceAlterationEnumeration" default="planned" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Type of Service alteration. Default is planned.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
 	<!-- ======================================================================= -->
 	<xsd:element name="DatedSpecialService" abstract="false" substitutionGroup="Journey_">
 		<xsd:annotation>
