@@ -15,9 +15,11 @@
 				<Contributor>Nicholas Knowles</Contributor>
 				<Coverage>Europe</Coverage>
 				<Creator>First drafted for NeTEx version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.  mailto:schemer@netex.org.uk</Creator>
-				<Date><Created>2020-10-15</Created>New Modes
+				<Date>
+					<Created>2020-10-15</Created>New Modes
 				</Date>
-				<Date><Modified>2020-10-15</Modified>New modes
+				<Date>
+					<Modified>2020-10-15</Modified>New modes
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -290,6 +292,11 @@ Rail transport, Roads and Road transport
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element ref="VehicleRef" minOccurs="0"/>
+			<xsd:element name="reviews" type="reviews_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Reviews associated to the vehicle pooling driver</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- === INDIVIDUAL PASSENGER INFO. ================================================= -->
@@ -368,6 +375,52 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Whether  travelling with Pet.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="reviews" type="reviews_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Reviews associated to the passenger</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
+	<!-- ====  REVIEWS.  ============================================ -->
+	<xsd:element name="Review" type="ReviewStructure">
+		<xsd:annotation>
+			<xsd:documentation>A review of a diver or of a traveler.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="reviews_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for collection of reviews.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="Review" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ReviewStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for Review.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Date" type="xsd:dateTime" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Date and time of the review</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Ranking" type="xsd:positiveInteger">
+				<xsd:annotation>
+					<xsd:documentation>Rating attributed by the reviewer (most often 1 to 5, and the higher is the better)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Comment" type="MultilingualString" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Comment associated with the review</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="UserAcronym" type="MultilingualString" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Acronym name of the reviewer</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
 </xsd:schema>
