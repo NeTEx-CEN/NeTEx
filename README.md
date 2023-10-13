@@ -20,7 +20,7 @@ The individual XML files are organized hierarchically in folders, following a st
 - **Main Folder for Each Part**: There is a main folder for each part of the schema (e.g., Core, Part 1, Part 2, etc.).
 - **Subfolders for Functional Areas**: Within each main folder, there are subfolders for each NeTEx functional area, keeping the schema well-structured.
 
-You can find more information about the directory's structure on the [wiki](https://github.com/TuThoThai/NeTEx/wiki/Structure-And-Compatibility#netex-directory-structure)
+You can find more information about the directory's structure on the [wiki](https://github.com/ITxPT/NeTEx/wiki/Structure-And-Compatibility#netex-directory-structure)
 ### UML Models
 
 - You can refer to the NeTEx UML Physical and Conceptual models for a detailed UML view of the schema packages.
@@ -48,7 +48,7 @@ You can find more information about the directory's structure on the [wiki](http
 
 - Explore XML examples of the use of both protocols in the */examples* subdirectory.
 
-Further information on the examples is available on the [wiki](https://github.com/TuThoThai/NeTEx/wiki/Using-NeTEx#how-to-use-example-files)
+Further information on the examples is available on the [wiki](https://github.com/ITxPT/NeTEx/wiki/Using-NeTEx#how-to-use-example-files)
 ### Support for XML Editors
 
 - **Altova XMLSpy Project**: Find an organized view of the schema and examples in the root directory.
@@ -84,4 +84,4 @@ The schema is systematically divided into small modular files. Generally, for ea
 | 1.2.3          |               | Bug fixes (when necessary)                     | [Release Notes](https://github.com/NeTEx-CEN/NeTEx/blob/next/CHANGELOG.md)       |
 | 1.3.0          | Dec. 2023     | Upcoming release   ⏳                            | N/A                                                                                             |
 ## Full Version History 📚
-The complete version history is available on the [wiki](https://github.com/TuThoThai/NeTEx/wiki/Release-history).
+The complete version history is available on the [wiki](https://github.com/ITxPT/NeTEx/wiki/Release-history).
