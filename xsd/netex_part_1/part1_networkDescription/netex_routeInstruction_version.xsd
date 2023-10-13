@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_routeInstruction_version">
 	<xsd:include schemaLocation="../part1_ifopt/netex_ifopt_path_support.xsd"/>
 	<xsd:include schemaLocation="netex_routeInstruction_support.xsd"/>
@@ -73,10 +74,28 @@ Rail transport, Roads and Road transport
 		<xsd:complexContent>
 			<xsd:extension base="strictContainmentAggregationStructure">
 				<xsd:sequence>
-					<xsd:element ref="RouteInstruction" maxOccurs="unbounded">
+					<xsd:element name="RouteInstruction" maxOccurs="unbounded">
 						<xsd:annotation>
-							<xsd:documentation>An Instruction on how to follow a ROUTE through the network.</xsd:documentation>
+							<xsd:documentation>A POINT used to define the shape of a ROUTE through the network.</xsd:documentation>
 						</xsd:annotation>
+						<xsd:complexType>
+							<xsd:complexContent>
+								<xsd:restriction base="RouteInstruction_VersionStructure">
+									<xsd:sequence>
+										<xsd:sequence>
+											<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+										</xsd:sequence>
+										<xsd:sequence>
+											<xsd:group ref="DataManagedObjectGroup"/>
+										</xsd:sequence>
+										<xsd:sequence>
+											<xsd:group ref="RouteInstructionGroup"/>
+										</xsd:sequence>
+									</xsd:sequence>
+									<xsd:attribute name="id" type="RouteInstructionIdType"/>
+								</xsd:restriction>
+							</xsd:complexContent>
+						</xsd:complexType>
 					</xsd:element>
 				</xsd:sequence>
 			</xsd:extension>
@@ -138,7 +157,7 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Relative heading for Instruction</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="Heading" type="CompassBearing16Enumeration" minOccurs="0">
+			<xsd:element name="Heading" type="CompassBearing16Enumeration"  minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Heading for Instructioni nternational boundary between two countries may be crossed.</xsd:documentation>
 				</xsd:annotation>
