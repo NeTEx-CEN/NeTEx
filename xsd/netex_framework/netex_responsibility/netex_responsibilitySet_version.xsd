@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_responsibilitySet">
 	<xsd:include schemaLocation="netex_typeOfValue_version.xsd"/>
+	<xsd:include schemaLocation="../netex_genericFramework/netex_organisation_version.xsd"/>
 	<xsd:annotation>
 		<xsd:appinfo>
 			<Metadata xmlns="http://www.govtalk.gov.uk/CM/gms-xs">
@@ -345,6 +346,128 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="TypeOfEntity_VersionStructure"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- Contracts, possibly related to roles =================================== -->
+	<xsd:element name="Contract" abstract="true" substitutionGroup="DataManagedObject">
+		<xsd:annotation>
+			<xsd:documentation>Simplified description of a contract between 2 ORGANISATIONs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="Contract_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="ContractGroup">
+								<xsd:annotation>
+									<xsd:documentation>Details for a Contract</xsd:documentation>
+								</xsd:annotation>
+							</xsd:group>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="ContractIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="Contract_VersionStructure" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation>Type for an Contract.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="DataManagedObjectStructure">
+				<xsd:sequence>
+					<xsd:group ref="ContractGroup">
+						<xsd:annotation>
+							<xsd:documentation>Details for Contract.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:group>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="ContractGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a Contract.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Name" type="MultilingualString" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The name of the ORGANISATION.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Description" type="MultilingualString" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Description of ORGANISATION.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TypeOfContract" type="TypeOfContractEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>formal  informal  written  oral  plainUnderstood</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="LegalStatus" type="LegalStatusEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>binding  nonBinding</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ContractGoverningLaw" type="MultilingualString" minOccurs="0"/>
+			<xsd:element name="contractors">
+				<xsd:annotation>
+					<xsd:documentation>The contractor is the party which agrees to a written contract.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:sequence minOccurs="0" maxOccurs="1">
+						<xsd:element ref="Organisation_" maxOccurs="unbounded"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="contractees">
+				<xsd:annotation>
+					<xsd:documentation>The contractee is the party which creates a contract for others to agree to</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:sequence minOccurs="0" maxOccurs="1">
+						<xsd:element ref="Organisation_" maxOccurs="unbounded"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="contractDocuments" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>External documents can be referenced from external archives, such as PDF's</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="ContractRef_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a reference to a Contract.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:choice>
+					<xsd:element ref="ContractRef"/>
+					<xsd:element ref="Contract"/>
+				</xsd:choice>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="contractsInFrame_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for containment in frame of Contracts.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="Contract" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
 	<!-- ======================================================================= -->
