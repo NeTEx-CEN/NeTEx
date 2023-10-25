@@ -506,3 +506,188 @@ An dem Bahnsteig 2 in Osterburken liegen die Bahsteigkanten 2, 3 und 4 mit versc
 |Verweis auf die ID der Bahnsteigkante (/StopPlace/quays/Quay[Id="${"ParentQuayRef"}])
 
 |===
+
+== Equipments
+
+NeTEx liefert bei der Abbildung von verschiedenen Equipments und deren Standort verschiedene *Equipment* Klassen.
+Dessen Standorte können mit Hilfe von *equipmentPlaces* angegeben werden.
+Dies ist zum Beispiel besonders sinnvoll bei Equipments, die sich über mehrere Level erstecken wie zum Beispiel Aufzüge (*LiftEquipment*) oder Rolltreppen (*EscalatorEquipment*)
+Dieses Kapitel beschreibt die Fachlichkeit und die daraus folgende NeTEx Abbildung.
+
+=== EquipmentPlaces
+
+Der *EquipmentPlace* gibt an wo sich ein Equipment befindet und ist ein Kindelement von *AccessSpaces*, *Quays* und *Entrances*.
+Durch die Zuordnung einer der oben genannten Klassen lässt sich ermitteln, auf welchem Level das Equipment sich befindet.
+Innerhalb eines *EquipmentPlaces* können die an anderer Stelle definierten Equipments referenziert werden und damit einem Bestimmten Standort zugeordnet werden.
+
+==== Abbildung EquipmentPlaces in NeTEx
+
+.Table NeTEx Mapping - Equipment Layout
+[%header,cols="1a,1a,2a,1a,1a,2a"]
+|===
+2+|Equipment Standort Layout
+3+|NeTEx
+|
+
+|*Klasse*
+|*Element*
+|*Klasse*
+|*Element*
+|*Mapping*
+|*Beschreibung*
+
+|*Equipment Standort*
+|
+|*EquipmentPlace*
+|EquipmentPlace
+|/StopPlace/Entrance\|AccessSpace\|Quay/equipmentPlaces/EquipmentPlace
+|Der Standort eines Equipments wird in einem *EquipmentPlace* angegeben
+
+|*Equipment Standort*
+|Id
+|*EquipmentPlace*
+|@Id
+|/StopPlace/Entrance\|AccessSpace\|Quay/equipmentPlaces/EquipmentPlace/\@Id
+|Id eines Equipment Standorts ist eine UUID
+
+
+|*Equipment Standort*
+|GPS Coordinates
+|*Location*
+|
+|/StopPlace/Entrance\|AccessSpace\|Quay/equipmentPlaces/EquipmentPlace/Centroid/Location
+|GPS Cordinate wird mit Longitude und Latitude dargestellt
+
+|*Equipment Zuordnung*
+|Zuordnung Equipment
+|*PlaceEquipment*
+|*PlaceEquipmentRef*
+|/StopPlace/Entrance\|AccessSpace\|Quay/equipmentPlaces/EquipmentPlace/placeEquipments/*
+|Verweis auf die ID der vorzufindenen Equipments (/StopPlace/placeEquipments/*[Id="${"PlaceEquipmentRef"}])
+
+|===
+
+=== LiftEquipments
+
+Aufzüge werden in NeTEx als *LiftEquipments*, eine Kindklasse der *PlaceEquipments*, modelliert.
+Die gesamtheit der *PlaceEquipments* werden auf der ersten ebene unterhalb des *StopPlaces* modelliert.
+
+Die Merkmale eines Aufzuges werden im *LiftEquipment* modelliert. Die dafür benötigten Felder und deren Zielwerte lassen sich aus TSI-PRM entnehmen.
+
+.Table NeTEx Mapping - Aufzugs Layout
+[%header,cols="1a,1a,2a,1a,1a,2a"]
+|===
+2+|Aufzugs Layout
+3+|NeTEx
+|
+
+|*Klasse*
+|*Element*
+|*Klasse*
+|*Element*
+|*Mapping*
+|*Beschreibung*
+
+|*Aufzug*
+|
+|*LiftEquipment*
+|LiftEquipment
+|/StopPlace/placeEquipments/LiftEquipment
+|Der Aufzug wird durch LiftEquipment dargestellt
+
+|*Aufzug Name*
+|Id
+|*LiftEquipment*
+|@Id
+|/StopPlace/placeEquipments/LiftEquipment/@Id
+|Id eines Equipment Standorts ist eine UUID
+
+|*Aufzug Name*
+|Name
+|*LiftEquipment*
+|Name
+|/StopPlace/placeEquipments/LiftEquipment/Name
+|Der Name des Aufzugs.
+
+|*Aufzug Breite*
+|Breite
+|*LiftEquipment*
+|Width
+|/StopPlace/placeEquipments/LiftEquipment/Width
+|Breite der *Aufzugtür* in Meter. Sollte laut TSI-PRM mindestens 90 cm sein.
+
+|*Aufzug Tiefe*
+|Tiefe
+|*LiftEquipment*
+|Depth
+|/StopPlace/placeEquipments/LiftEquipment/Depth
+|Tiefe der *Aufzugskabine* in Meter
+
+|*Maximale Tragkraft*
+|Tragkraft
+|*LiftEquipment*
+|MaximumLoad
+|/StopPlace/placeEquipments/LiftEquipment/MaximumLoad
+|Maximale Tragkraft des Aufzuges in kg
+
+
+|*Kabinenbreite*
+|Breite
+|*LiftEquipment*
+|InternalWidth
+|/StopPlace/placeEquipments/LiftEquipment/InternalWidth
+|Breite der *Aufzugskabine* in Meter
+
+
+|*Aufzugs Handlauf*
+|Handlauf Typ
+|*LiftEquipment*
+|HandrailType
+|/StopPlace/placeEquipments/LiftEquipment/HandrailType
+|Gibt an ob es einen Handlauf gibt und um welche Art (einseitig, beidseitig) es sich handelt. Laut TSI-PRM muss es sich um einen beidseitigen Handlauf handeln ("bothSides")
+
+|*Aufzugs Handlauf*
+|Handlauf Höhe
+|*LiftEquipment*
+|HandrailHeight
+|/StopPlace/placeEquipments/LiftEquipment/HandrailHeight
+|Gibt die Höhe des Handlaufes an. 
+
+
+|*Aufzugs Bedienung*
+|Rufknopf Höhe
+|*LiftEquipment*
+|CallButtonHeight
+|/StopPlace/placeEquipments/LiftEquipment/CallButtonHeight
+|Gibt die Höhe an in der die Rufknöpfe angebracht sind. Laut TSI-PRM müssen diese zwischen 80 und 100cm liegen
+
+
+|*Aufzugs Bedienung*
+|Bedienelemente Höhe
+|*LiftEquipment*
+|ButtonsHeight
+|/StopPlace/placeEquipments/LiftEquipment/ButtonsHeight
+|Gibt die Höhe an in der die Bedienelemente angebracht sind. Laut TSI-PRM müssen diese zwischen 80 und 100cm liegen.
+
+
+|*Aufzugs Bedienung*
+|Braille Schrift
+|*LiftEquipment*
+|BrailleButtons
+|/StopPlace/placeEquipments/LiftEquipment/BrailleButtons
+|Gibt an ob die Bedienelemente mit Braille Schrift versehen sind.
+
+
+|*Aufzug*
+|akustische Ansagen
+|*LiftEquipment*
+|AudioAnnouncements
+|/StopPlace/placeEquipments/LiftEquipment/AudioAnnouncements
+|Gibt an ob der Aufzug mit Audio Ansagen ausgestattet ist.
+
+|===
+
+
+
+
+
