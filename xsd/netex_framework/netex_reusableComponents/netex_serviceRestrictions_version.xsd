@@ -134,26 +134,52 @@ Rail transport, Roads and Road transport
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->
-	<xsd:complexType name="BookingArrangementsStructure" abstract="false">
+	<xsd:element name="BookingArrangement" abstract="true" substitutionGroup="DataManagedObject">
 		<xsd:annotation>
-			<xsd:documentation>Type for BOOKING ARRANGEMENTs.</xsd:documentation>
+			<xsd:documentation>Description of a  for BOOKING ARRANGEMENT</xsd:documentation>
 		</xsd:annotation>
-		<xsd:sequence>
-			<xsd:choice>
-				<xsd:group ref="BookingArrangementsGroup"/>
-				<xsd:element name="BookingArrangement" maxOccurs="unbounded">
-					<xsd:complexType>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="BookingArrangement_VersionStructure">
+					<xsd:sequence>
 						<xsd:sequence>
-							<xsd:group ref="BookingArrangementsGroup"/>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
 						</xsd:sequence>
-					</xsd:complexType>
-				</xsd:element>
-			</xsd:choice>
-		</xsd:sequence>
-	</xsd:complexType>
-	<xsd:group name="BookingArrangementsGroup">
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="BookingArrangementGroup">
+								<xsd:annotation>
+									<xsd:documentation>Details for a BookingArrangement</xsd:documentation>
+								</xsd:annotation>
+							</xsd:group>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="BookingArrangementIdType" use="required"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="BookingArrangement_VersionStructure" abstract="true">
 		<xsd:annotation>
-			<xsd:documentation>Elements for BOOKING ARRANGEMENTs.</xsd:documentation>
+			<xsd:documentation>Type for a BookingArrangement</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="DataManagedObjectStructure">
+				<xsd:sequence>
+					<xsd:group ref="BookingArrangementGroup">
+						<xsd:annotation>
+							<xsd:documentation>Details for BookingArrangement</xsd:documentation>
+						</xsd:annotation>
+					</xsd:group>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="BookingArrangementGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for BOOKING ARRANGEMENTs</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element name="BookingContact" type="ContactStructure" minOccurs="0">
@@ -208,28 +234,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
-	<xsd:complexType name="ServiceBookingArrangementsStructure" abstract="false">
-		<xsd:annotation>
-			<xsd:documentation>Type for SERVICE BOOKING ARRANGEMENTs.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:sequence>
-			<xsd:choice>
-				<xsd:sequence>
-					<xsd:group ref="BookingArrangementsGroup"/>
-					<xsd:group ref="ServiceBookingArrangementsGroup"/>
-				</xsd:sequence>
-				<xsd:element name="ServiceBookingArrangement" maxOccurs="unbounded">
-					<xsd:complexType>
-						<xsd:sequence>
-							<xsd:group ref="BookingArrangementsGroup"/>
-							<xsd:group ref="ServiceBookingArrangementsGroup"/>
-						</xsd:sequence>
-					</xsd:complexType>
-				</xsd:element>
-			</xsd:choice>
-		</xsd:sequence>
-	</xsd:complexType>
-	<xsd:group name="ServiceBookingArrangementsGroup">
+	<xsd:group name="ServiceBookingArrangementGroup">
 		<xsd:annotation>
 			<xsd:documentation>Elements for SERVICE BOOKING ARRANGEMENTs.</xsd:documentation>
 		</xsd:annotation>
@@ -256,6 +261,103 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
+	<xsd:complexType name="BookingArrangementRef_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a reference to a BookingArrangement</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:choice>
+					<xsd:element ref="BookingArrangementRef"/>
+					<xsd:element ref="BookingArrangement"/>
+				</xsd:choice>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="bookingArrangements_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of BookingArrangements.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element ref="BookingArrangementRef"/>
+					<xsd:element ref="BookingArrangement"/>
+				</xsd:choice>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="bookingArrangementsInFrame_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for containment in frame of BookingArrangements</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="BookingArrangement" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- =Deprecated structures for BookingArrangements (for backward compatibility only)========== -->
+	<xsd:complexType name="BookingArrangementsStructure" abstract="false">
+		<xsd:annotation>
+			<xsd:documentation>Type for BOOKING ARRANGEMENTs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:group ref="BookingArrangementGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ServiceBookingArrangementsStructure" abstract="false">
+		<xsd:annotation>
+			<xsd:documentation>Type for SERVICE BOOKING ARRANGEMENTs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:choice>
+				<xsd:sequence>
+					<xsd:group ref="BookingArrangementGroup"/>
+					<xsd:group ref="ServiceBookingArrangementGroup"/>
+				</xsd:sequence>
+				<xsd:element name="ServiceBookingArrangement" maxOccurs="unbounded">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:group ref="BookingArrangementGroup"/>
+							<xsd:group ref="ServiceBookingArrangementGroup"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- ======================================================================= -->
+	<!--Pour SUPPORT 
+-->
+	<xsd:simpleType name="BookingArrangementIdType">
+		<xsd:annotation>
+			<xsd:documentation>Type for identifier of a BookingArrangement</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="TypeOfValueIdType"/>
+	</xsd:simpleType>
+	<xsd:element name="BookingArrangementRef" type="BookingArrangementRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a BookingArrangement</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="BookingArrangementRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a reference to a BookingArrangement</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="VersionOfObjectRefStructure">
+				<xsd:attribute name="ref" type="BookingArrangementIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Identifier of a BookingArrangement</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!-- ======================================================================= -->
 	<!-- ======================================================================= -->
 	<xsd:element name="TypeOfPaymentMethod" substitutionGroup="TypeOfValue">
 		<xsd:annotation>
