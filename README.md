@@ -13,22 +13,22 @@
 
 - NeTEx (Network Timetable EXchange) XML schema is a standardized format for exchanging network timetable data.
 
-### Folder Structure 📁
+### Folder structure 📁
 
-The individual XML files are organized hierarchically in folders, following a structure similar to the UML model and documentation. Here's how it's arranged:
+The individual XML files are organized hierarchically in folders, following the same structure as the UML model and documentation. The architecture is: 
 
 - **Main Folder for Each Part**: There is a main folder for each part of the schema (e.g., Core, Part 1, Part 2, etc.).
 - **Subfolders for Functional Areas**: Within each main folder, there are subfolders for each NeTEx functional area, keeping the schema well-structured.
 
 You can find more information about the directory's structure on the [wiki](https://github.com/ITxPT/NeTEx/wiki/Structure-And-Compatibility#netex-directory-structure)
-### UML Models
+### UML models
 
 - You can refer to the NeTEx UML Physical and Conceptual models for a detailed UML view of the schema packages.
 - These models are available in electronic format.
   
-## Getting Started 🚀
+## Getting started 🚀
 
-### Main Root Schemas
+### Main root schemas
 
 1. **netex_publication**
    - Embeds NeTEx XML model elements in a bulk output file format for use in asynchronous publication.
@@ -38,18 +38,18 @@ You can find more information about the directory's structure on the [wiki](http
    - Embeds NeTEx XML model elements in the SIRI protocol for dynamic exchange of elements between servers.
    - Supports both Request/response and publish/subscribe.
 
-### Additional Information
+### Additional information
 
 - **nx.xsd**
    - Embeds NeTeX XML model elements within a simple thematic organization to facilitate browsing and inspection of NeTEx.
    - The NX schema is not intended for actual use.
 
-### XML Examples
+### XML examples
 
 - Explore XML examples of the use of both protocols in the */examples* subdirectory.
 
 Further information on the examples is available on the [wiki](https://github.com/ITxPT/NeTEx/wiki/Using-NeTEx#how-to-use-example-files)
-### Support for XML Editors
+### Support for XML editors
 
 - **Altova XMLSpy Project**: Find an organized view of the schema and examples in the root directory.
    - Project file: NeTEx.spp
@@ -59,7 +59,7 @@ Further information on the examples is available on the [wiki](https://github.co
 
 ----
 
-### Note on the Schema
+### Note on the schema
 
 The schema is systematically divided into small modular files. Generally, for each functional package in the design model (See UML Model), there are two XML schema files:
 
@@ -84,4 +84,4 @@ The schema is systematically divided into small modular files. Generally, for ea
 | 1.2.3          |               | Bug fixes (when necessary)                     | [Release Notes](https://github.com/NeTEx-CEN/NeTEx/blob/next/CHANGELOG.md)       |
 | 1.3.0          | Dec. 2023     | Upcoming release   ⏳                            | N/A                                                                                             |
 ## Full Version History 📚
-The complete version history is available on the [wiki](https://github.com/ITxPT/NeTEx/wiki/Release-history).
+The comprehensive versions history is available on the [wiki](https://github.com/ITxPT/NeTEx/wiki/Release-history).
