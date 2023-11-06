@@ -10932,6 +10932,27 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
+		<!-- =====BookingArrangement============================== -->
+		<!-- =====BookingArrangement unique========================== -->
+		<xsd:unique name="BookingArrangement_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [BookingArrangement Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:BookingArrangement"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====PricingService Key ========================== -->
+		<xsd:keyref name="BookingArrangement_KeyRef" refer="netex:BookingArrangement_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:BookingArrangementRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="BookingArrangement_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:BookingArrangement"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
 	</xsd:element>
 	<!-- =====END OF CONSTRAINTS================= -->
 	<xsd:complexType name="PublicationDeliveryStructure">
