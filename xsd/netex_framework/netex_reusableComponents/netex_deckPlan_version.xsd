@@ -17,6 +17,8 @@
 				<Date><Modified>2023-01-30</Modified>
           Name Space changes
         </Date>
+				<Date><Modified>2023-12-08</Modified>Move SENSOR IN ENTRANCE to here
+				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the DECK PLAN types.</p>
@@ -534,7 +536,7 @@
 	</xsd:complexType>
 	<xsd:element name="OtherDeckSpace" substitutionGroup="DeckSpace_">
 		<xsd:annotation>
-			<xsd:documentation>All OTHER type of DECK SPACEs +v2.0</xsd:documentation>
+			<xsd:documentation>A specialisation of DECK SPACE defining an area within a VEHICLE (i.e. bus, boat, coach, car) or TRAIN ELEMENT for restricted use, such as a crew area. +v2.0</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -1029,6 +1031,68 @@
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
+	<!-- ====== SENSOR IN ENTRANCE =================================== -->
+	<xsd:complexType name="sensorsInEntrance_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of SENSORs in ENTRANCE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="strictContainmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="SensorInEntrance" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="SensorInEntrance">
+		<xsd:annotation>
+			<xsd:documentation>Use of a specific ENTRANCE SENSOR to monitor a specific DECK ENTRANCE. 
++ v2.0</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="SensorInEntrance_VersionedChildStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="VersionedChildGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="SensorInEntranceGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="SensorInEntranceIdType" use="optional">
+						<xsd:annotation>
+							<xsd:documentation>Identifier of SENSOR IN ENTRANCE.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="SensorInEntrance_VersionedChildStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a SENSOR IN ENTRANCE </xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="VersionedChildStructure">
+				<xsd:sequence>
+					<xsd:group ref="SensorInEntranceGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="SensorInEntranceGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a SENSOR IN ENTRANCE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="DeckEntranceRef" minOccurs="0"/>
+			<xsd:element ref="EntranceSensorRef" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
 	<!-- ====== DECK WINDOW =================================== -->
 	<xsd:complexType name="deckWindows_RelStructure">
 		<xsd:annotation>
@@ -1045,7 +1109,7 @@
 	</xsd:complexType>
 	<xsd:element name="DeckWindow" substitutionGroup="DeckComponent">
 		<xsd:annotation>
-			<xsd:documentation> A window onto a DECK SPACE. +v2.0</xsd:documentation>
+			<xsd:documentation>A window onto a DECK SPACE. +v2.0</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -1138,7 +1202,7 @@
 	</xsd:complexType>
 	<xsd:element name="DeckLevel" substitutionGroup="DataManagedObject">
 		<xsd:annotation>
-			<xsd:documentation>An identified level (1, 2 ,3 ) within the DECK PLAN of a VEHICLE (boat, airplane, etc). +v2.0</xsd:documentation>
+			<xsd:documentation>An identified level (1, 2 , 3, etc.) within the DECK PLAN of a VEHICLE (boat, train, airplane, etc.) +v2.0</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -1217,7 +1281,7 @@
 	</xsd:complexType>
 	<xsd:element name="DeckSpaceCapacity">
 		<xsd:annotation>
-			<xsd:documentation> Capacity of a DECK SPACE for passengers or LOCATABLE SPOTs. +v2.0</xsd:documentation>
+			<xsd:documentation>The capacity of a DECK SPACE for passengers and other payload in terms of TYPES OF LOCATABLE SPOTs. +v2.0</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -1275,7 +1339,7 @@
 	<!-- ========= TYPE OF DECK SPACE ============================================ -->
 	<xsd:element name="TypeOfDeckSpace" abstract="false" substitutionGroup="TypeOfValue">
 		<xsd:annotation>
-			<xsd:documentation> Classification for DECK SPACE, e.g. as WC, Restaurant, luggage area, etc. +v2.0</xsd:documentation>
+			<xsd:documentation>Classification for DECK SPACE, e.g. as WC, Restaurant, luggage area, etc. +v2.0</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
