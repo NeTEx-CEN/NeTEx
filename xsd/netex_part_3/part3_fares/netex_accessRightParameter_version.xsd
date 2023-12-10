@@ -119,7 +119,8 @@
 								Fix  add ServiceCalendarRef, TimebandRef to Temporal parameter refs
 								Fix add TarriffRef , TypeOfMediumAccessdeficeRef to Fare Usage Parameter refs
 								Enhancement  add TypeOfProof to Usage Parameter refs.
-								Enhancement DEek plans - Add DEckPlanRef DeckSpaceRef LocatbleSPotRef TypeOfLocatableSpotRef to Service Parameter refs 
+								Enhancement Deck plans - Add DEckPlanRef DeckSpaceRef to Service Parameter refs 
+								Enhancement Seating  plans  - Add SpotRoweRef, SpotColumnRef, LocatableSPotRef, TypeOfLocatableSpotRef to Service Parameter refs 
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -390,7 +391,7 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Network validity parameters for ACCESS RIGHT PARAMETER ASSIGNMENT.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:group>
-			<xsd:group ref="RouteValidityParametersGroup">
+			<xsd:group ref="RoutingValidityParametersGroup">
 				<xsd:annotation>
 					<xsd:documentation>Route validity parameters for ACCESS RIGHT PARAMETER ASSIGNMENT.</xsd:documentation>
 				</xsd:annotation>
@@ -464,7 +465,9 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>SITE validity parametersfor ACCESS RIGHT PARAMETER ASSIGNMENT.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
+			<!-- <xsd:element ref="GroupOfSitesRef"/> -->
 			<xsd:element ref="SiteElementRef" minOccurs="0"/>
+			<xsd:element ref="LevelRef" minOccurs="0"/>
 			<xsd:element ref="PointOfInterestClassificationRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
@@ -492,7 +495,7 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="VehicleMeetingPlaceRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
-	<xsd:group name="RouteValidityParametersGroup">
+	<xsd:group name="RoutingValidityParametersGroup">
 		<xsd:annotation>
 			<xsd:documentation>ROUTE validity parameters for ACCESS RIGHT PARAMETER ASSIGNMENT.</xsd:documentation>
 		</xsd:annotation>
@@ -579,12 +582,22 @@ Rail transport, Roads and Road transport
 		<xsd:sequence>
 			<xsd:element ref="TrainElementRef" minOccurs="0"/>
 			<xsd:element ref="TrainComponentLabelAssignmentRef" minOccurs="0"/>
-			<xsd:element ref="DeckPlanRef"/>
+			<xsd:element ref="DeckPlanRef" minOccurs="0"/>
 			<xsd:element ref="DeckSpaceRef" minOccurs="0"/>
-			<xsd:element ref="LocatableSpotRef" minOccurs="0"/>
-			<xsd:element ref="TypeOfLocatableSpotRef" minOccurs="0"/>
+			<xsd:group ref="SpotValidityParametersGroup"/>
 			<xsd:element ref="PassengerSeatRef" minOccurs="0"/>
 			<xsd:element ref="VehicleRef" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="SpotValidityParametersGroup">
+		<xsd:annotation>
+			<xsd:documentation>Seating validity parameters for ACCESS RIGHT PARAMETER ASSIGNMENT.  NB PAssengerSeatRef is DEPRECATED </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="SpotColumnRef" minOccurs="0"/>
+			<xsd:element ref="SpotRowRef" minOccurs="0"/>
+			<xsd:element ref="LocatableSpotRef" minOccurs="0"/>
+			<xsd:element ref="TypeOfLocatableSpotRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:group name="ClassOfUseValidityParametersGroup">
