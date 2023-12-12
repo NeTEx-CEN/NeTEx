@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_ifopt_site_version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_ifopt_site_version">
 	<xsd:include schemaLocation="netex_ifopt_site_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_equipmentPlace_version.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_accessibility/netex_acsb_accessibility.xsd"/>
@@ -8,6 +8,7 @@
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_address_version.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_facility_version.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_topographicPlace_version.xsd"/>
+	<xsd:import namespace="http://www.opengis.net/gml/3.2" schemaLocation="../../gml/gmlBasic2d-extract-v3_2_1-.xsd"/>
 	<xsd:include schemaLocation="netex_ifopt_checkConstraint_version.xsd"/>
 	<xsd:include schemaLocation="netex_ifopt_equipmentAll.xsd"/>
 	<!-- ======================================================================= -->
@@ -23,9 +24,14 @@
 				<Date>
 					<Created>2010-09-04</Created>
 				</Date>
-				<Date><Modified>2011-02-05</Modified>Name Space changes 
+				<Date>
+					<Modified>2011-02-05</Modified>Name Space changes 
 				</Date>
-				<Date><Modified>2020-10-10</Modified>New Modes : Add PRESENTATGION To Site ELement
+				<Date>
+					<Modified>2020-10-10</Modified>New Modes : Add PRESENTATGION To Site ELement
+				</Date>
+				<Date>
+					<Modified>2023-12-10</Modified>Enhancement TM v6.2:  Add GROUP OF SITES, SITE STRUCTURE and LEVEL IN STRUCTURE 	  
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -68,6 +74,7 @@ Rail transport, Roads and Road transport
 		</xsd:appinfo>
 		<xsd:documentation>NeTEx: SITE types.</xsd:documentation>
 	</xsd:annotation>
+	<!-- ======================================================================= -->
 	<xsd:element name="SiteElement" type="SiteElement_VersionStructure" abstract="true" substitutionGroup="Place">
 		<xsd:annotation>
 			<xsd:documentation>A physical PLACE to which passengers may go. May have ACCESSIBILITY ASSESMENT and other properties to describe it.</xsd:documentation>
@@ -188,7 +195,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
-	<!-- ======================================================================= -->
+	<!-- ======= SITE ====================================================== -->
 	<xsd:element name="Site" type="Site_VersionStructure" abstract="true" substitutionGroup="SiteElement">
 		<xsd:annotation>
 			<xsd:documentation>A type of PLACE, such as a STOP PLACE, POINT OF INTEREST or ADDRESS, to which passengers may wish to travel.</xsd:documentation>
@@ -254,7 +261,12 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element name="entrances" type="siteEntrances_RelStructure" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Entrances to and within SITE.</xsd:documentation>
+					<xsd:documentation>ENTRANCEs  to and within SITE.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="siteStructures" type="siteStructures_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>SITE STRUCTUREs within SITE. +v2.0</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:group ref="AllEquipmentGroup"/>
@@ -282,7 +294,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
-	<!-- ======================================================================= -->
+	<!-- ======= SITE COMPONENT ==================================================== -->
 	<xsd:element name="SiteComponent" type="SiteComponent_VersionStructure" abstract="true" substitutionGroup="SiteElement">
 		<xsd:annotation>
 			<xsd:documentation>An element of a SITE describing part of its structure. SITE COMPONENTs share common properties for accessibility and other features.</xsd:documentation>
@@ -334,7 +346,7 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="ModeOfOperationRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
-	<!-- ======================================================================= -->
+	<!-- ====== ENTRANCE ====================================================== -->
 	<xsd:complexType name="siteEntrances_RelStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for a list of ENTRANCEs.</xsd:documentation>
@@ -439,7 +451,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
-	<!-- ======================================================================= -->
+	<!-- ==== VEHICLE ENTRANCE ================================================ -->
 	<xsd:complexType name="vehicleEntrances_RelStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for a list of VEHICLE ENTRANCEs.</xsd:documentation>
@@ -522,7 +534,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
-	<!-- ====Level=========================================================== -->
+	<!-- ==== LEVEL ========================================================== -->
 	<xsd:complexType name="levels_RelStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for a list of LEVELs.</xsd:documentation>
@@ -623,7 +635,207 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="SiteRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
-	<!-- ======================================================================= -->
+	<!-- ===  GROUP OF SITES =================================================== -->
+	<xsd:complexType name="groupsOfSites_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for list of  GROUP OF SITES.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="GroupOfSites" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="GroupOfSites" abstract="false" substitutionGroup="GroupOfEntities">
+		<xsd:annotation>
+			<xsd:documentation>A grouping of SITEs which will be commonly referenced for a specific purpose. +v2.0</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="GroupOfSites_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="GroupOfEntitiesGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="GroupOfSitesGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="GroupOfSitesIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="GroupOfSites_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for GROUP OF SITES.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="GroupOfEntities_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="GroupOfSitesGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="GroupOfSitesGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for GROUP OF SITES.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:group ref="GroupOfSitesSpatialGroup"/>
+			<xsd:element name="alternativeNames" type="alternativeNames_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Alternative names.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="PublicCode" type="ExternalObjectRefStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Public code for GROUP OF SITES.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="members" type="siteRefs_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>SITEs in a GROUP OF SITEs</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="GroupOfSitesSpatialGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for GROUP OF SITES.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Centroid" type="SimplePoint_VersionStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Centre Coordinates of ZONE.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="gml:Polygon" minOccurs="0"/>
+			<xsd:element name="projections" type="projections_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Projections of SITE  onto another layer.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ===== SITE  STRUCTURE =============================================== -->
+	<xsd:complexType name="siteStructures_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for list of SITE STRUCTURES.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="SiteStructure" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="SiteStructure" type="SiteStructure_VersionStructure" abstract="false" substitutionGroup="DataManagedObject">
+		<xsd:annotation>
+			<xsd:documentation>A building or a separate part thereof within a SITE. +v2.0
+</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="SiteStructure_VersionStructure" abstract="false">
+		<xsd:annotation>
+			<xsd:documentation>Type for a SITE STRUCTURE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="DataManagedObjectStructure">
+				<xsd:sequence>
+					<xsd:group ref="SiteStructureGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="SiteStructureGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements of a SITE STRUCTURE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Name" type="MultilingualString" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Name of GROUP OF ENTITies.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Description" type="MultilingualString" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Further Description of a GROUP OF ENTITies.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="SiteRef" minOccurs="0"/>
+			<xsd:element name="levelsInStructure" type="levelsInStructure_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>LEVELs found within SITe.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ====== LEVEL IN STRUCTURE ============================================== -->
+	<xsd:complexType name="levelsInStructure_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of ENTRANCEs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="LevelInStructure" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="LevelInStructure" type="LevelInStructure_VersionStructure" abstract="false" substitutionGroup="VersionedChild">
+		<xsd:annotation>
+			<xsd:documentation>A LEVEL that is accessible in a SITE STRUCTURE with its relative lateral order in that SITE STRUCTURE counted from the bottom and upwards. +V2.0
+</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="LevelInStructure_VersionStructure" abstract="false">
+		<xsd:annotation>
+			<xsd:documentation>Type for LEVEL IN STRUCTURE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="VersionedChildStructure">
+				<xsd:sequence>
+					<xsd:group ref="LevelInStructureGroup"/>
+				</xsd:sequence>
+				<xsd:attribute name="order" type="xsd:positiveInteger">
+					<xsd:annotation>
+						<xsd:documentation>Order of LEVEL IN STRUCTURE within SITE STRUCTURE.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="LevelInStructureGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements of a LEVEL IN STRUCTURE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="FloorLabel" type="MultilingualString" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Label associated with LEVEL within SITE STRUCTURE. </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Name" type="MultilingualString" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Name of Level in SITE STRUCTURE</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="LevelRef"/>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ===== ACCESS ZONES ======================================================= -->
 	<xsd:complexType name="accessZones_RelStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for a list of ACCESS ZONEs.</xsd:documentation>
@@ -702,7 +914,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
-	<!-- ======================================================================= -->
+	<!-- ===== SERVICE SITE =================================================== -->
 	<xsd:element name="ServiceSite" substitutionGroup="Site">
 		<xsd:annotation>
 			<xsd:documentation>A sub-type of SITE which is of specific interest for the operator (e.g. where a joint service or a joint fee is proposed).</xsd:documentation>
