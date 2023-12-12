@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:core="http://www.govtalk.gov.uk/core" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_zone_version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:core="http://www.govtalk.gov.uk/core" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_zone_version">
 	<xsd:import namespace="http://www.opengis.net/gml/3.2" schemaLocation="../../gml/gml_extract_all_objects_v_3_2_1.xsd"/>
 	<!--Actual dependency-->
 	<xsd:import namespace="http://www.opengis.net/gml/3.2" schemaLocation="../../gml/gmlBasic2d-extract-v3_2_1-.xsd"/>
@@ -21,11 +21,17 @@
 				<Date>
 					<Modified>2017-03-28  Add Zones to RESOURCE FRAME</Modified>
 				</Date>
-				<Date><Modified>2017-11-08</Modified>Add  TARIFF ZONE Presentation Group
+				<Date>
+					<Modified>2017-11-08</Modified>Add  TARIFF ZONE Presentation Group
 				</Date>
-				<Date><Modified>2018-03-09</Modified>Correct Type on GENERAL ZONE element
+				<Date>
+					<Modified>2018-03-09</Modified>Correct Type on GENERAL ZONE element
 				</Date>
-				<Date><Modified>2019-02-25</Modified>UK-18 Introduce a dummy TariffZone_ type to workaround substitutiongroup restrictions  in XML spy
+				<Date>
+					<Modified>2019-02-25</Modified>UK-18 Introduce a dummy TariffZone_ type to workaround substitutiongroup restrictions  in XML spy
+				</Date>
+				<Date>
+					<Modified>2023-13-11</Modified>Add GROUP OF TARIFF ZONES
 				</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines ZONE types.</p>
@@ -39,7 +45,7 @@
 				<Language>[ISO 639-2/B] ENG</Language>
 				<Publisher>Kizoom Software Ltd, 16 High Holborn, London WC1V 6BX</Publisher>
 				<Rights>Unclassified
- 					<Copyright>CEN, Crown Copyright 2009-2019</Copyright>
+ 					<Copyright>CEN, Crown Copyright 2009-2023</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -90,7 +96,7 @@ Rail transport, Roads and Road transport
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<!-- ====Zone======================================================= -->
+	<!-- ==== ZONE ===================================================== -->
 	<xsd:element name="Zone" type="Zone_VersionStructure" abstract="false" substitutionGroup="GroupOfEntities">
 		<xsd:annotation>
 			<xsd:documentation>A two-dimensional PLACE within the service area of a public transport operator (administrative zone, TARIFF ZONE, ACCESS ZONE, etc.).</xsd:documentation>
@@ -136,7 +142,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
-	<!-- ======================================================================= -->
+	<!-- ===== GENERAL ZONE ====================================================== -->
 	<xsd:element name="GeneralZone" abstract="false" substitutionGroup="Zone">
 		<xsd:annotation>
 			<xsd:documentation>A GENERAL ZONE used to define a zonal fare structure in a zone-counting or zone-matrix system.</xsd:documentation>
@@ -174,7 +180,75 @@ Rail transport, Roads and Road transport
 			<xsd:extension base="Zone_VersionStructure"/>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<!-- ======================================================================= -->
+	<!-- ===  GROUP OF TARIFF ZONES ================================================= -->
+	<xsd:complexType name="groupsOfTariffZones_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for list of  GROUP OF TARIFF ZONES.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="GroupOfTariffZones" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="GroupOfTariffZones" abstract="false" substitutionGroup="GroupOfEntities">
+		<xsd:annotation>
+			<xsd:documentation>A grouping of TariffZones which will be commonly referenced for a specific purpose. +v2.0</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="GroupOfTariffZones_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="GroupOfEntitiesGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="GroupOfTariffZonesGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="GroupOfTariffZonesIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="GroupOfTariffZones_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for GROUP OF TARIFF ZONES.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="GroupOfEntities_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="GroupOfTariffZonesGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="GroupOfTariffZonesGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for GROUP OF TARIFF ZONES.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="PublicCode" type="ExternalObjectRefStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Public code for GROUP OF TARIFF ZONES.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="members" type="tariffZoneRefs_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>TARIFF ZONEs  in a GROUP OF TARIFF ZONES </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ======= TARIFF ZONE  ================================================ -->
 	<xsd:element name="TariffZone_" type="Zone_VersionStructure" abstract="true" substitutionGroup="Zone">
 		<xsd:annotation>
 			<xsd:documentation>Dummy TARIFF ZONE  to workaround xML spy Substitution Group limitations</xsd:documentation>
@@ -245,7 +319,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
-	<!-- ======================================================================= -->
+	<!-- ======= TYPE OF ZONE ====================================================== -->
 	<xsd:element name="TypeOfZone" abstract="false" substitutionGroup="TypeOfEntity">
 		<xsd:annotation>
 			<xsd:documentation>Classification of a ZONe.</xsd:documentation>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:core="http://www.govtalk.gov.uk/core" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_zone_version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:core="http://www.govtalk.gov.uk/core" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_zone_version">
 	<xsd:include schemaLocation="netex_pointAndLink_support.xsd"/>
 	<xsd:annotation>
 		<xsd:appinfo>
@@ -15,7 +15,7 @@
 					<Modified>2011-02-05</Modified>
 				</Date>
 				<Date>
-					<Modified>2010-11-05</Modified>
+					<Modified>2023-13-11</Modified>Add GROUPP OF TARIFF ZONES
 				</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines ZONE types.</p>
@@ -29,7 +29,7 @@
 				<Language>[ISO 639-2/B] ENG</Language>
 				<Publisher>Kizoom Software Ltd, 16 High Holborn, London WC1V 6BX</Publisher>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2014</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2023</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -54,7 +54,7 @@ Rail transport, Roads and Road transport
 		</xsd:appinfo>
 		<xsd:documentation>ZONE identifier types for NeTEx.</xsd:documentation>
 	</xsd:annotation>
-	<!-- ====Zone======================================================= -->
+	<!-- ==== ZONE ===================================================== -->
 	<xsd:simpleType name="ZoneIdType">
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of a ZONE.</xsd:documentation>
@@ -75,8 +75,7 @@ Rail transport, Roads and Road transport
 		</xsd:simpleContent>
 	</xsd:complexType>
 	<xsd:complexType name="zoneRefs_RelStructure">
-		<xsd:annotation>
-		</xsd:annotation>
+		<xsd:annotation/>
 		<xsd:complexContent>
 			<xsd:extension base="oneToManyRelationshipStructure">
 				<xsd:sequence>
@@ -85,7 +84,7 @@ Rail transport, Roads and Road transport
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<!-- ======================================================================= -->
+	<!-- ==== TARIFF ZONE ======================================================== -->
 	<xsd:element name="TariffZoneRef_" type="ZoneRefStructure" abstract="true" substitutionGroup="ZoneRef">
 		<xsd:annotation>
 			<xsd:documentation>Dummy type Reference to a TARIFF ZONE.</xsd:documentation>
@@ -161,6 +160,44 @@ Rail transport, Roads and Road transport
 			<xsd:extension base="oneToManyRelationshipStructure">
 				<xsd:sequence>
 					<xsd:element ref="TypeOfZoneRef" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ==  GROUP OF TARIFFZONEs  ============================================== -->
+	<xsd:element name="GroupOfTariffZonesRef" type="GroupOfTariffZonesRefStructure" substitutionGroup="GroupOfEntitiesRef_">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a GROUP OF TARIFF ZONEs.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="GroupOfTariffZonesRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a GROUP OF TARIFF ZONEs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="GroupOfEntitiesRefStructure">
+				<xsd:attribute name="ref" type="GroupOfTariffZonesIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Identifier of a GROUP OF TARIFF ZONEs.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:simpleType name="GroupOfTariffZonesIdType">
+		<xsd:annotation>
+			<xsd:documentation>Type for identifier of a GROUP OF TARIFF ZONEs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="GroupOfEntitiesIdType"/>
+	</xsd:simpleType>
+	<xsd:complexType name="groupOfTariffZoneRefs_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of GROUP OF TARIFF ZONEs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="oneToManyRelationshipStructure">
+				<xsd:sequence>
+					<xsd:element ref="GroupOfTariffZonesRef" minOccurs="0" maxOccurs="unbounded"/>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
