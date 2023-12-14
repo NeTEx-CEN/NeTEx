@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_accessRightParameter_version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_accessRightParameter_version">
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_serviceCalendar_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_vehicleSeating_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_trainElement_support.xsd"/>
@@ -8,7 +8,7 @@
 	<xsd:include schemaLocation="../../netex_part_1/part1_ifopt/netex_ifopt_pointOfInterest_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_part_1/part1_networkDescription/netex_line_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_part_1/part1_tacticalPlanning/netex_servicePattern_support.xsd"/>
-	<xsd:include schemaLocation="../../netex_part_1/part1_networkDescription/netex_route_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_part_1/part1_tacticalPlanning/netex_routingConstraint_support.xsd"/>
 	<!-- ====Timetables ========================================================= -->
 	<xsd:include schemaLocation="../../netex_part_2/part2_journeyTimes/netex_serviceJourney_support.xsd"/>
 	<!-- ====Fares ========================================================= -->
@@ -48,42 +48,55 @@
 				<Date>
 					<Created>2010-09-04</Created>
 				</Date>
-				<Date><Modified>2011-02-05</Modified>Name Space changes
+				<Date>
+					<Modified>2011-02-05</Modified>Name Space changes
 				</Date>
-				<Date><Modified>2017-03-28</Modified> CR019 Make ValidityParameter Assignment not abstract and fix ambiguity with Generic Parameter
+				<Date>
+					<Modified>2017-03-28</Modified> CR019 Make ValidityParameter Assignment not abstract and fix ambiguity with Generic Parameter
 				</Date>
-				<Date><Modified>2017-10-10</Modified> Fix Add TypeOfTravelDocument to ProductValidityParametersGroup.
+				<Date>
+					<Modified>2017-10-10</Modified> Fix Add TypeOfTravelDocument to ProductValidityParametersGroup.
 						* Allow DistanceMatrixElement view so that origin and Destination can be referenced
 				</Date>
-				<Date><Modified>2017-10-10</Modified> Fix Add TimeIntervalRef TimeStructureFactorRef to GeographicalIntervalRef   GeographicalStructureFactorRef to be referenced
+				<Date>
+					<Modified>2017-10-10</Modified> Fix Add TimeIntervalRef TimeStructureFactorRef to GeographicalIntervalRef   GeographicalStructureFactorRef to be referenced
 				</Date>
-				<Date><Modified>2019-03-01</Modified>EURA-(nk) Add DistanceMatrixInverseRef for backwards direction of reference to a DIstance Matrix Element
+				<Date>
+					<Modified>2019-03-01</Modified>EURA-(nk) Add DistanceMatrixInverseRef for backwards direction of reference to a DIstance Matrix Element
 				</Date>
-				<Date><Modified>2019-03-01</Modified>Add missing elements to GenericParameterAssignment
+				<Date>
+					<Modified>2019-03-01</Modified>Add missing elements to GenericParameterAssignment
 					    *	UK-33 Add TariffRef	as a GenericParameterAssignment parameter
 					   *	UK80 TypeOfConcession, TypeOfUsageParameter,  VehicleType   TypeOfLineRef as GenericParameterAssignment parameters
 				</Date>
-				<Date><Modified>2019-03-01</Modified>EURA-88 Add ServiceMatch Attributes : Exact | next | previous | timebands  to GenericParameterAssignmen
+				<Date>
+					<Modified>2019-03-01</Modified>EURA-88 Add ServiceMatch Attributes : Exact | next | previous | timebands  to GenericParameterAssignmen
 				</Date>
-				<Date><Modified>2019-03-01</Modified>UK-41 Add an additional functional operator to GenericParameterAssignment  to clarify use of groups :  oneOf /  someOf/  allOf
+				<Date>
+					<Modified>2019-03-01</Modified>UK-41 Add an additional functional operator to GenericParameterAssignment  to clarify use of groups :  oneOf /  someOf/  allOf
 				</Date>
-				<Date><Modified>2019-03-09</Modified>EURA-54 Add a PassengerSeatRef to
+				<Date>
+					<Modified>2019-03-09</Modified>EURA-54 Add a PassengerSeatRef to
 				</Date>
-				<Date><Modified>2019-03-14</Modified>UK-41  Also LimitationSelectionType Add an additional functional operator to GenericParameterAssignment  to clarify use of groups :  oneOf /  someOf/  allOf
+				<Date>
+					<Modified>2019-03-14</Modified>UK-41  Also LimitationSelectionType Add an additional functional operator to GenericParameterAssignment  to clarify use of groups :  oneOf /  someOf/  allOf
 
-					* Add  new ___FareStructureValidityParametersGroup___ to validity paarmaters with new attributes   ___TypeOfTariffRef___,   ___TypeOfFareStructureFactor___,  ___TypeOfFarFresStructureFactorRef___,
-					  * Extend  ___FareProduct ValidityParametersGroup___  to validity paramaters  with new attributes   ___TypeOfPriceingRuleRef___,   ___ChargingMethodRef___, ___TypeOfPaymentMethodRef___, ___TypeOfMachineReadability___, ___TypeOfFareTableRef.___  TypeofMachineReadabilityRef.
-					  * Add  new ___SeatingValidityParametersGroup___ with new attributes   ___TrainElementRef___,    ___TrainComponentLabelAssignmentRef___.
-					 * Also add OperatingPeriod Ref to Temporal  validity Parameters
+					* Add new FareStructureValidityParametersGroup to validity paarmaters with new attributes; TypeOfTariffRef, TypeOfFareStructureFactor, TypeOfFarFresStructureFactorRef,
+					 * Extend FareProduct ValidityParametersGroup to validity paramaters with new attributes: TypeOfPriceingRuleRef, ChargingMethodRef, TypeOfPaymentMethodRef, TypeOfMachineReadability, TypeOfFareTableRef. TypeofMachineReadabilityRef.
+					 * Add new SeatingValidityParametersGroup with new attributes  TrainElementRef, TrainComponentLabelAssignmentRef.
+					 * Also add OperatingPeriod Ref to Temporal validity Parameters
 					 * Also Fix change choice of TrainNumber etc to selection,
 				</Date>
-				<Date><Modified>2019-03-26</Modified>NL-27 CD #58 Add default TypeOfProductCategory and TypeOfService to Line:
+				<Date>
+					<Modified>2019-03-26</Modified>NL-27 CD #58 Add default TypeOfProductCategory and TypeOfService to Line:
 					Move TypeOfProductCategory amnd TypeOfService from netex_journey_version  to  Framework reusable components (netex_travelRights_version)  so they are visible from part 1
 		  	Can  therefore drop include of netex_travelRights_version from 	  netex_accessRightParameter_version.xsd  .
 				</Date>
-				<Date><Modified>2019-04-18</Modified>FIX  - SUpport Place to Place travel (ADDRESS and TOPOGRAPHICAL PLACE) : Add AddressRef ,  TopoographiPlaceRef and PlaceUseEnum.
+				<Date>
+					<Modified>2019-04-18</Modified>FIX  - SUpport Place to Place travel (ADDRESS and TOPOGRAPHICAL PLACE) : Add AddressRef ,  TopoographiPlaceRef and PlaceUseEnum.
 				</Date>
-				<Date><Modified>2020-10-05</Modified> New Modes:
+				<Date>
+					<Modified>2020-10-05</Modified> New Modes:
 					ValidityParameters
 					- Modes: Add AccessVeModes and  ModeOfOperation
 					- VehicleTypes:   Add ModelProfileType, use Wider TransportType rather than VehicleType
@@ -98,12 +111,18 @@
 					 - Service add SingleJourney and GroupOfSingleJourneys
 					 - Fare: add MediumAccessDevice and ApplicationInstance
 				</Date>
-				<Date><Modified>2020-12-08</Modified>FIX - Add optional TimebandRef and ServiceCalendarRef to TemporalValidityParametersGroup
+				<Date>
+					<Modified>2020-12-08</Modified>FIX - Add optional TimebandRef and ServiceCalendarRef to TemporalValidityParametersGroup
 				</Date>
-				<Date><Modified>2021-01-25</Modified>Add GroupOfTariffZonesRef to NetworkValidityParametersGroup
+				<Date>
+					<Modified>2021-01-25</Modified>Add GroupOfTariffZonesRef to NetworkValidityParametersGroup
 				</Date>
-				<Date><Modified>2021-09-01</Modified>FIX - Post newmodes merge  Remove ambigous use of VehicleModes (drop from Organisation validity parameters).
+				<Date>
+					<Modified>2021-09-01</Modified>FIX - Post newmodes merge  Remove ambigous use of VehicleModes (drop from Organisation validity parameters).
 					    Add MobilityServiceConstraintZone to Network validity parameters.
+				</Date>
+				<Date>
+					<Modified>2023-12-14</Modified>FIX - Rename RoutingValidityParametersGroup to align with Transmodel. Add missing TransferRestriction, ServiceExclusion, RoutingRestrictionnZone and Border Point parametrers.
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -121,7 +140,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
-					 <Copyright>CEN, Crown Copyright 2009-2021</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2023</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -376,7 +395,7 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Network validity parameters for ACCESS RIGHT PARAMETER ASSIGNMENT.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:group>
-			<xsd:group ref="RouteValidityParametersGroup">
+			<xsd:group ref="RoutingValidityParametersGroup">
 				<xsd:annotation>
 					<xsd:documentation>Route validity parameters for ACCESS RIGHT PARAMETER ASSIGNMENT.</xsd:documentation>
 				</xsd:annotation>
@@ -479,9 +498,9 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="VehicleMeetingPlaceRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
-	<xsd:group name="RouteValidityParametersGroup">
+	<xsd:group name="RoutingValidityParametersGroup">
 		<xsd:annotation>
-			<xsd:documentation>ROUTE validity parameters for ACCESS RIGHT PARAMETER ASSIGNMENT.</xsd:documentation>
+			<xsd:documentation>Routing validity parameters for ACCESS RIGHT PARAMETER ASSIGNMENT.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element name="RoutingType" type="RoutingTypeEnumeration" default="both" minOccurs="0">
@@ -494,9 +513,13 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Whether use SERIES, or FARE SECTION in forwards, backwards or both directions.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element ref="BorderPointRef" minOccurs="0"/>
 			<xsd:element ref="SeriesConstraintRef" minOccurs="0"/>
 			<xsd:element ref="ServiceJourneyPatternRef" minOccurs="0"/>
 			<xsd:element ref="SingleJourneyPathRef" minOccurs="0"/>
+			<xsd:element ref="TransferRestrictionRef" minOccurs="0"/>
+			<xsd:element ref="RoutingConstraintZoneRef" minOccurs="0"/>
+			<xsd:element ref="ServiceExclusionRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:group name="ServiceValidityParametersGroup">

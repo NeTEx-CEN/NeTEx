@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_line_version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_line_version">
 	<xsd:include schemaLocation="../../netex_framework/netex_utility/netex_utility_types.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_transportOrganisation_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_facility_support.xsd"/>
@@ -24,34 +24,43 @@
 					<Created>2010-09-04</Created>
 				</Date>
 				<Date><Modified>2011-02-05</Modified> Name Space changes 
+				<Date>
+					<Modified>2011-02-05</Modified> Name Space changes 
 				</Date>
-				<Date><Modified>2017-03-27</Modified>CR27 Add Submode to Group of lines.
+				<Date>
+					<Modified>2017-03-27</Modified>CR27 Add Submode to Group of lines.
 					<Modified>2017-03-27</Modified>CR11 Add Print Presentation to Line.
 					<Modified>2017-05-25</Modified>Pullrequest  Correct text on LineDirection.
 					<Modified>2017-06-01</Modified>Add Additional Networks to service Frame.
 					<Modified>2017-06-28</Modified>CRxx Add LineType and GroupOfLineType.
 					<Modified>2017-06-28</Modified>CRxx Add PRESENTATION to Allowed Line Direction.
-					<Modified>2017-07-03</Modified>CR25 Add Secondary Name to Detsination Display.
+					<Modified>2017-07-03</Modified>CR25 Add Secondary Name to Destination Display.
 				</Date>
 				<Date>
 					<Modified>2017-04-22 CR16 Timetable pdf links to Line</Modified>
 				</Date>
-				<Date><Modified>2019-03-08</Modified>UK-44 Add additional  groupsOfOperators  to Network.   
+				<Date>
+					<Modified>2019-03-08</Modified>UK-44 Add additional  groupsOfOperators  to Network.   
 						Also add flexible and urban to LineType enumeration	. 
 						Also add tariff and scheduling to GroupOfLinesType enumeration	
 						Add UseToExclude flag to GroupOfLines
 				</Date>
-				<Date><Modified>2019-03-25</Modified>NL-27  CD Add additional  defaults to line for  TypeProductCategory, TypeOfService
-					 	
+				<Date>
+					<Modified>2019-03-25</Modified>NL-27  CD Add additional  defaults to line for  TypeProductCategory, TypeOfService					 	
 						NJSK Review; Move  TypeProductCategory  TypeOfService
 						NJSK Review;  Move position of  Line  /TypeProductCategory and  TypeOfService to LineClassificationGroup 
 				</Date>
-				<Date><Modified>2019-03-12</Modified>EURA-84 (and GTFS)  Add default PaymentMethod, TypesOfPaymentMethods   and Payment Moments attribute to NETWORK, GROUP OF LINES and LINE   
+				<Date>
+					<Modified>2019-03-12</Modified>EURA-84 (and GTFS)  Add default PaymentMethod, TypesOfPaymentMethods   and Payment Moments attribute to NETWORK, GROUP OF LINES and LINE   
 				</Date>
-				<Date><Modified>2019-04-18</Modified>Allow PRESENTATION on DestinationDIsplay  
+				<Date>
+					<Modified>2019-04-18</Modified>Allow PRESENTATION on DestinationDIsplay  
 				</Date>
 				<Date>
 					<Modified>2020-10-05 New modes - add MODE of OPERATION to LINE.</Modified>
+				</Date>
+				<Date>
+					<Modified>2023-12-14 #391 Fix linesInDirection to also allow Allowed line diretcion ref. REmove commented out code</Modified>
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -69,7 +78,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
-					 <Copyright>CEN, Crown Copyright 2009-2020</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2023</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -269,45 +278,11 @@ Rail transport, Roads and Road transport
 		<xsd:annotation>
 			<xsd:documentation>Dummy Supertype for LINE &amp; FLEXIBLE LINe.</xsd:documentation>
 		</xsd:annotation>
-		<!--
-		<xsd:unique name="AnyLine">
-			<xsd:selector xpath=".//netex:Line"/>
-			<xsd:field xpath="Id"/>
-		</xsd:unique>
-		<xsd:unique name="AnyLineDirection">
-			<xsd:selector xpath=".//netex:allowedDirections/DirectionRef"/>
-			<xsd:field xpath="@ref"/>
-		</xsd:unique>
-	<xsd:unique name="UniqueLineId">
-			<xsd:annotation>
-				<xsd:appinfo>Line identifiers must be unique for Type/Version</xsd:appinfo>
-			</xsd:annotation>
-			<xsd:selector xpath=".//netex:Line"/>
-			<xsd:field xpath="@version"/>
-			<xsd:field xpath="./netex:Id"/>
-		</xsd:unique> -->
 	</xsd:element>
 	<xsd:element name="Line" abstract="false" substitutionGroup="Line_" id="Line">
 		<xsd:annotation>
 			<xsd:documentation>A group of ROUTEs which is generally known to the public by a similar name or number.</xsd:documentation>
 		</xsd:annotation>
-		<!--
-		<xsd:unique name="AnyLine">
-			<xsd:selector xpath=".//netex:Line"/>
-			<xsd:field xpath="Id"/>
-		</xsd:unique>
-		<xsd:unique name="AnyLineDirection">
-			<xsd:selector xpath=".//netex:allowedDirections/DirectionRef"/>
-			<xsd:field xpath="@ref"/>
-		</xsd:unique>
-	<xsd:unique name="UniqueLineId">
-			<xsd:annotation>
-				<xsd:appinfo>Line identifiers must be unique for Type/Version</xsd:appinfo>
-			</xsd:annotation>
-			<xsd:selector xpath=".//netex:Line"/>
-			<xsd:field xpath="@version"/>
-			<xsd:field xpath="./netex:Id"/>
-		</xsd:unique> -->
 		<xsd:complexType>
 			<xsd:complexContent>
 				<xsd:restriction base="Line_VersionStructure">
@@ -952,24 +927,42 @@ Rail transport, Roads and Road transport
 	<!-- ======================================================================= -->
 	<xsd:complexType name="linesInDirectionRefs_RelStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for a list of LINE in a specific DIRECTION</xsd:documentation>
+			<xsd:documentation>Type for a list of LINEs in a specific DIRECTION</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="containmentAggregationStructure">
-				<xsd:sequence>
-					<xsd:element ref="LineInDirectionRef" maxOccurs="unbounded"/>
-				</xsd:sequence>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element ref="LineInDirectionRef">
+						<xsd:annotation>
+							<xsd:documentation> Reference to LINEs in a specifiic DIRECTION</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element ref="AllowedLineDirectionRef"/>
+				</xsd:choice>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="linesInDirections_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of LINEsin a specific DIRECTION</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element ref="Line"/>
+					<xsd:element ref="LineInDirectionRef"/>
+				</xsd:choice>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
 	<xsd:element name="LineInDirectionRef" type="LineInDirectionRef_Structure" abstract="false">
 		<xsd:annotation>
-			<xsd:documentation> Refrence to LINE in a specific DIRECTION</xsd:documentation>
+			<xsd:documentation> Refrence to LINEs in a specific DIRECTION</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="LineInDirectionRef_Structure">
 		<xsd:annotation>
-			<xsd:documentation>Type for a Reference to a LINE in a specific DIRECTION</xsd:documentation>
+			<xsd:documentation>Type for a Reference to a LINEs in a specific DIRECTION</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="LineRef" minOccurs="0"/>
