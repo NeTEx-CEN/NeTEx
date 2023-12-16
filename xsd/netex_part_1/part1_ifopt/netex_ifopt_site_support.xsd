@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_ifopt_site_support">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_ifopt_site_support">
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_address_support.xsd"/>
 	<!-- ======================================================================= -->
 	<xsd:annotation>
@@ -13,11 +13,14 @@
 				<Date>
 					<Created>2010-09-04</Created>
 				</Date>
-				<Date><Modified>2011-02-05</Modified>Name Space changes
+				<Date>
+					<Modified>2011-02-05</Modified>Name Space changes
 				</Date>
-				<Date><Modified>2019-03-25</Modified>Fix #39 by Skinkie from 2019.01.07  Fix typo on ServiceSiteRefStructure 
+				<Date>
+					<Modified>2019-03-25</Modified>Fix #39 by Skinkie from 2019.01.07  Fix typo on ServiceSiteRefStructure 
 				</Date>
-				<Date><Modified>2020-20-05</Modified>New Modes Fix: add  sportsm transport, government  and culturalAttraction to SiteType enumeration					  
+				<Date>
+					<Modified>2020-20-05</Modified>New Modes Fix: add  sportsm transport, government  and culturalAttraction to SiteType enumeration					  
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -58,10 +61,37 @@ Rail transport, Roads and Road transport
 				<Type>Standard</Type>
 			</Metadata>
 		</xsd:appinfo>
-		<xsd:documentation>NeTEX: SITE idenifier types.</xsd:documentation>
+		<xsd:documentation>NeTEX: SITE identifier types.</xsd:documentation>
 	</xsd:annotation>
-	<xsd:simpleType name="SiteElementIdType">
+	<!-- ==  GROUP OF SITEs ============================================== -->
+	<xsd:element name="GroupOfSitesRef" type="GroupOfSitesRefStructure" substitutionGroup="GroupOfEntitiesRef_">
 		<xsd:annotation>
+			<xsd:documentation>Reference to a GROUP OF SITEs.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="GroupOfSitesRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a GROUP OF SITEs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="GroupOfEntitiesRefStructure">
+				<xsd:attribute name="ref" type="GroupOfSitesIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Identifier of a GROUP OF SITEs.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:simpleType name="GroupOfSitesIdType">
+		<xsd:annotation>
+			<xsd:documentation>Type for identifier of a GROUP OF SITEs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="GroupOfEntitiesIdType"/>
+	</xsd:simpleType>
+	<!-- ===== SITE========================================================== -->	
+	<xsd:simpleType name="SiteElementIdType">
+		<xsd:annotation>		
 			<xsd:documentation>Identifier for a SITE ELEMENT.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="AddressablePlaceIdType"/>
@@ -123,7 +153,7 @@ Rail transport, Roads and Road transport
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<!-- ======================================================================= -->
+	<!-- ============= SERVICE ========================================================== -->
 	<xsd:simpleType name="ServiceSiteIdType">
 		<xsd:annotation>
 			<xsd:documentation>Identifier for a SERVICE SITE.</xsd:documentation>
@@ -149,7 +179,7 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
-	<!-- ======================================================================= -->
+	<!-- ============= SITE COMPONENT ========================================================== -->
 	<xsd:simpleType name="SiteComponentIdType">
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of a SITE COMPONENT.</xsd:documentation>
@@ -175,7 +205,7 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
-	<!-- ======================================================================= -->
+	<!-- =========== LEVEL ============================================================ -->
 	<xsd:simpleType name="LevelIdType">
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of a LEVEL.</xsd:documentation>
@@ -201,7 +231,71 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
-	<!-- ======================================================================= -->
+	<!-- ===== SITE STRUCTURE======================================================== -->
+	<xsd:simpleType name="SiteStructureIdType">
+		<xsd:annotation>
+			<xsd:documentation>Identifier for a SITE STRUCTURE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ObjectIdType"/>
+	</xsd:simpleType>
+	<xsd:element name="SiteStructureRef" type="SiteStructureRefStructure" substitutionGroup="VersionOfObjectRef">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a SITE STRUCTURE.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="SiteStructureRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for identifier of a SITE STRUCTURE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="VersionOfObjectRefStructure">
+				<xsd:attribute name="ref" type="SiteStructureIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Identifier of a SITE STRUCTURE.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="siteStructureRefs_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a collection of one or more SITE STRUCTUREs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="oneToManyRelationshipStructure">
+				<xsd:sequence>
+					<xsd:element ref="SiteStructureRef" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ====== LEVEL ======================================================== -->
+	<xsd:simpleType name="LevelInStructureIdType">
+		<xsd:annotation>
+			<xsd:documentation>Type for identifier of a LEVEL IN  STRUCTURE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ObjectIdType"/>
+	</xsd:simpleType>
+	<xsd:element name="LevelInStructureRef" type="LevelInStructureRefStructure" substitutionGroup="VersionOfObjectRef">
+		<xsd:annotation>
+			<xsd:documentation>Reference to LEVEL of a LEVEL IN  STRUCTURE.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="LevelInStructureRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a reference to a LEVEL IN  STRUCTURE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="VersionOfObjectRefStructure">
+				<xsd:attribute name="ref" type="LevelInStructureIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Identifier of a LEVEL IN STRUCTURE.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!-- ===== ENTRANCE ===================================================== -->
 	<xsd:simpleType name="EntranceIdType">
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of ENTRANCE.</xsd:documentation>
@@ -221,7 +315,7 @@ Rail transport, Roads and Road transport
 			<xsd:restriction base="SiteComponentRefStructure">
 				<xsd:attribute name="ref" type="EntranceIdType" use="required">
 					<xsd:annotation>
-						<xsd:documentation>Identifier of a PLACE.</xsd:documentation>
+						<xsd:documentation>Identifier of an ENTRANCE.</xsd:documentation>
 					</xsd:annotation>
 				</xsd:attribute>
 			</xsd:restriction>
@@ -239,7 +333,7 @@ Rail transport, Roads and Road transport
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<!-- ======================================================================= -->
+	<!-- ========= VEHICLE ENTRANCE ============================================================== -->
 	<xsd:simpleType name="VehicleEntranceIdType">
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of a VEHICLE ENTRANCE.</xsd:documentation>
@@ -259,13 +353,13 @@ Rail transport, Roads and Road transport
 			<xsd:restriction base="EntranceRefStructure">
 				<xsd:attribute name="ref" type="VehicleEntranceIdType" use="required">
 					<xsd:annotation>
-						<xsd:documentation>Identifier of a PLACE.</xsd:documentation>
+						<xsd:documentation>Identifier of a VEHICLE ENTRANCE.</xsd:documentation>
 					</xsd:annotation>
 				</xsd:attribute>
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
-	<!-- ======================================================================= -->
+	<!-- ============ ACCESS ZONE =========================================================== -->
 	<xsd:simpleType name="AccessZoneIdType">
 		<xsd:annotation>
 			<xsd:documentation>Identifier for an ACCESS ZONE.</xsd:documentation>
