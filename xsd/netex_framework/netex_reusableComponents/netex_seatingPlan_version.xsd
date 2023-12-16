@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_seatingPlan_version">
 	<xsd:include schemaLocation="netex_vehicleType_version.xsd"/>
+	<xsd:include schemaLocation="netex_seatingPlan_support.xsd"/>
 	<xsd:include schemaLocation="netex_sensorEquipment_version.xsd"/>
 	<xsd:include schemaLocation="netex_equipmentVehiclePassenger_version.xsd"/>
 	<!-- ======================================================================= -->
@@ -78,7 +79,7 @@
 	</xsd:complexType>
 	<xsd:element name="SpotRow" substitutionGroup="VersionedChild">
 		<xsd:annotation>
-			<xsd:documentation>A Row of LOCATABLE SPOTs, e.g. seats, within a PASSENGER SPACE. +v2.0</xsd:documentation>
+			<xsd:documentation>A designated row of LOCATABLE SPOTs, e.g. seats, within a PASSENGER SPACE. v2.0</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -147,7 +148,7 @@
 	</xsd:complexType>
 	<xsd:element name="SpotColumn" substitutionGroup="VersionedChild">
 		<xsd:annotation>
-			<xsd:documentation>A File of LOCATABLE SPOTs within a PASSENGER SPACE, For example Column A, B, C, D. +v2.0
+			<xsd:documentation>A designated File of LOCATABLE SPOTs within a PASSENGER SPACE, For example Column A, B, C, D. +v2.0
 </xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
@@ -205,7 +206,7 @@
 	<!-- ==== EQUIPABLE SPACE ======================================================= -->
 	<xsd:element name="EquipableSpace" type="EquipableSpace_VersionStructure" abstract="true" substitutionGroup="DataManagedObject">
 		<xsd:annotation>
-			<xsd:documentation>A place where ACTUAL VEHICLE EQUIPMENT may be located. +v2.0</xsd:documentation>
+			<xsd:documentation>A place aboard a vehicle where ACTUAL VEHICLE EQUIPMENT may be located. +v2.0</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="EquipableSpace_VersionStructure" abstract="true">
@@ -273,7 +274,7 @@
 	<!-- ==== LOCATABLE SPOT ======================================================= -->
 	<xsd:element name="LocatableSpot" type="LocatableSpot_VersionStructure" abstract="true" substitutionGroup="EquipableSpace">
 		<xsd:annotation>
-			<xsd:documentation>An identifiable individual area within a given PASSENGER SPACE,  which may potentially be allocated to a single passenger or +v2.0</xsd:documentation>
+			<xsd:documentation>An identifiable individual area within a given PASSENGER SPACE, which may potentially be allocated to a single passenger or +v2.0</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="LocatableSpot_VersionStructure" abstract="true">
@@ -408,8 +409,7 @@
 	<!-- ====== PASSENGER VEHICLE SPOT =================================== -->
 	<xsd:element name="PassengerSpot" abstract="false" substitutionGroup="LocatableSpot">
 		<xsd:annotation>
-			<xsd:documentation>A  specified seat or other space for a passenger within a given DECK SPACE. +v2.0
- +v2.0.</xsd:documentation>
+			<xsd:documentation>A designated seat or other space for a passenger within a given DECK SPACE. +v2.0.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -463,7 +463,7 @@
 	</xsd:complexType>
 	<xsd:element name="PassengerVehicleSpot" abstract="false" substitutionGroup="LocatableSpot">
 		<xsd:annotation>
-			<xsd:documentation>A  specified  onboard space to carry a vehicle (car, motorcycle, cycle, etc) within a given DECK SPACE. +v2.0.</xsd:documentation>
+			<xsd:documentation> A designated space  to stow a passenger's luggage onboard.+v2.0.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -638,5 +638,67 @@
 			<xsd:extension base="TypeOfValue_VersionStructure"/>
 		</xsd:complexContent>
 	</xsd:complexType>
+	<!-- ====== SENSOR IN SPOT =================================== -->
+	<xsd:complexType name="sensorsInSpot_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of SENSORs in SPOT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="strictContainmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="SensorInSpot" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="SensorInSpot">
+		<xsd:annotation>
+			<xsd:documentation>Use of a specific SPOT SENSOR to monitor  a specific LOCATABLE SPOT. 
++v2.0</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="SensorInSpot_VersionedChildStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="VersionedChildGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="SensorInSpotGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="SensorInSpotIdType" use="optional">
+						<xsd:annotation>
+							<xsd:documentation>Identifier of SENSOR IN SPOT.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="SensorInSpot_VersionedChildStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a SENSOR IN SPOT </xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="VersionedChildStructure">
+				<xsd:sequence>
+					<xsd:group ref="SensorInSpotGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="SensorInSpotGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a SENSOR IN SPOT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="LocatableSpotRef" minOccurs="0"/>
+			<xsd:element ref="SpotSensorRef" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>	
 	<!-- ======================================================================= -->
 </xsd:schema>
