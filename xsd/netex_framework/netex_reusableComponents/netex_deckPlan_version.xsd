@@ -67,18 +67,18 @@
 	<!-- ======================================================================= -->
 	<xsd:group name="DeckPlanInFrameGroup">
 		<xsd:annotation>
-			<xsd:documentation>Deck Plans in Frame</xsd:documentation>
+			<xsd:documentation>Elements for a DECK PLAN in Frame.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="deckPlans" type="deckPlans_RefStructure" minOccurs="0">
+			<xsd:element name="deckPlans" type="deckPlansInFrame_RelStructure" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>A List OF DECK PLANs</xsd:documentation>
+					<xsd:documentation>DECK OKANs in FRAME.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ==== DECK PLAN ==================================================== -->
-	<xsd:complexType name="deckPlans_RefStructure">
+	<xsd:complexType name="deckPlansInFrame_RelStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for containment in frame of DECK PLANs</xsd:documentation>
 		</xsd:annotation>
@@ -90,6 +90,7 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
+	<!-- ==== DECK PLAN ==================================================== -->
 	<xsd:element name="DeckPlan" substitutionGroup="DataManagedObject">
 		<xsd:annotation>
 			<xsd:documentation>A  plan for the layout of seating and other areas of use of an entire VEHICLE (train, coach, vessel etc.) or individual TRAIN ELEMENT for all or part of a journey.  +v2.0
@@ -237,7 +238,8 @@
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element ref="DeckLevelRef" minOccurs="0"/>
-			<xsd:element name="deckSpaces" type="deckSpaceRefs_RelStructure" minOccurs="0">
+
+			<xsd:element name="deckSpaces" type="deckSpaces_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>DECK SPACEs in DECK PLAN.</xsd:documentation>
 				</xsd:annotation>
@@ -282,6 +284,16 @@
 			<xsd:documentation>Elements for a DECK COMPONENT.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
+			<xsd:element name="Name" type="MultilingualString" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Name of DECK COMPONENT.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Description" type="MultilingualString" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Description of DECK COMPONENT.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element name="PublicUse" type="xsd:boolean" default="true" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Whether DECK COMPONENT is for public use. Default is true.</xsd:documentation>
@@ -298,7 +310,7 @@
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ====== DECK SPACE =================================== -->
-	<xsd:complexType name="deckSpaceRefs_RelStructure">
+	<xsd:complexType name="deckSpaces_RelStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for a list of DECK SPACEs.</xsd:documentation>
 		</xsd:annotation>
@@ -331,7 +343,7 @@
 							<xsd:group ref="DataManagedObjectGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
-							<xsd:group ref="EquipableSpaceGroup">
+						<xsd:group ref="EquipableSpaceGroup">
 								<xsd:annotation>
 									<xsd:documentation>Elements for a EQUIPABLE SPACE.</xsd:documentation>
 								</xsd:annotation>
@@ -451,8 +463,7 @@
 	</xsd:complexType>
 	<xsd:element name="PassengerSpace" substitutionGroup="DeckSpace_">
 		<xsd:annotation>
-			<xsd:documentation> A specialisation of DECK SPACE defining an area within a VEHICLE (i.e. bus, boat, coach, car) or TRAIN ELEMENT for use by passengers. +2.0
-</xsd:documentation>
+			<xsd:documentation> A specialisation of DECK SPACE defining an area within a VEHICLE (i.e. bus, boat, coach, car) or TRAIN ELEMENT for use by passengers. +v2.0</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -707,6 +718,14 @@
 			<xsd:element name="VehicleSide" type="VehicleSideEnumeration" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Side of ENTRANCE relative to forward orientation of VEHICLE. </xsd:documentation>
+			<xsd:element name="DeckEntranceType" type="DeckEntranceTypeEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Type of DECK ENTRANCE.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="EntranceSide" type="VehicleSideEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Side of ENTRANCE relative to forward orientation of VEHICLE. to .</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="DistanceFromFront" type="LengthType" minOccurs="0">
@@ -752,13 +771,18 @@
 					<xsd:documentation>Whether the door is automatic.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element ref="TypeOfDeckEntranceRef" minOccurs="0"/>
+			<xsd:element name="sensorsInEntrance" type="sensorsInEntrance_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>ENTRANCE SENSORS in the DECK ENTRANCE.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ====== PASSENGER  ENTRANCE =================================== -->
 	<xsd:element name="PassengerEntrance" substitutionGroup="DeckEntrance_">
 		<xsd:annotation>
-			<xsd:documentation> A normal entrance for passengers to or within a DECK.
-+v2.0</xsd:documentation>
+			<xsd:documentation> A normal entrance for passengers to or within a DECK. +v2.0</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -895,8 +919,7 @@
 	<!-- ====== OTHER DECK ENTRANCE =================================== -->
 	<xsd:element name="OtherDeckEntrance" substitutionGroup="DeckEntrance_">
 		<xsd:annotation>
-			<xsd:documentation> An entrance  to or within a  DECK for use for other purposes than normal passenger access. E.g. crew, emergency exit, etc.
-+v2.0</xsd:documentation>
+			<xsd:documentation> An entrance  to or within a  DECK for use for other purposes than normal passenger access. E.g. crew, emergency exit, etc. +v2.0</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -971,8 +994,7 @@
 	</xsd:complexType>
 	<xsd:element name="DeckEntranceUsage" substitutionGroup="VersionedChild">
 		<xsd:annotation>
-			<xsd:documentation> Permitted usage of a specific PASSENGER ENTRANCE to access a particular DECK SPACE.
-+v2.0</xsd:documentation>
+			<xsd:documentation> Permitted usage of a specific PASSENGER ENTRANCE to access a particular DECK SPACE. +v2.0</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -1037,6 +1059,12 @@
 			</xsd:element>
 			<xsd:element ref="DeckEntranceRef" minOccurs="0"/>
 			<xsd:group ref="LocatableSpotRangeGroup"/>
+			<xsd:element name="UsageType" type="EntranceUsageEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Nature of usage: entry, ecit etc. See allowed values.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="DeckEntranceRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======DECK ENTRANCE COUPLE. ====================================================== -->
@@ -1054,9 +1082,7 @@
 	</xsd:complexType>
 	<xsd:element name="DeckEntranceCouple" substitutionGroup="VersionedChild">
 		<xsd:annotation>
-			<xsd:documentation> Explicit linking of a pair of DECK ENTRANCEs, e.g. between train carriages.
-+v2.0
-</xsd:documentation>
+			<xsd:documentation> Explicit linking of a pair of DECK ENTRANCEs, e.g. between train carriages. +v2.0</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -1126,8 +1152,7 @@
 	</xsd:complexType>
 	<xsd:element name="SensorInEntrance">
 		<xsd:annotation>
-			<xsd:documentation>Use of a specific ENTRANCE SENSOR to monitor a specific DECK ENTRANCE.
-+ v2.0</xsd:documentation>
+			<xsd:documentation>Use of a specific ENTRANCE SENSOR to monitor a specific DECK ENTRANCE. +v2.0</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -1189,8 +1214,7 @@
 	</xsd:complexType>
 	<xsd:element name="DeckWindow" substitutionGroup="DeckComponent">
 		<xsd:annotation>
-			<xsd:documentation> A window onto a DECK SPACE.
-+v2.0</xsd:documentation>
+			<xsd:documentation> A window onto a DECK SPACE. +v2.0</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -1298,9 +1322,7 @@
 	</xsd:complexType>
 	<xsd:element name="DeckLevel" substitutionGroup="DataManagedObject">
 		<xsd:annotation>
-			<xsd:documentation>An identified level (1, 2 , 3, etc. ) within the DECK PLAN of a VEHICLE (boat, train, airplane, etc). +v2.0
-.
-+v2.0</xsd:documentation>
+			<xsd:documentation>An identified level (1, 2 , 3, etc. ) within the DECK PLAN of a VEHICLE (boat, train, airplane, etc). +v2.0</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -1442,8 +1464,7 @@
 	<!-- ========= TYPE OF DECK SPACE ============================================ -->
 	<xsd:element name="TypeOfDeckSpace" abstract="false" substitutionGroup="TypeOfValue">
 		<xsd:annotation>
-			<xsd:documentation> Classification for DECK SPACE, e.g. as WC, Restaurant, luggage area, etc.
-+v2.0</xsd:documentation>
+			<xsd:documentation> Classification for DECK SPACE, e.g. as WC, Restaurant, luggage area, etc. +v2.0</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
