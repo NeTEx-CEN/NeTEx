@@ -5,6 +5,8 @@
 	<xsd:include schemaLocation="../../netex_framework/netex_utility/netex_utility_types.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_serviceRestrictions_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_trainElement_version.xsd"/>
+	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_dayType_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_dayType_version.xsd"/>
 	<xsd:import namespace="http://www.siri.org.uk/siri" schemaLocation="../../siri/siri_base-v2.0.xsd"/>
 	<xsd:group name="OccupancyScopeFilterGroup">
 		<xsd:annotation>
@@ -100,11 +102,74 @@ More accurate data can be provided by the individual occupancies or capacities b
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:complexType>
-	<xsd:complexType name="VehicleOccupancyStructure">
+	<xsd:element name="Occupancy_" type="Occupancy_VersionStructure" abstract="true" substitutionGroup="DataManagedObject">
+		<xsd:annotation>
+			<xsd:documentation>Dummy supertype for Occupancy.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="Occupancy" abstract="true" substitutionGroup="Occupancy_">
+		<xsd:annotation>
+			<xsd:documentation>An OCCUPANCY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="Occupancy_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="OccupancyGroup">
+								<xsd:annotation>
+									<xsd:documentation>Details of an Occupancy.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:group>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="OccupancyIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="Occupancy_VersionStructure" abstract="false">
+		<xsd:annotation>
+			<xsd:documentation>Type for an Occupancy.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="DataManagedObjectStructure">
+				<xsd:sequence>
+					<xsd:group ref="OccupancyGroup">
+						<xsd:annotation>
+							<xsd:documentation>Details for OCCUPANCY.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:group>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="OccupancyGroup">
 		<xsd:annotation>
 			<xsd:documentation>Real-time occupancies of a VEHICLE (by fare class). Could be feedback from an automatic passenger counting system (APC) or estimated values from statistics. (since SIRI 2.1)</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
+			<xsd:element name="dayTypeRefs" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>DAY TYPEs for BLOCK.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="dayTypeRefs_RelStructure"/>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="dayTypes" type="dayTypesInFrame_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Reusable DAY TYPE  in SERVICE CALENDAR FRAME.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:group ref="OccupancyScopeFilterGroup"/>
 			<xsd:group ref="OccupancyValuesGroup"/>
 			<xsd:element name="TotalNumberOfReservedSeats" type="NumberOfPassengers" minOccurs="0">
@@ -118,5 +183,50 @@ More accurate data can be provided by the individual occupancies or capacities b
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="OccupancyInFrameGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a OCCUPANCY in frame.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="occupancies" type="OccupancyInFrame_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>OCCUPANCYs in frame.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="OccupancyRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a reference  to an OCCUPANCY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="VersionOfObjectRefStructure">
+				<xsd:attribute name="ref" type="OccupancyIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Identifier of referenced entity.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:simpleType name="OccupancyIdType">
+		<xsd:annotation>
+			<xsd:documentation>Type for identifier of a OCCUPANCY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ObjectIdType"/>
+	</xsd:simpleType>
+	<xsd:complexType name="OccupancyInFrame_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for containment in frame of OCCUPANCYs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="Occupancy" type="Occupancy_VersionStructure"/>
+					<xsd:element name="OccupancyRef" type="OccupancyRefStructure"/>
+				</xsd:choice>
+			</xsd:extension>
+		</xsd:complexContent>
 	</xsd:complexType>
 </xsd:schema>
