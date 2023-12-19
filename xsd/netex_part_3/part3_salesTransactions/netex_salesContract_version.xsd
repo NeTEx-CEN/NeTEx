@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_salesContract_version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_salesContract_version">
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_facility_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_loggable_version.xsd"/>
 	<xsd:include schemaLocation="netex_customerPurchasePackage_support.xsd"/>
 	<xsd:include schemaLocation="netex_retailConsortium_support.xsd"/>
 	<xsd:include schemaLocation="netex_salesContract_support.xsd"/>
 	<xsd:include schemaLocation="netex_customerEligibility_version.xsd"/>
+	<xsd:include schemaLocation="netex_customerPaymentMeans_version.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_securityList_version.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_address_version.xsd"/>
-	<xsd:include schemaLocation="netex_customerPaymentMeans_version.xsd"/>
 	<!-- ======================================================================= -->
 	<xsd:annotation>
 		<xsd:appinfo>
@@ -22,16 +22,19 @@
 				<Date>
 					<Created>2010-09-04</Created>
 				</Date>
-				<Date><Modified>2011-02-05</Modified>Name Space changes 
+				<Date>
+					<Modified>2011-02-05</Modified>Name Space changes 
 				</Date>
-				<Date><Modified>2017-08-10</Modified>  Align with TM6
+				<Date>
+					<Modified>2017-08-10</Modified>  Align with TM6
 					  Make Passenger Contract Event a type of LogEntry.
 					  Rename Passenger Contract Event to PassengerContractEntry.
 					  Add Customer Account
 					  Add Customer Eligibilities 
 					  Add CUstomer Payment mans
 				</Date>
-				<Date><Modified>2017-08-10</Modified> Align with TM6
+				<Date>
+					<Modified>2017-08-10</Modified> Align with TM6
 					  Rename Passenger Contract   to FareContract.
 					  Rename Passenger Contract Event to FareContractEntry.
 					  Rename Passenger Contract Security Listing  to FareContractSecurityListing
@@ -39,18 +42,28 @@
 					  Rename Type of Passenger Contract Entry  to TypeOfFareContractEntry .
 					  Adjust References in Dependent packages. 
 				</Date>
-				<Date><Modified>2018-06-10</Modified> Fix for  Align with TM6         correct use of case on fareContracts
+				<Date>
+					<Modified>2018-06-10</Modified> Fix for  Align with TM6         correct use of case on fareContracts
 				</Date>
-				<Date><Modified>2019-03-10</Modified> UK-28  Add reference to CustomerAccount to FareContract
+				<Date>
+					<Modified>2019-03-10</Modified> UK-28  Add reference to CustomerAccount to FareContract
 						Add fareContracts / CustomerAccount to Customer 
 						Remove FareContractEntries from CustomerAccount  : Use relationship on FareCOntract
 						Add email to CustomerContact details
 						Add customerPurchasePackageRefs to CustomerAccount. This canbe derived from FarContractEntries
 				</Date>
-				<Date><Modified>2020.05.10</Modified>New Modes: Add MediumAccess DEvicesfor Account
+				<Date>
+					<Modified>2020.05.10</Modified>New Modes: Add MediumAccess DEvicesfor Account
 					  Add smoker to Customer.
 				</Date>
-				<Date><Modified>2021.01.10</Modified>New Modes: Add EMail and Phone  verification flag
+				<Date>
+					<Modified>2021.01.10</Modified>New Modes: Add EMail and Phone  verification flag
+				</Date>
+				<Date>
+					<Modified>2023.12.14</Modified>Enhancement: allow Customer Purchase Package to hold Package History
+				</Date>
+				<Date>
+					<Modified>2023-12-15</Modified>Factor out Paymount amount to FARE DEBIT PACKAGE
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -699,6 +712,11 @@ Rail transport, Roads and Road transport
 			<xsd:element name="fareContracts" type="fareContracts_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>FARE CONTRACTs for CUSTOMER ACCOUNT +v1.1.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="customerAccountEntries" type="fareContractEntries_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>FARE CONTRACT ENTRIES that relate to the CUSTOMER ACCOUNT. Normally these are embedded in a FARE CONTRACT  governing the account itself. For convenience they may also be  referenced or embedded directly in the CUSTOMER ACCOUNT. +V2.0 </xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="customerPurchasePackages" type="customerPurchasePackageRefs_RelStructure" minOccurs="0">
