@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_customerPurchasePackage_version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_customerPurchasePackage_version">
 	<!-- ======================================================================= -->
 	<xsd:include schemaLocation="../part3_fares/netex_geographicStructureFactor_support.xsd"/>
 	<xsd:include schemaLocation="../part3_PiQuery/netex_piRequest_support.xsd"/>
@@ -15,26 +15,85 @@
 	<xsd:include schemaLocation="../../netex_part_5/part5_fm/netex_nm_individualTraveller_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_part_5/part5_fm/netex_nm_accessCredentialsAssignment_version.xsd"/>
 	<xsd:include schemaLocation="../part3_fares/netex_trip_support.xsd"/>
+	<xsd:include schemaLocation="netex_fareDebit_version.xsd"/>
 	<!-- ======================================================================= -->
 	<xsd:annotation>
 		<xsd:appinfo>
-			<Metadata xmlns="http://www.govtalk.gov.uk/CM/gms-xs"><Aggregation>main schema</Aggregation><Audience>e-service developers</Audience><Contributor>Nicholas Knowles</Contributor><Coverage>Europe</Coverage><Creator>First drafted for NeTEx version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.  mailto:schemer@netex.org.uk</Creator><Date><Created>2017-08-10</Created></Date><Date><Modified>2019-03-01</Modified>Fix: Correct case on customerPurchasePackageRefs
-				</Date><Date><Modified>2019-03-01</Modified>EURA-10: Improve support for Customer PurchasePackages: allow inlining of packages in SalesTransaction 
-				</Date><Date><Modified>2019-03-01</Modified>Fix: Correct case on customerPurchasePackageRefs				 
-				</Date><Date><Modified>2019-03-15</Modified>EURA-(nk)  	  	Allow marking of use of CustomerPurchasePackage		
+			<Metadata xmlns="http://www.govtalk.gov.uk/CM/gms-xs">
+				<Aggregation>main schema</Aggregation>
+				<Audience>e-service developers</Audience>
+				<Contributor>Nicholas Knowles</Contributor>
+				<Coverage>Europe</Coverage>
+				<Creator>First drafted for NeTEx version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.  mailto:schemer@netex.org.uk</Creator>
+				<Date>
+					<Created>2017-08-10</Created>
+				</Date>
+				<Date>
+					<Modified>2019-03-01</Modified>Fix: Correct case on customerPurchasePackageRefs
+				</Date>
+				<Date>
+					<Modified>2019-03-01</Modified>EURA-10: Improve support for Customer PurchasePackages: allow inlining of packages in SalesTransaction
+				</Date>
+				<Date>
+					<Modified>2019-03-01</Modified>Fix: Correct case on customerPurchasePackageRefs
+				</Date>
+				<Date>
+					<Modified>2019-03-15</Modified>EURA-(nk)  	  	Allow marking of use of CustomerPurchasePackage		 
 				    	Also  Fix Numerous issues and align with TM 
 						Add new attribute Status    to  CustomerPurchasePackage   with values reserved, ordered,  paidFor, unused, activated,  partiallyUsed,  blocked,   used,   archived and other
 					    Add new attribute MarkedAs  to  CustomerPurchasePackageElement  with values unused, activated, marked and used  
 						Add new  child element  CustomerPurchasePackageElementAccess to CustomerPurchasePackage 
-				</Date><Date><Modified>2019-03-26</Modified>EURA-(nk)  	  	Allow marking of use of CustomerPurchasePackage. Refine model: make blocking separate from status. Correct annotations.	 
-				</Date><Date><Modified>2019-04-06</Modified>TN6 distinguish between RequestedTravelSpoeifcation and Offered TravelSpecication.  	  Remodularise to separate out from Sales Transaction
-				</Date><Date><Modified>2020-10-05</Modified>NewModes - add reference to MediumAPplicationRef and MediuamACcessDeviceRef to Customer purchase package
-				</Date><Date><Modified>2021-01-03</Modified>NewModes -Add PARKING BAY CONDITION and RENTAL AVAILABILITY 
-				</Date><Date><Modified>2021-05-14</Modified>NewModes - Add TravellerInfo and DRiverPoolInfo to CUSTOMER PUCRHASE PACHAGE ASSIGNMENT 
-				</Date>&gt;
-				<Description><p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p><p>This sub-schema describes the CUSTOMER PURCHASE PACKAGE types.</p></Description><Format><MediaType>text/xml</MediaType><Syntax>http://www.w3.org/2001/XMLSchema</Syntax><Description>XML schema, W3C Recommendation 2001</Description></Format><Identifier>{http://www.netex.org.uk/schemas/1.0/xsd/netex_part_3/part3_salesTransaction}netex_salesOfferPackage_version.xsd</Identifier><Language>[ISO 639-2/B] ENG</Language><Publisher>Steam Intellect, London N1 1JS </Publisher><Relation><Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires></Relation><Rights>Unclassified
-					 <Copyright>CEN, Crown Copyright 2009-2020</Copyright>
-				</Rights><Source><ul><li>Derived from the Transmodel standard.</li></ul></Source><Status>Version 1.0</Status><Subject><Category>Arts, recreation and travel, Tourism, Travel (tourism), Transport,
+				</Date>
+				<Date>
+					<Modified>2019-03-26</Modified>EURA-(nk)  	  	Allow marking of use of CustomerPurchasePackage. Refine model: make blocking separate from status. Correct annotations.
+				</Date>
+				<Date>
+					<Modified>2019-04-06</Modified>TN6 distinguish between RequestedTravelSpoeifcation and Offered TravelSpecication.  	  Remodularise to separate out from Sales Transaction
+				</Date>
+				<Date>
+					<Modified>2020-10-05</Modified>NewModes - add reference to MediumAPplicationRef and MediuamACcessDeviceRef to Customer purchase package
+				</Date>
+				<Date>
+					<Modified>2020-12-21</Modified>Added StartOfValidity and EndOfValidity to describe validity of CustomerPurchasePackageElementAccess
+				</Date>
+				<Date>
+					<Modified>2021-01-03</Modified>NewModes -Add PARKING BAY CONDITION and RENTAL AVAILABILITY
+				</Date>
+				<Date>
+					<Modified>2021-05-14</Modified>NewModes - Add TravellerInfo and DRiverPoolInfo to CUSTOMER PUCRHASE PACHAGE ASSIGNMENT
+				</Date>
+				<Date>
+					<Modified>2023-12-15</Modified> Customer Purchase Package to hold Package History
+				</Date>
+				<Date>
+					<Modified>2023-12-18</Modified>Factor out Paymount amount to FARE DEBIT PACKAGE
+				</Date>
+				<Description>
+					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
+					<p>This sub-schema describes the CUSTOMER PURCHASE PACKAGE types.</p>
+				</Description>
+				<Format>
+					<MediaType>text/xml</MediaType>
+					<Syntax>http://www.w3.org/2001/XMLSchema</Syntax>
+					<Description>XML schema, W3C Recommendation 2001</Description>
+				</Format>
+				<Identifier>{http://www.netex.org.uk/schemas/1.0/xsd/netex_part_3/part3_salesTransaction}netex_salesOfferPackage_version.xsd</Identifier>
+				<Language>[ISO 639-2/B] ENG</Language>
+				<Publisher>Steam Intellect, London N1 1JS </Publisher>
+				<Relation>
+					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
+				</Relation>
+				<Rights>Unclassified
+					 <Copyright>CEN, Crown Copyright 2009-2023</Copyright>
+				</Rights>
+				<Source>
+					<ul>
+						<li>Derived from the Transmodel standard.</li>
+					</ul>
+				</Source>
+				<Status>Version 1.0</Status>
+				<Subject>
+					<Category>Arts, recreation and travel, Tourism, Travel (tourism), Transport, 
 Air transport, Airports,
 Ports and maritime transport, Ferries (marine),
 Public transport, Bus services, Coach services, Bus stops and stations,
@@ -82,24 +141,6 @@ Rail transport, Roads and Road transport
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:group name="PaymentAmountGroup">
-		<xsd:annotation>
-			<xsd:documentation>Amount Elements for a FARE PRICE.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:sequence>
-			<xsd:group ref="FarePriceAmountWithDerivationGroup">
-				<xsd:annotation>
-					<xsd:documentation>Amount Elements Step Calculation</xsd:documentation>
-				</xsd:annotation>
-			</xsd:group>
-			<xsd:element name="PaymentMethod" type="PaymentMethodEnumeration" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Method of payment used,</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element ref="TypeOfPaymentMethodRef" minOccurs="0"/>
-		</xsd:sequence>
-	</xsd:group>
 	<xsd:complexType name="travelDocuments_RelStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for containment in frame of TRAVEL DOCUMENT.</xsd:documentation>
@@ -525,6 +566,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element ref="MediumAccessDeviceRef" minOccurs="0"/>
 			<xsd:element ref="MediumApplicationInstanceRef" minOccurs="0"/>
+			<xsd:group ref="CustomerPurchasePackageHistoryGroup"/>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:group name="CustomerPurchasePackageCustomerGroup">
@@ -595,6 +637,15 @@ Rail transport, Roads and Road transport
 			<xsd:element name="prices" type="customerPurchasePackagePrices_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>PRICEs of CUSTOMER PURCHASE PACKAGE ELEMENT.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="CustomerPurchasePackageHistoryGroup">
+		<xsd:annotation>
+			<xsd:documentation>FARE CONTRACT entries CUSTOMER PURCHASE PACKAGE.</xsd:documentation>
+		</xsd:annotation>
+					<xsd:documentation>FARE CONTRACT ENTRIES relating to CUSTOMER PURCHdASE PACKAGE. May be references to ENTRIEs held,  or entry instances inlined here  for convenience so that , they may exchanged  along with package.  This can include any type of entry:  note that TRAVEL SPECIFICATIONs and SALES TRANSACTIONS may be referenced separately by a gven PACKAGE. +v2.0</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
