@@ -284,16 +284,6 @@
 			<xsd:documentation>Elements for a DECK COMPONENT.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="Name" type="MultilingualString" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Name of DECK COMPONENT.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="Description" type="MultilingualString" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Description of DECK COMPONENT.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
 			<xsd:element name="PublicUse" type="xsd:boolean" default="true" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Whether DECK COMPONENT is for public use. Default is true.</xsd:documentation>
@@ -720,12 +710,24 @@
 					<xsd:documentation>Side of ENTRANCE relative to forward orientation of VEHICLE. </xsd:documentation>
 			<xsd:element name="DeckEntranceType" type="DeckEntranceTypeEnumeration" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Type of DECK ENTRANCE.</xsd:documentation>
+					<xsd:documentation>Classification elements for a DECK ENTRANCE.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:group>
+			<xsd:element name="sensorsInEntrance" type="sensorsInEntrance_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>ENTRANCE SENSORS in the DECK ENTRANCE.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="EntranceSide" type="VehicleSideEnumeration" minOccurs="0">
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="DeckEntrancePositionGroup">
+		<xsd:annotation>
+			<xsd:documentation>Positional ements for a DECK ENTRANCE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="VehicleSide" type="VehicleSideEnumeration" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Side of ENTRANCE relative to forward orientation of VEHICLE. to .</xsd:documentation>
+					<xsd:documentation>Side of ENTRANCE relative to forward orientation of VEHICLE. </xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="DistanceFromFront" type="LengthType" minOccurs="0">
@@ -771,10 +773,9 @@
 					<xsd:documentation>Whether the door is automatic.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element ref="TypeOfDeckEntranceRef" minOccurs="0"/>
-			<xsd:element name="sensorsInEntrance" type="sensorsInEntrance_RelStructure" minOccurs="0">
+			<xsd:element name="IsAutomatic" type="xsd:boolean" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>ENTRANCE SENSORS in the DECK ENTRANCE.</xsd:documentation>
+					<xsd:documentation>Whether the door is automatic.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -1061,7 +1062,17 @@
 			<xsd:group ref="LocatableSpotRangeGroup"/>
 			<xsd:element name="UsageType" type="EntranceUsageEnumeration" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Nature of usage: entry, ecit etc. See allowed values.</xsd:documentation>
+					<xsd:documentation>Nature of usage: entry, exit etc. See allowed values. Default is entryAndExit.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="EntranceSetting" type="EntranceSettingEnumeration" default="shut" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Door setting: whether keot open, shut or locked. See allowed values. Default is shut.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ControlledLocking" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether door is normally locked for safety when in motiion.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element ref="DeckEntranceRef" minOccurs="0"/>
