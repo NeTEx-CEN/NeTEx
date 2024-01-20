@@ -650,20 +650,21 @@ Rail transport, Roads and Road transport
 	<!-- ====== PASSENGER CAPACITY =================================== -->
 	<xsd:complexType name="passengerCapacities_RelStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for a list of PASSENGER CAPACITY REQUIREMENTs.</xsd:documentation>
+			<xsd:documentation>Type for a list of PASSENGER and PASSENGER VEHICLE CAPACITies.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="oneToManyRelationshipStructure">
 				<xsd:choice maxOccurs="unbounded">
 					<xsd:element ref="PassengerCapacityRef"/>
 					<xsd:element ref="PassengerCapacity" maxOccurs="1"/>
+					<xsd:element ref="PassengerVehicleCapacity"/>
 				</xsd:choice>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
 	<xsd:element name="PassengerCapacity">
 		<xsd:annotation>
-			<xsd:documentation>Capacity for a VEHICLE TYPE and Class.</xsd:documentation>
+			<xsd:documentation>Total number of passengers that can be carried by a VEHICLE of this type.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -690,7 +691,7 @@ Rail transport, Roads and Road transport
 	</xsd:element>
 	<xsd:complexType name="PassengerCapacityStructure">
 		<xsd:annotation>
-			<xsd:documentation>Capacity for a VEHICLE TYPE and Class.</xsd:documentation>
+			<xsd:documentation>Type for a PASSENGER CAPACITY.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="DataManagedObjectStructure">
@@ -702,12 +703,12 @@ Rail transport, Roads and Road transport
 	</xsd:complexType>
 	<xsd:group name="PassengerCapacityGroup">
 		<xsd:annotation>
-			<xsd:documentation>Elements for a PASSENGER CAPACITY REQUIREMENT. relevant for passenger systems.</xsd:documentation>
+			<xsd:documentation>Elements for a PASSENGER CAPACITY.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element name="FareClass" type="FareClassEnumeration" default="any" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Edit care class for which capacity is specifyed. Default is any, i.e. capacity is for all classes.</xsd:documentation>
+					<xsd:documentation>Fare class for which capacity is specifyed. Default is any, i.e. capacity is for all FARE CLASSes.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:group ref="CapacityGroup"/>
@@ -715,7 +716,7 @@ Rail transport, Roads and Road transport
 	</xsd:group>
 	<xsd:group name="CapacityGroup">
 		<xsd:annotation>
-			<xsd:documentation>Elements for a PASSENGER CAPACITY REQUIREMENT. relevant for passenger systems.</xsd:documentation>
+			<xsd:documentation>Capacity type Elements for a PASSENGER CAPACITY REQUIREMENT. Relevant for passenger systems.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element name="TotalCapacity" type="NumberOfPassengers" minOccurs="0">
@@ -746,6 +747,63 @@ Rail transport, Roads and Road transport
 			<xsd:element name="WheelchairPlaceCapacity" type="NumberOfPassengers" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>The number of wheelchairs places on vehicles of the type. For a requirement this is the minimum needed.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ====== PASSENGER VEHICLE CAPACITY =================================== -->
+	<xsd:element name="PassengerVehicleCapacity">
+		<xsd:annotation>
+			<xsd:documentation>Total number of passenger vehicles s that can be carried by a VEHICLE of this type.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="PassengerVehicleCapacityStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="PassengerVehicleCapacityGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="PassengerVehicleCapacityIdType" use="optional">
+						<xsd:annotation>
+							<xsd:documentation>Identifier of PASSENGER VEHICLE CAPACITY.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="PassengerVehicleCapacityStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a PASSENGER VEHICLE CAPACITY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="DataManagedObjectStructure">
+				<xsd:sequence>
+					<xsd:group ref="PassengerVehicleCapacityGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="PassengerVehicleCapacityGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a PASSENGER VEHICLE CAPACITY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="VehicleCategory" type="AllRoadVehicleCategoriesListOfEnumerations" default="allPassengerVehicles" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>VEHicle categories  for which capacity is specifyed. Default is allPAssengerVehicles i.e. capacity is for all VEHICLE CATEGORIES</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="VehicleCapacity" type="NumberOfVehicles" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The total capacity of passenger VEHICLES of the type. F </xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="PramPlaceCapacity" type="NumberOfPassengers" minOccurs="0">

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_deckPlanAssignment_version">
 	<xsd:include schemaLocation="netex_deckPlanAssignment_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_trainElement_support.xsd"/>
 	<xsd:include schemaLocation="netex_coupledJourney_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_deckPlan_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_vehicleType_support.xsd"/>
@@ -82,7 +83,7 @@
 	</xsd:complexType>
 	<xsd:element name="DeckPlanAssignment" substitutionGroup="Assignment_">
 		<xsd:annotation>
-			<xsd:documentation>DECK PLAN ASSIGNMENT: The allocation of a DECK PLAN to all or part of a specific VEHICLE JOURNEY  and/or VEHICLE TYPE and/or TRAIN ELEMENT. +v2.0</xsd:documentation>
+			<xsd:documentation>The allocation of a DECK PLAN to all or part of a specific VEHICLE JOURNEY and /or VEHICLE TYPE and/or TRAIN ELEMENT. +v2.0</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -130,7 +131,30 @@
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="DeckPlanRef"/>
+			<xsd:group ref="DeckPlanAssignToTrainGroup"/>
+			<xsd:group ref="DeckPlanAssignToServiceJourneyGroup"/>
+			<xsd:element name="configurationConditions" type="validityConditionRefs_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Validity coniditions in effect for JOURNEY or JOURNEY PART.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="DeckPlanAssignToTrainGroup">
+		<xsd:annotation>
+			<xsd:documentation>Assign to TRAIN elements for a DECK PLAN ASSIGNMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
 			<xsd:element ref="TransportTypeRef" minOccurs="0"/>
+				<xsd:element ref="TrainComponentRef" minOccurs="0"/>
+			<xsd:element ref="TrainElementRef" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="DeckPlanAssignToServiceJourneyGroup">
+		<xsd:annotation>
+			<xsd:documentation>Assign to SERVICE JOURNEY elements for a DECK PLAN ASSIGNMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
 			<xsd:element ref="JourneyRef" minOccurs="0"/>
 			<xsd:element ref="JourneyPartRef" minOccurs="0"/>
 		</xsd:sequence>
