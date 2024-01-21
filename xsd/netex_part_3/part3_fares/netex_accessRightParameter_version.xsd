@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_accessRightParameter_version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_accessRightParameter_version">
+	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_modeOfOperation_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_serviceCalendar_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_vehicleSeating_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_trainElement_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_topographicPlace_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_deckPlan_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_seatingPlan_support.xsd"/>
 	<!-- ====Network ========================================================= -->
 	<xsd:include schemaLocation="../../netex_part_1/part1_ifopt/netex_ifopt_pointOfInterest_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_part_1/part1_ifopt/netex_ifopt_localService_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_part_1/part1_networkDescription/netex_line_support.xsd"/>
-	<xsd:include schemaLocation="../../netex_part_1/part1_tacticalPlanning/netex_servicePattern_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_part_1/part1_networkDescription/netex_route_support.xsd"/>
 	<!-- ====Timetables ========================================================= -->
 	<xsd:include schemaLocation="../../netex_part_2/part2_journeyTimes/netex_serviceJourney_support.xsd"/>
@@ -15,9 +18,15 @@
 	<xsd:include schemaLocation="netex_validableElement_support.xsd"/>
 	<xsd:include schemaLocation="netex_qualityStructureFactor_support.xsd"/>
 	<xsd:include schemaLocation="netex_timeStructureFactor_support.xsd"/>
+	<xsd:include schemaLocation="netex_distanceMatrixElement_version.xsd"/>
+	<xsd:include schemaLocation="netex_usageParameterEligibility_support.xsd"/>
+	<xsd:include schemaLocation="netex_usageParametersAll_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_part_2/part2_journeyTimes/netex_serviceJourney_support.xsd"/>
+	<xsd:include schemaLocation="netex_fareProduct_support.xsd"/>
 	<xsd:include schemaLocation="netex_salesDistribution_support.xsd"/>
 	<xsd:include schemaLocation="netex_salesOfferPackageEntitlement_support.xsd"/>
 	<xsd:include schemaLocation="netex_salesOfferPackage_support.xsd"/>
+	<xsd:include schemaLocation="../part3_salesTransactions/netex_mediumApplication_support.xsd"/>
 	<xsd:include schemaLocation="netex_typeOfTravelDocument_support.xsd"/>
 	<!-- ====New Modes ========================================================= -->
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_nm_fleetEquipment_support.xsd"/>
@@ -30,7 +39,6 @@
 	<!-- ===ACCESS RIGHTS======================================================== -->
 	<xsd:include schemaLocation="netex_accessRightParameter_support.xsd"/>
 	<xsd:include schemaLocation="netex_usageParameter_version.xsd"/>
-	<xsd:include schemaLocation="netex_distanceMatrixElement_version.xsd"/>
 	<!-- ======================================================================= -->
 	<xsd:annotation>
 		<xsd:appinfo>
@@ -94,6 +102,10 @@
 					 - Service add SingleJourney and GroupOfSingleJourneys
 					 - Fare: add MediumAccessDevice and ApplicationInstance
 				</Date>
+				<Date><Modified>2020-12-08</Modified>FIX - Add optional TimebandRef and ServiceCalendarRef to TemporalValidityParametersGroup
+				</Date>
+				<Date><Modified>2021-01-25</Modified>Add GroupOfTariffZonesRef to NetworkValidityParametersGroup
+				</Date>
 				<Date><Modified>2021-09-01</Modified>FIX - Post newmodes merge  Remove ambigous use of VehicleModes (drop from Organisation validity parameters).
 					    Add MobilityServiceConstraintZone to Network validity parameters.
 				</Date>
@@ -113,7 +125,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
-					 <Copyright>CEN, Crown Copyright 2009-2021</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2023</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -136,7 +148,7 @@ Rail transport, Roads and Road transport
 				<Type>Standard</Type>
 			</Metadata>
 		</xsd:appinfo>
-		<xsd:documentation>NeTEx  ACCESS RIGHT ASSIGNMENT  types.</xsd:documentation>
+		<xsd:documentation>NeTEx ACCESS RIGHT ASSIGNMENT types.</xsd:documentation>
 	</xsd:annotation>
 	<!-- ======================================================================= -->
 	<!-- ===ENTIITY IN VERSION IN FRAME====Used in SERVICE FRAME)=================================================== -->
@@ -256,7 +268,10 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="TariffRef" minOccurs="0"/>
 			<xsd:element ref="FareStructureElementRef" minOccurs="0"/>
 			<xsd:element ref="FareElementInSequenceRef" minOccurs="0"/>
-			<xsd:element ref="DistanceMatrixElementRef" minOccurs="0"/>
+			<xsd:choice minOccurs="0">
+				<xsd:element ref="DistanceMatrixElementRef"/>
+				<xsd:element ref="DynamicDistanceMatrixElement"/>
+			</xsd:choice>
 			<xsd:element ref="DistanceMatrixElementInverseRef" minOccurs="0"/>
 			<xsd:element ref="DistanceMatrixElementView" minOccurs="0"/>
 			<xsd:element ref="SalesOfferPackageRef" minOccurs="0"/>
@@ -314,7 +329,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
-	<!-- ====VALIDITY PARAMETER ASSIGNMENT=================================================== -->
+	<!-- ==== TEMPORAL VALIDITY PARAMETER ASSIGNMENT================================== -->
 	<xsd:complexType name="temporalValidityParameters_RelStructure">
 		<xsd:annotation>
 			<xsd:documentation>One to many Relationship for temporal validity parameters.</xsd:documentation>
@@ -332,13 +347,17 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Temporal validity parameters for ACCESS RIGHT PARAMETER ASSIGNMENT.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
+			<!-- <xsd:element ref="ServiceCalendarRef" minOccurs="0"/> 		was in the commit, but caused problems! NK pls check -->
 			<xsd:element ref="DayTypeRef" minOccurs="0"/>
 			<xsd:element ref="GroupOfTimebandsRef" minOccurs="0"/>
+			<!-- <xsd:element ref="TimebandRef" minOccurs="0"/>			was in the commit, but caused problems! NK pls check -->
 			<xsd:element ref="OperatingDayRef" minOccurs="0"/>
 			<xsd:element ref="OperatingPeriodRef" minOccurs="0"/>
+			<xsd:element ref="ServiceCalendarRef" minOccurs="0"/>
 			<xsd:element ref="ValidityConditionRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
+	<!-- ==== SCOPING VALIDITY PARAMETER ASSIGNMENT=================================================== -->
 	<xsd:complexType name="validityParameters_RelStructure">
 		<xsd:annotation>
 			<xsd:documentation>One to many Relationship for scoping validity parameters.</xsd:documentation>
@@ -363,7 +382,7 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Network validity parameters for ACCESS RIGHT PARAMETER ASSIGNMENT.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:group>
-			<xsd:group ref="RouteValidityParametersGroup">
+			<xsd:group ref="RoutingValidityParametersGroup">
 				<xsd:annotation>
 					<xsd:documentation>Route validity parameters for ACCESS RIGHT PARAMETER ASSIGNMENT.</xsd:documentation>
 				</xsd:annotation>
@@ -414,6 +433,7 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="GroupOfLinesRef" minOccurs="0"/>
 			<xsd:element ref="LineRef" minOccurs="0"/>
 			<xsd:element ref="TypeOfLineRef" minOccurs="0"/>
+			<xsd:element ref="GroupOfTariffZonesRef" minOccurs="0"/>
 			<xsd:element ref="TariffZoneRef" minOccurs="0"/>
 			<xsd:element ref="FareZoneRef" minOccurs="0"/>
 			<xsd:element ref="FareSectionRef" minOccurs="0"/>
@@ -437,7 +457,9 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>SITE validity parametersfor ACCESS RIGHT PARAMETER ASSIGNMENT.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
+			<xsd:element ref="GroupOfSitesRef" minOccurs="0"/>
 			<xsd:element ref="SiteElementRef" minOccurs="0"/>
+			<xsd:element ref="LevelRef" minOccurs="0"/>
 			<xsd:element ref="PointOfInterestClassificationRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
@@ -465,7 +487,7 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="VehicleMeetingPlaceRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
-	<xsd:group name="RouteValidityParametersGroup">
+	<xsd:group name="RoutingValidityParametersGroup">
 		<xsd:annotation>
 			<xsd:documentation>ROUTE validity parameters for ACCESS RIGHT PARAMETER ASSIGNMENT.</xsd:documentation>
 		</xsd:annotation>
@@ -547,13 +569,27 @@ Rail transport, Roads and Road transport
 	</xsd:group>
 	<xsd:group name="SeatingValidityParametersGroup">
 		<xsd:annotation>
-			<xsd:documentation>Seating validity parameters for ACCESS RIGHT PARAMETER ASSIGNMENT.</xsd:documentation>
+			<xsd:documentation>Seating validity parameters for ACCESS RIGHT PARAMETER ASSIGNMENT.  NB PAssengerSeatRef is DEPRECATED </xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="TrainElementRef" minOccurs="0"/>
 			<xsd:element ref="TrainComponentLabelAssignmentRef" minOccurs="0"/>
+			<xsd:element ref="DeckPlanRef" minOccurs="0"/>
+			<xsd:element ref="DeckSpaceRef" minOccurs="0"/>
+			<xsd:group ref="SpotValidityParametersGroup"/>
 			<xsd:element ref="PassengerSeatRef" minOccurs="0"/>
 			<xsd:element ref="VehicleRef" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="SpotValidityParametersGroup">
+		<xsd:annotation>
+			<xsd:documentation>Seating validity parameters for ACCESS RIGHT PARAMETER ASSIGNMENT.  NB PAssengerSeatRef is DEPRECATED </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="SpotColumnRef" minOccurs="0"/>
+			<xsd:element ref="SpotRowRef" minOccurs="0"/>
+			<xsd:element ref="LocatableSpotRef" minOccurs="0"/>
+			<xsd:element ref="TypeOfLocatableSpotRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:group name="ClassOfUseValidityParametersGroup">
@@ -596,6 +632,7 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="TypeOfFareStructureFactorRef" minOccurs="0"/>
 			<xsd:element ref="TypeOfFareStructureElementRef" minOccurs="0"/>
 			<xsd:element ref="TypeOfTariffRef" minOccurs="0"/>
+			<xsd:element ref="TariffRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:group name="ProductValidityParametersGroup">
@@ -609,6 +646,7 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="TypeOfFareProductRef" minOccurs="0"/>
 			<xsd:element ref="TypeOfUsageParameterRef" minOccurs="0"/>
 			<xsd:element ref="TypeOfConcessionRef" minOccurs="0"/>
+			<xsd:element ref="TypeOfProofRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:group name="SalesOfferValidityParametersGroup">
@@ -619,6 +657,7 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="TypeOfSalesOfferPackageRef" minOccurs="0"/>
 			<xsd:element ref="TypeOfTravelDocumentRef" minOccurs="0"/>
 			<xsd:element ref="TypeOfMachineReadabilityRef" minOccurs="0"/>
+			<xsd:element ref="TypeOfMediumAccessDeviceRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:group name="DistributionParametersGroup">

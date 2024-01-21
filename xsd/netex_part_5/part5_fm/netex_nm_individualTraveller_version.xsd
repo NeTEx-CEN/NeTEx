@@ -151,9 +151,9 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Whether traveller'ss identify has been verified. has been </xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="Ranking" type="xsd:integer" minOccurs="0">
+			<xsd:element name="Ranking" type="GlobalRankingType" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Rating for traveller</xsd:documentation>
+					<xsd:documentation>Mean rating for traveller</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="Gender" type="GenderEnumeration" minOccurs="0">
@@ -244,9 +244,9 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="IndividualTravellerRef" minOccurs="0"/>
-			<xsd:element name="Ranking" type="xsd:integer" minOccurs="0">
+			<xsd:element name="Ranking" type="GlobalRankingType" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Rating for driver.</xsd:documentation>
+					<xsd:documentation>Meanrating for driver.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="LastTripDate" type="xsd:dateTime" minOccurs="0">
@@ -290,6 +290,11 @@ Rail transport, Roads and Road transport
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element ref="VehicleRef" minOccurs="0"/>
+			<xsd:element name="reviews" type="reviews_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Reviews associated to the vehicle pooling driver</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- === INDIVIDUAL PASSENGER INFO. ================================================= -->
@@ -348,9 +353,9 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="IndividualTravellerRef" minOccurs="0"/>
-			<xsd:element name="Ranking" type="xsd:integer" minOccurs="0">
+			<xsd:element name="Ranking" type="GlobalRankingType" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Rating for driver.</xsd:documentation>
+					<xsd:documentation>Mean rating for passenger.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="LastTripDate" type="xsd:dateTime" minOccurs="0">
@@ -368,6 +373,52 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Whether  travelling with Pet.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="reviews" type="reviews_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Reviews associated to the passenger</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
+	<!-- ====  REVIEWS.  ============================================ -->
+	<xsd:element name="Review" type="ReviewStructure">
+		<xsd:annotation>
+			<xsd:documentation>A review of a diver or of a traveler.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="reviews_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for collection of reviews.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="Review" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ReviewStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for Review.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Date" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Date of the review</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Ranking" type="UserRankingType">
+				<xsd:annotation>
+					<xsd:documentation>Rating attributed by the reviewer (1 to 5, and the higher is the better)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Comment" type="MultilingualString" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Comment associated with the review</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="UserAcronym" type="MultilingualString" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Acronym name of the reviewer</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
 </xsd:schema>

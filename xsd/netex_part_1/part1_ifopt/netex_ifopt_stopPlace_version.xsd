@@ -405,6 +405,16 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>ENTRANCEs to SPACE.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="Length" type="LengthType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Length of SPACE in metres.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Width" type="LengthType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Width of SPACE in metres.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:group name="StopPlaceComponentIdentifierGroup">
@@ -518,6 +528,7 @@ contained within its parent QUAY.</xsd:documentation>
 		<xsd:sequence>
 			<xsd:group ref="QuayIdentifierGroup"/>
 			<xsd:group ref="QuayDescriptorGroup"/>
+			<xsd:group ref="PlatformAccessibilitySpecificGroup"/>
 			<xsd:element name="ParentQuayRef" type="QuayRefStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>if QUAY is a subzone of another QUAY, identifies parent.</xsd:documentation>
@@ -656,6 +667,24 @@ contained within its parent QUAY.</xsd:documentation>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
+	<!-- ======================================================================= -->
+	<xsd:group name="PlatformAccessibilitySpecificGroup">
+		<xsd:annotation>
+			<xsd:documentation>Additional details for accessibility of QUAYs and BOARDING POSITIONs</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="PlatformHeight" type="LengthType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Height of the platform relative to the ground (bus) or the rail track.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="EdgeToTrackCenterDistance" type="LengthType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Distance between the track centre and the platform edge parallel to the running plane (bq), as defined in chapter 13 of EN 15273-3:2013.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
 	<!-- ======================================================================= -->
 	<xsd:complexType name="accessSpaces_RelStructure">
 		<xsd:annotation>
@@ -858,6 +887,7 @@ contained within its parent QUAY.</xsd:documentation>
 					<xsd:documentation>Entrances to BOARDING POSITION.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:group ref="PlatformAccessibilitySpecificGroup"/>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->

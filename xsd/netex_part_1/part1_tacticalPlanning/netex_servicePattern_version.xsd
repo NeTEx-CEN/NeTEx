@@ -20,7 +20,7 @@
 				<Date>
 					<Created>2010-09-04</Created>
 				</Date>
-				<Date><Modified>2011-02-05</Modified>Name Space changes 
+				<Date><Modified>2011-02-05</Modified>Name Space changes
 				</Date>
 				<Date><Modified>2017-05-19</Modified>CRT040
 				     	Allow type  attribute on Public and ShortCode.   Backwards compatible.  Add NameSuffix to SchedueldStopPoint
@@ -31,7 +31,7 @@
 				</Date>
 				<Date><Modified>2019-02-21</Modified>Remove commented out old Section code
 				</Date>
-				<Date><Modified>2019-03-25</Modified>Merge in Corrections to comments as per SBB20 #55 Correct camel case on StopPoinInXXX groups. 
+				<Date><Modified>2019-03-25</Modified>Merge in Corrections to comments as per SBB20 #55 Correct camel case on StopPoinInXXX groups.
 				</Date>
 				<Date><Modified>2019-03-25</Modified> NL48  CD #64  Add new attributes for   advertising of stop; Print and Dynamic to StopPointInPattern.
 				</Date>
@@ -311,7 +311,11 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>A PUBLIC code that uniquely identifies the STOP POINT.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element ref="PrivateCode" minOccurs="0"/>
+			<xsd:element ref="PrivateCode" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>DEPRECATED - use privateCodes</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element name="ExternalStopPointRef" type="ExternalObjectRefStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>An alternative  code that uniquely identifies the STOP POINT. pecifically for use in AVMS systems that require an alias, if. For VDV compatibility.</xsd:documentation>
@@ -346,7 +350,17 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element name="RequestMethodType" type="RequestMethodTypeEnumeration" default="noneRequired" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Method of request stop. Default is noneRequired. + v1.1</xsd:documentation>
+					<xsd:documentation>Method of request stop. Default is noneRequired. DEPRECATED: USE BoardingRquestMethod OR AlightingRequestMethod INSTEAD.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="BoardingRequestMethod" type="RequestMethodTypeListOfEnumerations" default="noneRequired" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Methods to Request Stop for boarding in this particular service pattern; Default is noneRequired.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="AlightingRequestMethod" type="RequestMethodTypeListOfEnumerations" default="noneRequired" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Methods to Request Stop for alighting in this particular service pattern; Default is noneRequired.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -823,6 +837,16 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Whether boarding is allowed at the stop. Default is true.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="AlightingSideInDirectionOfTravel" type="SideInDirectionOfTravelEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>On which side the vehicle can be alighted on this stop in the direction of travel. This is often not relevant. And it is difficult to define this from the QUAY when the direction of travel is not known.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="BoardingSideInDirectionOfTravel" type="SideInDirectionOfTravelEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>On which side the vehicle can be boarded on this stop in the direction of travel.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:group ref="StopPointInPatternPropertiesGroup"/>
 		</xsd:sequence>
 	</xsd:group>
@@ -853,7 +877,17 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element name="RequestMethod" type="RequestMethodTypeEnumeration" default="noneRequired" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Method to Request Stop in this particular service pattern; if none specified, as as per stop.  +V1.1</xsd:documentation>
+					<xsd:documentation>Method to Request Stop in this particular service pattern; if none specified, as as per stop. DEPRECATED: USE BoardingRquestMethod OR AlightingRequestMethod INSTEAD.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="BoardingRequestMethod" type="RequestMethodTypeListOfEnumerations" default="noneRequired" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Methods to Request Stop for boarding in this particular service pattern; Default is noneRequired.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="AlightingRequestMethod" type="RequestMethodTypeListOfEnumerations" default="noneRequired" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Methods to Request Stop for alighting in this particular service pattern; Default is noneRequired.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="StopUse" type="StopUseEnumeration" minOccurs="0">
@@ -863,7 +897,12 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element name="BookingArrangements" type="BookingArrangementsStructure" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Booking Arrangements for stop if different from those for SERVICE JOURNEY.</xsd:documentation>
+					<xsd:documentation>Booking Arrangements for stop if different from those for SERVICE JOURNEY. DEPRECATED: use bookingArrangements</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="bookingArrangements" type="bookingArrangements_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Set of possible Booking Arrangements for stop if different from those for SERVICE JOURNEY. </xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:group ref="StopPointInPatternAdvertisementGroup">

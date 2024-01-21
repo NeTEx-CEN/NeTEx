@@ -35,6 +35,8 @@
 				</Date>
 				<Date><Modified>2020-11-06</Modified>NewModes Allow reusable contacts.
  				</Date>
+				<Date><Modified>2023-10-17</Modified>Allow multiple Booking arrangements.
+ 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the Common  Service Restriction Types.</p>
@@ -132,15 +134,52 @@ Rail transport, Roads and Road transport
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->
-	<xsd:complexType name="BookingArrangementsStructure" abstract="false">
+	<xsd:element name="BookingArrangement" substitutionGroup="DataManagedObject">
 		<xsd:annotation>
-			<xsd:documentation>Type for BOOKING ARRANGEMENTs.</xsd:documentation>
+			<xsd:documentation>Description of a  for BOOKING ARRANGEMENT</xsd:documentation>
 		</xsd:annotation>
-		<xsd:group ref="BookingArrangementsGroup"/>
-	</xsd:complexType>
-	<xsd:group name="BookingArrangementsGroup">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="BookingArrangement_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="BookingArrangementGroup">
+								<xsd:annotation>
+									<xsd:documentation>Details for a BookingArrangement</xsd:documentation>
+								</xsd:annotation>
+							</xsd:group>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="BookingArrangementIdType" use="required"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="BookingArrangement_VersionStructure" abstract="true">
 		<xsd:annotation>
-			<xsd:documentation>Elements for BOOKING ARRANGEMENTs.</xsd:documentation>
+			<xsd:documentation>Type for a BookingArrangement</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="DataManagedObjectStructure">
+				<xsd:sequence>
+					<xsd:group ref="BookingArrangementGroup">
+						<xsd:annotation>
+							<xsd:documentation>Details for BookingArrangement</xsd:documentation>
+						</xsd:annotation>
+					</xsd:group>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="BookingArrangementGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for BOOKING ARRANGEMENTs</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element name="BookingContact" type="ContactStructure" minOccurs="0">
@@ -183,7 +222,7 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Maximum interval in advance of departure day or time that Service may be ordered. +V1.2..2</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="BookingUrl" type="xsd:anyURI" minOccurs="0">
+			<xsd:element name="BookingUrl" type="InfoLinkStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>URL for booking. +V1.1</xsd:documentation>
 				</xsd:annotation>
@@ -195,17 +234,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
-	<xsd:complexType name="ServiceBookingArrangementsStructure" abstract="false">
-		<xsd:annotation>
-			<xsd:documentation>Type for SERVICE BOOKING ARRANGEMENTs.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:complexContent>
-			<xsd:extension base="BookingArrangementsStructure">
-				<xsd:group ref="ServiceBookingArrangementsGroup"/>
-			</xsd:extension>
-		</xsd:complexContent>
-	</xsd:complexType>
-	<xsd:group name="ServiceBookingArrangementsGroup">
+	<xsd:group name="ServiceBookingArrangementGroup">
 		<xsd:annotation>
 			<xsd:documentation>Elements for SERVICE BOOKING ARRANGEMENTs.</xsd:documentation>
 		</xsd:annotation>
@@ -232,6 +261,80 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
+	<xsd:complexType name="BookingArrangementRef_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a reference to a BookingArrangement</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:choice>
+					<xsd:element ref="BookingArrangementRef"/>
+					<xsd:element ref="BookingArrangement"/>
+				</xsd:choice>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="bookingArrangements_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of BookingArrangements.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element ref="BookingArrangementRef"/>
+					<xsd:element ref="BookingArrangement"/>
+				</xsd:choice>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="BookingArrangementInFrameGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for BOOKING ARRANGEMENTs frame.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="bookingArrangements" type="bookingArrangementsInFrame_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation> BOOKING ARRANGEMENT in frame.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="bookingArrangementsInFrame_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for containment in frame of BOOKING ARRANGEMENTs</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="BookingArrangement" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- =Deprecated structures for BookingArrangements (for backward compatibility only)========== -->
+	<xsd:complexType name="BookingArrangementsStructure" abstract="false">
+		<xsd:annotation>
+			<xsd:documentation>Type for BOOKING ARRANGEMENTs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:group ref="BookingArrangementGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ServiceBookingArrangementsStructure" abstract="false">
+		<xsd:annotation>
+			<xsd:documentation>Type for SERVICE BOOKING ARRANGEMENTs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ServiceBookingArrangement" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="BookingArrangement" type="BookingArrangementRef_RelStructure"/>
+						<xsd:group ref="ServiceBookingArrangementGroup"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
 	<!-- ======================================================================= -->
 	<xsd:element name="TypeOfPaymentMethod" substitutionGroup="TypeOfValue">
 		<xsd:annotation>
@@ -392,6 +495,11 @@ Rail transport, Roads and Road transport
 			<xsd:element name="ExternalProductCategoryRef" type="ExternalObjectRefStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>An alternative code that uniquely identifies the PRODUCT CATEGORY. Specifically for use in AVMS systems that require an alias, if code is different from main identifier. For VDV compatibility.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Presentation" type="PresentationStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The presentation colours to use for this TYPE OF PRODUCT CATEGORY. +v2.1</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
