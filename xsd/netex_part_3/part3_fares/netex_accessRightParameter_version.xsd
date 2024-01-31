@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_accessRightParameter_version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_accessRightParameter_version">
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_serviceCalendar_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_vehicleSeating_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_trainElement_support.xsd"/>
@@ -8,7 +8,7 @@
 	<xsd:include schemaLocation="../../netex_part_1/part1_ifopt/netex_ifopt_pointOfInterest_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_part_1/part1_networkDescription/netex_line_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_part_1/part1_tacticalPlanning/netex_servicePattern_support.xsd"/>
-	<xsd:include schemaLocation="../../netex_part_1/part1_networkDescription/netex_route_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_part_1/part1_tacticalPlanning/netex_routingConstraint_support.xsd"/>
 	<!-- ====Timetables ========================================================= -->
 	<xsd:include schemaLocation="../../netex_part_2/part2_journeyTimes/netex_serviceJourney_support.xsd"/>
 	<!-- ====Fares ========================================================= -->
@@ -71,10 +71,10 @@
 				</Date>
 				<Date><Modified>2019-03-14</Modified>UK-41  Also LimitationSelectionType Add an additional functional operator to GenericParameterAssignment  to clarify use of groups :  oneOf /  someOf/  allOf
 
-					* Add  new ___FareStructureValidityParametersGroup___ to validity paarmaters with new attributes   ___TypeOfTariffRef___,   ___TypeOfFareStructureFactor___,  ___TypeOfFarFresStructureFactorRef___,
-					  * Extend  ___FareProduct ValidityParametersGroup___  to validity paramaters  with new attributes   ___TypeOfPriceingRuleRef___,   ___ChargingMethodRef___, ___TypeOfPaymentMethodRef___, ___TypeOfMachineReadability___, ___TypeOfFareTableRef.___  TypeofMachineReadabilityRef.
-					  * Add  new ___SeatingValidityParametersGroup___ with new attributes   ___TrainElementRef___,    ___TrainComponentLabelAssignmentRef___.
-					 * Also add OperatingPeriod Ref to Temporal  validity Parameters
+					* Add new FareStructureValidityParametersGroup to validity paarmaters with new attributes; TypeOfTariffRef, TypeOfFareStructureFactor, TypeOfFarFresStructureFactorRef,
+					 * Extend FareProduct ValidityParametersGroup to validity paramaters with new attributes: TypeOfPriceingRuleRef, ChargingMethodRef, TypeOfPaymentMethodRef, TypeOfMachineReadability, TypeOfFareTableRef. TypeofMachineReadabilityRef.
+					 * Add new SeatingValidityParametersGroup with new attributes  TrainElementRef, TrainComponentLabelAssignmentRef.
+					 * Also add OperatingPeriod Ref to Temporal validity Parameters
 					 * Also Fix change choice of TrainNumber etc to selection,
 				</Date>
 				<Date><Modified>2019-03-26</Modified>NL-27 CD #58 Add default TypeOfProductCategory and TypeOfService to Line:
@@ -105,6 +105,8 @@
 				<Date><Modified>2021-09-01</Modified>FIX - Post newmodes merge  Remove ambigous use of VehicleModes (drop from Organisation validity parameters).
 					    Add MobilityServiceConstraintZone to Network validity parameters.
 				</Date>
+				<Date><Modified>2023-12-14</Modified>FIX - Rename RoutingValidityParametersGroup to align with Transmodel. Add missing TransferRestriction, ServiceExclusion, RoutingRestrictionnZone and Border Point parametrers.
+				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the FARE ACCESS RIGHT PARAMETER types.</p>
@@ -121,7 +123,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
-					 <Copyright>CEN, Crown Copyright 2009-2021</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2023</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -376,7 +378,7 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Network validity parameters for ACCESS RIGHT PARAMETER ASSIGNMENT.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:group>
-			<xsd:group ref="RouteValidityParametersGroup">
+			<xsd:group ref="RoutingValidityParametersGroup">
 				<xsd:annotation>
 					<xsd:documentation>Route validity parameters for ACCESS RIGHT PARAMETER ASSIGNMENT.</xsd:documentation>
 				</xsd:annotation>
@@ -479,9 +481,9 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="VehicleMeetingPlaceRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
-	<xsd:group name="RouteValidityParametersGroup">
+	<xsd:group name="RoutingValidityParametersGroup">
 		<xsd:annotation>
-			<xsd:documentation>ROUTE validity parameters for ACCESS RIGHT PARAMETER ASSIGNMENT.</xsd:documentation>
+			<xsd:documentation>Routing validity parameters for ACCESS RIGHT PARAMETER ASSIGNMENT.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element name="RoutingType" type="RoutingTypeEnumeration" default="both" minOccurs="0">
@@ -494,9 +496,13 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Whether use SERIES, or FARE SECTION in forwards, backwards or both directions.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element ref="BorderPointRef" minOccurs="0"/>
 			<xsd:element ref="SeriesConstraintRef" minOccurs="0"/>
 			<xsd:element ref="ServiceJourneyPatternRef" minOccurs="0"/>
 			<xsd:element ref="SingleJourneyPathRef" minOccurs="0"/>
+			<xsd:element ref="TransferRestrictionRef" minOccurs="0"/>
+			<xsd:element ref="RoutingConstraintZoneRef" minOccurs="0"/>
+			<xsd:element ref="ServiceExclusionRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:group name="ServiceValidityParametersGroup">
