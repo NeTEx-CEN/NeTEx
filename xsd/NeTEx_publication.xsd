@@ -376,6 +376,28 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
+		<!-- =====Version============================== -->
+		<!-- =====Version unique========================== -->
+		<!-- DEPRECATED -v2.0 -->
+		<xsd:unique name="Version_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [Version Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:Version"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====Version Key ========================== -->
+		<xsd:keyref name="Version_AnyKeyRef" refer="netex:Version_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:VersionRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="Version_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:Version"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
 		<!-- =====TypeOfFrame============================== -->
 		<!-- =====TypeOfFrame unique========================== -->
 		<xsd:unique name="TypeOfFrame_UniqueBy_Id_Version">
