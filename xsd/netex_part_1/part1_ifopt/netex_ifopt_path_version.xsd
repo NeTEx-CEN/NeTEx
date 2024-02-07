@@ -3,7 +3,6 @@
 <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:siri="http://www.siri.org.uk/siri" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_ifopt_path_version">
 	<xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_path_version.xsd"/>
 	<xsd:include schemaLocation="netex_ifopt_path_support.xsd"/>
-	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_environment_version.xsd"/>
 	<xsd:include schemaLocation="netex_ifopt_site_version.xsd"/>
 	<!-- ============================================== -->
 	<xsd:annotation>
@@ -24,17 +23,20 @@
 				<Date>
 					<Modified>2007-03-22</Modified>
 				</Date>
-				<Date><Modified>2019-03-25</Modified>FR49 CD #65  Accessibility changes
-					 CD add new attributes to PathLink : Width, FlooringType,  RightSideBorder,  LeftSideBordert, TiltAngle, CodedTilt, TactileWarningStrip,  TactileGuidingStrip
-					 NK Review: Reorder so as to place like elements toigether, add sub Groups to organize
+				<Date>
+					<Modified>2019-03-25</Modified>FR49 CD #65  Accessibility changes
+					 CD add new attributes to PathLink : Width, FlooringType,  RightSideBorder,  LeftSideBordert, TiltAngle, CodedTilt, TactileWarningStrip,  TactileGuidingStrip	
+					 NK Review: Reorder so as to place like elements toigether, add sub Groups to organize  
  				</Date>
-				<Date><Modified>2019-03-28</Modified>FR49 CD #65  Accessibility changes
-					 NJSK Doc rewviewe
+				<Date>
+					<Modified>2019-03-28</Modified>FR49 CD #65  Accessibility changes
+					 NJSK Doc rewviewe 
 					 Revise name of ___PathLink___   ___Width___ to ___MinimumWidth__, add enw attribute ___MinimumHeight___
-					 Revise name of  ___PathLink___  new attribute ___CodedTilt___ to ___TiltType___ to be consistent
- 				    Also add new attributes ___MaximumGradient___ and MaximumGradientType___ to  ___PathLink___
+					 Revise name of  ___PathLink___  new attribute ___CodedTilt___ to ___TiltType___ to be consistent 				
+ 				    Also add new attributes ___MaximumGradient___ and MaximumGradientType___ to  ___PathLink___   	
  				</Date>
-				<Date><Modified>2024-02-05</Modified>Revise to share common features with DECK PATH LINK, add OffSItePathLink
+				<Date>
+					<Modified>2024-02-05</Modified>Revise to share common features with DECK PATH LINK, add OffSItePathLink
 				</Date>
 				<Description>
 					<Title>NeTEx Network Exchange - PATH types.</Title>
@@ -77,19 +79,32 @@ Rail transport, Roads and Road transport
 		<xsd:documentation>IFOPT PATH LINK Model.</xsd:documentation>
 	</xsd:annotation>
 	<!-- ======================================================================= -->
+	<xsd:group name="FixedPathLinkGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements of a  OFF SITE PATH LINK.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Description" type="MultilingualString" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Description of PATH LINK.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:group ref="PathLinkElementGroup"/>
+			<xsd:group ref="EnvironmentPropertiesGroup"/>
+			<xsd:group ref="PathPropertiesGroup"/>
+			<xsd:group ref="LinkDurationGroup"/>
+		</xsd:sequence>
+	</xsd:group>
 	<xsd:complexType name="SitePathLinkEndStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for an  OFF SITE P PATH LINK END.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:choice>
-				<xsd:element ref="SiteElementRef"/>
-				<xsd:element name="PlaceRef" type="PlaceRefStructure">
-					<xsd:annotation>
-						<xsd:documentation>Reference to a PLACE, including QUAY, ACCESS SPACE, BOARDING POSITION or other node of a SITE.  DEPRECATED 2.0 use more specifc SITE COMPONENT</xsd:documentation>
-					</xsd:annotation>
-				</xsd:element>
-			</xsd:choice>
+			<xsd:element name="PlaceRef" type="PlaceRefStructure">
+				<xsd:annotation>
+					<xsd:documentation>Reference to a PLACE, including QUAY, ACCESS SPACE, BOARDING POSITION or other node of a SITE.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element name="LevelRef" type="LevelRefStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Reference to a LEVEL on which SITE COMPONENT is found.</xsd:documentation>
@@ -180,61 +195,10 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Destination end of PATH LINK.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:group ref="PathDescriptionGroup"/>
+			<xsd:group ref="FixedPathLinkGroup"/>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ====== SITE PATH LINK =============================================== -->
-	<xsd:group name="LinkDurationGroup">
-		<xsd:annotation>
-			<xsd:documentation>Duration properties of a LINK.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:sequence>
-			<xsd:element name="TransferDuration" type="TransferDurationStructure" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Timings for the transfer.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-		</xsd:sequence>
-	</xsd:group>
-	<xsd:complexType name="PathLinkEndStructure">
-		<xsd:annotation>
-			<xsd:documentation>Type for a PATH LINK END.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:sequence>
-			<xsd:element name="PlaceRef" type="PlaceRefStructure">
-				<xsd:annotation>
-					<xsd:documentation>Reference to a PLACE, including QUAY, ACCESS SPACE, BOARDING POSITION or other node of a SITE.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="LevelRef" type="LevelRefStructure" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Reference to a LEVEL on which SITE COMPONENT is found.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="EntranceRef" type="EntranceRefStructure" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Reference to an ENTRANCE of a PLACE.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-		</xsd:sequence>
-	</xsd:complexType>
-	<xsd:group name="PathLinkElementGroup">
-		<xsd:annotation>
-			<xsd:documentation>Elements of a PATH SITE ELEMENT.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:sequence>
-			<xsd:choice minOccurs="0">
-				<xsd:element ref="AccessibilityAssessmentRef"/>
-				<xsd:element ref="AccessibilityAssessment" minOccurs="0" maxOccurs="1"/>
-			</xsd:choice>
-			<xsd:element name="AccessModes" type="AccessModeListOfEnumerations" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Allowed MODEs to use in component.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:group ref="SiteElementPropertiesGroup"/>
-		</xsd:sequence>
-	</xsd:group>
 	<xsd:complexType name="sitePathLinks_RelStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for a list of SITE PATH LINKs.</xsd:documentation>
@@ -308,7 +272,7 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Destination end of PATH LINK.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:group ref="PathDescriptionGroup">
+			<xsd:group ref="FixedPathLinkGroup">
 				<xsd:annotation>
 					<xsd:documentation>Elements of a  fixed PATH LINK.</xsd:documentation>
 				</xsd:annotation>
@@ -358,9 +322,6 @@ Rail transport, Roads and Road transport
 							<xsd:group ref="PointGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
-							<xsd:group ref="PathJunctionGroup"/>
-						</xsd:sequence>
-						<xsd:sequence>
 							<xsd:group ref="SitePathJunctionGroup"/>
 						</xsd:sequence>
 					</xsd:sequence>
@@ -374,7 +335,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Type for a SITE PATH JUNCTION.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
-			<xsd:extension base="PathJunction_VersionStructure">
+			<xsd:extension base="Point_VersionStructure">
 				<xsd:sequence>
 					<xsd:group ref="SitePathJunctionGroup"/>
 				</xsd:sequence>
@@ -386,6 +347,11 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Elements of a SITE PATH JUNCTION.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
+			<xsd:element name="ParentZoneRef" type="ZoneRefStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Parent ZONE that contains this PATH JUNCTION.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:group ref="SiteElementPropertiesGroup">
 				<xsd:annotation>
 					<xsd:documentation>Elements of a SITE ELEMENTs.</xsd:documentation>

@@ -117,6 +117,7 @@ Rail transport, Roads and Road transport
 		<xsd:complexContent>
 			<xsd:extension base="containmentAggregationStructure">
 				<xsd:choice maxOccurs="unbounded">
+					<xsd:element ref="OffSitePathLink"/>
 					<xsd:element ref="SitePathLink">
 						<xsd:annotation>
 							<xsd:documentation>A designated path between two PLACEs. May include an Ordered sequence of references to PATH LINKS.</xsd:documentation>
@@ -139,7 +140,7 @@ Rail transport, Roads and Road transport
 							<xsd:documentation>A designated path between two PLACEs. May include an Ordered sequence of references to PATH LINKS.</xsd:documentation>
 						</xsd:annotation>
 					</xsd:element>
-					<xsd:element ref="PathJunction">
+					<xsd:element ref="SitePathJunction">
 						<xsd:annotation>
 							<xsd:documentation>A designated path between two PLACEs. May include an Ordered sequence of references to PATH LINKS.</xsd:documentation>
 						</xsd:annotation>
@@ -296,6 +297,34 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Elements of a NAVIGATION PATH.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
+			<xsd:group ref="SiteNavigationPathSummaryGroup"/>
+			<xsd:group ref="SiteElementPropertiesGroup"/>
+			<xsd:group ref="SiteNavigationPathGroup"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="SiteNavigationPathSummaryGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements of a NAVIGATION PATH that summarise properties o the set of PATH LINKs. Will state the strictest constraint found . e.g. if any link forbids wheelchair, the NAVIGATION PATH forbids wheelchair.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="From" type="SitePathLinkEndStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Origin end of NAVIGATION PATH. Only needed if detailed PATH LINKs are not given.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="To" type="SitePathLinkEndStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Destination end of NAVIGATION PATH. Only needed if detailed PATH LINKs not given.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:group ref="NavigationPathSummaryGroup"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="SiteNavigationPathGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements of a NAVIGATION PATH.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
 			<xsd:element name="AccessFeatureList" type="AccessFeatureListOfEnumerations" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Classification of Overall Accessibility of NAVIGATION PATH.</xsd:documentation>
@@ -320,6 +349,89 @@ Rail transport, Roads and Road transport
 				<xsd:annotation>
 					<xsd:documentation>Access Links that NAVIGATION PATH serves.</xsd:documentation>
 				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+
+	<!-- ======= PLACES IN SEQUENCE ======================================= -->
+	<xsd:complexType name="placesInSequence_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>A collection of one or more PLACEs in SEQUENCE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="strictContainmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="PlaceInSequence" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="PlaceInSequence" substitutionGroup="PointInLinkSequence">
+		<xsd:annotation>
+			<xsd:documentation>Point traversed by  a NAVIGATION PATH  in sequence. May be a PLACE PATH JUNCTION or POINT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="PlaceInSequence_VersionedChildStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="VersionedChildGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="PointInLinkSequenceGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="PlaceInSequenceGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="PlaceInSequenceIdType" use="optional">
+						<xsd:annotation>
+							<xsd:documentation>Identifier of ENTITY.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="PlaceInSequence_VersionedChildStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a PLACE in SEQUENCE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="PointInLinkSequence_VersionedChildStructure">
+				<xsd:sequence>
+					<xsd:group ref="PlaceInSequenceGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="PlaceInSequenceGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements of PLACE in SEQUENCE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="PlaceRef" type="PlaceRefStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Reference to a Place or Site Component , that is QUAY, ACCESS SPACE or BOARDING POSITION or PATH JUNCTION.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="BranchLevel" type="xsd:NMTOKEN" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Branching level of place.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="onwardLinks" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Onward links from this point.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="pathLinksInSequence_RelStructure"/>
+					</xsd:complexContent>
+				</xsd:complexType>
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>

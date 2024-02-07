@@ -4299,6 +4299,48 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
+		<!-- =====DeckPathLink========================== -->
+		<!-- =====DeckPathLink unique========================== -->
+		<xsd:unique name="DeckPathLink_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [DeckPathLink Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:DeckPathLink"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====DeckPathLink Key ========================== -->
+		<xsd:keyref name="DeckPathLink_KeyRef" refer="netex:DeckPathLink_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:DeckPathLinkRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="DeckPathLink_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:DeckPathLink"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====DeckPathJunction ========================= -->
+		<!-- =====DeckPathJunction unique========================== -->
+		<xsd:unique name="DeckPathJunction_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [DeckPathJunction Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:DeckPathJunction"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====DeckPathJunction Key ========================== -->
+		<xsd:keyref name="DeckPathJunction_KeyRef" refer="netex:DeckPathJunction_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:DeckPathJunctionRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="DeckPathJunction_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:DeckPathJunction"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
 		<!-- =====AcceptedDriverPermit==(NM)========================== -->
 		<!-- =====AcceptedDriverPermit unique========================== -->
 		<xsd:unique name="AcceptedDriverPermit_UniqueBy_Id_Version">
@@ -5747,12 +5789,12 @@ Correct COnstraints for PointOnRoute
 		</xsd:unique>
 		<!-- =====PathLink Key ========================== -->
 		<xsd:keyref name="PathLink_KeyRef" refer="netex:PathLink_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:PathLinkRef | .//netex:SitePathLinkRef"/>
+			<xsd:selector xpath=".//netex:PathLinkRef | .//netex:SitePathLinkRef | .//netex:OffSitePathLinkRef"/>
 			<xsd:field xpath="@ref"/>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
 		<xsd:key name="PathLink_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:PathLink | .//netex:SitePathLink"/>
+			<xsd:selector xpath=".//netex:PathLink | .//netex:SitePathLink | .//netex:OffSitePathLink"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
@@ -5762,18 +5804,18 @@ Correct COnstraints for PointOnRoute
 			<xsd:annotation>
 				<xsd:documentation>Every [PathJunction Id + Version] must be unique within document.</xsd:documentation>
 			</xsd:annotation>
-			<xsd:selector xpath=".//netex:PathJunction | .//netex:PathLink/netex:FromPointRef"/>
+			<xsd:selector xpath=".//netex:PathJunction "/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:unique>
 		<!-- =====PathJunction Key ========================== -->
 		<xsd:keyref name="PathJunction_KeyRef" refer="netex:PathJunction_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:PathJunctionRef"/>
+			<xsd:selector xpath=".//netex:PathJunctionRef | .//netex:SitePathJunctionRef"/>
 			<xsd:field xpath="@ref"/>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
 		<xsd:key name="PathJunction_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:PathJunction"/>
+			<xsd:selector xpath=".//netex:PathJunction| .//netex:SitePathJunction"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
