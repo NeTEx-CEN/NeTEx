@@ -57,6 +57,20 @@ Rail transport, Roads and Road transport
 		</xsd:appinfo>
 		<xsd:documentation>NeTEx: VERSION types for NeTEx.</xsd:documentation>
 	</xsd:annotation>
+	<!-- ===ENTIITY IN VERSION IN FRAME====Used in RESOURCE FRAME)=================================================== -->
+￼	<!--CLOSE COUPLED WITH  netex_responsibility_version-->
+￼	<xsd:complexType name="versionsInFrame_RelStructure">
+￼		<xsd:annotation>
+￼			<xsd:documentation>DEPRECATED: Type for containment in frame of VERSION. -v2.0</xsd:documentation>
+￼		</xsd:annotation>
+￼		<xsd:complexContent>
+￼			<xsd:extension base="containmentAggregationStructure">
+￼				<xsd:sequence>
+￼					<xsd:element ref="Version" maxOccurs="unbounded"/>
+￼				</xsd:sequence>
+￼			</xsd:extension>
+￼		</xsd:complexContent>
+￼	</xsd:complexType>	
 	<!-- ======ENTITY IN VERSION =============================================== -->
 	<xsd:complexType name="entitiesInVersion_RelStructure">
 		<xsd:annotation>
@@ -113,5 +127,152 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
+	<!-- ==== VERSION ====================================================== -->
+￼	<xsd:complexType name="versions_RelStructure">
+￼		<xsd:annotation>
+￼			<xsd:documentation>DEPRECATED Type for containment of a VERSION. -v2.0</xsd:documentation>
+￼		</xsd:annotation>
+￼		<xsd:complexContent>
+￼			<xsd:extension base="containmentAggregationStructure">
+￼				<xsd:choice maxOccurs="unbounded">
+￼					<xsd:element ref="VersionRef"/>
+￼					<xsd:element ref="Version"/>
+￼				</xsd:choice>
+￼			</xsd:extension>
+￼		</xsd:complexContent>
+￼	</xsd:complexType>
+￼	<xsd:element name="Version" substitutionGroup="DataManagedObject">
+￼		<xsd:annotation>
+￼			<xsd:documentation>DEPRECATED A group of operational data instances which share the same VALIDITY CONDITIONs. A VERSION belongs to a unique VERSION FRAME and is characterized by a unique TYPE OF VERSION. E.g.  NETWORK VERSION for Line 12 starting from 2000-01-01. -v2.0</xsd:documentation>
+￼		</xsd:annotation>
+￼		<xsd:complexType>
+￼			<xsd:complexContent>
+￼				<xsd:restriction base="Version_VersionStructure">
+￼					<xsd:sequence>
+￼						<xsd:sequence>
+￼							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+￼						</xsd:sequence>
+￼						<xsd:sequence>
+￼							<xsd:group ref="DataManagedObjectGroup"/>
+￼						</xsd:sequence>
+￼						<xsd:sequence>
+￼							<xsd:element name="StartDate" type="xsd:dateTime" minOccurs="0">
+￼								<xsd:annotation>
+￼									<xsd:documentation>Date of start of VERSION currency.</xsd:documentation>
+￼								</xsd:annotation>
+￼							</xsd:element>
+￼							<xsd:element name="EndDate" type="xsd:dateTime" minOccurs="0">
+￼								<xsd:annotation>
+￼									<xsd:documentation>Date of end of VERSION currency. Date is INCLUSIVE.</xsd:documentation>
+￼								</xsd:annotation>
+￼							</xsd:element>
+￼							<xsd:element name="Status" type="VersionStatusEnumeration" default="versioned" minOccurs="0">
+￼								<xsd:annotation>
+￼									<xsd:documentation>Status of VERSION.</xsd:documentation>
+￼								</xsd:annotation>
+￼							</xsd:element>
+￼							<xsd:element name="Description" type="MultilingualString" minOccurs="0"/>
+￼							<xsd:element name="VersionType" type="VersionTypeEnumeration" default="point" minOccurs="0">
+￼								<xsd:annotation>
+￼									<xsd:documentation>VERSION type: Point or Baseline.</xsd:documentation>
+￼								</xsd:annotation>
+￼							</xsd:element>
+￼							<xsd:element ref="TypeOfVersionRef" minOccurs="0"/>
+￼							<xsd:element name="DerivedFromVersionRef" type="VersionRefStructure" minOccurs="0">
+￼								<xsd:annotation>
+￼									<xsd:documentation>Reference to VERSION from which this VERSION was derived.</xsd:documentation>
+￼								</xsd:annotation>
+￼							</xsd:element>
+￼						</xsd:sequence>
+￼					</xsd:sequence>
+￼					<xsd:attribute name="id" type="VersionIdType"/>
+￼				</xsd:restriction>
+￼			</xsd:complexContent>
+￼		</xsd:complexType>
+￼	</xsd:element>
+￼	<xsd:complexType name="Version_VersionStructure">
+￼		<xsd:annotation>
+￼			<xsd:documentation>DEPRECATED Type for a VERSION. -v2.0</xsd:documentation>
+￼		</xsd:annotation>
+￼		<xsd:complexContent>
+￼			<xsd:extension base="DataManagedObjectStructure">
+￼				<xsd:sequence>
+￼					<xsd:element name="StartDate" type="xsd:dateTime" minOccurs="0">
+￼						<xsd:annotation>
+￼							<xsd:documentation>Date of start of VERSION currency.</xsd:documentation>
+￼						</xsd:annotation>
+￼					</xsd:element>
+￼					<xsd:element name="EndDate" type="xsd:dateTime" minOccurs="0">
+￼						<xsd:annotation>
+￼							<xsd:documentation>Date of end of VERSION currency. Date is INCLUSIVE.</xsd:documentation>
+￼						</xsd:annotation>
+￼					</xsd:element>
+￼					<xsd:element name="Status" type="VersionStatusEnumeration" default="versioned" minOccurs="0">
+￼						<xsd:annotation>
+￼							<xsd:documentation>Status of VERSION.</xsd:documentation>
+￼						</xsd:annotation>
+￼					</xsd:element>
+￼					<xsd:element name="Description" type="MultilingualString" minOccurs="0"/>
+￼					<xsd:element name="VersionType" type="VersionTypeEnumeration" default="point" minOccurs="0">
+￼						<xsd:annotation>
+￼							<xsd:documentation>Version type: Point or Baseline.</xsd:documentation>
+￼						</xsd:annotation>
+￼					</xsd:element>
+￼					<xsd:element ref="TypeOfVersionRef" minOccurs="0"/>
+￼					<xsd:element name="DerivedFromVersionRef" type="VersionRefStructure" minOccurs="0">
+￼						<xsd:annotation>
+￼							<xsd:documentation>Reference to VERSION from which this VERSION was derived.</xsd:documentation>
+￼						</xsd:annotation>
+￼					</xsd:element>
+￼				</xsd:sequence>
+￼			</xsd:extension>
+￼		</xsd:complexContent>
+￼	</xsd:complexType>
+￼	<!-- ======================================================================= -->
+￼	<!-- ==== TYPE OF VERSION ============================================= -->
+￼	<xsd:element name="TypeOfVersion" substitutionGroup="TypeOfValue">
+￼		<xsd:annotation>
+￼			<xsd:documentation>DEPRECATED A classification of the VERSIONs. -v2.0</xsd:documentation>
+￼		</xsd:annotation>
+￼		<xsd:complexType>
+￼			<xsd:complexContent>
+￼				<xsd:restriction base="TypeOfVersion_ValueStructure">
+￼					<xsd:sequence>
+￼						<xsd:sequence>
+￼							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+￼						</xsd:sequence>
+￼						<xsd:sequence>
+￼							<xsd:group ref="DataManagedObjectGroup"/>
+￼						</xsd:sequence>
+￼						<xsd:sequence>
+￼							<xsd:group ref="TypeOfValueGroup"/>
+￼						</xsd:sequence>
+￼						<xsd:group ref="TypeOfVersionGroup"/>
+￼					</xsd:sequence>
+￼					<xsd:attribute name="id" type="TypeOfVersionIdType">
+￼						<xsd:annotation>
+￼							<xsd:documentation>Reference to a TYPE OF VERSION.</xsd:documentation>
+￼						</xsd:annotation>
+￼					</xsd:attribute>
+￼				</xsd:restriction>
+￼			</xsd:complexContent>
+￼		</xsd:complexType>
+￼	</xsd:element>
+￼	<xsd:complexType name="TypeOfVersion_ValueStructure">
+￼		<xsd:annotation>
+￼			<xsd:documentation>Type for a TYPE OF VERSION.</xsd:documentation>
+￼		</xsd:annotation>
+￼		<xsd:complexContent>
+￼			<xsd:extension base="TypeOfValue_VersionStructure">
+￼				<xsd:group ref="TypeOfVersionGroup"/>
+￼			</xsd:extension>
+￼		</xsd:complexContent>
+￼	</xsd:complexType>
+￼	<xsd:group name="TypeOfVersionGroup">
+￼		<xsd:annotation>
+￼			<xsd:documentation>Elements for a TYPE OF VERSION.</xsd:documentation>
+￼		</xsd:annotation>
+￼		<xsd:sequence/>
+￼	</xsd:group>	
 	<!-- ======================================================================= -->
 </xsd:schema>
