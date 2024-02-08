@@ -443,6 +443,17 @@ Data is selected just for the stops for a single journey
 				<DefaultCodespaceRef ref="op_cs"/>
 			</FrameDefaults>
 			<frames>
+				<!--  Narrative:  The SERVICE CALENDAR FRAME provides a container to organise the operational dates -->
+				<ServiceCalendarFrame id="uic:SKDUPD_basic_example" version="any">
+					<operatingPeriods>
+						<!-- POP+273:2006-11-04/2006-11-04::1' -->
+						<UicOperatingPeriod id="uic:SKDUPD_basic_example_operatingperiod" version="any">
+							<FromDate>2006-11-04T12:00:00</FromDate>
+							<ToDate>2006-11-04T12:00:00</ToDate>
+							<ValidDayBits>1</ValidDayBits>
+						</UicOperatingPeriod>
+					</operatingPeriods>
+				</ServiceCalendarFrame>
 				<ServiceFrame version="any" id="uic:SKDUPD_basic_example">
 					<!--  Narrative:  The SERVICE FRAME provides a container to organise stop (TAPSI Location) and related data -->
 					<!--- comment: A TAPTSI data stream doe snot normalloy incldue location (ie stop) definitions, just a refernce to  their codes. 
@@ -485,7 +496,7 @@ Data is selected just for the stops for a single journey
 					<Name>Uic Example of a very simple train timetable</Name>
 					<VehicleModes>rail</VehicleModes>
 					<vehicleJourneys>
-						<DatedServiceJourney version="any" id="3">
+						<ServiceJourney version="any" id="3">
 							<!-- PRD+3:11:1:3:::ALPHA TANGO+0060**80' -->
 							<Name>ALPHA TANGO</Name>
 							<TypeOfProductCategoryRef versionRef="EXTERNAL" ref="84"/>
@@ -499,6 +510,10 @@ Data is selected just for the stops for a single journey
 							<!--  Narrative: Overall Departure times from firts stop-->
 							<!-- PRD+3:11:1:3:::ALPHA TANGO+0060**80' -->
 							<DepartureTime>05:03:00</DepartureTime>
+							<!-- POP+273:2006-11-04/2006-11-04::1' -->
+							<dayTypes>
+								<DayTypeRef ref="uic:SKDUPD_basic_example_operatingperiod"/>
+							</dayTypes>
 							<!--  Narrative: Operator of service (ie TAPTSI  RU.)  This is an external reference -->
 							<!-- 	POR+006070001+*0503+*1+5'			-->
 							<OperatorRef versionRef="EXTERNAL" ref="uic:0060"/>
@@ -700,12 +715,7 @@ PDT++:::58:::'     (TAPTSI B.4.7009  58 TRN Intercités) -->
 									</delays>
 								</CheckConstraint>
 							</checkConstraints>
-							<UicOperatingPeriod id="3" version="any">
-								<FromDate>2006-11-04T12:00:00</FromDate>
-								<ToDate>2006-11-04T12:00:00</ToDate>
-								<ValidDayBits>1</ValidDayBits>
-							</UicOperatingPeriod>
-						</DatedServiceJourney>
+						</ServiceJourney>
 					</vehicleJourneys>
 					<trainNumbers>
 						<TrainNumber version="any" id="3">
