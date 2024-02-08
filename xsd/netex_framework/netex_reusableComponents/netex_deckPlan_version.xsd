@@ -16,10 +16,9 @@
 				<Date>
 					<Created>2023-01-30</Created>
 				</Date>
-				<Date><Modified>2024-02-09</Modified>Add locatable spot range for usage.
-				</Date>
-				<Date><Modified>2024-02-18</Modified>Norway review comment - Add Window types.
-				</Date>
+				<Date><Modified>2023-01-30</Modified>
+          Name Space changes
+        </Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the DECK PLAN types.</p>
@@ -37,11 +36,11 @@
 				</Relation>
 				<Rights>
           Unclassified
-          <Copyright>CEN, Crown Copyright  2022-2024</Copyright>
+          <Copyright>CEN, Crown Copyright  2022-2023</Copyright>
 				</Rights>
 				<Source>
 					<ul>
-						<li>Derived from the Transmodel, standards.</li>
+						<li>Derived from the Transmodel,   standards.</li>
 					</ul>
 				</Source>
 				<Status>Version 1.0</Status>
@@ -67,18 +66,17 @@
 	<!-- ======================================================================= -->
 	<xsd:group name="DeckPlanInFrameGroup">
 		<xsd:annotation>
-			<xsd:documentation>Deck Plans in Frame</xsd:documentation>
+			<xsd:documentation>Elements for a DECK PLAN in Frame.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="deckPlans" type="deckPlans_RelStructure" minOccurs="0">
+			<xsd:element name="deckPlans" type="deckPlansInFrame_RelStructure" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>A List OF DECK PLANs</xsd:documentation>
+					<xsd:documentation>DECK OKANs in FRAME.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
-	<!-- ==== DECK PLAN ==================================================== -->
-	<xsd:complexType name="deckPlans_RelStructure">
+	<xsd:complexType name="deckPlansInFrame_RelStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for containment in frame of DECK PLANs</xsd:documentation>
 		</xsd:annotation>
@@ -90,6 +88,7 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
+	<!-- ==== DECK PLAN ==================================================== -->
 	<xsd:element name="DeckPlan" substitutionGroup="DataManagedObject">
 		<xsd:annotation>
 			<xsd:documentation>A  plan for the layout of seating and other areas of use of an entire VEHICLE (train, coach, vessel etc.) or individual TRAIN ELEMENT for all or part of a journey.  +v2.0
@@ -146,14 +145,9 @@
 					<xsd:documentation>Description of DECK PLAN.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="Orientation" type="VehicleOrientationEnumeration" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Description of DECK PLAN.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
 			<xsd:element name="configurationConditions" type="validityConditions_RelStructure" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>VALIDITY CONDITIONs used to configure DECK PLAN</xsd:documentation>
+					<xsd:documentation>VALIDTY CONDITIONs used to configure DECK PLAN</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="deckLevels" type="deckLevels_RelStructure" minOccurs="0">
@@ -237,7 +231,6 @@
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element ref="DeckLevelRef" minOccurs="0"/>
-
 			<xsd:element name="deckSpaces" type="deckSpaces_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>DECK SPACEs in DECK PLAN.</xsd:documentation>
@@ -292,7 +285,7 @@
 			<xsd:element ref="ClassOfUseRef" minOccurs="0"/>
 			<xsd:element name="FareClass" type="FareClassEnumeration" default="any" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Fare class for which capacity is specifyed. Default is any, i.e. capacity is for all classes.</xsd:documentation>
+					<xsd:documentation>Edit care class for which capacity is specifyed. Default is any, i.e. capacity is for all classes.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element ref="AccessibilityAssessment" minOccurs="0"/>
@@ -332,7 +325,7 @@
 							<xsd:group ref="DataManagedObjectGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
-						<xsd:group ref="EquipableSpaceGroup">
+							<xsd:group ref="EquipableSpaceGroup">
 								<xsd:annotation>
 									<xsd:documentation>Elements for a EQUIPABLE SPACE.</xsd:documentation>
 								</xsd:annotation>
@@ -452,7 +445,8 @@
 	</xsd:complexType>
 	<xsd:element name="PassengerSpace" substitutionGroup="DeckSpace_">
 		<xsd:annotation>
-			<xsd:documentation> A specialisation of DECK SPACE defining an area within a VEHICLE (i.e. bus, boat, coach, car) or TRAIN ELEMENT for use by passengers. +v2.0</xsd:documentation>
+			<xsd:documentation> A specialisation of DECK SPACE defining an area within a VEHICLE (i.e. bus, boat, coach, car) or TRAIN ELEMENT for use by passengers. _2.0
++v2.0</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -707,26 +701,6 @@
 			<xsd:element name="VehicleSide" type="VehicleSideEnumeration" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Side of ENTRANCE relative to forward orientation of VEHICLE. </xsd:documentation>
-			<xsd:element name="DeckEntranceType" type="DeckEntranceTypeEnumeration" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Classification elements for a DECK ENTRANCE.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:group>
-			<xsd:element name="sensorsInEntrance" type="sensorsInEntrance_RelStructure" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>ENTRANCE SENSORS in the DECK ENTRANCE.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-		</xsd:sequence>
-	</xsd:group>
-	<xsd:group name="DeckEntrancePositionGroup">
-		<xsd:annotation>
-			<xsd:documentation>Positional ements for a DECK ENTRANCE.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:sequence>
-			<xsd:element name="VehicleSide" type="VehicleSideEnumeration" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Side of ENTRANCE relative to forward orientation of VEHICLE. </xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="DistanceFromFront" type="LengthType" minOccurs="0">
@@ -736,19 +710,19 @@
 			</xsd:element>
 			<xsd:element name="SequenceFromFront" type="xsd:positiveInteger" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Positional sequence of door from front to end (or left side to right)  of VEHICLE. Start with 1.</xsd:documentation>
+					<xsd:documentation>Positional sequence of door from front (orr left side end)  of VEHICLE. 1 - forward, </xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="HeightFromGround" type="LengthType" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Height of Entrance from ground.</xsd:documentation>
+					<xsd:documentation>Height  of ENtrance from ground.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:group name="DeckEntranceClassificationGroup">
 		<xsd:annotation>
-			<xsd:documentation>Classification elements for a DECK ENTRANCE.</xsd:documentation>
+			<xsd:documentation>EClassification lements for a DECK ENTRANCE.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element name="DeckEntranceType" type="DeckEntranceTypeEnumeration" minOccurs="0">
@@ -772,17 +746,13 @@
 					<xsd:documentation>Whether the door is automatic.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="IsAutomatic" type="xsd:boolean" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Whether the door is automatic.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ====== PASSENGER  ENTRANCE =================================== -->
 	<xsd:element name="PassengerEntrance" substitutionGroup="DeckEntrance_">
 		<xsd:annotation>
-			<xsd:documentation> A normal entrance for passengers to or within a DECK. +v2.0</xsd:documentation>
+			<xsd:documentation> A normal entrance for passengers to or within a DECK.
++v2.0</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -919,7 +889,8 @@
 	<!-- ====== OTHER DECK ENTRANCE =================================== -->
 	<xsd:element name="OtherDeckEntrance" substitutionGroup="DeckEntrance_">
 		<xsd:annotation>
-			<xsd:documentation> An entrance  to or within a  DECK for use for other purposes than normal passenger access. E.g. crew, emergency exit, etc. +v2.0</xsd:documentation>
+			<xsd:documentation> An entrance  to or within a  DECK for use for other purposes than normal passenger access. E.g. crew, emergency exit, etc.
++v2.0</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -994,7 +965,8 @@
 	</xsd:complexType>
 	<xsd:element name="DeckEntranceUsage" substitutionGroup="VersionedChild">
 		<xsd:annotation>
-			<xsd:documentation> Permitted usage of a specific PASSENGER ENTRANCE to access a particular DECK SPACE. +v2.0</xsd:documentation>
+			<xsd:documentation> Permitted usage of a specific PASSENGER ENTRANCE to access a particular DECK SPACE.
++v2.0</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -1049,33 +1021,15 @@
 			</xsd:element>
 			<xsd:element name="EntranceSetting" type="EntranceSettingEnumeration" default="shut" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Whether door is kept open, shut or locked. See allowed values. Default is shut.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="ControlledLocking" type="xsd:boolean" default="true" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Whether door is normally locked for safety when in motiion. Default is true.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element ref="DeckEntranceRef" minOccurs="0"/>
-			<xsd:group ref="LocatableSpotRangeGroup"/>
-			<xsd:element name="UsageType" type="EntranceUsageEnumeration" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Nature of usage: entry, exit etc. See allowed values. Default is entryAndExit.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="EntranceSetting" type="EntranceSettingEnumeration" default="shut" minOccurs="0">
-				<xsd:annotation>
 					<xsd:documentation>Door setting: whether keot open, shut or locked. See allowed values. Default is shut.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="ControlledLocking" type="xsd:boolean" default="true" minOccurs="0">
+			<xsd:element name="ControlledLocking" type="xsd:boolean" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Whether door is normally locked for safety when in motiion. Default is true.</xsd:documentation>
+					<xsd:documentation>Whether door is normally locked for safety when in motiion.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element ref="DeckEntranceRef" minOccurs="0"/>
-			<xsd:group ref="LocatableSpotRangeGroup"/>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======DECK ENTRANCE COUPLE. ====================================================== -->
@@ -1093,7 +1047,9 @@
 	</xsd:complexType>
 	<xsd:element name="DeckEntranceCouple" substitutionGroup="VersionedChild">
 		<xsd:annotation>
-			<xsd:documentation> Explicit linking of a pair of DECK ENTRANCEs, e.g. between train carriages. +v2.0</xsd:documentation>
+			<xsd:documentation> Explicit linking of a pair of DECK ENTRANCEs, e.g. between train carriages.
++v2.0
+</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -1163,7 +1119,8 @@
 	</xsd:complexType>
 	<xsd:element name="SensorInEntrance">
 		<xsd:annotation>
-			<xsd:documentation>Use of a specific ENTRANCE SENSOR to monitor a specific DECK ENTRANCE. +v2.0</xsd:documentation>
+			<xsd:documentation>Use of a specific ENTRANCE SENSOR to monitor a specific DECK ENTRANCE. 
++ v2.0</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -1225,7 +1182,8 @@
 	</xsd:complexType>
 	<xsd:element name="DeckWindow" substitutionGroup="DeckComponent">
 		<xsd:annotation>
-			<xsd:documentation> A window onto a DECK SPACE. +v2.0</xsd:documentation>
+			<xsd:documentation> A window onto a DECK SPACE.
++v2.0</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -1293,17 +1251,7 @@
 			</xsd:element>
 			<xsd:element name="HeightFromFloor" type="LengthType" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Height of Window from floor of of DECK</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="VehicleSide" type="VehicleSideEnumeration" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Side of WINDOW relative to forward orientation of VEHICLE. </xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="DeckWindowType" type="DeckWindowTypeEnumeration" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Classification of DECK WINDOW.</xsd:documentation>
+					<xsd:documentation>Height ofindow from floor of of DECK</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="HasBlind" type="xsd:boolean" minOccurs="0">
@@ -1333,7 +1281,9 @@
 	</xsd:complexType>
 	<xsd:element name="DeckLevel" substitutionGroup="DataManagedObject">
 		<xsd:annotation>
-			<xsd:documentation>An identified level (1, 2 , 3, etc. ) within the DECK PLAN of a VEHICLE (boat, train, airplane, etc). +v2.0</xsd:documentation>
+			<xsd:documentation>An identified level (1, 2 , 3, etc. ) within the DECK PLAN of a VEHICLE (boat, train, airplane, etc). +v2.0
+.
++v2.0</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -1475,7 +1425,8 @@
 	<!-- ========= TYPE OF DECK SPACE ============================================ -->
 	<xsd:element name="TypeOfDeckSpace" abstract="false" substitutionGroup="TypeOfValue">
 		<xsd:annotation>
-			<xsd:documentation> Classification for DECK SPACE, e.g. as WC, Restaurant, luggage area, etc. +v2.0</xsd:documentation>
+			<xsd:documentation> Classification for DECK SPACE, e.g. as WC, Restaurant, luggage area, etc.
++v2.0</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -1529,7 +1480,7 @@
 					</xsd:sequence>
 					<xsd:attribute name="id" type="TypeOfDeckEntranceIdType">
 						<xsd:annotation>
-							<xsd:documentation>Identifier of PURPOSE OF EQUIPMENT PROFILE.</xsd:documentation>
+							<xsd:documentation>Identifier of PURPOSE OF EQUIMENT PROFILE.</xsd:documentation>
 						</xsd:annotation>
 					</xsd:attribute>
 				</xsd:restriction>
