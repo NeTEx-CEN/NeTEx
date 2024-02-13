@@ -21,11 +21,13 @@
 				</Date>
 				<Date><Modified>2012-03-04</Modified>Revise attributes of StopAssignment MODEL CHANGE
 				</Date>
-				<Date><Modified>2017-06-03</Modified>CR0040 Allow inlining of STOP POINT, STOP PLACE, QUAY etc so as to iimprove packaging (no semantic change) 			 
+				<Date><Modified>2017-06-03</Modified>CR0040 Allow inlining of STOP POINT, STOP PLACE, QUAY etc so as to iimprove packaging (no semantic change)
 				</Date>
-				<Date><Modified>2017-06-03</Modified>CR0051 CD Allow reference to JOURNEY PATTERN on DYNAMIC STOP ASSIGNMENT.		 
+				<Date><Modified>2017-06-03</Modified>CR0051 CD Allow reference to JOURNEY PATTERN on DYNAMIC STOP ASSIGNMENT.
 				</Date>
-				<Date><Modified>2023-12-12</Modified>Add DECK ENTRANCE ASSIGNMENT 
+				<Date><Modified>2023-12-12</Modified>Add DECK ENTRANCE ASSIGNMENT
+				<Date>
+					<Modified>2024-02-08</Modified>Add Directional attributes as per MS suggestions:  ArrivesForwards, DpeartsForwards  ArrivesFrom, Left DepartsToRight .  corrected name of trainStopAssignments
 				</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines common STOP ASSIGNMENT types.</p>
@@ -138,6 +140,39 @@ Rail transport, Roads and Road transport
 				<xsd:element ref="ScheduledStopPointRef"/>
 				<xsd:element ref="ScheduledStopPoint"/>
 			</xsd:choice>
+			<xsd:group ref="StopAssignmentDirectionGroup">
+				<xsd:annotation>
+					<xsd:documentation>Directional elements for a  STOP ASSIGNMENT. +v2.0</xsd:documentation>
+				</xsd:annotation>
+			</xsd:group>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="StopAssignmentDirectionGroup">
+		<xsd:annotation>
+			<xsd:documentation>EDirectional lements for a  STOP ASSIGNMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ArrivesForwards" type="xsd:boolean" default="true" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether VEHICLE or TRAIN arrives at stop travelling in a forwards direction, i.e. operational orientation. Default is true. +v2.0</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DepartsForwards" type="xsd:boolean" default="true" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether VEHICLE or TRAIN departs from stop travelling in a forwards direction, i.e. operational orientation. Default is true.. Default is true. . +v2.0</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ArrivesFromLeft" type="xsd:boolean" default="true" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether VEHICLE or TRAIN is expected to arrive at the QUAY from the left of a bystander facing the track edge of the platform. Default is true. +v2.0</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DepartsToRight" type="xsd:boolean" default="true" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether VEHICLE or TRAIN is expected to depart from the QUAY to the right of a bystander facing the track edge of the platform.
+ Default is true. +v2.0</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->
@@ -210,16 +245,28 @@ Rail transport, Roads and Road transport
 				<xsd:element ref="BoardingPositionRef"/>
 				<xsd:element ref="BoardingPosition"/>
 			</xsd:choice>
-			<xsd:element name="trainElements" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Train elements to which SCHEDULED STOP POINT is to be assigned.</xsd:documentation>
-				</xsd:annotation>
-				<xsd:complexType>
-					<xsd:complexContent>
-						<xsd:extension base="trainStopAssignments_RelStructure"/>
-					</xsd:complexContent>
-				</xsd:complexType>
-			</xsd:element>
+			<xsd:choice minOccurs="0">
+				<xsd:element name="trainStopAssignments" minOccurs="0" maxOccurs="unbounded">
+					<xsd:annotation>
+						<xsd:documentation>Train stop assignemnts elements to use for  which SCHEDULED STOP POINT</xsd:documentation>
+					</xsd:annotation>
+					<xsd:complexType>
+						<xsd:complexContent>
+							<xsd:extension base="trainStopAssignments_RelStructure"/>
+						</xsd:complexContent>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="trainElements" minOccurs="0" maxOccurs="unbounded">
+					<xsd:annotation>
+						<xsd:documentation>Train elements to which SCHEDULED STOP POINT is to be assigned. DEPRECATED 2.0</xsd:documentation>
+					</xsd:annotation>
+					<xsd:complexType>
+						<xsd:complexContent>
+							<xsd:extension base="trainStopAssignments_RelStructure"/>
+						</xsd:complexContent>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:choice>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->
@@ -372,7 +419,6 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
-	<!-- ======================================================================= -->
 	<!-- ======================================================================= -->
 	<xsd:element name="PassengerStopAssignmentView" abstract="false" substitutionGroup="DerivedView">
 		<xsd:annotation>

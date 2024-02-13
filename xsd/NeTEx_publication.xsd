@@ -2480,6 +2480,27 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
+		<!-- =====HelpPointEquipment============================== -->
+		<!-- =====HelpPointEquipment unique========================== -->
+		<xsd:unique name="HelpPointEquipment_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [HelpPointEquipment Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:HelpPointEquipment"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====HelpPointEquipment Key ========================== -->
+		<xsd:keyref name="HelpPointEquipment_AnyKeyRef" refer="netex:HelpPointEquipment_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:HelpPointEquipmentRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="HelpPointEquipment_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:HelpPointEquipment"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
 		<!-- =====PassengerBeaconEquipment============================== -->
 		<!-- =====PassengerBeaconEquipment unique========================== -->
 		<xsd:unique name="PassengerBeaconEquipment_UniqueBy_Id_Version">
@@ -3811,6 +3832,18 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
+		<!-- =====DeckEntrance==(NM)========================== -->
+		<!-- =====DeckEntrance Key ========================== -->
+		<xsd:keyref name="DeckEntrance_KeyRef" refer="netex:DeckEntrance_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:FromDeckEntranceRef|.//netex:ToDeckEntranceRef "/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="DeckEntrance_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:PassengerEntrance| .//netex:DeckVehicleEntrance | .//netex:OtherDeckEntrance"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
 		<!-- =====PassengerEntrance==(NM)========================== -->
 		<!-- =====PassengerEntrance unique========================== -->
 		<xsd:unique name="PassengerEntrance_UniqueBy_Id_Version">
@@ -3865,7 +3898,7 @@ Correct COnstraints for PointOnRoute
 		</xsd:unique>
 		<!-- =====DeckVehicleEntrance Key ========================== -->
 		<xsd:keyref name="DeckVehicleEntrance_KeyRef" refer="netex:DeckVehicleEntrance_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:DeckVehicleEntranceRef"/>
+			<xsd:selector xpath=".//netex:DeckVehicleEntranceRef "/>
 			<xsd:field xpath="@ref"/>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
@@ -4447,18 +4480,18 @@ Correct COnstraints for PointOnRoute
 			<xsd:annotation>
 				<xsd:documentation>Every [Train Id + Version] must be unique within document.</xsd:documentation>
 			</xsd:annotation>
-			<xsd:selector xpath=".//netex:Train"/>
+			<xsd:selector xpath=".//netex:Train |.//netex:PoweredTrain | .//netex:UnpoweredTrain "/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:unique>
 		<!-- =====Train Key ========================== -->
 		<xsd:keyref name="Train_KeyRef" refer="netex:Train_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:TrainRef"/>
+			<xsd:selector xpath=".//netex:TrainRef |.//netex:PoweredTrainRef | .//netex:UnpoweredTrainRef"/>
 			<xsd:field xpath="@ref"/>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
 		<xsd:key name="Train_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:Train"/>
+			<xsd:selector xpath=".//netex:Train |.//netex:PoweredTrain | .//netex:UnpoweredTrain"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
@@ -4484,26 +4517,27 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@version"/>
 		</xsd:key>
 		<!-- =====TrainElement============================== -->
-		<!-- =====TrainElement unique========================== -->
-		<xsd:unique name="TrainElement_UniqueBy_Id_Version">
+		<!-- =====TrainElementType unique========================== -->
+		<xsd:unique name="TrainElementType_UniqueBy_Id_Version">
 			<xsd:annotation>
-				<xsd:documentation>Every [TrainElement Id + Version] must be unique within document.</xsd:documentation>
+				<xsd:documentation>Every [TrainElementType Id + Version] must be unique within document.</xsd:documentation>
 			</xsd:annotation>
-			<xsd:selector xpath=".//netex:TrainElement"/>
+			<xsd:selector xpath="  .//netex:TractiveElementType|  .//netex:TrailingElementType| .//netex:TrainElement"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:unique>
-		<!-- =====TrainElement Key ========================== -->
-		<xsd:keyref name="TrainElement_KeyRef" refer="netex:TrainElement_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:TrainElementRef"/>
+		<!-- =====TrainElementType Key ========================== -->
+		<xsd:keyref name="TrainElementType_KeyRef" refer="netex:TrainElementType_AnyVersionedKey">
+			<xsd:selector xpath="  .//netex:TractiveElementTypeRef |  .//netex:TrailingElementTypeRef| .//netex:TrainElementRef"/>
 			<xsd:field xpath="@ref"/>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
-		<xsd:key name="TrainElement_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:TrainElement"/>
+		<xsd:key name="TrainElementType_AnyVersionedKey">
+			<xsd:selector xpath=" .//netex:TractiveElementType|  .//netex:TrailingElementType| .//netex:TrainElement"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
+		<!-- NB TRAIN ELEMENT is deprecated In future shoudk eb renamed to TrainELementTyepa and be made abstarct -->
 		<!-- =====Train Component============================== -->
 		<!-- =====TrainComponent unique========================== -->
 		<xsd:unique name="TrainComponent_UniqueBy_Id_Version_Order">
@@ -4589,6 +4623,18 @@ Correct COnstraints for PointOnRoute
 		</xsd:keyref>
 		<xsd:key name="Access_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:Access"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====Access Target PLACE Reference============================ -->
+		<!-- =====Access Target PLACE Reference== Key ========================== -->
+		<xsd:keyref name="Access_Place_KeyRef" refer="netex:AccessTarget_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:Access/netex:From/netex:PlaceRef | .//netex:Access/netex:To/netex:PlaceRef "/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="AccessTarget_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:StopPlace |.//netex:PointOfInterest  |.//netex:Parking  |.//netex:Quay  |.//netex:StopPlaceEntrance"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
@@ -4863,7 +4909,7 @@ Correct COnstraints for PointOnRoute
 		</xsd:unique>
 		<!-- =====Quay Key ========================== -->
 		<xsd:keyref name="Quay_KeyRef" refer="netex:Quay_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:QuayRef | .//netex:ParentQuayRef"/>
+			<xsd:selector xpath=".//netex:QuayRef|.//netex:ParentQuayRef"/>
 			<xsd:field xpath="@ref"/>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
@@ -5751,6 +5797,25 @@ Correct COnstraints for PointOnRoute
 		</xsd:keyref>
 		<xsd:key name="PathLink_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:PathLink | .//netex:SitePathLink | .//netex:OffSitePathLink"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- ===== PathLink Target PLACE Reference============================ -->
+		<!-- =====PathLink PTarget LACE Reference== Key ========================== -->
+		<xsd:keyref name="PathLink_Place_KeyRef" refer="netex:SitePathLinkTarget_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:Link/netex:From/netex:PlaceRef | .//netex:PathLink/netex:To/netex:PlaceRef "/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<!-- =====SitePathLink Target PLACE Reference============================ -->
+		<!-- =====SitePathLink PTarget LACE Reference== Key ========================== -->
+		<xsd:keyref name="SitePathLink_Place_KeyRef" refer="netex:SitePathLinkTarget_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:SitePathLink/netex:From/netex:PlaceRef | .//netex:SitePathLink/netex:To/netex:PlaceRef "/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="SitePathLinkTarget_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:StopPlace |  .//netex:AccessSpace | .//netex:Quay | .//netex:BoardingPosition |.//netex:SitePathJunction |.//netex:PathJunction |.//netex:PointOfInterest |.//netex:PointOfInterestSpace  |.//netex:PointOfInterestEntrance   |.//netex:Parking |.//netex:ParkingPassengerEntrance   |.//netex:ParkingEntranceForVehicles  |.//netex:ParkingArea"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>

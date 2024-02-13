@@ -21,6 +21,9 @@
         </Date>
 				<Date><Modified>2023-12-08</Modified>Move SENSOR IN ENTRANCE to here
 				</Date>
+				<Date>
+					<Modified>2024-02-09</Modified>Add locatbale spot range for usage.
+				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the DECK PLAN types.</p>
@@ -71,14 +74,15 @@
 			<xsd:documentation>Elements for a DECK PLAN in Frame.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="deckPlans" type="deckPlansInFrame_RelStructure" minOccurs="0">
+			<xsd:element name="deckPlans" type="deckPlans_RelStructure" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>DECK PLANs in FRAME.</xsd:documentation>
+					<xsd:documentation>A List OF DECK PLANs</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
-	<xsd:complexType name="deckPlansInFrame_RelStructure">
+	<!-- ==== DECK PLAN ==================================================== -->
+	<xsd:complexType name="deckPlans_RelStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for containment in frame of DECK PLANs.</xsd:documentation>
 		</xsd:annotation>
@@ -90,7 +94,6 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<!-- ==== DECK PLAN ==================================================== -->
 	<xsd:element name="DeckPlan" substitutionGroup="DataManagedObject">
 		<xsd:annotation>
 			<xsd:documentation>A plan for the layout of seating and other areas of use of an entire VEHICLE (train, coach, vessel etc.) or individual TRAIN ELEMENT for all or part of a journey. +v2.0</xsd:documentation>
@@ -147,7 +150,7 @@
 			</xsd:element>
 			<xsd:element name="configurationConditions" type="validityConditions_RelStructure" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>VALIDTY CONDITIONs used to configure DECK PLAN</xsd:documentation>
+					<xsd:documentation>VALIDITY CONDITIONs used to configure DECK PLAN</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="deckLevels" type="deckLevels_RelStructure" minOccurs="0">
@@ -1019,12 +1022,13 @@
 					<xsd:documentation>Door setting: whether keot open, shut or locked. See allowed values. Default is shut.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="ControlledLocking" type="xsd:boolean" minOccurs="0">
+			<xsd:element name="ControlledLocking" type="xsd:boolean" default="true" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Whether door is normally locked for safety when in motiion.</xsd:documentation>
+					<xsd:documentation>Whether door is normally locked for safety when in motiion. Default is true.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element ref="DeckEntranceRef" minOccurs="0"/>
+			<xsd:group ref="LocatableSpotRangeGroup"/>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======DECK ENTRANCE COUPLE. ====================================================== -->
