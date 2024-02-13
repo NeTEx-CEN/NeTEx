@@ -3411,19 +3411,6 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====ObjectRef============================== -->
-		<!---
-			<xsd:keyref name="Object_AnyKeyRef" refer="netex:Object_AnyVersionedKey">
-				<xsd:selector xpath=".//netex:ConditionedObjectRef | .//netex:RuleObjectRef"/>
-				<xsd:field xpath="@ref"/>
-				<xsd:field xpath="@version"/>
-			</xsd:keyref>
-
-			<xsd:key name="Object_AnyVersionedKey">
-				<xsd:selector xpath=".//netex:ResourceFrame | .//netex:CompositeFrame | .//netex:SiteFrame | .//netex:ServiceFrame | .//netex:InfrastructureFrame | .//netex:TimetableFrame | .//netex:GeneralFrame | .//netex:SiteFrame | .//netex:ServiceCalendarFrame | .//netex:VehicleScheduleFrame | .//netex:DriverScheduleFrame | .//netex:FareFrame | .//netex:RailwayJunction | .//netex:RoadJunction | .//netex:WireJunction|.//netex:ReliefPoint | .//netex:GaragePoint | .//netex:ParkingPoint | .//netex:ScheduledStopPoint | .//netex:TimingPoint | .//netex:ActivationPoint | .//netex:BeaconPoint | .//netex:RoutePoint | .//netex:TrafficControlPoint | .//netex:Place | .//netex:StopPlace | .//netex:ServiceSite | .//netex:TopographicPlace | .//netex:PointOfInterest | .//netex:Parking | .//netex:EquipmentPlace | .//netex:FlexibleStopPlace | .//netex:AccessZone | .//netex:TariffZone | .//netex:RoadAddress | .//netex:PostalAddress | .//netex:Quay | .//netex:AccessSpace | .//netex:BoardingPosition | .//netex:StopArea | .//netex:HailAndRideArea | .//netex:FlexibleArea | .//netex:VehicleStoppingPlace | .//netex:VehicleStoppingPosition | .//netex:VehicleEntrance | .//netex:StopPlaceEntrance | .//netex:StopPlaceVehicleEntrance | .//netex:PointOfInterestEntrance | .//netex:ParkingPassengerEntrance | .//netex:ParkingEntranceForVehicles | .//netex:ParkingBay | .//netex:ParkingArea | .//netex:AdministrativeZone | .//netex:Country | .//netex:RoutingConstraintZone | .//netex:ActivationLink | .//netex:TimingLink | .//netex:ServiceLink | .//netex:Connection | .//netex:Access | .//netex:NavigationPath | .//netex:PathJunction | .//netex:VehicleJourney | .//netex:DeadRun | .//netex:ServiceJourney | .//netex:TemplateServiceJourney | .//netex:TemplateServiceJourney | .//netex:SpecialService | .//netex:DatedVehicleJourney | .//netex:NormalDatedVehicleJourney | .//netex:TimingPattern | .//netex:Operator | .//netex:GroupOfOperators | .//netex:Authority | .//netex:OtherOganisation | .//netex:TravelAgent | .//netex:ServicedOrganisation | .//netex:GeneralOrganisation | .//netex:ManagementAGent | .//netex:Line | .//netex:GroupOfLines | .//netex:Garage | .//netex:Crewbase | .//netex:TimingPattern | .//netex:Route | .//netex:ServicePattern | .//netex:DeadRunPattern | .//netex:GroupOfServices"/>
-				<xsd:field xpath="@id"/>
-				<xsd:field xpath="@version"/>
-			</xsd:key>  -->
 		<!-- =====VEHICLE Constraints========================= -->
 		<!-- =====Vehicle============================== -->
 		<!-- =====Vehicle unique========================== -->
@@ -3493,6 +3480,90 @@ Correct COnstraints for PointOnRoute
 		</xsd:keyref>
 		<xsd:key name="SimpleVehicleType_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:SimpleVehicleType"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====RollingStockInventory==(NM)========================== -->
+		<!-- =====RollingStockInventory unique========================== -->
+		<xsd:unique name="RollingStockInventory_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [RollingStockInventory Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:RollingStockInventory"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====RollingStockInventory Key ========================== -->
+		<xsd:keyref name="RollingStockInventory_KeyRef" refer="netex:RollingStockInventory_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:RollingStockInventoryRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="RollingStockInventory_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:RollingStockInventory"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====TrailingRollingStockItem==(NM)========================== -->
+		<!-- =====TrailingRollingStockItem unique========================== -->
+		<xsd:unique name="TrailingRollingStockItem_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [TrailingRollingStockItem Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:TrailingRollingStockItem"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====TrailingRollingStockItem Key ========================== -->
+		<xsd:keyref name="TrailingRollingStockItem_KeyRef" refer="netex:TrailingRollingStockItem_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:TrailingRollingStockItemRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="TrailingRollingStockItem_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:TrailingRollingStockItem"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====TractiveRollingStockItem==(NM)========================== -->
+		<!-- =====TractiveRollingStockItem unique========================== -->
+		<xsd:unique name="TractiveRollingStockItem_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [TractiveRollingStockItem Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:TractiveRollingStockItem"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====TractiveRollingStockItem Key ========================== -->
+		<xsd:keyref name="TractiveRollingStockItem_KeyRef" refer="netex:TractiveRollingStockItem_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:TractiveRollingStockItemRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="TractiveRollingStockItem_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:TractiveRollingStockItem"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====TypeOfRollingStockItem==(NM)========================== -->
+		<!-- =====TypeOfRollingStockItem unique========================== -->
+		<xsd:unique name="TypeOfRollingStockItem_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [TypeOfRollingStockItem Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:TypeOfRollingStockItem"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====TypeOfRollingStockItem Key ========================== -->
+		<xsd:keyref name="TypeOfRollingStockItem_KeyRef" refer="netex:TypeOfRollingStockItem_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:TypeOfRollingStockItemRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="TypeOfRollingStockItem_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:TypeOfRollingStockItem"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
