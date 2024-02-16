@@ -16,9 +16,8 @@
 				<Date>
 					<Created>2023-01-30</Created>
 				</Date>
-				<Date><Modified>2023-01-30</Modified>
-          Name Space changes
-        </Date>
+				<Date><Modified>2024-02-09</Modified>Add locatbale spot range for usage.
+				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the DECK PLAN types.</p>
@@ -36,11 +35,11 @@
 				</Relation>
 				<Rights>
           Unclassified
-          <Copyright>CEN, Crown Copyright  2022-2023</Copyright>
+          <Copyright>CEN, Crown Copyright  2022-2024</Copyright>
 				</Rights>
 				<Source>
 					<ul>
-						<li>Derived from the Transmodel,   standards.</li>
+						<li>Derived from the Transmodel, standards.</li>
 					</ul>
 				</Source>
 				<Status>Version 1.0</Status>
@@ -66,17 +65,18 @@
 	<!-- ======================================================================= -->
 	<xsd:group name="DeckPlanInFrameGroup">
 		<xsd:annotation>
-			<xsd:documentation>Elements for a DECK PLAN in Frame.</xsd:documentation>
+			<xsd:documentation>Deck Plans in Frame</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="deckPlans" type="deckPlansInFrame_RelStructure" minOccurs="0">
+			<xsd:element name="deckPlans" type="deckPlans_RelStructure" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>DECK OKANs in FRAME.</xsd:documentation>
+					<xsd:documentation>A List OF DECK PLANs</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
-	<xsd:complexType name="deckPlansInFrame_RelStructure">
+	<!-- ==== DECK PLAN ==================================================== -->
+	<xsd:complexType name="deckPlans_RelStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for containment in frame of DECK PLANs</xsd:documentation>
 		</xsd:annotation>
@@ -88,7 +88,6 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<!-- ==== DECK PLAN ==================================================== -->
 	<xsd:element name="DeckPlan" substitutionGroup="DataManagedObject">
 		<xsd:annotation>
 			<xsd:documentation>A  plan for the layout of seating and other areas of use of an entire VEHICLE (train, coach, vessel etc.) or individual TRAIN ELEMENT for all or part of a journey.  +v2.0
@@ -145,14 +144,9 @@
 					<xsd:documentation>Description of DECK PLAN.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="Orientation" type="VehicleOrientationEnumeration" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Description of DECK PLAN.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
 			<xsd:element name="configurationConditions" type="validityConditions_RelStructure" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>VALIDTY CONDITIONs used to configure DECK PLAN</xsd:documentation>
+					<xsd:documentation>VALIDITY CONDITIONs used to configure DECK PLAN</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="deckLevels" type="deckLevels_RelStructure" minOccurs="0">
@@ -1029,12 +1023,13 @@
 					<xsd:documentation>Whether door is kept open, shut or locked. See allowed values. Default is shut.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="ControlledLocking" type="xsd:boolean" minOccurs="0">
+			<xsd:element name="ControlledLocking" type="xsd:boolean" default="true" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Whether door is normally locked for safety when in motiion.</xsd:documentation>
+					<xsd:documentation>Whether door is normally locked for safety when in motiion. Default is true.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element ref="DeckEntranceRef" minOccurs="0"/>
+			<xsd:group ref="LocatableSpotRangeGroup"/>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======DECK ENTRANCE COUPLE. ====================================================== -->
@@ -1124,7 +1119,7 @@
 	</xsd:complexType>
 	<xsd:element name="SensorInEntrance">
 		<xsd:annotation>
-			<xsd:documentation>Use of a specific ENTRANCE SENSOR to monitor a specific DECK ENTRANCE. 
+			<xsd:documentation>Use of a specific ENTRANCE SENSOR to monitor a specific DECK ENTRANCE.
 + v2.0</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
