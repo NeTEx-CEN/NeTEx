@@ -218,20 +218,7 @@ Correct COnstraints for PointOnRoute
 				</Relation>
 				<Rights>Unclassified
 					 <Copyright>CEN, Crown Copyright 2009-2021</Copyright>
-				</Rights>
-				<Source>
-					<ul>
-						<li>Created for NeTEx.</li>
-					</ul>
-				</Source>
-				<Status>Version 1.1</Status>
-				<Subject>
-					<Category>Arts, recreation and travel, Tourism, Travel (tourism), Transport, Public transport, Bus services, Coach services, Business and industry, Transport, Public transport, Roads and Road transport.</Category>
-					<Project>CEN TC278 WG3 SG9.</Project>
-				</Subject>
-				<Title>NeTEx XML schema. bulk Publication Interface for exchanging NeTEx data </Title>
-				<Type>Standard</Type>
-			</Metadata>
+				</Rights><Source><ul><li>Created for NeTEx.</li></ul></Source><Status>Version 1.1</Status><Subject><Category>Arts, recreation and travel, Tourism, Travel (tourism), Transport, Public transport, Bus services, Coach services, Business and industry, Transport, Public transport, Roads and Road transport.</Category><Project>CEN TC278 WG3 SG9.</Project></Subject><Title>NeTEx XML schema. bulk Publication Interface for exchanging NeTEx data </Title><Type>Standard</Type></Metadata>
 		</xsd:appinfo>
 		<xsd:documentation>NeTEx PUBLICATION SCHEMA</xsd:documentation>
 	</xsd:annotation>
@@ -489,6 +476,7 @@ Correct COnstraints for PointOnRoute
 		</xsd:key>
 		<!-- =====Version============================== -->
 		<!-- =====Version unique========================== -->
+		<!-- DEPRECATED -v2.0 -->
 		<xsd:unique name="Version_UniqueBy_Id_Version">
 			<xsd:annotation>
 				<xsd:documentation>Every [Version Id + Version] must be unique within document.</xsd:documentation>
@@ -11972,6 +11960,27 @@ Correct COnstraints for PointOnRoute
 		</xsd:keyref>
 		<xsd:key name="BookingArrangement_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:BookingArrangement"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====ServiceBookingArrangement============================== -->
+		<!-- =====ServiceBookingArrangement unique========================== -->
+		<xsd:unique name="ServiceBookingArrangement_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [ServiceBookingArrangement Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:ServiceBookingArrangement"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====PricingService Key ========================== -->
+		<xsd:keyref name="ServiceBookingArrangement_KeyRef" refer="netex:ServiceBookingArrangement_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:ServiceBookingArrangementRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="ServiceBookingArrangement_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:ServiceBookingArrangement"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>

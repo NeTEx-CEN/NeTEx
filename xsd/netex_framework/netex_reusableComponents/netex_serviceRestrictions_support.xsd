@@ -36,6 +36,9 @@
 	 			</Date>
 				<Date><Modified>2024-01-17</Modified>DECKPLANS dd washbasin to sanitary facilities 
 	 			</Date>
+				<Date><Modified>2023-12-18</Modified>FIX: Correct the #525 implementation of BOOKING ARRANGEMENT and SERVICE BOOKING ARRANGEMENT,
+					   SERVICE BOOKING ARRANGEMENT should inherit from BOOKING ARRANGEMENT and should have its own structure.
+				</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines  NetEX:TRAVEL RIGHTS identifier  types.</p>
 				</Description>
@@ -833,18 +836,44 @@ See ERA B.4 7037 Characteristic description code.</xsd:documentation>
 	</xsd:simpleType>
 	<xsd:element name="BookingArrangementRef" type="BookingArrangementRefStructure">
 		<xsd:annotation>
-			<xsd:documentation>Reference to a BookingArrangement</xsd:documentation>
+			<xsd:documentation>Reference to a BOOKING ARRANGEMENT.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="BookingArrangementRefStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for a reference to a BookingArrangement</xsd:documentation>
+			<xsd:documentation>Type for a reference to a BOOKING ARRANGEMENT.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:simpleContent>
 			<xsd:restriction base="VersionOfObjectRefStructure">
 				<xsd:attribute name="ref" type="BookingArrangementIdType" use="required">
 					<xsd:annotation>
-						<xsd:documentation>Identifier of a BookingArrangement</xsd:documentation>
+						<xsd:documentation>Identifier of a BOOKING ARRANGEMENT.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!-- ===== Booking Arrangement ============================================== -->
+	<xsd:simpleType name="ServiceBookingArrangementIdType">
+		<xsd:annotation>
+			<xsd:documentation>Type for identifier of a SERVICE BOOKING ARRANGEMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="BookingArrangementIdType"/>
+	</xsd:simpleType>
+	<xsd:element name="ServiceBookingArrangementRef" type="ServiceBookingArrangementRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a SERVICE BOOKING ARRANGEMENT.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ServiceBookingArrangementRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a reference to a SERVICE BOOKING ARRANGEMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="BookingArrangementRefStructure">
+				<xsd:attribute name="ref" type="ServiceBookingArrangementIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Identifier of a SERVICE BOOKING ARRANGEMENT.</xsd:documentation>
 					</xsd:annotation>
 				</xsd:attribute>
 			</xsd:restriction>
