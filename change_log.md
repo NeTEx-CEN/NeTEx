@@ -3,7 +3,8 @@
 ## Version 1.2.2 - Revised to add New Modes
 The Part 1, Part 2, & Part 3 schemas include corrections and enhancements since the release of the version 1.2 CEN specification documents for NeTEx. 
 
-A new Part5 is added for new modes, with examples 
+A new Part 5 is added for new modes, with examples. 
+
 The new Part 5 CEN Specification document describes the additions and changes.
 
 
