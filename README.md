@@ -41,7 +41,7 @@ You can find more information about the directory's structure on the [wiki](http
 ### Additional information
 
 - **nx.xsd**
-   - Embeds NeTeX XML model elements within a simple thematic organization to facilitate browsing and inspection of NeTEx.
+   - Embeds NeTeX XML model elements within a simple thematic organisation to facilitate browsing and inspection of NeTEx.
    - The NX schema is not intended for actual use.
 
 ### XML examples
