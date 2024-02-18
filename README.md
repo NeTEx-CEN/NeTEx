@@ -80,7 +80,7 @@ The schema is systematically divided into small modular files. Generally, for ea
 | Release Number | Release Date  | Description                                    | Link | Release Notes                                                                                   |
 | -------------- | ------------- | ---------------------------------------------- | ------------- | ----------------------------------------------------------------------------------------------- |
 | 1.2            | March 2022    | Latest productive version before new modes merge | [Code](https://github.com/NeTEx-CEN/NeTEx/releases/tag/v1.2) | [Release Notes](https://github.com/NeTEx-CEN/NeTEx/blob/v1.2/README.md) |
-| 1.2.2          | August 2023   | First version of new modes                     | [Release Notes](https://github.com/NeTEx-CEN/NeTEx/releases/tag/v1.2.2)        |
+| 1.2.2          | August 2023   | First version of new modes                     | [Code](https://github.com/NeTEx-CEN/NeTEx/releases/tag/v1.2.2)  | [Release Notes](https://github.com/NeTEx-CEN/NeTEx/blob/v1.2.2/README.md)       |
 | 1.3          |   2024  | European Passenger Information Accessibility Profile (EPIAP) - upcoming       | N/A    | N/A     |
 | 2.0          | 2024     | Upcoming release   ⏳                            | N/A  | N/A                                                                                             |
 ## Full Version History 📚
