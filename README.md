@@ -77,7 +77,7 @@ The schema is systematically divided into small modular files. Generally, for ea
 
 # Change Log
 ## Releases
-| Release Number | Release Date  | Description                                    | Release Notes                                                                                   |
+| Release Number | Release Date  | Description                                    | Link | Release Notes                                                                                   |
 | -------------- | ------------- | ---------------------------------------------- | ----------------------------------------------------------------------------------------------- |
 | 1.2            | March 2022    | Latest productive version before new modes merge | [Release Notes](https://github.com/NeTEx-CEN/NeTEx/releases/tag/v1.2)      |
 | 1.2.2          | August 2023   | First version of new modes                     | [Release Notes](https://github.com/NeTEx-CEN/NeTEx/releases/tag/v1.2.2)        |
