@@ -5,7 +5,8 @@ The Part 1, Part 2, & Part 3 schemas include corrections and enhancements since 
 
 A new Part 5 is added for new modes, with examples. 
 
-The new Part 5 CEN Specification document describes the additions and changes.
+The new Part 5 CEN specification document describes the additions and changes.
+
 
 
 ### 2021.09.03  NewModes: CommentAction Add __MustReturnToSameBay__  attribute to __PoolOfVehicles__. 
