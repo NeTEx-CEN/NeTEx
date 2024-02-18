@@ -1,5 +1,5 @@
 # NeTEx (Network Timetable EXchange) XML schema
-**(C) 2009-2023 NeTEx, CEN, Crown Copyright**
+**(C) 2009-2024 NeTEx, CEN, Crown Copyright**
 
 ## Schemas for:
 
