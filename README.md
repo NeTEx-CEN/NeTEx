@@ -36,7 +36,7 @@ You can find more information about the directory's structure on the [wiki](http
 
 2. **netex_siri.xsd**
    - Embeds NeTEx XML model elements in the SIRI protocol for dynamic exchange of elements between servers.
-   - Supports both Request/response and publish/subscribe.
+   - Supports both request/response and publish/subscribe.
 
 ### Additional information
 
