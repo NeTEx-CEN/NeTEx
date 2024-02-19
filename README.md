@@ -33,6 +33,7 @@ You can find more information about the directory's structure on the [wiki](http
 1. **netex_publication**
    - Embeds NeTEx XML model elements in a bulk output file format for use in asynchronous publication.
    - The intended content scope can be indicated by a filter object.
+   -  **netex_publication_noConstraint**: same as **netex_publication** but without all the XSD constraint that is convenient to speed up the work in development phases (but at the price of a much weaker validation).
 
 2. **netex_siri.xsd**
    - Embeds NeTEx XML model elements in the SIRI protocol for dynamic exchange of elements between servers.
