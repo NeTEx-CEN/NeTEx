@@ -23,7 +23,7 @@ The individual XML files are organized hierarchically in folders, following the 
 You can find more information about the directory's structure on the [wiki](https://github.com/ITxPT/NeTEx/wiki/Structure-And-Compatibility#netex-directory-structure)
 ### UML models
 
-- You can refer to the NeTEx UML Physical and Conceptual models for a detailed UML view of the schema packages.
+- You can refer to the NeTEx UML Physical and Conceptual models (note that NeTEx Conceptual model is Transmodel) for a detailed UML view of the schema packages.
 - These models are available in electronic format.
   
 ## Getting started 🚀
