@@ -10,7 +10,8 @@
 				<Audience>e-service developers</Audience>
 				<Coverage>Europe</Coverage>
 				<Creator>First drafted for version 1.0 CEN TC278 WG3 SG6 Editor Nicholas Knowles.  mailto:schemer@netex.org.uk</Creator>
-				<Date><Created>2024-02-05</Created>PATH  Factored  generic enums out of Ifopt paths and other files ast to share with DECK PATH LINK etc
+				<Date>
+					<Created>2024-02-05</Created>PATH  Factored  generic enums out of Ifopt paths and other files ast to share with DECK PATH LINK etc 
 				</Date>
 				<Date>
 					<Modified>2024-02-05</Modified>
@@ -60,8 +61,8 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Common elements of a PATH.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:group ref="PathNavigationGroup"/>
-			<xsd:group ref="PathDescriptionGroup"/>
+			<xsd:group ref="PathTraversalGroup"/>
+			<xsd:group ref="PathEnvironmentGroup"/>
 			<xsd:element name="MaximumFlowPerMinute" type="xsd:nonNegativeInteger" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Maximum number of passengers who can traverse PATH LINK per minute.</xsd:documentation>
@@ -69,7 +70,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
-	<xsd:group name="PathNavigationGroup">
+	<xsd:group name="PathTraversalGroup">
 		<xsd:annotation>
 			<xsd:documentation>Common Navigation elements of a PATH.</xsd:documentation>
 		</xsd:annotation>
@@ -151,11 +152,6 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Type of flooring of the walking surface. +v1.1</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="FlooringStatus" type="FlooringStatusEnumeration" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Status of flooring of the walking surface. +v1.3</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
 			<xsd:element name="RightSideBorder" type="BorderTypeEnumeration" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Type of border on the right side (in the direction of the PATH LINK).</xsd:documentation>
@@ -171,19 +167,9 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Nature of the  tactile warning strips (in the direction of the PATH LINK). +v1.1</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="TactileWarningStripContrast" type="xsd:boolean" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Indicates whether there is contrast for the tactile warning strips. +v1.1</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
 			<xsd:element name="TactileGuidingStrip" type="xsd:boolean" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Indicates whether there are guiding strips. +v1.1</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="TactileGuidingStripStatus" type="TactileGuidingStripStatusEnumeration" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Indicates the status of the tactile guiding strips. +v1.1</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -297,45 +283,6 @@ Rail transport, Roads and Road transport
 			<xsd:enumeration value="uneven"/>
 			<xsd:enumeration value="unknown"/>
 			<xsd:enumeration value="other"/>
-		</xsd:restriction>
-	</xsd:simpleType>
-	<xsd:simpleType name="FlooringStatusEnumeration">
-		<xsd:annotation>
-			<xsd:documentation>Allowed values for the status of the flooring.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="xsd:NMTOKEN">
-			<xsd:enumeration value="good"/>
-			<xsd:enumeration value="worn"/>
-			<xsd:enumeration value="discomfortable"/>
-			<xsd:enumeration value="hazardous"/>
-			<xsd:enumeration value="unknown"/>
-		</xsd:restriction>
-	</xsd:simpleType>
-	<xsd:simpleType name="TactileGuidingStripStatusEnumeration">
-		<xsd:annotation>
-			<xsd:documentation>Allowed values for the status of the Tactile Guiding Strip.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="xsd:NMTOKEN">
-			<xsd:enumeration value="goodAndContrasted">
-				<xsd:annotation>
-					<xsd:documentation>When the guiding strip has the expected quality level.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="primitive">
-				<xsd:annotation>
-					<xsd:documentation>When there is no guiding strip as such but a decorative element or ledge can be used for this purpose.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="incorrect">
-				<xsd:annotation>
-					<xsd:documentation>When there is a guiding strip but it does not correspond to a path that can actually be used (passes through the middle of an obstacle without going around it for example).</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="bad">
-				<xsd:annotation>
-					<xsd:documentation>When the guiding strip is degraded and difficult to interpret.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="BorderTypeEnumeration">
