@@ -11,10 +11,11 @@
 				<Audience>e-service developers</Audience>
 				<Coverage>Europe</Coverage>
 				<Creator>First drafted for version 1.0 CEN TC278 WG3 SG6 Editor Nicholas Knowles.  mailto:schemer@netex.org.uk</Creator>
-				<Date><Created>2024-01-05</Created>Factored out of Ifopt path
+				<Date>
+					<Created>2024-01-05</Created>Factored out of Ifopt path
 				</Date>
 				<Date>
-					<Modified>2024-01-05</Modified>
+					<Modified>2024-02-15</Modified>Add PATH INSTRUCTION, Rename NAVIGATION PATH to NAVIGATION 
 				</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines PATH types.</p>
@@ -148,41 +149,61 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
+	<!-- ======= PATH INSTRUCTION =========================================== -->
+	<xsd:simpleType name="PathInstructionIdType">
+		<xsd:annotation>
+			<xsd:documentation>Type for identifier of a PATH INSTRUCTION.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ObjectIdType"/>
+	</xsd:simpleType>
+	<xsd:element name="PathInstructionRef" type="PathInstructionRefStructure" substitutionGroup="VersionOfObjectRef">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a PATH INSTRUCTION.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="PathInstructionRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a reference to a PATH INSTRUCTION.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="OrderedVersionOfObjectRefStructure"/>
+		</xsd:simpleContent>
+	</xsd:complexType>
 	<!-- ======================================================================= -->
 	<!-- Simple Type Definitions -->
-	<!-- ====== NAVIGATION PATH =============================================== -->
-	<xsd:complexType name="navigationPathRefs_RelStructure">
+	<!-- ====== NAVIGATION  =============================================== -->
+	<xsd:complexType name="navigationRefs_RelStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for a list of references to a NAVIGATION PATH.</xsd:documentation>
+			<xsd:documentation>Type for a list of references to a NAVIGATION path.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="oneToManyRelationshipStructure">
 				<xsd:sequence>
-					<xsd:element ref="NavigationPathRef" maxOccurs="unbounded"/>
+					<xsd:element ref="NavigationRef" maxOccurs="unbounded"/>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:simpleType name="NavigationPathIdType">
+	<xsd:simpleType name="NavigationIdType">
 		<xsd:annotation>
-			<xsd:documentation>Type for identifier of a NAVIGATION PATH.</xsd:documentation>
+			<xsd:documentation>Type for identifier of a NAVIGATION path.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="LinkSequenceIdType"/>
 	</xsd:simpleType>
-	<xsd:element name="NavigationPathRef" type="NavigationPathRefStructure" substitutionGroup="LinkSequenceRef">
+	<xsd:element name="NavigationRef" type="NavigationRefStructure" substitutionGroup="LinkSequenceRef">
 		<xsd:annotation>
-			<xsd:documentation>Reference to a NAVIGATION PATH.</xsd:documentation>
+			<xsd:documentation>Reference to a NAVIGATION path.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:complexType name="NavigationPathRefStructure">
+	<xsd:complexType name="NavigationRefStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for reference to a NAVIGATION PATH.</xsd:documentation>
+			<xsd:documentation>Type for reference to a NAVIGATION path.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:simpleContent>
 			<xsd:restriction base="LinkSequenceRefStructure">
-				<xsd:attribute name="ref" type="NavigationPathIdType" use="required">
+				<xsd:attribute name="ref" type="NavigationIdType" use="required">
 					<xsd:annotation>
-						<xsd:documentation>Identifier of a NAVIGATION PATH.</xsd:documentation>
+						<xsd:documentation>Identifier of a NAVIGATION path.</xsd:documentation>
 					</xsd:annotation>
 				</xsd:attribute>
 			</xsd:restriction>

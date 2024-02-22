@@ -17,6 +17,13 @@
 				<Coverage>Europe</Coverage>
 				<Creator>First Drafted for NeTEx version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.  mailto:schemer@netex.org.uk</Creator>
 				<Date>
+					<Modified>2024-02-14</Modified>Add PATH INSTRUCTION, ROUTE INSTRUCTION
+				</Date>
+				<Date>
+					<Modified>2024-02-07</Modified>Add TRACTIVE TRAIN ELEMENT TYPE,  TRAILING TRAIN ELEMENT TYPE, ROLLING STOCK INVENTORY, 
+					  ROLLING STOCK TRACTIVE ITEM,   ROLLLING STOCK TRAILING ITEM, etc
+				</Date>
+				<Date>
 					<Modified>2024-01-14</Modified>Add PASSENGER CAPACITY, PASSENGER VEHICLE CAPACITY, PASSENGER CARRYING REQUIREMENT
 					FACILITY REQUIREMENT , VEHICLE MANOEVRING REQUIREMENT, PASSENGER BEACON
 				</Date>
@@ -4445,6 +4452,30 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
+		<!-- =====PathInstruction============================== -->
+		<!-- =====PathInstruction unique========================== -->
+		<xsd:unique name="PathInstruction_UniqueBy_Id_Version_ordered">
+			<xsd:annotation>
+				<xsd:documentation>Every [PathInstruction Id + Version + order] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:PathInstruction"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+			<xsd:field xpath="@order"/>
+		</xsd:unique>
+		<!-- =====PathInstruction Key ========================== -->
+		<xsd:keyref name="PathInstruction_KeyRef" refer="netex:PathInstruction_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:PathInstructionRef "/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+			<xsd:field xpath="@order"/>
+		</xsd:keyref>
+		<xsd:key name="PathInstruction_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:PathInstruction"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+			<xsd:field xpath="@order"/>
+		</xsd:key>
 		<!-- =====AcceptedDriverPermit==(NM)========================== -->
 		<!-- =====AcceptedDriverPermit unique========================== -->
 		<xsd:unique name="AcceptedDriverPermit_UniqueBy_Id_Version">
@@ -5940,7 +5971,7 @@ Correct COnstraints for PointOnRoute
 			<xsd:annotation>
 				<xsd:documentation>Every [PathJunction Id + Version] must be unique within document.</xsd:documentation>
 			</xsd:annotation>
-			<xsd:selector xpath=".//netex:PathJunction "/>
+			<xsd:selector xpath=".//netex:PathJunction | .//netex:SitePathJunction "/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:unique>
@@ -6626,6 +6657,30 @@ Correct COnstraints for PointOnRoute
 			<xsd:selector xpath=".//netex:RouteLink"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====RouteInstruction============================== -->
+		<!-- =====RouteInstruction unique========================== -->
+		<xsd:unique name="RouteInstruction_UniqueBy_Id_Version_ordered">
+			<xsd:annotation>
+				<xsd:documentation>Every [RouteInstruction Id + Version + order] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:RouteInstruction"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+			<xsd:field xpath="@order"/>
+		</xsd:unique>
+		<!-- =====RouteInstruction Key ========================== -->
+		<xsd:keyref name="RouteInstruction_KeyRef" refer="netex:RouteInstruction_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:RouteInstructionRef "/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+			<xsd:field xpath="@order"/>
+		</xsd:keyref>
+		<xsd:key name="RouteInstruction_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:RouteInstruction"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+			<xsd:field xpath="@order"/>
 		</xsd:key>
 		<!-- =====ModeRestrictionAssessment============================== -->
 		<!-- =====ModeRestrictionAssessment unique========================== -->
