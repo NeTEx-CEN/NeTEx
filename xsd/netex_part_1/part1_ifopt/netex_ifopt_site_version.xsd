@@ -11,6 +11,7 @@
 	<xsd:import namespace="http://www.opengis.net/gml/3.2" schemaLocation="../../gml/gmlBasic2d-extract-v3_2_1-.xsd"/>
 	<xsd:include schemaLocation="netex_ifopt_checkConstraint_version.xsd"/>
 	<xsd:include schemaLocation="netex_ifopt_equipmentAll.xsd"/>
+	<xsd:include schemaLocation="netex_ifopt_site_support.xsd"/>
 	<!-- ======================================================================= -->
 	<xsd:annotation>
 		<xsd:appinfo>
@@ -230,7 +231,7 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>ENTRANCEs  to and within SITE.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="siteStructures" type="siteStructures_RelStructure" minOccurs="0">
+			<xsd:element name="siteStructures" type="siteStructureRefs_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>SITE STRUCTUREs within SITE. +v2.0</xsd:documentation>
 				</xsd:annotation>
@@ -353,7 +354,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Elements of a SITE ENTRANCE.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="PublicCode" type="xsd:normalizedString" minOccurs="0">
+			<xsd:element name="PublicCode" type="PublicCodeType" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Alternative identifier of ENTRANCE shown to Public.</xsd:documentation>
 				</xsd:annotation>
@@ -365,7 +366,12 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element name="EntranceType" type="EntranceEnumeration" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Classification of ENTRANCE. Use EQUIPMENT element to describe in further detail.</xsd:documentation>
+					<xsd:documentation>Classification of ENTRANCE. Use EntrancePurpose and EQUIPMENT elements to describe in further detail.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="EntrancePurpose" type="EntrancePurposeEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Classification of ENTRANCE regarding its purpose (e.g., main entrance, side entrance, etc.).</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="IsExternal" type="xsd:boolean" default="true" minOccurs="0">
@@ -568,7 +574,7 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Description of LEVEL.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="PublicCode" type="xsd:normalizedString" minOccurs="0">
+			<xsd:element name="PublicCode" type="PublicCodeType" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Public code for LEVEL.</xsd:documentation>
 				</xsd:annotation>
@@ -653,7 +659,7 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:group ref="GroupOfSitesSpatialGroup"/>
-			<xsd:element name="alternativeNames" type="alternativeNames_RelStructure" minOccurs="0">
+			<xsd:element name="alternativeNameRefs" type="alternativeNames_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Alternative names.</xsd:documentation>
 				</xsd:annotation>
@@ -689,7 +695,7 @@ Rail transport, Roads and Road transport
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ===== SITE  STRUCTURE =============================================== -->
-	<xsd:complexType name="siteStructures_RelStructure">
+	<xsd:complexType name="siteStructureRefs_RelStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for list of SITE STRUCTURES.</xsd:documentation>
 		</xsd:annotation>
@@ -735,7 +741,7 @@ Rail transport, Roads and Road transport
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element ref="SiteRef" minOccurs="0"/>
-			<xsd:element name="levelsInStructure" type="levelsInStructure_RelStructure" minOccurs="0">
+			<xsd:element name="levelsInStructure" type="levelInStructureRefs_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>LEVELs found within SITe.</xsd:documentation>
 				</xsd:annotation>
@@ -743,7 +749,7 @@ Rail transport, Roads and Road transport
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ====== LEVEL IN STRUCTURE ============================================== -->
-	<xsd:complexType name="levelsInStructure_RelStructure">
+	<xsd:complexType name="levelInStructureRefs_RelStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for a list of ENTRANCEs.</xsd:documentation>
 		</xsd:annotation>
