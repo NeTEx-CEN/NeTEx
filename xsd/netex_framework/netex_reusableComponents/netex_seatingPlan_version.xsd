@@ -21,6 +21,9 @@
         </Date>
 				<Date><Modified>2023-12-08</Modified>Move SENSOR IN SPOT declarations to here
 				</Date>
+				<Date>
+					<Modified>2024-02-18</Modified>Norway review comment - Revise AIsle /Window to use enumeration. Add  TableType enum.
+				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the DECK PLAN types.</p>
@@ -80,7 +83,7 @@
 	</xsd:complexType>
 	<xsd:element name="SpotRow" substitutionGroup="VersionedChild">
 		<xsd:annotation>
-			<xsd:documentation>A Row of LOCATABLE SPOTs, e.g. seats, within a PASSENGER SPACE. +v2.0</xsd:documentation>
+			<xsd:documentation>A designated row of LOCATABLE SPOTs, e.g. seats, within a PASSENGER SPACE. v2.0</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -149,7 +152,8 @@
 	</xsd:complexType>
 	<xsd:element name="SpotColumn" substitutionGroup="VersionedChild">
 		<xsd:annotation>
-			<xsd:documentation>A File of LOCATABLE SPOTs within a PASSENGER SPACE. For example Column A, B, C, D. +v2.0</xsd:documentation>
+			<xsd:documentation>A designated File of LOCATABLE SPOTs within a PASSENGER SPACE, For example Column A, B, C, D. +v2.0
+</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -206,7 +210,7 @@
 	<!-- ==== EQUIPABLE SPACE ======================================================= -->
 	<xsd:element name="EquipableSpace" type="EquipableSpace_VersionStructure" abstract="true" substitutionGroup="DataManagedObject">
 		<xsd:annotation>
-			<xsd:documentation>A place where ACTUAL VEHICLE EQUIPMENT may be located. +v2.0</xsd:documentation>
+			<xsd:documentation>A place aboard a vehicle where ACTUAL VEHICLE EQUIPMENT may be located. +v2.0</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="EquipableSpace_VersionStructure" abstract="true">
@@ -247,7 +251,7 @@
 			</xsd:element>
 			<xsd:element name="Orientation" type="ComponentOrientationEnumeration" default="forwards" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Orientation of EQUIPABLE SPACE. Default is forwards.</xsd:documentation>
+					<xsd:documentation>Orientation of EQUIPABLE SPACE . Default is forwards.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:group ref="EquipableSpaceDimensionGroup"/>
@@ -379,17 +383,12 @@
 			<xsd:documentation>Elements for a PASSENGER SPOT.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="ByAisle" type="xsd:boolean" minOccurs="0">
+			<xsd:element name="SeatContext" type="SeatContextEnumeration" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Whether PASSENGER SPOT is by an aisle.</xsd:documentation>
+					<xsd:documentation>Whether PASSENGER SPOT is by an Aisle, window, etc.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="ByWindow" type="xsd:boolean" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Whether PASSENGER SPOT is by a window</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="ByTable" type="xsd:boolean" minOccurs="0">
+			<xsd:element name="TableType" type="TableTypeEnumeration" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Whether PASSENGER SPOT faces table.</xsd:documentation>
 				</xsd:annotation>
@@ -419,7 +418,7 @@
 	<!-- ====== PASSENGER VEHICLE SPOT =================================== -->
 	<xsd:element name="PassengerSpot" abstract="false" substitutionGroup="LocatableSpot">
 		<xsd:annotation>
-			<xsd:documentation>A specified seat or other space for a passenger within a given DECK SPACE. +v2.0</xsd:documentation>
+			<xsd:documentation>A designated seat or other space for a passenger within a given DECK SPACE. +v2.0.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -473,7 +472,7 @@
 	</xsd:complexType>
 	<xsd:element name="PassengerVehicleSpot" abstract="false" substitutionGroup="LocatableSpot">
 		<xsd:annotation>
-			<xsd:documentation>A specified onboard space to carry a vehicle (car, motorcycle, cycle, etc.) within a given DECK SPACE. +v2.0</xsd:documentation>
+			<xsd:documentation> A designated space to stow a passenger's luggage onboard.+v2.0.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -557,7 +556,7 @@
 	</xsd:complexType>
 	<xsd:element name="LuggageSpot" abstract="false" substitutionGroup="LocatableSpot">
 		<xsd:annotation>
-			<xsd:documentation> A specified space to stow a passenger's luggage onboard. +v2.0</xsd:documentation>
+			<xsd:documentation> A specified space to stow a passenger's luggage onboard.+v2.0.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -623,7 +622,7 @@
 	<!-- ========= TYPE OF LOCATABLE SPOT ============================================ -->
 	<xsd:element name="TypeOfLocatableSpot" abstract="false" substitutionGroup="TypeOfValue">
 		<xsd:annotation>
-			<xsd:documentation> Classification for LOCATABLE SPOT. +v2.0.</xsd:documentation>
+			<xsd:documentation>Classification for LOCATABLE SPOT. +v2.0.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
