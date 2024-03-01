@@ -16,7 +16,7 @@
 				<Contributor>CEN TC278 WG3 SG9 Team.</Contributor>
 				<Coverage>Europe</Coverage>
 				<Creator>First Drafted for NeTEx version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.  mailto:schemer@netex.org.uk</Creator>
-				<Date><Modified>2024-02-26</Modified>Add TIMETABLED PASSING TIME, PASSENGER TIME AT STOP, DATED PASSING TIME, ESTIMATED PASSING TIME,  OBSERVED PASSING TIME 
+				<Date><Modified>2024-02-26</Modified>Add TIMETABLED PASSING TIME, PASSENGER TIME AT STOP, DATED PASSING TIME, ESTIMATED PASSING TIME, OBSERVED PASSING TIME, VEHICLE PREASSIGNMENT
 				</Date>
 				<Date><Modified>2024-02-26</Modified>Add RECHARGING PLAN, RECHARGING STEP, RECHARGING POINT ASSIGNMENT
 				</Date>
@@ -3598,6 +3598,28 @@ Correct COnstraints for PointOnRoute
 		</xsd:keyref>
 		<xsd:key name="TypeOfRollingStockItem_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:TypeOfRollingStockItem"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		
+			<!-- =====VehiclePreassignment==(NM)========================== -->
+		<!-- =====VehiclePreassignment unique========================== -->
+		<xsd:unique name="VehiclePreassignment_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [VehiclePreassignment Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:VehiclePreassignment"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====VehiclePreassignment Key ========================== -->
+		<xsd:keyref name="VehiclePreassignment_KeyRef" refer="netex:VehiclePreassignment_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:VehiclePreassignmentRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="VehiclePreassignment_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:VehiclePreassignment"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
