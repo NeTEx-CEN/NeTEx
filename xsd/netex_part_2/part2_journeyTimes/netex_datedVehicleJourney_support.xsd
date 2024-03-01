@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_datedVehicleJourney_support">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_datedVehicleJourney_support">
 	<xsd:include schemaLocation="netex_serviceJourney_support.xsd"/>
 	<xsd:annotation>
 		<xsd:appinfo>
@@ -14,8 +14,7 @@
 					<Created>2014-06-16</Created>
 				</Date>
 				<Date>
-					<Modified>2014-06-16</Modified>
-					<!-- Name Space changes -->
+					<Modified>2024-03-29</Modified>Add VEHICLE PREASSIGNMENT
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -28,12 +27,9 @@
 				</Format>
 				<Identifier>{http://www.netex.org.uk/schemas/1.0/xsd/netex_part_1/part1_tacticalPlanning}netex_datedVehicleJourney_support.xsd</Identifier>
 				<Language>[ISO 639-2/B] ENG</Language>
-				<Publisher>Kizoom Software Ltd, 16 High Holborn, London WC1V 6BX </Publisher>
-				<Relation>
-					<Requires>http://www.netex.org.uk/schemas/2.0/xsd/netex_framework/netex_genericFramework/netex_pointAndLinkSequence_support.xsd</Requires>
-				</Relation>
+				<Publisher>Kizoom Software Ltd, 16 High Holborn, London WC1V 6BX </Publisher>	 
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2014</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2024</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -133,8 +129,7 @@ Rail transport, Roads and Road transport
 			<xsd:enumeration value="other"/>
 		</xsd:restriction>
 	</xsd:simpleType>
-	<!-- ===DEAD RUN====================================================== -->
-	<!-- ===Service Journey====================================================== -->
+	<!-- === DATED SPECIAL SERVICE y====================================================== -->
 	<xsd:simpleType name="DatedSpecialServiceIdType">
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of a DATED SPECIAL SERVICE.</xsd:documentation>
@@ -168,6 +163,44 @@ Rail transport, Roads and Road transport
 			<xsd:extension base="oneToManyRelationshipStructure">
 				<xsd:sequence>
 					<xsd:element ref="DatedSpecialServiceRef"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- === VEHICLE PREASSIGNMENT ===================================================== -->
+	<xsd:simpleType name="VehiclePreassignmentIdType">
+		<xsd:annotation>
+			<xsd:documentation>Type for identifier of a VEHICLE PREASSIGNMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="AssignmentIdType"/>
+	</xsd:simpleType>
+	<xsd:element name="VehiclePreassignmentRef" type="VehiclePreassignmentRefStructure" substitutionGroup="AssignmentRef">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a VEHICLE PREASSIGNMENT.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="VehiclePreassignmentRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a reference to a VEHICLE PREASSIGNMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="AssignmentRefStructure">
+				<xsd:attribute name="ref" type="VehiclePreassignmentIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Identifier of a VEHICLE PREASSIGNMENT.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="VehiclePreassignmentRefs_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list references to a VEHICLE PREASSIGNMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="oneToManyRelationshipStructure">
+				<xsd:sequence>
+					<xsd:element ref="VehiclePreassignmentRef"/>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>

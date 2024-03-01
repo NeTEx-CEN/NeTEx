@@ -2,36 +2,58 @@
 <PublicationDelivery xmlns="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2.2" xsi:schemaLocation="http://www.netex.org.uk/netex ../../../xsd/NeTEx_publication.xsd">
 	<!-- Example DECK PLAN for a Railway train with NAVIGATION PATHS to access
 
-This example provides a dense example of describing a TRAIN  with its composition of  carriages (TRAIN ELEMENTs) and detailed  layout (DECK PLANs, DECks and PASSENGER SPACEs) of the carriages. The train is a sleeper train with couchettes that have different Day and Night configurations ,a buffet and nad some car transporter carriages.
+This example provides a dense example of describing a TRAIN  with its composition of  carriages (TRAIN ELEMENTs) and detailed  layout (DECK PLANs, DECks and PASSENGER SPACEs) of the carriages. The train is a sleeper train with couchettes that have different Day and Night configurations, a buffet and   some car transporter carriages.
 
 It also describes
-
+======================================
 (1) DECK PLANs to specify vehicle seating and layout  for  a specific TRAIN (TYPE)  and its TRAIN ELEMENT (TYPES0s
 
 (1.1) Association of the DECK PLAN wih a specific SERVICE JOURNEY made up of two JOURNEY PARTs using a two different DECK PLAN  configuration (night vs day) for each journey part
 
-(1.2) Association of certain  FACILITIES  with just part of the journey (buffet)
+(1.2) Association of certain  FACILITIES  with just part of the journey (e.g. buffet, couchettes )
+======================================SITE NAVUGATION abd DECK NAVIATIONDECK  NAVIGATION 
 
-(2) Use of DECK PLANs for trip navigation
+(2) Description of a specific station at which the train is drawn up.
+(2.1) Description of a station (STOP PLACE)  woth two levels - ticket hall and platform, with both stairs and lifts (ACCESS SPACEs) to reach the platforms (QUAYs)  from the main ENTRANCE  
 
-(2.1) Alignment of the train and its individual carriages  with the platforms (QUAYs) and BOARDING POSITIONs at one  specific station for a SERVICE JOURNEY  that is using the TRAIN and its DECK PLANs.
+(2.2) Alignment of the train and its individual carriages  with the platforms (QUAYs) and BOARDING POSITIONs at one  specific station for a SERVICE JOURNEY  that is using the TRAIN and its DECK PLANs.
 
-(2.2) TRAIN ASSIGNMENts to block boarding and alighting from the rear  passenger carriages from  the  specific  QUAY  because of a short platform.
+(2.2) Use of a STOP ASSIGNMENT with TRAIN ASSIGNMENTs  specific to the station and journey  to block boarding and alighting from the rear  passenger carriages from  the  specific  QUAY  because of a short platform.
 
-(2.3) Navigation (NAVIGATION PATH) using the stairs through the one specific station to reach the train at a specific BOARDING POSITION on a specific platform (QUAY) in order  in order to access a specific carriage aligned with that BOARDING POSITION
+(2.3) Navigation (SITE NAVIGATION ) using the stairs through the one specific station to reach the train at a specific BOARDING POSITION on a specific platform (QUAY) in order  in order to access a specific carriage aligned with that BOARDING POSITION
 
-(2.4 Navigation (NAVIGATION PATH) without using steps  through the one specific station to reach the train at a specific BOARDING POSITION on a specific platform (QUAY) in order  in order to access a specifc carriage aligned with that BOARDING POSITION.
+(2.4) Navigation (SITE NAVIGATION ) without using steps  *using the lift through the one specific station to reach the train at a specific BOARDING POSITION on a specific platform (QUAY) in order  in order to access a specifc carriage aligned with that BOARDING POSITION.
 
 (2.5) Navigation on board the train from a specific carriage door  to reach a specific seat in a specific carriage (DECK NAVIGATION PATH to PASSENGER SPOT).
 
+(2.6) The STOP ASSIGNMENT is populated  with information so that the passenger n the can be informed from which direction the train will approach
 
+======================================
 (3) Use of detailed  EQUIPMENT and FACILITY attributes, including thoese describing accessibility:
 
 (3.1) The STOP PLACE ELEMENTs (ACCESS SPACEs, QUAYs, ENTRANCEs, SITE PATH LINKs, etc) are populated with EQUIPMENT and FACILITY SET definitions including appropriate attributes to describe the very detailed accessibility characteristics of the station . Note however that not all the physical dimensions are populated.
 
-(3.2) The DECK PLAN elements (PASSENGER SPACEs, DECK PATH LINKs, etc) are populated with appropriate    EQUIPMENT and FACILITY SET definitions to described teh onboard environment, including accesibility characteristics.
+(3.2) The DECK PLAN elements (PASSENGER SPACEs, DECK PATH LINKs, etc) are populated with appropriate   EQUIPMENT and FACILITY SET definitions to described the onboard environment, including accesibility characteristics.
 
 (3.3) The STOP PLACE ELEMENTs (ACCESS SPACEs, QUAYs, ENTRANCEs, SITE PATH LINKs, etc) are populated with CHECK CONSTRAINTs and CHECH CONSTRAINT DELAYs to indicate the extra time needed to allow for certain processes, e.g. use of lift.
+
+======================================
+(4) A SERVICE PATTERN  and SERVICE JOURNEY etc for the train 
+MN the journey is also shown as a set of CALLS. This is redundant, only one is needed.
+
+(4.1) SERVICE PATTERN with the side of aloghting and boarding noted for each STOP POINT IN PATTERN
+
+(4.2) A PASSENGER TIME AT STOP that allows a time to be specified  for disabled boarding, and another for car transport loading that are earlier than teh actual departure time.
+
+(4.3)  Arbitrary relabelling  of the sleeper carriages for the night time part of the journey using a TRAIN COMPONENT LABEL ASSSIGNMENT 
+ 
+======================================
+(5.) MOTORAIL loading and unloading details.  
+
+(5.1) Description of a second STOP PLACE with a PASSENGER VEHICLE ENTRANCE to drive onto a QUAY with access to a cart transporter loading wagon.
+
+(5.1)  A PASSENGER TIME at STOP that allows for   car transport loading
+======================================
 -->
 	<!-- Train and Train Makeup
 We describe DECK PLANS for three different wagon types :   a sleeper car and car transport wagon and a buffet car
@@ -39,30 +61,34 @@ We describe DECK PLANS for three different wagon types :   a sleeper car and car
 We describe  a TRAIN Comprising a buffet car, three sleeper wagons and two car transport wagons, pulled by an engine.
 The sleeper wagons and buffet are coupled  as an unsplittable rake with walk through access between carriages.
 
-The engines and car transport can be separated and not  accessibel from teh other carriages by the  public.
+The engines and car transport can be separated and not  accessible from the other carriages by the  public.
 
-When darwn up in the specifc station, because of the very short platform, only the front two passneger carriages are accessible from the platfrom..
+When drawn up in the specifuc station, because of the very short platform, only the front two passneger carriages are accessible from the platform.
 
- DECK PLANs	    	[Vehicles]=:=[Vehicles]=:=[[Sleeper]=====[Buffet ]======[Sleeper]=====[Sleeper]]=:=[Engine]
+
+The STOP ASSIGNMENT is indicated with information so that the passenger n the can be informed which side of the  the  train  the doors will open.
+
+ DECK PLANs	    	[ Loader  ]=:=[Vehicles ]=:=[ Loader ]=:=[[Sleeper]=====[Buffet ]======[ Sleeper]=====[Sleeper]]=:=[Engine]
 
 TRAIN
+====================|================================================================================================
+TRAIN COMPONENT     |   #8    |=N=|   #7    |=N=|   #6   |=N=|  #5   |=Thru=|  #4    |=Thru=| #3    |=Thru=| #2   	|===N==| #1     |
+TRAIN ELEMENT TYPE  | V622    |   | V620    |   | V622   |   | S645  |      | B766   |      | S645  |      | S645   |      | X444   |
+Orientation         |forwards |   |backwards|   |backward|   |forward|      |forward |      |forward|      |forward |      |forwards|
+Carriage Label      |  V03    |   |  V02    |   |  V01   |   |  F04  |      |  F03   |      |  F02  |      |  F01   |      | n/a    |
+Carriage Label      |  V03    |   |  V02    |   |  V01   |   |COUCHETTE-03  |  F03   |      |COUCHETTE-02  |COUCHETTE-01   | n/a    |
+====================|================================================================================================
+ROLLING STOCK ITEM  |  W8826  |   | W8156   |   | W7456  |   | B4044 |      | N7482  |      | N7955  |     | E888   |
+|                   | trailing|   |trailing |   |trailing|   |trailing|     |trailing|      |trailing|     |trailing|
+====================|===============================================================================================
+====================|===============================================================================================
+|                   | x       |   | x       |   | x      |   | N   N |      | N   N  |      | N   Y  |      | Y   Y |      | n/a    |
+Doors accessible at | none    |   | none    |   | none   |   |  none |      |  none  |      | front  |      | both  |      | n/a    |
+station765 Erewhon  | none    |   | none    |   | none   |   |(short)|      |(short) |      | left   |      | doors |      | n/a    |
 ====================|=============================================================================================
-TRAIN COMPONENT     |   #7    |=N=|   #6   |=N=|  #5   |=Thru=|  #4   |=Thru=| #3    |=Thru=| #2    |=N=| #1     |
-TRAIN ELEMENT TYPE  | V620    |   | V620   |   | S645  |      | B766  |      | S645  |      | S645  |   | X444   |
-Orientation         |backwards|   |backward|   |forward|      |forward|      |forward|      |forward|   |forwards|
-Carriage Label      |  V02    |   |  V02   |   |  F04  |      |  F03  |      |  F02  |      |  F01  |   | n/a    |
-====================|=============================================================================================
-ROLLING STOCK ITEM  |  N8756  |   | N8156  |   | N7456 |      | B4044 |      | N7482 |      | N7955 |   | E888   |
-|                   | trailing|   |trailing|   |trailing|     |trailing|     |trailing|     |trailing|  |trailing|
-====================|=============================================================================================
-====================|=============================================================================================
-|                   | x       |   | x      |   | N   N |      | N   N |      | N   Y |      | Y   Y |   | n/a    |
-Doors accessible at | none    |   | none   |   |  none |      |  none |      | front |      | both  |   | n/a    |
-station765 Erewhon  | none    |   | none   |   |(short)|      |(short)|      | left  |      | doors |   | n/a    |
-====================|=============================================================================================
-Alignment of QUAY2  | x       |   | x      |   | x   x |      | x   x |      | x   C |      | B  A  |   | x      |
-Boarding for        | x       |   | x      |   | x   x |      | x   x |      | x  01-36    13-36 0-12   |        |
-====================|=============================================================================================
+Alignment of QUAY2  | none    |   | x       |   | x      |   | x   x |      | x   x  |      | x   C  |      | B  A  |      | x      |
+Boarding for Erewhon| none    |   | x       |   | x      |   | x   x |      | x   x  |      | x 01-36|      |13-36 0-12    |        |
+====================|===============================================================================================
 -->
 	<!-- === Sleeper Wagon
 
@@ -219,7 +245,7 @@ Two decks with drive through entrance at front or rear decks
 
 TO DO add steps between decks
 
-Lower deck
+Lower deckLower deck
 ====/::::::::::::::::::::\====
 @@@/:::::::::::::::::::::\@@@|
 |@      Front Vehicle       @|
@@ -229,23 +255,23 @@ Lower deck
 @| left          right      @|             Alt config
 |@++++++++++++++++++++++++++@|     |@+++++++++++++++++++++++++++|
 |@          01              @|     |@          01-02           @|
-|@                          @|     |@                          @|
-|@                          @|     |@                          @|
-|@++++++++++++++++++++++++++@|     |@                          @|
-|@                          @|     |@                          @|
-|@          02              @|     |@                          @|
-|@                          @|     |@                          @|
-|@                          @|     |@                          @|
+|@                          @| 
+|@                          @| 
+|@++++++++++++++++++++++++++@|
+|@                          @| 
+|@          02              @|
+|@                          @| 
+|@                          @| 
 |@++++++++++++++++++++++++++@|     |@+++++++++++++++++++++++++++|
-|@                          @|     |@                          @|
-|@         03               @|     |@          03-04           @|
-|@                          @|     |@                          @|
-|@                          @|     |@                          @|
-|@++++++++++++++++++++++++++@|     |@                          @|
-|@                          @|     |@                          @|
-|@         04               @|     |@                          @|
-|@                          @|     |@                          @|
-|@                          @|     |@                          @|
+|@                          @| 
+|@          03              @|     |@          03-04           @|
+|@                          @| 
+|@                          @| 
+|@++++++++++++++++++++++++++@|
+|@                          @| 
+|@         04               @|
+|@                          @| 
+|@                          @| 
 |@++++++++++++++++++++++++++@|     |@+++++++++++++++++++++++++++|
 |@     Lower deck back      @|
 |@        Entrance          @|
@@ -259,25 +285,25 @@ Small cars only
 =====/===================\====
 |@@@/::::::::::::::::::::\@@@|
 |@   Upper deck Front       @|
-|@ 	     Entrance 	    @|
+|@         Entrance         @|
 |@                          @|
 |@                          @|
-|@    	01		    @|
-|@                          @|
-|@                          @|
-|@++++++++++++++++++++++++++@|
-|@                          @|
-|@    	02		    @|
+|@          01              @|
 |@                          @|
 |@                          @|
 |@++++++++++++++++++++++++++@|
 |@                          @|
-|@    	03		    @|
+|@          02              @|
 |@                          @|
 |@                          @|
 |@++++++++++++++++++++++++++@|
 |@                          @|
-|@    	04		    @|
+|@          03              @|
+|@                          @|
+|@                          @|
+|@++++++++++++++++++++++++++@|
+|@                          @|
+|@          04              @|
 |@                          @|
 |@                          @|
 |@    Upper deck Back       @|
@@ -286,11 +312,95 @@ Small cars only
 =====\:::::::::::::::::::/====
 
 -->
+	<!-- === Motor rail Loader Wagon === 
+ 
+Lower deck
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@|
+|@      Front Vehicle       @|
+\                            \
+\ Vehicle        Vehicle     \
+\ Entrance          Entrance \
+\ forward          forward   \
+\ left             right     \ 
+\                            \
+\                            \
+\                            \
+\                            \
+|@++++++++++++++++++++++++++@|
+|@          	 @          @| 
+|@          	 @          @|  
+|@      01    	 @  Ramp to @| 
+|@          	 @ upper    @| 
+|@         	 @   deck   @| 
+\         	 @          @| 
+\  VEhicl        @          @|  
+\  Entrance      @          @| 
+\  Middle        @          @| 
+\  left       	 @          @| 
+|@++++++++++++++++++++++++++@|
+|@                          @| 
+|@          01              @|
+|@                          @| 
+|@                          @| 
+|@++++++++++++++++++++++++++@|
+|@                          @| 
+|@          02              @|
+|@                          @| 
+|@                          @| 
+|@++++++++++++++++++++++++++@|
+|@     Lower deck back      @|
+|@        Entrance          @|
+|@@@\::::::::::::::::::::/@@@|
+=====\:::::::::::::::::::/====
+
+
+Upper deck with drive through entrance at front and rear
+Small cars only
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@|
+|@      Front Vehicle       @|
+|@                          @| 
+|@                          @| 
+|@                          @| 
+|@                          @| 
+|@                          @| 
+|@                          @| 
+|@                          @| 
+|@                          @| 
+|@+++++++++++++++@::::::::::@|
+|@          	 @          @| 
+|@          	 @          @|  
+|@          	 @ Ramp from@| 
+|@          	 @ lower    @| 
+|@          	 @   deck   @| 
+|@          	 @          @| 
+|@          	 @          @|  
+|@          	 @          @| 
+|@          	 @          @| 
+|@          	 @          @| 
+|@++++++++++++++++++++++++++@|
+|@                          @| 
+|@          01              @|
+|@                          @| 
+|@                          @| 
+|@++++++++++++++++++++++++++@|
+|@                          @| 
+|@         012              @|
+|@                          @| 
+|@                          @| 
+|@++++++++++++++++++++++++++@|
+|@     Upper deck back      @|
+|@        Entrance          @|
+|@@@\::::::::::::::::::::/@@@|
+=====\:::::::::::::::::::/====
+
+-->
 	<!-- === Stop boarding position and Navigation paths for accessing sleeper wagon ===
 
 
-The Train hasa default
-We assign the deck plans to a specific SERVICE JOURNEY , with different configuratiosn for each journey part
+The Train has a default deck plan. 
+
+We further assign the deck plans to a specific SERVICE JOURNEY , with different configurations for each journey part
 
 A PASSENGER STOP ASSIGNMENT with individual TRAIN STOP ASSIGNMENTs specify which carriages are aligned with which BOARDING POSITION
 
@@ -305,7 +415,7 @@ NAVIGATION PATH + DECK NAVIGATION PATH to reach a seat
  ===========/:::::::X:::::\===========v==================================================================|      |   + + + + + + + + + + + + +
 |=                  v          [Exit]                                             |:  Lift to           =|      | +++++++++++++++++++++++++++++++++
 |=    ERewhon Hbf   v                         Wheelchair NAVIGATION PATH          /  Q1 and Q2          =|      |   + + + + + + + + + + + + +
-|=                  X >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> x \ x >>>>>>.           =|      | +++++++++++++++++++++++++++++++++
+|=        765       X >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> x \ x >>>>>>.           =|      | +++++++++++++++++++++++++++++++++
 |=   STOP PLACE     v                                                             |:         v          =|      |   + + + + + + + + + + + + +
 |=  Ticekt machines v                               ========================================-\::/========|      =============================. . .
 |=                  v           NAVIGATION PATH      : |||||||||||     :                       v [Exit]  :           QUAY 1  (SSP_0015W)        X
@@ -334,23 +444,49 @@ The train reverse in  the station and departs, oriented backwards to the right
       <<<< Arrival Direction        forwards											forwards
       >>>> Departure DIrection      backwards										 backwards
 -->
+	<!-- MOTOR RTAIL BOARDING
+
+This shows just the car boarding positions  . Coul als have partking baps, quing are etc etc 
+                     
+ ==============================v===============================:::::::::::::::::::::===============|      
+|=                  									 									  
+|=  PAS de ville                 																			   |  
+|=        123                     																			   |  
+|=   STOP PLACE                   																			   |  
+
+|======================= 
+|=...........................|..................................|...... 
+|=                                                      Boarding Position A     |    Boarding Position B           |      
+|====================================================================================================================================== 
+
+|@@@@@@@@@@@@@@@@:|. . |@@@@@@@@@@@@@@@@@@@@@@@@@right@@@@@@@@@@@@@@@@@/:::::::::::@@@@@@@@/:::::::::::@@@@@@@
+ + + @|          @\::/|@                                                                                     @
+ + + @|          =::- |@                                                                                     @
+ + + @|          =::- |@                                                                                     @
+ + + @|          =::-                                                    @@@@@@@@@@@@@@@@@@@@@@@@            @
+ + + @|          =::-                                                   :     Ramp to upper deck :           @
+ + + @|          =::-                                                   :     Ramp to upper deck :           @
+ >>>> @@@@@@@@@@@  |@@@@@____@@@@@@@@@@@@@@@@@@@@@@@@. . . @@@@@@@@@@____@@@@|  |@@@@____@@@@@@@@@@@@@@@@@@@@@@ 
+                                   left
+
+-->
 	<!-- Service Journey and parts
 
  (intermediate stops ommitted)
-|=================================================================================|
-| SCHEDULED STOP POINT  | Dep   | SERVICE JOURNEY | JOURNEY PART   | Train Orientation Note
-|=================================================================================|
-| stop_001 Pas de Ville |d18:30 |    x            | Part 1 (Day)   | forwards     |
-|          .......      |       |    |            | Part 1 (Day)   | forwards     |
-|                       |       |   \|/           | Part 1 (Day)   | forwards     |
-| stop_015 Erewhon Hbf  |a20:30 |    X            | Part 1 (Day)   | forwards     | Connect to | stop_015 Erewhon Hbf  |d20:30 |
-|          .......      |d20:45 |    |            | Part 2 (Night) | backwards    | Reverses   |          .......      |d20:45 |
-|                       |       |   \|/           | Part 2 (Night) | backwards    |            | stop_101 Novado       |a06:50 |
-| stop_017 Cockagyne    |d11:45 |    X            | Part 2 (Night) | backwards    |
-|          .......      |d11:50 |    |            | Part 2 (Night) | backwards    |
-|                       |       |   \|/           | Part 2 (Night) | backwards    |
-| stop_021 Keinstadt    |a06:50 |    X            | Part 2 (Night) | backwards    |
-|=================================================================================|
+|====================================================================================|
+|  | SCHEDULED STOP POINT  | Dep   | SERVICE JOURNEY | JOURNEY PART   | Train Orientation Note
+|==|=================================================================================|
+|01| stop_001 Pas de Ville |d18:30 |    x            | Part 1 (Day)   | forwards     |
+|  |          .......      |       |    |            | Part 1 (Day)   | forwards     |
+|  |                       |       |   \|/           | Part 1 (Day)   | forwards     |
+|07| stop_015 Erewhon Hbf  |a20:30 |    X            | Part 1 (Day)   | forwards     | Connect to | stop_015 Erewhon Hbf  |d20:30 |
+|  |           .......     |d20:45 |    |            | Part 2 (Night) | backwards    | Reverses   |          .......      |d20:45 |
+|  |                       |       |   \|/           | Part 2 (Night) | backwards    |            | stop_101 Novado       |a06:50 |
+|12| stop_017 Cockagyne    |d23:45 |    X            | Part 2 (Night) | backwards    |
+|  |           .......     |d23:50 |    |            | Part 2 (Night) | backwards    |
+|  |                       |       |   \|/           | Part 2 (Night) | backwards    |
+|18|  stop_021 Keinstadt   |a06:50 |    X            | Part 2 (Night) | backwards    | Next Day
+|====================================================================================|
 (C) CEN 2024
 -->
 	<PublicationTimestamp>2020-12-17T09:30:47.0Z</PublicationTimestamp>
@@ -409,7 +545,7 @@ The train reverse in  the station and departs, oriented backwards to the right
 					<!-- ==== EQUIPMENT ==== -->
 					<equipments>
 						<!-- === Door  Related === -->
-						<EntranceEquipment version="any" id="rc:EE-external_door">
+						<EntranceEquipment version="any" id="rc:EE-external_passenger_door">
 							<Name>Passenger Train door</Name>
 							<SafeForGuideDog>true</SafeForGuideDog>
 							<DoorType>hingedSingle</DoorType>
@@ -433,12 +569,17 @@ The train reverse in  the station and departs, oriented backwards to the right
 							<WheelchairPassable>true</WheelchairPassable>
 							<WheelchairUnaided>true</WheelchairUnaided>
 						</EntranceEquipment>
-						<EntranceEquipment version="any" id="rc:EE-ctw_external_door">
-							<Name>Passenger Train dor on car transporter</Name>
+						<EntranceEquipment version="any" id="rc:EE-ctm_external_passenger_door">
+							<Name>Passenger Train door on car transporter</Name>
 							<SafeForGuideDog>false</SafeForGuideDog>
 							<DoorType>hingedSingle</DoorType>
 							<AutomaticDoor>false</AutomaticDoor>
 							<WheelchairPassable>false</WheelchairPassable>
+						</EntranceEquipment>
+						<EntranceEquipment version="any" id="rc:EE-ctl_external_vehicle_door">
+							<Name>Vehicle Train door on car transporter</Name>
+							<DoorType>dropDownShutter </DoorType>
+							<AutomaticDoor>false</AutomaticDoor>
 						</EntranceEquipment>
 						<EntranceSensor version="any" id="rc:ES-external_door_sensor">
 							<Name>External Door sensor</Name>
@@ -455,6 +596,14 @@ The train reverse in  the station and departs, oriented backwards to the right
 							<Name>External Door sensor</Name>
 							<CommunicationMethod>cable</CommunicationMethod>
 						</EntranceSensor>
+						<RampEquipment version="any" id="rc:RE-ctl_car_ramp">
+							<Name>Car ramo on car transporter</Name>
+							<MaximumLoad>5000</MaximumLoad>
+							<Gradient>20</Gradient>
+							<GradientType>medium</GradientType>
+							<Temporary>false</Temporary>
+							<SuitableForCycles>false</SuitableForCycles>
+						</RampEquipment>
 						<!-- seating_area Related -->
 						<SeatEquipment version="any" id="rc:SEq-couchette_single_bed">
 							<Name>Bottom seat in couchette</Name>
@@ -625,7 +774,7 @@ The train reverse in  the station and departs, oriented backwards to the right
 							<CateringFacilityList>buffet  </CateringFacilityList>
 						</ServiceFacilitySet>
 						<!-- Car Transporter -->
-						<ServiceFacilitySet version="any" id="rc:SFS-ctw_general_facilities">
+						<ServiceFacilitySet version="any" id="rc:SFS-ctm_general_facilities">
 							<Description>General facilities</Description>
 							<CarServiceFacilityList>recharging</CarServiceFacilityList>
 						</ServiceFacilitySet>
@@ -711,8 +860,9 @@ The train reverse in  the station and departs, oriented backwards to the right
 								</TrainComponent>
 								<TrainComponent version="any" id="rco:TC-rail_sleeper_train_1" order="6">
 									<Label>V01</Label>
-									<TrailingElementTypeRef version="any" ref="rco:TriET-V620"/>
-									<OperationalOrientation>backwards</OperationalOrientation>
+									<Description>Car loader/unloader</Description>
+									<TrailingElementTypeRef version="any" ref="rco:TriET-V622"/>
+									<OperationalOrientation>forwards</OperationalOrientation>
 									<ForwardCoupling>
 										<Splittable>true</Splittable>
 										<ThroughAccess>noThroughAccess</ThroughAccess>
@@ -720,11 +870,22 @@ The train reverse in  the station and departs, oriented backwards to the right
 								</TrainComponent>
 								<TrainComponent version="any" id="rco:TC-rail_sleeper_train_1" order="7">
 									<Label>V02</Label>
+									<Description>Car transporter</Description>
 									<TrailingElementTypeRef version="any" ref="rco:TriET-V620"/>
 									<OperationalOrientation>backwards</OperationalOrientation>
 									<ForwardCoupling>
 										<Splittable>true</Splittable>
-										<ThroughAccess>noThroughAccess</ThroughAccess>
+										<ThroughAccess>throughAccessWhenLoading</ThroughAccess>
+									</ForwardCoupling>
+								</TrainComponent>
+								<TrainComponent version="any" id="rco:TC-rail_sleeper_train_1" order="8">
+									<Label>V03</Label>
+									<Description>Car loader/unloader</Description>
+									<TrailingElementTypeRef version="any" ref="rco:TriET-V622"/>
+									<OperationalOrientation>backwards</OperationalOrientation>
+									<ForwardCoupling>
+										<Splittable>true</Splittable>
+										<ThroughAccess>throughAccessWhenLoading</ThroughAccess>
 									</ForwardCoupling>
 								</TrainComponent>
 							</components>
@@ -759,10 +920,16 @@ The train reverse in  the station and departs, oriented backwards to the right
 							<DeckPlanRef version="any" ref="rc:DP-bfc_buffet_car"/>
 						</TrailingElementType>
 						<TrailingElementType version="any" id="rco:TriET-V620">
-							<Name>Vehicle Wagon</Name>
-							<TrainElementType>sleeperCarriage</TrainElementType>
+							<Name>Vehicle Wagon - middle</Name>
+							<TrainElementType>carTransporter</TrainElementType>
 							<FareClasses>any</FareClasses>
-							<DeckPlanRef version="any" ref="rc:DP-ctw_car_transporter_wagon"/>
+							<DeckPlanRef version="any" ref="rc:DP-ctm_car_transporter_wagon_middle"/>
+						</TrailingElementType>
+						<TrailingElementType version="any" id="rco:TriET-V622">
+							<Name>Vehicle Wagon - loader</Name>
+							<TrainElementType>carTransporter</TrainElementType>
+							<FareClasses>any</FareClasses>
+							<DeckPlanRef version="any" ref="rc:DP-ctl_car_transporter_wagon_loader"/>
 						</TrailingElementType>
 					</trainElementTypes>
 					<rollingStockInventories>
@@ -773,13 +940,17 @@ The train reverse in  the station and departs, oriented backwards to the right
 									<Name>Engine</Name>
 									<TractiveElementTypeRef version="any" ref="rco:TraET-X444"/>
 								</TractiveRollingStockItem>
+								<TrailingRollingStockItem version="any" id="rco:TriRSI-W8266">
+									<Name>car transporter = loader</Name>
+									<TrailingElementTypeRef version="any" ref="rco:TriET-V622"/>
+								</TrailingRollingStockItem>
 								<TrailingRollingStockItem version="any" id="rco:TriRSI-W8156">
-									<Name>car transporter</Name>
+									<Name>car transporter - middle</Name>
 									<TrailingElementTypeRef version="any" ref="rco:TriET-V620"/>
 								</TrailingRollingStockItem>
 								<TrailingRollingStockItem version="any" id="rco:TriRSI-W8756">
-									<Name>car transporter</Name>
-									<TrailingElementTypeRef version="any" ref="rco:TriET-V620"/>
+									<Name>car transporter = loader</Name>
+									<TrailingElementTypeRef version="any" ref="rco:TriET-V622"/>
 								</TrailingRollingStockItem>
 								<TrailingRollingStockItem version="any" id="rco:TriRSI-N7955">
 									<Name>Sleeper</Name>
@@ -841,7 +1012,7 @@ The train reverse in  the station and departs, oriented backwards to the right
 													<actualVehicleEquipments>
 														<ActualVehicleEquipment version="any" id="rc:AVE-slw_deck_1@forward_external_left@door">
 															<Units>1</Units>
-															<EntranceEquipmentRef version="any" ref="rc:EE-external_door"/>
+															<EntranceEquipmentRef version="any" ref="rc:EE-external_passenger_door"/>
 														</ActualVehicleEquipment>
 														<ActualVehicleEquipment version="any" id="rc:AVE-slw_deck_1@forward_external_left@sensor">
 															<Units>1</Units>
@@ -873,7 +1044,7 @@ The train reverse in  the station and departs, oriented backwards to the right
 													<actualVehicleEquipments>
 														<ActualVehicleEquipment version="any" id="rc:AVE-slw_deck_1@forward_external@door">
 															<Units>1</Units>
-															<EntranceEquipmentRef version="any" ref="rc:EE-external_door"/>
+															<EntranceEquipmentRef version="any" ref="rc:EE-external_passenger_door"/>
 														</ActualVehicleEquipment>
 														<ActualVehicleEquipment version="any" id="rc:AVE-slw_deck_1@forward_external@sensor">
 															<Units>1</Units>
@@ -902,7 +1073,7 @@ The train reverse in  the station and departs, oriented backwards to the right
 													<actualVehicleEquipments>
 														<ActualVehicleEquipment version="any" id="rc:AVE-slw_deck_1@rear_external_left@door">
 															<Units>1</Units>
-															<EntranceEquipmentRef version="any" ref="rc:EE-external_door"/>
+															<EntranceEquipmentRef version="any" ref="rc:EE-external_passenger_door"/>
 														</ActualVehicleEquipment>
 														<ActualVehicleEquipment version="any" id="rc:AVE-slw_deck_1@rear_external_left@sensor">
 															<EntranceSensorRef version="any" ref="rc:ES-external_door_sensor"/>
@@ -933,7 +1104,7 @@ The train reverse in  the station and departs, oriented backwards to the right
 													<actualVehicleEquipments>
 														<ActualVehicleEquipment version="any" id="rc:AVE-slw_deck_1@rear_external_right@door">
 															<Units>1</Units>
-															<EntranceEquipmentRef version="any" ref="rc:EE-external_door"/>
+															<EntranceEquipmentRef version="any" ref="rc:EE-external_passenger_door"/>
 														</ActualVehicleEquipment>
 														<ActualVehicleEquipment version="any" id="rc:AVE-slw_deck_1@rear_external_right@sensor">
 															<EntranceSensorRef version="any" ref="rc:ES-external_door_sensor"/>
@@ -1665,7 +1836,7 @@ The train reverse in  the station and departs, oriented backwards to the right
 											</passengerSpots>
 										</PassengerSpace>
 										<PassengerSpace version="any" id="rc:PS-slw_deck_1@compartment_4-2nd_class">
-											<Label>C4&gt;</Label>
+											<Label>C4</Label>
 											<Name>Compartment 4 : Seats 12-20</Name>
 											<Description>2nd class configurable as 2 x 4 seats or 2 x 3 bunk berths</Description>
 											<ServiceFacilitySetRef version="any" ref="rc:SFS-slw_2nd_class_facilities"/>
@@ -2538,50 +2709,50 @@ The train reverse in  the station and departs, oriented backwards to the right
 								</Deck>
 							</decks>
 						</DeckPlan>
-						<DeckPlan version="any" id="rc:DP-ctw_car_transporter_wagon">
+						<DeckPlan version="any" id="rc:DP-ctm_car_transporter_wagon_middle">
 							<Name>Rail sleeper wagon</Name>
-							<Description>Double decker wagon drive through eaxis from front and back. Passenger doors on side </Description>
+							<Description>Double decker wagon drive through axis from front and back. Passenger doors on side </Description>
 							<configurationConditions>
-								<ValidityCondition version="any" id="rc:VC-ctw_deck_1@as_single_space">
+								<ValidityCondition version="any" id="rc:VC-ctm_deck_1@as_single_space">
 									<Name>If One vehicle per space</Name>
 								</ValidityCondition>
-								<ValidityCondition version="any" id="rc:VC-ctw_deck_1@as_double_space">
+								<ValidityCondition version="any" id="rc:VC-ctm_deck_1@as_double_space">
 									<Name>If Two  vehiclesper space</Name>
 								</ValidityCondition>
 							</configurationConditions>
 							<deckLevels>
-								<DeckLevel version="any" id="rc:Lv-ctw_@1">
+								<DeckLevel version="any" id="rc:Lv-ctm_@1">
 									<Label>Lower</Label>
 									<Name>Lower vehicle deck</Name>
 									<PublicUse>true</PublicUse>
 								</DeckLevel>
-								<DeckLevel version="any" id="rc:Lv-ctw_@2">
+								<DeckLevel version="any" id="rc:Lv-ctm_@2">
 									<Label>Upper</Label>
 									<Name>Lower vehicle deck</Name>
 									<PublicUse>true</PublicUse>
 								</DeckLevel>
 							</deckLevels>
 							<decks>
-								<Deck version="any" id="rc:Dk-ctw_deck_1">
+								<Deck version="any" id="rc:Dk-ctm_deck_1">
 									<Name>Car transporter Waggon - lower deck</Name>
 									<Label>W1245</Label>
-									<DeckLevelRef version="any" ref="rc:Lv-ctw_@1"/>
+									<DeckLevelRef version="any" ref="rc:Lv-ctm_@1"/>
 									<deckSpaces>
-										<PassengerSpace version="any" id="rc:PS-ctw_deck_1@vehicles">
+										<PassengerSpace version="any" id="rc:PS-ctm_deck_1@vehicles">
 											<Name>Car area</Name>
-											<ServiceFacilitySetRef version="any" ref="rc:SFS-ctw_general_facilities"/>
+											<ServiceFacilitySetRef version="any" ref="rc:SFS-ctm_general_facilities"/>
 											<SmokingAllowed>false</SmokingAllowed>
 											<deckEntrances>
 												<!-- external doors to  carriage -->
-												<PassengerEntrance version="any" id="rc:PE-ctw_deck_1@forward_external_left">
+												<PassengerEntrance version="any" id="rc:PE-ctm_deck_1@forward_external_left">
 													<Label>D1</Label>
 													<Name>Passenger access left Door</Name>
 													<Width>1.00</Width>
 													<Height>1.90</Height>
 													<actualVehicleEquipments>
-														<ActualVehicleEquipment version="any" id="rc:AVE-ctw_deck_1@forward_external_left@door">
+														<ActualVehicleEquipment version="any" id="rc:AVE-ctm_deck_1@forward_external_left@door">
 															<Units>1</Units>
-															<EntranceEquipmentRef version="any" ref="rc:EE-ctw_external_door"/>
+															<EntranceEquipmentRef version="any" ref="rc:EE-ctm_external_passenger_door"/>
 														</ActualVehicleEquipment>
 													</actualVehicleEquipments>
 													<PublicUse>true</PublicUse>
@@ -2592,15 +2763,15 @@ The train reverse in  the station and departs, oriented backwards to the right
 													<HasDoor>true</HasDoor>
 													<IsAutomatic>false</IsAutomatic>
 												</PassengerEntrance>
-												<PassengerEntrance version="any" id="rc:PE-ctw_deck_1@forward_external_right">
+												<PassengerEntrance version="any" id="rc:PE-ctm_deck_1@forward_external_right">
 													<Label>D2</Label>
-													<Name>&gt;Passenger access Right  External  Door</Name>
+													<Name> Passenger access Right  External  Door</Name>
 													<Width>1.00</Width>
 													<Height>1.90</Height>
 													<actualVehicleEquipments>
-														<ActualVehicleEquipment version="any" id="rc:AVE-ctw_deck_1@forward_external_right@door">
+														<ActualVehicleEquipment version="any" id="rc:AVE-ctm_deck_1@forward_external_right@door">
 															<Units>1</Units>
-															<EntranceEquipmentRef version="any" ref="rc:EE-external_door"/>
+															<EntranceEquipmentRef version="any" ref="rc:EE-external_passenger_door"/>
 														</ActualVehicleEquipment>
 													</actualVehicleEquipments>
 													<PublicUse>true</PublicUse>
@@ -2613,7 +2784,7 @@ The train reverse in  the station and departs, oriented backwards to the right
 													<IsAutomatic>false</IsAutomatic>
 												</PassengerEntrance>
 												<!-- end doors to next carriage -->
-												<DeckVehicleEntrance version="any" id="rc:ctw_deck_1@front">
+												<DeckVehicleEntrance version="any" id="rc:DVE-ctm_deck_1@front">
 													<Name>Front End entrance</Name>
 													<Width>4.00</Width>
 													<Height>5.00</Height>
@@ -2622,7 +2793,7 @@ The train reverse in  the station and departs, oriented backwards to the right
 													<DeckEntranceType>communicating</DeckEntranceType>
 													<HasDoor>false</HasDoor>
 												</DeckVehicleEntrance>
-												<DeckVehicleEntrance version="any" id="rc:ctw_deck_1@back">
+												<DeckVehicleEntrance version="any" id="rc:DVE-ctm_deck_1@back">
 													<Name>Back End entrance</Name>
 													<Width>4.00</Width>
 													<Height>5.00</Height>
@@ -2633,35 +2804,35 @@ The train reverse in  the station and departs, oriented backwards to the right
 												</DeckVehicleEntrance>
 											</deckEntrances>
 											<deckEntranceUsages>
-												<DeckEntranceUsage version="any" id="rc:DEU-ctw_deck_1@forward_external_left">
+												<DeckEntranceUsage version="any" id="rc:DEU-ctm_deck_1@forward_external_left">
 													<EntranceUsageType>entryAndExit</EntranceUsageType>
 													<EntranceSetting>shut</EntranceSetting>
 													<ControlledLocking>false</ControlledLocking>
-													<PassengerEntranceRef version="any" ref="rc:PE-ctw_deck_1@forward_external_left"/>
+													<PassengerEntranceRef version="any" ref="rc:PE-ctm_deck_1@forward_external_left"/>
 												</DeckEntranceUsage>
-												<DeckEntranceUsage version="any" id="rc:DEU-ctw_deck_1@forward_external_right">
+												<DeckEntranceUsage version="any" id="rc:DEU-ctm_deck_1@forward_external_right">
 													<EntranceUsageType>entryAndExit</EntranceUsageType>
 													<EntranceSetting>shut</EntranceSetting>
 													<ControlledLocking>false</ControlledLocking>
-													<PassengerEntranceRef version="any" ref="rc:PE-ctw_deck_1@forward_external_right"/>
+													<PassengerEntranceRef version="any" ref="rc:PE-ctm_deck_1@forward_external_right"/>
 												</DeckEntranceUsage>
 											</deckEntranceUsages>
 											<TotalCapacity>4</TotalCapacity>
 											<deckSpaceCapacities>
-												<DeckSpaceCapacity version="any" id="rc:DSC-ctw_deck_1@vehicles@capacity_small_car">
+												<DeckSpaceCapacity version="any" id="rc:DSC-ctm_deck_1@vehicles@capacity_small_car">
 													<LocatableSpotType>vehicleSpace</LocatableSpotType>
 													<Capacity>4</Capacity>
 												</DeckSpaceCapacity>
-												<DeckSpaceCapacity version="any" id="rc:DSC-ctw_deck_1@vehicles@capacity_large_car">
+												<DeckSpaceCapacity version="any" id="rc:DSC-ctm_deck_1@vehicles@capacity_large_car">
 													<LocatableSpotType>vehicleSpace</LocatableSpotType>
 													<Capacity>2</Capacity>
 												</DeckSpaceCapacity>
 											</deckSpaceCapacities>
 											<StandingAllowed>true</StandingAllowed>
 											<passengerVehicleSpots>
-												<PassengerVehicleSpot version="any" id="rc:ctw_deck_1@vehicles@V1">
+												<PassengerVehicleSpot version="any" id="rc:PVS-ctm_deck_1@vehicles@V1">
 													<validityConditions>
-														<ValidityConditionRef version="any" ref="rc:VC-ctw_deck_1@as_single_space"/>
+														<ValidityConditionRef version="any" ref="rc:VC-ctm_deck_1@as_single_space"/>
 													</validityConditions>
 													<Label>V1</Label>
 													<Width>5.0</Width>
@@ -2669,9 +2840,9 @@ The train reverse in  the station and departs, oriented backwards to the right
 													<Height>3.40</Height>
 													<VehicleCategories>motorcycle microCar miniCar smallCar  largeCar</VehicleCategories>
 												</PassengerVehicleSpot>
-												<PassengerVehicleSpot version="any" id="rc:ctw_deck_1@vehicles@V2">
+												<PassengerVehicleSpot version="any" id="rc:PVS-ctm_deck_1@vehicles@V2">
 													<validityConditions>
-														<ValidityConditionRef version="any" ref="rc:VC-ctw_deck_1@as_single_space"/>
+														<ValidityConditionRef version="any" ref="rc:VC-ctm_deck_1@as_single_space"/>
 													</validityConditions>
 													<Label>V2</Label>
 													<Width>5.0</Width>
@@ -2679,9 +2850,9 @@ The train reverse in  the station and departs, oriented backwards to the right
 													<Height>3.40</Height>
 													<VehicleCategories>motorcycle microCar miniCar smallCar  largeCar</VehicleCategories>
 												</PassengerVehicleSpot>
-												<PassengerVehicleSpot version="any" id="rc:ctw_deck_1@vehicles@V1+2">
+												<PassengerVehicleSpot version="any" id="rc:PVS-ctm_deck_1@vehicles@V1+2">
 													<validityConditions>
-														<ValidityConditionRef version="any" ref="rc:VC-ctw_deck_1@as_double_space"/>
+														<ValidityConditionRef version="any" ref="rc:VC-ctm_deck_1@as_double_space"/>
 													</validityConditions>
 													<Label>V1-2</Label>
 													<Width>5.0</Width>
@@ -2690,9 +2861,9 @@ The train reverse in  the station and departs, oriented backwards to the right
 													<VehicleCategories> largeCar camperCar minibus  carWithTrailer</VehicleCategories>
 												</PassengerVehicleSpot>
 												<!--  v2 and 4 -->
-												<PassengerVehicleSpot version="any" id="rc:ctw_deck_1@vehicles@V3">
+												<PassengerVehicleSpot version="any" id="rc:PVS-ctm_deck_1@vehicles@V3">
 													<validityConditions>
-														<ValidityConditionRef version="any" ref="rc:VC-ctw_deck_1@as_single_space"/>
+														<ValidityConditionRef version="any" ref="rc:VC-ctm_deck_1@as_single_space"/>
 													</validityConditions>
 													<Label>V3</Label>
 													<Width>5.0</Width>
@@ -2700,9 +2871,9 @@ The train reverse in  the station and departs, oriented backwards to the right
 													<Height>3.40</Height>
 													<VehicleCategories>motorcycle microCar miniCar smallCar  largeCar</VehicleCategories>
 												</PassengerVehicleSpot>
-												<PassengerVehicleSpot version="any" id="rc:ctw_deck_1@vehicles@V4">
+												<PassengerVehicleSpot version="any" id="rc:PVS-ctm_deck_1@vehicles@V4">
 													<validityConditions>
-														<ValidityConditionRef version="any" ref="rc:VC-ctw_deck_1@as_single_space"/>
+														<ValidityConditionRef version="any" ref="rc:VC-ctm_deck_1@as_single_space"/>
 													</validityConditions>
 													<Label>V4</Label>
 													<Width>5.0</Width>
@@ -2710,9 +2881,9 @@ The train reverse in  the station and departs, oriented backwards to the right
 													<Height>3.40</Height>
 													<VehicleCategories>motorcycle microCar miniCar smallCar  largeCar</VehicleCategories>
 												</PassengerVehicleSpot>
-												<PassengerVehicleSpot version="any" id="rc:ctw_deck_1@vehicles@V3+4">
+												<PassengerVehicleSpot version="any" id="rc:PVS-ctm_deck_1@vehicles@V3+4">
 													<validityConditions>
-														<ValidityConditionRef version="any" ref="rc:VC-ctw_deck_1@as_double_space"/>
+														<ValidityConditionRef version="any" ref="rc:VC-ctm_deck_1@as_double_space"/>
 													</validityConditions>
 													<Label>V3-4</Label>
 													<Width>5.0</Width>
@@ -2724,18 +2895,18 @@ The train reverse in  the station and departs, oriented backwards to the right
 										</PassengerSpace>
 									</deckSpaces>
 								</Deck>
-								<Deck version="any" id="rc:Dk-ctw_deck_2">
+								<Deck version="any" id="rc:Dk-ctm_deck_2">
 									<Name>Car transporter Waggon - upper deck</Name>
 									<Label>W1245</Label>
-									<DeckLevelRef version="any" ref="rc:Lv-ctw_@2"/>
+									<DeckLevelRef version="any" ref="rc:Lv-ctm_@2"/>
 									<deckSpaces>
-										<PassengerSpace version="any" id="rc:PS-ctw_deck_2@vehicles">
+										<PassengerSpace version="any" id="rc:PS-ctm_deck_2@vehicles">
 											<Name>Car area</Name>
-											<ServiceFacilitySetRef version="any" ref="rc:SFS-ctw_general_facilities"/>
+											<ServiceFacilitySetRef version="any" ref="rc:SFS-ctm_general_facilities"/>
 											<SmokingAllowed>false</SmokingAllowed>
 											<deckEntrances>
 												<!-- end doors to next carriage -->
-												<DeckVehicleEntrance version="any" id="rc:ctw_deck_2@front">
+												<DeckVehicleEntrance version="any" id="rc:DVE-ctm_deck_2@front">
 													<Name>Front End entrance</Name>
 													<Width>4.00</Width>
 													<Height>5.00</Height>
@@ -2744,7 +2915,7 @@ The train reverse in  the station and departs, oriented backwards to the right
 													<DeckEntranceType>communicating</DeckEntranceType>
 													<HasDoor>false</HasDoor>
 												</DeckVehicleEntrance>
-												<DeckVehicleEntrance version="any" id="rc:ctw_deck_2@back">
+												<DeckVehicleEntrance version="any" id="rc:DVE-ctm_deck_2@back">
 													<Name>Back End entrance</Name>
 													<Width>4.00</Width>
 													<Height>5.00</Height>
@@ -2756,35 +2927,35 @@ The train reverse in  the station and departs, oriented backwards to the right
 											</deckEntrances>
 											<TotalCapacity>4</TotalCapacity>
 											<deckSpaceCapacities>
-												<DeckSpaceCapacity version="any" id="rc:DSC-ctw_deck_2@vehicles@capacity_small_car">
+												<DeckSpaceCapacity version="any" id="rc:DSC-ctm_deck_2@vehicles@capacity_small_car">
 													<LocatableSpotType>vehicleSpace</LocatableSpotType>
 													<Capacity>4</Capacity>
 												</DeckSpaceCapacity>
 											</deckSpaceCapacities>
 											<StandingAllowed>true</StandingAllowed>
 											<passengerVehicleSpots>
-												<PassengerVehicleSpot version="any" id="rc:ctw_deck_2@vehicles@V1">
+												<PassengerVehicleSpot version="any" id="rc:PVS-ctm_deck_2@vehicles@V1">
 													<Label>V1</Label>
 													<Width>5.0</Width>
 													<Length>9.0</Length>
 													<Height>3.0</Height>
 													<VehicleCategories>motorcycle microCar miniCar smallCar  largeCar</VehicleCategories>
 												</PassengerVehicleSpot>
-												<PassengerVehicleSpot version="any" id="rc:ctw_deck_2@vehicles@V2">
+												<PassengerVehicleSpot version="any" id="rc:PVS-ctm_deck_2@vehicles@V2">
 													<Label>V2</Label>
 													<Width>5.0</Width>
 													<Length>9.0</Length>
 													<Height>3.0</Height>
 													<VehicleCategories>motorcycle microCar miniCar smallCar  largeCar</VehicleCategories>
 												</PassengerVehicleSpot>
-												<PassengerVehicleSpot version="any" id="rc:ctw_deck_2@vehicles@V3">
+												<PassengerVehicleSpot version="any" id="rc:PVS-ctm_deck_2@vehicles@V3">
 													<Label>V3</Label>
 													<Width>5.0</Width>
 													<Length>9.0</Length>
 													<Height>3.0</Height>
 													<VehicleCategories>motorcycle microCar miniCar smallCar  largeCar</VehicleCategories>
 												</PassengerVehicleSpot>
-												<PassengerVehicleSpot version="any" id="rc:ctw_deck_2@vehicles@V4">
+												<PassengerVehicleSpot version="any" id="rc:PVS-ctm_deck_2@vehicles@V4">
 													<Label>V4</Label>
 													<Width>5.0</Width>
 													<Length>9.0</Length>
@@ -2792,6 +2963,253 @@ The train reverse in  the station and departs, oriented backwards to the right
 													<VehicleCategories>motorcycle microCar miniCar smallCar  largeCar</VehicleCategories>
 												</PassengerVehicleSpot>
 												<!--  v2 and 4 -->
+											</passengerVehicleSpots>
+										</PassengerSpace>
+									</deckSpaces>
+								</Deck>
+							</decks>
+						</DeckPlan>
+						<DeckPlan version="any" id="rc:DP-ctl_car_transporter_wagon_loader">
+							<Name>Rail sleeper wagon</Name>
+							<Description>Double decker loader wagon drive Side entrances for vehicles, ramp, end entrance for drive through Passenger doors on side </Description>
+							<deckLevels>
+								<DeckLevel version="any" id="rc:DL-ctl_@1">
+									<Label>Lower</Label>
+									<Name>Lower vehicle deck</Name>
+									<PublicUse>true</PublicUse>
+								</DeckLevel>
+								<DeckLevel version="any" id="rc:DL-ctl_@2">
+									<Label>Upper</Label>
+									<Name>Lower vehicle deck</Name>
+									<PublicUse>true</PublicUse>
+								</DeckLevel>
+							</deckLevels>
+							<decks>
+								<Deck version="any" id="rc:Dk-ctl_deck_1">
+									<Name>Car transporter Waggon - lower deck</Name>
+									<Label>W1246</Label>
+									<DeckLevelRef version="any" ref="rc:DL-ctl_@1"/>
+									<deckSpaces>
+										<PassengerSpace version="any" id="rc:PS-ctl_deck_1@vehicles">
+											<Name>Car area</Name>
+											<ServiceFacilitySetRef version="any" ref="rc:SFS-ctm_general_facilities"/>
+											<SmokingAllowed>false</SmokingAllowed>
+											<deckEntrances>
+												<!-- loading doors -->
+												<DeckVehicleEntrance version="any" id="rc:DVE-ctl_deck_1@side_left_forward_vehicle_door">
+													<Name>Front left side  entrance</Name>
+													<Width>4.00</Width>
+													<Height>4.00</Height>
+													<actualVehicleEquipments>
+														<ActualVehicleEquipment version="any" id="rc:AVE-ctl_deck_1@side_left_forward_vehicle_door">
+															<Units>1</Units>
+															<EntranceEquipmentRef version="any" ref="rc:EE-ctl_external_vehicle_door"/>
+														</ActualVehicleEquipment>
+													</actualVehicleEquipments>
+													<PublicUse>true</PublicUse>
+													<VehicleSide>leftSide</VehicleSide>
+													<DeckEntranceType>external</DeckEntranceType>
+													<HasDoor>true</HasDoor>
+												</DeckVehicleEntrance>
+												<DeckVehicleEntrance version="any" id="rc:DVE-ctl_deck_1@side_right_forward_vehicle_door">
+													<Name>Back End entrance</Name>
+													<Width>4.00</Width>
+													<Height>5.00</Height>
+													<actualVehicleEquipments>
+														<ActualVehicleEquipment version="any" id="rc:AVE-ctl_deck_1@side_right_forward_vehicle_door">
+															<Units>1</Units>
+															<EntranceEquipmentRef version="any" ref="rc:EE-ctl_external_vehicle_door"/>
+														</ActualVehicleEquipment>
+													</actualVehicleEquipments>
+													<PublicUse>true</PublicUse>
+													<VehicleSide>rightSide</VehicleSide>
+													<DeckEntranceType>external</DeckEntranceType>
+													<HasDoor>true</HasDoor>
+												</DeckVehicleEntrance>
+												<DeckVehicleEntrance version="any" id="rc:DVE-ctl_deck_1@side_left_middle_vehicle_door">
+													<Name>Back End entrance</Name>
+													<Width>4.00</Width>
+													<Height>5.00</Height>
+													<actualVehicleEquipments>
+														<ActualVehicleEquipment version="any" id="rc:AVE-ctl_deck_1@left_middle_vehicle_door">
+															<Units>1</Units>
+															<EntranceEquipmentRef version="any" ref="rc:EE-ctl_external_vehicle_door"/>
+														</ActualVehicleEquipment>
+													</actualVehicleEquipments>
+													<PublicUse>true</PublicUse>
+													<VehicleSide>leftSide</VehicleSide>
+													<DeckEntranceType>external</DeckEntranceType>
+													<HasDoor>true</HasDoor>
+												</DeckVehicleEntrance>
+												<!-- end doors to next carriage -->
+												<DeckVehicleEntrance version="any" id="rc:DVE-ctl_deck_1@back_vehicle">
+													<Name>Back End entrance</Name>
+													<Width>4.00</Width>
+													<Height>5.00</Height>
+													<PublicUse>true</PublicUse>
+													<VehicleSide>backEnd</VehicleSide>
+													<DeckEntranceType>communicating</DeckEntranceType>
+													<HasDoor>false</HasDoor>
+												</DeckVehicleEntrance>
+												<DeckVehicleEntrance version="any" id="rc:DVE-ctl_deck_1@vehicles@ramp_bottom_vehicle_door">
+													<Name>Ramp End entrance</Name>
+													<Width>2.5</Width>
+													<Height>5.00</Height>
+													<PublicUse>true</PublicUse>
+													<VehicleSide>internal</VehicleSide>
+													<DeckEntranceType>internal</DeckEntranceType>
+													<HasDoor>false</HasDoor>
+												</DeckVehicleEntrance>
+											</deckEntrances>
+											<deckEntranceUsages>
+												<DeckEntranceUsage version="any" id="rc:DEU-ctl_deck_1@side_left_forward_vehicle_door">
+													<EntranceUsageType>entryAndExit</EntranceUsageType>
+													<EntranceSetting>openWhenLoading</EntranceSetting>
+													<ControlledLocking>false</ControlledLocking>
+													<DeckVehicleEntranceRef version="any" ref="rc:DVE-ctl_deck_1@side_left_forward_vehicle_door"/>
+												</DeckEntranceUsage>
+												<DeckEntranceUsage version="any" id="rc:DEU-ctl_deck_1@side_right_forward_vehicle_door">
+													<EntranceUsageType>entryAndExit</EntranceUsageType>
+													<EntranceSetting>openWhenLoading</EntranceSetting>
+													<ControlledLocking>false</ControlledLocking>
+													<DeckVehicleEntranceRef version="any" ref="rc:DVE-ctl_deck_1@side_right_forward_vehicle_door"/>
+												</DeckEntranceUsage>
+												<DeckEntranceUsage version="any" id="rc:DEU-ctl_deck_1@side_left_middle_vehicle_door">
+													<EntranceUsageType>entryAndExit</EntranceUsageType>
+													<EntranceSetting>openWhenLoading</EntranceSetting>
+													<ControlledLocking>false</ControlledLocking>
+													<DeckVehicleEntranceRef version="any" ref="rc:DVE-ctl_deck_1@side_left_middle_vehicle_door"/>
+												</DeckEntranceUsage>
+											</deckEntranceUsages>
+											<TotalCapacity>3</TotalCapacity>
+											<deckSpaceCapacities>
+												<DeckSpaceCapacity version="any" id="rc:DSC-ctl_deck_1@vehicles@capacity_small_car">
+													<LocatableSpotType>vehicleSpace</LocatableSpotType>
+													<Capacity>3</Capacity>
+												</DeckSpaceCapacity>
+											</deckSpaceCapacities>
+											<passengerVehicleSpots>
+												<PassengerVehicleSpot version="any" id="rc:PVS-cctl_deck_1@vehicles@V1">
+													<Label>V1</Label>
+													<Width>5.0</Width>
+													<Length>9.0</Length>
+													<Height>3.40</Height>
+													<VehicleCategories>motorcycle microCar miniCar smallCar  largeCar</VehicleCategories>
+												</PassengerVehicleSpot>
+												<PassengerVehicleSpot version="any" id="rc:PVS-cctl_deck_1@vehicles@V2">
+													<Label>V2</Label>
+													<Width>5.0</Width>
+													<Length>9.0</Length>
+													<Height>3.40</Height>
+													<VehicleCategories>motorcycle microCar miniCar smallCar  largeCar</VehicleCategories>
+												</PassengerVehicleSpot>
+												<PassengerVehicleSpot version="any" id="rc:PVS-ctl_deck_1@vehicles@V3">
+													<Label>V3</Label>
+													<Width>5.0</Width>
+													<Length>9.0</Length>
+													<Height>3.40</Height>
+													<VehicleCategories>motorcycle microCar miniCar smallCar  largeCar</VehicleCategories>
+												</PassengerVehicleSpot>
+											</passengerVehicleSpots>
+										</PassengerSpace>
+										<PassengerSpace version="any" id="rc:PS-ctl_deck_1@ramp">
+											<Name>Ramp area</Name>
+											<actualVehicleEquipments>
+												<ActualVehicleEquipment version="any" id="rc:AVE-ctl_deck_1@ramp">
+													<RampEquipmentRef version="any" ref="rc:RE-ctl_car_ramp"/>
+												</ActualVehicleEquipment>
+											</actualVehicleEquipments>
+											<deckEntrances>
+												<DeckVehicleEntrance version="any" id="rc:DVE-ctl_deck_1@ramp@bottom_vehicle_door">
+													<Name>Ramp bottom End entrance</Name>
+													<Width>2.5</Width>
+													<Height>5.00</Height>
+													<PublicUse>true</PublicUse>
+													<DeckLevelRef version="any" ref="rc:DL-ctl_@1"/>
+													<VehicleSide>internal</VehicleSide>
+													<DeckEntranceType>internal</DeckEntranceType>
+													<HasDoor>false</HasDoor>
+												</DeckVehicleEntrance>
+												<DeckVehicleEntrance version="any" id="rc:DVE-ctl_deck_1@ramp@top_vehicle_door">
+													<Name>Ramp  top End entrance</Name>
+													<Width>2.5</Width>
+													<Height>5.00</Height>
+													<PublicUse>true</PublicUse>
+													<DeckLevelRef version="any" ref="rc:DL-ctl_@2"/>
+													<VehicleSide>internal</VehicleSide>
+													<DeckEntranceType>internal</DeckEntranceType>
+													<HasDoor>false</HasDoor>
+												</DeckVehicleEntrance>
+											</deckEntrances>
+											<deckEntranceCouples>
+												<DeckEntranceCouple version="any" id="rc:DEC-slw_deck_1@ramp@bottom">
+													<Name>Connected to decks</Name>
+													<FromDeckEntranceRef version="any" ref="rc:DVE-ctl_deck_1@vehicles@ramp_bottom_vehicle_door"/>
+													<ToDeckEntranceRef version="any" ref="rc:DVE-ctl_deck_1@ramp@bottom_vehicle_door"/>
+												</DeckEntranceCouple>
+												<DeckEntranceCouple version="any" id="rc:DEC-slw_deck_1@ramp@top">
+													<Name>Connected to decks</Name>
+													<FromDeckEntranceRef version="any" ref="rc:DVE-ctl_deck_1@ramp@top_vehicle_door"/>
+													<ToDeckEntranceRef version="any" ref="rc:DVE-ctl_deck_2@vehicles@ramp_top_vehicle_door"/>
+												</DeckEntranceCouple>
+											</deckEntranceCouples>
+										</PassengerSpace>
+									</deckSpaces>
+								</Deck>
+								<Deck version="any" id="rc:Dk-ctl_deck_2">
+									<Name>Car transporter Waggon - upper deck</Name>
+									<Label>W1245</Label>
+									<DeckLevelRef version="any" ref="rc:DL-ctl_@2"/>
+									<deckSpaces>
+										<PassengerSpace version="any" id="rc:PS-ctl_deck_2@vehicles">
+											<Name>Car area</Name>
+											<ServiceFacilitySetRef version="any" ref="rc:SFS-ctm_general_facilities"/>
+											<SmokingAllowed>false</SmokingAllowed>
+											<deckEntrances>
+												<!-- Ramp entrance  -->
+												<DeckVehicleEntrance version="any" id="rc:DVE-ctl_deck_2@vehicles@ramp_top_vehicle_door">
+													<Name>Top of ramp</Name>
+													<Width>4.00</Width>
+													<Height>3.00</Height>
+													<PublicUse>true</PublicUse>
+													<VehicleSide>internal</VehicleSide>
+													<DeckEntranceType>internal</DeckEntranceType>
+													<HasDoor>false</HasDoor>
+												</DeckVehicleEntrance>
+												<!-- end doors to next carriage -->
+												<DeckVehicleEntrance version="any" id="rc:DVE-ctl_deck_2@back">
+													<Name>Back End entrance</Name>
+													<Width>4.00</Width>
+													<Height>5.00</Height>
+													<PublicUse>true</PublicUse>
+													<VehicleSide>backEnd</VehicleSide>
+													<DeckEntranceType>communicating</DeckEntranceType>
+													<HasDoor>false</HasDoor>
+												</DeckVehicleEntrance>
+											</deckEntrances>
+											<TotalCapacity>2</TotalCapacity>
+											<deckSpaceCapacities>
+												<DeckSpaceCapacity version="any" id="rc:DSC-ctl_deck_2@vehicles@capacity_small_car">
+													<LocatableSpotType>vehicleSpace</LocatableSpotType>
+													<Capacity>2</Capacity>
+												</DeckSpaceCapacity>
+											</deckSpaceCapacities>
+											<StandingAllowed>true</StandingAllowed>
+											<passengerVehicleSpots>
+												<PassengerVehicleSpot version="any" id="rc:PVS-ctl_deck_2@vehicles@V1">
+													<Label>V1</Label>
+													<Width>5.0</Width>
+													<Length>9.0</Length>
+													<Height>3.0</Height>
+													<VehicleCategories>motorcycle microCar miniCar smallCar  largeCar</VehicleCategories>
+												</PassengerVehicleSpot>
+												<PassengerVehicleSpot version="any" id="rc:PVS-ctl_deck_2@vehicles@V2">
+													<Label>V2</Label>
+													<Width>5.0</Width>
+													<Length>9.0</Length>
+													<Height>3.0</Height>
+													<VehicleCategories>motorcycle microCar miniCar smallCar  largeCar</VehicleCategories>
+												</PassengerVehicleSpot>
 											</passengerVehicleSpots>
 										</PassengerSpace>
 									</deckSpaces>
@@ -2819,7 +3237,7 @@ The train reverse in  the station and departs, oriented backwards to the right
 													<actualVehicleEquipments>
 														<ActualVehicleEquipment version="any" id="rc:AVE-bfc_deck_1@@seating_area@forward_external_left@door">
 															<Units>1</Units>
-															<EntranceEquipmentRef version="any" ref="rc:EE-external_door"/>
+															<EntranceEquipmentRef version="any" ref="rc:EE-external_passenger_door"/>
 														</ActualVehicleEquipment>
 														<ActualVehicleEquipment version="any" id="rc:AVE-bfc_deck_1@seating_area@forward_external_left@sensor">
 															<Units>1</Units>
@@ -2851,7 +3269,7 @@ The train reverse in  the station and departs, oriented backwards to the right
 													<actualVehicleEquipments>
 														<ActualVehicleEquipment version="any" id="rc:AVE-bfc_deck_1@seating_area@forward_external@door">
 															<Units>1</Units>
-															<EntranceEquipmentRef version="any" ref="rc:EE-external_door"/>
+															<EntranceEquipmentRef version="any" ref="rc:EE-external_passenger_door"/>
 														</ActualVehicleEquipment>
 														<ActualVehicleEquipment version="any" id="rc:AVE-bfc_deck_1@seating_area@forward_external@sensor">
 															<Units>1</Units>
@@ -2880,7 +3298,7 @@ The train reverse in  the station and departs, oriented backwards to the right
 													<actualVehicleEquipments>
 														<ActualVehicleEquipment version="any" id="rc:AVE-bfc_deck_1@seating_area@rear_external_left@door">
 															<Units>1</Units>
-															<EntranceEquipmentRef version="any" ref="rc:EE-external_door"/>
+															<EntranceEquipmentRef version="any" ref="rc:EE-external_passenger_door"/>
 														</ActualVehicleEquipment>
 														<ActualVehicleEquipment version="any" id="rc:AVE-bfc_deck_1@seating_area@rear_external_left@sensor">
 															<EntranceSensorRef version="any" ref="rc:ES-external_door_sensor"/>
@@ -2911,7 +3329,7 @@ The train reverse in  the station and departs, oriented backwards to the right
 													<actualVehicleEquipments>
 														<ActualVehicleEquipment version="any" id="rc:AVE-bfc_deck_1@seating_area@rear_external_right@door">
 															<Units>1</Units>
-															<EntranceEquipmentRef version="any" ref="rc:EE-external_door"/>
+															<EntranceEquipmentRef version="any" ref="rc:EE-external_passenger_door"/>
 														</ActualVehicleEquipment>
 														<ActualVehicleEquipment version="any" id="rc:AVE-bfc_deck_1@seating_area@rear_external_right@sensor">
 															<EntranceSensorRef version="any" ref="rc:ES-external_door_sensor"/>
@@ -3771,7 +4189,7 @@ The train reverse in  the station and departs, oriented backwards to the right
 				</ResourceFrame>
 				<SiteFrame version="1.0" id="rc:SF-deck_plan_example" responsibilitySetRef="xx:RS-stop_data">
 					<Name>Deck Plan - Train and Journey assignment Example</Name>
-					<Description>Example descripotion of  a Station with Navigation paths to reach a platform</Description>
+					<Description>Example description of  a Station with Navigation paths to reach a platform</Description>
 					<codespaces>
 						<Codespace id="CS-xx_data">
 							<Xmlns>xx</Xmlns>
@@ -4473,6 +4891,54 @@ The train reverse in  the station and departs, oriented backwards to the right
 								</SitePathLink>
 							</pathLinks>
 						</StopPlace>
+						<StopPlace version="any" id="xx:SP-station_123">
+							<Name>Pas de Ville</Name>
+							<Description>This describes just the motorail boarding</Description>
+							<entrances>
+								<StopPlaceVehicleEntrance version="any" id="xx:SPVE-station_123@entrance_1">
+									<Name>Vehicle  Entrance for motorail use</Name>
+									<ParentZoneRef version="any" ref="xx:SP-station_123"/>
+									<Label>VE1</Label>
+									<EntranceType>opening</EntranceType>
+									<IsExternal>true</IsExternal>
+									<IsEntry>true</IsEntry>
+									<IsExit>true</IsExit>
+									<Width>4.0</Width>
+									<Height>4.0</Height>
+								</StopPlaceVehicleEntrance>
+							</entrances>
+							<TransportMode>rail </TransportMode>
+							<RailSubmode>carTransportRailService</RailSubmode>
+							<StopPlaceType>railStation</StopPlaceType>
+							<BorderCrossing>false</BorderCrossing>
+							<quays>
+								<Quay version="any" id="xx:Qy-station_123@quay_M1">
+									<Name>Motorail platform for cars</Name>
+									<AccessModes>car motorcycle </AccessModes>
+									<PublicUse>all</PublicUse>
+									<Covered>outdoors</Covered>
+									<checkConstraints>
+										<CheckConstraint version="any" id="xx:CC-station_123@motorail_boarding">
+											<Name>Vehicle loading</Name>
+											<CheckProcess>boarding</CheckProcess>
+											<delays>
+												<CheckConstraintDelay version="any" id="xx:CC-station_123@motorail_boarding">
+													<MinimumLikelyDelay>PT20M</MinimumLikelyDelay>
+													<AverageDelay>PT25M</AverageDelay>
+													<MaximumLikelyDelay>PT40M</MaximumLikelyDelay>
+												</CheckConstraintDelay>
+											</delays>
+										</CheckConstraint>
+									</checkConstraints>
+									<entrances>
+										<StopPlaceVehicleEntranceRef version="any" ref="xx:SPVE-station_123@entrance_1"/>
+									</entrances>
+									<CompassOctant>E</CompassOctant>
+									<QuayType>vehicleLoadingPlace</QuayType>
+									<PlatformHeight>1.0</PlatformHeight>
+								</Quay>
+							</quays>
+						</StopPlace>
 					</stopPlaces>
 					<!-- =======Navigation paths========== -->
 					<navigationPaths>
@@ -4607,7 +5073,7 @@ The train reverse in  the station and departs, oriented backwards to the right
 								</PathInstruction>
 								<PathInstruction version="any" id="xx:PJ-station_765@ticket_hall_middle" order="3">
 									<PathHeading>forward</PathHeading>
-									<Instruction>Cmtinue forward for stairs to platforms </Instruction>
+									<Instruction>Continue forward for stairs to platforms </Instruction>
 								</PathInstruction>
 							</pathInstructions>
 						</SitePathJunction>
@@ -4616,6 +5082,67 @@ The train reverse in  the station and departs, oriented backwards to the right
 						</SitePathJunction>
 					</pathJunctions>
 				</SiteFrame>
+				<ServiceFrame version="1.0" id="rc:SF-deck_plan_example" responsibilitySetRef="xx:RS-stop_data">
+					<Name>Deck Plan - Train and Journey assignment Example</Name>
+					<Description>Example service pattern</Description>
+					<codespaces>
+						<CodespaceRef ref="CS-xx_data"/>
+					</codespaces>
+					<servicePatterns>
+						<ServicePattern version="any" id="rc:SvP-r123">
+							<Name>Pas de Ville - Erewhon - Cockagne - Keinstadt</Name>
+							<pointsInSequence>
+								<StopPointInJourneyPattern version="any" id="rc:SPIJP-r123" order="1">
+									<Description>Pas de Ville</Description>
+									<ScheduledStopPointRef version="any" ref="rc:SSP-stop_001">Pas de ville</ScheduledStopPointRef>
+									<ForAlighting>false</ForAlighting>
+									<ForBoarding>true</ForBoarding>
+									<BoardingSideInDirectionOfTravel>left</BoardingSideInDirectionOfTravel>
+									<DestinationDisplayRef version="any" ref="xx:DD-keinstadt_via_cockaygne"/>
+								</StopPointInJourneyPattern>
+								<!-- ... other stops ... -->
+								<StopPointInJourneyPattern version="any" id="rc:SPIJP-r123" order="7">
+									<Description>Erewhon Hbf</Description>
+									<ScheduledStopPointRef version="any" ref="rc:SSP-stop_015">Erewhon</ScheduledStopPointRef>
+									<IsWaitPoint>true</IsWaitPoint>
+									<WaitTime>PT15M</WaitTime>
+									<ForAlighting>true</ForAlighting>
+									<ForBoarding>true</ForBoarding>
+									<AlightingSideInDirectionOfTravel>right</AlightingSideInDirectionOfTravel>
+									<!-- nb train reverses in station so changes -->
+									<BoardingSideInDirectionOfTravel>left</BoardingSideInDirectionOfTravel>
+									<!-- Buffet service ens gere -->
+									<ChangeOfServiceRequirements>true</ChangeOfServiceRequirements>
+									<noticeAssignments>
+										<NoticeAssignment version="any" id="SvP-r123" order="1">
+											<NoticeRef version="any" ref="rc:No-stop_0015E@short"/>
+										</NoticeAssignment>
+									</noticeAssignments>
+								</StopPointInJourneyPattern>
+								<!-- ... other stops ... -->
+								<StopPointInJourneyPattern version="any" id="rc:SPIJP-r123" order="12">
+									<Description>Cockagyne</Description>
+									<ScheduledStopPointRef version="any" ref="rc:SSP-stop_017"/>
+									<WaitTime>PT5M</WaitTime>
+									<ForAlighting>true</ForAlighting>
+									<ForBoarding>true</ForBoarding>
+									<AlightingSideInDirectionOfTravel>left</AlightingSideInDirectionOfTravel>
+									<BoardingSideInDirectionOfTravel>left</BoardingSideInDirectionOfTravel>
+									<DestinationDisplayRef version="any" ref="xx:DD-keinstadt"/>
+									<ChangeOfDestinationDisplay>true</ChangeOfDestinationDisplay>
+								</StopPointInJourneyPattern>
+								<!-- ... other stops ... -->
+								<StopPointInJourneyPattern version="any" id="rc:SPIJP-r123" order="18">
+									<Description>Keinstadt</Description>
+									<ScheduledStopPointRef version="any" ref="rc:SSP-stop_021"/>
+									<ForAlighting>true</ForAlighting>
+									<ForBoarding>false</ForBoarding>
+									<AlightingSideInDirectionOfTravel>right</AlightingSideInDirectionOfTravel>
+								</StopPointInJourneyPattern>
+							</pointsInSequence>
+						</ServicePattern>
+					</servicePatterns>
+				</ServiceFrame>
 				<!--==== TIMETABLE ==== -->
 				<TimetableFrame version="1.0" id="rc:TF-deck_plan_example" responsibilitySetRef="rc:RS-service_data">
 					<Name>Deck Plan - Train and Journey assignment Example</Name>
@@ -4623,18 +5150,59 @@ The train reverse in  the station and departs, oriented backwards to the right
 					<!-- =======Journeys========== -->
 					<vehicleJourneys>
 						<ServiceJourney version="any" id="rc:SJ-sj001">
-							<Name>Train from Pas de Ville - Erewhon - Cockaigne - Keinstadt</Name>
+							<Name>Train from Pas de Ville - Erewhon - Cockaygne - Keinstadt</Name>
 							<Description>Operates as sleeper between Erewhon -Keinstadt</Description>
 							<DepartureTime>18:10:00</DepartureTime>
 							<dayTypes>
 								<DayTypeRef versionRef="EXTERNAL" ref="DTy-weekday"/>
 							</dayTypes>
-							<ServicePatternRef versionRef="EXTERNAL" ref="rc:SvP-r123"/>
+							<ServicePatternRef versionRef="any" ref="rc:SvP-r123"/>
 							<TrainRef version="any" ref="rco:Tr-rail_sleeper_train_1"/>
 							<OperatorRef version="any" ref="rc:OP-mrc_123"/>
 							<trainNumbers>
 								<TrainNumberRef versionRef="EXTERNAL" ref="rc:TN-456"/>
 							</trainNumbers>
+							<!-- NB for Example purposes we show the  stop info  as both CALLs and SERVICE PATTERN + PASSING TIMEs: only one is needed -->
+							<passingTimes>
+								<TimetabledPassingTime version="any" id="rc:TPT-sj001@a@01">
+									<StopPointInJourneyPatternRef version="any" ref="rc:SPIJP-r123" order="1">Pas de Ville</StopPointInJourneyPatternRef>
+									<DepartureTime>18:30:00</DepartureTime>
+								</TimetabledPassingTime>
+								<TimetabledPassingTime version="any" id="rc:TPT-sj001@a@07">
+									<StopPointInJourneyPatternRef version="any" ref="rc:SPIJP-r123" order="7">Erewhon</StopPointInJourneyPatternRef>
+									<ArrivalTime>20:30:00</ArrivalTime>
+									<DepartureTime>20:45:00</DepartureTime>
+									<WaitingTime>PT15M</WaitingTime>
+								</TimetabledPassingTime>
+								<TimetabledPassingTime version="any" id="rc:TPT-sj001@a@12">
+									<StopPointInJourneyPatternRef version="any" ref="rc:SPIJP-r123" order="12">Cockagyne</StopPointInJourneyPatternRef>
+									<ArrivalTime>23:45:00</ArrivalTime>
+									<DepartureTime>23:50:00</DepartureTime>
+									<WaitingTime>PT5M</WaitingTime>
+								</TimetabledPassingTime>
+								<TimetabledPassingTime version="any" id="rc:TPT-sj001@a@18">
+									<StopPointInJourneyPatternRef version="any" ref="rc:SPIJP-r123" order="18">Keinstadt</StopPointInJourneyPatternRef>
+									<ArrivalTime>06:50:00</ArrivalTime>
+									<ArrivalDayOffset>1</ArrivalDayOffset>
+								</TimetabledPassingTime>
+							</passingTimes>
+							<passengerAtStopTimes>
+								<PassengerAtStopTime version="any" id="rc:PAST-sj001@a@01@vehicle_loading">
+									<StopPointInJourneyPatternRef version="any" ref="rc:SPIJP-r123" order="1">Pas de Ville</StopPointInJourneyPatternRef>
+									<Description>Time at stop for motorail boarding</Description>
+									<EarliestTime>17:50:00</EarliestTime>
+									<LatestTime>18:10:00</LatestTime>
+									<CheckConstraintRef version="any" ref="xx:CC-station_123@motorail_boarding"/>
+									<CheckConstraintProcess>vehicleLoading</CheckConstraintProcess>
+								</PassengerAtStopTime>
+								<PassengerAtStopTime version="any" id="rc:PAST-sj001@a@07@assisted">
+									<StopPointInJourneyPatternRef version="any" ref="rc:SPIJP-r123" order="7">Erewhon</StopPointInJourneyPatternRef>
+									<Description>Time at stop for Assisted Boarding</Description>
+									<LatestTime>20:30:00</LatestTime>
+									<CheckConstraintRef version="any" ref="xx:CC-station_765@quay_1_and_2@assisted_boarding"/>
+									<CheckConstraintProcess>assistedBoarding</CheckConstraintProcess>
+								</PassengerAtStopTime>
+							</passengerAtStopTimes>
 							<parts>
 								<JourneyPart version="any" id="rc:JP-sj001@a" order="1">
 									<Description>Day Configuration as seats</Description>
@@ -4658,28 +5226,44 @@ The train reverse in  the station and departs, oriented backwards to the right
 								</JourneyPart>
 								<!---  This overlaps with the other parts -->
 								<JourneyPart version="any" id="rc:JP-sj001@buffet" order="0">
-									<Description>Buffet Service betwen 18:30 and 11:45</Description>
+									<Description>Buffet Service betwen 18:30 and 23:45</Description>
 									<MainPartRef version="any" ref="rc:JP-sj001@a"/>
 									<StartTime>18:30:00</StartTime>
-									<EndTime>11:45:00</EndTime>
+									<EndTime>23:45:00</EndTime>
 									<facilities>
 										<ServiceFacilitySetRef version="any" ref="rc:SFS-slw_buffet"/>
 									</facilities>
 								</JourneyPart>
 							</parts>
+							<!--  for demo purposes we show the  stop info  as both CALLs and sERVICE pATTERN plus PASSING TIMES: only one is needed -->
 							<calls>
 								<Call version="any" id="rc:Ca-sj001" order="1">
-									<ScheduledStopPointRef version="any" ref="rc:SSP-stop_001">Pas de Ville</ScheduledStopPointRef>
+									<ScheduledStopPointView>
+										<ScheduledStopPointRef version="any" ref="rc:SSP-stop_001">Pas de Ville</ScheduledStopPointRef>
+										<Name>Pas de Ville</Name>
+									</ScheduledStopPointView>
 									<Departure>
 										<Time>18:30:00</Time>
 										<ForBoarding>true</ForBoarding>
 										<JourneyPartRef version="any" ref="rc:JP-sj001@a"/>
+										<passengerAtStopTimes>
+											<PassengerAtStopTime version="any" id="rc:PAST-sj001@a@C1@vehicle_loading l">
+												<Description>Time at stop for motorail boarding</Description>
+												<EarliestTime>17:50:00</EarliestTime>
+												<LatestTime>18:10:00</LatestTime>
+												<CheckConstraintRef version="any" ref="xx:CC-station_123@motorail_boarding"/>
+												<CheckConstraintProcess>vehicleLoading</CheckConstraintProcess>
+											</PassengerAtStopTime>
+										</passengerAtStopTimes>
 									</Departure>
 									<DestinationDisplayRef version="any" ref="xx:DD-keinstadt_via_cockaygne"/>
 								</Call>
 								<!-- ... intermediate stops omitted -->
 								<Call version="any" id="rc:Ca-sj001" order="7">
-									<ScheduledStopPointRef version="any" ref="rc:SSP-stop_015">Erewhon</ScheduledStopPointRef>
+									<ScheduledStopPointView>
+										<ScheduledStopPointRef version="any" ref="rc:SSP-stop_015">Erewhon</ScheduledStopPointRef>
+										<Name>Erewhon</Name>
+									</ScheduledStopPointView>
 									<Arrival>
 										<Time>20:30:00</Time>
 										<ForAlighting>true</ForAlighting>
@@ -4689,6 +5273,14 @@ The train reverse in  the station and departs, oriented backwards to the right
 										<Time>20:45:00</Time>
 										<ForBoarding>true</ForBoarding>
 										<JourneyPartRef version="any" ref="rc:JP-sj001@b"/>
+										<passengerAtStopTimes>
+											<PassengerAtStopTime version="any" id="rc:PAST-sj001@a@C7@assisted">
+												<Description>Time at stop for Assisted Boarding</Description>
+												<LatestTime>20:30:00</LatestTime>
+												<CheckConstraintRef version="any" ref="xx:CC-station_765@quay_1_and_2@assisted_boarding"/>
+												<CheckConstraintProcess>assistedBoarding</CheckConstraintProcess>
+											</PassengerAtStopTime>
+										</passengerAtStopTimes>
 									</Departure>
 									<DestinationDisplayRef version="any" ref="xx:DD-keinstadt_via_cockaygne"/>
 									<noticeAssignments>
@@ -4701,14 +5293,17 @@ The train reverse in  the station and departs, oriented backwards to the right
 								</Call>
 								<!-- ... intermediate stops omitted -->
 								<Call version="any" id="rc:Ca-sj001" order="12">
-									<ScheduledStopPointRef version="any" ref="rc:SSP-stop_017">Cockaigne</ScheduledStopPointRef>
+									<ScheduledStopPointView>
+										<ScheduledStopPointRef version="any" ref="rc:SSP-stop_017">Cockaygne</ScheduledStopPointRef>
+										<Name>Cockaygne</Name>
+									</ScheduledStopPointView>
 									<Arrival>
-										<Time>11:45:00</Time>
+										<Time>23:45:00</Time>
 										<ForAlighting>true</ForAlighting>
 										<JourneyPartRef version="any" ref="rc:JP-sj001@b"/>
 									</Arrival>
 									<Departure>
-										<Time>11:50:00</Time>
+										<Time>23:50:00</Time>
 										<ForBoarding>true</ForBoarding>
 										<JourneyPartRef version="any" ref="rc:JP-sj001@b"/>
 									</Departure>
@@ -4716,7 +5311,10 @@ The train reverse in  the station and departs, oriented backwards to the right
 									<ChangeOfDestinationDisplay>true</ChangeOfDestinationDisplay>
 								</Call>
 								<Call version="any" id="rc:Ca-sj001" order="18">
-									<ScheduledStopPointRef version="any" ref="rc:SSP-stop_021">Keinstadt</ScheduledStopPointRef>
+									<ScheduledStopPointView>
+										<ScheduledStopPointRef version="any" ref="rc:SSP-stop_021">Keinstadt</ScheduledStopPointRef>
+										<Name>Keinstadt</Name>
+									</ScheduledStopPointView>
 									<Arrival>
 										<Time>06:50:00</Time>
 										<DayOffset>1</DayOffset>
@@ -4725,6 +5323,29 @@ The train reverse in  the station and departs, oriented backwards to the right
 									</Arrival>
 								</Call>
 							</calls>
+							<trainComponentLabelAssignments>
+								<TrainComponentLabelAssignment version="any" id="rc:TCLA-sj001" order="1">
+									<Name>Relabel Coach F01</Name>
+									<Label>Couchettes-01</Label>
+									<ServiceJourneyRef version="any" ref="rc:SJ-sj001"/>
+									<JourneyPartRef version="any" ref="rc:JP-sj001@b"/>
+									<TrainComponentRef version="any" ref="rco:TC-rail_sleeper_train_1" order="2"/>
+								</TrainComponentLabelAssignment>
+								<TrainComponentLabelAssignment version="any" id="rc:TCLA-sj001" order="2">
+									<Name>Relabel Coach F02</Name>
+									<Label>Couchettes-02</Label>
+									<ServiceJourneyRef version="any" ref="rc:SJ-sj001"/>
+									<JourneyPartRef version="any" ref="rc:JP-sj001@b"/>
+									<TrainComponentRef version="any" ref="rco:TC-rail_sleeper_train_1" order="3"/>
+								</TrainComponentLabelAssignment>
+								<TrainComponentLabelAssignment version="any" id="rc:TCLA-sj001" order="3">
+									<Name>Relabel  Coach F04</Name>
+									<Label>Couchettes-04</Label>
+									<ServiceJourneyRef version="any" ref="rc:SJ-sj001"/>
+									<JourneyPartRef version="any" ref="rc:JP-sj001@b"/>
+									<TrainComponentRef version="any" ref="rco:TC-rail_sleeper_train_1" order="5"/>
+								</TrainComponentLabelAssignment>
+							</trainComponentLabelAssignments>
 						</ServiceJourney>
 						<ServiceJourney version="any" id="rc:SJ-sj321">
 							<Name>Connecting journey Erewhon - Novado</Name>
@@ -4814,9 +5435,9 @@ The train reverse in  the station and departs, oriented backwards to the right
 						</ServiceJourneyInterchange>
 					</journeyInterchanges>
 				</TimetableFrame>
-				<ServiceFrame version="1.0" id="rc:SF-deck_plan_example" responsibilitySetRef="rc:RS-service_data">
+				<ServiceFrame version="1.0" id="rc:SvF-deck_plan_example" responsibilitySetRef="rc:RS-service_data">
 					<Name>Rail Deck Plan  Assignment Example</Name>
-					<Description>This is an example showing how one might assign a Deck Entrance to a journey so as to state which entrance will be at which point on the platform . </Description>
+					<Description>Service joirney with information on relative position to platfotm included </Description>
 					<destinationDisplays>
 						<DestinationDisplay version="any" id="xx:DD-pas_de_ville">
 							<Name>Pas de Ville</Name>

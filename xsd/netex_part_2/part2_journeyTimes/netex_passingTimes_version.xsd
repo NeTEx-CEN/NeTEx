@@ -3,6 +3,7 @@
 	<xsd:include schemaLocation="../../netex_part_1/part1_tacticalPlanning/netex_journeyPattern_support.xsd"/>
 	<xsd:include schemaLocation="netex_vehicleJourney_support.xsd"/>
 	<xsd:include schemaLocation="netex_passingTimes_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_part_1/part1_ifopt/netex_ifopt_checkConstraint_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_part_1/part1_tacticalPlanning/netex_journeyTiming_version.xsd"/>
 	<!-- ======================================================================= -->
 	<!-- ==CLOSELY COUPLED ===================================================== -->
@@ -19,10 +20,10 @@
 					<Created>2010-09-04</Created>
 				</Date>
 				<Date>
-					<Modified>2011-02-05</Modified>
-					<!-- Name Space changes -->
+					<Modified>2011-02-05</Modified>Name Space changes
 				</Date>
-				<Date><Modified>2017-06-28</Modified>Add separate Earliest Arrival and Latest Departure Day Offsets
+				<Date>
+					<Modified>2017-06-28</Modified>Add separate Earliest Arrival and Latest Departure Day Offsets
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -40,7 +41,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2017</Copyright>
+					<Copyright>CEN, Crown Copyright 2009-2024</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -65,8 +66,8 @@ Rail transport, Roads and Road transport
 		</xsd:appinfo>
 		<xsd:documentation>NeTEx: PASSING TIMES  types.</xsd:documentation>
 	</xsd:annotation>
-	<!-- ======================================================================= -->
-	<xsd:element name="PassingTime" type="PassingTime_VersionedChildStructure" abstract="false" substitutionGroup="VersionedChild">
+	<!-- ======PASSING TIME ================================================ -->
+	<xsd:element name="PassingTime" type="PassingTime_VersionedChildStructure" abstract="true" substitutionGroup="VersionedChild">
 		<xsd:annotation>
 			<xsd:documentation>PASSING TIME.</xsd:documentation>
 		</xsd:annotation>
@@ -97,7 +98,7 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="PointInJourneyPatternRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
-	<!-- ===WaitTime===================================================== -->
+	<!-- === TIMETABLED PASSING TIME ============================================ -->
 	<xsd:complexType name="timetabledPassingTimes_RelStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for a list of TIMETABLED PASSING TIME.</xsd:documentation>
@@ -106,6 +107,18 @@ Rail transport, Roads and Road transport
 			<xsd:extension base="strictContainmentAggregationStructure">
 				<xsd:sequence>
 					<xsd:element ref="TimetabledPassingTime" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="TimetabledPassingTime_VersionedChildStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for TIMETABLED PASSING TIME.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="PassingTime_VersionedChildStructure">
+				<xsd:sequence>
+					<xsd:group ref="TimetabledPassingTimeGroup"/>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -135,21 +148,9 @@ Rail transport, Roads and Road transport
 			</xsd:complexContent>
 		</xsd:complexType>
 	</xsd:element>
-	<xsd:complexType name="TimetabledPassingTime_VersionedChildStructure">
-		<xsd:annotation>
-			<xsd:documentation>Type for TIMETABLED PASSING TIME.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:complexContent>
-			<xsd:extension base="PassingTime_VersionedChildStructure">
-				<xsd:sequence>
-					<xsd:group ref="TimetabledPassingTimeGroup"/>
-				</xsd:sequence>
-			</xsd:extension>
-		</xsd:complexContent>
-	</xsd:complexType>
 	<xsd:group name="TimetabledPassingTimeGroup">
 		<xsd:annotation>
-			<xsd:documentation>TIEMTABLED PASSING TIME elements.</xsd:documentation>
+			<xsd:documentation>TIMETABLED PASSING TIME elements.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element name="ArrivalTime" type="xsd:time" minOccurs="0">
