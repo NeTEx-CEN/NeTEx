@@ -20,29 +20,42 @@
 				<Date>
 					<Created>2010-09-04</Created>
 				</Date>
-				<Date><Modified>2011-02-05</Modified>Name Space changes 
+				<Date>
+					<Modified>2011-02-05</Modified>Name Space changes 
 				</Date>
-				<Date><Modified>2017-05-19</Modified>CRT040
+				<Date>
+					<Modified>2017-05-19</Modified>CRT040
 				     	Allow type  attribute on Public and ShortCode.   Backwards compatible.  Add NameSuffix to SchedueldStopPoint
 				</Date>
-				<Date><Modified>2017-06-11</Modified>CRT023 Add BookingArrangements to StopPointInPattern nt
+				<Date>
+					<Modified>2017-06-11</Modified>CRT023 Add BookingArrangements to StopPointInPattern nt
 				</Date>
-				<Date><Modified>2017-05-25</Modified>Text on for alighting/boarding corrected. Doc change only.
+				<Date>
+					<Modified>2017-05-25</Modified>Text on for alighting/boarding corrected. Doc change only.
 				</Date>
-				<Date><Modified>2019-02-21</Modified>Remove commented out old Section code
+				<Date>
+					<Modified>2019-02-21</Modified>Remove commented out old Section code
 				</Date>
-				<Date><Modified>2019-03-25</Modified>Merge in Corrections to comments as per SBB20 #55 Correct camel case on StopPoinInXXX groups. 
+				<Date>
+					<Modified>2019-03-25</Modified>Merge in Corrections to comments as per SBB20 #55 Correct camel case on StopPoinInXXX groups. 
 				</Date>
-				<Date><Modified>2019-03-25</Modified> NL48  CD #64  Add new attributes for   advertising of stop; Print and Dynamic to StopPointInPattern.
+				<Date>
+					<Modified>2019-03-25</Modified> NL48  CD #64  Add new attributes for   advertising of stop; Print and Dynamic to StopPointInPattern.
 				</Date>
-				<Date><Modified>2020-10-05</Modified> New Modes: Change to allow all modes for connection end.
+				<Date>
+					<Modified>2020-10-05</Modified> New Modes: Change to allow all modes for connection end.
 					Add mode of operation for VehicleEntrance
 					Add VEHICLE MEETING POINT TO CONNECTION END
 				</Date>
-				<Date><Modified>2019-03-01</Modified>Comment SBB20
+				<Date>
+					<Modified>2019-03-01</Modified>Comment SBB20
 				     	Extension of ConnectionEnd (submode and transportOrganisation)
 				</Date>
-				<Date><Modified>2023-12-18</Modified>FIX: revise the  #525 implementation of BOOKING ARRANGEMENT and SERVICE BOOKING ARRANGEMENT, 
+				<Date>
+					<Modified>2023-12-18</Modified>FIX: revise the  #525 implementation of BOOKING ARRANGEMENT and SERVICE BOOKING ARRANGEMENT, 
+				</Date>				
+				<Date>
+					<Modified>2024-02-27</Modified>Revise text on alighting/boarding sides top clarify. Also introducte some groups to organise related elements.  Doc change only.
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -829,6 +842,15 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Link that connects this to the next point. Allows to disambiguate if there are multiple SERVICE LINKs between two SERVICE POINTs.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:group ref="StopPointInJourneyPatternBoardingGroup"/>
+			<xsd:group ref="StopPointInPatternPropertiesGroup"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="StopPointInJourneyPatternBoardingGroup">
+		<xsd:annotation>
+			<xsd:documentation>Alighting and Boarding Elements for a STOP POINT IN JOURNEY PATTERN.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
 			<xsd:element name="ForAlighting" type="xsd:boolean" default="true" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Whether alighting is allowed at the stop. Default is true.</xsd:documentation>
@@ -841,15 +863,14 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element name="AlightingSideInDirectionOfTravel" type="SideInDirectionOfTravelEnumeration" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>On which side the vehicle can be alighted on this stop in the direction of travel. This is often not relevant. And it is difficult to define this from the QUAY when the direction of travel is not known.</xsd:documentation>
+					<xsd:documentation>The side of the vehicle from which the passenger may alight  at this stop, given relative to the direction of travel pf the vehicle as it arrives at the station. NOTE. This is often not populated. And it is difficult to determine  this for a QUAY when the direction of travel is not known. +v2.0</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="BoardingSideInDirectionOfTravel" type="SideInDirectionOfTravelEnumeration" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>On which side the vehicle can be boarded on this stop in the direction of travel.</xsd:documentation>
+					<xsd:documentation>The side of the vehicle on which the passenger may board  at this stop, given relative to the direction of travel pf the vehicle as it departs from the station. NOTE. This is often not populated.+v2.0</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:group ref="StopPointInPatternPropertiesGroup"/>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:group name="StopPointInJourneyPatternTimingGroup">
@@ -872,6 +893,23 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:group ref="PointInPatternPropertiesGroup"/>
+			<xsd:group ref="StopPointInPatternRequestGroup">
+				<xsd:annotation>
+					<xsd:documentation>Request r\and bookingelated elements for a STOP POINT IN JOURNEY PATTERN.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:group>
+			<xsd:group ref="StopPointInPatternAdvertisementGroup">
+				<xsd:annotation>
+					<xsd:documentation>Advertisement Elements for info about publicising STOP POINT IN JOURNEY PATTERN. +V1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:group>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="StopPointInPatternRequestGroup">
+		<xsd:annotation>
+			<xsd:documentation>Request related Elements for a STOP POINT IN JOURNEY PATTERN.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
 			<xsd:element name="RequestStop" type="xsd:boolean" default="false" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Whether stop is a request stop for this journey. Default is false.</xsd:documentation>
@@ -879,7 +917,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element name="RequestMethod" type="RequestMethodTypeEnumeration" default="noneRequired" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Method to Request Stop in this particular service pattern; if none specified, as as per stop. DEPRECATED: USE BoardingRquestMethod OR AlightingRequestMethod INSTEAD.</xsd:documentation>
+					<xsd:documentation>Method to Request Stop in this particular service pattern; if none specified, as as per stop. DEPRECATED: v2.0 USE BoardingRquestMethod OR AlightingRequestMethod INSTEAD.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="BoardingRequestMethod" type="RequestMethodTypeListOfEnumerations" default="noneRequired" minOccurs="0">
@@ -909,11 +947,6 @@ Rail transport, Roads and Road transport
 					</xsd:annotation>
 				</xsd:element>
 			</xsd:choice>
-			<xsd:group ref="StopPointInPatternAdvertisementGroup">
-				<xsd:annotation>
-					<xsd:documentation>Advertisement Elements for info about publicising STOP POINT IN JOURNEY PATTERN. +V1.1</xsd:documentation>
-				</xsd:annotation>
-			</xsd:group>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:group name="StopPointInPatternAdvertisementGroup">

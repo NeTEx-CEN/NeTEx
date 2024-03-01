@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_dateVehicleJourney_version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_dateVehicleJourney_version">
 	<xsd:include schemaLocation="netex_datedVehicleJourney_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_vehicle_support.xsd"/>
 	<xsd:include schemaLocation="netex_serviceJourney_version.xsd"/>
 	<xsd:include schemaLocation="netex_datedPassingTimes_version.xsd"/>
 	<xsd:include schemaLocation="netex_call_version.xsd"/>
@@ -17,9 +18,14 @@
 				<Date>
 					<Created>2010-09-04</Created>
 				</Date>
-				<Date><Modified>2011-02-05</Modified>Name Space changes  
+				<Date>
+					<Modified>2011-02-05</Modified>Name Space changes  
 				</Date>
-				<Date><Modified>2020-07-29</Modified>Issue #97 Add NormalDatedJourney and DatedVehicleJourney journeys  in timetableframe
+				<Date>
+					<Modified>2020-07-29</Modified>Issue #97 Add NormalDatedJourney and DatedVehicleJourney journeys  in timetableframe
+				</Date>
+				<Date>
+					<Modified>2024-03-29</Modified>Add VEHICLE PREASSIGNMENT
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -37,7 +43,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
-					 <Copyright>CEN, Crown Copyright 2009-2021</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2024</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -56,7 +62,7 @@ Rail transport, Roads and Road transport
 </Category>
 					<Project>CEN TC278 WG3 SG9.</Project>
 				</Subject>
-				<Title>NeTEx DATED VEHICLE JOURNE   types.</Title>
+				<Title>NeTEx DATED VEHICLE JOURNEY types.</Title>
 				<Type>Standard</Type>
 			</Metadata>
 		</xsd:appinfo>
@@ -117,7 +123,7 @@ Rail transport, Roads and Road transport
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<!-- ======================================================================= -->
+	<!-- ===== DATED VEHICLE JOURNEY ========================================= -->
 	<xsd:element name="DatedVehicleJourney" abstract="false" substitutionGroup="Journey_">
 		<xsd:annotation>
 			<xsd:documentation>A particular journey of a vehicle on a particular OPERATING DAY including all modifications possibly decided by the control staff.</xsd:documentation>
@@ -166,7 +172,7 @@ Rail transport, Roads and Road transport
 	</xsd:complexType>
 	<xsd:group name="DatedVehicleJourneyGroup">
 		<xsd:annotation>
-			<xsd:documentation>Elements for DATED  VEHICLE JOURNEY.</xsd:documentation>
+			<xsd:documentation>Elements for DATED VEHICLE JOURNEY.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:group ref="DatedVehicleJourneyReferencesGroup"/>
@@ -183,6 +189,11 @@ Rail transport, Roads and Road transport
 			<xsd:element name="ServiceAlterationType" type="ServiceAlterationEnumeration" default="planned" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Type of Service alteration. Default is planned.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="vehiclePreassignments" type="vehiclePreassignments_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Vehicle Preassignments  for JOURNEY.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -289,7 +300,7 @@ The VIEW includes derived ancillary data from referenced entities.</xsd:document
 			<xsd:group ref="DatedVehicleJourneyReferencesGroup"/>
 		</xsd:sequence>
 	</xsd:group>
-	<!-- ======================================================================= -->
+	<!-- ====== NORMAL DATED VEHICLE JOURNEY======================================= -->
 	<xsd:element name="NormalDatedVehicleJourney" abstract="false" substitutionGroup="Journey_">
 		<xsd:annotation>
 			<xsd:documentation>A DATED VEHICLE JOURNEY identical to a long-term planned VEHICLE JOURNEY, possibly updated according to short-term modifications of the PRODUCTION PLAN decided by the control staff.</xsd:documentation>
@@ -336,7 +347,7 @@ The VIEW includes derived ancillary data from referenced entities.</xsd:document
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<!-- ======================================================================= -->
+	<!-- ===== DATED  SPECIAL SERVICE ============================================== -->
 	<xsd:element name="DatedSpecialService" abstract="false" substitutionGroup="Journey_">
 		<xsd:annotation>
 			<xsd:documentation>A particular journey of a vehicle on a particular OPERATING DAY including all modifications possibly decided by the control staff.</xsd:documentation>
@@ -363,7 +374,7 @@ The VIEW includes derived ancillary data from referenced entities.</xsd:document
 								<xsd:group ref="DatedVehicleJourneyReferencesGroup"/>
 								<xsd:element name="datedPassingTimes" type="targetPassingTimes_RelStructure" minOccurs="0">
 									<xsd:annotation>
-										<xsd:documentation>PASSING TIMEs  for JOURNEY.</xsd:documentation>
+											<xsd:documentation>DATED PASSING TIMEs  for DATED VEHICLE JOURNEY.</xsd:documentation>
 									</xsd:annotation>
 								</xsd:element>
 								<xsd:element name="datedCalls" type="calls_RelStructure" minOccurs="0">
@@ -395,5 +406,75 @@ The VIEW includes derived ancillary data from referenced entities.</xsd:document
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
+	<!-- ===== VEHICLE PREASSIGNMENT============================================== -->
+	<xsd:complexType name="vehiclePreassignments_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of VEHICLE PREASSIGNMENTs .</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="VehiclePreassignment" maxOccurs="unbounded">
+						<xsd:annotation>
+							<xsd:documentation>The default allocation of a VEHICLE to a NORMAL DATED JOURNEY, for example where a specific ship is used for a specific journey. + v2.0</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="VehiclePreassignment" abstract="false">
+		<xsd:annotation>
+			<xsd:documentation>The default allocation of a VEHICLE to a NORMAL DATED JOURNEY, for example where a specific ship is used for a specific journey.
++ v2.0</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="VehiclePreassignment_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:sequence>
+								<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+							</xsd:sequence>
+							<xsd:sequence>
+								<xsd:group ref="DataManagedObjectGroup"/>
+							</xsd:sequence>
+							<xsd:sequence>
+								<xsd:group ref="AssignmentGroup"/>
+							</xsd:sequence>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="VehiclePreassignmentGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="VehiclePreassignmentIdType" use="optional">
+						<xsd:annotation>
+							<xsd:documentation>Identifier of ENTITY.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="VehiclePreassignment_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation> Type for VEHICLE PREASSIGNMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="Assignment_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="VehiclePreassignmentGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="VehiclePreassignmentGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for VEHICLE PREASSIGNMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="VehicleRef"/>
+		</xsd:sequence>
+	</xsd:group>
 	<!-- ======================================================================= -->
 </xsd:schema>
