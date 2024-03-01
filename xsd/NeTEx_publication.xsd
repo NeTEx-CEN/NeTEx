@@ -336,6 +336,27 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
+		<!-- =====Contract============================== -->
+		<!-- =====Contract unique========================== -->
+		<xsd:unique name="Contract_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [Contract Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:Contract"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====Contract Key ========================== -->
+		<xsd:keyref name="Contract_AnyKeyRef" refer="netex:Contract_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:ContractRef |.//netex:SupplyContractRef  "/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="Contract_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:Contract"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
 		<!-- =====Entity_Entity============================== -->
 		<!-- =====Entity_Entity unique========================== -->
 		<xsd:unique name="Entity_Entity_UniqueBy_Id_Version">
@@ -4504,13 +4525,13 @@ Correct COnstraints for PointOnRoute
 		<!-- =====RentalAvailability unique========================== -->
 		<xsd:unique name="RentalAvailability_UniqueBy_Id_Version">
 			<xsd:annotation>
-				<xsd:documentation>Every [Contract Id + Version] must be unique within document.</xsd:documentation>
+				<xsd:documentation>Every [RentalAvailability Id + Version] must be unique within document.</xsd:documentation>
 			</xsd:annotation>
 			<xsd:selector xpath=".//netex:RentalAvailability"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:unique>
-		<!-- =====Contract Key ========================== -->
+		<!-- =====RentalAvailability Key ========================== -->
 		<xsd:keyref name="RentalAvailability_KeyRef" refer="netex:RentalAvailability_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:RentalAvailabilityRef"/>
 			<xsd:field xpath="@ref"/>
@@ -4589,13 +4610,13 @@ Correct COnstraints for PointOnRoute
 		<!-- =====ParkingBayCondition unique========================== -->
 		<xsd:unique name="ParkingBayCondition_UniqueBy_Id_Version">
 			<xsd:annotation>
-				<xsd:documentation>Every [Contract Id + Version] must be unique within document.</xsd:documentation>
+				<xsd:documentation>Every [ParkingBayConditionId + Version] must be unique within document.</xsd:documentation>
 			</xsd:annotation>
 			<xsd:selector xpath=".//netex:ParkingBayCondition"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:unique>
-		<!-- =====Contract Key ========================== -->
+		<!-- =====ParkingBay Key ========================== -->
 		<xsd:keyref name="ParkingBayCondition_KeyRef" refer="netex:ParkingBayCondition_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:ParkingBayConditionRef"/>
 			<xsd:field xpath="@ref"/>
@@ -10396,7 +10417,7 @@ Correct COnstraints for PointOnRoute
 		<!-- =====UserProfileEligibility unique========================== -->
 		<xsd:unique name="UserProfileEligibility_UniqueBy_Id_Version">
 			<xsd:annotation>
-				<xsd:documentation>Every [Contract Id + Version] must be unique within document.</xsd:documentation>
+				<xsd:documentation>Every [UserProfileEligibility Id + Version] must be unique within document.</xsd:documentation>
 			</xsd:annotation>
 			<xsd:selector xpath=".//netex:UserProfileEligibility"/>
 			<xsd:field xpath="@id"/>
@@ -10417,7 +10438,7 @@ Correct COnstraints for PointOnRoute
 		<!-- =====CommercialProfileEligibility unique========================== -->
 		<xsd:unique name="CommercialProfileEligibility_UniqueBy_Id_Version">
 			<xsd:annotation>
-				<xsd:documentation>Every [Contract Id + Version] must be unique within document.</xsd:documentation>
+				<xsd:documentation>Every [CommercialProfileEligibility Id + Version] must be unique within document.</xsd:documentation>
 			</xsd:annotation>
 			<xsd:selector xpath=".//netex:CommercialProfileEligibility"/>
 			<xsd:field xpath="@id"/>
@@ -10438,7 +10459,7 @@ Correct COnstraints for PointOnRoute
 		<!-- =====ResidentialQualificationEligibility unique========================== -->
 		<xsd:unique name="ResidentialQualificationEligibility_UniqueBy_Id_Version">
 			<xsd:annotation>
-				<xsd:documentation>Every [Contract Id + Version] must be unique within document.</xsd:documentation>
+				<xsd:documentation>Every [ResidentialQualificationEligibility Id + Version] must be unique within document.</xsd:documentation>
 			</xsd:annotation>
 			<xsd:selector xpath=".//netex:ResidentialQualificationEligibility"/>
 			<xsd:field xpath="@id"/>
@@ -10459,7 +10480,7 @@ Correct COnstraints for PointOnRoute
 		<!-- =====CustomerPaymentMeans unique========================== -->
 		<xsd:unique name="CustomerPaymentMeans_UniqueBy_Id_Version">
 			<xsd:annotation>
-				<xsd:documentation>Every [Contract Id + Version] must be unique within document.</xsd:documentation>
+				<xsd:documentation>Every [CustomerPaymentMeans Id + Version] must be unique within document.</xsd:documentation>
 			</xsd:annotation>
 			<xsd:selector xpath=".//netex:CustomerPaymentMeans"/>
 			<xsd:field xpath="@id"/>
@@ -10604,12 +10625,11 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====ContractEntry============================== -->
-		<!-- =====ContractEntry============================== -->
-		<!-- =====ContractEntry unique========================== -->
+		<!-- =====FareContractEntry============================== -->
+		<!-- =====FareContract unique========================== -->
 		<xsd:unique name="FareContractEntry_UniqueBy_Id_Version">
 			<xsd:annotation>
-				<xsd:documentation>Every [Contract Id + Version] must be unique within document.</xsd:documentation>
+				<xsd:documentation>Every [FareContractEntry Id + Version] must be unique within document.</xsd:documentation>
 			</xsd:annotation>
 			<xsd:selector xpath=".//netex:FareContractEntry"/>
 			<xsd:field xpath="@id"/>
@@ -10673,7 +10693,7 @@ Correct COnstraints for PointOnRoute
 		<!-- =====CustomerAccount unique========================== -->
 		<xsd:unique name="CustomerAccount_UniqueBy_Id_Version">
 			<xsd:annotation>
-				<xsd:documentation>Every [Contract Id + Version] must be unique within document.</xsd:documentation>
+				<xsd:documentation>Every [CustomerAccount Id + Version] must be unique within document.</xsd:documentation>
 			</xsd:annotation>
 			<xsd:selector xpath=".//netex:CustomerAccount"/>
 			<xsd:field xpath="@id"/>
