@@ -17,7 +17,10 @@
 				<Coverage>Europe</Coverage>
 				<Creator>First Drafted for NeTEx version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.  mailto:schemer@netex.org.uk</Creator>
 				<Date>
-					<Modified>2024-02-29</Modified>Add TRACTIVE TRAIN ELEMENT TYPE,  TRAILING TRAIN ELEMENT TYPE, ROLLING STOCK INVENTOR
+					<Modified>2024-03-01</Modified>Add SPOT AFFINITY
+				</Date>
+				<Date>
+					<Modified>2024-02-29</Modified>Add  PASSENGER AT SPOT TIME and missing TIMETABLED PASSING TIME, ESTIMATED PASSING TIME etc
 				</Date>
 				<Date>
 					<Modified>2024-02-26</Modified>Add CONTRACT, correct documentation on other items
@@ -3838,7 +3841,7 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====SpotColumn==(NM)========================== -->
+		<!-- =====SpotColumn====================== -->
 		<!-- =====SpotColumn unique========================== -->
 		<xsd:unique name="SpotColumn_UniqueBy_Id_Version">
 			<xsd:annotation>
@@ -3859,7 +3862,7 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====PassengerSpot==(NM)========================== -->
+		<!-- =====PassengerSpot=========================== -->
 		<!-- =====PassengerSpot unique========================== -->
 		<xsd:unique name="PassengerSpot_UniqueBy_Id_Version">
 			<xsd:annotation>
@@ -3880,7 +3883,7 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====LuggageSpot ==(NM)========================== -->
+		<!-- =====LuggageSpot =========================== -->
 		<!-- =====LuggageSpot unique========================== -->
 		<xsd:unique name="LuggageSpot_UniqueBy_Id_Version">
 			<xsd:annotation>
@@ -3901,7 +3904,7 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====PassengerVehicleSpot==(NM)========================== -->
+		<!-- =====PassengerVehicleSpot============================== -->
 		<!-- =====PassengerVehicleSpot unique========================== -->
 		<xsd:unique name="PassengerVehicleSpot_UniqueBy_Id_Version">
 			<xsd:annotation>
@@ -3922,7 +3925,7 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====TypeOfLocatableSpot==(NM)========================== -->
+		<!-- =====TypeOfLocatableSpot============================ -->
 		<!-- =====TypeOfLocatableSpot unique========================== -->
 		<xsd:unique name="TypeOfLocatableSpot_UniqueBy_Id_Version">
 			<xsd:annotation>
@@ -3943,7 +3946,28 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====DeckPlan==(NM)========================== -->
+		<!-- =====SpotAffinity============================== -->
+		<!-- =====SpotAffinity unique========================== -->
+		<xsd:unique name="SpotAffinity_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [SpotAffinity Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:SpotAffinity"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====SpotAffinity Key ========================== -->
+		<xsd:keyref name="SpotAffinity_KeyRef" refer="netex:SpotAffinity_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:SpotAffinityRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="SpotAffinity_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:SpotAffinity"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====DeckPlan=============================== -->
 		<!-- =====DeckPlan unique========================== -->
 		<xsd:unique name="DeckPlan_UniqueBy_Id_Version">
 			<xsd:annotation>
@@ -3964,7 +3988,7 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====Deck==(NM)========================== -->
+		<!-- =====Deck=========================== -->
 		<!-- =====Deck unique========================== -->
 		<xsd:unique name="Deck_UniqueBy_Id_Version">
 			<xsd:annotation>
@@ -3985,7 +4009,7 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====PassengerSpace==(NM)========================== -->
+		<!-- =====PassengerSpace============================ -->
 		<!-- =====PassengerSpace unique========================== -->
 		<xsd:unique name="PassengerSpace_UniqueBy_Id_Version">
 			<xsd:annotation>
@@ -4006,7 +4030,7 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====TypeOfLocatableSpot==(NM)========================== -->
+		<!-- =====OtherDeckSpace================================= -->
 		<!-- =====OtherDeckSpace unique========================== -->
 		<xsd:unique name="OtherDeckSpace_UniqueBy_Id_Version">
 			<xsd:annotation>
@@ -4027,7 +4051,7 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====DeckEntrance==(NM)========================== -->
+		<!-- =====DeckEntrance============================ -->
 		<!-- =====DeckEntrance Key ========================== -->
 		<xsd:keyref name="DeckEntrance_KeyRef" refer="netex:DeckEntrance_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:FromDeckEntranceRef|.//netex:ToDeckEntranceRef "/>
@@ -4039,7 +4063,7 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====PassengerEntrance==(NM)========================== -->
+		<!-- =====PassengerEntrance============================= -->
 		<!-- =====PassengerEntrance unique========================== -->
 		<xsd:unique name="PassengerEntrance_UniqueBy_Id_Version">
 			<xsd:annotation>
@@ -4060,7 +4084,7 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====OtherDeckEntrance==(NM)========================== -->
+		<!-- =====OtherDeckEntrance============================ -->
 		<!-- =====OtherDeckEntrance unique========================== -->
 		<xsd:unique name="OtherDeckEntrance_UniqueBy_Id_Version">
 			<xsd:annotation>
@@ -4081,7 +4105,7 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====DeckVehicleEntrance==(NM)========================== -->
+		<!-- =====DeckVehicleEntrance========================= -->
 		<!-- =====DeckVehicleEntrance unique========================== -->
 		<xsd:unique name="DeckVehicleEntrance_UniqueBy_Id_Version">
 			<xsd:annotation>
@@ -4102,7 +4126,7 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====DeckEntranceUsage==(NM)========================== -->
+		<!-- =====DeckEntranceUsage============================= -->
 		<!-- =====DeckEntranceUsage unique========================== -->
 		<xsd:unique name="DeckEntranceUsage_UniqueBy_Id_Version">
 			<xsd:annotation>
@@ -4123,7 +4147,7 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====DeckEntranceCouple==(NM)========================== -->
+		<!-- =====DeckEntranceCouple============================= -->
 		<!-- =====DeckEntranceCouple unique========================== -->
 		<xsd:unique name="DeckEntranceCouple_UniqueBy_Id_Version">
 			<xsd:annotation>
@@ -4144,7 +4168,7 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====DeckLevel==(NM)========================== -->
+		<!-- =====DeckLevel============================== -->
 		<!-- =====DeckLevel unique========================== -->
 		<xsd:unique name="DeckLevel_UniqueBy_Id_Version">
 			<xsd:annotation>
@@ -4165,7 +4189,7 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====DeckCapacity==(NM)========================== -->
+		<!-- =====DeckCapacity============================ -->
 		<!-- =====DeckCapacity unique========================== -->
 		<xsd:unique name="DeckCapacity_UniqueBy_Id_Version">
 			<xsd:annotation>
@@ -4186,7 +4210,7 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====TypeOfDeckSpace==(NM)========================== -->
+		<!-- =====TypeOfDeckSpace========================== -->
 		<!-- =====TypeOfDeckSpace unique========================== -->
 		<xsd:unique name="TypeOfDeckSpace_UniqueBy_Id_Version">
 			<xsd:annotation>
@@ -4207,7 +4231,7 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====TypeOfDeckEntrance==(NM)========================== -->
+		<!-- =====TypeOfDeckEntrance============================ -->
 		<!-- =====TypeOfDeckEntrance unique========================== -->
 		<xsd:unique name="TypeOfDeckEntrance_UniqueBy_Id_Version">
 			<xsd:annotation>
@@ -4228,7 +4252,7 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====DeckPlanAssignment==(NM)========================== -->
+		<!-- =====DeckPlanAssignment============================ -->
 		<!-- =====DeckPlanAssignment unique========================== -->
 		<xsd:unique name="DeckPlanAssignment_UniqueBy_Id_Version">
 			<xsd:annotation>
@@ -4249,7 +4273,7 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====DeckEntranceAssignment==(NM)========================== -->
+		<!-- =====DeckEntranceAssignment========================== -->
 		<!-- =====DeckEntranceAssignment unique========================== -->
 		<xsd:unique name="DeckEntranceAssignment_UniqueBy_Id_Version">
 			<xsd:annotation>
@@ -4291,7 +4315,7 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====BedEquipment==(NM)========================== -->
+		<!-- =====BedEquipment============================ -->
 		<!-- =====BedEquipment unique========================== -->
 		<xsd:unique name="BedEquipment_UniqueBy_Id_Version">
 			<xsd:annotation>
@@ -4312,7 +4336,7 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====LuggageSpotEquipment==(NM)========================== -->
+		<!-- =====LuggageSpotEquipment============================== -->
 		<!-- =====LuggageSpotEquipment unique========================== -->
 		<xsd:unique name="LuggageSpotEquipment_UniqueBy_Id_Version">
 			<xsd:annotation>
@@ -4333,7 +4357,7 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====EntranceSensor==(NM)========================== -->
+		<!-- =====EntranceSensor============================= -->
 		<!-- =====EntranceSensor unique========================== -->
 		<xsd:unique name="EntranceSensor_UniqueBy_Id_Version">
 			<xsd:annotation>
@@ -4354,7 +4378,7 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====SpotSensor==(NM)========================== -->
+		<!-- =====SpotSensor=========================== -->
 		<!-- =====SpotSensor unique========================== -->
 		<xsd:unique name="SpotSensor_UniqueBy_Id_Version">
 			<xsd:annotation>
@@ -4396,7 +4420,7 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====SensorInSpot==(NM)========================== -->
+		<!-- =====SensorInSpot============================ -->
 		<!-- =====SensorInSpot unique========================== -->
 		<xsd:unique name="SensorInSpot_UniqueBy_Id_Version">
 			<xsd:annotation>
