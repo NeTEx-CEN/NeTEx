@@ -3,6 +3,7 @@
 <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:siri="http://www.siri.org.uk/siri" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_ifopt_path_version">
 	<xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_path_version.xsd"/>
 	<xsd:include schemaLocation="netex_ifopt_path_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_environment_version.xsd"/>
 	<xsd:include schemaLocation="netex_ifopt_site_version.xsd"/>
 	<!-- ============================================== -->
 	<xsd:annotation>
@@ -25,13 +26,13 @@
 				</Date>
 				<Date><Modified>2019-03-25</Modified>FR49 CD #65  Accessibility changes
 					 CD add new attributes to PathLink : Width, FlooringType,  RightSideBorder,  LeftSideBordert, TiltAngle, CodedTilt, TactileWarningStrip,  TactileGuidingStrip
-					 NK Review: Reorder so as to place like elements toigether, add sub Groups to organize  
+					 NK Review: Reorder so as to place like elements toigether, add sub Groups to organize
  				</Date>
 				<Date><Modified>2019-03-28</Modified>FR49 CD #65  Accessibility changes
-					 NJSK Doc rewviewe 
+					 NJSK Doc rewviewe
 					 Revise name of ___PathLink___   ___Width___ to ___MinimumWidth__, add enw attribute ___MinimumHeight___
-					 Revise name of  ___PathLink___  new attribute ___CodedTilt___ to ___TiltType___ to be consistent 				
- 				    Also add new attributes ___MaximumGradient___ and MaximumGradientType___ to  ___PathLink___   	
+					 Revise name of  ___PathLink___  new attribute ___CodedTilt___ to ___TiltType___ to be consistent
+ 				    Also add new attributes ___MaximumGradient___ and MaximumGradientType___ to  ___PathLink___
  				</Date>
 				<Date><Modified>2024-02-05</Modified>Revise to share common features with DECK PATH LINK, add OffSItePathLink
 				</Date>
@@ -76,22 +77,6 @@ Rail transport, Roads and Road transport
 		<xsd:documentation>IFOPT PATH LINK Model.</xsd:documentation>
 	</xsd:annotation>
 	<!-- ======================================================================= -->
-	<xsd:group name="FixedPathLinkGroup">
-		<xsd:annotation>
-			<xsd:documentation>Elements of a  OFF SITE PATH LINK.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:sequence>
-			<xsd:element name="Description" type="MultilingualString" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Description of PATH LINK.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:group ref="PathLinkElementGroup"/>
-			<xsd:group ref="EnvironmentPropertiesGroup"/>
-			<xsd:group ref="PathPropertiesGroup"/>
-			<xsd:group ref="LinkDurationGroup"/>
-		</xsd:sequence>
-	</xsd:group>
 	<xsd:complexType name="SitePathLinkEndStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for an  OFF SITE P PATH LINK END.</xsd:documentation>
@@ -195,7 +180,7 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Destination end of PATH LINK.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:group ref="FixedPathLinkGroup"/>
+			<xsd:group ref="PathDescriptionGroup"/>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ====== SITE PATH LINK =============================================== -->
@@ -272,7 +257,7 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Destination end of PATH LINK.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:group ref="FixedPathLinkGroup">
+			<xsd:group ref="PathDescriptionGroup">
 				<xsd:annotation>
 					<xsd:documentation>Elements of a  fixed PATH LINK.</xsd:documentation>
 				</xsd:annotation>
@@ -322,6 +307,9 @@ Rail transport, Roads and Road transport
 							<xsd:group ref="PointGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
+							<xsd:group ref="PathJunctionGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
 							<xsd:group ref="SitePathJunctionGroup"/>
 						</xsd:sequence>
 					</xsd:sequence>
@@ -335,7 +323,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Type for a SITE PATH JUNCTION.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
-			<xsd:extension base="Point_VersionStructure">
+			<xsd:extension base="PathJunction_VersionStructure">
 				<xsd:sequence>
 					<xsd:group ref="SitePathJunctionGroup"/>
 				</xsd:sequence>
@@ -347,11 +335,6 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Elements of a SITE PATH JUNCTION.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="ParentZoneRef" type="ZoneRefStructure" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Parent ZONE that contains this PATH JUNCTION.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
 			<xsd:group ref="SiteElementPropertiesGroup">
 				<xsd:annotation>
 					<xsd:documentation>Elements of a SITE ELEMENTs.</xsd:documentation>
