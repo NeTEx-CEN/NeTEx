@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_ifopt_checkConstraint_support">
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_ifopt_checkConstraint_support">
 	<xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_assignment_support.xsd"/>
 	<xsd:annotation>
 		<xsd:appinfo>
@@ -16,10 +16,6 @@
 				</Date>
 				<Date><Modified>2017-10-25</Modified>  Add TYPE OF CONGESTION.
 				</Date>
-				<Date><Modified>2024-01-17</Modified>DECK PLANS: add ladder to AccesFeatureType enumeration.
-				</Date>
-				<Date><Modified>2024-02-17</Modified>DECK PLANS: REmodularise Move  AccsesFeatureType enumeration to acceeess_Support
-				</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines common Check types.</p>
 				</Description>
@@ -32,7 +28,7 @@
 				<Language>[ISO 639-2/B] ENG</Language>
 				<Publisher>Kizoom Software Ltd, 16 High Holborn, London WC1V 6BX</Publisher>
 				<Rights>Unclassified
-					 <Copyright>CEN, Crown Copyright 2009-2024</Copyright>
+ <Copyright>CEN, Crown Copyright 2009-2014</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -175,13 +171,7 @@ Rail transport, Roads and Road transport
 			<xsd:enumeration value="ticketCollection"/>
 			<xsd:enumeration value="ticketValidation"/>
 			<xsd:enumeration value="baggageCheckIn"/>
-			<xsd:enumeration value="checkIn"/>
-			<xsd:enumeration value="checkOut"/>
-			<xsd:enumeration value="checkout">
-				<xsd:annotation>
-					<xsd:documentation>DEPRECATED. -v2.0</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
+			<xsd:enumeration value="checkout"/>
 			<xsd:enumeration value="oversizeBaggageCheckIn"/>
 			<xsd:enumeration value="oversizeBaggageReclaim"/>
 			<xsd:enumeration value="baggageReclaim"/>
@@ -219,6 +209,42 @@ Rail transport, Roads and Road transport
 			<xsd:enumeration value="anyService"/>
 			<xsd:enumeration value="other"/>
 		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="AccessFeatureEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for an access feature.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="lift"/>
+			<xsd:enumeration value="escalator"/>
+			<xsd:enumeration value="freightElevator"/>
+			<xsd:enumeration value="travelator"/>
+			<xsd:enumeration value="ramp"/>
+			<xsd:enumeration value="stairs"/>
+			<xsd:enumeration value="seriesOfStairs"/>
+			<xsd:enumeration value="shuttle"/>
+			<xsd:enumeration value="crossing"/>
+			<xsd:enumeration value="barrier"/>
+			<xsd:enumeration value="narrowEntrance"/>
+			<xsd:enumeration value="hall"/>
+			<xsd:enumeration value="concourse"/>
+			<xsd:enumeration value="confinedSpace"/>
+			<xsd:enumeration value="queueManagement"/>
+			<xsd:enumeration value="none"/>
+			<xsd:enumeration value="unknown"/>
+			<xsd:enumeration value="other"/>
+			<xsd:enumeration value="openSpace"/>
+			<xsd:enumeration value="street"/>
+			<xsd:enumeration value="pavement"/>
+			<xsd:enumeration value="footpath"/>
+			<xsd:enumeration value="passage"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="AccessFeatureListOfEnumerations">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for a list of access features.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:list itemType="AccessFeatureEnumeration"/>
 	</xsd:simpleType>
 	<xsd:simpleType name="CongestionEnumeration">
 		<xsd:annotation>

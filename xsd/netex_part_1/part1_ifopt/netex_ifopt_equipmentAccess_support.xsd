@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_ifopt_equipmentAccess_support">
-	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_equipment_support.xsd"/>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_ifopt_equipmentAccess_support">
+	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_equipment_version.xsd"/>
+	<xsd:include schemaLocation="../../netex_framework/netex_utility/netex_utility_types.xsd"/>
 	<!-- ======================================================================= -->
 	<xsd:annotation>
 		<xsd:appinfo>
@@ -26,10 +27,6 @@
  				</Date>
 				<Date><Modified>2021-07-14</Modified>Fix catch up - Make Access Equipment Abstarct 
 				</Date>
-				<Date><Modified>2024-01-17</Modified>DECK PLAN and EPIA add DoorType
-				</Date>
-				<Date><Modified>2024-02-05</Modified>Path refactoring: Move	TactileWarningStripEnumeration to path_support. Also cdrop unusued LightingMethod - shoudl be LightingOnMethod
-				</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines ACCESS EQUIPMENT types for Place access.</p>
 				</Description>
@@ -42,7 +39,7 @@
 				<Language>[ISO 639-2/B] ENG</Language>
 				<Publisher>Kizoom Software Ltd, 16 High Holborn, London WC1V 6BX</Publisher>
 				<Rights>Unclassified
-					 <Copyright>CEN, Crown Copyright 2009-2024</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2021</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -119,60 +116,6 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
-	<xsd:simpleType name="DoorTypeEnumeration">
-		<xsd:annotation>
-			<xsd:documentation>Allowed values for DOOR TYPE +2.0</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="xsd:NMTOKEN">
-			<xsd:enumeration value="hingedSingle">
-				<xsd:annotation>
-					<xsd:documentation>Single door hinged at one side.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="hingedPair">
-				<xsd:annotation>
-					<xsd:documentation>Pair of doors, hinged at either side of ENTRANCE.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="slidingSingle">
-				<xsd:annotation>
-					<xsd:documentation>Single door, sliding to one side.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="slidingPair">
-				<xsd:annotation>
-					<xsd:documentation>Pair of sliding doors, sliding apart to each side.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="foldingSingle">
-				<xsd:annotation>
-					<xsd:documentation>Single door, folding to one side.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="foldingPair">
-				<xsd:annotation>
-					<xsd:documentation>Pair of folding doors, folding to each side.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="hingedRamp">
-				<xsd:annotation>
-					<xsd:documentation>Door hinged at bottom to drop down as boarding ramp.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="revolving">
-				<xsd:annotation>
-					<xsd:documentation>Revolving Door.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="other">
-				<xsd:annotation>
-					<xsd:documentation>Other type of door </xsd:documentation>
-				</xsd:annotation>
-			</xsd:enumeration>
-			<xsd:enumeration value="none"/>
-			<xsd:enumeration value="unknown"/>
-		</xsd:restriction>
-	</xsd:simpleType>
 	<!-- ======================================================================= -->
 	<xsd:simpleType name="RampEquipmentIdType">
 		<xsd:annotation>
@@ -408,6 +351,18 @@ Rail transport, Roads and Road transport
 		</xsd:simpleContent>
 	</xsd:complexType>
 	<!-- ======================================================================= -->
+	<xsd:simpleType name="TactileWarningStripEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for TactileWarningStrip </xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="tactileStripAtBeginning"/>
+			<xsd:enumeration value="tactileStripAtEnd"/>
+			<xsd:enumeration value="tactileStripAtBothEnds"/>
+			<xsd:enumeration value="noTactileStrip"/>
+			<xsd:enumeration value="unknown"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<!-- ======================================================================= -->
 	<xsd:simpleType name="PlaceLightingIdType">
 		<xsd:annotation>
@@ -443,6 +398,18 @@ Rail transport, Roads and Road transport
 		<xsd:restriction base="ObjectIdType"/>
 	</xsd:simpleType>
 	<!-- ======================================================================= -->
+	<xsd:simpleType name="LightingEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed value for Lighting.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="wellLit"/>
+			<xsd:enumeration value="poorlyLit"/>
+			<xsd:enumeration value="unlit"/>
+			<xsd:enumeration value="unknown"/>
+			<xsd:enumeration value="other"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<xsd:simpleType name="LightingOnMethodEnumeration">
 		<xsd:annotation>
 			<xsd:documentation>Allowed values for lighting method.</xsd:documentation>
@@ -492,6 +459,18 @@ Rail transport, Roads and Road transport
 			<xsd:enumeration value="none"/>
 			<xsd:enumeration value="oneSide"/>
 			<xsd:enumeration value="bothSides"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="GradientEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for Gradient steepness.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="verySteep"/>
+			<xsd:enumeration value="steep"/>
+			<xsd:enumeration value="medium"/>
+			<xsd:enumeration value="gentle"/>
+			<xsd:enumeration value="level"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="EntranceAttentionEnumeration">

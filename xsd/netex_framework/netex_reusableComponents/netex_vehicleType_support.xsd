@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_vehicleType_support">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_vehicleType_support">
 	<xsd:include schemaLocation="netex_equipment_support.xsd"/>
-	<!-- =====VEHICLE TYPE types=========================================== -->
+	<!-- ======================================================================= -->
 	<xsd:annotation>
 		<xsd:appinfo>
 			<Metadata xmlns="http://www.govtalk.gov.uk/CM/gms-xs">
@@ -37,8 +37,6 @@
 				</Date>
 				<Date><Modified>2023-01-30</Modified>TM CR: Enhancement Add Accepted Driver Permit
 				</Date>
-				<Date><Modified>2024-01-17</Modified>TM CR: Enhancement Add PASSENGER VEHICLE CAPACITY
-				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the VEHICLE TYPE identifier Types.</p>
@@ -55,7 +53,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
-					 <Copyright>CEN, Crown Copyright 2009-2024</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2020</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -271,32 +269,6 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
-	<!-- ======= PASSENGER VEHICLE CAPACITY =========================================== -->
-	<xsd:simpleType name="PassengerVehicleCapacityIdType">
-		<xsd:annotation>
-			<xsd:documentation>Type for identifier of a PASSENGER VEHICLE CAPACITY.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="ObjectIdType"/>
-	</xsd:simpleType>
-	<xsd:element name="PassengerVehicleCapacityRef" type="PassengerVehicleCapacityRefStructure" substitutionGroup="VersionOfObjectRef">
-		<xsd:annotation>
-			<xsd:documentation>Reference to a PASSENGER VEHICLE CAPACITY.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:complexType name="PassengerVehicleCapacityRefStructure">
-		<xsd:annotation>
-			<xsd:documentation>Type for a reference to a PASSENGER VEHICLE CAPACITY.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:simpleContent>
-			<xsd:restriction base="VersionOfObjectRefStructure">
-				<xsd:attribute name="ref" type="PassengerVehicleCapacityIdType" use="required">
-					<xsd:annotation>
-						<xsd:documentation>Identifier of a VEHICLE.</xsd:documentation>
-					</xsd:annotation>
-				</xsd:attribute>
-			</xsd:restriction>
-		</xsd:simpleContent>
-	</xsd:complexType>
 	<!-- ===== VEHICLE MANOEVRING REQUIREMENT ================================================= -->
 	<xsd:simpleType name="VehicleManoeuvringRequirementIdType">
 		<xsd:annotation>
@@ -344,6 +316,44 @@ Rail transport, Roads and Road transport
 				<xsd:attribute name="ref" type="FacilityRequirementIdType" use="required">
 					<xsd:annotation>
 						<xsd:documentation>Identifier of referenced entity.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!-- ====== VEHICLE ================================================== -->
+	<xsd:complexType name="vehicleRefs_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of VEHICLEs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="oneToManyRelationshipStructure">
+				<xsd:sequence>
+					<xsd:element ref="VehicleRef" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:simpleType name="VehicleIdType">
+		<xsd:annotation>
+			<xsd:documentation>Type for identifier of a VEHICLE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ObjectIdType"/>
+	</xsd:simpleType>
+	<xsd:element name="VehicleRef" type="VehicleRefStructure" substitutionGroup="VersionOfObjectRef">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a VEHICLE.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="VehicleRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a reference to a VEHICLE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="VersionOfObjectRefStructure">
+				<xsd:attribute name="ref" type="VehicleIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Identifier of a VEHICLE.</xsd:documentation>
 					</xsd:annotation>
 				</xsd:attribute>
 			</xsd:restriction>
@@ -485,120 +495,29 @@ Rail transport, Roads and Road transport
 			<xsd:enumeration value="unknown"/>
 		</xsd:restriction>
 	</xsd:simpleType>
-	<!--  ===== vehicle categories === -->
-	<!-- Portable vehicles -->
-	<xsd:simpleType name="PortableVehicleCategoryListOfEnumerations">
+	<xsd:simpleType name="SimpleVehicleCategoryEnumeration">
 		<xsd:annotation>
-			<xsd:documentation>Allowed values for list of Portable Wheeled VEHICLE types.+V2.0</xsd:documentation>
+			<xsd:documentation>Allowed values for Personal Vehicle Categories _v1.2.2</xsd:documentation>
 		</xsd:annotation>
-		<xsd:list itemType="PortableVehicleCategoryEnumeration"/>
-	</xsd:simpleType>
-	<xsd:simpleType name="PortableVehicleCategoryEnumeration">
-		<xsd:annotation>
-			<xsd:documentation>Allowed values for Portable VEHICLE types. +V2.0</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="xsd:string">
+		<xsd:restriction base="xsd:normalizedString">
 			<xsd:enumeration value="scooter"/>
-			<xsd:enumeration value="eScooter"/>
 			<xsd:enumeration value="cycle"/>
-			<xsd:enumeration value="pedalCycle"/>
-			<xsd:enumeration value="eCycle"/>
-		</xsd:restriction>
-	</xsd:simpleType>
-	<!-- Personal vehicles -->
-	<xsd:simpleType name="PersonalVehicleCategoryListOfEnumerations">
-		<xsd:annotation>
-			<xsd:documentation>Allowed values for list of Personal Wheeled VEhICLE types.+V2.0</xsd:documentation>
-		</xsd:annotation>
-		<xsd:list itemType="PersonalVehicleCategoryEnumeration"/>
-	</xsd:simpleType>
-	<xsd:simpleType name="PersonalVehicleCategoryEnumeration">
-		<xsd:annotation>
-			<xsd:documentation>Allowed values for Personal VEHICLE types.+V2.0</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="tricycle"/>
+			<xsd:enumeration value="tandem"/>
 			<xsd:enumeration value="moped"/>
 			<xsd:enumeration value="motorcycle"/>
-			<xsd:enumeration value="motorcycleWithSidecar"/>
-			<xsd:enumeration value="motorScooter"/>
-			<xsd:enumeration value="twoWheeledVehicle"/>
-			<xsd:enumeration value="threeWheeledVehicle"/>
+			<xsd:enumeration value="quadbike"/>
 			<xsd:enumeration value="car"/>
 			<xsd:enumeration value="microCar"/>
 			<xsd:enumeration value="miniCar"/>
 			<xsd:enumeration value="smallCar"/>
 			<xsd:enumeration value="mediumCar"/>
-			<xsd:enumeration value="passengerCar"/>
 			<xsd:enumeration value="largeCar"/>
-			<xsd:enumeration value="fourWheelDrive"/>
-			<xsd:enumeration value="taxi"/>
-			<xsd:enumeration value="camperCar"/>
-			<xsd:enumeration value="caravan"/>
-			<xsd:enumeration value="carWithTrailer"/>
-			<xsd:enumeration value="carWithCaravan"/>
-			<xsd:enumeration value="minibus"/>
 			<xsd:enumeration value="minivan"/>
-			<xsd:enumeration value="snowmobile"/>
-			<xsd:enumeration value="undefined"/>
-			<xsd:enumeration value="other"/>
-			<xsd:enumeration value="allPassengerVehicles"/>
-			<xsd:enumeration value="all"/>
-		</xsd:restriction>
-	</xsd:simpleType>
-	<!-- Commercial Vehicles -->
-	<xsd:simpleType name="CommercialVehicleCategoryListOfEnumerations">
-		<xsd:annotation>
-			<xsd:documentation>Allowed values for list of Wheeled commercial VEHICLE types.+V2.0</xsd:documentation>
-		</xsd:annotation>
-		<xsd:list itemType="CommercialVehicleCategoryEnumeration"/>
-	</xsd:simpleType>
-	<xsd:simpleType name="CommercialVehicleCategoryEnumeration">
-		<xsd:annotation>
-			<xsd:documentation>Allowed values for Wheeled commercial  VEHICLE types.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="xsd:string">
-			<xsd:enumeration value="bus"/>
-			<xsd:enumeration value="van"/>
 			<xsd:enumeration value="transporter"/>
-			<xsd:enumeration value="largeVan"/>
-			<xsd:enumeration value="highSidedVehicle"/>
-			<xsd:enumeration value="lightGoodsVehicle"/>
-			<xsd:enumeration value="heavyGoodsVehicle"/>
-			<xsd:enumeration value="agriculturalVehicle"/>
-			<xsd:enumeration value="tanker"/>
-			<xsd:enumeration value="truck"/>
-			<xsd:enumeration value="articulatedVehicle"/>
-			<xsd:enumeration value="largeTrailer"/>
-			<xsd:enumeration value="vehicleWithTrailer"/>
-			<xsd:enumeration value="lightGoodsVehicleWithTrailer"/>
-			<xsd:enumeration value="heavyGoodsVehicleWithTrailer"/>
+			<xsd:enumeration value="van"/>
+			<xsd:enumeration value="snowmobile"/>
 		</xsd:restriction>
-	</xsd:simpleType>
-	<!-- All Road vehicles -->
-	<xsd:simpleType name="AllRoadVehicleCategoriesListOfEnumerations">
-		<xsd:annotation>
-			<xsd:documentation>Allowed values for list of All road  Wheeled VEHICLE types.+V2.0</xsd:documentation>
-		</xsd:annotation>
-		<xsd:list itemType="AllRoadVehicleCategoryEnumeration"/>
-	</xsd:simpleType>
-	<xsd:simpleType name="AllRoadVehicleCategoryEnumeration">
-		<xsd:annotation>
-			<xsd:documentation>All road vehicle types.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:union memberTypes="PortableVehicleCategoryEnumeration PersonalVehicleCategoryEnumeration CommercialVehicleCategoryEnumeration"/>
-	</xsd:simpleType>
-	<!-- All Simple Road vehicles -->
-	<xsd:simpleType name="SimpleVehicleCategoriesListOfEnumerations">
-		<xsd:annotation>
-			<xsd:documentation>Allowed values for list of All road  Wheeled VEHICLE types.+V2.0</xsd:documentation>
-		</xsd:annotation>
-		<xsd:list itemType="SimpleVehicleCategoryEnumeration"/>
-	</xsd:simpleType>
-	<xsd:simpleType name="SimpleVehicleCategoryEnumeration">
-		<xsd:annotation>
-			<xsd:documentation>All road vehicle types.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:union memberTypes="PortableVehicleCategoryEnumeration PersonalVehicleCategoryEnumeration"/>
 	</xsd:simpleType>
 	<!-- ===== VEHICLE PROFILE ======================================================== -->
 	<xsd:simpleType name="VehicleProfileIdType">
@@ -647,32 +566,6 @@ Rail transport, Roads and Road transport
 				<xsd:attribute name="ref" type="PurposeOfEquipmentProfileIdType" use="required">
 					<xsd:annotation>
 						<xsd:documentation>Reference to a PURPOSE OF EQUIPMENT PROFILE.</xsd:documentation>
-					</xsd:annotation>
-				</xsd:attribute>
-			</xsd:restriction>
-		</xsd:simpleContent>
-	</xsd:complexType>
-	<!-- ===== VEHICLE PEQUIPMENT PROFILE MEMBER ================================================ -->
-	<xsd:simpleType name="VehicleEquipmentProfileMemberIdType">
-		<xsd:annotation>
-			<xsd:documentation>Type for identifier of a VEHICLE EQUIPMENT PROFILE MEMBER.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="ObjectIdType"/>
-	</xsd:simpleType>
-	<xsd:element name="VehicleEquipmentProfileMemberRef" type="VehicleEquipmentProfileMemberRefStructure" substitutionGroup="VersionOfObjectRef">
-		<xsd:annotation>
-			<xsd:documentation>Reference to a VEHICLE EQUIPMENT PROFILE MEMBER</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:complexType name="VehicleEquipmentProfileMemberRefStructure">
-		<xsd:annotation>
-			<xsd:documentation>Type for a reference to a VEHICLE EQUIPMENT PROFILE MEMBER.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:simpleContent>
-			<xsd:restriction base="VersionOfObjectRefStructure">
-				<xsd:attribute name="ref" type="VehicleEquipmentProfileMemberIdType" use="required">
-					<xsd:annotation>
-						<xsd:documentation>Identifier of referenced VEHICLE EQUIPMENT PROFILE MEMBER</xsd:documentation>
 					</xsd:annotation>
 				</xsd:attribute>
 			</xsd:restriction>
