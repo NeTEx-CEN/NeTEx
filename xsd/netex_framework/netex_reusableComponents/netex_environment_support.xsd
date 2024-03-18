@@ -168,12 +168,22 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element name="TactileWarningStrip" type="TactileWarningStripEnumeration" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Nature of the  tactile warning strips (in the direction of the PATH LINK). +v1.1</xsd:documentation>
+					<xsd:documentation>Nature of the tactile warning strips (in the direction of the PATH LINK). +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TactileWarningStripContrast" type="xsd:boolean" minOccurs="0" default="true">
+				<xsd:annotation>
+					<xsd:documentation>Indicates whether the color of the possible warning strip is sufficiently contrasted with the color of the floor.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="TactileGuidingStrip" type="xsd:boolean" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Indicates whether there are guiding strips. +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TactileGuidingStripStatus" type="TactileGuidingStripStatusEnumeration" minOccurs="0" default="goodAndContrasted">
+				<xsd:annotation>
+					<xsd:documentation>Provides additional details on possible guiding strip.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -329,7 +339,7 @@ Rail transport, Roads and Road transport
 	</xsd:simpleType>
 	<xsd:simpleType name="TactileWarningStripEnumeration">
 		<xsd:annotation>
-			<xsd:documentation>Allowed values for TactileWarningStrip </xsd:documentation>
+			<xsd:documentation>Allowed values for TactileWarningStrip.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:NMTOKEN">
 			<xsd:enumeration value="tactileStripAtBeginning"/>
@@ -337,6 +347,33 @@ Rail transport, Roads and Road transport
 			<xsd:enumeration value="tactileStripAtBothEnds"/>
 			<xsd:enumeration value="noTactileStrip"/>
 			<xsd:enumeration value="unknown"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TactileGuidingStripStatusEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for the status of the Tactile Guiding Strip.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="goodAndContrasted">
+				<xsd:annotation>
+					<xsd:documentation>When the guiding strip has the expected quality level.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="primitive">
+				<xsd:annotation>
+					<xsd:documentation>When there is no guiding strip as such but a decorative element or ledge can be used for this purpose.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="incorrect">
+				<xsd:annotation>
+					<xsd:documentation>When there is a guiding strip but it does not correspond to a path that can actually be used (passes through the middle of an obstacle without going around it for example).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="bad">
+				<xsd:annotation>
+					<xsd:documentation>When the guiding strip is degraded and difficult to interpret.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<!-- ======================================================================= -->
