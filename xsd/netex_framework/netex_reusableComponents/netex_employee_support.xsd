@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_employee_support">
+	<xsd:include schemaLocation="../../netex_framework/netex_responsibility/netex_relationship.xsd"/>
+	<xsd:annotation>
+		<xsd:appinfo>
+			<Metadata xmlns="http://www.govtalk.gov.uk/CM/gms-xs">
+				<Aggregation>main schema</Aggregation>
+				<Audience>e-service developers</Audience>
+				<Contributor>V1.0 Christophe Duquesne</Contributor>
+				<Contributor>Nicholas Knowles</Contributor>
+				<Coverage>Europe</Coverage>
+				<Creator>First drafted for NeTEx version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.  mailto:schemer@netex.org.uk</Creator>
+				<Date>
+					<Created>2023-02-15</Created>
+				</Date>
+				<Date>
+					<Modified>2023-02-15</Modified>
+				</Date>
+				<Description>
+					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
+					<p>This sub-schema describes the  EMPLOYEE identifier types.</p>
+				</Description>
+				<Format>
+					<MediaType>text/xml</MediaType>
+					<Syntax>http://www.w3.org/2001/XMLSchema</Syntax>
+					<Description>XML schema, W3C Recommendation 2001</Description>
+				</Format>
+				<Identifier>{http://www.netex.org.uk/schemas/1.0/xsd/netex_part_2/part2_vehicleService}netex_employee_support.xsd</Identifier>
+				<Language>[ISO 639-2/B] ENG</Language>
+				<Publisher>Kizoom, 109-123 Clifton Street, London EC4A 4LD </Publisher>
+				<Relation>
+					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
+				</Relation>
+				<Rights>Unclassified
+					 <Copyright>CEN, Crown Copyright 2009-2023</Copyright>
+				</Rights>
+				<Source>
+					<ul>
+						<li>Derived from the Transmodel, VDV, TransXChange, NEPTUNE, BISON and Trident standards.</li>
+					</ul>
+				</Source>
+				<Status>Version 1.0</Status>
+				<Subject>
+					<Category>Arts, recreation and travel, Tourism, Travel (tourism), Transport,
+Air transport, Airports,
+Ports and maritime transport, Ferries (marine),
+Public transport, Bus services, Coach services, Bus stops and stations,
+Rail transport, Railway stations and track, Train services, Underground trains,
+Business and industry, Transport, Air transport , Ports and maritime transport, Public transport,
+Rail transport, Roads and Road transport
+</Category>
+					<Project>CEN TC278 WG3 SG9.</Project>
+				</Subject>
+				<Title>NeTEx EMPLOYEE identifier  types.</Title>
+				<Type>Standard</Type>
+			</Metadata>
+		</xsd:appinfo>
+		<xsd:documentation>NeTEx: EMPLOYEE identifier types.</xsd:documentation>
+	</xsd:annotation>
+	<!-- ==== EMPLOYEE ======================================================= -->
+	<xsd:simpleType name="EmployeeIdType">
+		<xsd:annotation>
+			<xsd:documentation>Type for identifier of an EMPLOYEE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ObjectIdType"/>
+	</xsd:simpleType>
+	<xsd:element name="EmployeeRef" type="EmployeeRefStructure" substitutionGroup="VersionOfObjectRef">
+		<xsd:annotation>
+			<xsd:documentation>Reference to an EMPLOYEE. +v2.0</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="EmployeeRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for Reference to an EMPLOYEE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="VersionOfObjectRefStructure">
+				<xsd:attribute name="ref" type="EmployeeIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Identifier of an Employee.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!-- ==== QUALIFICATION ========================================== -->
+	<xsd:simpleType name="QualificationIdType">
+		<xsd:annotation>
+			<xsd:documentation>Type for identifier of a QUALIFICATION.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ObjectIdType"/>
+	</xsd:simpleType>
+	<xsd:element name="QualificationRef" type="QualificationRefStructure" substitutionGroup="VersionOfObjectRef">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a QUALIFICATION. +v2.0</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="QualificationRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for Reference to a QUALIFICATION.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="VersionOfObjectRefStructure">
+				<xsd:attribute name="ref" type="QualificationIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Identifier of a QUALIFICATION.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!-- ======================================================================= -->
+	<!-- =====TYPE OF QUALIFICATION ===================================================== -->
+	<xsd:complexType name="typesOfQualificationRefs_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of TYPE OF QUALIFICATIONs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="oneToManyRelationshipStructure">
+				<xsd:sequence>
+					<xsd:element ref="TypeOfQualificationRef" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:simpleType name="TypeOfQualificationIdType">
+		<xsd:annotation>
+			<xsd:documentation>Type for identifier of a TYPE OF QUALIFICATION.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="TypeOfValueIdType"/>
+	</xsd:simpleType>
+	<xsd:element name="TypeOfQualificationRef" type="TypeOfQualificationRefStructure" substitutionGroup="TypeOfEntityRef">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a TYPE OF QUALIFICATION. +v2.0</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="TypeOfQualificationRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a reference to a TYPE OF QUALIFICATION.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="TypeOfValueRefStructure">
+				<xsd:attribute name="ref" type="TypeOfQualificationIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Reference to identifier of a TYPE OF QUALIFICATION.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!-- ======================================================================= -->
+</xsd:schema>

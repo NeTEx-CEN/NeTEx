@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_employee_version">
+	<xsd:include schemaLocation="netex_employee_support.xsd"/>
+	<xsd:include schemaLocation="netex_facility_support.xsd"/>
+	<xsd:include schemaLocation="../netex_genericFramework/netex_organisation_support.xsd"/>
+	<xsd:include schemaLocation="netex_address_version.xsd"/>
+	<!-- ======================================================================= -->
+	<xsd:annotation>
+		<xsd:appinfo>
+			<Metadata xmlns="http://www.govtalk.gov.uk/CM/gms-xs">
+				<Aggregation>main schema</Aggregation>
+				<Audience>e-service developers</Audience>
+				<Contributor>V1.0 Christophe Duquesne</Contributor>
+				<Contributor>Nicholas Knowles</Contributor>
+				<Coverage>Europe</Coverage>
+				<Creator>First drafted for NeTEx version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.  mailto:schemer@netex.org.uk</Creator>
+				<Date>
+					<Created>2010-09-04</Created>
+				</Date>
+				<Date><Modified>2023-02-15</Modified>Add start  date
+				</Date>
+				<Description>
+					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
+					<p>This sub-schema describes the EMPLOYEE types.</p>
+				</Description>
+				<Format>
+					<MediaType>text/xml</MediaType>
+					<Syntax>http://www.w3.org/2001/XMLSchema</Syntax>
+					<Description>XML schema, W3C Recommendation 2001</Description>
+				</Format>
+				<Identifier>{http://www.netex.org.uk/schemas/1.0/xsd/netex_part_2/part2_vehicleService}netex_duty_version.xsd</Identifier>
+				<Language>[ISO 639-2/B] ENG</Language>
+				<Publisher>Kizoom, 109-123 Clifton Street, London EC4A 4LD </Publisher>
+				<Relation>
+					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
+				</Relation>
+				<Rights>Unclassified
+					 <Copyright>CEN, Crown Copyright 2009-2023</Copyright>
+				</Rights>
+				<Source>
+					<ul>
+						<li>Derived from the Transmodel, VDV,   standards.</li>
+					</ul>
+				</Source>
+				<Status>Version 1.0</Status>
+				<Subject>
+					<Category>Arts, recreation and travel, Tourism, Travel (tourism), Transport,
+Air transport, Airports,
+Ports and maritime transport, Ferries (marine),
+Public transport, Bus services, Coach services, Bus stops and stations,
+Rail transport, Railway stations and track, Train services, Underground trains,
+Business and industry, Transport, Air transport , Ports and maritime transport, Public transport,
+Rail transport, Roads and Road transport
+</Category>
+					<Project>CEN TC278 WG3 SG9.</Project>
+				</Subject>
+				<Title>NeTEx EMPLOYEE    types.</Title>
+				<Type>Standard</Type>
+			</Metadata>
+		</xsd:appinfo>
+		<xsd:documentation>NeTEx: EMPLOYEE  types.</xsd:documentation>
+	</xsd:annotation>
+	<!-- ======================================================================= -->
+	<xsd:group name="EmployeeFrameGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for Employees In FRAME. +v2.0</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="employees" type="employeesInFrame_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>EMPLOYEEs in frame.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="qualificationTypes" type="qualificationTypesInFrame_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>DUTY PARTs (Runs) in frame.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="employeesInFrame_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for containment in frame of EMPLOYEEs</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="Employee" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="qualificationTypesInFrame_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for containment in frame of TYPEs of QUALIFCATION.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="TypeOfQualification" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- === EMPLOYEE ================================================== -->
+	<xsd:element name="Employee" abstract="false" substitutionGroup="DataManagedObject">
+		<xsd:annotation>
+			<xsd:documentation>An employee of the public transport company. +v2.0</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="Employee_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EmployeeGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="EmployeeIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="Employee_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for EMPLOYEE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="DataManagedObjectStructure">
+				<xsd:sequence>
+					<xsd:group ref="EmployeeGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="EmployeeGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for EMPLOYEE</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:group ref="EmployeeParticularsGroup"/>
+			<xsd:group ref="EmployeeContactGroup"/>
+			<xsd:element name="StartDate" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Date on which EMPLOYEE formally started employment.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="OrganisationRef" minOccurs="0"/>
+			<xsd:element name="qualifications" type="qualifications_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Parts of a EMPLOYEE.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="EmployeeParticularsGroup">
+		<xsd:annotation>
+			<xsd:documentation>Particular Elements for EMPLOYEE</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Surname" type="xsd:normalizedString" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Surname of EMPLOYEE.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="FirstName" type="xsd:normalizedString" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>First name of EMPLOYEE.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Title" type="xsd:normalizedString" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Title of EMPLOYEE.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DateOfBirth" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Date of birth of EMPLOYEE.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Gender" type="GenderEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Gender of EMPLOYEE.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Height" type="LengthType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Height of EMPLOYEE.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Photo" type="xsd:anyURI" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Photo of EMPLOYEE.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Smoker" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether the customer likes to smoke. +1.2.2</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="EmployeeContactGroup">
+		<xsd:annotation>
+			<xsd:documentation>Contact Elements for EMPLOYEE</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Email" type="EmailAddressType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Email address of EMPLOYEE. +v1.1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="EmailVerified" type="xsd:dateTime" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Email address of EMPLOYEE last verified +v1.2.2</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Phone" type="TelephoneContactStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Phone number of EMPLOYEE. (Usually personal mobile phone).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="PhoneVerified" type="xsd:dateTime" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Phone of EMPLOYEE last verified +v1.2.2</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="PostalAddress" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- === QUALIFICATION ================================================== -->
+	<xsd:complexType name="qualifications_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of QUALIFICATIONs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="strictContainmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="Qualification" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="Qualification" abstract="false" substitutionGroup="DataManagedObject">
+		<xsd:annotation>
+			<xsd:documentation>A specific knowledge or ability or experience, or a certified skill or education, which may be possessed by an EMPLOYEE and which may be necessary to work a DUTY. The qualification profiles given by all QUALIFICATIONs recorded for EMPLOYEEs are important for correct disposition of DUTies. QUALIFICATIONs may also be assigned to DUTies or SPELLs by the operator. +v2.0</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="Qualification_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="QualificationGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="QualificationIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="Qualification_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for QUALIFICATION.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="DataManagedObjectStructure">
+				<xsd:sequence>
+					<xsd:group ref="QualificationGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="QualificationGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for EMPLOYEE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Description" type="MultilingualString" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Description  of Qualification</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ExpirationDate" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Expiration date of QUALIFICATION (last day of validity).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="TypeOfQualification" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ========= TYPE OF QUALIFICATION ============================================ -->
+	<xsd:element name="TypeOfQualification" abstract="false" substitutionGroup="TypeOfValue">
+		<xsd:annotation>
+			<xsd:documentation>A classification of a QUALIFICATION possessed by an EMPLOYEE. +v2.0</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="TypeOfQualification_ValueStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="TypeOfValueGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="TypeOfQualificationIdType">
+						<xsd:annotation>
+							<xsd:documentation>Identifier of TYPE OF QUALIFICATION.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="TypeOfQualification_ValueStructure" abstract="false">
+		<xsd:annotation>
+			<xsd:documentation>Type for a TYPE OF QUALIFICATION.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="TypeOfEntity_VersionStructure"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_accountableElement_version">
+	<xsd:include schemaLocation="netex_accountableElement_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_framework/netex_responsibility/netex_responsibility_version.xsd"/>
+	<!-- =================== ============================================ -->
+	<xsd:annotation>
+		<xsd:appinfo>
+			<Metadata xmlns="http://www.govtalk.gov.uk/CM/gms-xs">
+				<Aggregation>main schema</Aggregation>
+				<Audience>e-service developers</Audience>
+				<Contributor>V1.0 Christophe Duquesne</Contributor>
+				<Contributor>Nicholas Knowles</Contributor>
+				<Coverage>Europe</Coverage>
+				<Creator>First drafted for NeTEx version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.  mailto:schemer@netex.org.uk</Creator>
+				<Date><Created>2023-02-14</Created> Factorored out of Duty
+				</Date>
+				<Date>
+					<Modified>2023-02-145</Modified>
+				</Date>
+				<Description>
+					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
+					<p>This sub-schema describes the TIME ACCOUNTABLE ACTIVITY types.</p>
+				</Description>
+				<Format>
+					<MediaType>text/xml</MediaType>
+					<Syntax>http://www.w3.org/2001/XMLSchema</Syntax>
+					<Description>XML schema, W3C Recommendation 2001</Description>
+				</Format>
+				<Identifier>{http://www.netex.org.uk/schemas/1.0/xsd/netex_part_2/part2_vehicleService}netex_duty_version.xsd</Identifier>
+				<Language>[ISO 639-2/B] ENG</Language>
+				<Publisher>Kizoom, 109-123 Clifton Street, London EC4A 4LD </Publisher>
+				<Relation>
+					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
+				</Relation>
+				<Rights>Unclassified
+					 <Copyright>CEN, Crown Copyright 2009-2023</Copyright>
+				</Rights>
+				<Source>
+					<ul>
+						<li>Derived from the Transmodel, VDV, TransXChange, NEPTUNE, BISON and Trident standards.</li>
+					</ul>
+				</Source>
+				<Status>Version 1.0</Status>
+				<Subject>
+					<Category>Arts, recreation and travel, Tourism, Travel (tourism), Transport,
+Air transport, Airports,
+Ports and maritime transport, Ferries (marine),
+Public transport, Bus services, Coach services, Bus stops and stations,
+Rail transport, Railway stations and track, Train services, Underground trains,
+Business and industry, Transport, Air transport , Ports and maritime transport, Public transport,
+Rail transport, Roads and Road transport
+</Category>
+					<Project>CEN TC278 WG3 SG9.</Project>
+				</Subject>
+				<Title>NeTEx TIME ACCOUNTABLE ACTIVITY    types.</Title>
+				<Type>Standard</Type>
+			</Metadata>
+		</xsd:appinfo>
+		<xsd:documentation>NeTEx: TIME ACCOUNTABLE ACTIVITY  types.</xsd:documentation>
+	</xsd:annotation>
+	<!-- === TIME ACCOUNTABLE ACTIVITY  =========================================== -->
+	<xsd:element name="AccountableActivity_" type="DataManagedObjectStructure" abstract="true" substitutionGroup="DataManagedObject">
+		<xsd:annotation>
+			<xsd:documentation>Dummy Supertype for ACCOUNTABLE ACTIVITY.</xsd:documentation>
+		</xsd:annotation>
+		<!--
+		<xsd:unique name="AnyLine">
+			<xsd:selector xpath=".//netex:Line"/>
+			<xsd:field xpath="Id"/>
+		</xsd:unique>
+		<xsd:unique name="AnyLineDirection">
+			<xsd:selector xpath=".//netex:allowedDirections/DirectionRef"/>
+			<xsd:field xpath="@ref"/>
+		</xsd:unique>
+	<xsd:unique name="UniqueLineId">
+			<xsd:annotation>
+				<xsd:appinfo>Line identifiers must be unique for Type/Version</xsd:appinfo>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:Line"/>
+			<xsd:field xpath="@version"/>
+			<xsd:field xpath="./netex:Id"/>
+		</xsd:unique> -->
+	</xsd:element>
+	<xsd:element name="AccountableActivity" abstract="true" substitutionGroup="DataManagedObject">
+		<xsd:annotation>
+			<xsd:documentation>An activity to which accounting factors may be assigned. +v2.0</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="AccountableActivity_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="AccountableActivityGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="AccountableActivityIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="AccountableActivity_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for an ACCOUNTABLE ACTIVITY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="DataManagedObjectStructure">
+				<xsd:sequence>
+					<xsd:group ref="AccountableActivityGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="AccountableActivityGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for an ACCOUNTABLE ACTIVITY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Name" type="MultilingualString" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Name of the ACCOUNTABLE ACTIVITY.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Description" type="MultilingualString" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Description of the ACCOUNTABLE ACTIVITY.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="AccountingFactor" type="xsd:normalizedString" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Accounting Factor to use for the ACCOUNTABLE ACTIVITY.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="AccountingTime" type="xsd:duration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>How long a time should be used for accounting the ACCOUNTABLE ACTIVITY.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- === TIME ACCOUNTABLE ACTIVITY  ========================================= -->
+	<xsd:element name="TimeAccountableActivity_" type="DataManagedObjectStructure" abstract="true" substitutionGroup="AccountableActivity_">
+		<xsd:annotation>
+			<xsd:documentation>Dummy Supertype for ACCOUNTABLE ACTIVITY.</xsd:documentation>
+		</xsd:annotation>
+		<!--
+		<xsd:unique name="AnyLine">
+			<xsd:selector xpath=".//netex:Line"/>
+			<xsd:field xpath="Id"/>
+		</xsd:unique>
+		<xsd:unique name="AnyLineDirection">
+			<xsd:selector xpath=".//netex:allowedDirections/DirectionRef"/>
+			<xsd:field xpath="@ref"/>
+		</xsd:unique>
+	<xsd:unique name="UniqueLineId">
+			<xsd:annotation>
+				<xsd:appinfo>Line identifiers must be unique for Type/Version</xsd:appinfo>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:Line"/>
+			<xsd:field xpath="@version"/>
+			<xsd:field xpath="./netex:Id"/>
+		</xsd:unique> -->
+	</xsd:element>
+	<xsd:element name="TimeAccountableActivity" abstract="true" substitutionGroup="AccountableActivity_">
+		<xsd:annotation>
+			<xsd:documentation>An activity which may have a TIME ALLOWANCE. +v2.0</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="TimeAccountableActivity_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="AccountableActivityGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="TimeAccountableActivityGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="TimeAccountableActivityIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="TimeAccountableActivity_VersionStructure" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation>Type for TIME ACCOUNTABLE ACTIVITY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AccountableActivity_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="TimeAccountableActivityGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="TimeAccountableActivityGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a TIME ACCOUNTABLE ACTIVITY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="PreparationDuration" type="xsd:duration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Time to prepare TIME ACCOUNTABLE ACTIVITY.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="FinishingDuration" type="xsd:duration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Time to complete TIME ACCOUNTABLE ACTIVITY.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="timeAllowances" type="timeAllowances_RelStructure" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ==== TIME RANGE ====================================================== -->
+	<xsd:group name="TimeRangeGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a Time Range.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="StartTime" type="xsd:time" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Start time.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="StartDayOffset" type="DayOffsetType" default="0" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Day offset for start time. Number of days after the current operating day for Duty. Default is 0 for same day.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="EndTime" type="xsd:time" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>End time.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="EndDayOffset" type="DayOffsetType" default="0" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Day offset for end time. Number of days after the starting departure time of the journey if not same calendar day as starting time. Default is 0 for same day.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- === TIME ALLOWANCE  =========================================== -->
+	<xsd:complexType name="timeAllowances_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of TIME ALLOWANCes</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="TimeAllowance" maxOccurs="unbounded">
+						<xsd:annotation>
+							<xsd:documentation>An area within a Site. May be connected to Quays by PATH LINKs.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="TimeAllowance" abstract="false" substitutionGroup="VersionedChild">
+		<xsd:annotation>
+			<xsd:documentation>An activity to which accounting factors may be assigned. +v2.0</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="TimeAllowance_VersionedChildStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="VersionedChildGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="TimeAllowanceGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="TimeAllowanceIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="TimeAllowance_VersionedChildStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for TIME ALLOWANCE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="VersionedChildStructure">
+				<xsd:sequence>
+					<xsd:group ref="TimeAllowanceGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="TimeAllowanceGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a TIME ALLOWANCE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Duration" type="xsd:duration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Duration of a TIME ALLOWANCE.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ==== TYPE OF ALLOWANCE ============================================== -->
+	<xsd:element name="TypeOfTimeAllowance" abstract="false" substitutionGroup="TypeOfEntity">
+		<xsd:annotation>
+			<xsd:documentation>A classification of additional paid times, including the information whether the allowance is given before or after the main activity. +v2.0</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="TypeOfTimeAllowance_ValueStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="TypeOfValueGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="TypeOfTimeAllowanceIdType"/>
+					<xsd:attribute name="nameOfClassifiedEntityClass" type="NameOfClass" use="optional" fixed="Line">
+						<xsd:annotation>
+							<xsd:documentation>Name of Class of the ENTITY. Allows reflection. Fixed for each ENTITY type.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="TypeOfTimeAllowance_ValueStructure" abstract="false">
+		<xsd:annotation>
+			<xsd:documentation>Type for a TYPE OF TIME ALLOWANCE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="TypeOfEntity_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="TypeOfTimeAllowanceGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="TypeOfTimeAllowanceGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a TIME ACCOUNTABLE ACTIVITY.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="preOrPost" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether the TIME ALLOWANCE is before or after the main activity.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+</xsd:schema>

@@ -19,222 +19,247 @@ There is a simple route with three stops    A - B  - C
 traversed in both directions  ABC, CBA
 
 Outbound timetable
-		Day															Night
-		VJ_1o	VJ_3o	VJ_5o	VJ_7o	VJ_9o	       VJ_11o	 
-A     	11.10	12:20	 13:45	15:55	17:30			20:10
-B	    11: 20	12:30	 13:55	16:05	17:40			20:20			
-C		11:40	12:50	 14:15	16:25	18:00			20:40
+........Day......................................Night
+....VJ_1o...VJ_3o...VJ_5o...VJ_7o...VJ_9o.......VJ_11o
+A...11.10...12:20...13:45...15:55...17:30.......20:10
+B...11:20...12:30...13:55...16:05...17:40.......20:20
+C...11:40...12:50...14:15...16:25...18:00.......20:40
 
 Inbound timetable
-		Day															Night
-		VJ_2o	VJ_4o	VJ_6o	VJ_8o	VJ_10o		VJ_12o	 	
-C		11:45	13:10   	14:20	16:55 	 18:05			20:45	
-B	    12:05	13:30	14:40	17:15	 18:25			21:05				
-A     	12:15	13:40	14:50	17:25     18:35			21:15	
+......Day.......................................Night
+....VJ_2o...VJ_4o...VJ_6o...VJ_8o...VJ_10o......VJ_12o
+C...11:45...13:10...14:20...16:55...18:05.......20:45
+B...12:05...13:30...14:40...17:15...18:25.......21:05
+A...12:15...13:40...14:50...17:25...18:35.......21:15
 
 		
 
 
 The BLOCK starts and ends at at a garage G1, and goes to a parking P1 between blocks so  the runs are
 	GA, ABC, CBA, ABC, CP, PC, CBA, ABC, BCA, ABC, CP, PC,CBA, ABC, CBA,AG
-
-   <=VS1===================================================================><==VS2=============>
-     <==   blk_L24_1===========><=BLK_2	==================><==BLK_3============><==   blk_L24_2===========>
-		DR_1o  																											DR_10i					DR_11o  		DR_12o 
-G		11.00  																											18:45					 		20:00  	 21:25
-   10M    | 																													/|\								   | 				/|\
-			 \|/																												 |							  	 \|/				 |				
-	 
-		VJ_1o			VJ_2i	VJ_3o	VJ_4i	 VJ_5o	VJ_6i   VJ_7o		VJ_8i	VJ_9o	VJ_10i					VJ_11o	 	VJ_11o	 
-	  outbound	inbound outbound	inbound outbound	inbound outbound	inbound	outbound	inbound				outbound	inbound	 
-	W5M
-A     	11.10		12:15- - ->12:20	 13:40- - ->13:45	14:50 - ->15:55	 17:25 - ->17:30   18:35					  	20:10   21:15			
-   10M    | 				/|\			 | 			/|\				 | 			/|\			 | 			/|\			 | 			/|\							 | 			/|\		
-			 \|/			 | 			\|/		  	 | 				\|/			 |			\|/		     | 			\|/			 |							\|/			 |
-B	    11: 20		12:05	12:30	  13:30 		 13:55	14:40	16:05	  17:15 	  17:40 	  18:25		 			  20:20  	21:05				
-   20M    | 				/|\			 | 			/|\				 | 			/|\			 | 			/|\			 | 			/|\							 | 			/|\	
-			 \|/			 | 			\|/		  	 | 				\|/			 |			\|/		     | 			\|/			 |							\|/			 |
-C		11:40 - - -> 11:45	12:50		13:10   	14:15- - ->14:20	16:25	16:55 	  18:00- - ->18:05				  20:40 - - ->20:45	
-	W5M							DR_3o		DR_4i							DR_7o	DR_8o
-   5M    . 				...			 |			 | 				...			...			 |			 | 				...			 
-		   . 				...			\|/			/|\				....		...			\|/			/|\				....		 
-P1    ...				....		12:55- - ->13:05			....		....	16:30- - ->16:40	...			...		 
-	W10M																					RELIEF POINT
-   <=DP01===========================================><==DP02=============>
-
+..
+........<==blk_L24_1==============>..<==BLK_2=========================>..<==BLK_3============>..<==  blk_L24_2===========>...}::BLOCKS
+........DR_1o ....................................................................................DR_10i...DR_11o.....DR_12....}::DEAD RUNS
+G-grgpt1.11.00....................................................................................18:40...20:00.......21:25....}
+..10M....|........................................................................................ /!\......|.........../|\....}::TIMING LINKs
+........\|/........................................................................................,|......\|/.. ........|.....} 
+........VJ_1o....VJ_2i......VJ_3o.....VJ_4i.....VJ_5o.....VJ_6i.....VJ_7o.....VJ_8i.....VJ_9o.....VJ_10i....VJ_11o.....VJ_11o....}::VEHICLE JOURNEYS	 
+......outbound..inbound....outbound..inbound..outbound..inbound..outbound....inbound...outbound..inbound..outbound..inbound	 
+..W5M....................................................................................................................
+A........11.10....12:15-:-:->12:20....13:40-:-:->13:45....14:50-:-:->15:55.....17:25-:-:->17:30...18:35.....20:10   21:15.......}:STOPs/ PASSING TIMEs 	
+..10M.....|......../|\........|......../|\........|......../|\........|......../|\........|......../|\........|......../|\......}::TIMING LINKs
+.........\|/........|........\|/........|........\|/........|........\|/........|........\|/........|........\|/........|.......}
+B........11:20....12:05.....12:30.....13:30.....13:55.....14:40.....16:05.....17:15.....17:40.....18:25.....20:20.....21:05......}:STOPs/ PASSING TIMEs 
+..20M.....|......../|\........|......../|\........|......../|\........|......../|\........|......../|\........|......../|\.......}::TIMING LINKs
+.........\|/........|........\|/........|........\|/........|........\|/........|........\|/........|........\|/........|........}
+C........11:40:-:-:-> 11:45	12:50.....13:10.....14:15-:-:->14:20.....16:25.....16:55....18:00:-:->18:05......20:40 -:-:->20:45...}:STOPs/ PASSING TIMEs 
+...W5M.......................DR_3o......DR_4i........................DR_7o.....DR_8o...........................................}
+...5M.........................|.........|.............................|.........|..............................................}::DEAD RUNS
+.............................\|/......./|\...........................\|/......./|\.............................................}
+P1..W10M....................12:55-:-:->13:05.........................16:30-:-:->16:40..........................................}		
+...GARAGE.. ...................PARKiNG ..............................PARKiNG....................RELIEF POINT..... ...GARAGE ......}::RELIEF POINTS/GARAGE POINTs/PARKING POINTs
+...G-grgpt1...................P1-pkgpt1............................P1-pkgpt1........................C.............. G-grgpt1	
  
+...RO
+...ro_L24_01@r01 11:00
+.........................ro_L24_01@r02...12:55
+.................................................................ro_L24_02@r01...16:30
+.................................................................ro_L24_02@r02...16:30
+................................................................................................ro_L24_02@r02...16:30
+  <=DT01==========================================================================================================================>
+   <=DP01===========================================>..<==DP02====================================>..<==DP03=======================>
+........06:00.................................13:00.......13:00...............................18:00.....19:00................22:00
+
+
+
+
+
+There are RELIEF  OPPORTUNITIES
+...(1) xj:ro_L24_01@r01...11:00...BLOCK: ops:blk_L24_01...GARAGE POINT : grgpt1
+...(2) xj:ro_L24_01@r02...12:25...BLOCK: ops:blk_L24_01...PARKING POINT : pkgpt1
+...(2) xj:blk_L24_01@rl01	 11:10		       BLOCK:   ops:blk_L24_01	RELIEF POINT 				 pkgpt1	 grgpt1 
+...(2)  xj:vj_3o	 12:20		outbound       BLOCK:   ops:blk_L24_01		 
+
+
 1. SERVICE PATTERN
  
- This has just  three SCHEDULED STOP POINTs      
-		A  :  mybus:ssp_001  	Alpha
-		B  :  mybus:ssp_002	 Bravo
-		C  :  mybus:ssp_077 	Charley
+This has just  three SCHEDULED STOP POINTs:
+........A  :  mybus:ssp_001 Alpha
+........B  :  mybus:ssp_002	Bravo
+........C  :  mybus:ssp_077 Charley
 
-	There is a GARAGE  G1  mybus:Garage:grg1 
-			with  GARAGE POINT    G1pt 	mybus:grgpt1
-	 There is a PARKING POINT   P1 		mybus:pkgpt1
+Infrastucture Points
+........There is a GARAGE  G1  mybus:grg1 with  GARAGE POINT G1pt mybus:grgpt1
+........There is a PARKING POINT  P1 mybus::pkgpt1
+........Stop A is also a Relief point for some journeys  ybus:rl_ssp_00_relief
 
 2. Vehicle Service
 
-There is one VEHICLE SERVICE  xj:vs_L24_1
-	 With two VEHiCLE SERVICE PARTs
-		xj:VehicleService:vs_L24_1_01	Day Service
-		xj:VehicleService:vs_L24N_1_02  Night Service
+There is one VEHICLE SERVICE  xj:vs_L24_1:
+.....With two VEHiCLE SERVICE PARTs
+........xj:vs_L24_1_01	Day Service
+........xj:vs_L24N_1_02  Night Service
 
-There are three BLOCKS
-       ops:blk_L24_01   VEHiCLE SERVICE PART : xj:vs_L24_01_01	Day
-       ops:blk_L24_02	VEHiCLE SERVICE PART : xj:vs_L24_02_01 	Day
-       ops:blk_L24_03	VEHiCLE SERVICE PART : xj:vs_L24_03_01 	Day
-      ops:blk_L24N_04	VEHiCLE SERVICE PART : xj:vs_L24_04_01 	Night
+There are four BLOCKS:
+........ops:blk_L24_01...VEHiCLE SERVICE PART : xj:vs_L24_01_01...Day
+........ops:blk_L24_02...VEHiCLE SERVICE PART : xj:vs_L24_02_01...Day
+........ops:blk_L24_03...VEHiCLE SERVICE PART : xj:vs_L24_03_01...Day
+........ops:blk_L24N_04..VEHiCLE SERVICE PART : xj:vs_L24_04_01...Night
 
 There are eight DEAD RUNs :-
 
-	 One at the beginning of the day service to go from     the GARAGE
-     (a)  	xj:DeadRun:dr_1o	 11.00		outbound       BLOCK:  ops:blk_L24_01   		DEAD RUN JP :  kx:drjp_L24_01o
+..One at the beginning of the day service to go from     the GARAGE
+ops:blk_L24_01...VEHiCLE SERVICE PART : xj:vs_L24_01_01...Day
+.......(a) xj:dr_1o...11.00		outbound       BLOCK:  ops:blk_L24_01   		DEAD RUN JP :  kx:drjp_L24_01o
 
-	 Four to  go to  the PARKING POINTs at the intermediate BLOCK s
-     (b)  	xj:DeadRun:dr_3o	 	12.50		outbound       BLOCK:  ops:blk_L24_01     	DEAD RUN JP :  kx:drjp_L24_02o
-     (c)  	xj:DeadRun:dr_4i	 	13.05		inbound         BLOCK:  ops:blk_L24_02 		DEAD RUN JP :  kx:drjp_L24_03i
-     (d)  	xj:DeadRun:dr_7o		 16.25		outbound       BLOCK:  ops:blk_L24_01 		DEAD RUN JP :  kx:drjp_L24_04o
-     (e)  	xj:DeadRun:dr_8i	 	16.40		inbound         BLOCK:  ops:blk_L24_02  		DEAD RUN JP :  kx:drjp_L24_05i
+..Four to  go to  the PARKING POINTs at the intermediate BLOCK s
+.......(b) xj:dr_3o...12.50...outbound...BLOCK: ops:blk_L24_01...DEAD RUN JP: kx:drjp_L24_02o
+.......(c) xj:dr_4i...13.05...inbound....BLOCK: ops:blk_L24_02...DEAD RUN JP: kx:drjp_L24_03i
+.......(d) xj:dr_7o...16.25...outbound...BLOCK: ops:blk_L24_01...DEAD RUN JP: kx:drjp_L24_04o
+.......(e) xj:dr_8i...16.40...inbound....BLOCK: ops:blk_L24_02...DEAD RUN JP: kx:drjp_L24_05i
 
-	 One in  the  end of the day  VEHICLE SERVICE PART to go to     the GARAGE
-      (f)  	xj:DeadRun:dr_10i	 18.35		inbound         BLOCK:  ops:blk_L24_03  		DEAD RUN JP :  kx:drjp_L24_06i
+..One in  the  end of the day  VEHICLE SERVICE PART to go to     the GARAGE
+.......(f) xj:dr_10i...18.35...inbound...BLOCK: ops:blk_L24_0...DEAD RUN JP: kx:drjp_L24_06i
 
+..One at the  start of the night  VEHICLE SERVICE PART to go from the GARAGE
+.......(g) xj:dr_10i...18.35...inbound...BLOCK: ops:blk_L24N_04...DEAD RUN JP: kx:drjp_L24N_07i
+..One at the  end of the night  VEHICLE SERVICE PART to go to the GARAGE
+.......(h) xj:dr_10i...18.35...inbound...BLOCK: ops:blk_L24N_04...DEAD RUN JP: kx:drjp_L24N_08i
 
- One at the  start of the night  VEHICLE SERVICE PART to go from     the GARAGE
-      (f)  	xj:DeadRun:dr_10i	 18.35		inbound         BLOCK:  ops:blk_L24N_04  		DEAD RUN JP :  kx:drjp_L24N_07i
- One at the  end of the night    VEHICLE SERVICE PART to go to     the GARAGE
-      (f)  	xj:DeadRun:dr_10i	 18.35		inbound         BLOCK:  ops:blk_L24N_04  		DEAD RUN JP :  kx:drjp_L24N_08i
+There are twelve SERVICE JOURNEYs in the timetable  
+...(1) xj:vj_1o...11.10...outbound...BLOCK: ops:blk_L24_01...JOURNEY PATTERN : kx:sjp_L24o
+...(2) xj:vj_2i...11.45...inbound....BLOCK: ops:blk_L24_01...JOURNEY PATTERN : kx:sjp_L24i
+...(3) xj:vj_3o...12:20...outbound...BLOCK: ops:blk_L24_01...JOURNEY PATTERN : kx:sjp_L24o
 
-There are   twelve  SERVICE JOURNEYs in the timetable  
-     (1)  	xj:vj_1o	 11.10		outbound       BLOCK:   ops:blk_L24_01  		JOURNEY PATTERN :  kx:sjp_L24o
-     (2)  	xj:vj_2i	 11.45		inbound  	    BLOCK:   ops:blk_L24_01		JOURNEY PATTERN :  kx:sjp_L24i
-     (3) 	xj:vj_3o	 12:20		outbound       BLOCK:   ops:blk_L24_01		JOURNEY PATTERN :  kx:sjp_L24o
+...(4) xj:vj_4i...13:10...inbound....BLOCK: ops:blk_L24_02...JOURNEY PATTERN : kx:sjp_L24i         
+...(5) xj:vj_5o...13:45...outbound...BLOCK: ops:blk_L24_02...JOURNEY PATTERN : kx:sjp_L24o
+...(6) xj:vj_6i...13:45...inbound....BLOCK: ops:blk_L24_02...JOURNEY PATTERN : kx:sjp_L24i     
+...(7) xj:vj_7o...15.55...outbound...BLOCK: ops:blk_L24_02...JOURNEY PATTERN : kx:sjp_L24o  
 
-     (4) 	xj:vj_4i	 13:10		inbound         BLOCK:  ops:blk_L24_02		JOURNEY PATTERN :  kx:sjp_L24i         
-     (5) 	xj:vj_5o	 13:45		outbound       BLOCK:  ops:blk_L24_02		JOURNEY PATTERN :  kx:sjp_L24o
-     (6) 	xj:vj_6i	 13:45		inbound         BLOCK:  ops:blk_L24_02		JOURNEY PATTERN :  kx:sjp_L24i     
-	 (7)  	xj:vj_7o	 15.55		outbound       BLOCK:  ops:blk_L24_02		JOURNEY PATTERN :  kx:sjp_L24o  
+...(8) xj:vj_8i...16.55...inbound....BLOCK: ops:blk_L24_03...JOURNEY PATTERN : kx:sjp_L24i      
+...(9) xj:vj_9o...17:30...outbound...BLOCK: ops:blk_L24_03...JOURNEY PATTERN : kx:sjp_L24o     
+..(10) xj:vj_10i..18:05...inbound....BLOCK: ops:blk_L24_03...JOURNEY PATTERN : kx:sjp_L24i     
 
-     (8)  	xj:vj_8i	 16.55		inbound         BLOCK:  ops:blk_L24_03		JOURNEY PATTERN :  kx:sjp_L24i      
-     (9) 	xj:vj_9o	 17:30		outbound       BLOCK:  ops:blk_L24_03		JOURNEY PATTERN :  kx:sjp_L24o     
-     (10) xj:vj_10i	 18:05		inbound         BLOCK:  ops:blk_L24_03  	JOURNEY PATTERN :  kx:sjp_L24i     
+...(11) xj:vj_11o.17:30...outbound...BLOCK: ops:blk_L24_03...JOURNEY PATTERN : kx:sjp_L24o     
+...(12) xj:vj_12i.18:05...inbound....BLOCK: ops:blk_L24_03...JOURNEY PATTERN : kx:sjp_L24i     
 
-  (11) 	xj:vj_11o	 17:30		outbound       BLOCK:  ops:blk_L24_03		JOURNEY PATTERN :  kx:sjp_L24o     
-     (12) xj:vj_12i	 18:05		inbound         BLOCK:  ops:blk_L24_03  	JOURNEY PATTERN :  kx:sjp_L24i     
 
 There are three COURSE OF JOURNEYs (Runs)
-	1.  ops:coj_L24_01  Block 1 JOURNEYS : 		 xj:vj_L24_01o , xj:vj_L24_02i, xj:vj_L24_03o 
-	3.  ops:coj_L24_02  Block 2 JOURNEYS : 		 xj:vj_L24_04i , xj:vj_L24_05o, xj:vj_L24_06i, xj:vj_L24_07o 
-	3.  ops:coj_L24_03  Block 3 JOURNEYS : 		 xj:vj_L24_08i , xj:vj_L24_09o, xj:vj_L24_10i
+...(1) ops:blk_L24_01  Block 1   12:15  TIMING POINT 
+...(2) ops:coj_L24_02  Block 2 JOURNEYS : 		 xj:vj_L24_04i , xj:vj_L24_05o, xj:vj_L24_06i, xj:vj_L24_07o 
+...(3) ops:coj_L24_03  Block 3 JOURNEYS : 		 xj:vj_L24_08i , xj:vj_L24_09o, xj:vj_L24_10i
+
 3.  Further details 
 
 There is one LINE  mybus:LN_24
 
-There   are two ROUTEs  
-	outbound:  kx:rt_24o
-	inbound: kx:rt_24i
+There are two ROUTEs  
+...(1) outbound: kx:rt_24o
+...(2) inbound:  kx:rt_24i
 
 There are eight ROUTE LINKS
-	 Used in Outbound
-		G1-A : kx:rl_grg1-ssp_001  
-		A-B	: kx:rl_ssp_001-ssp_002  
-		B-C 	: kx:rl_ssp_002-ssp_077
-		C-P1 : kx:rl_ssp_077-pkg1
-   Used in Inbound
-		P1-C 	: kx:rl_pkg1-ssp_077
-		C-B		: kx:rl_ssp_077-ssp_002  
-		B-A		: kx:rl_ssp_002-ssp_001  
-		A-G1	 :kx:rl_ssp_001-grg1  
+...Used in Outbound
+......(1) G1-A : kx:rl_grg1-ssp_001  
+......(2) A-B :  kx:rl_ssp_001-ssp_002  
+......(3) B-C :  kx:rl_ssp_002-ssp_077
+......(4) C-P1 : kx:rl_ssp_077-pkg1
+...Used in Inbound
+......(5) P1-C : kx:rl_pkg1-ssp_077
+......(6) C-B :  kx:rl_ssp_077-ssp_002  
+......(7) B-A :  kx:rl_ssp_002-ssp_001  
+......(8) A-G1 :  kx:rl_ssp_001-grg1  
+
 
 There are ten  TIMING LINKS  * + 2 summary)
-  Used in Outbound
-		G1-A : kx:tl_grg1_to_ssp_001    		==> 	With associated JOURNEY RUN TIME  kx:JJourneyRunTime:jprt_drjp_L24o_grg1-ssp_001_tdt_45   10 Minutes
-		A-B	: kx:tl_ssp_001_to_ssp_002  	==> 	With associated TIME DEMAND  RUN TIME  kx:JJourneyRunTime:jprt_sjp_L24o_ssp_001-ssp_002_tdt_45   10 Minutes
-		B-C 	: kx:tl_ssp_002_to_ssp_077  	==> 	With associated TIME DEMAND  RUN TIME  kx:JJourneyRunTime:jprt_sjp_L24o_ssp_002-ssp_077_tdt_45   20 Minutes
-		C-P1 : kx:tl_ssp_077_to_pkg1   		==> 	With associated TIME DEMAND  RUN TIME  kx:JJourneyRunTime:jprt_drjp_L24o_ssp_077-pkg1_tdt_45   5 Minutes
+..Used in Outbound
+...(1) G1-A : kx:tl_grg1_to_ssp_001.... ==>With associated JOURNEY RUN TIME  kx:JJourneyRunTime:jprt_drjp_L24o_grg1-ssp_001_tdt_45   10 Minutes
+...(2) A-B	: kx:tl_ssp_001_to_ssp_002.. ==> With associated TIME DEMAND  RUN TIME  kx:JJourneyRunTime:jprt_sjp_L24o_ssp_001-ssp_002_tdt_45   10 Minutes
+...(3) B-C : kx:tl_ssp_002_to_ssp_077.. ==> With associated TIME DEMAND  RUN TIME  kx:JJourneyRunTime:jprt_sjp_L24o_ssp_002-ssp_077_tdt_45   20 Minutes
+...(4) C-P1 : kx:tl_ssp_077_to_pkg1.... ==> With associated TIME DEMAND  RUN TIME  kx:JJourneyRunTime:jprt_drjp_L24o_ssp_077-pkg1_tdt_45   5 Minutes
 
-		A-C : kx:tl_ssp_001_to_ssp_077   		==> 	With associated JOURNEY PATTERN RUN TIME  kx:jprt_drjp_L24o_ssp_00-ssp_077_tdt_45   30 Minutes
+...(5) A-C : kx:tl_ssp_001_to_ssp_077.. ==> With associated JOURNEY PATTERN RUN TIME  kx:jprt_drjp_L24o_ssp_00-ssp_077_tdt_45   30 Minutes
 
-   Used in Inbound
-		P1-C 	: kx:tl_pkg1_to_ssp_077   	 ==> 	With associated JOURNEY PATTERN RUN TIME  kx:JJourneyRunTime:jprt_drjp_L24i_pkg1-ssp_077_tdt_45   10 Minutes
-		C-B		: kx:tl_ssp_077_to_ssp_002   ==> 	With associated JOURNEY PATTERN RUN TIME  kx:JJourneyRunTime:jprt_sjp_L24i_ssp_077-ssp_002_tdt_45   20 Minutes
-		B-A		: kx:tl_ssp_002_to_ssp_001   ==> 	With associated JOURNEY PATTERN RUN TIME  kx:JJourneyRunTime:jprt_sjp_L24i_ssp_002-ssp_001_tdt_45   10 Minutes
-		A-G1	 :kx:tl_ssp_001_to_grg1         ==> 	With associated JOURNEY PATTERN RUN TIME  kx:JJourneyRunTime:jprt_drjp_L24i_ssp_001-grg1_tdt_45   10 Minutes
+..Used in Inbound
+...(6) P1-C : kx:tl_pkg1_to_ssp_077....	==> With associated JOURNEY PATTERN RUN TIME  kx:JJourneyRunTime:jprt_drjp_L24i_pkg1-ssp_077_tdt_45   10 Minutes
+...(7) PC-B	: kx:tl_ssp_077_to_ssp_002. ==> With associated JOURNEY PATTERN RUN TIME  kx:JJourneyRunTime:jprt_sjp_L24i_ssp_077-ssp_002_tdt_45   20 Minutes
+...(8) PB-A	: kx:tl_ssp_002_to_ssp_001. ==> With associated JOURNEY PATTERN RUN TIME  kx:JJourneyRunTime:jprt_sjp_L24i_ssp_002-ssp_001_tdt_45   10 Minutes
+...(9) PA-G1 : kx:tl_ssp_001_to_grg1... ==> With associated JOURNEY PATTERN RUN TIME  kx:JJourneyRunTime:jprt_drjp_L24i_ssp_001-grg1_tdt_45   10 Minutes
 
-		C-A : kx:tl_ssp_077_to_ssp_001   		==> 	With associated JOURNEY PATTERN RUN TIME  kx:jprt_drjp_L24o_ssp_077-ssp_001_tdt_45   30 Minutes
+..(10) PC-A : kx:tl_ssp_077_to_ssp_001. ==> With associated JOURNEY PATTERN RUN TIME  kx:jprt_drjp_L24o_ssp_077-ssp_001_tdt_45   30 Minutes
 
 There are two TIMING PATTERNs  shared by the SERVICE JOURNEYS
-	outbound: kx:tpt_12o
-		 With POINTs IN TIMING PATTERN
-			1. kx:tpijp_sjp_L24o_001  ==> SCHEDULED STOP POINT mybus:ssp_001  Alpha
-			2. kx:tpijp_sjp_L24o_002 ==> SCHEDULED STOP POINT  mybus:ssp_002	 Bravo
-			3. kx:tpijp_sjp_L24o_003  ==> SCHEDULED STOP POINTmybus:ssp_077 Charley
- 	inbound: kx:tpt_12i
-		 With POINTs IN TIMING PATTERN
-			1. kx:tpijp_sjp_L24i_001  ==> SCHEDULED STOP POINTmybus:ssp_077 Charley
-			2. kx:tpijp_sjp_L24i_002 ==> SCHEDULED STOP POINT  mybus:ssp_002 Bravo
-			3. kx:tpijp_sjp_L24i_003  ==> SCHEDULED STOP POINT mybus:ssp_001  Alpha
+..(1) outbound: kx:tpt_12o
+.........With POINTs IN TIMING PATTERN
+...........1. kx:tpijp_sjp_L24o_001 ==> SCHEDULED STOP POINT mybus:ssp_001  Alpha
+...........2. kx:tpijp_sjp_L24o_002 ==> SCHEDULED STOP POINT  mybus:ssp_002	 Bravo
+...........3. kx:tpijp_sjp_L24o_003 ==> SCHEDULED STOP POINTmybus:ssp_077 Charley
+..(2) inbound: kx:tpt_12i
+.......  With POINTs IN TIMING PATTERN
+...........1. kx:tpijp_sjp_L24i_001 ==> SCHEDULED STOP POINTmybus:ssp_077 Charley
+...........2. kx:tpijp_sjp_L24i_002 ==> SCHEDULED STOP POINT  mybus:ssp_002 Bravo
+...........3. kx:tpijp_sjp_L24i_003 ==> SCHEDULED STOP POINT mybus:ssp_001  Alpha
 
 There is one TIME DEMAND TYPE  tdt_45
-    with 8 JOURNEY RUN TIMES - See  TIMING PATTERN
+...with 8 JOURNEY RUN TIMES - See  TIMING PATTERN
 
 There are Four SERVICE LINKs    
-  Outwards  A - B - C
-	A-B : kx:sl_ssp_001_to_ssp_002  
-	B-C : kx:sl_ssp_002_to_ssp_077    
-  Back  C - B - A
-	C-B : kx:sl_ssp_0017-ssp_002  
-	B-A : kx:sl_ssp_002_to_ssp_001    
+..Outwards  A - B - C
+....(1) A-B : kx:sl_ssp_001_to_ssp_002  
+....(2) B-C : kx:sl_ssp_002_to_ssp_077    
+..Back  C - B - A
+....(3) C-B : kx:sl_ssp_0017-ssp_002  
+....(4) B-A : kx:sl_ssp_002_to_ssp_001    
 
 There are two SERVICE JOURNEY PATTERNs shared by the SERVICE JOURNEYS
-	outbound: kx:sjp_L24o  A - B - C
-		 With POINTs IN JOURNEY PATTERN
-			1. kx:pijp_sjp_L24o_001  ==> SCHEDULED STOP POINT mybus:ssp_001  Alpha
-			2. kx:pijp_sjp_L24o_002 ==> SCHEDULED STOP POINT  mybus:ssp_002	 Bravo
-			3. kx:pijp_sjp_L24o_003  ==> SCHEDULED STOP POINT mybus:ssp_077 Charley
- 	inbound: kx:sjp_L24i  C - B - A
-		 With POINTs IN JOURNEY PATTERN
-			1. kx:pijp_sjp_L24i_001  ==> SCHEDULED STOP POINT mybus:ssp_077 Charley
-			2. kx:pijp_sjp_L24i_002 ==> SCHEDULED STOP POINT  mybus:ssp_002	 Bravo
-			3. kx:pijp_sjp_L24i_003  ==> SCHEDULED STOP POINT mybus:ssp_001  Alpha
+..(1) outbound: kx:sjp_L24o  A - B - C
+.......With POINTs IN JOURNEY PATTERN
+...........1. kx:pijp_sjp_L24o_001 ==> SCHEDULED STOP POINT mybus:ssp_001...Alpha
+...........2. kx:pijp_sjp_L24o_002 ==> SCHEDULED STOP POINT mybus:ssp_002...Bravo
+...........3. kx:pijp_sjp_L24o_003 ==> SCHEDULED STOP POINT mybus:ssp_077...Charley
+..(2) inbound: kx:sjp_L24i  C - B - A
+.......With POINTs IN JOURNEY PATTERN
+...........1. kx:pijp_sjp_L24i_001 ==> SCHEDULED STOP POINT mybus:ssp_077...Charley
+...........2. kx:pijp_sjp_L24i_002 ==> SCHEDULED STOP POINT mybus:ssp_002...Bravo
+...........3. kx:pijp_sjp_L24i_003 ==> SCHEDULED STOP POINT mybus:ssp_001...Alpha
 
 There are four DEAD RUN JOURNEY PATTERNs  shared by the DEAD RUNs
-	outbound: kx:drjp_L24_01o    G1 - A 
-		 With POINTs IN JOURNEY PATTERN
-			1. kx:pijp_drjp_L24_01o_001  ==> GARAGE POINT mybus:grgpt1
-			2. kx:pijp_drjp_L24_01o_002 ==> SCHEDULED STOP POINT mybus:ssp_001  Alpha
-	outbound: kx:drjp_L24_02o
-		 With POINTs IN JOURNEY PATTERN
-			1. kx:pijp_drjp_L24_02o_001  ==>SCHEDULED STOP POINT mybus:ssp_077 Charley
-			2. kx:pijp_drjp_L24_02o_002 ==> PARKING POINT mybus:pkgpt1
-	inbound: kx:drjp_L24_03i
-		 With POINTs IN JOURNEY PATTERN
-			1. kx:pijp_drjp_L24_03i_001 ==> PARKING POINT mybus:pkgpt1
-			2. kx:pijp_drjp_L24_03i_002  ==>SCHEDULED STOP POINT mybus:ssp_077 Charley
- 	inbound: kx:drjp_L24_04i
-		 With POINTs IN JOURNEY PATTERN
-			1. kx:pijp_drjp_L24_04i_001  ==> SCHEDULED STOP POINT mybus:ssp_001  Alpha
-			2. kx:pijp_drjp_L24_04i_002  ==> GARAGE POINT mybus:grgpt1
+..(1) outbound: kx:drjp_L24_01o    G1 - A 
+.......With POINTs IN JOURNEY PATTERN
+...........1. kx:pijp_drjp_L24_01o_001 ==> GARAGE POINT mybus:grgpt1............Garage
+...........2. kx:pijp_drjp_L24_01o_002 ==> SCHEDULED STOP POINT mybus:ssp_001..Alpha
+..(2) outbound: kx:drjp_L24_02o
+.......With POINTs IN JOURNEY PATTERN
+...........1. kx:pijp_drjp_L24_02o_001 ==> SCHEDULED STOP POINT mybus:ssp_077...Charley
+...........2. kx:pijp_drjp_L24_02o_002 ==> PARKING POINT mybus:pkgpt1...........P1
+..(3) inbound: kx:drjp_L24_03i
+.......With POINTs IN JOURNEY PATTERN
+...........1. kx:pijp_drjp_L24_03i_001 ==> PARKING POINT mybus:pkgpt1...........P1
+...........2. kx:pijp_drjp_L24_03i_002 ==> SCHEDULED STOP POINT mybus:ssp_077...Charley
+..(4) inbound: kx:drjp_L24_04i
+.......With POINTs IN JOURNEY PATTERN
+...........1. kx:pijp_drjp_L24_04i_001 ==> SCHEDULED STOP POINT mybus:ssp_001...Alpha
+...........2. kx:pijp_drjp_L24_04i_002 ==> GARAGE POINT mybus:grgpt1............Garage
 
 4. Duties
 
-There is one DUTY ops:Duty:dty_01 with TWO DUTY PARTS
-	ops:DutyPart:dtypt_01   From G1 a RELIEF POINT at the second visit to the Parking Point
-	ops:DutyPart:dtypt_02  From  RELIEF POINT Back to G1
-	 
+There is one DUTY ops:Duty:dty_01 with THREE DUTY PARTS
+...1. ops:dtypt_01  From G1 GARAGE  POINT at the second visit to the PARKING POINT P1
+...2. ops:dtypt_02  From  PARKING POINT P1 to G1
+...3. ops:dtypt_03 From  G1 to G1 
+
 5. Frames
 
-	A VEHICLE SCHEDULE  FRAME  xj:vsf_12  is used to contain  the block  elements
+...A VEHICLE SCHEDULE  FRAME  xj:vsf_12  is used to contain  the block  elements
 
-	A TIMETABLE FRAME xj:ttf_12 is used to contain the service journey  elements
+...A TIMETABLE FRAME xj:ttf_12 is used to contain the service journey  elements
 
-	A SERVICE FRAME kx:svf_12 is used to contain the SERVICE PATTERN  elements
+...A SERVICE FRAME kx:svf_12 is used to contain the SERVICE PATTERN  elements
 
-	A SERVICE CALENDAR FRAME is used to contain the DAY TYPEs etc
+...A SERVICE CALENDAR FRAME is used to contain the DAY TYPEs etc
 
-	A COMPOSITE FRAME xj:cf_12 is used to group the frames
+...A DRIVER SCHEDULE  FRAME  xj:vsf_12  is used to contain  the DUTY  elements
+
+...A COMPOSITE FRAME xj:cf_12 is used to group the frames
   
 -->
 <PublicationDelivery xmlns="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://www.netex.org.uk/netex ../../../xsd/NeTEx_publication.xsd">
@@ -591,54 +616,54 @@ There is one DUTY ops:Duty:dty_01 with TWO DUTY PARTS
 					<!--- TIMING LINKs======== -->
 					<timingLinks>
 						<TimingLink version="any" id="kx:tl_ssp_001_to_ssp_077">
-							<Name>Overalll Stop A to Stop C </Name>
-							<FromPointRef version="any" ref="mybus:ssp_001"/>
-							<ToPointRef version="any" ref="mybus:ssp_077"/>
+							<Name>Overalll Stop A to Stop C</Name>
+							<FromPointRef version="any" ref="mybus:ssp_001" nameOfRefClass="ScheduledStopPoint"/>
+							<ToPointRef version="any" ref="mybus:ssp_077" nameOfRefClass="ScheduledStopPoint"/>
 						</TimingLink>
 						<TimingLink version="any" id="kx:tl_grg1_to_ssp_001">
 							<Name>G1 to A</Name>
-							<FromPointRef version="any" ref="mybus:grgpt1"/>
-							<ToPointRef version="any" ref="mybus:ssp_001"/>
+							<FromPointRef version="any" ref="mybus:grgpt1" nameOfRefClass="GaragePoint"/>
+							<ToPointRef version="any" ref="mybus:ssp_001" nameOfRefClass="ScheduledStopPoint"/>
 						</TimingLink>
 						<TimingLink version="any" id="kx:tl_ssp_001_to_ssp_002">
 							<Name>A to B</Name>
-							<FromPointRef version="any" ref="mybus:ssp_001"/>
-							<ToPointRef version="any" ref="mybus:ssp_002"/>
+							<FromPointRef version="any" ref="mybus:ssp_001" nameOfRefClass="ScheduledStopPoint"/>
+							<ToPointRef version="any" ref="mybus:ssp_002" nameOfRefClass="ScheduledStopPoint"/>
 						</TimingLink>
 						<TimingLink version="any" id="kx:tl_ssp_002_to_ssp_077">
 							<Name>B to  C</Name>
-							<FromPointRef version="any" ref="mybus:ssp_002"/>
-							<ToPointRef version="any" ref="mybus:ssp_077"/>
+							<FromPointRef version="any" ref="mybus:ssp_002" nameOfRefClass="ScheduledStopPoint"/>
+							<ToPointRef version="any" ref="mybus:ssp_077" nameOfRefClass="ScheduledStopPoint"/>
 						</TimingLink>
 						<TimingLink version="any" id="kx:tl_ssp_077_to_ssp_001">
 							<Name>Overall Stop C  to Stop A</Name>
-							<FromPointRef version="any" ref="mybus:ssp_077"/>
-							<ToPointRef version="any" ref="mybus:ssp_001"/>
+							<FromPointRef version="any" ref="mybus:ssp_077" nameOfRefClass="ScheduledStopPoint"/>
+							<ToPointRef version="any" ref="mybus:ssp_001" nameOfRefClass="ScheduledStopPoint"/>
 						</TimingLink>
 						<TimingLink version="any" id="kx:tl_ssp_077_to_pkg1">
 							<Name>C to P1</Name>
-							<FromPointRef version="any" ref="mybus:ssp_077"/>
-							<ToPointRef version="any" ref="mybus:pkgpt1"/>
+							<FromPointRef version="any" ref="mybus:ssp_077" nameOfRefClass="ScheduledStopPoint"/>
+							<ToPointRef version="any" ref="mybus:pkgpt1" xsi:type="ParkingPointRefStructure"/>
 						</TimingLink>
 						<TimingLink version="any" id="kx:tl_pkg1_to_ssp_077">
 							<Name>P1 to  C</Name>
-							<FromPointRef version="any" ref="mybus:pkgpt1"/>
-							<ToPointRef version="any" ref="mybus:ssp_077"/>
+							<FromPointRef version="any" ref="mybus:pkgpt1" xsi:type="ParkingPointRefStructure"/>
+							<ToPointRef version="any" ref="mybus:ssp_077" nameOfRefClass="ScheduledStopPoint"/>
 						</TimingLink>
 						<TimingLink version="any" id="kx:tl_ssp_077_to_ssp_002">
 							<Name>C to B</Name>
-							<FromPointRef version="any" ref="mybus:ssp_077"/>
-							<ToPointRef version="any" ref="mybus:ssp_002"/>
+							<FromPointRef version="any" ref="mybus:ssp_077" nameOfRefClass="ScheduledStopPoint"/>
+							<ToPointRef version="any" ref="mybus:ssp_002" nameOfRefClass="ScheduledStopPoint"/>
 						</TimingLink>
 						<TimingLink version="any" id="kx:tl_ssp_002_to_ssp_001">
 							<Name>B to  A</Name>
-							<FromPointRef version="any" ref="mybus:ssp_002"/>
-							<ToPointRef version="any" ref="mybus:ssp_001"/>
+							<FromPointRef version="any" ref="mybus:ssp_002" nameOfRefClass="ScheduledStopPoint"/>
+							<ToPointRef version="any" ref="mybus:ssp_001" nameOfRefClass="ScheduledStopPoint"/>
 						</TimingLink>
 						<TimingLink version="any" id="kx:tl_ssp_001_to_grg1">
 							<Name>A to G1</Name>
-							<FromPointRef version="any" ref="mybus:ssp_001"/>
-							<ToPointRef version="any" ref="mybus:grgpt1"/>
+							<FromPointRef version="any" ref="mybus:ssp_001" nameOfRefClass="ScheduledStopPoint"/>
+							<ToPointRef version="any" ref="mybus:grgpt1" nameOfRefClass="GaragePoint"/>
 						</TimingLink>
 					</timingLinks>
 					<timingPatterns>
@@ -888,7 +913,7 @@ There is one DUTY ops:Duty:dty_01 with TWO DUTY PARTS
 					<VehicleModes>bus</VehicleModes>
 					<vehicleJourneys>
 						<!--  ============= SERVICE JOURNEYS ============== -->
-						<DeadRun version="any" id="xj:DeadRun:dr_L24_01o">
+						<DeadRun version="any" id="xj:dr_L24_01o">
 							<Name>1st Dead Run out from Garage in Day  service</Name>
 							<DepartureTime>11:00:00.0Z</DepartureTime>
 							<dayTypes>
@@ -944,7 +969,7 @@ There is one DUTY ops:Duty:dty_01 with TWO DUTY PARTS
 									<ScheduledStopPointRef version="any" ref="mybus:ssp_001"/>
 									<Arrival>
 										<ForAlighting>false</ForAlighting>
-										<DutyPartRef version="any" ref="ops:DutyPart:dtypt_01_01"/>
+										<DutyPartRef version="any" ref="ops:dtypt_01_01"/>
 									</Arrival>
 									<Departure>
 										<Time>11:10:00.0Z</Time>
@@ -1063,7 +1088,7 @@ There is one DUTY ops:Duty:dty_01 with TWO DUTY PARTS
 								</Call>
 							</calls>
 						</ServiceJourney>
-						<DeadRun version="any" id="xj:DeadRun:dr_L24_03o">
+						<DeadRun version="any" id="xj:dr_L24_03o">
 							<Name>Drive to Parking for first wait  service</Name>
 							<DepartureTime>12:50:00.0Z</DepartureTime>
 							<dayTypes>
@@ -1092,7 +1117,7 @@ There is one DUTY ops:Duty:dty_01 with TWO DUTY PARTS
 							</Destination>
 							<DeadRunType>other</DeadRunType>
 						</DeadRun>
-						<DeadRun version="any" id="xj:DeadRun:dr_L24_04i">
+						<DeadRun version="any" id="xj:dr_L24_04i">
 							<Name>Return from Parking after first wait  service</Name>
 							<DepartureTime>11:00:00.0Z</DepartureTime>
 							<dayTypes>
@@ -1313,7 +1338,7 @@ There is one DUTY ops:Duty:dty_01 with TWO DUTY PARTS
 								</Call>
 							</calls>
 						</ServiceJourney>
-						<DeadRun version="any" id="xj:DeadRun:dr_L24_07o">
+						<DeadRun version="any" id="xj:dr_L24_07o">
 							<Name>Drive to Parking for 2nd  wait  with Relief</Name>
 							<DepartureTime>16:25:00.0Z</DepartureTime>
 							<dayTypes>
@@ -1342,7 +1367,7 @@ There is one DUTY ops:Duty:dty_01 with TWO DUTY PARTS
 							</Destination>
 							<DeadRunType>other</DeadRunType>
 						</DeadRun>
-						<DeadRun version="any" id="xj:DeadRun:dr_L24_08i">
+						<DeadRun version="any" id="xj:dr_L24_08i">
 							<Name>Return from Parking after 2nd  wait  with Relief</Name>
 							<DepartureTime>16:50:00.0Z</DepartureTime>
 							<dayTypes>
@@ -1397,11 +1422,11 @@ There is one DUTY ops:Duty:dty_01 with TWO DUTY PARTS
 									<ScheduledStopPointRef version="any" ref="mybus:ssp_077"/>
 									<Arrival>
 										<ForAlighting>false</ForAlighting>
-										<DutyPartRef version="any" ref="ops:DutyPart:dtypt_01_01"/>
+										<DutyPartRef version="any" ref="ops:dtypt_01_01"/>
 									</Arrival>
 									<Departure>
 										<Time>16:55:00.0Z</Time>
-										<DutyPartRef version="any" ref="ops:DutyPart:dtypt_01_02"/>
+										<DutyPartRef version="any" ref="ops:dtypt_01_02"/>
 									</Departure>
 								</Call>
 								<Call id="xj:vj_L24_08i_002" version="any" order="2">
@@ -1517,7 +1542,7 @@ There is one DUTY ops:Duty:dty_01 with TWO DUTY PARTS
 								</Call>
 							</calls>
 						</ServiceJourney>
-						<DeadRun version="any" id="xj:DeadRun:dr_L24_10i">
+						<DeadRun version="any" id="xj:dr_L24_10i">
 							<Name>Return to Garage after Day Service</Name>
 							<DepartureTime>11:00:00.0Z</DepartureTime>
 							<dayTypes>
@@ -1546,7 +1571,7 @@ There is one DUTY ops:Duty:dty_01 with TWO DUTY PARTS
 							</Destination>
 							<DeadRunType>garageRunIn</DeadRunType>
 						</DeadRun>
-						<DeadRun version="any" id="xj:DeadRun:dr_L24N_11o">
+						<DeadRun version="any" id="xj:dr_L24N_11o">
 							<Name>1st Dead Run out from Garage to start Night   service</Name>
 							<DepartureTime>20:00:00.0Z</DepartureTime>
 							<dayTypes>
@@ -1601,7 +1626,7 @@ There is one DUTY ops:Duty:dty_01 with TWO DUTY PARTS
 									<ScheduledStopPointRef version="any" ref="mybus:ssp_001"/>
 									<Arrival>
 										<ForAlighting>false</ForAlighting>
-										<DutyPartRef version="any" ref="ops:DutyPart:dtypt_01_03"/>
+										<DutyPartRef version="any" ref="ops:dtypt_01_03"/>
 									</Arrival>
 									<Departure>
 										<Time>20:10:00.0Z</Time>
@@ -1672,7 +1697,7 @@ There is one DUTY ops:Duty:dty_01 with TWO DUTY PARTS
 								</Call>
 							</calls>
 						</ServiceJourney>
-						<DeadRun version="any" id="xj:DeadRun:dr_L24N_12i">
+						<DeadRun version="any" id="xj:dr_L24N_12i">
 							<Name>Last Dead Run back from Garage in Night  service</Name>
 							<DepartureTime>21:15:00.0Z</DepartureTime>
 							<dayTypes>
@@ -1845,24 +1870,24 @@ There is one DUTY ops:Duty:dty_01 with TWO DUTY PARTS
 					</vehicleServices>
 				</VehicleScheduleFrame>
 				<DriverScheduleFrame version="any" id="xj:dtf_01">
-					<Name>Driver Scheudles for Line 1</Name>
+					<Name>Driver Schedules for Line 1</Name>
 					<duties>
 						<Duty version="any" id="ops:Duty:dty_01">
 							<Description/>
 							<dutyParts>
-								<DutyPart version="any" id="ops:DutyPart:dtypt_01_01">
+								<DutyPart version="any" id="ops:dtypt_01_01">
 									<StartTime>06:00:00Z</StartTime>
-									<EndTime>16:30:00Z</EndTime>
+									<EndTime>13:00:00Z</EndTime>
 									<StartPointRef version="any" ref="mybus:grgpt1"/>
 									<EndPointRef version="any" ref="mybus:pkgpt1"/>
 								</DutyPart>
-								<DutyPart version="any" id="ops:DutyPart:dtypt_01_02">
+								<DutyPart version="any" id="ops:dtypt_01_02">
 									<StartTime>16:30:00Z</StartTime>
 									<EndTime>18:00:00Z</EndTime>
 									<StartPointRef version="any" ref="mybus:pkgpt1"/>
 									<EndPointRef version="any" ref="mybus:grgpt1"/>
 								</DutyPart>
-								<DutyPart version="any" id="ops:DutyPart:dtypt_01_03">
+								<DutyPart version="any" id="ops:dtypt_01_03">
 									<StartTime>19:00:00Z</StartTime>
 									<EndTime>22:00:00Z</EndTime>
 									<StartPointRef version="any" ref="mybus:grgpt1"/>
@@ -1873,7 +1898,7 @@ There is one DUTY ops:Duty:dty_01 with TWO DUTY PARTS
 					</duties>
 				</DriverScheduleFrame>
 				<InfrastructureFrame version="any" id="xif:InfrastructureFrame:iff_01">
-					<Name>Infra  Frame with garage def</Name>
+					<Name>Infrastructure Frame with garage def</Name>
 					<garages>
 						<Garage version="any" id="mybus:Garage:grg1">
 							<Name>Garage G1 </Name>
@@ -1890,6 +1915,9 @@ There is one DUTY ops:Duty:dty_01 with TWO DUTY PARTS
 						<ParkingPoint version="any" id="mybus:pkgpt1">
 							<Name>Parking Point P1 (Also a relief point)</Name>
 						</ParkingPoint>
+						<ReliefPoint version="any" id="mybus:ssp_001_relief">
+							<Name>Stop A is also a relief Point</Name>
+						</ReliefPoint>
 					</vehicleAndCrewPoints>
 					<vehicleTypes>
 						<VehicleType version="any" created="2010-12-17T09:30:47.0Z" id="xj:vt-447">

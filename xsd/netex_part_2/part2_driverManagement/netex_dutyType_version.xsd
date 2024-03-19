@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_dutyType_version">
+	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_dayType_support.xsd"/>
+	<xsd:include schemaLocation="netex_dutyType_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_framework/netex_responsibility/netex_typeOfValue_version.xsd"/>
+	<!-- ======================================================================= -->
+	<xsd:annotation>
+		<xsd:appinfo>
+			<Metadata xmlns="http://www.govtalk.gov.uk/CM/gms-xs">
+				<Aggregation>main schema</Aggregation>
+				<Audience>e-service developers</Audience>
+				<Contributor>V1.0 Christophe Duquesne</Contributor>
+				<Contributor>Nicholas Knowles</Contributor>
+				<Coverage>Europe</Coverage>
+				<Creator>First drafted for NeTEx version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.  mailto:schemer@netex.org.uk</Creator>
+				<Date>
+					<Created>2010-09-04</Created>
+				</Date>
+				<Date><Modified>2011-02-05</Modified> Name Space changes  
+				</Date>
+				<Date><Modified>2018-02-25</Modified>Skinkie: Fix:  #35 Correct Case on AccountingTime.  Also Renamed DayOffset to EndDayOffset
+						Also changed VehicleModeEnumeration   to AllVehicleModesOfTransportEnumeration to allow for non vehicle modes.
+				</Date>
+				<Date><Modified>2019-03-25</Modified>NJSK : Fix: Revise to Add separate  EndDayOffset. NB this changes DayOffset to mean start day offset 
+				</Date>
+				<Date><Modified>2023-02-15</Modified>NJSK : Fix: Add DayType to Duty 
+				</Date>
+				<Date><Modified>2023-02-15</Modified>Add missing Duty Elements: DUTY TYPE, SPLIT DUTY TYPE TYPE, CONTINUOUS DUTY TYPE TYPE
+				</Date>
+				<Description>
+					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
+					<p>This sub-schema describes the DUTY types.</p>
+				</Description>
+				<Format>
+					<MediaType>text/xml</MediaType>
+					<Syntax>http://www.w3.org/2001/XMLSchema</Syntax>
+					<Description>XML schema, W3C Recommendation 2001</Description>
+				</Format>
+				<Identifier>{http://www.netex.org.uk/schemas/1.0/xsd/netex_part_2/part2_vehicleService}netex_duty_version.xsd</Identifier>
+				<Language>[ISO 639-2/B] ENG</Language>
+				<Publisher>Kizoom, 109-123 Clifton Street, London EC4A 4LD </Publisher>
+				<Relation>
+					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
+				</Relation>
+				<Rights>Unclassified
+					 <Copyright>CEN, Crown Copyright 2009-2023</Copyright>
+				</Rights>
+				<Source>
+					<ul>
+						<li>Derived from the Transmodel, VDV, TransXChange, NEPTUNE, BISON and Trident standards.</li>
+					</ul>
+				</Source>
+				<Status>Version 1.0</Status>
+				<Subject>
+					<Category>Arts, recreation and travel, Tourism, Travel (tourism), Transport,
+Air transport, Airports,
+Ports and maritime transport, Ferries (marine),
+Public transport, Bus services, Coach services, Bus stops and stations,
+Rail transport, Railway stations and track, Train services, Underground trains,
+Business and industry, Transport, Air transport , Ports and maritime transport, Public transport,
+Rail transport, Roads and Road transport
+</Category>
+					<Project>CEN TC278 WG3 SG9.</Project>
+				</Subject>
+				<Title>NeTEx DUTY    types.</Title>
+				<Type>Standard</Type>
+			</Metadata>
+		</xsd:appinfo>
+		<xsd:documentation>NeTEx: DUTY  types.</xsd:documentation>
+	</xsd:annotation>
+	<!-- ======================================================================= -->
+	<xsd:complexType name="dutyTypesInFrame_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for containment in frame of DUTY TYPEs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element ref="ContinuousDutyType"/>
+					<xsd:element ref="SplitDutyType"/>
+				</xsd:choice>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ==== DUTY TYPE ====================================================== -->
+	<xsd:element name="DutyType_" type="DataManagedObjectStructure" abstract="true" substitutionGroup="DataManagedObject">
+		<xsd:annotation>
+			<xsd:documentation>Dummy Type. +v2.0</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DutyType" abstract="true" substitutionGroup="TypeOfEntity">
+		<xsd:annotation>
+			<xsd:documentation>A classification of a DUTY, in terms of working hours within the day. +v2.0</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="DutyType_ValueStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="TypeOfValueGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DutyTypeGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="DutyTypeIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="DutyType_ValueStructure" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation>Type for a DUTY TYPE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="TypeOfEntity_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="DutyTypeGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="DutyTypeGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a DUTY TYPE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="StartTimebandRef" type="TimebandRefStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Start within TIMEBAND.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="EndTimebandRef" type="TimebandRefStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>End  within TIMEBAND</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ==== SPLIT DUTY TYPE ====================================================== -->
+	<xsd:element name="SplitDutyType" abstract="false" substitutionGroup="DutyType_">
+		<xsd:annotation>
+			<xsd:documentation>A classification of a DUTY, in terms of working hours comprising several time bands separated in different DUTY PARTs by periods of unpaid time. +v2.0</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="SplitDutyType_ValueStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="TypeOfValueGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DutyTypeGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="SplitDutyTypeGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="SplitDutyTypeIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="SplitDutyType_ValueStructure" abstract="false">
+		<xsd:annotation>
+			<xsd:documentation>Type for a SPLIT DUTY TYPE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="DutyType_ValueStructure">
+				<xsd:sequence>
+					<xsd:group ref="SplitDutyTypeGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="SplitDutyTypeGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a DUTY TYPE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="StartUnpaidTimebandRef" type="TimebandRefStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Start within TIMEBAND.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="EndUnpaidTimebandRef" type="TimebandRefStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>End  within TIMEBAND</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ==== CONTINUOUS DUTY TYPE ====================================================== -->
+	<xsd:element name="ContinuousDutyType" abstract="false" substitutionGroup="DutyType_">
+		<xsd:annotation>
+			<xsd:documentation>A classification of a DUTY, in terms of working hours within the day comprising a single period of paid work. +v2.0</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="ContinuousDutyType_ValueStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="TypeOfValueGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DutyTypeGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="ContinuousDutyTypeIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="ContinuousDutyType_ValueStructure" abstract="false">
+		<xsd:annotation>
+			<xsd:documentation>Type for a CONTINUOUS DUTY TYPE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="DutyType_ValueStructure"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ======================================================================= -->
+</xsd:schema>
