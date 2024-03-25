@@ -169,7 +169,7 @@ Rail transport, Roads and Road transport
 		<xsd:complexContent>
 			<xsd:extension base="oneToManyRelationshipStructure">
 				<xsd:sequence>
-					<xsd:element ref="OrganisationRef" maxOccurs="unbounded"/>
+					<xsd:element ref="OrganisationRef_" maxOccurs="unbounded"/>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -180,9 +180,14 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:restriction base="ObjectIdType"/>
 	</xsd:simpleType>
-	<xsd:element name="OrganisationRef" type="OrganisationRefStructure" substitutionGroup="VersionOfObjectRef">
+	<xsd:element name="OrganisationRef_" type="OrganisationRefStructure" abstract="true" substitutionGroup="VersionOfObjectRef">
 		<xsd:annotation>
 			<xsd:documentation>Reference to an ORGANISATION.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OrganisationRef" type="OrganisationRefStructure" substitutionGroup="OrganisationRef_">
+		<xsd:annotation>
+			<xsd:documentation>DEPRECATED reference to any ORGANISATION meeting the substitutiongroup. -v2.0</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="OrganisationRefStructure">
@@ -218,7 +223,7 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:choice>
 			<xsd:element ref="AllOrganisationsRef"/>
-			<xsd:element ref="OrganisationRef"/>
+			<xsd:element ref="OrganisationRef_"/>
 		</xsd:choice>
 	</xsd:group>
 	<!-- ======================================================================= -->
