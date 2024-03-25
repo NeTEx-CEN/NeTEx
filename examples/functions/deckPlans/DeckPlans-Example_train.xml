@@ -315,8 +315,8 @@ NAVIGATION PATH + DECK NAVIGATION PATH to reach a seat
 |=          (Lower LEVEL)               QUAY 2   (SSP_0015E)    |      v         DECK NAVIGATION PATH   =|=|
 |=...........................|..................................|......v................................=|=|
 |=   Boarding Position A     |    Boarding Position B           |      v Boarding Position C            =|=|
-|======================================================================X===================================|	 SHORT PLATFORM!
-                 to 01-12 ::::                     	    to 13-36 ::::           to 01-36	   					   no  Access
+|======================================================================X===================================|	 SHORT PLATFORM!         SHORT PLATFORM!
+                 to 01-12 ::::                     	    to 13-36 ::::           to 01-36	   					   no  Access 					no Access
        @@@@@@@@@@@  |@@@@@/::\@@@@@@@@@@@@@@@@@@@@@@@. . . @@@@@@@@@@@/:x\@@@@|  |@@@@/::\@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@. . @@@@@@___@@|  |@@. . .
 ++++++@|  #1     @  |@      right      TRAIN ELEMENT #2 F01 . . .       V    @|==|@       TRAIN ELEMENT#3 -F02   . . .         right   @|==|@   . .
  + + @|          @==|| DECK PLAN Sleeper  Corridor x<<<..<<<<<<<<<<<<<X       \==/          x     DECK PLAN Sleeper  Corridor  . X      \==/    . .
@@ -2505,8 +2505,8 @@ The train reverse in  the station and departs, oriented backwards to the right
 											</ToEquipableSpace>
 										</DeckPathLink>
 									</deckPathLinks>
-									<deckNavigations>
-										<DeckNavigation version="any" id="rc:DPN-@PE-rear_external_right+PE-compartment_3">
+									<deckNavigationPaths>
+										<DeckNavigationPath version="any" id="rc:DPN-@PE-rear_external_right+PE-compartment_3">
 											<Name>Static Navigation path to get from right rear door to Compartment 3 seat 05</Name>
 											<From>
 												<PassengerEntranceRef version="any" ref="rc:PE-slw_deck_1@rear_external_right"/>
@@ -2533,8 +2533,8 @@ The train reverse in  the station and departs, oriented backwards to the right
 													<Instruction>Seat  9is on far side by window on left</Instruction>
 												</PathLinkInSequence>
 											</pathLinksInSequence>
-										</DeckNavigation>
-									</deckNavigations>
+										</DeckNavigationPath>
+									</deckNavigationPaths>
 								</Deck>
 							</decks>
 						</DeckPlan>
@@ -4476,7 +4476,7 @@ The train reverse in  the station and departs, oriented backwards to the right
 					</stopPlaces>
 					<!-- =======Navigation paths========== -->
 					<navigationPaths>
-						<NavigationPath version="any" id="xx:NP-station_765@SPE-entrance_1+BP-quay_2_boarding_point_c@by_stairs">
+						<SiteNavigationPath version="any" id="xx:NP-station_765@SPE-entrance_1+BP-quay_2_boarding_point_c@by_stairs">
 							<Name>From Station main entrance to  QUAY 2 Boarding point C - via stairs</Name>
 							<Distance>70</Distance>
 							<From>
@@ -4530,8 +4530,8 @@ The train reverse in  the station and departs, oriented backwards to the right
 									<Instruction>Turn right and Walk  along platform to boarding point C</Instruction>
 								</PathLinkInSequence>
 							</pathLinksInSequence>
-						</NavigationPath>
-						<NavigationPath version="any" id="xx:NP-station_765@SPE-entrance_1+BP-quay_2_boarding_point_c@by_lift">
+						</SiteNavigationPath>
+						<SiteNavigationPath version="any" id="xx:NP-station_765@SPE-entrance_1+BP-quay_2_boarding_point_c@by_lift">
 							<Name>From Station main entrance to  QUAY 2 Boarding point C - via lift </Name>
 							<Distance>65</Distance>
 							<From>
@@ -4591,7 +4591,7 @@ The train reverse in  the station and departs, oriented backwards to the right
 									<Instruction>Walk  along platform to boarding point C</Instruction>
 								</PathLinkInSequence>
 							</pathLinksInSequence>
-						</NavigationPath>
+						</SiteNavigationPath>
 					</navigationPaths>
 					<pathJunctions>
 						<SitePathJunction version="any" id="xx:PJ-station_765@ticket_hall_middle">
@@ -4921,6 +4921,7 @@ The train reverse in  the station and departs, oriented backwards to the right
 						</Connection>
 					</connections>
 					<stopAssignments>
+						<!-- Here we give explicit assigbments for each  doro of each carriage . Can alsu be populated more sparsely with just the carriages that are not accessible flagged as not alllowed -->
 						<PassengerStopAssignment version="any" id="rc:PSA-rail_sleeper_train_1" order="1">
 							<Name>Assignment for train at particular stop Erewhon 015E</Name>
 							<Description>Short platform so only front three doors accessible. Train reverses in station</Description>
@@ -4933,6 +4934,8 @@ The train reverse in  the station and departs, oriented backwards to the right
 							<QuayRef version="any" ref="xx:Qy-station_765@quay_2"/>
 							<trainElements>
 								<TrainStopAssignment version="any" id="rc:TSA-rail_sleeper_train_1" order="1">
+									<Name>Front half of Carriage F01</Name>
+									<Description>Carriage F01 Seats 01-12 can use Boarding Position A</Description>
 									<BoardingUse>true</BoardingUse>
 									<AlightingUse>true</AlightingUse>
 									<TrainComponentView>
@@ -4942,6 +4945,7 @@ The train reverse in  the station and departs, oriented backwards to the right
 									</TrainComponentView>
 									<PositionOfTrainElement>2</PositionOfTrainElement>
 									<BoardingPositionRef version="any" ref="xx:BP-station_765@quay_2@A"/>
+									<IsAllowed>true</IsAllowed>
 									<EntranceToVehicle>Board at front</EntranceToVehicle>
 									<deckEntranceAssignments>
 										<DeckEntranceAssignment version="any" id="rc:DEA-rail_sleeper_train_1@carriage_1@forward">
@@ -4957,6 +4961,8 @@ The train reverse in  the station and departs, oriented backwards to the right
 									</deckEntranceAssignments>
 								</TrainStopAssignment>
 								<TrainStopAssignment version="any" id="rc:TSA-rail_sleeper_train_1" order="2">
+									<Name>Rear half of Carriage F01</Name>
+									<Description>Carriage F01 Seats 03-26 can use Boarding Position B</Description>
 									<BoardingUse>true</BoardingUse>
 									<AlightingUse>true</AlightingUse>
 									<TrainComponentView>
@@ -4966,10 +4972,11 @@ The train reverse in  the station and departs, oriented backwards to the right
 									</TrainComponentView>
 									<PositionOfTrainElement>2</PositionOfTrainElement>
 									<BoardingPositionRef version="any" ref="xx:BP-station_765@quay_2@B"/>
-									<EntranceToVehicle>exit  at rear</EntranceToVehicle>
+									<IsAllowed>true</IsAllowed>
+									<EntranceToVehicle>Exit by rear doors</EntranceToVehicle>
 									<deckEntranceAssignments>
 										<DeckEntranceAssignment version="any" id="rc:DEA-rail_sleeper_train_1@carriage_1@rear">
-											<Name>Entrance to F01  at Boarding Position B via rear door on right hand side of train</Name>
+											<Name>Entrance to F01 seats 13-26   at Boarding Position B via rear door on right hand side of train</Name>
 											<PassengerEntranceRef version="any" ref="rc:PE-slw_deck_1@rear_external_right"/>
 											<EntranceSetting>shut</EntranceSetting>
 											<!-- Passenger must open door themselves -->
@@ -4983,6 +4990,8 @@ The train reverse in  the station and departs, oriented backwards to the right
 									</deckEntranceAssignments>
 								</TrainStopAssignment>
 								<TrainStopAssignment version="any" id="rc:TSA-rail_sleeper_train_1" order="3">
+									<Name>Carriage F02 front </Name>
+									<Description>Carriage F02 All seats must use forward door to Boarding Position C. Rear door shut</Description>
 									<BoardingUse>true</BoardingUse>
 									<AlightingUse>true</AlightingUse>
 									<TrainComponentView>
@@ -4992,10 +5001,11 @@ The train reverse in  the station and departs, oriented backwards to the right
 									</TrainComponentView>
 									<PositionOfTrainElement>3</PositionOfTrainElement>
 									<BoardingPositionRef version="any" ref="xx:BP-station_765@quay_2@C"/>
-									<EntranceToVehicle>exit  at front</EntranceToVehicle>
+									<IsAllowed>true</IsAllowed>
+									<EntranceToVehicle>Exit through front carriages</EntranceToVehicle>
 									<deckEntranceAssignments>
 										<DeckEntranceAssignment version="any" id="rc:DEA-rail_sleeper_train_1@carriage_2@forward">
-											<Name>Entrance to F02  at Boarding Position A via forward door on right hand side of train</Name>
+											<Name>Entrance to F03  at Boarding Position A via forward door on right hand side of train</Name>
 											<PassengerEntranceRef version="any" ref="rc:PE-slw_deck_1@forward_external_right"/>
 											<EntranceSetting>shut</EntranceSetting>
 											<StartSpot>
@@ -5005,20 +5015,6 @@ The train reverse in  the station and departs, oriented backwards to the right
 												<PassengerSpotRef version="any" ref="rc:PSp-slw_deck_1@compartment_6@row_12_col_D">Seat 36</PassengerSpotRef>
 											</EndSpot>
 										</DeckEntranceAssignment>
-									</deckEntranceAssignments>
-								</TrainStopAssignment>
-								<TrainStopAssignment version="any" id="rc:TSA-rail_sleeper_train_1" order="4">
-									<Name>Short platform means doors cannot be used</Name>
-									<BoardingUse>false</BoardingUse>
-									<AlightingUse>false</AlightingUse>
-									<TrainComponentView>
-										<TrainComponentRef version="any" ref="rco:TC-rail_sleeper_train_1" order="3"/>
-										<Label>F02</Label>
-										<TrainElementTypeType>sleeperCarriage</TrainElementTypeType>
-									</TrainComponentView>
-									<PositionOfTrainElement>3</PositionOfTrainElement>
-									<EntranceToVehicle>exit  at front</EntranceToVehicle>
-									<deckEntranceAssignments>
 										<DeckEntranceAssignment version="any" id="rc:DEA-rail_sleeper_train_1@carriage_2@rear">
 											<Name>No Entrance to F02   via rear  door on right hand side of train</Name>
 											<PassengerEntranceRef version="any" ref="rc:PE-slw_deck_1@rear_external_right"/>
@@ -5026,7 +5022,7 @@ The train reverse in  the station and departs, oriented backwards to the right
 										</DeckEntranceAssignment>
 									</deckEntranceAssignments>
 								</TrainStopAssignment>
-								<TrainStopAssignment version="any" id="rc:TSA-rail_sleeper_train_1" order="5">
+								<TrainStopAssignment version="any" id="rc:TSA-rail_sleeper_train_1" order="4">
 									<Name>Short platform means  F03 (buffet car) doors cannot be used</Name>
 									<BoardingUse>false</BoardingUse>
 									<AlightingUse>false</AlightingUse>
@@ -5036,19 +5032,8 @@ The train reverse in  the station and departs, oriented backwards to the right
 										<TrainElementType>buffetCar</TrainElementType>
 									</TrainComponentView>
 									<PositionOfTrainElement>4</PositionOfTrainElement>
-									<EntranceToVehicle>exit  at front</EntranceToVehicle>
-									<deckEntranceAssignments>
-										<DeckEntranceAssignment version="any" id="rc:DEA-rail_sleeper_train_1@carriage_3@forward">
-											<Name>No Entrance to F03   via front  door on right hand side of train</Name>
-											<PassengerEntranceRef version="any" ref="rc:PE-slw_deck_1@forward_external_right"/>
-											<EntranceSetting>lockedShut</EntranceSetting>
-										</DeckEntranceAssignment>
-										<DeckEntranceAssignment version="any" id="rc:DEA-rail_sleeper_train_1@carriage_3@rear">
-											<Name>No Entrance to F03   via rear  door on right hand side of train</Name>
-											<PassengerEntranceRef version="any" ref="rc:PE-slw_deck_1@rear_external_right"/>
-											<EntranceSetting>lockedShut</EntranceSetting>
-										</DeckEntranceAssignment>
-									</deckEntranceAssignments>
+									<IsAllowed>false</IsAllowed>
+									<EntranceToVehicle>Move to front 2 carriages to access platfrom</EntranceToVehicle>
 								</TrainStopAssignment>
 								<TrainStopAssignment version="any" id="rc:TSA-rail_sleeper_train_1" order="6">
 									<Name>Short platform means  F04 (sleeper wagon) doors cannot be used</Name>
@@ -5060,19 +5045,8 @@ The train reverse in  the station and departs, oriented backwards to the right
 										<TrainElementTypeType>sleeperCarriage</TrainElementTypeType>
 									</TrainComponentView>
 									<PositionOfTrainElement>5</PositionOfTrainElement>
-									<EntranceToVehicle>exit  at front</EntranceToVehicle>
-									<deckEntranceAssignments>
-										<DeckEntranceAssignment version="any" id="rc:DEA-rail_sleeper_train_1@carriage_4@forward">
-											<Name>No Entrance to F04  via front  door on right hand side of train</Name>
-											<PassengerEntranceRef version="any" ref="rc:PE-slw_deck_1@forward_external_right"/>
-											<EntranceSetting>lockedShut</EntranceSetting>
-										</DeckEntranceAssignment>
-										<DeckEntranceAssignment version="any" id="rc:DEA-rail_sleeper_train_1@carriage_4@rear">
-											<Name>No Entrance to F04   via rear  door on right hand side of train</Name>
-											<PassengerEntranceRef version="any" ref="rc:PE-slw_deck_1@rear_external_right"/>
-											<EntranceSetting>lockedShut</EntranceSetting>
-										</DeckEntranceAssignment>
-									</deckEntranceAssignments>
+									<IsAllowed>false</IsAllowed>
+									<EntranceToVehicle>Move to front 2 carriages to access platfrom</EntranceToVehicle>
 								</TrainStopAssignment>
 							</trainElements>
 						</PassengerStopAssignment>

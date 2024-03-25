@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_deckEntranceAlignment_version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_deckEntranceAssignment_version">
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_seatingPlan_support.xsd"/>
-	<xsd:include schemaLocation="netex_deckEntranceAlignment_support.xsd"/>
+	<xsd:include schemaLocation="netex_deckEntranceAssignment_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_deckPlan_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_trainElement_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_assignment_version.xsd"/>
@@ -17,27 +17,26 @@
 				<Date>
 					<Created>2023-01-30</Created>
 				</Date>
-				<Date><Modified>2023-01-30</Modified>
-          Name Space changes
-        </Date>
+				<Date>
+					<Modified>2023-01-30</Modified>Add exclude include flag
+				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
-					<p>This sub-schema describes the DECK ENTRANCE ALIGNMENT types.</p>
+					<p>This sub-schema describes the DECK ENTRANCE ASSIGNMENT types.</p>
 				</Description>
 				<Format>
 					<MediaType>text/xml</MediaType>
 					<Syntax>http://www.w3.org/2001/XMLSchema</Syntax>
 					<Description>XML schema, W3C Recommendation 2001</Description>
 				</Format>
-				<Identifier>{http://www.netex.org.uk/schemas/1.0/xsd/netex_framework/netex_reusableComponents}netex_deckEntranceAlignment_version.xsd</Identifier>
+				<Identifier>{http://www.netex.org.uk/schemas/1.0/xsd/netex_framework/netex_reusableComponents}netex_deckEntranceAssignment_version.xsd</Identifier>
 				<Language>[ISO 639-2/B] ENG</Language>
 				<Publisher>Kizoom Software Ltd, 16 High Holborn, London WC1V 6BX </Publisher>
 				<Relation>
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
-				<Rights>
-          Unclassified
-          <Copyright>CEN, Crown Copyright  2022-2023</Copyright>
+				<Rights>Unclassified
+					 <Copyright>CEN, Crown Copyright  2022-2024</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -58,11 +57,11 @@
           </Category>
 					<Project>CEN TC278 WG3 SG9.</Project>
 				</Subject>
-				<Title>NeTEx DECKENTRANCE ALIGNMENT types.</Title>
+				<Title>NeTEx DECK ENTRANCE ASSIGNMENT types.</Title>
 				<Type>Standard</Type>
 			</Metadata>
 		</xsd:appinfo>
-		<xsd:documentation>DECK ENTRANCE ALIGNMENT data types</xsd:documentation>
+		<xsd:documentation>NeTEx: DECK ENTRANCE ASSIGNMENT data types</xsd:documentation>
 	</xsd:annotation>
 	<!-- ======================================================================= -->
 	<!-- ==== DECK ENTRANCE ASSIGNMENT ==================================================== -->
@@ -130,6 +129,11 @@
 		<xsd:sequence>
 			<xsd:element ref="DeckEntranceRef"/>
 			<xsd:element ref="TrainComponentRef" minOccurs="0"/>
+			<xsd:element name="IsAllowed" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether assigment permits or forbids use of TRAIN COMPONENT and / or specified DECK ENTRANCE at specifed stop. </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element name="EntranceSetting" type="EntranceSettingEnumeration" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Default setting for doors when while at stop - are the doors held open, shut or locked shut.</xsd:documentation>
