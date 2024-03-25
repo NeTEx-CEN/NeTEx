@@ -22,7 +22,8 @@
 				<Date>
 					<Created>2024-01-17</Created>
 				</Date>
-				<Date><Modified>2024-02-18</Modified>Norway review comment - Add Window types.
+				<Date>
+					<Modified>2024-02-18</Modified>Norway review comment - Add Window types.
 				</Date>
 				<Description>
 					<Title>NeTEx Network Exchange - DECK PATH LINK types.</Title>
@@ -64,7 +65,7 @@ Rail transport, Roads and Road transport
 				<Type>Standard</Type>
 			</Metadata>
 		</xsd:appinfo>
-		<xsd:documentation>DECK PATH LINK and NAVIGATION PATH Model.</xsd:documentation>
+		<xsd:documentation>NeTEx: DECK PATH LINK and NAVIGATION PATH Model.</xsd:documentation>
 	</xsd:annotation>
 	<!-- ============================================== -->
 	<xsd:group name="DeckPathGroup">
@@ -82,7 +83,7 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>PATH LINKs for DECK </xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="deckNavigations" type="deckNavigations_RelStructure" minOccurs="0">
+			<xsd:element name="deckNavigationPaths" type="deckNavigationPaths_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>NAVIGATION PATHs for DECK </xsd:documentation>
 				</xsd:annotation>
@@ -97,7 +98,7 @@ Rail transport, Roads and Road transport
 		<xsd:complexContent>
 			<xsd:extension base="containmentAggregationStructure">
 				<xsd:choice maxOccurs="unbounded">
-					<xsd:element ref="PathLinkRef"/>
+					<xsd:element ref="GenericPathLinkRef"/>
 					<xsd:element ref="DeckPathLink">
 						<xsd:annotation>
 							<xsd:documentation>PATH LINK for a DECK</xsd:documentation>
@@ -126,7 +127,7 @@ Rail transport, Roads and Road transport
 							<xsd:group ref="LinkGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
-							<xsd:group ref="PathLinkGroup"/>
+							<xsd:group ref="GenericPathLinkGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
 							<xsd:sequence>
@@ -138,13 +139,13 @@ Rail transport, Roads and Road transport
 								<xsd:group ref="PathLinkElementGroup"/>
 								<xsd:group ref="EnvironmentPropertiesGroup"/>
 								<xsd:group ref="PathPropertiesGroup"/>
-								<xsd:group ref="LinkDurationGroup"/>
+								<xsd:group ref="GenericPathLinkDurationGroup"/>
 							</xsd:sequence>
 							<xsd:group ref="DeckPathLinkComponentGroup"/>
 							<xsd:group ref="DeckPathLinkGroup"/>
 						</xsd:sequence>
 					</xsd:sequence>
-					<xsd:attribute name="id" type="DeckPathLinkIdType" use="optional">
+					<xsd:attribute name="id" type="DeckGenericPathLinkPathLinkIdType" use="optional">
 						<xsd:annotation>
 							<xsd:documentation>Identifier of ENTITY.</xsd:documentation>
 						</xsd:annotation>
@@ -158,7 +159,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Type for a DECK PATH LINK.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
-			<xsd:extension base="PathLink_VersionStructure">
+			<xsd:extension base="GenericPathLink_VersionStructure">
 				<xsd:sequence>
 					<xsd:group ref="PathDescriptionGroup"/>
 					<xsd:group ref="DeckPathLinkComponentGroup"/>
@@ -268,7 +269,7 @@ Rail transport, Roads and Road transport
 							<xsd:group ref="PointGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
-							<xsd:group ref="PathJunctionGroup"/>
+							<xsd:group ref="GenericPathJunctionGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
 							<xsd:group ref="DeckPathJunctionGroup"/>
@@ -284,7 +285,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Type for a DECK PATH JUNCTION</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
-			<xsd:extension base="PathJunction_VersionStructure">
+			<xsd:extension base="GenericPathJunction_VersionStructure">
 				<xsd:sequence>
 					<xsd:group ref="DeckPathJunctionGroup"/>
 				</xsd:sequence>
@@ -398,29 +399,29 @@ Rail transport, Roads and Road transport
 		</xsd:sequence>
 	</xsd:group>
 	<!-- =====DECK NAVIGATION PATH =============================================== -->
-	<xsd:complexType name="deckNavigations_RelStructure">
+	<xsd:complexType name="deckNavigationPaths_RelStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for a list of DECK NAVIGATION paths.</xsd:documentation>
+			<xsd:documentation>Type for a list of DECK NAVIGATION PATHs.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="strictContainmentAggregationStructure">
 				<xsd:sequence>
-					<xsd:element ref="DeckNavigation" maxOccurs="unbounded">
+					<xsd:element ref="DeckNavigationPath" maxOccurs="unbounded">
 						<xsd:annotation>
-							<xsd:documentation>DECK NAVIGATION path for a SITE.</xsd:documentation>
+							<xsd:documentation>DECK NAVIGATION PATH for a DECK.\ PLAN</xsd:documentation>
 						</xsd:annotation>
 					</xsd:element>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:element name="DeckNavigation">
+	<xsd:element name="DeckNavigationPath">
 		<xsd:annotation>
 			<xsd:documentation>A designated path between two places within a DECK PLAN. May include an ordered sequence of DECK PATH LINKs. +v2.0</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
-				<xsd:restriction base="DeckNavigation_VersionStructure">
+				<xsd:restriction base="DeckNavigationPath_VersionStructure">
 					<xsd:sequence>
 						<xsd:sequence>
 							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
@@ -432,10 +433,10 @@ Rail transport, Roads and Road transport
 							<xsd:group ref="LinkSequenceGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
-							<xsd:group ref="DeckNavigationGroup"/>
+							<xsd:group ref="DeckNavigationPathGroup"/>
 						</xsd:sequence>
 					</xsd:sequence>
-					<xsd:attribute name="id" type="DeckNavigationIdType" use="optional">
+					<xsd:attribute name="id" type="DeckNavigationPathIdType" use="optional">
 						<xsd:annotation>
 							<xsd:documentation>Identifier of ENTITY.</xsd:documentation>
 						</xsd:annotation>
@@ -444,31 +445,31 @@ Rail transport, Roads and Road transport
 			</xsd:complexContent>
 		</xsd:complexType>
 	</xsd:element>
-	<xsd:complexType name="DeckNavigation_VersionStructure">
+	<xsd:complexType name="DeckNavigationPath_VersionStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for DECK NAVIGATION path.</xsd:documentation>
+			<xsd:documentation>Type for DECK NAVIGATION PATH.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
-			<xsd:extension base="Navigation_VersionStructure">
+			<xsd:extension base="GenericNavigationPath_VersionStructure">
 				<xsd:sequence>
-					<xsd:group ref="DeckNavigationGroup"/>
+					<xsd:group ref="DeckNavigationPathGroup"/>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:group name="DeckNavigationGroup">
+	<xsd:group name="DeckNavigationPathGroup">
 		<xsd:annotation>
-			<xsd:documentation>Elements of a DECK NAVIGATION path.</xsd:documentation>
+			<xsd:documentation>Elements of a DECK NAVIGATION PATH.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:group ref="DeckNavigationSummaryGroup"/>
+			<xsd:group ref="DeckNavigationPathSummaryGroup"/>
 			<xsd:group ref="DeckElementPropertiesGroup"/>
 			<xsd:element name="AccessFeatureList" type="AccessFeatureListOfEnumerations" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Classification of Overall Accessibility of NAVIGATION path.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="DeckNavigationType" type="DeckNavigationTypeEnumeration" minOccurs="0">
+			<xsd:element name="DeckNavigationPathType" type="DeckNavigationPathTypeEnumeration" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Classification of DECK NAVIGATION..</xsd:documentation>
 				</xsd:annotation>
@@ -485,19 +486,19 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
-	<xsd:group name="DeckNavigationSummaryGroup">
+	<xsd:group name="DeckNavigationPathSummaryGroup">
 		<xsd:annotation>
-			<xsd:documentation>Elements of a DECK NAVIGATION path that summarise properties o the set of PATH LINKs. Will state the strictest constraint found . e.g. if any link forbids wheelchair, the DECK NAVIGATION path forbids wheelchair.</xsd:documentation>
+			<xsd:documentation>Elements of a DECK NAVIGATION PATH that summarise properties o the set of PATH LINKs. Will state the strictest constraint found . e.g. if any link forbids wheelchair, the DECK NAVIGATION PATH forbids wheelchair.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element name="From" type="DeckPathLinkEndStructure" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Origin end of DECK NAVIGATION path. Only needed if detailed PATH LINKs are not given.</xsd:documentation>
+					<xsd:documentation>Origin end of DECK NAVIGATION PATH. Only needed if detailed PATH LINKs are not given.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="To" type="DeckPathLinkEndStructure" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Destination end of DECK NAVIGATION path. Only needed if detailed PATH LINKs not given.</xsd:documentation>
+					<xsd:documentation>Destination end of DECK NAVIGATION PATH. Only needed if detailed PATH LINKs not given.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:group ref="NavigationSummaryGroup"/>

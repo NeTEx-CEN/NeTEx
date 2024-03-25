@@ -26,9 +26,11 @@
 				<Date>
 					<Modified>2007-03-22</Modified>
 				</Date>
-				<Date><Modified>2017-11-08</Modified> Move Description from Path in Sequence to supertype link in Sequence
+				<Date>
+					<Modified>2017-11-08</Modified> Move Description from Path in Sequence to supertype link in Sequence
 				</Date>
-				<Date><Modified>2024-02-06</Modified> Refactor  to share  common path elements with new DECK PATH LINKs etc
+				<Date>
+					<Modified>2024-02-06</Modified> Refactor  to share  common path elements with new DECK PATH LINKs etc
 				</Date>
 				<Description>
 					<Title>NeTEx Network Exchange - NAVIGATION PATH types.</Title>
@@ -100,7 +102,7 @@ Rail transport, Roads and Road transport
 		<xsd:complexContent>
 			<xsd:extension base="containmentAggregationStructure">
 				<xsd:choice maxOccurs="unbounded">
-					<xsd:element ref="SiteNavigation"/>
+					<xsd:element ref="SiteNavigationPath"/>
 					<xsd:element ref="NavigationPath">
 						<xsd:annotation>
 							<xsd:documentation>A designated path between two PLACEs. May include an Ordered sequence of references to PATH LINKS.</xsd:documentation>
@@ -136,7 +138,7 @@ Rail transport, Roads and Road transport
 				<xsd:choice maxOccurs="unbounded">
 					<xsd:element ref="SitePathJunction">
 						<xsd:annotation>
-							<xsd:documentation>A designated path between two PLACEs. May include an Ordered sequence of references to PATH LINKS.</xsd:documentation>
+							<xsd:documentation>A designated path between two PLACEs within a SITE. May include an Ordered sequence of references to PATH LINKS.</xsd:documentation>
 						</xsd:annotation>
 					</xsd:element>
 					<xsd:element ref="PathJunction">
@@ -199,7 +201,7 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
-				<xsd:restriction base="SiteNavigation_VersionStructure">
+				<xsd:restriction base="SiteNavigationPath_VersionStructure">
 					<xsd:sequence>
 						<xsd:sequence>
 							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
@@ -211,24 +213,24 @@ Rail transport, Roads and Road transport
 							<xsd:group ref="LinkSequenceGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
-							<xsd:group ref="NavigationGroup"/>
+							<xsd:group ref="GenericNavigationPathGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
-							<xsd:group ref="SiteNavigationGroup"/>
+							<xsd:group ref="SiteNavigationPathGroup"/>
 						</xsd:sequence>
 					</xsd:sequence>
-					<xsd:attribute name="id" type="SiteNavigationIdType" use="optional"/>
+					<xsd:attribute name="id" type="SiteNavigationPathIdType" use="optional"/>
 				</xsd:restriction>
 			</xsd:complexContent>
 		</xsd:complexType>
 	</xsd:element>
-	<xsd:element name="SiteNavigation" substitutionGroup="LinkSequence">
+	<xsd:element name="SiteNavigationPath" substitutionGroup="LinkSequence">
 		<xsd:annotation>
 			<xsd:documentation>A designated path between two places. May include an ordered sequence of PATH LINKs.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
-				<xsd:restriction base="SiteNavigation_VersionStructure">
+				<xsd:restriction base="SiteNavigationPath_VersionStructure">
 					<xsd:sequence>
 						<xsd:sequence>
 							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
@@ -240,40 +242,40 @@ Rail transport, Roads and Road transport
 							<xsd:group ref="LinkSequenceGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
-							<xsd:group ref="NavigationGroup"/>
+							<xsd:group ref="GenericNavigationPathGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
-							<xsd:group ref="SiteNavigationGroup"/>
+							<xsd:group ref="SiteNavigationPathGroup"/>
 						</xsd:sequence>
 					</xsd:sequence>
-					<xsd:attribute name="id" type="SiteNavigationIdType" use="optional"/>
+					<xsd:attribute name="id" type="SiteNavigationPathIdType" use="optional"/>
 				</xsd:restriction>
 			</xsd:complexContent>
 		</xsd:complexType>
 	</xsd:element>
-	<xsd:complexType name="SiteNavigation_VersionStructure">
+	<xsd:complexType name="SiteNavigationPath_VersionStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for NAVIGATION PATH.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
-			<xsd:extension base="Navigation_VersionStructure">
+			<xsd:extension base="GenericNavigationPath_VersionStructure">
 				<xsd:sequence>
-					<xsd:group ref="SiteNavigationGroup"/>
+					<xsd:group ref="SiteNavigationPathGroup"/>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:group name="SiteNavigationGroup">
+	<xsd:group name="SiteNavigationPathGroup">
 		<xsd:annotation>
 			<xsd:documentation>Elements of a SITE NAVIGATION PATH.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:group ref="SiteNavigationSummaryGroup"/>
+			<xsd:group ref="SiteNavigationPathSummaryGroup"/>
 			<xsd:group ref="SiteElementPropertiesGroup"/>
 			<xsd:group ref="NavigationPathLinksGroup"/>
 		</xsd:sequence>
 	</xsd:group>
-	<xsd:group name="SiteNavigationSummaryGroup">
+	<xsd:group name="SiteNavigationPathSummaryGroup">
 		<xsd:annotation>
 			<xsd:documentation>Elements of a SITE NAVIGATION PATH that summarise properties o the set of PATH LINKs. Will state the strictest constraint found . e.g. if any link forbids wheelchair, the NAVIGATION PATH forbids wheelchair.</xsd:documentation>
 		</xsd:annotation>

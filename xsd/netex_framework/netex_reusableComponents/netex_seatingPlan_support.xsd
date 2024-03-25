@@ -13,9 +13,11 @@
 				<Date>
 					<Created>2023-02-02</Created>
 				</Date>
-				<Date><Modified>2024-01-17</Modified>Add bed to locatable spot type enumerations
+				<Date>
+					<Modified>2024-01-17</Modified>Add bed to locatable spot type enumerations
 				</Date>
-				<Date><Modified>2024-02-18</Modified>Norway review comment - Revise Aisle /Window to use enumeration.  
+				<Date>
+					<Modified>2024-02-18</Modified>Norway review comment - Revise Aisle /Window to use enumeration.  
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -163,6 +165,18 @@
 		</xsd:simpleContent>
 	</xsd:complexType>
 	<!-- ===== LOCATABLE SPOT ======================================================== -->
+	<xsd:complexType name="locatableSpotRefs_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of  LOCATABLE SPOTs</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="oneToManyRelationshipStructure">
+				<xsd:sequence>
+					<xsd:element ref="LocatableSpotRef" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 	<xsd:simpleType name="LocatableSpotIdType">
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of a LOCATABLE SPOT.</xsd:documentation>
@@ -193,25 +207,15 @@
 			<xsd:documentation>A Range of LOCATABLE SPOTs. </xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="StartSpot" minOccurs="0">
+			<xsd:element name="StartSpot" type="locatableSpotRefs_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Start of range of LOCATABLE SPOTs.</xsd:documentation>
 				</xsd:annotation>
-				<xsd:complexType>
-					<xsd:sequence>
-						<xsd:element ref="LocatableSpotRef" minOccurs="0"/>
-					</xsd:sequence>
-				</xsd:complexType>
 			</xsd:element>
-			<xsd:element name="EndSpot" minOccurs="0" maxOccurs="unbounded">
+			<xsd:element name="EndSpot" type="locatableSpotRefs_RelStructure" minOccurs="0" maxOccurs="unbounded">
 				<xsd:annotation>
 					<xsd:documentation>End of range of LOCATABLE SPOTs.</xsd:documentation>
 				</xsd:annotation>
-				<xsd:complexType>
-					<xsd:sequence>
-						<xsd:element ref="LocatableSpotRef" minOccurs="0"/>
-					</xsd:sequence>
-				</xsd:complexType>
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>

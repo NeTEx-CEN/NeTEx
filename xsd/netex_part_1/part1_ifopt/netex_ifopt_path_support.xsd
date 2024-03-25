@@ -15,11 +15,13 @@
 				<Date>
 					<Modified>2011-12-16</Modified>
 				</Date>
-				<Date><Modified>2019-03-25</Modified>FR49 CD #65  Accessibility changes
+				<Date>
+					<Modified>2019-03-25</Modified>FR49 CD #65  Accessibility changes
 					 CD add CodedTiltEnumeration  with values _strongLeftTilt,   mediumLeftTilt, nearlyFlat, mediumRightTilt, strongRightTilt,  unknown_.
 					 Revise name of ___CodedTilt___ to ___TiltType___ to be consistent
  				</Date>
-				<Date><Modified>2024-02-05</Modified>Factor out common PATH LINK to generic file shared with DECK PATH. Rename NAVIGATH PATH to NAVIGATION
+				<Date>
+					<Modified>2024-02-05</Modified>Factor out common PATH LINK to generic file shared with DECK PATH. Rename NAVIGATH PATH to NAVIGATION
 				</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines PATH types.</p>
@@ -56,7 +58,7 @@ Rail transport, Roads and Road transport
 				<Type>Standard</Type>
 			</Metadata>
 		</xsd:appinfo>
-		<xsd:documentation>PATH identifier types for IFOPT Fixed Objects in Public Transport.</xsd:documentation>
+		<xsd:documentation>NeTEx: PATH identifier types for IFOPT Fixed Objects in Public Transport.</xsd:documentation>
 	</xsd:annotation>
 	<!-- ===== SITE PATH LINK ================================================= -->
 	<xsd:complexType name="sitePathLinkRefs_RelStructure">
@@ -66,19 +68,19 @@ Rail transport, Roads and Road transport
 		<xsd:complexContent>
 			<xsd:extension base="oneToManyRelationshipStructure">
 				<xsd:choice maxOccurs="unbounded">
-					<xsd:element ref="PathLinkRef"/>
+					<xsd:element ref="GenericPathLinkRef"/>
 					<xsd:element ref="PathLinkRefByValue"/>
 				</xsd:choice>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:simpleType name="SitePathLinkIdType">
+	<xsd:simpleType name="SiteGenericPathLinkPathLinkIdType">
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of a SITE PATH LINK.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="PathLinkIdType"/>
+		<xsd:restriction base="GenericPathLinkPathLinkIdType"/>
 	</xsd:simpleType>
-	<xsd:element name="SitePathLinkRef" type="SitePathLinkRefStructure" substitutionGroup="PathLinkRef">
+	<xsd:element name="SitePathLinkRef" type="SitePathLinkRefStructure" substitutionGroup="GenericPathLinkRef">
 		<xsd:annotation>
 			<xsd:documentation>Reference to a SITE PATH LINK.</xsd:documentation>
 		</xsd:annotation>
@@ -88,8 +90,8 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Type for a reference to a SITE PATH LINK.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:simpleContent>
-			<xsd:restriction base="PathLinkRefStructure">
-				<xsd:attribute name="ref" type="SitePathLinkIdType" use="required">
+			<xsd:restriction base="GenericPathLinkRefStructure">
+				<xsd:attribute name="ref" type="SiteGenericPathLinkPathLinkIdType" use="required">
 					<xsd:annotation>
 						<xsd:documentation>Identifier of a SITE PATH LINK.</xsd:documentation>
 					</xsd:annotation>
@@ -97,14 +99,19 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
+	<xsd:element name="PathLinkRef" type="SitePathLinkRefStructure" substitutionGroup="GenericPathLinkRef">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a SITE PATH LINK. DEPRECATED use SitePathLinkRef+v2.0</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
 	<!-- ====== SITE PATH JUNCTION  =========================================================== -->
 	<xsd:simpleType name="SitePathJunctionIdType">
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of a SITE PATH JUNCTION.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="PathJunctionIdType"/>
+		<xsd:restriction base="GenericPathJunctionIdType"/>
 	</xsd:simpleType>
-	<xsd:element name="SitePathJunctionRef" type="SitePathJunctionRefStructure" substitutionGroup="PathJunctionRef">
+	<xsd:element name="SitePathJunctionRef" type="SitePathJunctionRefStructure" substitutionGroup="GenericPathJunctionRef">
 		<xsd:annotation>
 			<xsd:documentation>Reference to a SITE PATH JUNCTION.</xsd:documentation>
 		</xsd:annotation>
@@ -114,7 +121,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Type for a reference to a SITE PATH JUNCTION.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:simpleContent>
-			<xsd:restriction base="PathJunctionRefStructure">
+			<xsd:restriction base="GenericPathJunctionRefStructure">
 				<xsd:attribute name="ref" type="SitePathJunctionIdType" use="required">
 					<xsd:annotation>
 						<xsd:documentation>Identifier of a SITE PATH JUNCTION.</xsd:documentation>
@@ -123,6 +130,11 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
+	<xsd:element name="PathJunctionRef" type="SitePathJunctionRefStructure" substitutionGroup="GenericPathJunctionRef">
+		<xsd:annotation>
+			<xsd:documentation>Depreceated - use SitePathJunctionRef +v2.0</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
 	<!-- ====== SITE PATH JUNCTION  =========================================================== -->
 	<xsd:complexType name="offSitePathLinkRefs_RelStructure">
 		<xsd:annotation>
@@ -131,19 +143,19 @@ Rail transport, Roads and Road transport
 		<xsd:complexContent>
 			<xsd:extension base="oneToManyRelationshipStructure">
 				<xsd:choice maxOccurs="unbounded">
-					<xsd:element ref="PathLinkRef"/>
+					<xsd:element ref="GenericPathLinkRef"/>
 					<xsd:element ref="PathLinkRefByValue"/>
 				</xsd:choice>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:simpleType name="OffSitePathLinkIdType">
+	<xsd:simpleType name="OffSiteGenericPathLinkPathLinkIdType">
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of a OFF SITE PATH LINK.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="PathLinkIdType"/>
+		<xsd:restriction base="GenericPathLinkPathLinkIdType"/>
 	</xsd:simpleType>
-	<xsd:element name="OffSitePathLinkRef" type="OffSitePathLinkRefStructure" substitutionGroup="PathLinkRef">
+	<xsd:element name="OffSitePathLinkRef" type="OffSitePathLinkRefStructure" substitutionGroup="GenericPathLinkRef">
 		<xsd:annotation>
 			<xsd:documentation>Reference to a OFF SITE PATH LINK.</xsd:documentation>
 		</xsd:annotation>
@@ -153,8 +165,8 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Type for a reference to a OFF SITE PATH LINK.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:simpleContent>
-			<xsd:restriction base="PathLinkRefStructure">
-				<xsd:attribute name="ref" type="OffSitePathLinkIdType" use="required">
+			<xsd:restriction base="GenericPathLinkRefStructure">
+				<xsd:attribute name="ref" type="OffSiteGenericPathLinkPathLinkIdType" use="required">
 					<xsd:annotation>
 						<xsd:documentation>Identifier of a OFF SITE PATH LINK.</xsd:documentation>
 					</xsd:annotation>
@@ -163,47 +175,47 @@ Rail transport, Roads and Road transport
 		</xsd:simpleContent>
 	</xsd:complexType>
 	<!-- =======SITE NAVIGATION PATH JUNCTION============================================ -->
-	<xsd:complexType name="siteNavigationRefs_RelStructure">
+	<xsd:complexType name="siteNavigationPathRefs_RelStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for a list of references to a SITE NAVIGATION path.</xsd:documentation>
+			<xsd:documentation>Type for a list of references to a SITE NAVIGATION PATH.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="oneToManyRelationshipStructure">
 				<xsd:sequence>
-					<xsd:element ref="NavigationRef" maxOccurs="unbounded"/>
+					<xsd:element ref="GenericNavigationPathRef" maxOccurs="unbounded"/>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
 	<!-- ======================================================================= -->
-	<xsd:simpleType name="SiteNavigationIdType">
+	<xsd:simpleType name="SiteNavigationPathIdType">
 		<xsd:annotation>
-			<xsd:documentation>Type for identifier of a SITE NAVIGATION path.</xsd:documentation>
+			<xsd:documentation>Type for identifier of a SITE NAVIGATION PATH.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="NavigationIdType"/>
+		<xsd:restriction base="GenericNavigationPathIdType"/>
 	</xsd:simpleType>
-	<xsd:element name="SiteNavigationRef" type="SiteNavigationRefStructure" substitutionGroup="NavigationRef">
+	<xsd:element name="SiteNavigationPathRef" type="SiteNavigationPathRefStructure" substitutionGroup="GenericNavigationPathRef">
 		<xsd:annotation>
-			<xsd:documentation>Reference to a SITE NAVIGATION path.</xsd:documentation>
+			<xsd:documentation>Reference to a SITE NAVIGATION PATH.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:complexType name="SiteNavigationRefStructure">
+	<xsd:complexType name="SiteNavigationPathRefStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for reference to a SITE NAVIGATION path.</xsd:documentation>
+			<xsd:documentation>Type for reference to a SITE NAVIGATION PATH.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:simpleContent>
-			<xsd:restriction base="NavigationRefStructure">
-				<xsd:attribute name="ref" type="SiteNavigationIdType" use="required">
+			<xsd:restriction base="GenericNavigationPathRefStructure">
+				<xsd:attribute name="ref" type="SiteNavigationPathIdType" use="required">
 					<xsd:annotation>
-						<xsd:documentation>Identifier of a SITE NAVIGATION path.</xsd:documentation>
+						<xsd:documentation>Identifier of a SITE NAVIGATION PATH.</xsd:documentation>
 					</xsd:annotation>
 				</xsd:attribute>
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
-	<xsd:element name="NavigationPathRef" type="SiteNavigationRefStructure" substitutionGroup="NavigationRef">
+	<xsd:element name="NavigationPathRef" type="SiteNavigationPathRefStructure" substitutionGroup="GenericNavigationPathRef">
 		<xsd:annotation>
-			<xsd:documentation>DEPRECATED  use Reference to a SITE NAVIGATION path. </xsd:documentation>
+			<xsd:documentation>DEPRECATED  use Reference to a SIteNavigationPath v.20</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<!-- ======================================================================= -->
