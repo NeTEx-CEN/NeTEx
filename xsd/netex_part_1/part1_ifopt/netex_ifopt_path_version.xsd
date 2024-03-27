@@ -89,7 +89,7 @@ Rail transport, Roads and Road transport
 			<xsd:group ref="PathLinkElementGroup"/>
 			<xsd:group ref="EnvironmentPropertiesGroup"/>
 			<xsd:group ref="PathPropertiesGroup"/>
-			<xsd:group ref="LinkDurationGroup"/>
+			<xsd:group ref="GenericPathLinkDurationGroup"/>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:complexType name="SitePathLinkEndStructure">
@@ -153,13 +153,13 @@ Rail transport, Roads and Road transport
 							<xsd:group ref="LinkGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
-							<xsd:group ref="PathLinkGroup"/>
+							<xsd:group ref="GenericPathLinkGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
 							<xsd:group ref="OffSitePathLinkGroup"/>
 						</xsd:sequence>
 					</xsd:sequence>
-					<xsd:attribute name="id" type="OffSitePathLinkIdType" use="optional">
+					<xsd:attribute name="id" type="OffSiteGenericPathLinkIdType" use="optional">
 						<xsd:annotation>
 							<xsd:documentation>Identifier of ENTITY.</xsd:documentation>
 						</xsd:annotation>
@@ -173,7 +173,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Type for an  OFF SITE PATH LINK.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
-			<xsd:extension base="PathLink_VersionStructure">
+			<xsd:extension base="GenericPathLink_VersionStructure">
 				<xsd:sequence>
 					<xsd:group ref="OffSitePathLinkGroup"/>
 				</xsd:sequence>
@@ -234,13 +234,13 @@ Rail transport, Roads and Road transport
 							<xsd:group ref="LinkGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
-							<xsd:group ref="PathLinkGroup"/>
+							<xsd:group ref="GenericPathLinkGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
 							<xsd:group ref="SitePathLinkGroup"/>
 						</xsd:sequence>
 					</xsd:sequence>
-					<xsd:attribute name="id" type="SitePathLinkIdType"/>
+					<xsd:attribute name="id" type="SiteGenericPathLinkIdType"/>
 				</xsd:restriction>
 			</xsd:complexContent>
 		</xsd:complexType>
@@ -250,7 +250,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Type for a SITE PATH LINK.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
-			<xsd:extension base="PathLink_VersionStructure">
+			<xsd:extension base="GenericPathLink_VersionStructure">
 				<xsd:sequence>
 					<xsd:group ref="SitePathLinkGroup"/>
 				</xsd:sequence>
@@ -293,11 +293,15 @@ Rail transport, Roads and Road transport
 		<xsd:complexContent>
 			<xsd:extension base="containmentAggregationStructure">
 				<xsd:choice maxOccurs="unbounded">
-					<xsd:element ref="PathJunctionRef"/>
-					<xsd:element ref="PathJunction"/>
+					<xsd:element ref="GenericPathJunctionRef"/>
 					<xsd:element ref="SitePathJunction">
 						<xsd:annotation>
 							<xsd:documentation>PATH JUNCTION for a SITE.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element ref="PathJunction">
+						<xsd:annotation>
+							<xsd:documentation>Preferably use SITE PATH JUNCTION in future.</xsd:documentation>
 						</xsd:annotation>
 					</xsd:element>
 				</xsd:choice>
@@ -325,7 +329,7 @@ Rail transport, Roads and Road transport
 							<xsd:group ref="SitePathJunctionGroup"/>
 						</xsd:sequence>
 					</xsd:sequence>
-					<xsd:attribute name="id" type="PathJunctionIdType" use="optional"/>
+					<xsd:attribute name="id" type="GenericPathJunctionIdType" use="optional"/>
 				</xsd:restriction>
 			</xsd:complexContent>
 		</xsd:complexType>
@@ -335,7 +339,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Type for a SITE PATH JUNCTION.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
-			<xsd:extension base="Point_VersionStructure">
+			<xsd:extension base="GenericPathJunction_VersionStructure">
 				<xsd:sequence>
 					<xsd:group ref="SitePathJunctionGroup"/>
 				</xsd:sequence>
@@ -347,11 +351,11 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Elements of a SITE PATH JUNCTION.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="ParentZoneRef" type="ZoneRefStructure" minOccurs="0">
+			<!--xxx <xsd:element name="ParentZoneRef" type="ZoneRefStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Parent ZONE that contains this PATH JUNCTION.</xsd:documentation>
 				</xsd:annotation>
-			</xsd:element>
+			</xsd:element>-->
 			<xsd:group ref="SiteElementPropertiesGroup">
 				<xsd:annotation>
 					<xsd:documentation>Elements of a SITE ELEMENTs.</xsd:documentation>
@@ -374,5 +378,34 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
+		<xsd:element name="PathJunction" substitutionGroup="Point">
+		<xsd:annotation>
+			<xsd:documentation>DEPRECATED - use SITE PATH JUNCTION. v 3.0esignated point, inside  a SITE ie  STOP PLACE or POINT OF INTEREST, at which two or more PATH LINKs may connect or branch.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="SitePathJunction_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="PointGroup"/>
+						</xsd:sequence>
+<!--xxx						<xsd:sequence>
+							<xsd:group ref="GenericPathJunctionGroup"/>
+						</xsd:sequence> -->
+						<xsd:sequence>
+							<xsd:group ref="SitePathJunctionGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="GenericPathJunctionIdType" use="optional"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
 	<!-- ======================================================================= -->
 </xsd:schema>

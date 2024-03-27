@@ -115,10 +115,17 @@ Correct COnstraints for PointOnRoute
 					  CR0038 revise constraints on ResponsibilityRole
 				</Date><Date><Modified>2011-01-17</Modified>V0.94 Revised
 				</Date><Date><Created>2010-09-04</Created>Created from Siri.xsd
-				</Date><Description><p>netex Xml is an XML representation of the Transmodel model that can be used to exchange data objects between netex databases and other services.</p>.
-					<p> The same netex Xml of netex data objects can be used both in fine grained protocols that exchange one or more objects at a time, such as the SIRI based netex Xml web service, and in bulk publication exchange formats used to exchange whole data sets. </p><p>This netex Publication exchange XML schema defines a bulk delivery format to exchange netex objects as an XML document. (It has no dependency on SIRI).
- 						<ul><li>For each data object type it describes an XML representation which can be used to exchange netex data.</li><li>It also describes filters to describe requests for publishing data. These can be used both to configure the publication, and to describe the contents of the published document, for example all Network Objects, or all current traffic events.</li><li>A particular use of the netex Publication Exchange format is to publish data from a NeTEx system: at regular intervals as an Xml document which can be transmitted to other systems by FTP or other communication transport means. </li></ul>
-					</p></Description><Format><MediaType>text/xml</MediaType><Syntax>http://www.w3.org/2001/XMLSchema</Syntax><Description>XML schema, W3C Recommendation 2001</Description></Format><Identifier>{http://www.netex.org.uk/schemas/1.0/xsd}netex_publication.xsd</Identifier><Language>[ISO 639-2/B] ENG</Language><Publisher>Kizoom Software Ltd, 16 High Holborn, London WC1V 6BX </Publisher><Relation><Requires>http://www.netex.org.uk/schemas/1.0/netex_filters.xsd</Requires><Requires>http://www.netex.org.uk/schemas/1.0/netex_all_objects.xsd</Requires></Relation><Rights>Unclassified
+				</Date><Description>
+					<p>netex Xml is an XML representation of the Transmodel model that can be used to exchange data objects between netex databases and other services.</p>.
+					<p> The same netex Xml of netex data objects can be used both in fine grained protocols that exchange one or more objects at a time, such as the SIRI based netex Xml web service, and in bulk publication exchange formats used to exchange whole data sets. </p>
+					<p>This netex Publication exchange XML schema defines a bulk delivery format to exchange netex objects as an XML document. (It has no dependency on SIRI).
+ 						<ul>
+							<li>For each data object type it describes an XML representation which can be used to exchange netex data.</li>
+							<li>It also describes filters to describe requests for publishing data. These can be used both to configure the publication, and to describe the contents of the published document, for example all Network Objects, or all current traffic events.</li>
+							<li>A particular use of the netex Publication Exchange format is to publish data from a NeTEx system: at regular intervals as an Xml document which can be transmitted to other systems by FTP or other communication transport means. </li>
+						</ul>
+					</p>
+				</Description><Format><MediaType>text/xml</MediaType><Syntax>http://www.w3.org/2001/XMLSchema</Syntax><Description>XML schema, W3C Recommendation 2001</Description></Format><Identifier>{http://www.netex.org.uk/schemas/1.0/xsd}netex_publication.xsd</Identifier><Language>[ISO 639-2/B] ENG</Language><Publisher>Kizoom Software Ltd, 16 High Holborn, London WC1V 6BX </Publisher><Relation><Requires>http://www.netex.org.uk/schemas/1.0/netex_filters.xsd</Requires><Requires>http://www.netex.org.uk/schemas/1.0/netex_all_objects.xsd</Requires></Relation><Rights>Unclassified
 					 <Copyright>CEN, Crown Copyright 2009-2021</Copyright>
 				</Rights><Source><ul><li>Created for NeTEx.</li></ul></Source><Status>Version 1.1</Status><Subject><Category>Arts, recreation and travel, Tourism, Travel (tourism), Transport, Public transport, Bus services, Coach services, Business and industry, Transport, Public transport, Roads and Road transport.</Category><Project>CEN TC278 WG3 SG9.</Project></Subject><Title>NeTEx XML schema. bulk Publication Interface for exchanging NeTEx data </Title><Type>Standard</Type></Metadata>
 		</xsd:appinfo>
@@ -4335,6 +4342,27 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
+		<!-- =====DeckNavigationPath============================== -->
+		<!-- =====DeckNavigationPath unique========================== -->
+		<xsd:unique name="DeckNavigationPath_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [DeckNavigationPath Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:DeckNavigationPath"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====DEckNavigationPath Key ========================== -->
+		<xsd:keyref name="DeckNavigationPath_KeyRef" refer="netex:DeckNavigationPath_AnyVersionedKey">
+			<xsd:selector xpath=" .//netex:DeckNavigationPathRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="DeckNavigationPath_AnyVersionedKey">
+			<xsd:selector xpath=" .//netex:DeckNavigationPath"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>		
 		<!-- =====AcceptedDriverPermit============================ -->
 		<!-- =====AcceptedDriverPermit unique========================== -->
 		<xsd:unique name="AcceptedDriverPermit_UniqueBy_Id_Version">
@@ -5849,44 +5877,38 @@ Correct COnstraints for PointOnRoute
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====PATH COnstraints============== -->
-		<!-- =====PathLink============================== -->
-		<!-- =====PathLink unique========================== -->
-		<xsd:unique name="PathLink_UniqueBy_Id_Version">
+		<!-- =====PATH Constraints============== -->
+		<!-- =====SitePathLink============================== -->
+		<!-- =====SitePathLink unique========================== -->
+		<xsd:unique name="SitePathLink_UniqueBy_Id_Version">
 			<xsd:annotation>
-				<xsd:documentation>Every [PathLink Id + Version] must be unique within document.</xsd:documentation>
+				<xsd:documentation>Every [sitePathLink Id + Version] must be unique within document.</xsd:documentation>
 			</xsd:annotation>
-			<xsd:selector xpath=".//netex:PathLink"/>
+			<xsd:selector xpath=".//netex:PathLink  | .//netex:SitePathLink | .//netex:OffSitePathLink"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:unique>
 		<!-- =====PathLink Key ========================== -->
-		<xsd:keyref name="PathLink_KeyRef" refer="netex:PathLink_AnyVersionedKey">
+		<xsd:keyref name="SitePathLink_KeyRef" refer="netex:SitePathLink_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:PathLinkRef | .//netex:SitePathLinkRef | .//netex:OffSitePathLinkRef"/>
 			<xsd:field xpath="@ref"/>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
-		<xsd:key name="PathLink_AnyVersionedKey">
+		<xsd:key name="SitePathLink_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:PathLink | .//netex:SitePathLink | .//netex:OffSitePathLink"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
 		<!-- ===== PathLink Target PLACE Reference============================ -->
 		<!-- =====PathLink PTarget LACE Reference== Key ========================== -->
-		<xsd:keyref name="PathLink_Place_KeyRef" refer="netex:SitePathLinkTarget_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:Link/netex:From/netex:PlaceRef | .//netex:PathLink/netex:To/netex:PlaceRef "/>
+		<xsd:keyref name="PathLink_Place_KeyRef" refer="netex:PathLinkTarget_AnyVersionedKey">
+			<xsd:selector xpath=" .//netex:SitePathLink/netex:To/netex:PlaceRef  | .//netex:PathLink/netex:To/netex:PlaceRef | .//netex:SitePathLink/netex:From/netex:PlaceRef | .//netex:PathLink/netex:From/netex:PlaceRef "/>
 			<xsd:field xpath="@ref"/>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
-		<!-- =====SitePathLink Target PLACE Reference============================ -->
-		<!-- =====SitePathLink PTarget LACE Reference== Key ========================== -->
-		<xsd:keyref name="SitePathLink_Place_KeyRef" refer="netex:SitePathLinkTarget_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:SitePathLink/netex:From/netex:PlaceRef | .//netex:SitePathLink/netex:To/netex:PlaceRef "/>
-			<xsd:field xpath="@ref"/>
-			<xsd:field xpath="@version"/>
-		</xsd:keyref>
-		<xsd:key name="SitePathLinkTarget_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:StopPlace |  .//netex:AccessSpace | .//netex:Quay | .//netex:BoardingPosition | .//netex:EquipmentPlace | .//netex:StopPlaceEntrance | .//netex:StopPlaceVehicleEntrance | .//netex:SitePathJunction | .//netex:PathJunction | .//netex:PointOfInterest | .//netex:PointOfInterestSpace  | .//netex:PointOfInterestEntrance | .//netex:Parking | .//netex:ParkingPassengerEntrance |.//netex:ParkingEntranceForVehicles | .//netex:ParkingArea"/>
+		 
+		<xsd:key name="PathLinkTarget_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:StopPlace |  .//netex:AccessSpace | .//netex:Quay |  .//netex:BoardingPosition  |.//netex:StopPlaceEntrance |.//netex:StopPlaceVehicleEntrance |.//netex:SitePathJunction |.//netex:PathJunction |.//netex:PointOfInterest |.//netex:PointOfInterestSpace  |.//netex:PointOfInterestEntrance   |.//netex:Parking |.//netex:ParkingPassengerEntrance   |.//netex:ParkingEntranceForVehicles  |.//netex:ParkingArea |.//netex:EquipmentPlace"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
@@ -5896,7 +5918,7 @@ Correct COnstraints for PointOnRoute
 			<xsd:annotation>
 				<xsd:documentation>Every [PathJunction Id + Version] must be unique within document.</xsd:documentation>
 			</xsd:annotation>
-			<xsd:selector xpath=".//netex:PathJunction "/>
+			<xsd:selector xpath=".//netex:PathJunction | .//netex:SitePathJunction "/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:unique>
@@ -5910,6 +5932,30 @@ Correct COnstraints for PointOnRoute
 			<xsd:selector xpath=".//netex:PathJunction| .//netex:SitePathJunction"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====PathInstruction============================== -->
+		<!-- =====PathInstruction unique========================== -->
+		<xsd:unique name="PathInstruction_UniqueBy_Id_Version_ordered">
+			<xsd:annotation>
+				<xsd:documentation>Every [PathInstruction Id + Version + order] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:PathInstruction"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+			<xsd:field xpath="@order"/>
+		</xsd:unique>
+		<!-- =====PathInstruction Key ========================== -->
+		<xsd:keyref name="PathInstruction_KeyRef" refer="netex:PathInstruction_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:PathInstructionRef "/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+			<xsd:field xpath="@order"/>
+		</xsd:keyref>
+		<xsd:key name="PathInstruction_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:PathInstruction"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+			<xsd:field xpath="@order"/>
 		</xsd:key>
 		<!-- =====NavigationPath============================== -->
 		<!-- =====NavigationPath unique========================== -->
