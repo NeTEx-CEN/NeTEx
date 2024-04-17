@@ -2582,6 +2582,14 @@ Provides a general purose wrapper for NeTEx data content.</xsd:documentation>
 		</xsd:key>
 		<!-- =====ACCESSIBILITY Constraints========================= -->
 		<!-- =====AccessibilityAssessment============================ -->
+		<xsd:unique name="AccessibilityAssessment_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [AccessibilityAssessment Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:AccessibilityAssessment"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
 		<xsd:keyref name="AccessibilityAssessment_AnyKeyRef" refer="netex:AccessibilityAssessment_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:AccessibilityAssessmentRef"/>
 			<xsd:field xpath="@ref"/>
@@ -2592,6 +2600,15 @@ Provides a general purose wrapper for NeTEx data content.</xsd:documentation>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
+		<!-- =====AccessibilityLimitation============================ -->
+		<xsd:unique name="AccessibilityLimitation_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [AccessibilityLimitation Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:AccessibilityLimitation"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
 		<!-- =====SERVICE CALENDAR Constraints========================= -->
 		<!-- =====DayType============================== -->
 		<!-- =====DayType unique========================== -->
@@ -2690,14 +2707,14 @@ Provides a general purose wrapper for NeTEx data content.</xsd:documentation>
 		</xsd:key>
 		<!-- =====OperatingDay============================== -->
 		<!-- =====OperatingDay unique========================== -->
-		<!--		<xsd:unique name="OperatingDay_UniqueBy_Id_Version">
+		<xsd:unique name="OperatingDay_UniqueBy_Id_Version">
 			<xsd:annotation>
 				<xsd:documentation>Every [OperatingDay Id + Version] must be unique within document.</xsd:documentation>
 			</xsd:annotation>
 			<xsd:selector xpath=".//netex:OperatingDay"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
-		</xsd:unique>-->
+		</xsd:unique>
 		<!-- =====OperatingDay unique==In Calendar======================== -->
 		<xsd:unique name="OperatingDay_UniqueCalendarDateInCalendar">
 			<xsd:annotation>
@@ -2790,7 +2807,7 @@ Provides a general purose wrapper for NeTEx data content.</xsd:documentation>
 			<xsd:annotation>
 				<xsd:documentation>Every [ValidityCondition Id + Version] must be unique within document.</xsd:documentation>
 			</xsd:annotation>
-			<xsd:selector xpath=".//netex:ValidityCondition | .//netex:ValidityTrigger | .//netex:ValidityRuleParameter"/>
+			<xsd:selector xpath=".//netex:ValidityCondition | .//netex:ValidityTrigger | .//netex:ValidityRuleParameter | .//netex:ValidBetween"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:unique>
@@ -2806,6 +2823,15 @@ Provides a general purose wrapper for NeTEx data content.</xsd:documentation>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
 		<!-- =====AvailabilityCondition============================== -->
+		<!-- =====AvailabilityCondition unique========================== -->
+		<xsd:unique name="AvailabilityCondition_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [AvailabilityCondition Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:AvailabilityCondition | .//netex:ValidDuring"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
 		<xsd:keyref name="AvailabilityCondition_AnyKeyRef" refer="netex:AvailabilityCondition_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:AvailabilityConditionRef"/>
 			<xsd:field xpath="@ref"/>
@@ -3328,6 +3354,48 @@ Provides a general purose wrapper for NeTEx data content.</xsd:documentation>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
+		<!-- =====FlexibleRoute============================== -->
+		<!-- =====FlexibleRoute unique========================== -->
+		<xsd:unique name="FlexibleRoute_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [FlexibleRoute Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:FlexibleRoute"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====FlexibleRoute Key ========================== -->
+		<xsd:keyref name="FlexibleRoute_KeyRef" refer="netex:FlexibleRoute_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:FlexibleRouteRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="FlexibleRoute_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:FlexibleRoute"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====FlexibleQuay============================== -->
+		<!-- =====FlexibleQuay unique========================== -->
+		<xsd:unique name="FlexibleQuay_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [FlexibleQuay Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:FlexibleQuay"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====FlexibleQuay Key ========================== -->
+		<xsd:keyref name="FlexibleQuay_KeyRef" refer="netex:FlexibleQuay_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:FlexibleQuayRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="FlexibleQuay_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:FlexibleQuay"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
 		<!-- =====FlexibleStopPlace============================== -->
 		<!-- =====FlexibleStopPlace unique========================== -->
 		<xsd:unique name="FlexibleStopPlace_UniqueBy_Id_Version">
@@ -3622,7 +3690,7 @@ Provides a general purose wrapper for NeTEx data content.</xsd:documentation>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====CHECK CONSTRAINT COnstraints============== -->
+		<!-- =====CHECK CONSTRAINT Constraints============== -->
 		<!-- =====CheckConstraint============================== -->
 		<!-- =====CheckConstraint unique========================== -->
 		<xsd:unique name="CheckConstraint_UniqueBy_Id_Version">
@@ -3686,14 +3754,14 @@ Provides a general purose wrapper for NeTEx data content.</xsd:documentation>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====PATH COnstraints============== -->
+		<!-- =====PATH Constraints============== -->
 		<!-- =====PathLink============================== -->
 		<!-- =====PathLink unique========================== -->
 		<xsd:unique name="PathLink_UniqueBy_Id_Version">
 			<xsd:annotation>
 				<xsd:documentation>Every [PathLink Id + Version] must be unique within document.</xsd:documentation>
 			</xsd:annotation>
-			<xsd:selector xpath=".//netex:PathLink"/>
+			<xsd:selector xpath=".//netex:PathLink | .//netex:SitePathLink"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:unique>
@@ -4240,9 +4308,18 @@ Provides a general purose wrapper for NeTEx data content.</xsd:documentation>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:unique>
+		<!-- =====FlexibleLine unique========================== -->
+		<xsd:unique name="FlexibleLine_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [FlexibleLine Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:FlexibleLine"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
 		<!-- =====Line Key ========================== -->
 		<xsd:keyref name="Line_KeyRef" refer="netex:Line_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:LineRef| .//netex:FlexibleLineRef | .//netex:MainLineRef"/>
+			<xsd:selector xpath=".//netex:LineRef | .//netex:FlexibleLineRef | .//netex:MainLineRef"/>
 			<xsd:field xpath="@ref"/>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
@@ -4946,6 +5023,30 @@ Provides a general purose wrapper for NeTEx data content.</xsd:documentation>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
 		<!-- =====STOP ASSIGNMENT Constraints============================== -->
+		<!-- =====FlexibleStopAssignment============================== -->
+		<!-- =====FlexibleStopAssignment unique========================== -->
+		<xsd:unique name="FlexibleStopAssignment_UniqueBy_Id_Version_Order">
+			<xsd:annotation>
+				<xsd:documentation>Every [FlexibleStopAssignment Id + Version + order] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:FlexibleStopAssignment"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+			<xsd:field xpath="@order"/>
+		</xsd:unique>
+		<!-- =====FlexibleStopAssignment Key ========================== -->
+		<xsd:keyref name="FlexibleStopAssignment_KeyRef" refer="netex:FlexibleStopAssignment_AnyVersionedKey_ordered">
+			<xsd:selector xpath=".//netex:FlexibleStopAssignmentRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+			<xsd:field xpath="@order"/>
+		</xsd:keyref>
+		<xsd:key name="FlexibleStopAssignment_AnyVersionedKey_ordered">
+			<xsd:selector xpath=".//netex:FlexibleStopAssignment"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+			<xsd:field xpath="@order"/>
+		</xsd:key>
 		<!-- =====PassengerStopAssignment============================== -->
 		<!-- =====PassengerStopAssignment unique========================== -->
 		<xsd:unique name="PassengerStopAssignment_UniqueBy_Id_Version_Order">
@@ -5566,6 +5667,22 @@ Provides a general purose wrapper for NeTEx data content.</xsd:documentation>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:unique>
+		<xsd:unique name="DatedVehicleJourney_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [DatedVehicleJourney Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:DatedVehicleJourney"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<xsd:unique name="NormalDatedVehicleJourney_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [NormalDatedVehicleJourney Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:NormalDatedVehicleJourney"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
 		<xsd:unique name="ServiceJourney_UniqueBy_Id_Version">
 			<xsd:annotation>
 				<xsd:documentation>Every [ServiceJourney Id + Version] must be unique within document.</xsd:documentation>
@@ -5574,7 +5691,15 @@ Provides a general purose wrapper for NeTEx data content.</xsd:documentation>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:unique>
-		<xsd:unique name="TemplateVehicleourney_UniqueBy_Id_Version">
+		<xsd:unique name="DatedServiceJourney_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [DatedServiceJourney Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:DatedServiceJourney"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<xsd:unique name="TemplateVehicleJourney_UniqueBy_Id_Version">
 			<xsd:annotation>
 				<xsd:documentation>Every [TemplateVehicleJourney Id + Version] must be unique within document.</xsd:documentation>
 			</xsd:annotation>
@@ -5597,7 +5722,7 @@ Provides a general purose wrapper for NeTEx data content.</xsd:documentation>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
 		<xsd:key name="Journey_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:ServiceJourney | .//netex:VehicleJourney| .//netex:DeadRun | .//netex:SpecialService | .//netex:TemplateServiceJourney | .//netex:DatedServiceJourney"/>
+			<xsd:selector xpath=".//netex:ServiceJourney | .//netex:VehicleJourney | .//netex:DeadRun | .//netex:SpecialService | .//netex:TemplateServiceJourney | .//netex:DatedServiceJourney | .//netex:DatedVehicleJourney | .//netex:NormalDatedVehicleJourney"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
