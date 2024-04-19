@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_nm_mobilityService_version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_nm_mobilityService_version">
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_equipment_version.xsd"/>
 	<xsd:include schemaLocation="netex_nm_mobilityService_support.xsd"/>
 	<xsd:include schemaLocation="netex_nm_onlineService_support.xsd"/>
@@ -31,6 +31,9 @@
 				</Date>
 				<Date><Modified>2021-08-01</Modified>NewModes Feedback: Add PolicyUrl attribute to VehiclePoolingService,  VehicleSharingService.
 				</Date>
+				<Date><Modified>2023-12-18</Modified>FIX: Correct the  #525 implementation of BOOKING ARRANGEMENT and SERVICE BOOKING ARRANGEMENT,
+					   SERVICE BOOKING ARRANGEMENT should inherit from BOOKING ARRANGEMENT and should have its own structure.
+				</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines MOBILITY SERVICE types.</p>
 				</Description>
@@ -43,7 +46,7 @@
 				<Language>[ISO 639-2/B] ENG</Language>
 				<Publisher>CEN TC278 WG3 SG9</Publisher>
 				<Rights>Unclassified
-					 <Copyright>CEN, Crown Copyright 2019-2021</Copyright>
+					 <Copyright>CEN, Crown Copyright 2019-2023</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -125,24 +128,20 @@ Rail transport, Roads and Road transport
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element ref="TypeOfMobilityServiceRef" minOccurs="0"/>
-			<xsd:element ref="OrganisationRef" minOccurs="0"/>
+			<xsd:element ref="OrganisationRef_" minOccurs="0"/>
 			<xsd:element ref="TopographicPlaceRef" minOccurs="0"/>
-			<xsd:element name="ServiceBookingArrangements" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Booking Arrangements for service. DEPRECATED: use serviceBookingArrangements</xsd:documentation>
-				</xsd:annotation>
-				<xsd:complexType>
-					<xsd:sequence>
-						<xsd:group ref="BookingArrangementGroup"/>
-						<xsd:group ref="ServiceBookingArrangementGroup"/>
-					</xsd:sequence>
-				</xsd:complexType>
-			</xsd:element>
-			<xsd:element name="serviceBookingArrangements" type="ServiceBookingArrangementsStructure" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Booking Arrangements for service.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
+			<xsd:choice>
+				<xsd:element name="serviceBookingArrangements" type="serviceBookingArrangements_RelStructure" minOccurs="0">
+					<xsd:annotation>
+						<xsd:documentation>Service Booking Arrangements for service. +2.0 </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="ServiceBookingArrangements" type="ServiceBookingArrangement_VersionStructure" minOccurs="0">
+					<xsd:annotation>
+						<xsd:documentation>Booking Arrangements for service. DEPRECATED: use serviceBookingArrangements</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:choice>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ===== COMMON VEHICLE SERVICE ============================================= -->

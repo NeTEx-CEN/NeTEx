@@ -9,6 +9,7 @@
 	<xsd:include schemaLocation="netex_vehicleJourneyFrequency_version.xsd"/>
 	<xsd:include schemaLocation="netex_vehicleJourneyTimes_version.xsd"/>
 	<xsd:include schemaLocation="netex_passingTimes_version.xsd"/>
+	<xsd:include schemaLocation="netex_passengerAtStopTime_version.xsd"/>
 	<xsd:include schemaLocation="netex_coupledJourney_version.xsd"/>
 	<xsd:include schemaLocation="netex_vehicleJourneyFrequency_version.xsd"/>
 	<!-- ======================================================================= -->
@@ -42,6 +43,8 @@
 				<Date><Modified>2020-10-05</Modified> New Modes: Add Vehicle  mode  to VehicleType
 					   Replace VehicleTypeRef with TransportTypeRef so as to be more general
 				</Date>
+				<Date><Modified>2024-02-27</Modified>TM enhancement add PASSENGER TIMES at STOP
+				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the VEHICLE JOURNEY types.</p>
@@ -58,7 +61,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
-						 <Copyright>CEN, Crown Copyright 2009-2020</Copyright>
+						 <Copyright>CEN, Crown Copyright 2009-2024</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -203,7 +206,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element name="vehicleJourneyStopAssignments" type="vehicleJourneyStopAssignments_RelStructure" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Niormal  VEHICLE STOP ASSIGNMENTs  for VEHICLE JOURNEY, +v1.1</xsd:documentation>
+					<xsd:documentation>Normal VEHICLE STOP ASSIGNMENTs for VEHICLE JOURNEY, +v1.1</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -231,6 +234,11 @@ Rail transport, Roads and Road transport
 			<xsd:element name="passingTimes" type="timetabledPassingTimes_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>PASSING TIMEs  for VEHICLE JOURNEY.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="passengerAtStopTimes" type="passengerAtStopTimes_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Times for passenger to be at stop if earlier than departure time. +v2.0</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -335,7 +343,7 @@ Rail transport, Roads and Road transport
 	</xsd:element>
 	<xsd:complexType name="TemplateVehicleJourney_VersionStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for TEMP_LATE VEHICLE JOURNEY.</xsd:documentation>
+			<xsd:documentation>Type for TEMPLATE VEHICLE JOURNEY.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="Journey_VersionStructure">
@@ -465,7 +473,7 @@ Rail transport, Roads and Road transport
 	</xsd:element>
 	<xsd:complexType name="TrainComponentLabelAssignment_VersionStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for TRAIN COMPONENT NUMBER ASSIGNNMENT.</xsd:documentation>
+			<xsd:documentation>Type for TRAIN COMPONENT NUMBER ASSIGNMENT.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="Assignment_VersionStructure">
@@ -477,7 +485,7 @@ Rail transport, Roads and Road transport
 	</xsd:complexType>
 	<xsd:group name="TrainComponentLabelAssignmentGroup">
 		<xsd:annotation>
-			<xsd:documentation>Elements for TRAIN COMPONENT NUMBER ASSIGNNMENT Group.</xsd:documentation>
+			<xsd:documentation>Elements for TRAIN COMPONENT NUMBER ASSIGNMENT Group.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element name="Label" type="MultilingualString" minOccurs="0">
@@ -492,7 +500,7 @@ Rail transport, Roads and Road transport
 	<!-- ======== VEHICLE TYPE STOP ASSIGNMENT ========================== -->
 	<xsd:complexType name="vehicleTypeStopAssignments_RelStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for containment  of  VEHICLE TYPE STOP ASSIGNNMENTs.</xsd:documentation>
+			<xsd:documentation>Type for containment of VEHICLE TYPE STOP ASSIGNNMENTs.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="containmentAggregationStructure">
@@ -537,7 +545,7 @@ Rail transport, Roads and Road transport
 	</xsd:element>
 	<xsd:complexType name="VehicleTypeStopAssignment_VersionStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for VEHICLE TYPE STOP ASSIGNNMENT.</xsd:documentation>
+			<xsd:documentation>Type for VEHICLE TYPE STOP ASSIGNMENT.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="Assignment_VersionStructure">
@@ -549,7 +557,7 @@ Rail transport, Roads and Road transport
 	</xsd:complexType>
 	<xsd:group name="VehicleTypeStopAssignmentGroup">
 		<xsd:annotation>
-			<xsd:documentation>Elements for VEHICLE TYPE STOP  ASSIGNNMENT Group.</xsd:documentation>
+			<xsd:documentation>Elements for VEHICLE TYPE STOP ASSIGNMENT Group.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element name="VehicleOrientation" type="VehicleOrientationEnumeration" default="forwards" minOccurs="0">
@@ -562,7 +570,7 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="TransportTypeRef"/>
 		</xsd:sequence>
 	</xsd:group>
-	<!-- ========= TIMING ALGORITHM TYPE=========================================== -->
+	<!-- ======= TIMING ALGORITHM TYPE=========================================== -->
 	<xsd:element name="TimingAlgorithmType" substitutionGroup="TypeOfValue">
 		<xsd:annotation>
 			<xsd:documentation>Classification of a TIMING ALGORITHM.</xsd:documentation>
@@ -644,7 +652,7 @@ Rail transport, Roads and Road transport
 	</xsd:element>
 	<xsd:complexType name="VehicleJourneyStopAssignment_VersionStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for VEHICLE JOURNER STOP ASSIGNMENT.</xsd:documentation>
+			<xsd:documentation>Type for VEHICLE JOURNEY STOP ASSIGNMENT.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="PassengerStopAssignment_VersionStructure">

@@ -354,27 +354,6 @@ Provides a general purose wrapper for NeTEx data content.</xsd:documentation>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====Version============================== -->
-		<!-- =====Version unique========================== -->
-		<xsd:unique name="Version_UniqueBy_Id_Version">
-			<xsd:annotation>
-				<xsd:documentation>Every [Version Id + Version] must be unique within document.</xsd:documentation>
-			</xsd:annotation>
-			<xsd:selector xpath=".//netex:Version"/>
-			<xsd:field xpath="@id"/>
-			<xsd:field xpath="@version"/>
-		</xsd:unique>
-		<!-- =====Version Key ========================== -->
-		<xsd:keyref name="Version_AnyKeyRef" refer="netex:Version_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:VersionRef"/>
-			<xsd:field xpath="@ref"/>
-			<xsd:field xpath="@version"/>
-		</xsd:keyref>
-		<xsd:key name="Version_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:Version"/>
-			<xsd:field xpath="@id"/>
-			<xsd:field xpath="@version"/>
-		</xsd:key>
 		<!-- =====TypeOfFrame============================== -->
 		<!-- =====TypeOfFrame unique========================== -->
 		<xsd:unique name="TypeOfFrame_UniqueBy_Id_Version">
@@ -748,12 +727,12 @@ Provides a general purose wrapper for NeTEx data content.</xsd:documentation>
 		</xsd:unique>
 		<!-- =====GeneralGroupOfEntities Key ========================== -->
 		<xsd:keyref name="GeneralGroupOfEntities_AnyKeyRef" refer="netex:GeneralGroupOfEntities_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:GeneralGroupOfEntitiesRef   | DistributionGroupRef"/>
+			<xsd:selector xpath=".//netex:GeneralGroupOfEntitiesRef | .//netex:DistributionGroupRef"/>
 			<xsd:field xpath="@ref"/>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
 		<xsd:key name="GeneralGroupOfEntities_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:GeneralGroupOfEntities"/>
+			<xsd:selector xpath=".//netex:GeneralGroupOfEntities | .//netex:GroupOfPlaces"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
@@ -1009,27 +988,6 @@ Provides a general purose wrapper for NeTEx data content.</xsd:documentation>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====GroupOfTariffZones============================== -->
-		<!-- =====GroupOfTariffZones unique========================== -->
-		<xsd:unique name="GroupOfTariffZones_UniqueBy_Id_Version">
-			<xsd:annotation>
-				<xsd:documentation>Every [GroupOfTariffZones Id + Version] must be unique within document.</xsd:documentation>
-			</xsd:annotation>
-			<xsd:selector xpath=".//netex:GroupOfTariffZones"/>
-			<xsd:field xpath="@id"/>
-			<xsd:field xpath="@version"/>
-		</xsd:unique>
-		<!-- =====GroupOfTariffZones Key ========================== -->
-		<xsd:keyref name="GroupOfTariffZones_KeyRef" refer="netex:GroupOfTariffZones_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:GroupOfTariffZonesRef"/>
-			<xsd:field xpath="@ref"/>
-			<xsd:field xpath="@version"/>
-		</xsd:keyref>
-		<xsd:key name="GroupOfTariffZones_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:GroupOfTariffZones"/>
-			<xsd:field xpath="@id"/>
-			<xsd:field xpath="@version"/>
-		</xsd:key>
 		<!-- =====FareZone============================== -->
 		<!-- =====FareZone unique========================== -->
 		<xsd:unique name="FareZone_UniqueBy_Id_Version">
@@ -1048,6 +1006,27 @@ Provides a general purose wrapper for NeTEx data content.</xsd:documentation>
 		</xsd:keyref>
 		<xsd:key name="FareZone_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:FareZone"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====GroupOfTariffZones============================== -->
+		<!-- =====GroupOfTariffZones unique========================== -->
+		<xsd:unique name="GroupOfTariffZones_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [GroupOfTariffZones Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:GroupOfTariffZones"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====GroupOfTariffZones Key ========================== -->
+		<xsd:keyref name="GroupOfTariffZones_KeyRef" refer="netex:GroupOfTariffZones_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:GroupOfTariffZonesRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="GroupOfTariffZones_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:GroupOfTariffZones"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
@@ -1080,7 +1059,7 @@ Provides a general purose wrapper for NeTEx data content.</xsd:documentation>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
 		<xsd:key name="LinkSequence_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:Route | .//netex:JourneyPattern | .//netex:TimingPattern | .//netex:ServicePattern | .//netex:ServiceJourneyPattern | .//netex:DeadRunServicePattern | .//netex:NavigationPath"/>
+			<xsd:selector xpath=".//netex:Route | .//netex:JourneyPattern | .//netex:TimingPattern | .//netex:ServicePattern | .//netex:ServiceJourneyPattern | .//netex:NavigationPath"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
@@ -1303,17 +1282,6 @@ Provides a general purose wrapper for NeTEx data content.</xsd:documentation>
 		</xsd:keyref>
 		<xsd:key name="TypeOfOrganisation_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:TypeOfOrganisation"/>
-			<xsd:field xpath="@id"/>
-			<xsd:field xpath="@version"/>
-		</xsd:key>
-		<!-- =====Organisation============================== -->
-		<xsd:keyref name="Organisation_AnyKeyRef" refer="netex:Organisation_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:OrganisationRef | .//netex:ResponsibleOrganisationRef | .//netex:ProvidedByRef"/>
-			<xsd:field xpath="@ref"/>
-			<xsd:field xpath="@version"/>
-		</xsd:keyref>
-		<xsd:key name="Organisation_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:GeneralOrganisation | .//netex:Authority | .//netex:Operator | .//netex:ServicedOrganisation | .//netex:TravelAgent | .//netex:ManagementAgent  | .//netex:RetailConsortium"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
@@ -1683,7 +1651,7 @@ Provides a general purose wrapper for NeTEx data content.</xsd:documentation>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
 		<xsd:key name="Equipment_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:Equipment | .//netex:PlaceEquipment | .//netex:InstalledEquipment | .//netex:ActualVehicleEquipment | .//netex:TicketValidatorEquipment | .//netex:TicketingEquipment   | .//netex:SanitaryEquipment  | .//netex:PassengerSafetyEquipment | .//netex:RubbishDisposalEquipment    |.//netex:PassengerInformationEquipment   | .//netex:EntranceEquipment  | .//netex:LiftEquipment |  .//netex:EscalatorEquipment | .//netex:TravelatorEquipment | .//netex:StaircaseEquipment | .//netex:RampEquipment  | .//netex:RoughSurface  | .//netex:PlaceLighting|  .//netex:PlaceSign |  .//netex:PlaceSign | .//netex:HeadingSign  | .//netex:GeneralSign   |.//netex:WaitingRoomEquipment   | .//netex:ShelterEquipment  | .//netex:SeatingEquipment | .//netex:TrolleyStandEquipment      | .//netex:LuggageLockerEquipment  |  .//netex:CycleParkingEquipment    |.//netex:AccessVehicleEquipment    |.//netex:WheelchairVehicleEquipment"/>
+			<xsd:selector xpath=".//netex:Equipment | .//netex:PlaceEquipment | .//netex:InstalledEquipment | .//netex:ActualVehicleEquipment | .//netex:TicketValidatorEquipment | .//netex:TicketingEquipment   | .//netex:SanitaryEquipment  | .//netex:PassengerSafetyEquipment | .//netex:RubbishDisposalEquipment    |.//netex:PassengerInformationEquipment   | .//netex:EntranceEquipment  | .//netex:LiftEquipment | .//netex:LiftCallEquipment |  .//netex:EscalatorEquipment | .//netex:TravelatorEquipment | .//netex:StaircaseEquipment | .//netex:RampEquipment  | .//netex:RoughSurface  | .//netex:PlaceLighting|  .//netex:PlaceSign |  .//netex:PlaceSign | .//netex:HeadingSign  | .//netex:GeneralSign   |.//netex:WaitingRoomEquipment   | .//netex:ShelterEquipment  | .//netex:SeatingEquipment | .//netex:TrolleyStandEquipment      | .//netex:LuggageLockerEquipment  |  .//netex:CycleParkingEquipment    |.//netex:AccessVehicleEquipment    |.//netex:WheelchairVehicleEquipment"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
@@ -1778,7 +1746,7 @@ Provides a general purose wrapper for NeTEx data content.</xsd:documentation>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
 		<xsd:key name="AccessEquipment_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:EntranceEquipment | .//netex:LiftEquipment | .//netex:RampEquipment |.//netex:StaircaseEquipment   | .//netex:EscalatorEquipment  |  .//netex:TravelatorEquipment  | .//netex:RoughSurface | .//netex:PlaceLighting"/>
+			<xsd:selector xpath=".//netex:EntranceEquipment | .//netex:LiftEquipment | .//netex:LiftCallEquipment | .//netex:RampEquipment |.//netex:StaircaseEquipment   | .//netex:EscalatorEquipment  |  .//netex:TravelatorEquipment  | .//netex:RoughSurface | .//netex:PlaceLighting"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
@@ -1821,6 +1789,27 @@ Provides a general purose wrapper for NeTEx data content.</xsd:documentation>
 		</xsd:keyref>
 		<xsd:key name="LiftEquipment_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:LiftEquipment"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====LiftCallEquipment============================== -->
+		<!-- =====LiftCallEquipment unique========================== -->
+		<xsd:unique name="LiftCallEquipment_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [LiftCallEquipment Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:LiftCallEquipment"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====LiftCallEquipment Key ========================== -->
+		<xsd:keyref name="LiftCallEquipment_AnyKeyRef" refer="netex:LiftCallEquipment_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:LiftCallEquipmentRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="LiftCallEquipment_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:LiftCallEquipment"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
@@ -3718,67 +3707,67 @@ Provides a general purose wrapper for NeTEx data content.</xsd:documentation>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====PATH COnstraints============== -->
-		<!-- =====PathLink============================== -->
-		<!-- =====PathLink unique========================== -->
-		<xsd:unique name="PathLink_UniqueBy_Id_Version">
+		<!-- =====PATH Constraints============== -->
+		<!-- =====SitePathLink============================== -->
+		<!-- =====SitePathLink unique========================== -->
+		<xsd:unique name="SitePathLink_UniqueBy_Id_Version">
 			<xsd:annotation>
-				<xsd:documentation>Every [PathLink Id + Version] must be unique within document.</xsd:documentation>
+				<xsd:documentation>Every [SitePathLink Id + Version] must be unique within document.</xsd:documentation>
 			</xsd:annotation>
-			<xsd:selector xpath=".//netex:PathLink"/>
+			<xsd:selector xpath=".//netex:PathLink | .//netex:SitePathLink "/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:unique>
 		<!-- =====PathLink Key ========================== -->
-		<xsd:keyref name="PathLink_KeyRef" refer="netex:PathLink_AnyVersionedKey">
+		<xsd:keyref name="SitePathLink_KeyRef" refer="netex:SitePathLink_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:PathLinkRef | .//netex:SitePathLinkRef"/>
 			<xsd:field xpath="@ref"/>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
-		<xsd:key name="PathLink_AnyVersionedKey">
+		<xsd:key name="SitePathLink_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:PathLink | .//netex:SitePathLink"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====PathJunction============================== -->
-		<!-- =====PathJunction unique========================== -->
-		<xsd:unique name="PathJunction_UniqueBy_Id_Version">
+		<!-- =====SitePathJunction============================== -->
+		<!-- =====SitePathJunction unique========================== -->
+		<xsd:unique name="SitePathJunction_UniqueBy_Id_Version">
 			<xsd:annotation>
 				<xsd:documentation>Every [PathJunction Id + Version] must be unique within document.</xsd:documentation>
 			</xsd:annotation>
-			<xsd:selector xpath=".//netex:PathJunction|.//netex:PathLink/netex:FromPointRef"/>
+			<xsd:selector xpath=".//netex:PathJunction | .//netex:SitePathJunction"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:unique>
 		<!-- =====PathJunction Key ========================== -->
-		<xsd:keyref name="PathJunction_KeyRef" refer="netex:PathJunction_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:PathJunctionRef"/>
+		<xsd:keyref name="SitePathJunction_KeyRef" refer="netex:SitePathJunction_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:PathJunctionRef| .//netex:SitePathJunctionRef"/>
 			<xsd:field xpath="@ref"/>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
-		<xsd:key name="PathJunction_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:PathJunction"/>
+		<xsd:key name="SitePathJunction_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:PathJunction | .//netex:SitePathJunction"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====NavigationPath============================== -->
-		<!-- =====NavigationPath unique========================== -->
-		<xsd:unique name="NavigationPath_UniqueBy_Id_Version">
+		<!-- =====SiteNavigationPath============================== -->
+		<!-- =====SiteNavigationPath unique========================== -->
+		<xsd:unique name="SiteNavigationPath_UniqueBy_Id_Version">
 			<xsd:annotation>
-				<xsd:documentation>Every [NavigationPath Id + Version] must be unique within document.</xsd:documentation>
+				<xsd:documentation>Every [SiteNavigationPath Id + Version] must be unique within document.</xsd:documentation>
 			</xsd:annotation>
-			<xsd:selector xpath=".//netex:NavigationPath"/>
+			<xsd:selector xpath=".//netex:NavigationPath | .//netex:SiteNavigationPath"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:unique>
-		<!-- =====NavigationPath Key ========================== -->
-		<xsd:keyref name="NavigationPath_KeyRef" refer="netex:NavigationPath_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:NavigationPathRef"/>
+		<!-- =====SiteNavigationPath Key ========================== -->
+		<xsd:keyref name="SiteNavigationPath_KeyRef" refer="netex:SiteNavigationPath_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:SiteNavigationPathRef| .//netex:NavigationPathRef"/>
 			<xsd:field xpath="@ref"/>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
-		<xsd:key name="NavigationPath_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:NavigationPath"/>
+		<xsd:key name="SiteNavigationPath_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:SiteNavigationPath |.//netex:NavigationPath"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
@@ -5350,18 +5339,18 @@ Provides a general purose wrapper for NeTEx data content.</xsd:documentation>
 			<xsd:annotation>
 				<xsd:documentation>Every [ServicePattern Id + Version] must be unique within document.</xsd:documentation>
 			</xsd:annotation>
-			<xsd:selector xpath=".//netex:ServicePattern |.//netex:DeadRunPattern"/>
+			<xsd:selector xpath=".//netex:ServicePattern"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:unique>
 		<!-- =====ServicePattern Key ========================== -->
 		<xsd:keyref name="ServicePattern_KeyRef" refer="netex:ServicePattern_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:ServicePatternRef | .//netex:DeadRunServicePatternRef"/>
+			<xsd:selector xpath=".//netex:ServicePatternRef"/>
 			<xsd:field xpath="@ref"/>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
 		<xsd:key name="ServicePattern_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:ServicePattern |.//netex:DeadRunPattern"/>
+			<xsd:selector xpath=".//netex:ServicePattern"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
