@@ -87,6 +87,22 @@ ID	Service_number	Reservation	Tariff	Service_Mode	Service_Name	Service_Provider	
 				<DefaultCodespaceRef ref="op5_cs"/>
 			</FrameDefaults>
 			<frames>
+				<ResourceFrame version="any" id="RF1">
+					<dataSources>
+						<DataSource id="uic:0060" version="any"/>
+					</dataSources>
+				</ResourceFrame>
+				<!--  Narrative:  The SERVICE CALENDAR FRAME provides a container to organise the operational dates -->
+				<ServiceCalendarFrame id="uic:SKDUPD_example_5_Interchange" version="any">
+					<operatingPeriods>
+						<UicOperatingPeriod id="uic:SKDUPD_example_5_Interchange" version="any">
+							<!--POP+273:2022-03-11/2022-03-18::10000001' -->
+							<FromDate>2022-03-11T00:00:00</FromDate>
+							<ToDate>2022-03-18T23:59:59</ToDate>
+							<ValidDayBits>10000001</ValidDayBits>
+						</UicOperatingPeriod>
+					</operatingPeriods>
+				</ServiceCalendarFrame>
 				<ServiceFrame version="any" id="uic:SKDUPD_example_5_Interchange">
 					<!--- comment: THESE STOP DECLARATIONS COULD BE EXTERNAL as in a TSDUPD location , they are here so as to be able to define names -->
 					<scheduledStopPoints>
@@ -186,7 +202,7 @@ ID	Service_number	Reservation	Tariff	Service_Mode	Service_Name	Service_Provider	
 				<TimetableFrame version="any" id="SKDUPD_example_5_Interchange">
 					<VehicleModes>rail</VehicleModes>
 					<vehicleJourneys>
-						<DatedServiceJourney version="any" id="100" changed="2022-01-26T09:51:00" dataSourceRef="uic:0060">
+						<ServiceJourney version="any" id="100" changed="2022-01-26T09:51:00" dataSourceRef="uic:0060">
 							<!-- PRD+100:11::8:::Interchange+1180' -->
 							<!-- SKPUPD_TRAIN
 ID	Service_number	Reservation	Tariff	Service_Mode	Service_Name	Service_Provider	not_used	Reservation_system	First_day	Last_day	Operation_days	Second_service_number
@@ -200,6 +216,10 @@ ID	Service_number	Reservation	Tariff	Service_Mode	Service_Name	Service_Provider	
 							<TypeOfServiceRef versionRef="EXTERNAL" ref="8">high-speed train</TypeOfServiceRef>
 							<!--  TapTsi B.4.7009    8 high speed train   NB CHECK -->
 							<DepartureTime>06:57:00</DepartureTime>
+							<!--POP+273:2022-03-11/2022-03-18::10000001' -->
+							<dayTypes>
+								<DayTypeRef ref="uic:SKDUPD_example_5_Interchange"/>
+							</dayTypes>
 							<OperatorRef versionRef="EXTERNAL" ref="uic:1180">DB Vertrieb GBH</OperatorRef>
 							<trainNumbers>
 								<TrainNumberRef version="any" ref="100"/>
@@ -594,13 +614,7 @@ ID	Stop_number	UIC	Arrival_time	Arrival_offset	Departure_time	Departure_offset	P
 									<CheckProcess>incomingPassportControl</CheckProcess>
 								</CheckConstraint>
 							</checkConstraints>
-							<UicOperatingPeriod id="100" version="any">
-								<!--POP+273:2022-03-11/2022-03-18::10000001' -->
-								<FromDate>2022-03-11T00:00:00</FromDate>
-								<ToDate>2022-03-18T23:59:59</ToDate>
-								<ValidDayBits>10000001</ValidDayBits>
-							</UicOperatingPeriod>
-						</DatedServiceJourney>
+						</ServiceJourney>
 					</vehicleJourneys>
 					<trainNumbers>
 						<TrainNumber version="any" id="100">

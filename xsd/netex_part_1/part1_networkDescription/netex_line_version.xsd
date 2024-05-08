@@ -31,7 +31,7 @@
 					<Modified>2017-06-01</Modified>Add Additional Networks to service Frame.
 					<Modified>2017-06-28</Modified>CRxx Add LineType and GroupOfLineType.
 					<Modified>2017-06-28</Modified>CRxx Add PRESENTATION to Allowed Line Direction.
-					<Modified>2017-07-03</Modified>CR25 Add Secondary Name to Detsination Display.
+					<Modified>2017-07-03</Modified>CR25 Add Secondary Name to Destination Display.
 				</Date>
 				<Date>
 					<Modified>2017-04-22 CR16 Timetable pdf links to Line</Modified>
@@ -51,6 +51,9 @@
 				</Date>
 				<Date>
 					<Modified>2020-10-05 New modes - add MODE of OPERATION to LINE.</Modified>
+				</Date>
+				<Date>
+					<Modified>2023-12-14 #391 Fix linesInDirection to also allow Allowed line diretcion ref. Remove commented out code</Modified>
 				</Date>
 				<Date><Modified>2023-12-18</Modified>FIX: revise the  #525 implementation of BOOKING ARRANGEMENT 
 					; move booking arrangements up up to LINE and deprecate use on FLEXIBLE LINE
@@ -272,23 +275,6 @@ Rail transport, Roads and Road transport
 		<xsd:annotation>
 			<xsd:documentation>Dummy Supertype for LINE &amp; FLEXIBLE LINe.</xsd:documentation>
 		</xsd:annotation>
-		<!--
-		<xsd:unique name="AnyLine">
-			<xsd:selector xpath=".//netex:Line"/>
-			<xsd:field xpath="Id"/>
-		</xsd:unique>
-		<xsd:unique name="AnyLineDirection">
-			<xsd:selector xpath=".//netex:allowedDirections/DirectionRef"/>
-			<xsd:field xpath="@ref"/>
-		</xsd:unique>
-	<xsd:unique name="UniqueLineId">
-			<xsd:annotation>
-				<xsd:appinfo>Line identifiers must be unique for Type/Version</xsd:appinfo>
-			</xsd:annotation>
-			<xsd:selector xpath=".//netex:Line"/>
-			<xsd:field xpath="@version"/>
-			<xsd:field xpath="./netex:Id"/>
-		</xsd:unique> -->
 	</xsd:element>
 	<xsd:element name="Line" abstract="false" substitutionGroup="Line_" id="Line">
 		<xsd:annotation>
@@ -377,7 +363,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Alternative Code Elements of a LINE.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="PublicCode" type="xsd:normalizedString" minOccurs="0">
+			<xsd:element name="PublicCode" type="PublicCodeStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Public identifier of a LINe.</xsd:documentation>
 				</xsd:annotation>
@@ -396,16 +382,19 @@ Rail transport, Roads and Road transport
 	</xsd:group>
 	<xsd:group name="LinePropertiesGroup">
 		<xsd:annotation>
-			<xsd:documentation>Property Elements of a LINE.</xsd:documentation>
+			<xsd:documentation>Property elements of a LINE.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:choice minOccurs="0">
+			<xsd:element ref="AuthorityRef" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Primary OPERATOR of LINE.</xsd:documentation>
+					<xsd:documentation>A line should always have an AUTHORITY, even when the information is provided in a ResponsibilitySet.</xsd:documentation>
 				</xsd:annotation>
-				<xsd:element ref="AuthorityRef"/>
-				<xsd:element ref="OperatorRef"/>
-			</xsd:choice>
+			</xsd:element>
+			<xsd:element ref="OperatorRef" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>An OPERATOR should be set, even when the same as the AUTHORITY. In some cases OPERATOR or AUTHORITY are managed through a ResponsibilitySet. However, for compatibility OperatorRef and AuthorityRef still should be filled in.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element name="additionalOperators" type="transportOrganisationRefs_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Additional OPERATORs for LINE.</xsd:documentation>
@@ -726,7 +715,7 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Short code associated with Destination display used vehicle display controller which describes the format of the destination text in the front and side display in the vehicle. (VDV).</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="PublicCode" type="xsd:normalizedString" minOccurs="0">
+			<xsd:element name="PublicCode" type="PublicCodeStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Public code to show for Destination.</xsd:documentation>
 				</xsd:annotation>
@@ -958,19 +947,24 @@ Rail transport, Roads and Road transport
 	<!-- ======================================================================= -->
 	<xsd:complexType name="linesInDirectionRefs_RelStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for a list of LINE in a specific DIRECTION</xsd:documentation>
+			<xsd:documentation>Type for a list of LINEs in a specific DIRECTION</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="containmentAggregationStructure">
-				<xsd:sequence>
-					<xsd:element ref="LineInDirectionRef" maxOccurs="unbounded"/>
-				</xsd:sequence>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element ref="LineInDirectionRef">
+						<xsd:annotation>
+							<xsd:documentation>Reference to a LINE in a specific DIRECTION</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element ref="AllowedLineDirectionRef"/>
+				</xsd:choice>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
 	<xsd:element name="LineInDirectionRef" type="LineInDirectionRef_Structure" abstract="false">
 		<xsd:annotation>
-			<xsd:documentation> Refrence to LINE in a specific DIRECTION</xsd:documentation>
+			<xsd:documentation>Reference to LINEs in a specific DIRECTION</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="LineInDirectionRef_Structure">
@@ -1044,7 +1038,7 @@ Rail transport, Roads and Road transport
 			<xsd:extension base="DerivedViewStructure">
 				<xsd:sequence>
 					<xsd:element ref="LineRef" minOccurs="0"/>
-					<xsd:element name="PublicCode" type="xsd:normalizedString" minOccurs="0">
+					<xsd:element name="PublicCode" type="PublicCodeStructure" minOccurs="0">
 						<xsd:annotation>
 							<xsd:documentation>Identifier of LINE.</xsd:documentation>
 						</xsd:annotation>
