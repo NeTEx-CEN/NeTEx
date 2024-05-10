@@ -86,6 +86,11 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>SERVICE FACILITY SETs in frame . +v1.2.2</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="groupsOfFacilities" type="groupsOfFacilites_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>GROUPS of Facilities in frame. +v2.0</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>			
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:group name="SiteFacilitySetsInFrameGroup">
@@ -160,6 +165,11 @@ Rail transport, Roads and Road transport
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:group ref="CommonFacilityGroup"/>
+			<xsd:element name="GroupOfFacilitiesRef" type="GroupOfFacilitiesRefStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>A reference to a GroupOfFacilities. +v2.0</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:group name="CommonFacilityGroup">
@@ -411,7 +421,7 @@ Rail transport, Roads and Road transport
 			</xsd:choice>
 		</xsd:sequence>
 	</xsd:group>
-	<!-- ==== SIteFacility=======================================-->
+	<!-- ==== SiteFacility=======================================-->
 	<xsd:complexType name="siteFacilitySets_RelStructure">
 		<xsd:annotation>
 			<xsd:documentation>SITE FACILITies associated with entity.</xsd:documentation>
@@ -518,6 +528,74 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
+	<!-- ==== GroupOfFacilities=======================================-->
+	<xsd:complexType name="groupsOfFacilites_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for list of  GROUP OF FACILITies.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="GroupOfFacilities" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>	
+	<xsd:element name="GroupOfFacilities" abstract="false" substitutionGroup="GroupOfEntities">
+		<xsd:annotation>
+			<xsd:documentation>A grouping of FACILITies which will be commonly referenced for a specific purpose. +v2.0</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="GroupOfFacilities_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="GroupOfEntitiesGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="GroupOfFacilitiesGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="GroupOfFacilitiesIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="GroupOfFacilities_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for GROUP OF FACILITies.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="GroupOfEntities_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="GroupOfFacilitiesGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="GroupOfFacilitiesGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for GROUP OF FACILITies.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="PublicCode" type="ExternalObjectRefStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Public code for GROUP OF SITES.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="members" type="facilitiesRefs_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>SITEs in a GROUP OF FACILITies</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>	
 	<!-- ====TYPE OF FACILITY======================================== -->
 	<xsd:complexType name="typesOfFacility_RelStructure">
 		<xsd:annotation>

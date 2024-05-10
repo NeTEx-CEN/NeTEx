@@ -800,6 +800,32 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
+	<!-- ====GROUP OF FACILITIES==================================== -->
+	<xsd:simpleType name="GroupOfFacilitiesIdType">
+		<xsd:annotation>
+			<xsd:documentation>Identifier of a GROUP OF FACILITies.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ObjectIdType"/>
+	</xsd:simpleType>
+	<xsd:element name="GroupOfFacilitiesRef" type="GroupOfFacilitiesRefStructure" substitutionGroup="VersionOfObjectRef">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a GROUP OF FACILITies.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="GroupOfFacilitiesRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a reference to a GROUP OF FACILITies.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="VersionOfObjectRefStructure">
+				<xsd:attribute name="ref" type="GroupOfFacilitiesIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Identifier of a GROUP OF FACILITies.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>	
 	<!-- ====FACILITY SET==================================== -->
 	<xsd:simpleType name="FacilitySetIdType">
 		<xsd:annotation>
@@ -809,7 +835,7 @@ Rail transport, Roads and Road transport
 	</xsd:simpleType>
 	<xsd:element name="FacilitySetRef" type="FacilitySetRefStructure" substitutionGroup="VersionOfObjectRef">
 		<xsd:annotation>
-			<xsd:documentation> Reference to a FACILITY SET.</xsd:documentation>
+			<xsd:documentation>Reference to a FACILITY SET.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="FacilitySetRefStructure">
@@ -826,6 +852,18 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
+	<xsd:complexType name="facilitiesRefs_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a collection of one or more FACILITies.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="oneToManyRelationshipStructure">
+				<xsd:sequence>
+					<xsd:element ref="FacilityRef" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>	
 	<!-- ====SITE FACILITY SET=========================== -->
 	<xsd:element name="SiteFacilitySetRef" type="SiteFacilitySetRefStructure" substitutionGroup="FacilitySetRef">
 		<xsd:annotation>
