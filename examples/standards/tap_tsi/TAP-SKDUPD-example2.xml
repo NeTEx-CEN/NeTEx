@@ -60,6 +60,17 @@ ID	Service_number	Reservation	Tariff	Service_Mode	Service_Name	Service_Provider	
 				<DefaultCodespaceRef ref="op_cs"/>
 			</FrameDefaults>
 			<frames>
+				<!--  Narrative:  The SERVICE CALENDAR FRAME provides a container to organise the operational dates -->
+				<ServiceCalendarFrame id="uic:SKDUPD_example_2_Classic_train" version="any">
+					<operatingPeriods>
+						<!-- POP+273:2022-03-28/2022-06-18::11111101111110111111011111101111110111111011111101111110111111011111101111110111111'		 -->
+						<UicOperatingPeriod id="uic:SKDUPD_example_2_Classic_train_1" version="any">
+							<FromDate>2022-03-28T00:00:00</FromDate>
+							<ToDate>2022-06-18T23:59:59</ToDate>
+							<ValidDayBits>11111101111110111111011111101111110111111011111101111110111111011111101111110111111</ValidDayBits>
+						</UicOperatingPeriod>
+					</operatingPeriods>
+				</ServiceCalendarFrame>
 				<ServiceFrame version="any" id="uic:SKDUPD_example_1_Classic_train">
 					<!--- comment: THESE STOP DECLARATIONS COULD BE EXTERNAL as in a TSDUPD location , they are here so as to be able to define names
 			  to make the example easier to follow  and to show how data can be cross validated for referential integrity -->
@@ -135,7 +146,7 @@ ID	Service_number	Reservation	Tariff	Service_Mode	Service_Name	Service_Provider	
 					<Name>Uic Example of a very simple train timetable</Name>
 					<VehicleModes>rail</VehicleModes>
 					<vehicleJourneys>
-						<DatedServiceJourney version="any" id="1" changed="2022-01-26T09:51:00" dataSourceRef="uic:0060">
+						<ServiceJourney version="any" id="1" changed="2022-01-26T09:51:00" dataSourceRef="uic:0060">
 							<!-- SKPUPD_TRAIN
 ID	Service_number	Reservation	Tariff	Service_Mode	Service_Name	Service_Provider	not_used	Reservation_system	First_day	Last_day	Operation_days	Second_service_number
 1	1	13	2	9	Classic train	0010			2022-03-28	2022-06-18	11111101111110111111011111101111110111111011111101111110111111011111101111110111111	-->
@@ -148,6 +159,9 @@ ID	Service_number	Reservation	Tariff	Service_Mode	Service_Name	Service_Provider	
 							<TypeOfServiceRef versionRef="EXTERNAL" ref="9">Intercity</TypeOfServiceRef>
 							<!-- tap/tsi B.4.7009   	9 Intercity    -->
 							<DepartureTime>06:57:00</DepartureTime>
+							<dayTypes>
+								<DayTypeRef ref="uic:SKDUPD_example_2_Classic_train_1"/>
+							</dayTypes>
 							<OperatorRef versionRef="EXTERNAL" ref="uic:0010">VR</OperatorRef>
 							<trainNumbers>
 								<TrainNumberRef version="any" ref="1"/>
@@ -372,12 +386,7 @@ ID	Stop_number	UIC	Arrival_time	Arrival_offset	Departure_time	Departure_offset	P
 									<!-- Tariff 2: Taf TSI B4.7139: 2	(Global price) All inclusive tariff -->
 								</ServiceFacilitySet>
 							</facilities>
-							<UicOperatingPeriod id="1" version="any">
-								<FromDate>2022-03-28T00:00:00</FromDate>
-								<ToDate>2022-06-18T23:59:59</ToDate>
-								<ValidDayBits>11111101111110111111011111101111110111111011111101111110111111011111101111110111111</ValidDayBits>
-							</UicOperatingPeriod>
-						</DatedServiceJourney>
+						</ServiceJourney>
 					</vehicleJourneys>
 					<trainNumbers>
 						<TrainNumber version="any" id="1">
@@ -405,6 +414,45 @@ ID	Stop_number	UIC	Arrival_time	Arrival_offset	Departure_time	Departure_offset	P
 				<DefaultCodespaceRef ref="op2_cs"/>
 			</FrameDefaults>
 			<frames>
+				<ResourceFrame version="any" id="RF1">
+					<dataSources>
+						<DataSource id="uic:0060" version="any"/>
+					</dataSources>
+				</ResourceFrame>
+				<!--  Narrative:  The SERVICE CALENDAR FRAME provides a container to organise the operational dates -->
+				<ServiceCalendarFrame id="uic:SKDUPD_example_2_Classic_train_2" version="any">
+					<operatingPeriods>
+						<!-- TODO: bitmap and dates are not matching -->
+						<!-- POP+273:2022-01-23/2022-01-25::11100000000000000000000000000000000111'		 -->
+						<UicOperatingPeriod id="e1:2" version="any">
+							<FromDate>2022-01-23T00:00:00</FromDate>
+							<ToDate>2022-01-25T23:59:59</ToDate>
+							<ValidDayBits>11100000000000000000000000000000000111</ValidDayBits>
+						</UicOperatingPeriod>
+						<!-- TODO: bitmap and dates are not matching -->
+						<!-- POP+273:2022-01-23/2022-01-25::11100000000000000000000000000000000111'		 -->
+						<UicOperatingPeriod id="e2:2" version="any">
+							<FromDate>2022-01-23T00:00:00</FromDate>
+							<ToDate>2022-01-25T23:59:59</ToDate>
+							<ValidDayBits>11100000000000000000000000000000000111</ValidDayBits>
+						</UicOperatingPeriod>
+						<UicOperatingPeriod id="e2:2a" version="any">
+							<FromDate>2022-01-23T00:00:00</FromDate>
+							<ToDate>2022-01-25T23:59:59</ToDate>
+							<ValidDayBits>11100000000000000000000000000000000111</ValidDayBits>
+						</UicOperatingPeriod>
+						<UicOperatingPeriod id="e2:2b" version="any">
+							<FromDate>2022-01-23T00:00:00</FromDate>
+							<ToDate>2022-01-25T23:59:59</ToDate>
+							<ValidDayBits>11100000000000000000000000000000000111</ValidDayBits>
+						</UicOperatingPeriod>
+						<UicOperatingPeriod id="e2:2c" version="any">
+							<FromDate>2022-01-23T00:00:00</FromDate>
+							<ToDate>2022-01-25T23:59:59</ToDate>
+							<ValidDayBits>11100000000000000000000000000000000111</ValidDayBits>
+						</UicOperatingPeriod>
+					</operatingPeriods>
+				</ServiceCalendarFrame>
 				<ServiceFrame version="any" id="SKDUPD_2_example_Coach_Group">
 					<!--- comment: THESE STOP DECLARATIONS COULD BE EXTERNAL as in a TSDUPD location , they are here so as to be able to define names -->
 					<scheduledStopPoints>
@@ -513,7 +561,7 @@ ID	Stop_number	UIC	Arrival_time	Arrival_offset	Departure_time	Departure_offset	P
 			               A single journey with three parts, each with a different Coach train number to  </Description>
 					<VehicleModes>rail</VehicleModes>
 					<vehicleJourneys>
-						<DatedServiceJourney version="any" id="e1:2" changed="2022-01-26T09:51:00" dataSourceRef="uic:0060">
+						<ServiceJourney version="any" id="e1:2" changed="2022-01-26T09:51:00" dataSourceRef="uic:0060">
 							<!-- SKPUPD_TRAIN
 ID	Service_number	Reservation	Tariff	Service_Mode	Service_Name	Service_Provider	not_used	Reservation_system	First_day	Last_day	Operation_days	Second_service_number
 2	41			31	Connecting to	1154		2021-12-19	2022-01-25	11100000000000000000000000000000000111		-->
@@ -526,6 +574,9 @@ ID	Service_number	Reservation	Tariff	Service_Mode	Service_Name	Service_Provider	
 							<TypeOfServiceRef versionRef="EXTERNAL" ref="31">Coach Group</TypeOfServiceRef>
 							<!-- tap/tsi B.4.7009   	31 Coach group G    -->
 							<DepartureTime>06:57:00</DepartureTime>
+							<dayTypes>
+								<DayTypeRef ref="e1:2"/>
+							</dayTypes>
 							<CompoundTrainRef version="any" ref="41"/>
 							<OperatorRef versionRef="EXTERNAL" ref="uic:1154">CD</OperatorRef>
 							<trainNumbers>
@@ -595,12 +646,7 @@ ID	Stop_number	UIC	Arrival_time	Arrival_offset	Departure_time	Departure_offset	P
 									</Departure>
 								</Call>
 							</calls>
-							<UicOperatingPeriod id="e1:2" version="any">
-								<FromDate>2022-01-23T00:00:00</FromDate>
-								<ToDate>2022-01-25T23:59:59</ToDate>
-								<ValidDayBits>11100000000000000000000000000000000111</ValidDayBits>
-							</UicOperatingPeriod>
-						</DatedServiceJourney>
+						</ServiceJourney>
 					</vehicleJourneys>
 					<trainNumbers>
 						<TrainNumber version="any" id="e1:2">
@@ -667,7 +713,7 @@ ID	Stop_number	Service	Relation	Transfer_time	Certainty
 			                representing the  splitting at off coaches at each stage</Description>
 					<VehicleModes>rail</VehicleModes>
 					<vehicleJourneys>
-						<DatedServiceJourney version="any" id="e2:2" changed="2022-01-26T09:51:00" dataSourceRef="uic:0060">
+						<ServiceJourney version="any" id="e2:2" changed="2022-01-26T09:51:00" dataSourceRef="uic:0060">
 							<!-- SKPUPD_TRAIN
 ID	Service_number	Reservation	Tariff	Service_Mode	Service_Name	Service_Provider	not_used	Reservation_system	First_day	Last_day	Operation_days	Second_service_number
 2	41			31	Connecting to	1154			2021-12-19	2022-01-25	11100000000000000000000000000000000111	-->
@@ -680,6 +726,9 @@ ID	Service_number	Reservation	Tariff	Service_Mode	Service_Name	Service_Provider	
 							<TypeOfServiceRef versionRef="EXTERNAL" ref="31">Coach Group</TypeOfServiceRef>
 							<!-- tap/tsi B.4.7009   	31 Coach group G    -->
 							<DepartureTime>06:57:00</DepartureTime>
+							<dayTypes>
+								<DayTypeRef ref="e2:2"/>
+							</dayTypes>
 							<CompoundTrainRef version="any" ref="41"/>
 							<!-- BOGUS VALUE -->
 							<OperatorRef versionRef="EXTERNAL" ref="uic:1154">CD</OperatorRef>
@@ -712,13 +761,8 @@ ID	Stop_number	UIC	Arrival_time	Arrival_offset	Departure_time	Departure_offset	P
 									</Departure>
 								</Call>
 							</calls>
-							<UicOperatingPeriod id="e2:2" version="any">
-								<FromDate>2022-01-23T00:00:00</FromDate>
-								<ToDate>2022-01-25T23:59:59</ToDate>
-								<ValidDayBits>11100000000000000000000000000000000111</ValidDayBits>
-							</UicOperatingPeriod>
-						</DatedServiceJourney>
-						<DatedServiceJourney version="any" id="e2:2a" changed="2022-01-26T09:51:00" dataSourceRef="uic:0060">
+						</ServiceJourney>
+						<ServiceJourney version="any" id="e2:2a" changed="2022-01-26T09:51:00" dataSourceRef="uic:0060">
 							<Name>Connecting to: Coaches C407  Warsaw  Bohumin </Name>
 							<TransportMode>rail</TransportMode>
 							<TransportSubmode>
@@ -727,6 +771,9 @@ ID	Stop_number	UIC	Arrival_time	Arrival_offset	Departure_time	Departure_offset	P
 							<TypeOfProductCategoryRef versionRef="EXTERNAL" ref="63">Intercity</TypeOfProductCategoryRef>
 							<TypeOfServiceRef versionRef="EXTERNAL" ref="31">Coach Group</TypeOfServiceRef>
 							<DepartureTime>06:57:00</DepartureTime>
+							<dayTypes>
+								<DayTypeRef ref="e2:2a"/>
+							</dayTypes>
 							<!-- BOGUS VALUE -->
 							<OperatorRef versionRef="EXTERNAL" ref="uic:1154">CD</OperatorRef>
 							<trainNumbers>
@@ -745,13 +792,8 @@ ID	Stop_number	UIC	Arrival_time	Arrival_offset	Departure_time	Departure_offset	P
 									<PurposeOfJourneyPartitionRef versionRef="EXTERNAL" ref="join Split"/>
 								</JourneyPart>
 							</parts>
-							<UicOperatingPeriod id="e2:2a" version="any">
-								<FromDate>2022-01-23T00:00:00</FromDate>
-								<ToDate>2022-01-25T23:59:59</ToDate>
-								<ValidDayBits>11100000000000000000000000000000000111</ValidDayBits>
-							</UicOperatingPeriod>
-						</DatedServiceJourney>
-						<DatedServiceJourney version="any" id="e2:2b" changed="2022-01-26T09:51:00" dataSourceRef="uic:0060">
+						</ServiceJourney>
+						<ServiceJourney version="any" id="e2:2b" changed="2022-01-26T09:51:00" dataSourceRef="uic:0060">
 							<Name>Connecting to  Warsaw  Breclaw</Name>
 							<TransportMode>rail</TransportMode>
 							<TransportSubmode>
@@ -760,6 +802,9 @@ ID	Stop_number	UIC	Arrival_time	Arrival_offset	Departure_time	Departure_offset	P
 							<TypeOfProductCategoryRef versionRef="EXTERNAL" ref="63">Intercity</TypeOfProductCategoryRef>
 							<TypeOfServiceRef versionRef="EXTERNAL" ref="31">Coach Group</TypeOfServiceRef>
 							<DepartureTime>06:57:00</DepartureTime>
+							<dayTypes>
+								<DayTypeRef ref="e2:2b"/>
+							</dayTypes>
 							<!-- BOGUS VALUE -->
 							<OperatorRef versionRef="EXTERNAL" ref="uic:1154">CD</OperatorRef>
 							<trainNumbers>
@@ -789,13 +834,8 @@ ID	Stop_number	UIC	Arrival_time	Arrival_offset	Departure_time	Departure_offset	P
 									<PurposeOfJourneyPartitionRef versionRef="EXTERNAL" ref="join Split"/>
 								</JourneyPart>
 							</parts>
-							<UicOperatingPeriod id="e2:2b" version="any">
-								<FromDate>2022-01-23T00:00:00</FromDate>
-								<ToDate>2022-01-25T23:59:59</ToDate>
-								<ValidDayBits>11100000000000000000000000000000000111</ValidDayBits>
-							</UicOperatingPeriod>
-						</DatedServiceJourney>
-						<DatedServiceJourney version="any" id="e2:2c" changed="2022-01-26T09:51:00" dataSourceRef="uic:0060">
+						</ServiceJourney>
+						<ServiceJourney version="any" id="e2:2c" changed="2022-01-26T09:51:00" dataSourceRef="uic:0060">
 							<Name>Connecting to: Warsaw   Budapest-Nuygati</Name>
 							<TransportMode>rail</TransportMode>
 							<TransportSubmode>
@@ -804,6 +844,9 @@ ID	Stop_number	UIC	Arrival_time	Arrival_offset	Departure_time	Departure_offset	P
 							<TypeOfProductCategoryRef versionRef="EXTERNAL" ref="63">Intercity</TypeOfProductCategoryRef>
 							<TypeOfServiceRef versionRef="EXTERNAL" ref="31">Coach Group</TypeOfServiceRef>
 							<DepartureTime>06:57:00</DepartureTime>
+							<dayTypes>
+								<DayTypeRef ref="e2:2c"/>
+							</dayTypes>
 							<!-- BOGUS VALUE -->
 							<OperatorRef versionRef="EXTERNAL" ref="uic:1154">CD</OperatorRef>
 							<trainNumbers>
@@ -844,12 +887,7 @@ ID	Stop_number	UIC	Arrival_time	Arrival_offset	Departure_time	Departure_offset	P
 									<PurposeOfJourneyPartitionRef versionRef="EXTERNAL" ref="join Split"/>
 								</JourneyPart>
 							</parts>
-							<UicOperatingPeriod id="e2:2c" version="any">
-								<FromDate>2022-01-23T00:00:00</FromDate>
-								<ToDate>2022-01-25T23:59:59</ToDate>
-								<ValidDayBits>11100000000000000000000000000000000111</ValidDayBits>
-							</UicOperatingPeriod>
-						</DatedServiceJourney>
+						</ServiceJourney>
 					</vehicleJourneys>
 					<trainNumbers>
 						<TrainNumber version="any" id="e2:2">
@@ -965,6 +1003,16 @@ ID	Stop_number	UIC	Arrival_time	Arrival_offset	Departure_time	Departure_offset	P
 				<DefaultCodespaceRef ref="op3_cs"/>
 			</FrameDefaults>
 			<frames>
+				<!--  Narrative:  The SERVICE CALENDAR FRAME provides a container to organise the operational dates -->
+				<ServiceCalendarFrame id="uic:SKDUPD_example_2_3_Leo_Express" version="any">
+					<operatingPeriods>
+						<UicOperatingPeriod id="uic:SKDUPD_example_2_3_Leo_Express" version="any">
+							<FromDate>2022-04-01T00:00:00</FromDate>
+							<ToDate>2022-12-10T23:59:59</ToDate>
+							<ValidDayBits>11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111</ValidDayBits>
+						</UicOperatingPeriod>
+					</operatingPeriods>
+				</ServiceCalendarFrame>
 				<ServiceFrame version="any" id="SKDUPD_example_3_Leo_Express">
 					<!--- comment: THESE STOP DECLARATIONS COULD BE EXTERNAL as in a TSDUPD location , they are here so as to be able to define namese -->
 					<scheduledStopPoints>
@@ -1047,7 +1095,7 @@ ID	Stop_number	UIC	Arrival_time	Arrival_offset	Departure_time	Departure_offset	P
 				</ServiceFrame>
 				<TimetableFrame version="any" id="SKDUPD_example_3_Leo_Express">
 					<vehicleJourneys>
-						<DatedServiceJourney version="any" id="3" changed="2022-01-26T09:51:00" dataSourceRef="uic:0060">
+						<ServiceJourney version="any" id="3" changed="2022-01-26T09:51:00" dataSourceRef="uic:0060">
 							<!-- SKPUPD_TRAIN
 ID	Service_number	Reservation	Tariff	Service_Mode	Service_Name	Service_Provider	not_used	Reservation_system	First_day	Last_day	Operation_days	Second_service_number
 3	410	11	1	9	Leo Express	3244			2022-04-01	2022-12-10	11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111	-->
@@ -1059,6 +1107,10 @@ ID	Service_number	Reservation	Tariff	Service_Mode	Service_Name	Service_Provider	
 							<TypeOfServiceRef versionRef="EXTERNAL" ref="9">Intercity</TypeOfServiceRef>
 							<!-- tap/tsi B.4.7009   	9 Intercity    -->
 							<DepartureTime>06:36:00</DepartureTime>
+							<!-- POP+273:2022-04-01/2022-12-10::11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111'		 -->
+							<dayTypes>
+								<DayTypeRef ref="uic:SKDUPD_example_2_3_Leo_Express"/>
+							</dayTypes>
 							<OperatorRef versionRef="EXTERNAL" ref="uic:3244">LE</OperatorRef>
 							<trainNumbers>
 								<TrainNumberRef version="any" ref="3">410</TrainNumberRef>
@@ -1291,12 +1343,7 @@ ID	Stop_number	UIC	Arrival_time	Arrival_offset	Departure_time	Departure_offset	P
 									<!-- Tariff 1 Taf TSI B4.7139: 	1	TCV -->
 								</ServiceFacilitySet>
 							</facilities>
-							<UicOperatingPeriod id="3" version="any">
-								<FromDate>2022-04-01T00:00:00</FromDate>
-								<ToDate>2022-12-10T23:59:59</ToDate>
-								<ValidDayBits>11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111</ValidDayBits>
-							</UicOperatingPeriod>
-						</DatedServiceJourney>
+						</ServiceJourney>
 					</vehicleJourneys>
 					<trainNumbers>
 						<TrainNumber version="any" id="3">
@@ -1324,6 +1371,18 @@ ID	Stop_number	UIC	Arrival_time	Arrival_offset	Departure_time	Departure_offset	P
 				<DefaultCodespaceRef ref="op4_cs"/>
 			</FrameDefaults>
 			<frames>
+				<!--  Narrative:  The SERVICE CALENDAR FRAME provides a container to organise the operational dates -->
+				<ServiceCalendarFrame id="uic:SKDUPD_example_2_4_Load_and_unload" version="any">
+					<operatingPeriods>
+						<UicOperatingPeriod id="uic:SKDUPD_example_2_4_Load_and_unload" version="any">
+							<!-- POP+273:2021-12-12/2022-09-04::111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111' -->
+							<FromDate>2022-01-01T00:00:00</FromDate>
+							<ToDate>2022-09-04T23:59:59</ToDate>
+							<ValidDayBits>111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+</ValidDayBits>
+						</UicOperatingPeriod>
+					</operatingPeriods>
+				</ServiceCalendarFrame>
 				<ServiceFrame version="any" id="SKDUPD_example_4_Load_and_Unload">
 					<scheduledStopPoints>
 						<ScheduledStopPoint version="any" id="uic:007944700">
@@ -1351,7 +1410,7 @@ ID	Stop_number	UIC	Arrival_time	Arrival_offset	Departure_time	Departure_offset	P
 				<TimetableFrame version="any" id="SKDUPD_example_4_Load_and_Unload">
 					<VehicleModes>rail</VehicleModes>
 					<vehicleJourneys>
-						<DatedServiceJourney version="any" id="4" changed="2022-01-26T09:51:00" dataSourceRef="uic:0060">
+						<ServiceJourney version="any" id="4" changed="2022-01-26T09:51:00" dataSourceRef="uic:0060">
 							<!-- SKPUPD_TRAIN
 ID	Service_number	Reservation	Tariff	Service_Mode Service_Name Service_Provider not_used Reservation_system	First_day	Last_day Operation_days	Second_service_number
 4	850	19			Load unload	1179			2021-12-12	2022-09-04	 111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111	 -->
@@ -1364,6 +1423,10 @@ ID	Service_number	Reservation	Tariff	Service_Mode Service_Name Service_Provider 
 							<!-- ( tap/tsi B.4.7009  84 regional train)		-->
 							<TypeOfServiceRef versionRef="EXTERNAL" ref="37">train</TypeOfServiceRef>
 							<DepartureTime>06:32:00</DepartureTime>
+							<!-- POP+273:2021-12-12/2022-09-04::111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111' -->
+							<dayTypes>
+								<DayTypeRef ref="uic:SKDUPD_example_2_4_Load_and_unload"/>
+							</dayTypes>
 							<OperatorRef versionRef="EXTERNAL" ref="uic:1170">SZ Pitzniski promet d.o.o</OperatorRef>
 							<trainNumbers>
 								<TrainNumberRef version="any" ref="4">850</TrainNumberRef>
@@ -1510,13 +1573,7 @@ ID	Stop_number	UIC	Arrival_time	Arrival_offset	Departure_time	Departure_offset	P
 									<!-- 	ASD+7 TafTsi  B.4.3039.	unloading -->
 								</CheckConstraint>
 							</checkConstraints>
-							<UicOperatingPeriod id="4" version="any">
-								<FromDate>2022-01-01T00:00:00</FromDate>
-								<ToDate>2022-09-04T23:59:59</ToDate>
-								<ValidDayBits>111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
-</ValidDayBits>
-							</UicOperatingPeriod>
-						</DatedServiceJourney>
+						</ServiceJourney>
 					</vehicleJourneys>
 					<trainNumbers>
 						<TrainNumber version="any" id="4">
@@ -1544,6 +1601,17 @@ ID	Stop_number	UIC	Arrival_time	Arrival_offset	Departure_time	Departure_offset	P
 				<DefaultCodespaceRef ref="op5_cs"/>
 			</FrameDefaults>
 			<frames>
+				<!--  Narrative:  The SERVICE CALENDAR FRAME provides a container to organise the operational dates -->
+				<ServiceCalendarFrame id="uic:SKDUPD_example_5_Interchange" version="any">
+					<operatingPeriods>
+						<UicOperatingPeriod id="uic:SKDUPD_example_5_Interchange" version="any">
+							<!--POP+273:2022-03-11/2022-03-18::10000001' -->
+							<FromDate>2022-03-11T00:00:00</FromDate>
+							<ToDate>2022-03-18T23:59:59</ToDate>
+							<ValidDayBits>10000001</ValidDayBits>
+						</UicOperatingPeriod>
+					</operatingPeriods>
+				</ServiceCalendarFrame>
 				<ServiceFrame version="any" id="uic:SKDUPD_example_5_Interchange">
 					<!--- comment: THESE STOP DECLARATIONS COULD BE EXTERNAL as in a TSDUPD location , they are here so as to be able to define names -->
 					<scheduledStopPoints>
@@ -1643,7 +1711,7 @@ ID	Stop_number	UIC	Arrival_time	Arrival_offset	Departure_time	Departure_offset	P
 				<TimetableFrame version="any" id="SKDUPD_example_5_Interchange">
 					<VehicleModes>rail</VehicleModes>
 					<vehicleJourneys>
-						<DatedServiceJourney version="any" id="5" changed="2022-01-26T09:51:00" dataSourceRef="uic:0060">
+						<ServiceJourney version="any" id="5" changed="2022-01-26T09:51:00" dataSourceRef="uic:0060">
 							<!-- SKPUPD_TRAIN
 ID	Service_number	Reservation	Tariff	Service_Mode	Service_Name	Service_Provider	not_used	Reservation_system	First_day	Last_day	Operation_days	Second_service_number
 5	100	11		8	Interchange	1180			2022-03-11	2022-03-18	10000001	-->
@@ -1658,6 +1726,10 @@ ID	Service_number	Reservation	Tariff	Service_Mode	Service_Name	Service_Provider	
 							<TypeOfServiceRef versionRef="EXTERNAL" ref="8">high-speed train</TypeOfServiceRef>
 							<!--  tap/tsi B.4.7009    8 high speed train  -->
 							<DepartureTime>06:57:00</DepartureTime>
+							<!--POP+273:2022-03-11/2022-03-18::10000001' -->
+							<dayTypes>
+								<DayTypeRef ref="uic:SKDUPD_example_5_Interchange"/>
+							</dayTypes>
 							<OperatorRef versionRef="EXTERNAL" ref="uic:1180">DB Vertrieb GBH</OperatorRef>
 							<trainNumbers>
 								<TrainNumberRef version="any" ref="5"/>
@@ -2019,12 +2091,7 @@ ID	Stop_number	UIC	Arrival_time	Arrival_offset	Departure_time	Departure_offset	P
 									<CheckProcess>incomingPassportControl</CheckProcess>
 								</CheckConstraint>
 							</checkConstraints>
-							<UicOperatingPeriod id="5" version="any">
-								<FromDate>2022-03-11T00:00:00</FromDate>
-								<ToDate>2022-03-18T23:59:59</ToDate>
-								<ValidDayBits>10000001</ValidDayBits>
-							</UicOperatingPeriod>
-						</DatedServiceJourney>
+						</ServiceJourney>
 					</vehicleJourneys>
 					<trainNumbers>
 						<TrainNumber version="any" id="5">
@@ -2103,6 +2170,17 @@ ID	Stop_number	Service	Relation	Transfer_time	Certainty
 				<DefaultCodespaceRef ref="op6_cs"/>
 			</FrameDefaults>
 			<frames>
+				<!--  Narrative:  The SERVICE CALENDAR FRAME provides a container to organise the operational dates -->
+				<ServiceCalendarFrame id="uic:SKDUPD_example_6_CheckIn" version="any">
+					<operatingPeriods>
+						<UicOperatingPeriod id="uic:SKDUPD_example_6_CheckIn" version="any">
+							<!-- POP+273:2022-01-29/2022-04-16::100000010000001000000100000010000001000000100000010000001000000100000010000001' -->
+							<FromDate>2022-01-29T00:00:00</FromDate>
+							<ToDate>2022-04-16T23:59:59</ToDate>
+							<ValidDayBits>100000010000001000000100000010000001000000100000010000001000000100000010000001</ValidDayBits>
+						</UicOperatingPeriod>
+					</operatingPeriods>
+				</ServiceCalendarFrame>
 				<ServiceFrame version="any" id="SKDUPD_example_6_CheckIn">
 					<scheduledStopPoints>
 						<ScheduledStopPoint version="any" id="uic:008600824">
@@ -2119,7 +2197,7 @@ ID	Stop_number	Service	Relation	Transfer_time	Certainty
 				</ServiceFrame>
 				<TimetableFrame version="any" id="SKDUPD_example_6CheckIn">
 					<vehicleJourneys>
-						<DatedServiceJourney version="any" id="6" changed="2022-01-26T09:51:00" dataSourceRef="uic:0060">
+						<ServiceJourney version="any" id="6" changed="2022-01-26T09:51:00" dataSourceRef="uic:0060">
 							<!-- SKPUPD_TRAIN
 ID	Service_number	Reservation	Tariff	Service_Mode	Service_Name	Service_Provider	not_used	Reservation_system	First_day	Last_day	Operation_days	Second_service_number
 6	74000015			32	Check in	X284			2022-01-29	2022-04-16	100000010000001000000100000010000001000000100000010000001000000100000010000001	
@@ -2132,6 +2210,10 @@ ID	Service_number	Reservation	Tariff	Service_Mode	Service_Name	Service_Provider	
 							<TypeOfServiceRef versionRef="EXTERNAL" ref="32">bus</TypeOfServiceRef>
 							<!--  tap/tsi B.4.7009   	32 Bus -->
 							<DepartureTime>08:06:00</DepartureTime>
+							<!-- POP+273:2022-01-29/2022-04-16::100000010000001000000100000010000001000000100000010000001000000100000010000001' -->
+							<dayTypes>
+								<DayTypeRef ref="uic:SKDUPD_example_6_CheckIn"/>
+							</dayTypes>
 							<OperatorRef versionRef="EXTERNAL" ref="uic:X284">Movia</OperatorRef>
 							<trainNumbers>
 								<TrainNumberRef ref="74000015"/>
@@ -2196,12 +2278,7 @@ ID	FromStopNumber	ToStopNumber	ASD_or_SER	Reservation_in_equipment	Equipment	Tar
 									<!-- NB TODO NeTEx Should have checkin value. Missing. Use 'Boarding' for temporary workaround  -->
 								</CheckConstraint>
 							</checkConstraints>
-							<UicOperatingPeriod id="6" version="any">
-								<FromDate>2022-01-29T00:00:00</FromDate>
-								<ToDate>2022-04-16T23:59:59</ToDate>
-								<ValidDayBits>100000010000001000000100000010000001000000100000010000001000000100000010000001</ValidDayBits>
-							</UicOperatingPeriod>
-						</DatedServiceJourney>
+						</ServiceJourney>
 					</vehicleJourneys>
 				</TimetableFrame>
 			</frames>
@@ -2223,6 +2300,18 @@ ID	FromStopNumber	ToStopNumber	ASD_or_SER	Reservation_in_equipment	Equipment	Tar
 				<DefaultCodespaceRef ref="op7_cs"/>
 			</FrameDefaults>
 			<frames>
+				<!--  Narrative:  The SERVICE CALENDAR FRAME provides a container to organise the operational dates -->
+				<ServiceCalendarFrame id="uic:SKDUPD_example_7_Tariff_and_Reservation" version="any">
+					<operatingPeriods>
+						<UicOperatingPeriod id="uic:SKDUPD_example_7_Tariff_and_Reservation" version="any">
+							<!-- POP+273:2021-12-12/2022-12-10::1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111' -->
+							<FromDate>2021-12-12T00:00:00</FromDate>
+							<ToDate>2022-12-12T23:59:59</ToDate>
+							<ValidDayBits>1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+</ValidDayBits>
+						</UicOperatingPeriod>
+					</operatingPeriods>
+				</ServiceCalendarFrame>
 				<ServiceFrame version="any" id="uic:SKDUPD_example_7_Tariff_and_Reservation">
 					<!--- comment: THESE STOP DECLARATIONS COULD BE EXTERNAL as in a TSDUPD location , they are here so as to be able to define names -->
 					<scheduledStopPoints>
@@ -2418,7 +2507,7 @@ ID	FromStopNumber	ToStopNumber	ASD_or_SER	Reservation_in_equipment	Equipment	Tar
 				<TimetableFrame version="any" id="SKDUPD_example_7_Tariff_and_Reservation">
 					<VehicleModes>rail</VehicleModes>
 					<vehicleJourneys>
-						<DatedServiceJourney version="any" id="7" changed="2022-01-26T09:51:00" dataSourceRef="uic:0060">
+						<ServiceJourney version="any" id="7" changed="2022-01-26T09:51:00" dataSourceRef="uic:0060">
 							<!-- SKPUPD_TRAIN
 ID	Service_number	Reservation	Tariff	Service_Mode	Service_Name	Service_Provider	not_used	Reservation_system	First_day	Last_day	Operation_days	Second_service_number
 7	686				Tarif and reservation	1153			2021-12-12	2022-12-10	1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111	-->
@@ -2431,6 +2520,10 @@ ID	Service_number	Reservation	Tariff	Service_Mode	Service_Name	Service_Provider	
 							<TypeOfServiceRef versionRef="EXTERNAL" ref="122">Interregional</TypeOfServiceRef>
 							<!--   -->
 							<DepartureTime>10:42:00</DepartureTime>
+							<!-- POP+273:2021-12-12/2022-12-10::1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111' -->
+							<dayTypes>
+								<DayTypeRef ref="uic:SKDUPD_example_7_Tariff_and_Reservation"/>
+							</dayTypes>
 							<OperatorRef versionRef="EXTERNAL" ref="uic:1153">CFR Calaton</OperatorRef>
 							<trainNumbers>
 								<TrainNumberRef version="any" ref="7"/>
@@ -2828,13 +2921,7 @@ ID	Stop_number	UIC	Arrival_time	Arrival_offset	Departure_time	Departure_offset	P
 									<CheckProcess>incomingPassportControl</CheckProcess>
 								</CheckConstraint>
 							</checkConstraints>
-							<UicOperatingPeriod id="7" version="any">
-								<FromDate>2021-12-12T00:00:00</FromDate>
-								<ToDate>2022-12-12T23:59:59</ToDate>
-								<ValidDayBits>1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
-</ValidDayBits>
-							</UicOperatingPeriod>
-						</DatedServiceJourney>
+						</ServiceJourney>
 					</vehicleJourneys>
 					<trainNumbers>
 						<TrainNumber version="any" id="7">

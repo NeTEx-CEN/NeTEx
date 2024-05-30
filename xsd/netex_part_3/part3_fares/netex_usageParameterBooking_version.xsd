@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_usageParameterBooking_version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_usageParameterBooking_version">
 	<xsd:include schemaLocation="netex_usageParameterBooking_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_vehicleSeating_support.xsd"/>
 	<xsd:include schemaLocation="netex_timeStructureFactor_support.xsd"/>
@@ -31,6 +31,8 @@
 					   Canncellation: CancellationALlowed
 					   Reservation: MinimumResrevationDUration MaximumReservationDuration
 				</Date>
+				<Date><Modified>2023-12-18</Modified>FIX: Correct the  documentatiion on #525 implementation of BOOKING ARRANGEMENT and SERVICE BOOKING ARRANGEMENT.
+				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the Booking USAGE PARAMETER types.</p>
@@ -47,7 +49,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
-					 <Copyright>CEN, Crown Copyright 2009-2020</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2023</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -287,16 +289,18 @@ Rail transport, Roads and Road transport
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:group ref="ReservingCalculationGroup"/>
-			<xsd:element name="BookingArrangements" type="BookingArrangementsStructure" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Booking Arrangements for Reservations. DEPRECATED: use bookingArrangements</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="bookingArrangements" type="bookingArrangements_RelStructure" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Set of possible Booking Arrangements for stop if different from those for SERVICE JOURNEY. </xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
+			<xsd:choice>
+				<xsd:element name="bookingArrangements" type="bookingArrangements_RelStructure" minOccurs="0">
+					<xsd:annotation>
+						<xsd:documentation>Set of possible Booking Arrangements for Reservations +v2.0</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="BookingArrangements" type="BookingArrangementsStructure" minOccurs="0">
+					<xsd:annotation>
+						<xsd:documentation>Booking Arrangements for Reservations. DEPRECATED: use bookingArrangements</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:choice>
 			<xsd:element name="SeatAllocationMethod" type="SeatAllocationMethodEnumeration" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Method of Seat allocation that is used. +V1.1</xsd:documentation>
@@ -388,16 +392,18 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Elements for CANCELLING Group.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="BookingArrangements" type="BookingArrangementsStructure" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Booking Arrangements for Cancellations. DEPRECATED: use bookingArrangements</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="bookingArrangements" type="bookingArrangements_RelStructure" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Set of possible Booking Arrangements for this USAGE PARAMETER. </xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
+			<xsd:choice>
+				<xsd:element name="bookingArrangements" type="bookingArrangements_RelStructure" minOccurs="0">
+					<xsd:annotation>
+						<xsd:documentation>Set of possible Booking Arrangements for Cancellations.  +v2.0</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="BookingArrangements" type="BookingArrangementsStructure" minOccurs="0">
+					<xsd:annotation>
+						<xsd:documentation>Booking Arrangements for Cancellations. DEPRECATED: use bookingArrangements</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:choice>
 			<xsd:element name="CancellationAllowed" type="xsd:boolean" default="true" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Whether Cancellation is allowed. +v1.2.2</xsd:documentation>
