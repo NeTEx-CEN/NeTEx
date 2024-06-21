@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_servicePattern_version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_servicePattern_version">
 	<!-- ======================================================================= -->
 	<xsd:include schemaLocation="netex_servicePattern_support.xsd"/>
 	<xsd:include schemaLocation="../part1_tacticalPlanning/netex_fareZone_support.xsd"/>
@@ -43,6 +43,8 @@
 				<Date><Modified>2019-03-01</Modified>Comment SBB20
 				     	Extension of ConnectionEnd (submode and transportOrganisation)
 				</Date>
+				<Date><Modified>2023-12-18</Modified>FIX: revise the  #525 implementation of BOOKING ARRANGEMENT and SERVICE BOOKING ARRANGEMENT,
+				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the SERVICE PATTERN types.</p>
@@ -59,7 +61,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
-						<Copyright>CEN, Crown Copyright 2009-2020</Copyright>
+						<Copyright>CEN, Crown Copyright 2009-2023</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -308,7 +310,7 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>An alternative short code that t identifies the STOP POINT.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="PublicCode" type="PrivateCodeStructure" minOccurs="0">
+			<xsd:element name="PublicCode" type="PublicCodeStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>A PUBLIC code that uniquely identifies the STOP POINT.</xsd:documentation>
 				</xsd:annotation>
@@ -492,7 +494,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Elements for a STOP AREA.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="PublicCode" type="xsd:normalizedString" minOccurs="0">
+			<xsd:element name="PublicCode" type="PublicCodeStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Alternative public facing Code that uniquely identifies the STOP AREA.</xsd:documentation>
 				</xsd:annotation>
@@ -897,16 +899,18 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Nature of use of stop, e.g. access, interchange only, or pass through. Default is Access.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="BookingArrangements" type="BookingArrangementsStructure" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Booking Arrangements for stop if different from those for SERVICE JOURNEY. DEPRECATED: use bookingArrangements</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="bookingArrangements" type="bookingArrangements_RelStructure" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Set of possible Booking Arrangements for stop if different from those for SERVICE JOURNEY. </xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
+			<xsd:choice>
+				<xsd:element name="bookingArrangements" type="bookingArrangements_RelStructure" minOccurs="0">
+					<xsd:annotation>
+						<xsd:documentation>Set of possible Booking Arrangements for stop if different from those for SERVICE JOURNEY.  +v2.0</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="BookingArrangements" type="BookingArrangementsStructure" minOccurs="0">
+					<xsd:annotation>
+						<xsd:documentation>Booking Arrangements for stop if different from those for SERVICE JOURNEY. DEPRECATED: use bookingArrangements instead</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:choice>
 			<xsd:group ref="StopPointInPatternAdvertisementGroup">
 				<xsd:annotation>
 					<xsd:documentation>Advertisement Elements for info about publicising STOP POINT IN JOURNEY PATTERN. +V1.1</xsd:documentation>

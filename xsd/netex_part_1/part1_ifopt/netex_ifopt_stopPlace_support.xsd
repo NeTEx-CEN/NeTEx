@@ -38,8 +38,7 @@
 				<Language>[ISO 639-2/B] ENG</Language>
 				<Publisher>Kizoom Software Ltd, 16 High Holborn, London WC1V 6BX</Publisher>
 				<Rights>Unclassified
-					 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
-				</Rights>
+					 <Copyright>CEN, Crown Copyright 2009-2019</Copyright></Rights>
 				<Source>
 					<ul>
 						<li>Derived from the SIRI standards.</li>
@@ -296,36 +295,6 @@ Rail transport, Roads and Road transport
 		</xsd:simpleContent>
 	</xsd:complexType>
 	<!-- ======================================================================= -->
-	<!-- ======================================================================= -->
-	<xsd:complexType name="SitePathLinkRefStructure">
-		<xsd:annotation>
-			<xsd:documentation>Type for Unique Reference to SITE PATH LINK.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:complexContent>
-			<xsd:extension base="PathLinkRefStructure"/>
-		</xsd:complexContent>
-	</xsd:complexType>
-	<xsd:complexType name="StopPathLinkRefStructure">
-		<xsd:annotation>
-			<xsd:documentation>Type for reference to a SITE PATH LINK.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:simpleContent>
-			<xsd:restriction base="PathLinkRefStructure">
-				<xsd:attribute name="ref" type="PathLinkIdType" use="required">
-					<xsd:annotation>
-						<xsd:documentation>Identifier of a PATH LINK.</xsd:documentation>
-					</xsd:annotation>
-				</xsd:attribute>
-			</xsd:restriction>
-		</xsd:simpleContent>
-	</xsd:complexType>
-	<!-- ======================================================================= -->
-	<xsd:simpleType name="PublicCodeType">
-		<xsd:annotation>
-			<xsd:documentation>Unique identifier of a stop for SMS and other customer facing delivery channels.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="xsd:normalizedString"/>
-	</xsd:simpleType>
 	<xsd:simpleType name="PlateCodeType">
 		<xsd:annotation>
 			<xsd:documentation>The plate identifier placed on the stop.</xsd:documentation>
@@ -343,7 +312,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Alternative identifiers of a STOP PLACE.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="PublicCode" type="PublicCodeType" minOccurs="0">
+			<xsd:element name="PublicCode" type="PublicCodeStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Short public code for passengers to use when uniquely identifying the stop by SMS and other self-service channels.</xsd:documentation>
 				</xsd:annotation>
@@ -382,13 +351,12 @@ Rail transport, Roads and Road transport
 	</xsd:simpleType>
 	<xsd:simpleType name="QuayTypeEnumeration">
 		<xsd:annotation>
-			<xsd:documentation>Allowed values for QUAY Component Types. Special is the structure for rail, which allows a hierarchy. 
-			railIslandPlatform is the full platform positioned between two tracks, railPlatform is a side platform facing the track and railPlatformSector is a sector of such a railPlatform. A similar hierarchy is defined for a metro station layout.</xsd:documentation>
+			<xsd:documentation>Allowed values for QUAY Component Types. Special is the structure for rail, which allows a hierarchy. railIslandPlatform is the full platform positioned between two tracks, railPlatform is a side platform facing the track and railPlatformSector is a sector of such a railPlatform. A similar hierarchy is defined for a metro station layout.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:string">
 			<xsd:enumeration value="airlineGate"/>
 			<xsd:enumeration value="railPlatform"/>
-			<xsd:enumeration value="railIslandPlaform"/>
+			<xsd:enumeration value="railIslandPlatform"/>
 			<xsd:enumeration value="railPlatformSector"/>
 			<xsd:enumeration value="metroPlatform"/>
 			<xsd:enumeration value="metroIslandPlatform"/>
@@ -407,6 +375,16 @@ Rail transport, Roads and Road transport
 			<xsd:enumeration value="vehicleLoadingPlace"/>
 			<xsd:enumeration value="handicappedLevelBoardingSector"/>
 			<xsd:enumeration value="multimodal"/>
+			<xsd:enumeration value="busStopWithinRoadwayBoarding">
+				<xsd:annotation>
+					<xsd:documentation>Bus stop directly on street. This means people waiting to board will literally be standing on the street. The usual elements of a stop (pole, bank, information) usually are present at the road side. Often there are markings on the floor and sometimes also traffic lights stopping the traffic for boarding and alighting. Often the area to wait is on the side of the road and the BOARDING POSITION could indicate, where to board/alight. However, BOARDING POSITIONs are often not modeled.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="tramStopWithinRoadwayBoarding">
+				<xsd:annotation>
+					<xsd:documentation>Tram stop directly on street. This means people waiting to board will literally be standing on the street. The usual elements of a stop (pole, bank, information) usually are present at the road side. Often there are markings on the floor and sometimes also traffic lights stopping the traffic for boarding and alighting. Often the area to wait is on the side of the road and the BOARDING POSITION could indicate, where to board/alight. However, BOARDING POSITIONs are often not modeled.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
 			<xsd:enumeration value="other"/>
 		</xsd:restriction>
 	</xsd:simpleType>

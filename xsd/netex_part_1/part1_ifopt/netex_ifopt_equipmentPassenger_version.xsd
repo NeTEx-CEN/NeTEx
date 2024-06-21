@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_ifopt_equipmentPassenger_version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_ifopt_equipmentPassenger_version">
 	<xsd:include schemaLocation="netex_ifopt_equipmentPassenger_support.xsd"/>
 	<xsd:include schemaLocation="netex_ifopt_equipmentAccess_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_accessibility/netex_acsb_accessibility.xsd"/>
@@ -87,7 +87,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element ref="PassengerSafetyEquipment">
 				<xsd:annotation>
-					<xsd:documentation>Specialisation of PASSENGER EQUIPMENT for pasenger safety.</xsd:documentation>
+					<xsd:documentation>Specialisation of PASSENGER EQUIPMENT for passenger safety.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element ref="RubbishDisposalEquipment">
@@ -102,7 +102,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 		</xsd:choice>
 	</xsd:group>
-	<!-- ======================================================================= -->
+	<!-- =====  SANITARY EQUIPMENT ========================================== -->
 	<xsd:element name="SanitaryEquipment" substitutionGroup="PassengerEquipment">
 		<xsd:annotation>
 			<xsd:documentation>A SANITARY FACILITY , e.g. WC, Shower, baby change.</xsd:documentation>
@@ -123,7 +123,7 @@ Rail transport, Roads and Road transport
 						<xsd:sequence>
 							<xsd:element name="Fixed" type="xsd:boolean" minOccurs="0">
 								<xsd:annotation>
-									<xsd:documentation>Whether the EQUIPMENT is fixed at a place or min a vehicle.</xsd:documentation>
+									<xsd:documentation>Whether the EQUIPMENT is fixed at a place or in a vehicle.</xsd:documentation>
 								</xsd:annotation>
 							</xsd:element>
 						</xsd:sequence>
@@ -201,6 +201,21 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Key issuing scheme under which facility is accessible.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="HandWashing" type="xsd:boolean" default="true" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether the toilets have a sink allowing hand washing with soap.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DrinkingWater" type="xsd:boolean" default="true" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether the tap inside the toilet supplies drinking water.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ToiletsType" type="ToiletsTypeEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indicates the position of using the toilet.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:group name="SanitaryEquipmentPaymentGroup">
@@ -236,7 +251,7 @@ Rail transport, Roads and Road transport
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->
-	<!-- ======================================================================= -->
+	<!-- ==== PASSENGER SAFETY EQUIPMENT ================================== -->
 	<xsd:element name="PassengerSafetyEquipment" substitutionGroup="PassengerEquipment">
 		<xsd:annotation>
 			<xsd:documentation>Specialisation of PASSENGER EQUIPMENT for passenger safety features, e.g. panic button, SOS phone.</xsd:documentation>
@@ -257,7 +272,7 @@ Rail transport, Roads and Road transport
 						<xsd:sequence>
 							<xsd:element name="Fixed" type="xsd:boolean" minOccurs="0">
 								<xsd:annotation>
-									<xsd:documentation>Whether the EQUIPMENT is fixed at a place or min a vehicle.</xsd:documentation>
+									<xsd:documentation>Whether the EQUIPMENT is fixed at a place or in a vehicle.</xsd:documentation>
 								</xsd:annotation>
 							</xsd:element>
 						</xsd:sequence>
@@ -339,7 +354,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
-	<!-- ======================================================================= -->
+	<!-- ==== HELP POINT EQUIPMENT ============================== -->
 	<xsd:element name="HelpPointEquipment" substitutionGroup="PassengerEquipment">
 		<xsd:annotation>
 			<xsd:documentation>Specialisation of PASSENGER EQUIPMENT for HELP POINT.</xsd:documentation>
@@ -360,7 +375,7 @@ Rail transport, Roads and Road transport
 						<xsd:sequence>
 							<xsd:element name="Fixed" type="xsd:boolean" minOccurs="0">
 								<xsd:annotation>
-									<xsd:documentation>Whether the EQUIPMENT is fixed at a place or min a vehicle.</xsd:documentation>
+									<xsd:documentation>Whether the EQUIPMENT is fixed at a place or in a vehicle.</xsd:documentation>
 								</xsd:annotation>
 							</xsd:element>
 						</xsd:sequence>
@@ -424,6 +439,80 @@ Rail transport, Roads and Road transport
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->
+	<xsd:element name="PassengerBeaconEquipment" substitutionGroup="PassengerEquipment">
+		<xsd:annotation>
+			<xsd:documentation>Specialisation of PASSENGER EQUIPMENT for Beacons. For SSID or UUID always use PublicCode. Be aware that when using VEHICLE TYPE or VEHICLE PROFILE only the type of the beacon can be described. The information aboutn the relevent real beacon often can only be provided when the actual VEHICLE is known.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="PassengerBeaconEquipment_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EquipmentGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:element name="Fixed" type="xsd:boolean" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Whether the EQUIPMENT is fixed at a place or in a vehicle.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="PassengerBeaconEquipmentGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="PassengerBeaconEquipmentIdType" use="optional"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="PassengerBeaconEquipment_VersionStructure" abstract="false">
+		<xsd:annotation>
+			<xsd:documentation>Type for a BEACON EQUIPMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="PassengerEquipment_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="PassengerBeaconEquipmentGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="PassengerBeaconEquipmentGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a BEACON EQUIPMENT type. Beacons are under development so the Enumerations may change fast.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="AccessibilityAssessment" minOccurs="0"/>
+			<xsd:element name="BeaconType" type="BeaconTypeEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The type of the beacon</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="BeaconDirection" type="BeaconDirectionEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>If the Beacon is unidirectional or bidirectional</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="BeaconProtocol" type="BeaconProtocolEnumeration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The relevant Beacon Protocol used.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="BeaconBackendUrl" type="xsd:anyURI" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The  to reach the back end system for the usage of the beacon.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ======================================================================= -->
 	<xsd:element name="RubbishDisposalEquipment" substitutionGroup="PassengerEquipment">
 		<xsd:annotation>
 			<xsd:documentation>Equipment for Passengers relating to a Rubbish disposal.</xsd:documentation>
@@ -444,7 +533,7 @@ Rail transport, Roads and Road transport
 						<xsd:sequence>
 							<xsd:element name="Fixed" type="xsd:boolean" minOccurs="0">
 								<xsd:annotation>
-									<xsd:documentation>Whether the EQUIPMENT is fixed at a place or min a vehicle.</xsd:documentation>
+									<xsd:documentation>Whether the EQUIPMENT is fixed at a place or in a vehicle.</xsd:documentation>
 								</xsd:annotation>
 							</xsd:element>
 						</xsd:sequence>
