@@ -32,7 +32,10 @@
 					<Modified>2023-12-12</Modified>Add DECK ENTRANCE ASSIGNMENT
 				</Date>
 				<Date>
-					<Modified>2024-02-08</Modified>Add Directional attributes as per MS suggestions:  ArrivesForwards, DpeartsForwards  ArrivesFrom, Left DepartsToRight .  corrected name of trainStopAssignments
+					<Modified>2024-02-08</Modified>Add Directional attributes as per MS suggestions:  ArrivesForwards, DpeartsForwards  ArrivesFrom, Left DepartsToRight .  corrected name of passengerBoardingPositionAssignments
+				</Date>
+				<Date>
+					<Modified>2024-06-24</Modified>Rename train stop assignment (deprectaed) to passenger boarding assignment
 				</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines common STOP ASSIGNMENT types.</p>
@@ -100,7 +103,7 @@ Rail transport, Roads and Road transport
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<!-- ======================================================================= -->
+	<!-- ====== STOP ASSIGNMENT.=========================================== -->
 	<xsd:element name="StopAssignment" type="StopAssignment_VersionStructure" abstract="true" substitutionGroup="DataManagedObject">
 		<xsd:annotation>
 			<xsd:documentation>Assignment of a SCHEDULED STOP POINT to a STOP PLACE and QUAY, etc.</xsd:documentation>
@@ -179,10 +182,11 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
-	<!-- ======================================================================= -->
+	<!-- ======PASSENGER STOP ASSIGNMENT.=========================================== -->
 	<xsd:element name="PassengerStopAssignment" abstract="false" substitutionGroup="StopAssignment">
 		<xsd:annotation>
-			<xsd:documentation>Assignment of a SCHEDULED STOP POINT to a STOP PLACE and QUAY, etc.. For associations to ZONE see FlexibleStopAssignment. Usually it is expected to have one single PASSENGER STOP ASSIGNMENT for each combination of STOP PLACE/QUAY/BOARDING POSITION assigned to a SCHEDULED STOP POINT. However, this can't be guaranteed as in some cases operational requirements need multiple combinations of multipe SCHEDULED STOP POINT to a combination in the physical world or even a single SCHEDULED STOP POINT potentially to be connected to multiple combinations in the real world. Also, for some operators the link between the timetable world (SCHEDULED STOP POINT) and the physical may not be provided. This should be avoided, as the link then needs to be done by matching which is not 100% accurate.</xsd:documentation>
+			<xsd:documentation>The default allocation of a SCHEDULED STOP POINT to a specific STOP PLACE, and also possibly a QUAY and BOARDING POSITION.
+</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -250,13 +254,13 @@ Rail transport, Roads and Road transport
 				<xsd:element ref="BoardingPosition"/>
 			</xsd:choice>
 			<xsd:choice minOccurs="0">
-				<xsd:element name="trainStopAssignments" minOccurs="0" maxOccurs="unbounded">
+				<xsd:element name="passengerBoardingPositionAssignments" minOccurs="0" maxOccurs="unbounded">
 					<xsd:annotation>
 						<xsd:documentation>Train stop assignments elements to use for which SCHEDULED STOP POINT is to be assigned. +v2.0</xsd:documentation>
 					</xsd:annotation>
 					<xsd:complexType>
 						<xsd:complexContent>
-							<xsd:extension base="trainStopAssignments_RelStructure"/>
+							<xsd:extension base="passengerBoardingPositionAssignments_RelStructure"/>
 						</xsd:complexContent>
 					</xsd:complexType>
 				</xsd:element>
@@ -266,14 +270,14 @@ Rail transport, Roads and Road transport
 					</xsd:annotation>
 					<xsd:complexType>
 						<xsd:complexContent>
-							<xsd:extension base="trainStopAssignments_RelStructure"/>
+							<xsd:extension base="passengerBoardingPositionAssignments_RelStructure"/>
 						</xsd:complexContent>
 					</xsd:complexType>
 				</xsd:element>
 			</xsd:choice>
 		</xsd:sequence>
 	</xsd:group>
-	<!-- ======================================================================= -->
+	<!-- ======DYNAMIC STOP ASSIGNMENT.=========================================== -->
 	<xsd:element name="DynamicStopAssignment" abstract="false" substitutionGroup="StopAssignment">
 		<xsd:annotation>
 			<xsd:documentation>Change to a PASSENGER STOP ASSIGNMENT.</xsd:documentation>
@@ -333,27 +337,34 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="PassengerStopAssignmentRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
-	<!-- ======================================================================= -->
-	<xsd:complexType name="trainStopAssignments_RelStructure">
+	<!-- ======ASSENGER BOARDING POSITION ASSIGNMENT============================================ -->
+	<xsd:complexType name="passengerBoardingPositionAssignments_RelStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for a list of references to a TRAIN STOP POINT ASSIGNMENT.</xsd:documentation>
+			<xsd:documentation>Type for a list of references to a PASSENGER BOARDING POSITION ASSIGNMENT</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="containmentAggregationStructure">
 				<xsd:choice maxOccurs="unbounded">
+					<xsd:element ref="PassengerBoardingPositionAssignmentRef"/>
+					<xsd:element ref="PassengerBoardingPositionAssignment"/>
+					<xsd:element ref="TrainStopAssignment">
+						<xsd:annotation>
+							<xsd:documentation>DEPRECATED - Use PASSENGER BOARDING POSITION ASSIGNMENT.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
 					<xsd:element ref="TrainStopAssignmentRef"/>
-					<xsd:element ref="TrainStopAssignment"/>
 				</xsd:choice>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:element name="TrainStopAssignment" substitutionGroup="StopAssignment">
+	<xsd:element name="PassengerBoardingPositionAssignment" substitutionGroup="StopAssignment">
 		<xsd:annotation>
-			<xsd:documentation>Assignment of a scheduled train stop point to a STOP PLACE and quay. etc.</xsd:documentation>
+			<xsd:documentation>The default allocation of a SCHEDULED STOP POINT to a specific STOP PLACE, and also possibly a QUAY and BOARDING POSITION. NB Rebmed from TRAIN STOP ASSIGNMENT in v2.
+</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
-				<xsd:restriction base="TrainStopAssignment_VersionStructure">
+				<xsd:restriction base="PassengerBoardingPositionAssignment_VersionStructure">
 					<xsd:sequence>
 						<xsd:sequence>
 							<xsd:sequence>
@@ -370,29 +381,29 @@ Rail transport, Roads and Road transport
 							<xsd:group ref="StopAssignmentGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
-							<xsd:group ref="TrainStopAssignmentGroup"/>
+							<xsd:group ref="PassengerBoardingPositionAssignmentGroup"/>
 						</xsd:sequence>
 					</xsd:sequence>
-					<xsd:attribute name="id" type="TrainStopAssignmentIdType"/>
+					<xsd:attribute name="id" type="PassengerBoardingPositionAssignmentIdType"/>
 				</xsd:restriction>
 			</xsd:complexContent>
 		</xsd:complexType>
 	</xsd:element>
-	<xsd:complexType name="TrainStopAssignment_VersionStructure">
+	<xsd:complexType name="PassengerBoardingPositionAssignment_VersionStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for a TRAIN STOP POINT ASSIGNMENT.</xsd:documentation>
+			<xsd:documentation>Type for a PASSENGER BOARDING POSITION ASSIGNMENT</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="StopAssignment_VersionStructure">
 				<xsd:sequence>
-					<xsd:group ref="TrainStopAssignmentGroup"/>
+					<xsd:group ref="PassengerBoardingPositionAssignmentGroup"/>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:group name="TrainStopAssignmentGroup">
+	<xsd:group name="PassengerBoardingPositionAssignmentGroup">
 		<xsd:annotation>
-			<xsd:documentation>Elements for a TRAIN STOP POINT ASSIGNMENT.</xsd:documentation>
+			<xsd:documentation>Elements for a PASSENGER BOARDING POSITION ASSIGNMENT</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="PassengerStopAssignmentRef" minOccurs="0"/>
@@ -428,6 +439,50 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
+	<!-- ======DEPRECATED - Use PASSENGER BOARDING POSITION ASSIGNMENT.============================================ -->
+	<xsd:element name="TrainStopAssignment" substitutionGroup="StopAssignment">
+		<xsd:annotation>
+			<xsd:documentation>DEPRECATED - Use PASSENGER BOARDING POSITION ASSIGNMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="TrainStopAssignment_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:sequence>
+								<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+							</xsd:sequence>
+							<xsd:sequence>
+								<xsd:group ref="DataManagedObjectGroup"/>
+							</xsd:sequence>
+							<xsd:sequence>
+								<xsd:group ref="AssignmentGroup"/>
+							</xsd:sequence>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="StopAssignmentGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="PassengerBoardingPositionAssignmentGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="TrainStopAssignmentIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="TrainStopAssignment_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>DEPRECATED - Use PASSENGER BOARDING POSITION ASSIGNMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="StopAssignment_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="PassengerBoardingPositionAssignmentGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 	<!-- ======================================================================= -->
 	<xsd:element name="PassengerStopAssignmentView" abstract="false" substitutionGroup="DerivedView">
 		<xsd:annotation>
