@@ -4,7 +4,7 @@
 	<xsd:include schemaLocation="netex_deckEntranceAssignment_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_deckPlan_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_trainElement_support.xsd"/>
-	<xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_assignment_version.xsd"/>
+	<xsd:include schemaLocation="../../netex_part_1/part1_tacticalPlanning/netex_stopAssignment_version.xsd"/>
 	<!-- ======================================================================= -->
 	<xsd:annotation>
 		<xsd:appinfo>
@@ -17,9 +17,9 @@
 				<Date>
 					<Created>2023-01-30</Created>
 				</Date>
-				<Date><Modified>2023-01-30</Modified>
-          Name Space changes
-        </Date>
+				<Date>
+					<Modified>2024-06-24</Modified>Add TRAIN COMPONENT STOP ASSIGNMENT
+				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the DECK ENTRANCE ALIGNMENT types.</p>
@@ -78,7 +78,7 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:element name="DeckEntranceAssignment" substitutionGroup="Assignment_">
+	<xsd:element name="DeckEntranceAssignment" substitutionGroup="PassengerBoardingPositionAssignment_">
 		<xsd:annotation>
 			<xsd:documentation>The association of a DECK ENTRANCE of a VEHICLE's DECK PLAN with a TRAIN and TRAIN COMPONENT and a specific STOP PLACE, QUAY and possibly BOARDING POSITION. NOTE: may indicate which side of VEHICLE door is. +v2.0</xsd:documentation>
 		</xsd:annotation>
@@ -98,6 +98,12 @@
 							</xsd:sequence>
 						</xsd:sequence>
 						<xsd:sequence>
+							<xsd:group ref="StopAssignmentGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="PassengerBoardingPositionAssignmentGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
 							<xsd:group ref="DeckEntranceAssignmentGroup"/>
 						</xsd:sequence>
 					</xsd:sequence>
@@ -115,7 +121,7 @@
 			<xsd:documentation>Type for a DECK ENTRANCE ASSIGNMENT.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
-			<xsd:extension base="Assignment_VersionStructure">
+			<xsd:extension base="PassengerBoardingPositionAssignment_VersionStructure">
 				<xsd:sequence>
 					<xsd:group ref="DeckEntranceAssignmentGroup"/>
 				</xsd:sequence>
@@ -128,7 +134,6 @@
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="DeckEntranceRef"/>
-			<xsd:element ref="TrainComponentRef" minOccurs="0"/>
 			<xsd:element name="IsAllowed" type="xsd:boolean" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Whether assigment permits or forbids use of TRAIN COMPONENT and / or specified DECK ENTRANCE at specifed stop. </xsd:documentation>
@@ -141,6 +146,69 @@
 			</xsd:element>
 			<xsd:group ref="LocatableSpotRangeGroup"/>
 		</xsd:sequence>
+	</xsd:group>
+	<!-- ==== TRAIN COMPONENT  ASSIGNMENT ==================================================== -->
+	<xsd:complexType name="trainComponentStopAssignments_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for containment in frame of TRAIN COMPONENT STOP ASSIGNMENTs</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="TrainComponentStopAssignment" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="TrainComponentStopAssignment" substitutionGroup="StopAssignment">
+		<xsd:annotation>
+			<xsd:documentation>The association of a DECK ENTRANCE of a VEHICLE's DECK PLAN with a TRAIN and TRAIN COMPONENT and a specific STOP PLACE, QUAY and possibly BOARDING POSITION. NOTE: may indicate which side of VEHICLE door is. +v2.0</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="TrainComponentStopAssignment_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:sequence>
+								<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+							</xsd:sequence>
+							<xsd:sequence>
+								<xsd:group ref="DataManagedObjectGroup"/>
+							</xsd:sequence>
+							<xsd:sequence>
+								<xsd:group ref="AssignmentGroup"/>
+							</xsd:sequence>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="TrainComponentStopAssignmentGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="TrainComponentStopAssignmentIdType">
+						<xsd:annotation>
+							<xsd:documentation>Identifier of TRAIN COMPONENT STOP ASSIGNMENT.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="TrainComponentStopAssignment_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a TRAIN COMPONENT STOP ASSIGNMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="PassengerBoardingPositionAssignment_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="TrainComponentStopAssignmentGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="TrainComponentStopAssignmentGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a TRAIN COMPONENT STOP ASSIGNMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence/>
 	</xsd:group>
 	<!-- ======================================================================= -->
 </xsd:schema>
