@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_deckEntranceAssignment_support">
 	<!-- ======================================================================= -->
-	<xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_assignment_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_part_1/part1_tacticalPlanning/netex_stopAssignment_support.xsd"/>
 	<xsd:annotation>
 		<xsd:appinfo>
 			<Metadata xmlns="http://www.govtalk.gov.uk/CM/gms-xs">
@@ -13,9 +13,8 @@
 				<Date>
 					<Created>2023-02-12</Created>
 				</Date>
-				<Date><Modified>2023-02-12</Modified>
-          Name Space changes
-        </Date>
+				<Date><Modified>2024-06-24</Modified>Add TRAIN COMPONENT STOP ASSIGNMENT
+				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the DECK ENTRANCE ASSIGNMENT types.</p>
@@ -77,7 +76,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of a DECK ENTRANCE ASSIGNMENT.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="AssignmentIdType"/>
+		<xsd:restriction base="PassengerBoardingPositionAssignmentIdType"/>
 	</xsd:simpleType>
 	<xsd:element name="deckEntranceAssignmentRef" type="deckEntranceAssignmentRefStructure" substitutionGroup="AssignmentRef">
 		<xsd:annotation>
@@ -89,10 +88,48 @@
 			<xsd:documentation>Type for a reference to a DECK ENTRANCE ASSIGNMENT.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:simpleContent>
-			<xsd:restriction base="AssignmentRefStructure">
+			<xsd:restriction base="PassengerBoardingPositionAssignmentRefStructure">
 				<xsd:attribute name="ref" type="deckEntranceAssignmentIdType" use="required">
 					<xsd:annotation>
 						<xsd:documentation>Identifier of a DECK ENTRANCE ASSIGNMENT.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!-- ====TRAIN COMPONENT STOPASSIGNMENT==================================================== -->
+	<xsd:complexType name="trainComponentStopAssignmentRefs_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of TRAIN COMPONENT STOP ASSIGNMENTs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="oneToManyRelationshipStructure">
+				<xsd:sequence>
+					<xsd:element ref="TrainComponentStopAssignmentRef" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:simpleType name="TrainComponentStopAssignmentIdType">
+		<xsd:annotation>
+			<xsd:documentation>Type for identifier of a TRAIN COMPONENT STOP ASSIGNMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="PassengerBoardingPositionAssignmentIdType"/>
+	</xsd:simpleType>
+	<xsd:element name="TrainComponentStopAssignmentRef" type="TrainComponentStopAssignmentRefStructure" substitutionGroup="AssignmentRef">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a TRAIN COMPONENT STOP ASSIGNMENT. +v2.0</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="TrainComponentStopAssignmentRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a reference to a TRAIN COMPONENT STOP ASSIGNMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="PassengerBoardingPositionAssignmentRefStructure">
+				<xsd:attribute name="ref" type="TrainComponentStopAssignmentIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Identifier of a TRAIN COMPONENT STOP ASSIGNMENT.</xsd:documentation>
 					</xsd:annotation>
 				</xsd:attribute>
 			</xsd:restriction>
