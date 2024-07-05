@@ -102,18 +102,13 @@ More accurate data can be provided by the individual occupancies or capacities b
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:complexType>
-	<xsd:element name="Occupancy_" type="Occupancy_VersionStructure" abstract="true" substitutionGroup="DataManagedObject">
+	<xsd:element name="OccupancyView">
 		<xsd:annotation>
-			<xsd:documentation>Dummy supertype for Occupancy.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:element name="Occupancy" abstract="true" substitutionGroup="Occupancy_">
-		<xsd:annotation>
-			<xsd:documentation>An OCCUPANCY.</xsd:documentation>
+			<xsd:documentation>A simple VIEW of OCCUPANCY as a first implementation without full support of DECK PLAN.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
-				<xsd:restriction base="Occupancy_VersionStructure">
+				<xsd:restriction base="OccupancyView_VersionStructure">
 					<xsd:sequence>
 						<xsd:sequence>
 							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
@@ -129,12 +124,12 @@ More accurate data can be provided by the individual occupancies or capacities b
 							</xsd:group>
 						</xsd:sequence>
 					</xsd:sequence>
-					<xsd:attribute name="id" type="OccupancyIdType"/>
+					<xsd:attribute name="id" type="OccupancyViewIdType"/>
 				</xsd:restriction>
 			</xsd:complexContent>
 		</xsd:complexType>
 	</xsd:element>
-	<xsd:complexType name="Occupancy_VersionStructure" abstract="false">
+	<xsd:complexType name="OccupancyView_VersionStructure" abstract="false">
 		<xsd:annotation>
 			<xsd:documentation>Type for an Occupancy.</xsd:documentation>
 		</xsd:annotation>
@@ -184,25 +179,25 @@ More accurate data can be provided by the individual occupancies or capacities b
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
-	<xsd:group name="OccupancyInFrameGroup">
+	<xsd:group name="OccupancyViewInFrameGroup">
 		<xsd:annotation>
 			<xsd:documentation>Elements for a OCCUPANCY in frame.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="occupancies" type="OccupancyInFrame_RelStructure" minOccurs="0">
+			<xsd:element name="occupancies" type="OccupancyViewInFrame_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>OCCUPANCYs in frame.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
-	<xsd:complexType name="OccupancyRefStructure">
+	<xsd:complexType name="OccupancyViewRefStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for a reference  to an OCCUPANCY.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:simpleContent>
 			<xsd:restriction base="VersionOfObjectRefStructure">
-				<xsd:attribute name="ref" type="OccupancyIdType" use="required">
+				<xsd:attribute name="ref" type="OccupancyViewIdType" use="required">
 					<xsd:annotation>
 						<xsd:documentation>Identifier of referenced entity.</xsd:documentation>
 					</xsd:annotation>
@@ -210,33 +205,33 @@ More accurate data can be provided by the individual occupancies or capacities b
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
-	<xsd:simpleType name="OccupancyIdType">
+	<xsd:simpleType name="OccupancyViewIdType">
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of a OCCUPANCY.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="ObjectIdType"/>
 	</xsd:simpleType>
-	<xsd:complexType name="Occupancy_RelStructure">
+	<xsd:complexType name="OccupancyView_RelStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for containment for multiple OCCUPANCYs.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="containmentAggregationStructure">
 				<xsd:choice maxOccurs="unbounded">
-					<xsd:element name="Occupancy" type="Occupancy_VersionStructure"/>
-					<xsd:element name="OccupancyRef" type="OccupancyRefStructure"/>
+					<xsd:element name="OccupancyView" type="OccupancyView_VersionStructure"/>
+					<xsd:element name="OccupancyViewRef" type="OccupancyViewRefStructure"/>
 				</xsd:choice>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:complexType name="OccupancyInFrame_RelStructure">
+	<xsd:complexType name="OccupancyViewInFrame_RelStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for containment in FRAME of OCCUPANCYs.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="containmentAggregationStructure">
 				<xsd:sequence>
-					<xsd:element name="Occupancy" type="Occupancy_VersionStructure"/>
+					<xsd:element name="OccupancyView" type="OccupancyView_VersionStructure"/>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
