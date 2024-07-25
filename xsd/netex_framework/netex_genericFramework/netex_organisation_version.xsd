@@ -41,7 +41,7 @@
 				<Language>[ISO 639-2/B] ENG</Language>
 				<Publisher>Kizoom Software Ltd, 16 High Holborn, London WC1V 6BX</Publisher>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2020</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2024</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -201,12 +201,16 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Code details for an ORGANISATION.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="PublicCode" type="PrivateCodeStructure" minOccurs="0">
+			<xsd:element name="PublicCode" type="PublicCodeStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Public code to use for ORGANISATION.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element ref="PrivateCode" minOccurs="0"/>
+			<xsd:element ref="PrivateCode" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>DEPRECATED - use privateCodes</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element name="CompanyNumber" type="xsd:normalizedString" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Company registration number including Country prefix.</xsd:documentation>
@@ -219,7 +223,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element name="ExternalOperatorRef" type="ExternalObjectRefStructure" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>An alternative  code that uniquely identifies the OPERATOR. Specifically for use in AVMS systems. For VDV compatibility.</xsd:documentation>
+					<xsd:documentation>An alternative  code that uniquely identifies the OPERATOR. Specifically for use in AVMS systems. For VDV compatibility. DEPRECATED - use PrivateCode -v2.0</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -390,12 +394,16 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Description of ORGANISATIONAL UNIT.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="PublicCode" type="PrivateCodeStructure" minOccurs="0">
+			<xsd:element name="PublicCode" type="PublicCodeStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Additional public code used for department.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element ref="PrivateCode" minOccurs="0"/>
+			<xsd:element ref="PrivateCode" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>DEPRECATED - use privateCodes</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element name="ContactDetails" type="ContactStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Contact details for ORGANISATION PART for Public use.</xsd:documentation>
@@ -406,7 +414,7 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Coordinates of ORGANISATIONAL UNIT.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element ref="OrganisationRef" minOccurs="0"/>
+			<xsd:element ref="OrganisationRef_" minOccurs="0"/>
 			<xsd:element ref="TypeOfOrganisationPartRef" minOccurs="0"/>
 			<xsd:element name="administrativeZones" type="administrativeZones_RelStructure" minOccurs="0">
 				<xsd:annotation>
@@ -604,7 +612,7 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Description of the nature pf the  Relationship.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element ref="OrganisationRef" minOccurs="0"/>
+			<xsd:element ref="OrganisationRef_" minOccurs="0"/>
 			<xsd:element name="OrganisationRoleType" type="OrganisationRoleEnumeration" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Role of the related Organbisation</xsd:documentation>
@@ -681,12 +689,12 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Elements for an ADMINISTRATIVE ZONE.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="PublicCode" type="PrivateCodeStructure" minOccurs="0">
+			<xsd:element name="PublicCode" type="PublicCodeStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Public Code assosociated with Zone</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element ref="OrganisationRef" minOccurs="0"/>
+			<xsd:element ref="OrganisationRef_" minOccurs="0"/>
 			<xsd:element name="responsibilities" type="responsibilitySets_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>RESPONSIBILITY SETs allocated to ADMINISTRATIVE ZONE.</xsd:documentation>
@@ -988,7 +996,7 @@ Rail transport, Roads and Road transport
 		<xsd:complexContent>
 			<xsd:extension base="DerivedViewStructure">
 				<xsd:sequence>
-					<xsd:element ref="OrganisationRef" minOccurs="0"/>
+					<xsd:element ref="OrganisationRef_" minOccurs="0"/>
 					<xsd:group ref="OrganisationNameGroup"/>
 					<xsd:element name="ContactDetails" type="ContactStructure" minOccurs="0">
 						<xsd:annotation>
@@ -1042,7 +1050,7 @@ Rail transport, Roads and Road transport
 	</xsd:element>
 	<xsd:complexType name="Contact_VersionStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for an CONTACT.</xsd:documentation>
+			<xsd:documentation>Type for a CONTACT.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="DataManagedObjectStructure">
@@ -1058,7 +1066,7 @@ Rail transport, Roads and Road transport
 	</xsd:complexType>
 	<xsd:group name="ContactGroup">
 		<xsd:annotation>
-			<xsd:documentation>Elements for an CONTACT.</xsd:documentation>
+			<xsd:documentation>Elements for a CONTACT.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element name="Name" type="MultilingualString" minOccurs="0">
@@ -1073,7 +1081,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element name="ContactType" type="ContactTypeEnumeration" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Classification of ContactTy[e. Used for arbitrary documentation.</xsd:documentation>
+					<xsd:documentation>Classification of ContactType. Used for arbitrary documentation.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>

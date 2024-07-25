@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_serviceJourney_Version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_serviceJourney_Version">
 	<xsd:include schemaLocation="netex_vehicleJourney_version.xsd"/>
 	<xsd:include schemaLocation="netex_flexibleService_version.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_serviceCalendar_version.xsd"/>
@@ -45,7 +45,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
-					 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2023</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -416,7 +416,17 @@ The VIEW includes derived ancillary data from referenced entities.</xsd:document
 			<xsd:group ref="ServiceJourneyEndpointsGroup"/>
 			<xsd:group ref="ServiceJourneyAdvertisementGroup"/>
 			<xsd:group ref="FlexibleServiceCharacteristicsGroup"/>
-			<xsd:group ref="BookingArrangementsGroup"/>
+			<xsd:choice>
+				<xsd:annotation>
+					<xsd:documentation>Usage of BookingArrangementGroup is DEPRECATED: use bookingArrangements</xsd:documentation>
+				</xsd:annotation>
+				<xsd:element name="bookingArrangements" type="bookingArrangements_RelStructure" minOccurs="0">
+					<xsd:annotation>
+						<xsd:documentation>Set of possible Booking Arrangements for stop if different from those for SERVICE JOURNEY. +v2.0</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:group ref="DeprecatedBookingArrangementGroup"/>
+			</xsd:choice>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ==Group of Services============================================================ -->
