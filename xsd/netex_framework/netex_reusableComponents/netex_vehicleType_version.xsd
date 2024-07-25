@@ -86,6 +86,18 @@ Rail transport, Roads and Road transport
 		<xsd:documentation>VEHICLE TYPE data types</xsd:documentation>
 	</xsd:annotation>
 	<!-- ======================================================================= -->
+	<xsd:complexType name="vehicleModelsInFrame_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for containment in frame of VEHICLE MODELs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="VehicleModel" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 	<!-- ==== TRANSPORT TYPE ==================================================== -->
 	<xsd:element name="TransportType_DummyType" type="DataManagedObjectStructure" abstract="true" substitutionGroup="DataManagedObject">
 		<xsd:annotation>
@@ -380,6 +392,11 @@ Rail transport, Roads and Road transport
 			<xsd:element name="HasHoist" type="xsd:boolean" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Whether vehicle has hoist for wheelchair access.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="HoistOperatingRadius" type="LengthType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Distance from VEHICLE needed to operate hoist.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="BoardingHeight" type="LengthType" minOccurs="0">
@@ -1151,7 +1168,7 @@ Rail transport, Roads and Road transport
 					</xsd:sequence>
 					<xsd:attribute name="id" type="VehicleEquipmentProfileIdType">
 						<xsd:annotation>
-							<xsd:documentation>Identifier of VEHICLE EQUIPMENT PROILE.</xsd:documentation>
+							<xsd:documentation>Identifier of VEHICLE EQUIPMENT PROFILE.</xsd:documentation>
 						</xsd:annotation>
 					</xsd:attribute>
 				</xsd:restriction>
@@ -1218,11 +1235,11 @@ Rail transport, Roads and Road transport
 	</xsd:complexType>
 	<xsd:element name="VehicleEquipmentProfileMember" substitutionGroup="VersionedChild">
 		<xsd:annotation>
-			<xsd:documentation>An element within a  VEHICLE EQUIPMENT PROFILE specifying the number of units of a given TYPE OF EQUIPMENT.</xsd:documentation>
+			<xsd:documentation>A element within a VEHICLE EQUIPMENT PROFILE specifying the number of units of a given a TYPE OF EQUIPMENT.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
-				<xsd:restriction base="VehicleEquipmentProfileMember_VersionedChildStructure">
+				<xsd:restriction base="VehicleEquipmentProfileMember_VersionStructure">
 					<xsd:sequence>
 						<xsd:sequence>
 							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
@@ -1234,14 +1251,14 @@ Rail transport, Roads and Road transport
 					</xsd:sequence>
 					<xsd:attribute name="id" type="VehicleEquipmentProfileMemberIdType">
 						<xsd:annotation>
-							<xsd:documentation>Identifier of VEHICLE EQUIPMENT PROFILE MEMBER.</xsd:documentation>
+							<xsd:documentation>Identifier of VEHICLE EQUIPMENT PROILE.</xsd:documentation>
 						</xsd:annotation>
 					</xsd:attribute>
 				</xsd:restriction>
 			</xsd:complexContent>
 		</xsd:complexType>
 	</xsd:element>
-	<xsd:complexType name="VehicleEquipmentProfileMember_VersionedChildStructure" abstract="false">
+	<xsd:complexType name="VehicleEquipmentProfileMember_VersionStructure" abstract="false">
 		<xsd:annotation>
 			<xsd:documentation>Type for a VEHICLE EQUIPMENT PROFILE MEMBER.</xsd:documentation>
 		</xsd:annotation>
@@ -1305,7 +1322,7 @@ Rail transport, Roads and Road transport
 	</xsd:element>
 	<xsd:complexType name="PurposeOfEquipmentProfile_ValueStructure" abstract="false">
 		<xsd:annotation>
-			<xsd:documentation>Type for a PURPOSE OF EQUIPMENT PROFILE.</xsd:documentation>
+			<xsd:documentation>Type for a PURPOSE OF EQUIPMENT.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="TypeOfValue_VersionStructure"/>
@@ -1314,7 +1331,7 @@ Rail transport, Roads and Road transport
 	<!-- =========TYPE OF DRIVER PERMIT. ============================================ -->
 	<xsd:element name="TypeOfDriverPermit" abstract="false" substitutionGroup="TypeOfValue">
 		<xsd:annotation>
-			<xsd:documentation>A type of driving license e.g. https://en.wikipedia.org/wiki/European_driving_licence  +V2.0</xsd:documentation>
+			<xsd:documentation>A type of driving license (e.g. https://en.wikipedia.org/wiki/European_driving_licence ). +v2.0</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
