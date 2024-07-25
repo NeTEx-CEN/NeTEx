@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_salesContract_version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_salesContract_version">
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_facility_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_loggable_version.xsd"/>
 	<xsd:include schemaLocation="netex_customerPurchasePackage_support.xsd"/>
 	<xsd:include schemaLocation="netex_retailConsortium_support.xsd"/>
 	<xsd:include schemaLocation="netex_salesContract_support.xsd"/>
 	<xsd:include schemaLocation="netex_customerEligibility_version.xsd"/>
+	<xsd:include schemaLocation="netex_customerPaymentMeans_version.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_securityList_version.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_address_version.xsd"/>
-	<xsd:include schemaLocation="netex_customerPaymentMeans_version.xsd"/>
 	<!-- ======================================================================= -->
 	<xsd:annotation>
 		<xsd:appinfo>
@@ -51,6 +51,10 @@
 					  Add smoker to Customer.
 				</Date>
 				<Date><Modified>2021.01.10</Modified>New Modes: Add EMail and Phone  verification flag
+				</Date>
+				<Date><Modified>2023.12.14</Modified>Enhancement: allow Customer Purchase Package to hold Package History
+				</Date>
+				<Date><Modified>2023-12-15</Modified>Factor out Paymount amount to FARE DEBIT PACKAGE
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -699,6 +703,11 @@ Rail transport, Roads and Road transport
 			<xsd:element name="fareContracts" type="fareContracts_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>FARE CONTRACTs for CUSTOMER ACCOUNT +v1.1.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="customerAccountEntries" type="fareContractEntries_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>FARE CONTRACT ENTRIES that relate to the CUSTOMER ACCOUNT. Normally these are embedded in a FARE CONTRACT governing the account itself. For convenience they may also be referenced or embedded directly in the CUSTOMER ACCOUNT. +V2.0 </xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="customerPurchasePackages" type="customerPurchasePackageRefs_RelStructure" minOccurs="0">
