@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_usageParameterCharging_version">
-	<xsd:include schemaLocation="netex_usageParameterCharging_support.xsd"/>
-	<xsd:include schemaLocation="netex_timeStructureFactor_support.xsd"/>
-	<xsd:include schemaLocation="netex_usageParameter_version.xsd"/>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_vehicleRechargingPlan_version">
+	<xsd:include schemaLocation="netex_vehicleRechargingPlan_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_vehicleType_support.xsd"/>
+	<xsd:include schemaLocation="../part2_journeyTimes/netex_coupledJourney_support.xsd"/>
+	<xsd:include schemaLocation="../part2_journeyTimes/netex_vehicleJourney_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_framework/netex_responsibility/netex_responsibility_version.xsd"/>
+	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_vehicle_version.xsd"/>
 	<!-- ======================================================================= -->
 	<xsd:annotation>
 		<xsd:appinfo>
@@ -12,40 +15,33 @@
 				<Contributor>V1.0 Christophe Duquesne</Contributor>
 				<Contributor>Nicholas Knowles</Contributor>
 				<Coverage>Europe</Coverage>
-				<Creator>First drafted for NeTEx version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.</Creator>
+				<Creator>First drafted for NeTEx version 2.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.</Creator>
+				<Date><Created>2024-02-17</Created>Created from TM Spec
+				</Date>
 				<Date>
-					<Created>2010-09-04</Created>
-				</Date>
-				<Date><Modified>2011-02-05</Modified>Name Space changes 
-				</Date>
-				<Date><Modified>2019-03-11</Modified>EURA-40 Add Subscribing  Usage Parameter with various attributes.
-						Add GracePeriod to ChargingPolicy
-				</Date>
-				<Date><Modified>2019-03-11</Modified>EURA-90 Add a MaximumNumberOfFailToCheckOutEvents  to PenaltyPolicy  
-				</Date>
-				<Date><Modified>2020-10-16</Modified>Add a DepositPolicyAttribute to ChargingPolicy
+					<Modified>2024-02-1</Modified>
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
-					<p>This sub-schema describes the Charging USAGE PARAMETER    types.</p>
+					<p>This sub-schema describes the ECHARGING PLAN. types.</p>
 				</Description>
 				<Format>
 					<MediaType>text/xml</MediaType>
 					<Syntax>http://www.w3.org/2001/XMLSchema</Syntax>
 					<Description>XML schema, W3C Recommendation 2001</Description>
 				</Format>
-				<Identifier>{http://www.netex.org.uk/schemas/1.0/xsd/netex_part_3/part3_fares}netex_usageParameterCharging_version.xsd</Identifier>
+				<Identifier>{http://www.netex.org.uk/schemas/1.0/xsd/netex_part_2/part2_vehicleService}netex_vehicleRechargingPlan_version.xsd</Identifier>
 				<Language>[ISO 639-2/B] ENG</Language>
 				<Publisher>Kizoom, 109-123 Clifton Street, London EC4A 4LD </Publisher>
 				<Relation>
-					<Requires>http://www.netex.org.uk/schemas/1.0/xsd/netex_part_3/fares/netex_usageParameterEligibility_support</Requires>
+					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
-					 <Copyright>CEN, Crown Copyright 2009-2020</Copyright>
+					 <Copyright>CEN, Crown Copyright 2023-2024</Copyright>
 				</Rights>
 				<Source>
 					<ul>
-						<li>Derived from the Transmodel, VDV, TransXChange, NEPTUNE, BISON and Trident standards.</li>
+						<li>Derived from the Transmodel, VDV, standards.</li>
 					</ul>
 				</Source>
 				<Status>Version 1.0</Status>
@@ -58,22 +54,48 @@ Rail transport, Railway stations and track, Train services, Underground trains,
 Business and industry, Transport, Air transport , Ports and maritime transport, Public transport,
 Rail transport, Roads and Road transport
 </Category>
-					<Project>CEN TC278 WG3 SG9</Project>
+					<Project>CEN TC278 WG3 SG9.</Project>
 				</Subject>
-				<Title>NeTEx Charging USAGE PARAMETER   types.</Title>
+				<Title>NeTEx RECHARGING PLAN. types.</Title>
 				<Type>Standard</Type>
 			</Metadata>
 		</xsd:appinfo>
-		<xsd:documentation>NeTEX: Charging USAGE PARAMETER  types.</xsd:documentation>
+		<xsd:documentation>NeTEx: VEHICLE SERVICE types.</xsd:documentation>
 	</xsd:annotation>
-	<!-- ==== CHARGING POLICY USER PARAMETER ================================================ -->
-	<xsd:element name="ChargingPolicy" abstract="false" substitutionGroup="UsageParameter_">
+	<!-- ======================================================================= -->
+	<xsd:group name="RechargingPlanInFrameGroup">
 		<xsd:annotation>
-			<xsd:documentation>Policy regarding different aspects of charging such as credit limits.</xsd:documentation>
+			<xsd:documentation>Elements for a RECHARGING PLAN in FRAME. +v2.0</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="rechargingPlans" type="rechargingPlans_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>List of RECHARGING PLANs in frame.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ===Block=================================================== -->
+	<!-- ======================================================================= -->
+	<xsd:complexType name="rechargingPlans_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of RECHARGING PLANs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="RechargingPlan" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="RechargingPlan" abstract="false" substitutionGroup="DataManagedObject">
+		<xsd:annotation>
+			<xsd:documentation>A plan for periodically charging a VEHICLE while executing a BLOCK or BLOCKs. +v2.0</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
-				<xsd:restriction base="ChargingPolicy_VersionStructure">
+				<xsd:restriction base="RechargingPlan_VersionStructure">
 					<xsd:sequence>
 						<xsd:sequence>
 							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
@@ -82,232 +104,207 @@ Rail transport, Roads and Road transport
 							<xsd:group ref="DataManagedObjectGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
-							<xsd:group ref="PriceableObjectGroup"/>
-						</xsd:sequence>
-						<xsd:sequence>
-							<xsd:group ref="UsageParameterGroup"/>
-						</xsd:sequence>
-						<xsd:sequence>
-							<xsd:group ref="ChargingPolicyGroup"/>
+							<xsd:group ref="RechargingPlanGroup"/>
 						</xsd:sequence>
 					</xsd:sequence>
-					<xsd:attribute name="id" type="ChargingPolicyIdType"/>
+					<xsd:attribute name="id" type="RechargingPlanIdType"/>
 				</xsd:restriction>
 			</xsd:complexContent>
 		</xsd:complexType>
 	</xsd:element>
-	<xsd:complexType name="ChargingPolicy_VersionStructure">
+	<xsd:complexType name="RechargingPlan_VersionStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for CHARGING POLICY.</xsd:documentation>
+			<xsd:documentation>Type for RECHARGING PLAN.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
-			<xsd:extension base="UsageParameter_VersionStructure">
+			<xsd:extension base="DataManagedObjectStructure">
 				<xsd:sequence>
-					<xsd:group ref="ChargingPolicyGroup"/>
+					<xsd:group ref="RechargingPlanGroup"/>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:group name="ChargingPolicyGroup">
+	<xsd:group name="RechargingPlanGroup">
 		<xsd:annotation>
-			<xsd:documentation>Elements for CHARGING POLICY Group.</xsd:documentation>
+			<xsd:documentation>Elements for RECHARGING PLAN.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="CreditPolicy" type="TravelCreditPolicyEnumeration" minOccurs="0">
+			<xsd:element name="Name" type="MultilingualString" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Policy for traveling on credit.</xsd:documentation>
+					<xsd:documentation>Name of RECHARGING PLAN.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="ExpireAfterPeriod" type="xsd:duration" minOccurs="0">
+			<xsd:element name="Description" type="MultilingualString" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Any expiry period on the right to  collec a rebate or adjustment.</xsd:documentation>
+					<xsd:documentation>Description of RECHARGING PLAN.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="PaymentGracePeriod" type="xsd:duration" minOccurs="0">
+			<xsd:element name="RechargingProcessType" type="RechargingProcessEnumeration" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Period after purchase by which time payment must be settled. +v1.1</xsd:documentation>
+					<xsd:documentation>Type of recharching process</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="BillingPolicy" type="TravelBillingPolicyEnumeration" minOccurs="0">
+			<xsd:element name="TotalChargeEnergy" type="WattHoursType" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Policy for billing frequency.</xsd:documentation>
+					<xsd:documentation>Overall quantity of energy for charging in Watt Hours [Wh].</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="DepositPolicy" type="DepositPolicyEnumeration" default="none" minOccurs="0">
+			<xsd:element name="ChargingDuration" type="xsd:duration" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Policy for deposits. +v1.2.2</xsd:documentation>
+					<xsd:documentation>Overall duration of the charging process in seconds, without preparation time.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-		</xsd:sequence>
-	</xsd:group>
-	<!-- ==== PENALTY POLICY USER PARAMETER ================================================ -->
-	<xsd:element name="PenaltyPolicy" abstract="false" substitutionGroup="UsageParameter_">
-		<xsd:annotation>
-			<xsd:documentation>Policy regarding different aspects of penalty charges, for example  repeated entry at the same station, no ticket etc.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:complexType>
-			<xsd:complexContent>
-				<xsd:restriction base="PenaltyPolicy_VersionStructure">
-					<xsd:sequence>
-						<xsd:sequence>
-							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
-						</xsd:sequence>
-						<xsd:sequence>
-							<xsd:group ref="DataManagedObjectGroup"/>
-						</xsd:sequence>
-						<xsd:sequence>
-							<xsd:group ref="PriceableObjectGroup"/>
-						</xsd:sequence>
-						<xsd:sequence>
-							<xsd:group ref="UsageParameterGroup"/>
-						</xsd:sequence>
-						<xsd:sequence>
-							<xsd:group ref="PenaltyPolicyGroup"/>
-						</xsd:sequence>
-					</xsd:sequence>
-					<xsd:attribute name="id" type="PenaltyPolicyIdType"/>
-				</xsd:restriction>
-			</xsd:complexContent>
-		</xsd:complexType>
-	</xsd:element>
-	<xsd:complexType name="PenaltyPolicy_VersionStructure">
-		<xsd:annotation>
-			<xsd:documentation>Type for PENALTY POLICY.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:complexContent>
-			<xsd:extension base="UsageParameter_VersionStructure">
-				<xsd:sequence>
-					<xsd:group ref="PenaltyPolicyGroup"/>
-				</xsd:sequence>
-			</xsd:extension>
-		</xsd:complexContent>
-	</xsd:complexType>
-	<xsd:group name="PenaltyPolicyGroup">
-		<xsd:annotation>
-			<xsd:documentation>Elements for PENALTY POLICY Group.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:sequence>
-			<xsd:element name="PenaltyPolicyType" type="PenaltyPolicyTypeEnumeration" minOccurs="0">
+			<xsd:element name="rechargingSteps" type="rechargingSteps_RelStructure" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Type of PENALTY POLICY type.</xsd:documentation>
+					<xsd:documentation>Parts of a RECHARGING PLAN.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="SameStationRentryPolicy" type="SameStationReentryPolicyEnumeration" minOccurs="0">
+			<xsd:element name="blockRefs" type="blockRefs_RelStructure" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Policy on rentering at same station within a limited period.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="MinimumTimeBeforeReentry" type="xsd:duration" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Minimum time before reentry at the same station.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="MaximumNumberOfFailToCheckOutEvents" type="xsd:integer" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Lmit on the  number of fail-to-checkout events allowed before suspension. +v1.1</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-		</xsd:sequence>
-	</xsd:group>
-	<!-- ==== SUBSCRIBING USER PARAMETER ================================================ -->
-	<xsd:element name="Subscribing" abstract="false" substitutionGroup="UsageParameter_">
-		<xsd:annotation>
-			<xsd:documentation>Parameters relating to paying by Subscribing for a product. +v1.1</xsd:documentation>
-		</xsd:annotation>
-		<xsd:complexType>
-			<xsd:complexContent>
-				<xsd:restriction base="Subscribing_VersionStructure">
-					<xsd:sequence>
-						<xsd:sequence>
-							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
-						</xsd:sequence>
-						<xsd:sequence>
-							<xsd:group ref="DataManagedObjectGroup"/>
-						</xsd:sequence>
-						<xsd:sequence>
-							<xsd:group ref="PriceableObjectGroup"/>
-						</xsd:sequence>
-						<xsd:sequence>
-							<xsd:group ref="UsageParameterGroup"/>
-						</xsd:sequence>
-						<xsd:sequence>
-							<xsd:group ref="SubscribingGroup"/>
-						</xsd:sequence>
-					</xsd:sequence>
-					<xsd:attribute name="id" type="SubscribingIdType"/>
-				</xsd:restriction>
-			</xsd:complexContent>
-		</xsd:complexType>
-	</xsd:element>
-	<xsd:complexType name="Subscribing_VersionStructure">
-		<xsd:annotation>
-			<xsd:documentation>Type for SUBSCRIBING.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:complexContent>
-			<xsd:extension base="UsageParameter_VersionStructure">
-				<xsd:sequence>
-					<xsd:group ref="SubscribingGroup"/>
-				</xsd:sequence>
-			</xsd:extension>
-		</xsd:complexContent>
-	</xsd:complexType>
-	<xsd:group name="SubscribingGroup">
-		<xsd:annotation>
-			<xsd:documentation>Elements for SUBSCRIBING Group.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:sequence>
-			<xsd:group ref="SubscribingTermGroup"/>
-			<xsd:group ref="SubscribingPaymentGroup"/>
-		</xsd:sequence>
-	</xsd:group>
-	<xsd:group name="SubscribingTermGroup">
-		<xsd:annotation>
-			<xsd:documentation>Elements relating to term of subscription.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:sequence>
-			<xsd:element name="SubscriptionTermType" type="SubscriptionTermTypeEnumeration" default="fixed" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Type of susbcription term, e.g. fixed, variable, etc.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="MinimumSubscriptionPeriod" type="xsd:duration" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Minimum duration allowed for a subscription.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="MaximumSubscriptionPeriod" type="xsd:duration" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Maximum duration allowed for a subscription.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="SubscriptionRenewalPolicy" type="SubscriptionRenewalPolicyEnumeration" default="automatic" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Subscription renewal policy.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-		</xsd:sequence>
-	</xsd:group>
-	<xsd:group name="SubscribingPaymentGroup">
-		<xsd:annotation>
-			<xsd:documentation>Elements relating to payment of subscription.</xsd:documentation>
-		</xsd:annotation>
-		<xsd:sequence>
-			<xsd:element name="possibleInstallmenttIntervals" type="timeIntervalRefs_RelStructure" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Allowed billing Intervals for payment in installment.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="InstallmentPaymentMethods" type="PaymentMethodListOfEnumerations" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Allowed means of payment of installations as standard value.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="installmentTypesOfPaymentMethod" type="TypeOfPaymentMethodRefs_RelStructure" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>Allowed means of payment of installations as TYPE OF PAYMENT METHOD.</xsd:documentation>
+					<xsd:documentation>Blocks using RECHARGING PLAN.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->
+	<xsd:complexType name="rechargingSteps_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of RECHARGING STEPs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="strictContainmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="RechargingStep" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="RechargingStep" abstract="false" substitutionGroup="VersionedChild">
+		<xsd:annotation>
+			<xsd:documentation>The planned charging of a VEHICLE at a PARKING POINT on a specific VEHICLE JOURNEY. +v2.0</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="RechargingStep_VersionStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="VersionedChildGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:element name="Name" type="MultilingualString" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Name of RECHARGING STEP.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="Description" type="MultilingualString" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Description of RECHARGING STEP.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="ChargeEnergy" type="WattHoursType" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Quantity of energy for charging in Watt Hours [Wh].</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="TargetEnergy" type="WattHoursType" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Target energy quantity in the vehicle on departure after charging.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:group ref="RechargingDurationGroup"/>
+							<xsd:element ref="JourneyRef" minOccurs="0"/>
+							<xsd:element ref="PointInJourneyPatternRef" minOccurs="0"/>
+							<xsd:element name="vehicleTypes" type="vehicleTypeRefs_RelStructure" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>TYPES OF VEHICLE possibly compatible with this recharging plan and step.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="vehicles" type="vehicleRefs_RelStructure" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>VEHICLEs possibly compatible with this recharging plan and step.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="RechargingStepIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="RechargingStep_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for RECHARGING STEP.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="VersionedChildStructure">
+				<xsd:group ref="RechargingStepGroup"/>
+				<xsd:attribute name="order" type="xsd:nonNegativeInteger"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="RechargingStepGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for RECHARGING STEP.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Name" type="MultilingualString" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Name of RECHARGING STEP.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Description" type="MultilingualString" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Description of RECHARGING STEP.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ChargeEnergy" type="WattHoursType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Quantity of energy for charging in Watt Hours [Wh].</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TargetEnergy" type="WattHoursType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Target energy quantity in the vehicle on departure after charging.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:group ref="RechargingDurationGroup"/>
+			<xsd:element ref="JourneyRef" minOccurs="0"/>
+			<xsd:element ref="PointInJourneyPatternRef" minOccurs="0"/>
+			<xsd:element name="vehicleTypes" type="vehicleTypeRefs_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>TYPES OF VEHICLE possibly compatible with this recharging plan and step.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="vehicles" type="vehicleRefs_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>VEHICLEs possibly compatible with this recharging plan and step.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="RechargingDurationGroup">
+		<xsd:annotation>
+			<xsd:documentation>Durations of RECHARGING STEP phases.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="PreparationDuration" type="xsd:duration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Duration of the setup process.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ChargingDuration" type="xsd:duration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Duration of the charging process without preparation or finishing time.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="FinalisationDuration" type="xsd:duration" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Duration of the unhooking process.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
 </xsd:schema>
