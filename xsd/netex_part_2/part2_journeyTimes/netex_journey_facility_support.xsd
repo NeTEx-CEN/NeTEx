@@ -13,11 +13,24 @@
 			<xsd:extension base="containmentAggregationStructure">
 				<xsd:choice maxOccurs="unbounded">
 					<xsd:element ref="RestrictedServiceFacilitySetRef"/>
-					<xsd:element ref="RestrictedServiceFacilitySet"/>
+					<!-- <xsd:element ref="RestrictedServiceFacilitySet"/> -->
 				</xsd:choice>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>	
+	
+		<xsd:complexType name="restrictedServiceFacilitySetsInFrame_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for containment in frame of restricted SERVICE FACILITY SETs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:sequence>
+					<xsd:element ref="RestrictedServiceFacilitySet" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 	
 	<xsd:simpleType name="RestrictedServiceFacilitySetIdType">
 		<xsd:annotation>
@@ -25,18 +38,20 @@
 		</xsd:annotation>
 		<xsd:restriction base="ServiceFacilitySetIdType"/>
 	</xsd:simpleType>
+
 	<xsd:element name="RestrictedServiceFacilitySetRef" type="RestrictedServiceFacilitySetRefStructure" substitutionGroup="ServiceFacilitySetRef">
 		<xsd:annotation>
 			<xsd:documentation>Reference to a restricted SERVICE FACILITY SET.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
+
 	<xsd:element name="RestrictedServiceFacilitySet" abstract="false" substitutionGroup="FacilitySet">
 		<xsd:annotation>
 			<xsd:documentation>Restricted Service FACILITY. Set of enumerated FACILITY values (Where available names are based on TPEG classifications, augmented with UIC etc.).</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
-				<xsd:restriction base="ServiceFacilitySet_VersionStructure">
+				<xsd:restriction base="RestrictedServiceFacilitySet_VersionStructure">
 					<xsd:sequence>
 						<xsd:sequence>
 							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
@@ -50,7 +65,10 @@
 						<xsd:sequence>
 							<xsd:group ref="ServiceFacilitySetGroup"/>
 						</xsd:sequence>
-					</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="RestrictedServiceFacilitySetGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>										
 					<xsd:attribute name="id" type="RestrictedServiceFacilitySetIdType"/>
 				</xsd:restriction>
 			</xsd:complexContent>
