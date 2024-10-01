@@ -17,7 +17,7 @@
 				<Contributor>V1.0 Christophe Duquesne</Contributor>
 				<Contributor>Nicholas Knowles</Contributor>
 				<Coverage>Europe</Coverage>
-				<Creator>First drafted for NeTEx version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.  mailto:schemer@netex.org.uk</Creator>
+				<Creator>First drafted for NeTEx version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.</Creator>
 				<Date>
 					<Created>2010-09-04</Created>
 				</Date>
@@ -41,6 +41,10 @@
 				<Date><Modified>2021-07-08</Modified>NewModes: Correction Add missing VehicleEquipmentProfile relationship to VehicleModel
 				</Date>
 				<Date><Modified>2023-01-30</Modified>TM CR: Enhancement Add Accepted Driver Permit
+				</Date>
+				<Date><Modified>2023-11-07</Modified>CR0544 Deprecate PrivateCode.
+				</Date>
+				<Date><Modified>2023-11-21</Modified>CR0545 Add AcceptedDriverPermit.
 				</Date>
 				<Date><Modified>2024-02-07</Modified>Fix - allow default DEck Plan or TRANSPORT TYPE, move VehiclesInFramegroup her
 				</Date>
@@ -318,6 +322,11 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:group ref="VehicleAccessibilityRequirementsGroup"/>
 			<xsd:group ref="VehicleDimensionsGroup"/>
+			<xsd:element name="Monitored" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether real-time data is normally available for the VEHICLE TYPE (this can be the vehicle position, but also the speed, charging level, passenger counting, etc.).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:group name="VehicleDimensionsGroup">
@@ -392,6 +401,11 @@ Rail transport, Roads and Road transport
 			<xsd:element name="HasHoist" type="xsd:boolean" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Whether vehicle has hoist for wheelchair access.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="HoistOperatingRadius" type="LengthType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Distance from VEHICLE needed to operate hoist.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="BoardingHeight" type="LengthType" minOccurs="0">
@@ -477,7 +491,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element name="acceptedDriverPermits" type="acceptedDriverPermits_RelStructure" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Required permit to operate the vehicle.</xsd:documentation>
+					<xsd:documentation>Required permit to operate the vehicle. +v2.0</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -497,7 +511,7 @@ Rail transport, Roads and Road transport
 	</xsd:complexType>
 	<xsd:element name="AcceptedDriverPermit" substitutionGroup="DataManagedObject">
 		<xsd:annotation>
-			<xsd:documentation>Accepted TYPE OF DRIVER PERMIT for a given SIMPLE VEHICLE TYPE. +V2.0</xsd:documentation>
+			<xsd:documentation>Accepted TYPE OF DRIVER PERMIT for a given SIMPLE VEHICLE TYPE. +v2.0</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -513,7 +527,7 @@ Rail transport, Roads and Road transport
 					</xsd:sequence>
 					<xsd:attribute name="id" type="AcceptedDriverPermitIdType">
 						<xsd:annotation>
-							<xsd:documentation>Identifier of VEHICLE EQUIPMENT PROFILE.</xsd:documentation>
+							<xsd:documentation>Identifier of ACCEPTED DRIVER PERMIT.</xsd:documentation>
 						</xsd:annotation>
 					</xsd:attribute>
 				</xsd:restriction>
@@ -755,12 +769,12 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element name="PramPlaceCapacity" type="NumberOfPassengers" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>The number of places on the vehicle that are suitable for prams.</xsd:documentation>
+					<xsd:documentation>The number of places on the vehicle that are suitable for prams. +v2.0</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="BicycleRackCapacity" type="NumberOfPassengers" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>The number of bicycle racks on the vehicle. Also non-rack places should be counted here. The name might change in future to BicycleCapacity.</xsd:documentation>
+					<xsd:documentation>The number of bicycle racks on the vehicle. Also non-rack places should be counted here. The name might change in future to BicycleCapacity. +v2.0</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -1114,14 +1128,34 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Energy required for a full charge. +v2.0</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:sequence>
-				<xsd:element name="equipmentProfiles" type="vehicleEquipmentProfileRefs_RelStructure" minOccurs="0">
-					<xsd:annotation>
-						<xsd:documentation>Equipment profiles assoicated with model +v1.2.2</xsd:documentation>
-					</xsd:annotation>
-				</xsd:element>
-			</xsd:sequence>
+			<xsd:element name="equipmentProfiles" type="vehicleEquipmentProfileRefs_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Equipment profiles assoicated with model. +v1.2.2</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element ref="VehicleModelProfileRef" minOccurs="0"/>
+			<xsd:element name="CustomerServiceContactDetails" type="ContactStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Especially very large vehicles and also some ALTERNATIVE MODE OF OPERATION offers need the possibility to contact the VEHICLE directly.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="VehicleCodeGroup">
+		<xsd:annotation>
+			<xsd:documentation>Alternative code elements for VEHICLE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="OperationalNumber" type="xsd:normalizedString" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Operational number of VEHICLE.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="PrivateCode" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Private code of the vehicle. DEPRECATED - use privateCodes. -v2.0</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- =======VEHICLE EQUIPMENT ================================================== -->
@@ -1172,7 +1206,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element name="Description" type="MultilingualString" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Description of VEHICLE EQUIPMENT PROFILE.</xsd:documentation>
+					<xsd:documentation>Description of VEHICLE EQUIPMENT PROFILE. +v1.2.2</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element ref="EquipmentRef" minOccurs="0"/>
@@ -1186,7 +1220,11 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Manufacturer VEHICLE MODEL.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element ref="TypeOfEquipmentRef" minOccurs="0"/>
+			<xsd:element ref="TypeOfEquipmentRef" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>TYPE of EQUIPMENT. +v2.0</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element ref="PurposeOfEquipmentProfileRef" minOccurs="0"/>
 			<xsd:element name="vehicleEquipmentProfileMembers" type="vehicleEquipmentProfileMembers_RelStructure" minOccurs="0">
 				<xsd:annotation>
