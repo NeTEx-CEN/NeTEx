@@ -74,7 +74,6 @@ The schema is systematically divided into small modular files. Generally, for ea
 | ----------- | ------------------------------------------------------- | ----------------------------------------------- |
 | `master`    | Current head of the project                            | [GitHub](https://github.com/NeTEx-CEN/NeTEx)    |
 | `next`      | Work for the next release                              | [GitHub](https://github.com/NeTEx-CEN/NeTEx/tree/next) |
-| `epiap`     | CEN NeTEx European Passenger Information Accessibility Profile | [GitHub](https://github.com/NeTEx-CEN/NeTEx/tree/EPIAP) |
 
 # Change Log
 ## Releases
@@ -82,7 +81,7 @@ The schema is systematically divided into small modular files. Generally, for ea
 | -------------- | ------------- | ---------------------------------------------- | ------------- | ----------------------------------------------------------------------------------------------- |
 | 1.2            | March 2022    | Latest productive version before new modes merge | [Code](https://github.com/NeTEx-CEN/NeTEx/releases/tag/v1.2) | [Release Notes](https://github.com/NeTEx-CEN/NeTEx/blob/v1.2/README.md) |
 | 1.2.2          | August 2023   | First version of new modes                     | [Code](https://github.com/NeTEx-CEN/NeTEx/releases/tag/v1.2.2)  | [Release Notes](https://github.com/NeTEx-CEN/NeTEx/blob/v1.2.2/README.md)       |
-| 1.3          |   2024  | European Passenger Information Accessibility Profile (EPIAP) - upcoming       | N/A    | N/A     |
+| 1.3.1          | May 2024      | European Passenger Information Accessibility Profile (EPIAP) | [Code](https://github.com/NeTEx-CEN/NeTEx/releases/tag/v1.3.1) | [Release Notes](https://github.com/NeTEx-CEN/NeTEx/blob/v1.3.1/README.md) |
 | 2.0          | 2024     | Upcoming release   ⏳                            | N/A  | N/A                                                                                             |
 ## Full Version History 📚
 The comprehensive versions history is available in [change_log.md](https://github.com/ITxPT/NeTEx/blob/NeTEx/change_log.md)

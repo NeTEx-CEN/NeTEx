@@ -15,7 +15,7 @@
 				<Audience>e-service developers</Audience>
 				<Contributor>CEN TC278 WG3 SG9 Team.</Contributor>
 				<Coverage>Europe</Coverage>
-				<Creator>First Drafted for NeTEx version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles. mailto:schemer@netex.org.uk</Creator>
+				<Creator>First Drafted for NeTEx version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.</Creator>
 				<Date><Modified>2023-01-30</Modified>
           NewModes: Add ACCEPTED DRIVER PERMIT, TYPE OF DRIVER PERMIT, VEHICLE EQUIPMENT PROFILE MEMBER
 
@@ -7017,6 +7017,27 @@
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
+		<!-- =====TypeOfNotice============================== -->
+		<!-- =====TypeOfNotice unique========================== -->
+		<xsd:unique name="TypeOfNotice_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [TypeOfNotice Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:TypeOfNotice"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====TypeOfNotice Key ========================== -->
+		<xsd:keyref name="TypeOfNotice_KeyRef" refer="netex:TypeOfNotice_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:TypeOfNoticeRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="TypeOfNotice_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:TypeOfNotice"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
 		<!-- =====NoticeAssignment============================== -->
 		<!-- =====NoticeAssignment unique========================== -->
 		<xsd:unique name="NoticeAssignment_UniqueBy_Id_Version_Order">
@@ -7040,6 +7061,17 @@
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 			<xsd:field xpath="@order"/>
+		</xsd:key>
+		<!-- =====OccupancyView Key ========================== -->
+		<xsd:keyref name="OccupancyView_KeyRef" refer="netex:OccupancyView_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:OccupancyViewRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="OccupancyView_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:OccupancyView"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
 		</xsd:key>
 		<!-- =====SalesNoticeAssignment============================== -->
 		<!-- =====SalesNoticeAssignment unique========================== -->
@@ -7563,7 +7595,31 @@
 			<xsd:field xpath="@version"/>
 			<xsd:field xpath="@order"/>
 		</xsd:key>
-		<!-- =====TrainStopAssignment============================== -->
+		<!-- =====PassengerBoardingPositionAssignment============================== -->
+		<!-- =====PassengerBoardingPositionAssignment unique========================== -->
+		<xsd:unique name="PassengerBoardingPositionAssignment_UniqueBy_Id_Version_Order">
+			<xsd:annotation>
+				<xsd:documentation>Every [PassengerBoardingPositionAssignment Id + Version + order] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:PassengerBoardingPositionAssignment"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+			<xsd:field xpath="@order"/>
+		</xsd:unique>
+		<!-- =====PassengerBoardingPositionAssignment Key ========================== -->
+		<xsd:keyref name="PassengerBoardingPositionAssignment_KeyRef" refer="netex:PassengerBoardingPositionAssignment_AnyVersionedKey_ordered">
+			<xsd:selector xpath=".//netex:PassengerBoardingPositionAssignmentRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+			<xsd:field xpath="@order"/>
+		</xsd:keyref>
+		<xsd:key name="PassengerBoardingPositionAssignment_AnyVersionedKey_ordered">
+			<xsd:selector xpath=".//netex:PassengerBoardingPositionAssignment"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+			<xsd:field xpath="@order"/>
+		</xsd:key>
+		<!-- =====DEPRECATED TrainStopAssignment============================== -->
 		<!-- =====TrainStopAssignment unique========================== -->
 		<xsd:unique name="TrainStopAssignment_UniqueBy_Id_Version_Order">
 			<xsd:annotation>
@@ -7574,7 +7630,7 @@
 			<xsd:field xpath="@version"/>
 			<xsd:field xpath="@order"/>
 		</xsd:unique>
-		<!-- =====TrainStopAssignment Key ========================== -->
+		<!-- =====DEPRECATED TrainStopAssignment Key ========================== -->
 		<xsd:keyref name="TrainStopAssignment_KeyRef" refer="netex:TrainStopAssignment_AnyVersionedKey_ordered">
 			<xsd:selector xpath=".//netex:TrainStopAssignmentRef"/>
 			<xsd:field xpath="@ref"/>
@@ -12334,6 +12390,27 @@
 		</xsd:keyref>
 		<xsd:key name="ServiceBookingArrangement_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:ServiceBookingArrangement"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====RouteInstruction ============================== -->
+		<!-- =====RouteInstruction Key ========================== -->
+		<xsd:unique name="RouteInstruction_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [RouteInstruction Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:RouteInstruction"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====RouteInstruction Key ========================== -->
+		<xsd:keyref name="RouteInstruction_KeyRef" refer="netex:RouteInstruction_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:RouteInstructionRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="RouteInstruction_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:RouteInstruction"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
