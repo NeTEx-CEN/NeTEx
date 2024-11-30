@@ -198,11 +198,18 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>DATED VEHICLE JOURNEYs for which current VEHICLE JOURNEY is an alteration (i.e. change, replacement, supplement). +v2.0</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element ref="OperatingDayRef" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>EXPECTED TO BE MANDATORY - left with minOccurs="0" only to avoid breaking compatibility with old rail datasets</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
+			<xsd:choice minOccurs="0">
+				<xsd:element ref="OperatorRef">
+					<xsd:annotation>
+						<xsd:documentation>EXPECTED TO BE MANDATORY - left with minOccurs="0" only to avoid breaking compatibility with old rail datasets and also in the case when OperatorView is used. +v2.0</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element ref="OperatorView">
+					<xsd:annotation>
+						<xsd:documentation>Used in some cases, when no OperatorRef is used. At least the OPERATING DAY must be provided as date. +v2.0</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:choice>
 			<xsd:element ref="UicOperatingPeriod" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>** DEPRECATED ** not to be used - left available only to avoid breaking compatibility with old rail datasets -v2.0</xsd:documentation>
