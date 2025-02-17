@@ -167,10 +167,10 @@ Rail transport, Roads and Road transport
 	</xsd:group>
 	<!-- ======================================================================= -->
 	<!-- ======================================================================= -->
-	<!-- ==  FARE TABLE============================= -->
+	<!-- == FARE TABLE============================= -->
 	<xsd:element name="FareTable" substitutionGroup="FareTable_">
 		<xsd:annotation>
-			<xsd:documentation>A grouping of prices that may be associated with a DISTANCE MATRIX ELEMENT, FARE STRUCTURE ELEMENT or  other PRICEABLE OBJECT.</xsd:documentation>
+			<xsd:documentation>A grouping of prices that may be associated with a DISTANCE MATRIX ELEMENT, FARE STRUCTURE ELEMENT or other PRICEABLE OBJECT.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -326,7 +326,7 @@ Rail transport, Roads and Road transport
 	</xsd:group>
 	<xsd:complexType name="usedInRefs_RelStructure">
 		<xsd:annotation>
-			<xsd:documentation>Type for use  of  fare table.</xsd:documentation>
+			<xsd:documentation>Type for use of fare table.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="oneToManyRelationshipStructure">
@@ -340,7 +340,7 @@ Rail transport, Roads and Road transport
 	</xsd:complexType>
 	<xsd:element name="FareTableInContext" type="FareTable_VersionStructure" substitutionGroup="FareTable_">
 		<xsd:annotation>
-			<xsd:documentation>A grouping of prices that may be associated with a DISTANCE MATRIX ELEMENT, FARE STRUCTURE ELEMENT or  other PRICEABLE OBJECT. OPTIMIZATION - Alias for FARE TABLE That does not require an ID to be present.</xsd:documentation>
+			<xsd:documentation>A grouping of prices that may be associated with a DISTANCE MATRIX ELEMENT, FARE STRUCTURE ELEMENT or other PRICEABLE OBJECT. OPTIMIZATION - Alias for FARE TABLE That does not require an ID to be present.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<!-- ===== STANDARD FARE TABLE =================================================== -->
@@ -390,17 +390,17 @@ Rail transport, Roads and Road transport
 	</xsd:group>
 	<xsd:group name="StandardFareTablePricesGroup">
 		<xsd:annotation>
-			<xsd:documentation>PRice  Elements for a STANDARD FARE TABLE PRICE GROUP.Group.</xsd:documentation>
+			<xsd:documentation>Price Elements for a STANDARD FARE TABLE PRICE GROUP.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element name="FirstClassSingle" type="CurrencyAmountType" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Price for a first class single  fare.</xsd:documentation>
+					<xsd:documentation>Price for a first class single fare.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="SecondClassSingle" type="CurrencyAmountType">
 				<xsd:annotation>
-					<xsd:documentation>Price for a second class  single fare.</xsd:documentation>
+					<xsd:documentation>Price for a second class single fare.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="FirstClassReturn" type="CurrencyAmountType" minOccurs="0">
@@ -426,7 +426,7 @@ Rail transport, Roads and Road transport
 					<xsd:element ref="Cell" maxOccurs="unbounded"/>
 					<xsd:element name="CellInContext" maxOccurs="unbounded">
 						<xsd:annotation>
-							<xsd:documentation>An individual combination of  features in a FARE TABLE, used to associate a FARE PRICE. An optimisation of CELL that can be used in a Faretable without a cell id.  SHould have a unique identity through its other attributes.</xsd:documentation>
+							<xsd:documentation>An individual combination of features in a FARE TABLE, used to associate a FARE PRICE. An optimisation of CELL that can be used in a Faretable without a cell id. SHould have a unique identity through its other attributes.</xsd:documentation>
 						</xsd:annotation>
 						<xsd:complexType>
 							<xsd:complexContent>
@@ -459,7 +459,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Type for a CELL.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
-			<xsd:extension base="VersionedChildStructure">
+			<xsd:extension base="OrderedVersionedChildStructure">
 				<xsd:sequence>
 					<xsd:group ref="CommonCellGroup">
 						<xsd:annotation>
@@ -467,11 +467,6 @@ Rail transport, Roads and Road transport
 						</xsd:annotation>
 					</xsd:group>
 				</xsd:sequence>
-				<xsd:attribute name="order" type="xsd:positiveInteger">
-					<xsd:annotation>
-						<xsd:documentation>Order in which cell is to appear.</xsd:documentation>
-					</xsd:annotation>
-				</xsd:attribute>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
@@ -495,7 +490,7 @@ Rail transport, Roads and Road transport
 	</xsd:group>
 	<xsd:element name="Cell" abstract="false" substitutionGroup="Cell_">
 		<xsd:annotation>
-			<xsd:documentation>An individual combination of  features in a FARE TABLE, used to associate a FARE PRICE.</xsd:documentation>
+			<xsd:documentation>An individual combination of features in a FARE TABLE, used to associate a FARE PRICE.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -518,7 +513,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Type for a CELL.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
-			<xsd:extension base="VersionedChildStructure">
+			<xsd:extension base="OrderedVersionedChildStructure">
 				<xsd:sequence>
 					<xsd:group ref="CellGroup">
 						<xsd:annotation>
@@ -526,11 +521,6 @@ Rail transport, Roads and Road transport
 						</xsd:annotation>
 					</xsd:group>
 				</xsd:sequence>
-				<xsd:attribute name="order" type="xsd:positiveInteger">
-					<xsd:annotation>
-						<xsd:documentation>Order in which cell is to appear.</xsd:documentation>
-					</xsd:annotation>
-				</xsd:attribute>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
@@ -658,7 +648,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element name="RoutingType" type="RoutingTypeEnumeration" default="both" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Whether fare is for s a direct i.e. no changes required point to point  fare or indirect routing.</xsd:documentation>
+					<xsd:documentation>Whether fare is for s a direct i.e. no changes required point to point fare or indirect routing.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -735,7 +725,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
-	<!-- === CFARE TABLE COLUMN  HEADING ======================================= -->
+	<!-- === FARE TABLE COLUMN HEADING ======================================= -->
 	<xsd:complexType name="fareTableColumns_RelStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for a list of FARE FARE TABLE COLUMN HEADINGs.</xsd:documentation>
@@ -745,7 +735,7 @@ Rail transport, Roads and Road transport
 				<xsd:sequence>
 					<xsd:element ref="FareTableColumn" maxOccurs="unbounded">
 						<xsd:annotation>
-							<xsd:documentation>A Column heading for a FARE TABLE,  </xsd:documentation>
+							<xsd:documentation>A Column heading for a FARE TABLE.</xsd:documentation>
 						</xsd:annotation>
 					</xsd:element>
 				</xsd:sequence>
@@ -754,7 +744,7 @@ Rail transport, Roads and Road transport
 	</xsd:complexType>
 	<xsd:element name="FareTableColumn">
 		<xsd:annotation>
-			<xsd:documentation>An individual combination of  features in a FARE TABLE, used to associate a FARE PRICE.</xsd:documentation>
+			<xsd:documentation>An individual combination of features in a FARE TABLE, used to associate a FARE PRICE.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -781,7 +771,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Type for a FARE TABLE COLUMN HEADING.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
-			<xsd:extension base="VersionedChildStructure">
+			<xsd:extension base="OrderedVersionedChildStructure">
 				<xsd:sequence>
 					<xsd:group ref="FareTableColumnGroup">
 						<xsd:annotation>
@@ -789,11 +779,6 @@ Rail transport, Roads and Road transport
 						</xsd:annotation>
 					</xsd:group>
 				</xsd:sequence>
-				<xsd:attribute name="order" type="xsd:positiveInteger">
-					<xsd:annotation>
-						<xsd:documentation>Order in which FARE TABLE COLUMN HEADING is to appear.</xsd:documentation>
-					</xsd:annotation>
-				</xsd:attribute>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
@@ -845,7 +830,7 @@ Rail transport, Roads and Road transport
 	</xsd:complexType>
 	<xsd:element name="FareTableRow">
 		<xsd:annotation>
-			<xsd:documentation>An individual combination of  features in a FARE TABLE, used to associate a FARE PRICE.</xsd:documentation>
+			<xsd:documentation>An individual combination of features in a FARE TABLE, used to associate a FARE PRICE.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -861,7 +846,7 @@ Rail transport, Roads and Road transport
 					<xsd:attribute name="id" type="FareTableRowIdType"/>
 					<xsd:attribute name="order" type="xsd:positiveInteger">
 						<xsd:annotation>
-							<xsd:documentation>Order in which FARE TABLE ROW  is to appear.</xsd:documentation>
+							<xsd:documentation>Order in which FARE TABLE ROW is to appear.</xsd:documentation>
 						</xsd:annotation>
 					</xsd:attribute>
 				</xsd:restriction>
@@ -883,7 +868,7 @@ Rail transport, Roads and Road transport
 				</xsd:sequence>
 				<xsd:attribute name="order" type="xsd:positiveInteger">
 					<xsd:annotation>
-						<xsd:documentation>Order in which FARE TABLE ROW  is to appear.</xsd:documentation>
+						<xsd:documentation>Order in which FARE TABLE ROW is to appear.</xsd:documentation>
 					</xsd:annotation>
 				</xsd:attribute>
 			</xsd:extension>
