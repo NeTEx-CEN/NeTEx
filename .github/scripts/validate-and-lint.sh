@@ -13,7 +13,7 @@ PARSING_ERROR=0
 # Iterate all XML and XSD files
 while IFS= read -r -d $'\0' filename; do
   # Prettify the file using xmllint and save the result to ${filename}.pretty
-  if XMLLINT_INDENT=$'\t' xmllint --encode UTF-8 --pretty 1 "${filename}" >"${filename}.pretty"; then
+  if XMLLINT_INDENT=$'\t' xmllint --encode UTF-8 --pretty 1 -format "${filename}" >"${filename}.pretty"; then
     # Remove lines containing the term "xmlspy" to get rid of advertising this and save the result as ${filename}
     grep -i -v "xmlspy" "${filename}.pretty" >"${filename}"
   else
