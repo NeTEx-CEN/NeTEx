@@ -61,10 +61,23 @@ Rail transport, Roads and Road transport
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_facility_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_part_2/part2_journeyTimes/netex_datedVehicleJourney_support.xsd"/>
 	<xsd:include schemaLocation="netex_spotAllocation_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_deckPlan_support.xsd"/>
 	<xsd:include schemaLocation="netex_salesContract_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_part_1/part1_tacticalPlanning/netex_servicePattern_support.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_responsibility/netex_responsibility_version.xsd"/>
 	<!-- ======================================================================= -->
+	<xsd:group name="SpotAllocationsInFrameGroup">
+		<xsd:annotation>
+			<xsd:documentation> SPOT ALLOCATION in a FARE FRAME. +V2.0</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="vehicleJourneySpotAllocations" type="vehicleJourneySpotAllocations_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>VEHICLE JOURNEY SPOT ALLOCATIONs In frame +v2.0</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
 	<!-- ==== VEHICLE JOURNEY SPOT ALLOCATION  ==== -->
 	<xsd:complexType name="vehicleJourneySpotAllocations_RelStructure">
 		<xsd:annotation>
@@ -145,17 +158,12 @@ Rail transport, Roads and Road transport
 		<xsd:complexContent>
 			<xsd:extension base="containmentAggregationStructure">
 				<xsd:sequence>
-					<xsd:element ref="PassengerSpotAllocation_" maxOccurs="unbounded"/>
+					<xsd:element ref="PassengerSpotAllocation" maxOccurs="unbounded"/>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:element name="PassengerSpotAllocation_" type="VersionedChildStructure" abstract="true" substitutionGroup="VersionedChild">
-		<xsd:annotation>
-			<xsd:documentation>Dummy Type for PASSENGER SPOT ALLOCATION.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:element name="PassengerSpotAllocation" abstract="true" substitutionGroup="PassengerSpotAllocation_">
+	<xsd:element name="PassengerSpotAllocation" abstract="false" substitutionGroup="VersionedChild">
 		<xsd:annotation>
 			<xsd:documentation>Whether a specific TRANSPORT CUSTOMER is eligible for a FARE PRODUCT with a specific validity Parameter. This may be subject to a particular VALIDITY CONDITION. +v2.0</xsd:documentation>
 		</xsd:annotation>
@@ -182,7 +190,7 @@ Rail transport, Roads and Road transport
 			</xsd:complexContent>
 		</xsd:complexType>
 	</xsd:element>
-	<xsd:complexType name="PassengerSpotAllocation_VersionedChildStructure" abstract="true">
+	<xsd:complexType name="PassengerSpotAllocation_VersionedChildStructure" abstract="false">
 		<xsd:annotation>
 			<xsd:documentation>Type for PASSENGER SPOT ALLOCATION.</xsd:documentation>
 		</xsd:annotation>
@@ -204,6 +212,8 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Time that llloactions was last updatedN.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element ref="DeckRef" minOccurs="0"/>
+			<xsd:element ref="DeckSpaceRef" minOccurs="0"/>
 			<xsd:element ref="LocatableSpotRef"/>
 			<xsd:element ref="FacilitySetRef" minOccurs="0"/>
 			<xsd:element name="PrimaryOrientation" type="ComponentOrientationEnumeration" minOccurs="0">
