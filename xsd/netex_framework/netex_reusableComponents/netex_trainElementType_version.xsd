@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_trainElement_version">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_trainElementType_version">
 	<xsd:include schemaLocation="netex_trainElementType_support.xsd"/>
 	<xsd:include schemaLocation="netex_trainElement_version.xsd"/>
 	<xsd:annotation>
@@ -11,9 +11,11 @@
 				<Contributor>Nicholas Knowles</Contributor>
 				<Coverage>Europe</Coverage>
 				<Creator>First drafted for NeTEx version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.</Creator>
-				<Date><Created>2024-01-11</Created>Transmodel - exten TRAIN and TRAIN ELEMENT tYPES 
+				<Date>
+					<Created>2024-01-11</Created>Transmodel - exten TRAIN and TRAIN ELEMENT tYPES 
 				</Date>
-				<Date><Modified>2024-01-11</Modified>Name Space changes
+				<Date>
+					<Modified>2024-01-11</Modified>Name Space changes
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -84,7 +86,7 @@ Rail transport, Roads and Road transport
 		</xsd:complexContent>
 	</xsd:complexType>
 	<!-- ====== POWERED TRAIN =================================================== -->
-	<xsd:element name="PoweredTrain" abstract="false" substitutionGroup="TrainType_">
+	<xsd:element name="PoweredTrain" abstract="false" substitutionGroup="Train_DummyType">
 		<xsd:annotation>
 			<xsd:documentation>A TRAIN that is able to move under its own power. +v2.0</xsd:documentation>
 		</xsd:annotation>
@@ -99,7 +101,18 @@ Rail transport, Roads and Road transport
 							<xsd:group ref="DataManagedObjectGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
-							<xsd:group ref="TrainElementTypeGroup"/>
+							<xsd:group ref="TransportTypeGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="VehicleTypeGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:element ref="TrainSize" minOccurs="0"/>
+							<xsd:element name="components" type="trainComponents_RelStructure" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Ordered collection of TRAIN COMPONENTs making up TRAIN.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
 						</xsd:sequence>
 						<xsd:sequence>
 							<xsd:group ref="PoweredTrainGroup"/>
@@ -115,7 +128,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Type for a POWERED TRAIN.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
-			<xsd:extension base="TrainElementType_VersionStructure">
+			<xsd:extension base="Train_VersionStructure">
 				<xsd:sequence>
 					<xsd:group ref="PoweredTrainGroup"/>
 				</xsd:sequence>
@@ -129,7 +142,7 @@ Rail transport, Roads and Road transport
 		<xsd:sequence/>
 	</xsd:group>
 	<!-- ====== UNPOWERED TRAIN =================================================== -->
-	<xsd:element name="UnpoweredTrain" abstract="false" substitutionGroup="TrainType_">
+	<xsd:element name="UnpoweredTrain" abstract="false" substitutionGroup="Train_DummyType">
 		<xsd:annotation>
 			<xsd:documentation>A TRAIN that is able to move under its own power. +v2.0</xsd:documentation>
 		</xsd:annotation>
@@ -144,7 +157,18 @@ Rail transport, Roads and Road transport
 							<xsd:group ref="DataManagedObjectGroup"/>
 						</xsd:sequence>
 						<xsd:sequence>
-							<xsd:group ref="TrainElementTypeGroup"/>
+							<xsd:group ref="TransportTypeGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="VehicleTypeGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:element ref="TrainSize" minOccurs="0"/>
+							<xsd:element name="components" type="trainComponents_RelStructure" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Ordered collection of TRAIN COMPONENTs making up TRAIN.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
 						</xsd:sequence>
 						<xsd:sequence>
 							<xsd:group ref="UnpoweredTrainGroup">
@@ -164,7 +188,7 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Type for a UNPOWERED TRAIN.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
-			<xsd:extension base="TrainElementType_VersionStructure">
+			<xsd:extension base="Train_VersionStructure">
 				<xsd:sequence>
 					<xsd:group ref="UnpoweredTrainGroup"/>
 				</xsd:sequence>
