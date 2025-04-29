@@ -16,11 +16,14 @@
 				<Date>
 					<Modified>2011-12-16</Modified>
 				</Date>
-				<Date><Modified>2021-01-29</Modified>BUG Issue #143: Correct data type on GapToPlatform
+				<Date>
+					<Modified>2021-01-29</Modified>BUG Issue #143: Correct data type on GapToPlatform
 				</Date>
-				<Date><Modified>2023-02-07</Modified>Add actual Vehicle Equipment list. Make Actual
+				<Date>
+					<Modified>2023-02-07</Modified>Add actual Vehicle Equipment list. Make Actual
 				</Date>
-				<Date><Modified>2019-03-25</Modified>Fix #41 by Skinkie from 2019.01.07. Fix typo on MobilityList.
+				<Date>
+					<Modified>2019-03-25</Modified>Fix #41 by Skinkie from 2019.01.07. Fix typo on MobilityList.
 				</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines passenger vehicle EQUIPMENT </p>
@@ -106,7 +109,6 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:complexType name="ActualVehicleEquipment_VersionStructure" abstract="false">
-		<!-- changed -->
 		<xsd:annotation>
 			<xsd:documentation>Abstract Type for an ACTUAL VEHICLE EQUIPMENT.</xsd:documentation>
 		</xsd:annotation>
@@ -117,6 +119,7 @@ Rail transport, Roads and Road transport
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
+		<!-- changed -->
 	</xsd:complexType>
 	<xsd:group name="ActualVehicleEquipmentGroup">
 		<xsd:annotation>
@@ -392,7 +395,48 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Whether there is a companion seat.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="suitableFor" type="typeOfWheelchairRefs_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>WHeelchair tyupes for which EQUIMENT is suitable. v2.0</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
+	<!-- =========TYPE OF DECK ENTRANCE. ============================================ -->
+	<xsd:element name="TypeOfWheelchair" abstract="false" substitutionGroup="TypeOfValue">
+		<xsd:annotation>
+			<xsd:documentation>Classification for TYPE OF WHEELCHAIR. +v2.0</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="TypeOfWheelchair_ValueStructure">
+					<xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="DataManagedObjectGroup"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:group ref="TypeOfValueGroup"/>
+						</xsd:sequence>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="TypeOfWheelchairIdType">
+						<xsd:annotation>
+							<xsd:documentation>Identifier of TYPE OF WHEELCHAIR,</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="TypeOfWheelchair_ValueStructure" abstract="false">
+		<xsd:annotation>
+			<xsd:documentation>Type for a TYPE OF WHEELCHAIR.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="TypeOfValue_VersionStructure"/>
+		</xsd:complexContent>
+	</xsd:complexType>
 	<!-- ======================================================================= -->
 </xsd:schema>
