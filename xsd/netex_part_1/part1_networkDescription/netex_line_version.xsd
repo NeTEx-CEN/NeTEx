@@ -7,6 +7,7 @@
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_mode_version.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_grouping_version.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_accessibility/netex_acsb_accessibility.xsd"/>
+	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_facility_version.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_noticeAssignment_version.xsd"/>
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_serviceRestrictions_version.xsd"/>
 	<xsd:include schemaLocation="netex_line_support.xsd"/>
@@ -245,9 +246,9 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Primary LINE in GROUP OF LINEs, if relevant.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="TransportMode" type="AllVehicleModesOfTransportEnumeration" minOccurs="0">
+			<xsd:element name="TransportMode" type="AllPublicTransportModesEnumeration" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Primary Transport MODE of NETWORK.</xsd:documentation>
+					<xsd:documentation>Primary PUBLIC TRANSPORT MODE of NETWORK.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element ref="TransportSubmode" minOccurs="0"/>
@@ -351,9 +352,9 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Description of LINE.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="TransportMode" type="AllVehicleModesOfTransportEnumeration" minOccurs="0">
+			<xsd:element name="TransportMode" type="AllPublicTransportModesEnumeration" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Transport MODE of LINE.</xsd:documentation>
+					<xsd:documentation>PT MODE of LINE.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element ref="TransportSubmode" minOccurs="0"/>
@@ -449,6 +450,11 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>Allowed directions for routes of LINE.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="facilities" type="serviceFacilitySets_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>FACILITies available associated with LINE. It is always recommended to also model accessibility relevant things as equipment on the VEHICLE and physical elements, if real-time information is needed.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element name="noticeAssignments" type="noticeAssignments_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>NOTICES assigned to LINE.</xsd:documentation>
@@ -473,7 +479,7 @@ Rail transport, Roads and Road transport
 		<xsd:sequence>
 			<xsd:element name="LineType" type="LineTypeEnumeration" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Classification of LINE. +v1.1.</xsd:documentation>
+					<xsd:documentation>Classification of LINE, including flexible options. +v2.0.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element ref="TypeOfLineRef" minOccurs="0"/>
@@ -525,7 +531,7 @@ Rail transport, Roads and Road transport
 	</xsd:group>
 	<xsd:group name="LinePaymentMethodGroup">
 		<xsd:annotation>
-			<xsd:documentation>Defauly Mayment methods supported for l LINE. +v1.1</xsd:documentation>
+			<xsd:documentation>Default Payment methods supported for LINE. +v1.1</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element name="PaymentMethods" type="PaymentMethodListOfEnumerations" minOccurs="0">
@@ -535,7 +541,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element name="typesOfPaymentMethod" type="TypeOfPaymentMethod_ValueStructure" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>TYPES OF PAYMENT yment Methods allowed on LINE. +v1.1</xsd:documentation>
+					<xsd:documentation>TYPES OF PAYMENT METHOD allowed on LINE. +v1.1</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="PurchaseMoment" type="PurchaseMomentListOfEnumerations" minOccurs="0">
@@ -669,7 +675,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element name="variants" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>DEITINATION DISPLAY VARIANT for DESTINATION DISPLAY. Variants may  be for use in a specifc context or on a specifc media, or a combination of both. </xsd:documentation>
+					<xsd:documentation>DESTINATION DISPLAY VARIANT for DESTINATION DISPLAY. Variants may  be for use in a specifc context or on a specifc media, or a combination of both. </xsd:documentation>
 				</xsd:annotation>
 				<xsd:complexType>
 					<xsd:complexContent>
@@ -857,9 +863,9 @@ Rail transport, Roads and Road transport
 		<xsd:complexContent>
 			<xsd:extension base="VersionedChildStructure">
 				<xsd:group ref="ViaGroup"/>
-				<xsd:attribute name="order" type="xsd:integer" use="optional" default="1">
+				<xsd:attribute name="order" type="xsd:integer" use="optional">
 					<xsd:annotation>
-						<xsd:documentation>Relative order of ASSIGNMENT.</xsd:documentation>
+						<xsd:documentation>Relative order of ASSIGNMENT. -v2.0</xsd:documentation>
 					</xsd:annotation>
 				</xsd:attribute>
 			</xsd:extension>
@@ -1016,9 +1022,9 @@ Rail transport, Roads and Road transport
 							<xsd:documentation>Name of NETWORK.</xsd:documentation>
 						</xsd:annotation>
 					</xsd:element>
-					<xsd:element name="TransportMode" type="AllVehicleModesOfTransportEnumeration" minOccurs="0">
+					<xsd:element name="TransportMode" type="AllPublicTransportModesEnumeration" minOccurs="0">
 						<xsd:annotation>
-							<xsd:documentation>TRANSPORT MODE of NETWORK.</xsd:documentation>
+							<xsd:documentation>PUBLIC TRANSPORT MODE of NETWORK.</xsd:documentation>
 						</xsd:annotation>
 					</xsd:element>
 				</xsd:sequence>
@@ -1059,9 +1065,9 @@ Rail transport, Roads and Road transport
 							<xsd:documentation>Short name of LINE.</xsd:documentation>
 						</xsd:annotation>
 					</xsd:element>
-					<xsd:element name="TransportMode" type="AllVehicleModesOfTransportEnumeration" minOccurs="0">
+					<xsd:element name="TransportMode" type="AllPublicTransportModesEnumeration" minOccurs="0">
 						<xsd:annotation>
-							<xsd:documentation>TRANSPORT MODE of LINE.</xsd:documentation>
+							<xsd:documentation>PUBLIC TRANSPORT MODE of LINE.</xsd:documentation>
 						</xsd:annotation>
 					</xsd:element>
 					<xsd:element ref="TransportSubmode" minOccurs="0"/>

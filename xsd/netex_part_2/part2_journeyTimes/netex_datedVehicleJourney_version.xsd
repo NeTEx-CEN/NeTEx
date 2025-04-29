@@ -182,7 +182,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 			<xsd:element name="ServiceAlterationType" type="ServiceAlterationEnumeration" default="planned" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Type of Service alteration. Default is planned.</xsd:documentation>
+					<xsd:documentation>Type of Service alteration. Default is planned. +v2.0</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
@@ -195,14 +195,21 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="JourneyRef" minOccurs="0"/>
 			<xsd:element name="replacedJourneys" type="replacedJourneys_RelStructure" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>DATED VEHICLE JOURNEYs for which current VEHICLE JOURNEY is an alteration (i.e. change, replacement, supplement)</xsd:documentation>
+					<xsd:documentation>DATED VEHICLE JOURNEYs for which current VEHICLE JOURNEY is an alteration (i.e. change, replacement, supplement). +v2.0</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element ref="OperatingDayRef" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>EXPECTED TO BE MANDATORY - left with minOccurs="0" only to avoid breaking compatibility with old rail datasets</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
+			<xsd:choice minOccurs="0">
+				<xsd:element ref="OperatingDayRef">
+					<xsd:annotation>
+						<xsd:documentation>EXPECTED TO BE MANDATORY - left with minOccurs="0" only to avoid breaking compatibility with old rail datasets and also in the case when OperatingDayView is used. +v2.0</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element ref="OperatingDayView">
+					<xsd:annotation>
+						<xsd:documentation>Used in some cases, when no OperatingDayRef is used. At least the OPERATING DAY must be provided as date. +v2.0</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:choice>
 			<xsd:element ref="UicOperatingPeriod" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>** DEPRECATED ** not to be used - left available only to avoid breaking compatibility with old rail datasets -v2.0</xsd:documentation>
