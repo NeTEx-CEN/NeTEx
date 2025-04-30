@@ -93,6 +93,62 @@ Rail transport, Roads and Road transport
 			</xsd:complexContent>
 		</xsd:complexType>
 	</xsd:element>
+	<xsd:simpleType name="NameOfRefClassForPlaceRefStructure">
+		<xsd:restriction base="NameOfRefClassForGroupOfEntitiesRefStructure">
+			<xsd:enumeration value="AccessSpace"/>
+			<xsd:enumeration value="Address"/>
+			<xsd:enumeration value="AddressablePlace"/>
+			<xsd:enumeration value="BoardingPosition"/>
+			<xsd:enumeration value="DeckPathJunction"/>
+			<xsd:enumeration value="Entrance"/>
+			<xsd:enumeration value="EquipmentPlace"/>
+			<xsd:enumeration value="EquipmentPosition"/>
+			<xsd:enumeration value="FlexibleArea"/>
+			<xsd:enumeration value="FlexibleQuay"/>
+			<xsd:enumeration value="FlexibleStopPlace"/>
+			<xsd:enumeration value="Garage"/>
+			<xsd:enumeration value="GenericPathJunction"/>
+			<xsd:enumeration value="GroupOfEntities"/>
+			<xsd:enumeration value="HailAndRideArea"/>
+			<xsd:enumeration value="MonitoredVehicleSharingParkingBay"/>
+			<xsd:enumeration value="Parking"/>
+			<xsd:enumeration value="ParkingArea"/>
+			<xsd:enumeration value="ParkingBay"/>
+			<xsd:enumeration value="ParkingEntranceForVehicles"/>
+			<xsd:enumeration value="ParkingPassengerEntrance"/>
+			<xsd:enumeration value="PathJunction"/>
+			<xsd:enumeration value="Place"/>
+			<xsd:enumeration value="PointOfInterest"/>
+			<xsd:enumeration value="PointOfInterestEntrance"/>
+			<xsd:enumeration value="PointOfInterestSpace"/>
+			<xsd:enumeration value="PointOfInterestVehicleEntrance"/>
+			<xsd:enumeration value="PostalAddress"/>
+			<xsd:enumeration value="Quay"/>
+			<xsd:enumeration value="RoadAddress"/>
+			<xsd:enumeration value="ServiceSite"/>
+			<xsd:enumeration value="Site"/>
+			<xsd:enumeration value="SiteComponent"/>
+			<xsd:enumeration value="SiteElement"/>
+			<xsd:enumeration value="SitePathJunction"/>
+			<xsd:enumeration value="StopPlace"/>
+			<xsd:enumeration value="StopPlaceEntrance"/>
+			<xsd:enumeration value="StopPlaceSpace"/>
+			<xsd:enumeration value="StopPlaceVehicleEntrance"/>
+			<xsd:enumeration value="TaxiParkingArea"/>
+			<xsd:enumeration value="TaxiRank"/>
+			<xsd:enumeration value="TaxiStand"/>
+			<xsd:enumeration value="TopographicPlace"/>
+			<xsd:enumeration value="VehicleEntrance"/>
+			<xsd:enumeration value="VehicleMeetingPlace"/>
+			<xsd:enumeration value="VehiclePoolingMeetingPlace"/>
+			<xsd:enumeration value="VehiclePoolingParkingArea"/>
+			<xsd:enumeration value="VehiclePoolingParkingBay"/>
+			<xsd:enumeration value="VehicleSharingParkingArea"/>
+			<xsd:enumeration value="VehicleSharingParkingBay"/>
+			<xsd:enumeration value="VehicleStoppingPlace"/>
+			<xsd:enumeration value="VehicleStoppingPosition"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<xsd:complexType name="PlaceRefStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for a reference to a PLACE.</xsd:documentation>
@@ -102,6 +158,11 @@ Rail transport, Roads and Road transport
 				<xsd:attribute name="ref" type="PlaceIdType" use="required">
 					<xsd:annotation>
 						<xsd:documentation>Identifier of referenced entity.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="nameOfRefClass" use="optional" type="NameOfRefClassForPlaceRefStructure" default="Place">
+					<xsd:annotation>
+						<xsd:documentation>The natural class for PlaceRefStructure and alternative options, automatically updated. Must be provided when referencing an other class.</xsd:documentation>
 					</xsd:annotation>
 				</xsd:attribute>
 			</xsd:restriction>
@@ -143,6 +204,15 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Reference to a TRANSFER.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
+	<xsd:simpleType name="NameOfRefClassForTransferRefStructure">
+		<xsd:restriction base="NameOfClass">
+			<xsd:enumeration value="Access"/>
+			<xsd:enumeration value="Connection"/>
+			<xsd:enumeration value="DefaultConnection"/>
+			<xsd:enumeration value="SiteConnection"/>
+			<xsd:enumeration value="Transfer"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<xsd:complexType name="TransferRefStructure" abstract="true">
 		<xsd:annotation>
 			<xsd:documentation>Type for a reference to a TRANSFER.</xsd:documentation>
@@ -152,6 +222,11 @@ Rail transport, Roads and Road transport
 				<xsd:attribute name="ref" type="TransferIdType" use="required">
 					<xsd:annotation>
 						<xsd:documentation>Identifier of a TRANSFER.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="nameOfRefClass" use="optional" type="NameOfRefClassForTransferRefStructure">
+					<xsd:annotation>
+						<xsd:documentation>The natural class for TransferRefStructure and alternative options, automatically updated. Must be provided when referencing an other class.</xsd:documentation>
 					</xsd:annotation>
 				</xsd:attribute>
 			</xsd:restriction>
@@ -181,6 +256,11 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Reference to an ACCESS link.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
+	<xsd:simpleType name="NameOfRefClassForAccessRefStructure">
+		<xsd:restriction base="NameOfRefClassForTransferRefStructure">
+			<xsd:enumeration value="Access"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<xsd:complexType name="AccessRefStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for a reference to an ACCESS link.</xsd:documentation>
@@ -190,6 +270,11 @@ Rail transport, Roads and Road transport
 				<xsd:attribute name="ref" type="AccessIdType" use="required">
 					<xsd:annotation>
 						<xsd:documentation>Identifier of an ACCESS link.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="nameOfRefClass" use="optional" type="NameOfRefClassForAccessRefStructure" fixed="Access">
+					<xsd:annotation>
+						<xsd:documentation>The natural class for AccessRefStructure, automatically updated.</xsd:documentation>
 					</xsd:annotation>
 				</xsd:attribute>
 			</xsd:restriction>
@@ -207,6 +292,11 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Reference to a TYPE OF TRANSFER.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
+	<xsd:simpleType name="NameOfRefClassForTypeOfTransferRefStructure">
+		<xsd:restriction base="NameOfRefClassForTypeOfValueRefStructure">
+			<xsd:enumeration value="TypeOfTransfer"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<xsd:complexType name="TypeOfTransferRefStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for a reference to a TYPE OF TRANSFER.</xsd:documentation>
@@ -216,6 +306,11 @@ Rail transport, Roads and Road transport
 				<xsd:attribute name="ref" type="TypeOfTransferIdType" use="required">
 					<xsd:annotation>
 						<xsd:documentation>Reference to a TYPE OF TRANSFER identifier.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="nameOfRefClass" use="optional" type="NameOfRefClassForTypeOfTransferRefStructure" fixed="TypeOfTransfer">
+					<xsd:annotation>
+						<xsd:documentation>The natural class for TypeOfTransferRefStructure, automatically updated.</xsd:documentation>
 					</xsd:annotation>
 				</xsd:attribute>
 			</xsd:restriction>
@@ -233,6 +328,11 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Reference to a TYPE OF PLACE.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
+	<xsd:simpleType name="NameOfRefClassForTypeOfPlaceRefStructure">
+		<xsd:restriction base="NameOfRefClassForTypeOfValueRefStructure">
+			<xsd:enumeration value="TypeOfPlace"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<xsd:complexType name="TypeOfPlaceRefStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for a reference to a TYPE OF PLACE.</xsd:documentation>
@@ -242,6 +342,11 @@ Rail transport, Roads and Road transport
 				<xsd:attribute name="ref" type="TypeOfPlaceIdType" use="required">
 					<xsd:annotation>
 						<xsd:documentation>Reference to a TYPE OF PLACE.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="nameOfRefClass" use="optional" type="NameOfRefClassForTypeOfPlaceRefStructure" fixed="TypeOfPlace">
+					<xsd:annotation>
+						<xsd:documentation>The natural class for TypeOfPlaceRefStructure, automatically updated.</xsd:documentation>
 					</xsd:annotation>
 				</xsd:attribute>
 			</xsd:restriction>
