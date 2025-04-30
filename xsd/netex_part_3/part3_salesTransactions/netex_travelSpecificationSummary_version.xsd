@@ -87,6 +87,7 @@ Rail transport, Roads and Road transport
 	<xsd:include schemaLocation="../part3_fares/netex_fareConditionSummary_version.xsd"/>
 	<xsd:include schemaLocation="netex_spotAllocation_version.xsd"/>
 	<!-- ======================================================================= -->
+	<xsd:include schemaLocation="../../netex_part_5/part5_rc/netex_nm_mobilityService_support.xsd"/>
 	<xsd:element name="TravelSpecificationSummaryView" type="TravelSpecificationSummaryViewStructure">
 		<xsd:annotation>
 			<xsd:documentation>Summary of key aspects of TRAVEL SPECIFICATION. +V1.1. This data should all be derivable from the PARAMATER ASSIGNMENTs.  v+1.1</xsd:documentation>
@@ -114,6 +115,7 @@ Rail transport, Roads and Road transport
 			</xsd:group>
 			<xsd:group ref="TravelSpecificationSummaryFareGroup"/>
 			<xsd:group ref="TravelSpecificationSummarySeatingGroup"/>
+			<xsd:group ref="TravelSpecificationSummaryAlternateModesGroup"/>
 			<xsd:element ref="ConditionSummary" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:complexType>
@@ -188,22 +190,14 @@ Rail transport, Roads and Road transport
 			</xsd:choice>
 		</xsd:sequence>
 	</xsd:group>
-	<xsd:complexType name="travelSpecificationJourneyRefs_RelStructure">
+	<xsd:group name="TravelSpecificationSummaryAlternateModesGroup">
 		<xsd:annotation>
-			<xsd:documentation>Type for a list of JOURNEYs.</xsd:documentation>
+			<xsd:documentation>Fare elements for TRAVEL SPECIFICATION.  Summary View.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:complexContent>
-			<xsd:extension base="oneToManyRelationshipStructure">
-				<xsd:choice minOccurs="0" maxOccurs="unbounded">
-					<xsd:sequence>
-						<xsd:element ref="ServiceJourneyRef" minOccurs="0"/>
-						<xsd:element ref="SingleJourneyRef" minOccurs="0"/>
-						<xsd:element ref="TrainNumberRef" minOccurs="0"/>
-					</xsd:sequence>
-				</xsd:choice>
-			</xsd:extension>
-		</xsd:complexContent>
-	</xsd:complexType>
+		<xsd:sequence>
+			<xsd:element ref="MobilityServiceRef" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
 	<xsd:group name="TravelSpecificationSummaryFareGroup">
 		<xsd:annotation>
 			<xsd:documentation>Fare elements for TRAVEL SPECIFICATION.  Summary View.</xsd:documentation>
@@ -222,6 +216,22 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
+	<xsd:complexType name="travelSpecificationJourneyRefs_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of JOURNEYs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="oneToManyRelationshipStructure">
+				<xsd:choice minOccurs="0" maxOccurs="unbounded">
+					<xsd:sequence>
+						<xsd:element ref="ServiceJourneyRef" minOccurs="0"/>
+						<xsd:element ref="SingleJourneyRef" minOccurs="0"/>
+						<xsd:element ref="TrainNumberRef" minOccurs="0"/>
+					</xsd:sequence>
+				</xsd:choice>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 	<xsd:group name="TravelSpecificationSummarySeatingGroup">
 		<xsd:annotation>
 			<xsd:documentation>Seating elements for TRAVEL SPECIFICATION.  Summary View.</xsd:documentation>
