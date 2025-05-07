@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_equipmentVehiclePassenger_support">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_equipmentVehiclePassenger_support">
 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_equipment_support.xsd"/>
 	<xsd:annotation>
 		<xsd:appinfo>
@@ -16,6 +16,8 @@
 				</Date>
 				<Date><Modified>2023-02-12</Modified> Correct reference to WheelchairEquipmenRef to WheelchairVehicleEquipmentRef. Deprecate WheelchairEquipmenRef
 				</Date>
+				<Date><Modified>2025-04-27</Modified>Add Type of Wheelchair
+				</Date>
 				<Description>
 					<p>NeTEx - Network Exchange. This subschema defines VEHICLE EQUIPMENT types for Place access.</p>
 				</Description>
@@ -28,7 +30,7 @@
 				<Language>[ISO 639-2/B] ENG</Language>
 				<Publisher>Kizoom Software Ltd, 16 High Holborn, London WC1V 6BX</Publisher>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2014</Copyright>
+ <Copyright>CEN, Crown Copyright 2009-2025</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -80,7 +82,7 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
-	<!-- ======================================================================= -->
+	<!-- ====== ACCESS VEHICLE EQUIPMENT ================================================= -->
 	<xsd:simpleType name="AccessVehicleEquipmentIdType">
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of an ACCESS VEHICLE EQUIPMENT.</xsd:documentation>
@@ -106,7 +108,7 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
-	<!-- ======================================================================= -->
+	<!-- ====== WHEELCHAIR VEHICLE EQUIPMEN ================================================ -->
 	<xsd:simpleType name="WheelchairVehicleEquipmentIdType">
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of a WHEELCHAIR VEHICLE EQUIPMENT.</xsd:documentation>
@@ -146,6 +148,44 @@ Rail transport, Roads and Road transport
 				<xsd:attribute name="ref" type="WheelchairVehicleEquipmentIdType" use="required">
 					<xsd:annotation>
 						<xsd:documentation>Identifier of a POINT.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!-- =====TYPE OF  WHEELCHAIR =================================================== -->
+	<xsd:complexType name="typeOfWheelchairRefs_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a list of  TYPEs OF WHEELCHAIR.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="oneToManyRelationshipStructure">
+				<xsd:sequence>
+					<xsd:element ref="TypeOfWheelchairRef" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:simpleType name="TypeOfWheelchairIdType">
+		<xsd:annotation>
+			<xsd:documentation>Type for identifier of a TYPE OF WHEELCHAIR.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="TypeOfValueIdType"/>
+	</xsd:simpleType>
+	<xsd:element name="TypeOfWheelchairRef" type="TypeOfWheelchairRefStructure" abstract="false" substitutionGroup="TypeOfEntityRef">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a TYPE OF WHEELCHAIR. +v1.2.2</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="TypeOfWheelchairRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a reference to a TYPE OF WHEELCHAIR.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="TypeOfValueRefStructure">
+				<xsd:attribute name="ref" type="TypeOfWheelchairIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Reference to a TYPE OF WHEELCHAIR.</xsd:documentation>
 					</xsd:annotation>
 				</xsd:attribute>
 			</xsd:restriction>

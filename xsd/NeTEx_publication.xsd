@@ -16,13 +16,12 @@
 				<Contributor>CEN TC278 WG3 SG9 Team.</Contributor>
 				<Coverage>Europe</Coverage>
 				<Creator>First Drafted for NeTEx version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.</Creator>
-				<Date><Modified>2023-01-30</Modified>
-          NewModes: Add ACCEPTED DRIVER PERMIT, TYPE OF DRIVER PERMIT, VEHICLE EQUIPMENT PROFILE MEMBER
-
-        </Date>
-				<Date><Modified>2021-09-02</Modified>
-          NewModes: Add BatteryEquipment and TypeOfBatteryCHemistry. Add ChargingEquipmentProfile, TypeOfPlug
-        </Date>
+				<Date><Modified>2025-04-27</Modified>NewModes: Add VEHICLE JOURNEY SPOT ALLOCATION,, PASSENGER SPOT ALLOCATION, FARE PRICE FRAME
+				</Date>
+				<Date><Modified>2023-01-30</Modified>NewModes: Add ACCEPTED DRIVER PERMIT, TYPE OF DRIVER PERMIT, VEHICLE EQUIPMENT PROFILE MEMBER
+				</Date>
+				<Date><Modified>2021-09-02</Modified>NewModes: Add BatteryEquipment and TypeOfBatteryCHemistry. Add ChargingEquipmentProfile, TypeOfPlug
+				</Date>
 				<Date><Modified>2021-09-01</Modified>
           NewModes: AddPOOL OF VEHICLEs
         </Date>
@@ -74,7 +73,7 @@
           IndividualTraveller, VehiclePoolingDriverInfo, IndividualPassengetrInfo
           MobilityServiceConstraint, VehicleTypeZoneConstraint
           TM: CustomerMaymentMeans, MediumAccessDevice,
-          NediunACcessDeviceSecurityListing, MediumAPplicationInstance.
+         MediunACcessDeviceSecurityListing, MediumAPplicationInstance.
           FIX: Add OpenTransportMode, Submode, VehicleChargingEquipment, CycleStorageEquipment, HailAndRideArea
           FIX: Remove PlaceRef and
           EquipmentRef and bogus restrictions on uniqueness across places and equipment.
@@ -913,6 +912,26 @@
 		</xsd:keyref>
 		<xsd:key name="FareFrame_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:FareFrame"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====FarePriceFrame unique========================== -->
+		<xsd:unique name="FarePriceFrame_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [FarePriceFrame Id + FarePriceFrame] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:FarePriceFrame"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====FarePriceFrame Key ========================== -->
+		<xsd:keyref name="FarePriceFrame_AnyKeyRef" refer="netex:FarePriceFrame_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:FarePriceFrameRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="FarePriceFrame_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:FarePriceFrame"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
@@ -2719,6 +2738,27 @@
 		</xsd:keyref>
 		<xsd:key name="WheelchairVehicleEquipment_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:WheelchairVehicleEquipment"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====TypeOfWheelchair============================== -->
+		<!-- =====TypeOfWheelchair unique========================== -->
+		<xsd:unique name="TypeOfWheelchair_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [TypeOfWheelchair Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:TypeOfWheelchair"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====TypeOfWheelchair Key ========================== -->
+		<xsd:keyref name="TypeOfWheelchair_AnyKeyRef" refer="netex:TypeOfWheelchair_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:TypeOfWheelchairRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="TypeOfWheelchair_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:TypeOfWheelchair"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
@@ -8177,12 +8217,12 @@
 		</xsd:unique>
 		<!-- =====Journey Key ========================== -->
 		<xsd:keyref name="Journey_KeyRef" refer="netex:Journey_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:ServiceJourneyRef | .//netex:VehicleJourneyRef | .//netex:TemplateServiceJourneyRef | .//netex:DeadRunRef | .//netex:FromJourneyRef | .//netex:ToJourneyRef"/>
+			<xsd:selector xpath=".//netex:ServiceJourneyRef | .//netex:VehicleJourneyRef |  .//netex:DatedVehicleJourneyRef |  .//netex:NormalDatedVehicleJourneyRef  |.//netex:TemplateServiceJourneyRef | .//netex:DeadRunRef | .//netex:FromJourneyRef | .//netex:ToJourneyRef"/>
 			<xsd:field xpath="@ref"/>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
 		<xsd:key name="Journey_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:ServiceJourney | .//netex:VehicleJourney | .//netex:DeadRun | .//netex:SpecialService | .//netex:TemplateServiceJourney | .//netex:DatedServiceJourney | .//netex:DatedVehicleJourney | .//netex:NormalDatedVehicleJourney"/>
+			<xsd:selector xpath=".//netex:ServiceJourney | .//netex:VehicleJourney | .//netex:DeadRun | .//netex:SpecialService | .//netex:TemplateServiceJourney |   .//netex:DatedServiceJourney |   .//netex:DatedVehicleJourney | .//netex:NormalDatedVehicleJourney"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
@@ -11575,6 +11615,48 @@
 		</xsd:keyref>
 		<xsd:key name="CustomerPurchasePackageElement_AnyVersionedKey_ordered">
 			<xsd:selector xpath=".//netex:CustomerPurchasePackageElement"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====PassengerSpotAllocation============================== -->
+		<!-- =====PassengerSpotAllocation unique========================== -->
+		<xsd:unique name="PassengerSpotAllocation_UniqueBy_Id_Version_Order">
+			<xsd:annotation>
+				<xsd:documentation>Every [PassengerSpotAllocation Id + Version + order] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:PassengerSpotAllocation"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====PassengerSpotAllocation Key ========================== -->
+		<xsd:keyref name="PassengerSpotAllocation_KeyRef" refer="netex:PassengerSpotAllocation_AnyVersionedKey_ordered">
+			<xsd:selector xpath=".//netex:PassengerSpotAllocationRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="PassengerSpotAllocation_AnyVersionedKey_ordered">
+			<xsd:selector xpath=".//netex:PassengerSpotAllocation"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:key>
+		<!-- =====VehicleJourneySpotAllocation============================== -->
+		<!-- =====VehicleJourneySpotAllocation unique========================== -->
+		<xsd:unique name="VehicleJourneySpotAllocation_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [VehicleJourneySpotAllocation Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:VehicleJourneySpotAllocation"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====VehicleJourneySpotAllocation Key ========================== -->
+		<xsd:keyref name="VehicleJourneySpotAllocation_KeyRef" refer="netex:VehicleJourneySpotAllocation_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:VehicleJourneySpotAllocationRef"/>
+			<xsd:field xpath="@ref"/>
+			<xsd:field xpath="@version"/>
+		</xsd:keyref>
+		<xsd:key name="VehicleJourneySpotAllocation_AnyVersionedKey">
+			<xsd:selector xpath=".//netex:VehicleJourneySpotAllocation"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
