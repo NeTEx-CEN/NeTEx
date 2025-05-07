@@ -5,6 +5,7 @@
 	<xsd:include schemaLocation="netex_deckPlan_support.xsd"/>
 	<xsd:include schemaLocation="netex_nm_chargingEquipmentProfile_version.xsd"/>
 	<xsd:include schemaLocation="netex_nm_fleetEquipment_version.xsd"/>
+	<!-- ======================================================================= -->
 	<xsd:annotation>
 		<xsd:appinfo>
 			<Metadata xmlns="http://www.govtalk.gov.uk/CM/gms-xs">
@@ -74,8 +75,9 @@ Rail transport, Roads and Road transport
 				<Type>Standard</Type>
 			</Metadata>
 		</xsd:appinfo>
-		<xsd:documentation>NeTEx Train specification</xsd:documentation>
+		<xsd:documentation>NeTEx TRAIN ELEMENT specification</xsd:documentation>
 	</xsd:annotation>
+	<!-- ======================================================================= -->
 	<xsd:group name="ServiceRequirementTypeGroup">
 		<xsd:annotation>
 			<xsd:documentation>SERVICE REQUIREMENTS for  SERVICE JOURNEY. These are the normal planned values, not necessarily the ACTUAL VEHICLE EQUIPMENT.</xsd:documentation>
@@ -96,7 +98,6 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
-	<!-- ======================================================================= -->
 	<!-- ===ENTIITY IN VERSION IN FRAME====(Used in SERVICE FRAME)======================= -->
 	<xsd:group name="VehicleTypeInFrameGroup">
 		<xsd:annotation>
@@ -167,12 +168,12 @@ Rail transport, Roads and Road transport
 		</xsd:complexContent>
 	</xsd:complexType>
 	<!-- =======TRAIN ======================================================= -->
-	<xsd:element name="TrainType_" type="DataManagedObjectStructure" abstract="true" substitutionGroup="TransportType_DummyType">
+	<xsd:element name="Train_DummyType" type="DataManagedObjectStructure" abstract="true" substitutionGroup="TransportType_DummyType">
 		<xsd:annotation>
 			<xsd:documentation>Dummy type to work around SG limitations</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:element name="Train" substitutionGroup="TrainType_">
+	<xsd:element name="Train" substitutionGroup="Train_DummyType">
 		<xsd:annotation>
 			<xsd:documentation>A vehicle composed of TRAIN ELEMENTs in a certain order, i.e. of wagons assembled together and propelled by a locomotive or one of the wagons.</xsd:documentation>
 		</xsd:annotation>
@@ -424,6 +425,9 @@ Rail transport, Roads and Road transport
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:choice>
+				<xsd:annotation>
+					<xsd:documentation>Open values to classify TRAIN ELEMENT TYPE</xsd:documentation>
+				</xsd:annotation>
 				<xsd:element ref="TrainElementTypeRef"/>
 				<xsd:element ref="TrainElementRef" minOccurs="0">
 					<xsd:annotation>
@@ -433,6 +437,9 @@ Rail transport, Roads and Road transport
 			</xsd:choice>
 			<xsd:element ref="FareClasses" minOccurs="0"/>
 			<xsd:choice>
+				<xsd:annotation>
+					<xsd:documentation>Enumerated values to classify TRAIN ELEMENT TYPE</xsd:documentation>
+				</xsd:annotation>
 				<xsd:element name="TrainElementTypeType" type="TrainElementTypeTypeEnumeration" minOccurs="0">
 					<xsd:annotation>
 						<xsd:documentation>Type of TRAIN ELEMENT TYPE. V2.0.</xsd:documentation>
@@ -611,7 +618,8 @@ Rail transport, Roads and Road transport
 						<xsd:documentation>Reference to a TRAIN.</xsd:documentation>
 					</xsd:annotation>
 				</xsd:element>
-				<xsd:element ref="Train"/>
+				<xsd:element ref="Train_DummyType"/>
+				<xsd:element ref="TrainElementType_DummyType"/>
 			</xsd:choice>
 			<xsd:element name="Label" type="MultilingualString" minOccurs="0">
 				<xsd:annotation>
@@ -633,7 +641,7 @@ Rail transport, Roads and Road transport
 	<!-- ======================================================================= -->
 	<xsd:element name="TrainComponentView" abstract="false" substitutionGroup="DerivedView">
 		<xsd:annotation>
-			<xsd:documentation>Simplified view of TRAIN COMPONENT.</xsd:documentation>
+			<xsd:documentation>Simplified view of TRAIN COMPONENT +2.0.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>

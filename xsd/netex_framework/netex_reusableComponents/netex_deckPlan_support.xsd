@@ -16,8 +16,10 @@
 				<Date><Modified>2023-12-08</Modified>Move SENSOR IN ENTRANCE to here
 				</Date>
 				<Date><Modified>2024-01-11</Modified>Revise enum values
-        </Date>
+				</Date>
 				<Date><Modified>2024-02-18</Modified>Norway review comment - Add Window types.
+				</Date>
+				<Date><Modified>2025-04-26</Modified>Rename EquipableSpace to  OnboardSpace.
 				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
@@ -111,6 +113,16 @@
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
+	<xsd:group name="DeckSpaceReferenceGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements to reference a Dec SPACE</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="DeckPlanRef" minOccurs="0"/>
+			<xsd:element ref="DeckRef" minOccurs="0"/>
+			<xsd:element ref="DeckSpaceRef" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
 	<!-- ==== DECK  ==================================================== -->
 	<xsd:complexType name="deckRefs_RelStructure">
 		<xsd:annotation>
@@ -164,9 +176,9 @@
 		<xsd:annotation>
 			<xsd:documentation>Type for identifier of a DECK COMPONENT.</xsd:documentation>
 		</xsd:annotation>
-		<xsd:restriction base="EquipableSpaceIdType"/>
+		<xsd:restriction base="OnboardSpaceIdType"/>
 	</xsd:simpleType>
-	<xsd:element name="DeckComponentRef" type="DeckComponentRefStructure" abstract="true" substitutionGroup="EquipableSpaceRef">
+	<xsd:element name="DeckComponentRef" type="DeckComponentRefStructure" abstract="true" substitutionGroup="OnboardSpaceRef">
 		<xsd:annotation>
 			<xsd:documentation>Reference to a DECK COMPONENT. +v2.0</xsd:documentation>
 		</xsd:annotation>
@@ -189,7 +201,7 @@
 			<xsd:documentation>Type for a reference to a DECK COMPONENT.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:simpleContent>
-			<xsd:restriction base="EquipableSpaceRefStructure">
+			<xsd:restriction base="OnboardSpaceRefStructure">
 				<xsd:attribute name="ref" type="DeckComponentIdType" use="required">
 					<xsd:annotation>
 						<xsd:documentation>Identifier of referenced entity.</xsd:documentation>
@@ -835,6 +847,32 @@
 				<xsd:attribute name="nameOfRefClass" use="optional" type="NameOfRefClassForTypeOfDeckEntranceRefStructure" fixed="TypeOfDeckEntrance">
 					<xsd:annotation>
 						<xsd:documentation>The natural class for TypeOfDeckEntranceRefStructure, automatically updated.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!--==== TYPE OF DECK ENTRANCE  USAGE ===============================================-->
+	<xsd:simpleType name="TypeOfDeckEntranceUsageIdType">
+		<xsd:annotation>
+			<xsd:documentation>Type for identifier of a TYPE OF DECK VEHICLE ENTRANCE USAGE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="TypeOfValueIdType"/>
+	</xsd:simpleType>
+	<xsd:element name="TypeOfDeckEntranceUsageRef" type="TypeOfDeckEntranceUsageRefStructure" abstract="false" substitutionGroup="TypeOfValueRef">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a TYPE OF DECK VEHICLE ENTRANCE USAGE. +v2.0</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="TypeOfDeckEntranceUsageRefStructure" abstract="false">
+		<xsd:annotation>
+			<xsd:documentation>Type for a reference to a TYPE OF DECK VEHICLE ENTRANCE USAGE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="TypeOfValueRefStructure">
+				<xsd:attribute name="ref" type="TypeOfDeckEntranceUsageIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Reference to a TYPE OF DECK VEHICLE ENTRANCE USAGE.</xsd:documentation>
 					</xsd:annotation>
 				</xsd:attribute>
 			</xsd:restriction>
