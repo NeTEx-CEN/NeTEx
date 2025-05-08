@@ -1,10 +1,10 @@
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:siri="http://www.siri.org.uk/siri" xmlns:netex="http://www.netex.org.uk/netex" xmlns="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_publication">
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:siri="http://www.siri.org.uk/siri" xmlns:netex="http://www.netex.org.uk/netex" xmlns="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_publication">
   <xsd:import namespace="http://www.siri.org.uk/siri" schemaLocation="./siri/siri_base-v2.0.xsd"/>
   <xsd:import namespace="http://www.siri.org.uk/siri" schemaLocation=".//siri_utility/siri_participant-v2.0.xsd"/>
   <xsd:import namespace="http://www.siri.org.uk/siri" schemaLocation=".//siri/siri_requests-v2.0.xsd"/>
-  <xsd:include schemaLocation="NeTEx_publication.xsd"/>
   <xsd:include schemaLocation="netex_service/netex_dataObjectRequest_service.xsd"/>
 	<xsd:include schemaLocation="netex_service/netex_all.xsd"/>
+  <xsd:include schemaLocation="./NeTEx_publication.xsd"/>
   <xsd:element name="PublicationDelivery" type="PublicationDeliveryStructure">
     <!--=== Entity "AbstractGroupMember" ===-->
     <xsd:key name="AbstractGroupMember_VcsKey">
@@ -12,7 +12,11 @@
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
-    <!-- Generation of deep key suppressed, key: AbstractGroupMember_VcsKey -->
+    <xsd:key name="AbstractGroupMember_VcsKey_Deep">
+      <xsd:selector xpath=".//netex:AbstractGroupMember | .//netex:ComplexFeatureMember | .//netex:GroupMember | .//netex:GroupOfServicesMember | .//netex:TimeDemandProfileMember"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
     <!--=== Entity "AcceptedDriverPermit" ===-->
     <xsd:keyref name="AcceptedDriverPermit_Ref" refer="AcceptedDriverPermit_Key">
       <xsd:selector xpath=".//netex:AcceptedDriverPermitRef"/>
@@ -57,7 +61,7 @@
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
-    <!-- Generation of deep key suppressed, key: AccessRightParameterAssignment_Key -->
+    <!-- Generation of deep key suppressed as it contains skipped keys (GenericParameterAssignment_VersionStructure), key: AccessRightParameterAssignment_Key -->
     <!--=== Entity "AccessSpace" ===-->
     <xsd:keyref name="AccessSpace_Ref" refer="AccessSpace_Key">
       <xsd:selector xpath=".//netex:AccessSpaceRef | .//netex:ParentAccessSpaceRef"/>
@@ -242,7 +246,7 @@
     </xsd:key>
     <!--=== Entity "AdministrativeZone" ===-->
     <xsd:keyref name="AdministrativeZone_Ref" refer="AdministrativeZone_Key_Deep">
-      <xsd:selector xpath=".//netex:AdministrativeZoneRef"/>
+      <xsd:selector xpath=".//netex:AdministrativeZoneRef | .//netex:ResponsibleAreaRef"/>
       <xsd:field xpath="@ref"/>
       <xsd:field xpath="@version"/>
     </xsd:keyref>
@@ -410,6 +414,17 @@
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
+    <!--=== Entity "BedEquipment" ===-->
+    <xsd:keyref name="BedEquipment_Ref" refer="BedEquipment_Key">
+      <xsd:selector xpath=".//netex:BedEquipmentRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="BedEquipment_Key">
+      <xsd:selector xpath=".//netex:BedEquipment"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
     <!--=== Entity "Blacklist" ===-->
     <xsd:keyref name="Blacklist_Ref" refer="Blacklist_Key">
       <xsd:selector xpath=".//netex:BlacklistRef"/>
@@ -464,6 +479,29 @@
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
+    <!--=== Entity "BookingArrangement" ===-->
+    <xsd:keyref name="BookingArrangement_Ref" refer="BookingArrangement_Key">
+      <xsd:selector xpath=".//netex:BookingArrangementRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="BookingArrangement_Key">
+      <xsd:selector xpath=".//netex:BookingArrangement"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!-- Generation of deep key suppressed as it contains skipped keys (ServiceBookingArrangement_VersionStructure), key: BookingArrangement_Key -->
+    <!--=== Entity "BookingDebit" ===-->
+    <xsd:keyref name="BookingDebit_Ref" refer="BookingDebit_Key">
+      <xsd:selector xpath=".//netex:BookingDebitRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="BookingDebit_Key">
+      <xsd:selector xpath=".//netex:BookingDebit"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
     <!--=== Entity "BookingPolicy" ===-->
     <xsd:keyref name="BookingPolicy_Ref" refer="BookingPolicy_Key_Deep">
       <xsd:selector xpath=".//netex:BookingPolicyRef"/>
@@ -503,12 +541,21 @@
       <xsd:field xpath="@version"/>
     </xsd:key>
     <!--=== Entity "Call" ===-->
+    <xsd:keyref name="Call_Ref" refer="Call_VcsKey_Deep">
+      <xsd:selector xpath=".//netex:CallRef | .//netex:FromCall | .//netex:ToCall"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
     <xsd:key name="Call_VcsKey">
       <xsd:selector xpath=".//netex:Call"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
-    <!-- Generation of deep key suppressed, key: Call_VcsKey -->
+    <xsd:key name="Call_VcsKey_Deep">
+      <xsd:selector xpath=".//netex:Call | .//netex:MonitoredCall | .//netex:OnwardCall | .//netex:PreviousCall"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
     <!--=== Entity "Cancelling" ===-->
     <xsd:keyref name="Cancelling_Ref" refer="Cancelling_Key">
       <xsd:selector xpath=".//netex:CancellingRef"/>
@@ -583,17 +630,6 @@
     </xsd:keyref>
     <xsd:key name="CateringService_Key">
       <xsd:selector xpath=".//netex:CateringService"/>
-      <xsd:field xpath="@id"/>
-      <xsd:field xpath="@version"/>
-    </xsd:key>
-    <!--=== Entity "ChargingEquipmentProfile" ===-->
-    <xsd:keyref name="ChargingEquipmentProfile_Ref" refer="ChargingEquipmentProfile_Key">
-      <xsd:selector xpath=".//netex:ChargingEquipmentProfileRef"/>
-      <xsd:field xpath="@ref"/>
-      <xsd:field xpath="@version"/>
-    </xsd:keyref>
-    <xsd:key name="ChargingEquipmentProfile_Key">
-      <xsd:selector xpath=".//netex:ChargingEquipmentProfile"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
@@ -855,6 +891,17 @@
     </xsd:keyref>
     <xsd:key name="Contact_Key">
       <xsd:selector xpath=".//netex:Contact"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "Contract" ===-->
+    <xsd:keyref name="Contract_Ref" refer="Contract_Key">
+      <xsd:selector xpath=".//netex:ContractRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="Contract_Key">
+      <xsd:selector xpath=".//netex:Contract"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
@@ -1135,7 +1182,7 @@
     </xsd:key>
     <!--=== Entity "DataManagedObjectStructure" ===-->
     <xsd:key name="DataManagedObjectStructure_Key">
-      <xsd:selector xpath=".//netex:AccessRightParameterAssignment_ | .//netex:AlternativeModeOfOperation_ | .//netex:Assignment_ | .//netex:ConventionalModeOfOperation_ | .//netex:DataManagedObject | .//netex:DayType_ | .//netex:FareContractEntry_ | .//netex:FareProduct_ | .//netex:Interchange_ | .//netex:Line_ | .//netex:MediumAccessDevice_ | .//netex:ModeOfOperation_ | .//netex:NoticeAssignment_ | .//netex:OperatingPeriod_ | .//netex:OrganisationPart_ | .//netex:Organisation_ | .//netex:ParkingLogEntry_ | .//netex:PriceableObject_ | .//netex:PricingRule_ | .//netex:QualityStructureFactor_ | .//netex:ServiceAccessRight_ | .//netex:TransportType_ | .//netex:TravelSpecification_ | .//netex:UsageParameter_ | .//netex:ValidityCondition_"/>
+      <xsd:selector xpath=".//netex:AccessRightParameterAssignment_ | .//netex:AlternativeModeOfOperation_ | .//netex:Assignment_ | .//netex:ConventionalModeOfOperation_ | .//netex:DataManagedObject | .//netex:DayType_ | .//netex:FareContractEntry_ | .//netex:FareDebit_DummyType | .//netex:FareProduct_ | .//netex:Interchange_ | .//netex:Line_ | .//netex:MediumAccessDevice_ | .//netex:ModeOfOperation_ | .//netex:NoticeAssignment_ | .//netex:OperatingPeriod_ | .//netex:OrganisationPart_ | .//netex:Organisation_ | .//netex:ParkingLogEntry_ | .//netex:PriceableObject_ | .//netex:PricingRule_ | .//netex:QualityStructureFactor_ | .//netex:RollingStockItem_DummyType | .//netex:ServiceAccessRight_ | .//netex:TrainElementType_DummyType | .//netex:Train_DummyType | .//netex:TransportType_DummyType | .//netex:TravelSpecification_ | .//netex:UsageParameter_ | .//netex:ValidityCondition_"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
@@ -1159,12 +1206,6 @@
     </xsd:keyref>
     <xsd:key name="DataSource_Key">
       <xsd:selector xpath=".//netex:DataSource"/>
-      <xsd:field xpath="@id"/>
-      <xsd:field xpath="@version"/>
-    </xsd:key>
-    <!--=== Entity "DatedCall" ===-->
-    <xsd:key name="DatedCall_VcsKey">
-      <xsd:selector xpath=".//netex:DatedCall"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
@@ -1199,11 +1240,6 @@
     <!--=== Entity "DatedVehicleJourney" ===-->
     <xsd:key name="DatedVehicleJourney_Key">
       <xsd:selector xpath=".//netex:DatedVehicleJourney"/>
-      <xsd:field xpath="@id"/>
-      <xsd:field xpath="@version"/>
-    </xsd:key>
-    <xsd:key name="DatedVehicleJourney_Key_Deep">
-      <xsd:selector xpath=".//netex:DatedVehicleJourney | .//netex:NormalDatedVehicleJourney"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
@@ -1248,6 +1284,198 @@
     <!--=== Entity "DeadRunWithCalls" ===-->
     <xsd:key name="DeadRunWithCalls_Key">
       <xsd:selector xpath=".//netex:DeadRun"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "DeckComponent" ===-->
+    <xsd:keyref name="DeckComponent_Ref" refer="DeckComponent_Key_Deep">
+      <xsd:selector xpath=".//netex:DeckComponentRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="DeckComponent_Key">
+      <xsd:selector xpath=".//netex:DeckComponent | .//netex:DeckEntrance_ | .//netex:DeckSpace_"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <xsd:key name="DeckComponent_Key_Deep">
+      <xsd:selector xpath=".//netex:DeckComponent | .//netex:DeckEntrance | .//netex:DeckEntrance_ | .//netex:DeckSpace | .//netex:DeckSpace_ | .//netex:DeckVehicleEntrance | .//netex:DeckWindow | .//netex:OtherDeckEntrance | .//netex:OtherDeckSpace | .//netex:PassengerEntrance | .//netex:PassengerSpace"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "DeckEntranceAssignment" ===-->
+    <xsd:key name="DeckEntranceAssignment_Key">
+      <xsd:selector xpath=".//netex:DeckEntranceAssignment"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "DeckEntranceCouple" ===-->
+    <xsd:keyref name="DeckEntranceCouple_Ref" refer="DeckEntranceCouple_VcsKey">
+      <xsd:selector xpath=".//netex:DeckEntranceCoupleRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="DeckEntranceCouple_VcsKey">
+      <xsd:selector xpath=".//netex:DeckEntranceCouple"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "DeckEntranceUsage" ===-->
+    <xsd:keyref name="DeckEntranceUsage_Ref" refer="DeckEntranceUsage_VcsKey">
+      <xsd:selector xpath=".//netex:DeckEntranceUsageRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="DeckEntranceUsage_VcsKey">
+      <xsd:selector xpath=".//netex:DeckEntranceUsage"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "DeckEntrance" ===-->
+    <xsd:keyref name="DeckEntrance_Ref" refer="DeckEntrance_Key_Deep">
+      <xsd:selector xpath=".//netex:DeckEntranceRef | .//netex:FromDeckEntranceRef | .//netex:ToDeckEntranceRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="DeckEntrance_Key">
+      <xsd:selector xpath=".//netex:DeckEntrance"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <xsd:key name="DeckEntrance_Key_Deep">
+      <xsd:selector xpath=".//netex:DeckEntrance | .//netex:DeckVehicleEntrance | .//netex:OtherDeckEntrance | .//netex:PassengerEntrance"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "DeckLevel" ===-->
+    <xsd:keyref name="DeckLevel_Ref" refer="DeckLevel_Key">
+      <xsd:selector xpath=".//netex:DeckLevelRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="DeckLevel_Key">
+      <xsd:selector xpath=".//netex:DeckLevel"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "DeckNavigationPath" ===-->
+    <xsd:keyref name="DeckNavigationPath_Ref" refer="DeckNavigationPath_Key">
+      <xsd:selector xpath=".//netex:DeckNavigationPathRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="DeckNavigationPath_Key">
+      <xsd:selector xpath=".//netex:DeckNavigationPath"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "DeckPathJunction" ===-->
+    <xsd:key name="DeckPathJunction_Key">
+      <xsd:selector xpath=".//netex:DeckPathJunction"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "DeckPathLink" ===-->
+    <xsd:keyref name="DeckPathLink_Ref" refer="DeckPathLink_Key">
+      <xsd:selector xpath=".//netex:DeckPathLinkRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="DeckPathLink_Key">
+      <xsd:selector xpath=".//netex:DeckPathLink"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "DeckPlaceInSequence" ===-->
+    <xsd:keyref name="DeckPlaceInSequence_Ref" refer="DeckPlaceInSequence_VcsKey">
+      <xsd:selector xpath=".//netex:DeckPlaceInSequenceRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="DeckPlaceInSequence_VcsKey">
+      <xsd:selector xpath=".//netex:DeckPlaceInSequence"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "DeckPlanAssignment" ===-->
+    <xsd:keyref name="DeckPlanAssignment_Ref" refer="DeckPlanAssignment_Key">
+      <xsd:selector xpath=".//netex:DeckPlanAssignmentRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="DeckPlanAssignment_Key">
+      <xsd:selector xpath=".//netex:DeckPlanAssignment"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "DeckPlan" ===-->
+    <xsd:keyref name="DeckPlan_Ref" refer="DeckPlan_Key">
+      <xsd:selector xpath=".//netex:DeckPlanRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="DeckPlan_Key">
+      <xsd:selector xpath=".//netex:DeckPlan"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "DeckSpaceCapacity" ===-->
+    <xsd:keyref name="DeckSpaceCapacity_Ref" refer="DeckSpaceCapacity_VcsKey">
+      <xsd:selector xpath=".//netex:DeckSpaceCapacityRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="DeckSpaceCapacity_VcsKey">
+      <xsd:selector xpath=".//netex:DeckSpaceCapacity"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "DeckSpace" ===-->
+    <xsd:keyref name="DeckSpace_Ref" refer="DeckSpace_Key_Deep">
+      <xsd:selector xpath=".//netex:DeckSpaceRef | .//netex:ParentDeckSpaceRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="DeckSpace_Key">
+      <xsd:selector xpath=".//netex:DeckSpace"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <xsd:key name="DeckSpace_Key_Deep">
+      <xsd:selector xpath=".//netex:DeckSpace | .//netex:OtherDeckSpace | .//netex:PassengerSpace"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "DeckVehicleEntrance" ===-->
+    <xsd:keyref name="DeckVehicleEntrance_Ref" refer="DeckVehicleEntrance_Key">
+      <xsd:selector xpath=".//netex:DeckVehicleEntranceRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="DeckVehicleEntrance_Key">
+      <xsd:selector xpath=".//netex:DeckVehicleEntrance"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "DeckWindow" ===-->
+    <xsd:keyref name="DeckWindow_Ref" refer="DeckWindow_Key">
+      <xsd:selector xpath=".//netex:DeckWindowRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="DeckWindow_Key">
+      <xsd:selector xpath=".//netex:DeckWindow"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "Deck" ===-->
+    <xsd:keyref name="Deck_Ref" refer="Deck_Key">
+      <xsd:selector xpath=".//netex:DeckRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="Deck_Key">
+      <xsd:selector xpath=".//netex:Deck"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
@@ -1358,13 +1586,18 @@
       <xsd:field xpath="@version"/>
     </xsd:key>
     <!--=== Entity "DistanceMatrixElement" ===-->
-    <xsd:keyref name="DistanceMatrixElement_Ref" refer="DistanceMatrixElement_Key">
+    <xsd:keyref name="DistanceMatrixElement_Ref" refer="DistanceMatrixElement_Key_Deep">
       <xsd:selector xpath=".//netex:DistanceMatrixElementInverseRef | .//netex:DistanceMatrixElementRef"/>
       <xsd:field xpath="@ref"/>
       <xsd:field xpath="@version"/>
     </xsd:keyref>
     <xsd:key name="DistanceMatrixElement_Key">
       <xsd:selector xpath=".//netex:DistanceMatrixElement"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <xsd:key name="DistanceMatrixElement_Key_Deep">
+      <xsd:selector xpath=".//netex:DistanceMatrixElement | .//netex:DynamicDistanceMatrixElement"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
@@ -1437,6 +1670,12 @@
     </xsd:keyref>
     <xsd:key name="Duty_Key">
       <xsd:selector xpath=".//netex:Duty"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "DynamicDistanceMatrixElement" ===-->
+    <xsd:key name="DynamicDistanceMatrixElement_Key">
+      <xsd:selector xpath=".//netex:DynamicDistanceMatrixElement"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
@@ -1546,6 +1785,17 @@
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
+    <!--=== Entity "EntranceSensor" ===-->
+    <xsd:keyref name="EntranceSensor_Ref" refer="EntranceSensor_Key">
+      <xsd:selector xpath=".//netex:EntranceSensorRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="EntranceSensor_Key">
+      <xsd:selector xpath=".//netex:EntranceSensor"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
     <!--=== Entity "EquipmentPlace" ===-->
     <xsd:keyref name="EquipmentPlace_Ref" refer="EquipmentPlace_Key">
       <xsd:selector xpath=".//netex:EquipmentPlaceRef"/>
@@ -1565,7 +1815,7 @@
     </xsd:key>
     <!--=== Entity "Equipment" ===-->
     <xsd:keyref name="Equipment_Ref" refer="Equipment_Key">
-      <xsd:selector xpath=".//netex:AccessVehicleEquipment/netex:EquipmentRef | .//netex:ActualVehicleEquipment/netex:EquipmentRef | .//netex:Cell/netex:EquipmentRef | .//netex:CellInContext/netex:EquipmentRef | .//netex:ChargingEquipmentProfile/netex:EquipmentRef | .//netex:CheckConstraint/netex:EquipmentRef | .//netex:EquipmentPosition/netex:EquipmentRef | .//netex:TravelSpecificationSummaryView/netex:EquipmentRef | .//netex:VehicleEquipmentProfile/netex:EquipmentRef | .//netex:WheelchairVehicleEquipment/netex:EquipmentRef | .//netex:actualVehicleEquipments/netex:EquipmentRef | .//netex:equipments/netex:EquipmentRef | .//netex:placeEquipments/netex:EquipmentRef | .//netex:specifics/netex:EquipmentRef"/>
+      <xsd:selector xpath=".//netex:AccessVehicleEquipment/netex:EquipmentRef | .//netex:ActualVehicleEquipment/netex:EquipmentRef | .//netex:Cell/netex:EquipmentRef | .//netex:CellInContext/netex:EquipmentRef | .//netex:CheckConstraint/netex:EquipmentRef | .//netex:EquipmentPosition/netex:EquipmentRef | .//netex:RechargingEquipmentProfile/netex:EquipmentRef | .//netex:VehicleEquipmentProfile/netex:EquipmentRef | .//netex:VehicleEquipmentProfileMember/netex:EquipmentRef | .//netex:WheelchairVehicleEquipment/netex:EquipmentRef | .//netex:actualVehicleEquipments/netex:EquipmentRef | .//netex:equipments/netex:EquipmentRef | .//netex:placeEquipments/netex:EquipmentRef | .//netex:seatEquipments/netex:EquipmentRef | .//netex:specifics/netex:EquipmentRef"/>
       <xsd:field xpath="@ref"/>
       <xsd:field xpath="@version"/>
     </xsd:keyref>
@@ -1632,7 +1882,7 @@
       <xsd:field xpath="@version"/>
     </xsd:key>
     <xsd:key name="FacilitySet_Key_Deep">
-      <xsd:selector xpath=".//netex:FacilitySet | .//netex:ServiceFacilitySet | .//netex:SiteFacilitySet"/>
+      <xsd:selector xpath=".//netex:FacilitySet | .//netex:RestrictedServiceFacilitySet | .//netex:RollingStockItem/netex:facilities | .//netex:ServiceFacilitySet | .//netex:SiteFacilitySet | .//netex:TractiveRollingStockItem/netex:facilities | .//netex:TrailingRollingStockItem/netex:facilities"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
@@ -1676,6 +1926,22 @@
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
+    <!--=== Entity "FareDebit" ===-->
+    <xsd:keyref name="FareDebit_Ref" refer="FareDebit_Key_Deep">
+      <xsd:selector xpath=".//netex:FareDebitRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="FareDebit_Key">
+      <xsd:selector xpath=".//netex:FareDebit"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <xsd:key name="FareDebit_Key_Deep">
+      <xsd:selector xpath=".//netex:BookingDebit | .//netex:FareDebit | .//netex:FareProductSaleDebit | .//netex:OffenceDebit | .//netex:OtherDebit | .//netex:TripDebit"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
     <!--=== Entity "FareDemandFactor" ===-->
     <xsd:keyref name="FareDemandFactor_Ref" refer="FareDemandFactor_Key">
       <xsd:selector xpath=".//netex:FareDemandFactorRef"/>
@@ -1688,7 +1954,7 @@
       <xsd:field xpath="@version"/>
     </xsd:key>
     <!--=== Entity "FareElementInSequence" ===-->
-    <xsd:keyref name="FareElementInSequence_Ref" refer="FareElementInSequence_VcsKey">
+    <xsd:keyref name="FareElementInSequence_Ref" refer="FareElementInSequence_VcsKey_Deep">
       <xsd:selector xpath=".//netex:FareElementInSequenceRef"/>
       <xsd:field xpath="@ref"/>
       <xsd:field xpath="@version"/>
@@ -1698,7 +1964,11 @@
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
-    <!-- Generation of deep key suppressed, key: FareElementInSequence_VcsKey -->
+    <xsd:key name="FareElementInSequence_VcsKey_Deep">
+      <xsd:selector xpath=".//netex:AccessRightInProduct | .//netex:ControllableElementInSequence | .//netex:FareElementInSequence | .//netex:FareStructureElementInSequence"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
     <!--=== Entity "FareFrame" ===-->
     <xsd:key name="FareFrame_VfsKey">
       <xsd:selector xpath=".//netex:FareFrame"/>
@@ -1732,6 +2002,12 @@
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
+    <!--=== Entity "FarePriceFrame" ===-->
+    <xsd:key name="FarePriceFrame_VfsKey">
+      <xsd:selector xpath=".//netex:FarePriceFrame"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
     <!--=== Entity "FareProductPrice" ===-->
     <xsd:keyref name="FareProductPrice_Ref" refer="FareProductPrice_VcsKey">
       <xsd:selector xpath=".//netex:FareProductPriceRef"/>
@@ -1740,6 +2016,17 @@
     </xsd:keyref>
     <xsd:key name="FareProductPrice_VcsKey">
       <xsd:selector xpath=".//netex:FareProductPrice"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "FareProductSaleDebit" ===-->
+    <xsd:keyref name="FareProductSaleDebit_Ref" refer="FareProductSaleDebit_Key">
+      <xsd:selector xpath=".//netex:FareProductSaleDebitRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="FareProductSaleDebit_Key">
+      <xsd:selector xpath=".//netex:FareProductSaleDebit"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
@@ -2117,9 +2404,51 @@
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
-    <!--=== Entity "GenericParameterAssignment" ===-->
-    <xsd:key name="GenericParameterAssignment_Key">
-      <xsd:selector xpath=".//netex:GenericParameterAssignment | .//netex:GenericParameterAssignmentInContext"/>
+    <!--=== Entity "GenericNavigationPath" ===-->
+    <xsd:keyref name="GenericNavigationPath_Ref" refer="GenericNavigationPath_Key_Deep">
+      <xsd:selector xpath=".//netex:GenericNavigationPathRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="GenericNavigationPath_Key">
+      <xsd:selector xpath=".//netex:GenericNavigationPath"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <xsd:key name="GenericNavigationPath_Key_Deep">
+      <xsd:selector xpath=".//netex:DeckNavigationPath | .//netex:GenericNavigationPath | .//netex:NavigationPath | .//netex:SiteNavigationPath"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "GenericPathJunction" ===-->
+    <xsd:keyref name="GenericPathJunction_Ref" refer="GenericPathJunction_Key_Deep">
+      <xsd:selector xpath=".//netex:DeckPathJunctionRef | .//netex:GenericPathJunctionRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="GenericPathJunction_Key">
+      <xsd:selector xpath=".//netex:GenericPathJunction"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <xsd:key name="GenericPathJunction_Key_Deep">
+      <xsd:selector xpath=".//netex:DeckPathJunction | .//netex:GenericPathJunction | .//netex:PathJunction | .//netex:SitePathJunction"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "GenericPathLink" ===-->
+    <xsd:keyref name="GenericPathLink_Ref" refer="GenericPathLink_Key_Deep">
+      <xsd:selector xpath=".//netex:GenericPathLinkRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="GenericPathLink_Key">
+      <xsd:selector xpath=".//netex:GenericPathLink"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <xsd:key name="GenericPathLink_Key_Deep">
+      <xsd:selector xpath=".//netex:DeckPathLink | .//netex:GenericPathLink | .//netex:OffSitePathLink | .//netex:PathLink | .//netex:SitePathLink"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
@@ -2320,6 +2649,17 @@
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
+    <!--=== Entity "GroupOfSites" ===-->
+    <xsd:keyref name="GroupOfSites_Ref" refer="GroupOfSites_Key">
+      <xsd:selector xpath=".//netex:GroupOfSitesRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="GroupOfSites_Key">
+      <xsd:selector xpath=".//netex:GroupOfSites"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
     <!--=== Entity "GroupOfStopPlacesStructure" ===-->
     <xsd:key name="GroupOfStopPlacesStructure_Key">
       <xsd:selector xpath=".//netex:GroupOfStopPlaces"/>
@@ -2503,7 +2843,7 @@
       <xsd:field xpath="@version"/>
     </xsd:keyref>
     <xsd:key name="InstalledEquipment_Key">
-      <xsd:selector xpath=".//netex:InstalledEquipment"/>
+      <xsd:selector xpath=".//netex:InstalledEquipment | .//netex:SensorEquipment_ | .//netex:SpotEquipment_"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
@@ -2747,6 +3087,17 @@
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
+    <!--=== Entity "LevelInStructure" ===-->
+    <xsd:keyref name="LevelInStructure_Ref" refer="LevelInStructure_Key">
+      <xsd:selector xpath=".//netex:LevelInStructureRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="LevelInStructure_Key">
+      <xsd:selector xpath=".//netex:LevelInStructure"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
     <!--=== Entity "Level" ===-->
     <xsd:keyref name="Level_Ref" refer="Level_Key">
       <xsd:selector xpath=".//netex:LevelRef"/>
@@ -2861,7 +3212,7 @@
       <xsd:field xpath="@version"/>
     </xsd:key>
     <!--=== Entity "LinkSequence" ===-->
-    <xsd:keyref name="LinkSequence_Ref" refer="LinkSequence_Key">
+    <xsd:keyref name="LinkSequence_Ref" refer="LinkSequence_Key_Deep">
       <xsd:selector xpath=".//netex:LinkSequenceRef | .//netex:ProjectedLinkSequenceRef"/>
       <xsd:field xpath="@ref"/>
       <xsd:field xpath="@version"/>
@@ -2871,7 +3222,11 @@
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
-    <!-- Generation of deep key suppressed, key: LinkSequence_Key -->
+    <xsd:key name="LinkSequence_Key_Deep">
+      <xsd:selector xpath=".//netex:CommonSection | .//netex:DatedServiceJourney | .//netex:DatedSpecialService | .//netex:DatedVehicleJourney | .//netex:DeadRun | .//netex:DeadRunJourneyPattern | .//netex:DeckNavigationPath | .//netex:FareSection | .//netex:FlexibleRoute | .//netex:GeneralSection | .//netex:GenericNavigationPath | .//netex:Journey | .//netex:JourneyPattern | .//netex:JourneyPattern_ | .//netex:Journey_ | .//netex:LineSection | .//netex:LinkSequence | .//netex:NavigationPath | .//netex:NormalDatedVehicleJourney | .//netex:Route | .//netex:Route_ | .//netex:Section | .//netex:Section_ | .//netex:ServiceJourney | .//netex:ServiceJourneyPattern | .//netex:ServiceJourney_ | .//netex:ServicePattern | .//netex:SingleJourney | .//netex:SingleJourneyPath | .//netex:SiteNavigationPath | .//netex:SpecialService | .//netex:TemplateServiceJourney | .//netex:TemplateVehicleJourney | .//netex:TimingPattern | .//netex:VehicleJourney | .//netex:VehicleJourney_"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
     <!--=== Entity "Link" ===-->
     <xsd:keyref name="Link_Ref" refer="Link_Key_Deep">
       <xsd:selector xpath=".//netex:CommonSectionPointMember/netex:LinkRef | .//netex:ComplexFeatureMember/netex:LinkRef | .//netex:FlexibleLinkProperties/netex:LinkRef | .//netex:FromLinkRef | .//netex:GeneralFrameMember/netex:LinkRef | .//netex:LineSectionPointMember/netex:LinkRef | .//netex:LineShape/netex:LinkRef | .//netex:LinkOnSection/netex:LinkRef | .//netex:OvertakingOnLinkRef | .//netex:PointOnLineSection/netex:LinkRef | .//netex:PointOnLink/netex:LinkRef | .//netex:PointOnSection/netex:LinkRef | .//netex:ProjectToLinkRef | .//netex:ProjectedLinkRef | .//netex:SchematicMapMember/netex:LinkRef | .//netex:ToLinkRef | .//netex:links/netex:LinkRef | .//netex:members/netex:LinkRef | .//netex:objectReferences/netex:LinkRef | .//netex:refs/netex:LinkRef | .//netex:representing/netex:LinkRef"/>
@@ -2884,7 +3239,7 @@
       <xsd:field xpath="@version"/>
     </xsd:key>
     <xsd:key name="Link_Key_Deep">
-      <xsd:selector xpath=".//netex:ActivationLink | .//netex:InfrastructureLink | .//netex:InfrastructureLink_ | .//netex:Link | .//netex:PathLink | .//netex:RailwayElement | .//netex:RoadElement | .//netex:RouteLink | .//netex:ServiceLink | .//netex:SitePathLink | .//netex:TimingLink | .//netex:VehicleMeetingLink | .//netex:WireElement"/>
+      <xsd:selector xpath=".//netex:ActivationLink | .//netex:DeckPathLink | .//netex:GenericPathLink | .//netex:InfrastructureLink | .//netex:InfrastructureLink_ | .//netex:Link | .//netex:OffSitePathLink | .//netex:PathLink | .//netex:RailwayElement | .//netex:RoadElement | .//netex:RouteLink | .//netex:ServiceLink | .//netex:SitePathLink | .//netex:TimingLink | .//netex:VehicleMeetingLink | .//netex:WireElement"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
@@ -2901,6 +3256,22 @@
     </xsd:key>
     <xsd:key name="LocalService_Key_Deep">
       <xsd:selector xpath=".//netex:AssistanceBookingService | .//netex:AssistanceService | .//netex:CateringService | .//netex:CommunicationService | .//netex:ComplaintsService | .//netex:CustomerService | .//netex:HireService | .//netex:LeftLuggageService | .//netex:LocalService | .//netex:LostPropertyService | .//netex:LuggageService | .//netex:MeetingPointService | .//netex:MoneyService | .//netex:RetailService | .//netex:TicketingService"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "LocatableSpot" ===-->
+    <xsd:keyref name="LocatableSpot_Ref" refer="LocatableSpot_Key_Deep">
+      <xsd:selector xpath=".//netex:LocatableSpotRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="LocatableSpot_Key">
+      <xsd:selector xpath=".//netex:LocatableSpot"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <xsd:key name="LocatableSpot_Key_Deep">
+      <xsd:selector xpath=".//netex:LocatableSpot | .//netex:LuggageSpot | .//netex:PassengerSpot | .//netex:PassengerVehicleSpot"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
@@ -2979,6 +3350,28 @@
     </xsd:keyref>
     <xsd:key name="LuggageService_Key">
       <xsd:selector xpath=".//netex:LuggageService"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "LuggageSpotEquipment" ===-->
+    <xsd:keyref name="LuggageSpotEquipment_Ref" refer="LuggageSpotEquipment_Key">
+      <xsd:selector xpath=".//netex:LuggageSpotEquipmentRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="LuggageSpotEquipment_Key">
+      <xsd:selector xpath=".//netex:LuggageSpotEquipment"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "LuggageSpot" ===-->
+    <xsd:keyref name="LuggageSpot_Ref" refer="LuggageSpot_Key">
+      <xsd:selector xpath=".//netex:LuggageSpotRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="LuggageSpot_Key">
+      <xsd:selector xpath=".//netex:LuggageSpot"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
@@ -3191,17 +3584,6 @@
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
-    <!--=== Entity "NavigationPath" ===-->
-    <xsd:keyref name="NavigationPath_Ref" refer="NavigationPath_Key">
-      <xsd:selector xpath=".//netex:NavigationPathRef"/>
-      <xsd:field xpath="@ref"/>
-      <xsd:field xpath="@version"/>
-    </xsd:keyref>
-    <xsd:key name="NavigationPath_Key">
-      <xsd:selector xpath=".//netex:NavigationPath"/>
-      <xsd:field xpath="@id"/>
-      <xsd:field xpath="@version"/>
-    </xsd:key>
     <!--=== Entity "NetworkRestriction" ===-->
     <xsd:keyref name="NetworkRestriction_Ref" refer="NetworkRestriction_Key_Deep">
       <xsd:selector xpath=".//netex:NetworkRestrictionRef"/>
@@ -3241,7 +3623,11 @@
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
-    <!-- Generation of deep key suppressed, key: NoticeAssignment_Key -->
+    <xsd:key name="NoticeAssignment_Key_Deep">
+      <xsd:selector xpath=".//netex:NoticeAssignment | .//netex:SalesNoticeAssignment"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
     <!--=== Entity "Notice" ===-->
     <xsd:keyref name="Notice_Ref" refer="Notice_Key">
       <xsd:selector xpath=".//netex:NoticeRef"/>
@@ -3270,6 +3656,39 @@
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
+    <!--=== Entity "OccupancyView" ===-->
+    <xsd:keyref name="OccupancyView_Ref" refer="OccupancyView_Key">
+      <xsd:selector xpath=".//netex:OccupancyViewRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="OccupancyView_Key">
+      <xsd:selector xpath=".//netex:OccupancyView"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "OffSitePathLink" ===-->
+    <xsd:keyref name="OffSitePathLink_Ref" refer="OffSitePathLink_Key">
+      <xsd:selector xpath=".//netex:OffSitePathLinkRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="OffSitePathLink_Key">
+      <xsd:selector xpath=".//netex:OffSitePathLink"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "OffenceDebit" ===-->
+    <xsd:keyref name="OffenceDebit_Ref" refer="OffenceDebit_Key">
+      <xsd:selector xpath=".//netex:OffenceDebitRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="OffenceDebit_Key">
+      <xsd:selector xpath=".//netex:OffenceDebit"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
     <!--=== Entity "OfferedTravelSpecification" ===-->
     <xsd:keyref name="OfferedTravelSpecification_Ref" refer="OfferedTravelSpecification_Key">
       <xsd:selector xpath=".//netex:OfferedTravelSpecificationRef"/>
@@ -3278,6 +3697,22 @@
     </xsd:keyref>
     <xsd:key name="OfferedTravelSpecification_Key">
       <xsd:selector xpath=".//netex:OfferedTravelSpecification"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "OnboardSpace" ===-->
+    <xsd:keyref name="OnboardSpace_Ref" refer="OnboardSpace_Key_Deep">
+      <xsd:selector xpath=".//netex:OnboardSpaceRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="OnboardSpace_Key">
+      <xsd:selector xpath=".//netex:OnboardSpace"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <xsd:key name="OnboardSpace_Key_Deep">
+      <xsd:selector xpath=".//netex:DeckComponent | .//netex:DeckEntrance | .//netex:DeckEntrance_ | .//netex:DeckSpace | .//netex:DeckSpace_ | .//netex:DeckVehicleEntrance | .//netex:DeckWindow | .//netex:LocatableSpot | .//netex:LuggageSpot | .//netex:OnboardSpace | .//netex:OtherDeckEntrance | .//netex:OtherDeckSpace | .//netex:PassengerEntrance | .//netex:PassengerSpace | .//netex:PassengerSpot | .//netex:PassengerVehicleSpot"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
@@ -3432,6 +3867,39 @@
     </xsd:keyref>
     <xsd:key name="OrganisationalUnit_Key">
       <xsd:selector xpath=".//netex:OrganisationalUnit"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "OtherDebit" ===-->
+    <xsd:keyref name="OtherDebit_Ref" refer="OtherDebit_Key">
+      <xsd:selector xpath=".//netex:OtherDebitRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="OtherDebit_Key">
+      <xsd:selector xpath=".//netex:OtherDebit"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "OtherDeckEntrance" ===-->
+    <xsd:keyref name="OtherDeckEntrance_Ref" refer="OtherDeckEntrance_Key">
+      <xsd:selector xpath=".//netex:OtherDeckEntranceRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="OtherDeckEntrance_Key">
+      <xsd:selector xpath=".//netex:OtherDeckEntrance"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "OtherDeckSpace" ===-->
+    <xsd:keyref name="OtherDeckSpace_Ref" refer="OtherDeckSpace_Key">
+      <xsd:selector xpath=".//netex:OtherDeckSpaceRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="OtherDeckSpace_Key">
+      <xsd:selector xpath=".//netex:OtherDeckSpace"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
@@ -3621,6 +4089,17 @@
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
+    <!--=== Entity "PassengerAtStopTime" ===-->
+    <xsd:keyref name="PassengerAtStopTime_Ref" refer="PassengerAtStopTime_VcsKey">
+      <xsd:selector xpath=".//netex:PassengerAtStopTimeRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="PassengerAtStopTime_VcsKey">
+      <xsd:selector xpath=".//netex:PassengerAtStopTime"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
     <!--=== Entity "PassengerBeaconEquipment" ===-->
     <xsd:keyref name="PassengerBeaconEquipment_Ref" refer="PassengerBeaconEquipment_Key">
       <xsd:selector xpath=".//netex:PassengerBeaconEquipmentRef"/>
@@ -3629,6 +4108,33 @@
     </xsd:keyref>
     <xsd:key name="PassengerBeaconEquipment_Key">
       <xsd:selector xpath=".//netex:PassengerBeaconEquipment"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "PassengerBoardingPositionAssignment" ===-->
+    <xsd:keyref name="PassengerBoardingPositionAssignment_Ref" refer="PassengerBoardingPositionAssignment_Key_Deep">
+      <xsd:selector xpath=".//netex:PassengerBoardingPositionAssignmentRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="PassengerBoardingPositionAssignment_Key">
+      <xsd:selector xpath=".//netex:PassengerBoardingPositionAssignment | .//netex:PassengerBoardingPositionAssignment_"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <xsd:key name="PassengerBoardingPositionAssignment_Key_Deep">
+      <xsd:selector xpath=".//netex:DeckEntranceAssignment | .//netex:PassengerBoardingPositionAssignment | .//netex:PassengerBoardingPositionAssignment_ | .//netex:TrainComponentStopAssignment"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "PassengerEntrance" ===-->
+    <xsd:keyref name="PassengerEntrance_Ref" refer="PassengerEntrance_Key">
+      <xsd:selector xpath=".//netex:PassengerEntranceRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="PassengerEntrance_Key">
+      <xsd:selector xpath=".//netex:PassengerEntrance"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
@@ -3665,6 +4171,39 @@
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
+    <!--=== Entity "PassengerSpace" ===-->
+    <xsd:keyref name="PassengerSpace_Ref" refer="PassengerSpace_Key">
+      <xsd:selector xpath=".//netex:PassengerSpaceRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="PassengerSpace_Key">
+      <xsd:selector xpath=".//netex:PassengerSpace"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "PassengerSpotAllocation" ===-->
+    <xsd:keyref name="PassengerSpotAllocation_Ref" refer="PassengerSpotAllocation_VcsKey">
+      <xsd:selector xpath=".//netex:PassengerSpotAllocationRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="PassengerSpotAllocation_VcsKey">
+      <xsd:selector xpath=".//netex:PassengerSpotAllocation"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "PassengerSpot" ===-->
+    <xsd:keyref name="PassengerSpot_Ref" refer="PassengerSpot_Key">
+      <xsd:selector xpath=".//netex:PassengerSpotRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="PassengerSpot_Key">
+      <xsd:selector xpath=".//netex:PassengerSpot"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
     <!--=== Entity "PassengerStopAssignment" ===-->
     <xsd:keyref name="PassengerStopAssignment_Ref" refer="PassengerStopAssignment_Key_Deep">
       <xsd:selector xpath=".//netex:PassengerStopAssignmentRef"/>
@@ -3681,6 +4220,23 @@
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
+    <!--=== Entity "PassengerVehicleCapacityStructure" ===-->
+    <xsd:key name="PassengerVehicleCapacityStructure_Key">
+      <xsd:selector xpath=".//netex:PassengerVehicleCapacity"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "PassengerVehicleSpot" ===-->
+    <xsd:keyref name="PassengerVehicleSpot_Ref" refer="PassengerVehicleSpot_Key">
+      <xsd:selector xpath=".//netex:PassengerVehicleSpotRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="PassengerVehicleSpot_Key">
+      <xsd:selector xpath=".//netex:PassengerVehicleSpot"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
     <!--=== Entity "PassingTime" ===-->
     <xsd:keyref name="PassingTime_Ref" refer="PassingTime_VcsKey">
       <xsd:selector xpath=".//netex:PassingTimeRef"/>
@@ -3692,7 +4248,7 @@
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
-    <!-- Generation of deep key suppressed, key: PassingTime_VcsKey -->
+    <!-- Generation of deep key suppressed as it contains skipped keys (TimetabledPassingTime_VersionedChildStructure), key: PassingTime_VcsKey -->
     <!--=== Entity "PassingTime" ===-->
     <xsd:key name="PassingTime_VisKey">
       <xsd:selector xpath=".//netex:PassingTimeView"/>
@@ -3704,14 +4260,14 @@
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
-    <!--=== Entity "PathJunction" ===-->
-    <xsd:keyref name="PathJunction_Ref" refer="PathJunction_Key">
-      <xsd:selector xpath=".//netex:PathJunctionRef"/>
+    <!--=== Entity "PathInstruction" ===-->
+    <xsd:keyref name="PathInstruction_Ref" refer="PathInstruction_VcsKey">
+      <xsd:selector xpath=".//netex:PathInstructionRef"/>
       <xsd:field xpath="@ref"/>
       <xsd:field xpath="@version"/>
     </xsd:keyref>
-    <xsd:key name="PathJunction_Key">
-      <xsd:selector xpath=".//netex:PathJunction"/>
+    <xsd:key name="PathInstruction_VcsKey">
+      <xsd:selector xpath=".//netex:PathInstruction"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
@@ -3723,22 +4279,6 @@
     </xsd:keyref>
     <xsd:key name="PathLinkInSequence_VcsKey">
       <xsd:selector xpath=".//netex:PathLinkInSequence"/>
-      <xsd:field xpath="@id"/>
-      <xsd:field xpath="@version"/>
-    </xsd:key>
-    <!--=== Entity "PathLink" ===-->
-    <xsd:keyref name="PathLink_Ref" refer="PathLink_Key_Deep">
-      <xsd:selector xpath=".//netex:PathLinkRef"/>
-      <xsd:field xpath="@ref"/>
-      <xsd:field xpath="@version"/>
-    </xsd:keyref>
-    <xsd:key name="PathLink_Key">
-      <xsd:selector xpath=".//netex:PathLink"/>
-      <xsd:field xpath="@id"/>
-      <xsd:field xpath="@version"/>
-    </xsd:key>
-    <xsd:key name="PathLink_Key_Deep">
-      <xsd:selector xpath=".//netex:PathLink | .//netex:SitePathLink"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
@@ -3814,9 +4354,9 @@
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
-    <!-- Generation of deep key suppressed, key: Place_Key -->
+    <!-- Generation of deep key suppressed as it contains skipped keys (PostalAddress_VersionStructure), key: Place_Key -->
     <!--=== Entity "PointInJourneyPattern" ===-->
-    <xsd:keyref name="PointInJourneyPattern_Ref" refer="PointInJourneyPattern_VcsKey">
+    <xsd:keyref name="PointInJourneyPattern_Ref" refer="PointInJourneyPattern_VcsKey_Deep">
       <xsd:selector xpath=".//netex:FromPointInJourneyPatternRef | .//netex:PointInJourneyPatternRef | .//netex:ToPointInJourneyPatternRef"/>
       <xsd:field xpath="@ref"/>
       <xsd:field xpath="@version"/>
@@ -3826,14 +4366,22 @@
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
-    <!-- Generation of deep key suppressed, key: PointInJourneyPattern_VcsKey -->
+    <xsd:key name="PointInJourneyPattern_VcsKey_Deep">
+      <xsd:selector xpath=".//netex:FarePointInPattern | .//netex:PointInJourneyPattern | .//netex:VehicleMeetingPointInPath"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
     <!--=== Entity "PointInLinkSequence" ===-->
     <xsd:key name="PointInLinkSequence_VcsKey">
       <xsd:selector xpath=".//netex:PointInLinkSequence | .//netex:PointOnSection_"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
-    <!-- Generation of deep key suppressed, key: PointInLinkSequence_VcsKey -->
+    <xsd:key name="PointInLinkSequence_VcsKey_Deep">
+      <xsd:selector xpath=".//netex:CommonSectionPointMember | .//netex:DeckPlaceInSequence | .//netex:FarePointInPattern | .//netex:LineSectionPointMember | .//netex:PlaceInSequence | .//netex:PointInJourneyPattern | .//netex:PointInLinkSequence | .//netex:PointOnLineSection | .//netex:PointOnRoute | .//netex:PointOnSection | .//netex:PointOnSection_ | .//netex:StopPointInJourneyPattern | .//netex:TimingPointInJourneyPattern | .//netex:VehicleMeetingPointInPath"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
     <!--=== Entity "PointOfInterestClassificationHierarchyMemberStructure" ===-->
     <xsd:key name="PointOfInterestClassificationHierarchyMemberStructure_Key">
       <xsd:selector xpath=".//netex:ClassificationHierarchyMember"/>
@@ -3870,7 +4418,7 @@
     </xsd:key>
     <!--=== Entity "PointOfInterestEntrance" ===-->
     <xsd:keyref name="PointOfInterestEntrance_Ref" refer="PointOfInterestEntrance_Key">
-      <xsd:selector xpath=".//netex:AccessRightParameterAssignment/netex:validityParameters/netex:PointOfInterestEntranceRef | .//netex:AccessSpace/netex:entrances/netex:PointOfInterestEntranceRef | .//netex:BoardingPosition/netex:boardingPositionEntrances/netex:PointOfInterestEntranceRef | .//netex:BoardingPosition/netex:entrances/netex:PointOfInterestEntranceRef | .//netex:CustomerPurchaseParameterAssignment/netex:validityParameters/netex:PointOfInterestEntranceRef | .//netex:FareTableColumn/netex:representing/netex:PointOfInterestEntranceRef | .//netex:FareTableRow/netex:representing/netex:PointOfInterestEntranceRef | .//netex:GeneralGroupOfEntities/netex:members/netex:PointOfInterestEntranceRef | .//netex:GenericParameterAssignment/netex:validityParameters/netex:PointOfInterestEntranceRef | .//netex:GenericParameterAssignmentInContext/netex:validityParameters/netex:PointOfInterestEntranceRef | .//netex:Layer/netex:members/netex:PointOfInterestEntranceRef | .//netex:NetworkFilterByValue/netex:objectReferences/netex:PointOfInterestEntranceRef | .//netex:NetworkFilterByValue/netex:places/netex:PointOfInterestEntranceRef | .//netex:ObjectFilterByValue/netex:objectReferences/netex:PointOfInterestEntranceRef | .//netex:Parking/netex:entrances/netex:PointOfInterestEntranceRef | .//netex:ParkingArea/netex:entrances/netex:PointOfInterestEntranceRef | .//netex:PointOfInterest/netex:entrances/netex:PointOfInterestEntranceRef | .//netex:Quay/netex:entrances/netex:PointOfInterestEntranceRef | .//netex:Quay_/netex:entrances/netex:PointOfInterestEntranceRef | .//netex:ServiceSite/netex:entrances/netex:PointOfInterestEntranceRef | .//netex:Site/netex:entrances/netex:PointOfInterestEntranceRef | .//netex:SiteConnection/netex:From/netex:PointOfInterestEntranceRef | .//netex:SiteConnection/netex:To/netex:PointOfInterestEntranceRef | .//netex:SpecificParameterAssignment/netex:validityParameters/netex:PointOfInterestEntranceRef | .//netex:StopPlace/netex:entrances/netex:PointOfInterestEntranceRef | .//netex:StopPlaceSpace/netex:entrances/netex:PointOfInterestEntranceRef | .//netex:StopPlace_/netex:entrances/netex:PointOfInterestEntranceRef | .//netex:TaxiParkingArea/netex:entrances/netex:PointOfInterestEntranceRef | .//netex:TaxiRank/netex:entrances/netex:PointOfInterestEntranceRef | .//netex:TaxiStand/netex:entrances/netex:PointOfInterestEntranceRef | .//netex:ValidityParameterAssignment/netex:validityParameters/netex:PointOfInterestEntranceRef | .//netex:VehiclePoolingParkingArea/netex:entrances/netex:PointOfInterestEntranceRef | .//netex:VehicleSharingParkingArea/netex:entrances/netex:PointOfInterestEntranceRef | .//netex:VehicleStoppingPlace/netex:entrances/netex:PointOfInterestEntranceRef | .//netex:actualVehicleEquipments/netex:PassengerInformationEquipment/netex:PointOfInterestEntranceRef | .//netex:assignments/netex:DynamicVehicleMeetingPointAssignment/netex:PointOfInterestEntranceRef | .//netex:assignments/netex:VehicleMeetingPointAssignment/netex:PointOfInterestEntranceRef | .//netex:commonDescendents/netex:refs/netex:PointOfInterestEntranceRef | .//netex:connections/netex:DefaultConnection/netex:PointOfInterestEntranceRef | .//netex:equipment/netex:PassengerInformationEquipment/netex:PointOfInterestEntranceRef | .//netex:equipments/netex:PassengerInformationEquipment/netex:PointOfInterestEntranceRef | .//netex:featureMembers/netex:ComplexFeatureMember/netex:PointOfInterestEntranceRef | .//netex:groups/netex:VehicleMeetingPlace/netex:PointOfInterestEntranceRef | .//netex:groups/netex:VehiclePoolingMeetingPlace/netex:PointOfInterestEntranceRef | .//netex:groupsOfEntities/netex:VehicleMeetingPlace/netex:PointOfInterestEntranceRef | .//netex:groupsOfEntities/netex:VehiclePoolingMeetingPlace/netex:PointOfInterestEntranceRef | .//netex:logicalDisplays/netex:PassengerInformationEquipment/netex:PointOfInterestEntranceRef | .//netex:meetingPointAssignments/netex:VehicleMeetingPointAssignment/netex:PointOfInterestEntranceRef | .//netex:members/netex:DefaultConnection/netex:PointOfInterestEntranceRef | .//netex:members/netex:DynamicVehicleMeetingPointAssignment/netex:PointOfInterestEntranceRef | .//netex:members/netex:GeneralFrameMember/netex:PointOfInterestEntranceRef | .//netex:members/netex:PassengerInformationEquipment/netex:PointOfInterestEntranceRef | .//netex:members/netex:SchematicMapMember/netex:PointOfInterestEntranceRef | .//netex:members/netex:VehicleMeetingPlace/netex:PointOfInterestEntranceRef | .//netex:members/netex:VehicleMeetingPointAssignment/netex:PointOfInterestEntranceRef | .//netex:members/netex:VehiclePoolingMeetingPlace/netex:PointOfInterestEntranceRef | .//netex:passengerInformationEquipments/netex:PassengerInformationEquipment/netex:PointOfInterestEntranceRef | .//netex:placeEquipments/netex:PassengerInformationEquipment/netex:PointOfInterestEntranceRef | .//netex:places/netex:VehicleMeetingPlace/netex:PointOfInterestEntranceRef | .//netex:places/netex:VehiclePoolingMeetingPlace/netex:PointOfInterestEntranceRef | .//netex:transfers/netex:DefaultConnection/netex:PointOfInterestEntranceRef | .//netex:unlocalisedEquipments/netex:PassengerInformationEquipment/netex:PointOfInterestEntranceRef | .//netex:vehicleMeetingPlaces/netex:VehiclePoolingMeetingPlace/netex:PointOfInterestEntranceRef | .//netex:vehicleMeetingPointAssignments/netex:VehicleMeetingPointAssignment/netex:PointOfInterestEntranceRef | .//netex:versions/netex:DefaultConnection/netex:PointOfInterestEntranceRef | .//netex:versions/netex:DynamicVehicleMeetingPointAssignment/netex:PointOfInterestEntranceRef | .//netex:versions/netex:PassengerInformationEquipment/netex:PointOfInterestEntranceRef | .//netex:versions/netex:VehicleMeetingPlace/netex:PointOfInterestEntranceRef | .//netex:versions/netex:VehicleMeetingPointAssignment/netex:PointOfInterestEntranceRef | .//netex:versions/netex:VehiclePoolingMeetingPlace/netex:PointOfInterestEntranceRef | .//netex:zones/netex:VehicleMeetingPlace/netex:PointOfInterestEntranceRef | .//netex:zones/netex:VehiclePoolingMeetingPlace/netex:PointOfInterestEntranceRef"/>
+      <xsd:selector xpath=".//netex:AccessRightParameterAssignment/netex:validityParameters/netex:PointOfInterestEntranceRef | .//netex:AccessSpace/netex:entrances/netex:PointOfInterestEntranceRef | .//netex:BoardingPosition/netex:boardingPositionEntrances/netex:PointOfInterestEntranceRef | .//netex:BoardingPosition/netex:entrances/netex:PointOfInterestEntranceRef | .//netex:CustomerPurchaseParameterAssignment/netex:validityParameters/netex:PointOfInterestEntranceRef | .//netex:FareTableColumn/netex:representing/netex:PointOfInterestEntranceRef | .//netex:FareTableRow/netex:representing/netex:PointOfInterestEntranceRef | .//netex:GeneralGroupOfEntities/netex:members/netex:PointOfInterestEntranceRef | .//netex:GenericParameterAssignment/netex:validityParameters/netex:PointOfInterestEntranceRef | .//netex:GenericParameterAssignmentInContext/netex:validityParameters/netex:PointOfInterestEntranceRef | .//netex:Layer/netex:members/netex:PointOfInterestEntranceRef | .//netex:NavigationPath/netex:From/netex:PointOfInterestEntranceRef | .//netex:NavigationPath/netex:To/netex:PointOfInterestEntranceRef | .//netex:NetworkFilterByValue/netex:objectReferences/netex:PointOfInterestEntranceRef | .//netex:NetworkFilterByValue/netex:places/netex:PointOfInterestEntranceRef | .//netex:ObjectFilterByValue/netex:objectReferences/netex:PointOfInterestEntranceRef | .//netex:OffSitePathLink/netex:From/netex:PointOfInterestEntranceRef | .//netex:OffSitePathLink/netex:To/netex:PointOfInterestEntranceRef | .//netex:Parking/netex:entrances/netex:PointOfInterestEntranceRef | .//netex:ParkingArea/netex:entrances/netex:PointOfInterestEntranceRef | .//netex:PathLink/netex:From/netex:PointOfInterestEntranceRef | .//netex:PathLink/netex:To/netex:PointOfInterestEntranceRef | .//netex:PointOfInterest/netex:entrances/netex:PointOfInterestEntranceRef | .//netex:Quay/netex:entrances/netex:PointOfInterestEntranceRef | .//netex:Quay_/netex:entrances/netex:PointOfInterestEntranceRef | .//netex:ServiceSite/netex:entrances/netex:PointOfInterestEntranceRef | .//netex:Site/netex:entrances/netex:PointOfInterestEntranceRef | .//netex:SiteConnection/netex:From/netex:PointOfInterestEntranceRef | .//netex:SiteConnection/netex:To/netex:PointOfInterestEntranceRef | .//netex:SiteNavigationPath/netex:From/netex:PointOfInterestEntranceRef | .//netex:SiteNavigationPath/netex:To/netex:PointOfInterestEntranceRef | .//netex:SitePathLink/netex:From/netex:PointOfInterestEntranceRef | .//netex:SitePathLink/netex:To/netex:PointOfInterestEntranceRef | .//netex:SpecificParameterAssignment/netex:validityParameters/netex:PointOfInterestEntranceRef | .//netex:StopPlace/netex:entrances/netex:PointOfInterestEntranceRef | .//netex:StopPlaceSpace/netex:entrances/netex:PointOfInterestEntranceRef | .//netex:StopPlace_/netex:entrances/netex:PointOfInterestEntranceRef | .//netex:TaxiParkingArea/netex:entrances/netex:PointOfInterestEntranceRef | .//netex:TaxiRank/netex:entrances/netex:PointOfInterestEntranceRef | .//netex:TaxiStand/netex:entrances/netex:PointOfInterestEntranceRef | .//netex:ValidityParameterAssignment/netex:validityParameters/netex:PointOfInterestEntranceRef | .//netex:VehiclePoolingParkingArea/netex:entrances/netex:PointOfInterestEntranceRef | .//netex:VehicleSharingParkingArea/netex:entrances/netex:PointOfInterestEntranceRef | .//netex:VehicleStoppingPlace/netex:entrances/netex:PointOfInterestEntranceRef | .//netex:actualVehicleEquipments/netex:PassengerInformationEquipment/netex:PointOfInterestEntranceRef | .//netex:assignments/netex:DynamicVehicleMeetingPointAssignment/netex:PointOfInterestEntranceRef | .//netex:assignments/netex:RechargingPointAssignment/netex:PointOfInterestEntranceRef | .//netex:assignments/netex:VehicleMeetingPointAssignment/netex:PointOfInterestEntranceRef | .//netex:commonDescendents/netex:refs/netex:PointOfInterestEntranceRef | .//netex:connections/netex:DefaultConnection/netex:PointOfInterestEntranceRef | .//netex:equipment/netex:PassengerInformationEquipment/netex:PointOfInterestEntranceRef | .//netex:equipments/netex:PassengerInformationEquipment/netex:PointOfInterestEntranceRef | .//netex:featureMembers/netex:ComplexFeatureMember/netex:PointOfInterestEntranceRef | .//netex:groups/netex:VehicleMeetingPlace/netex:PointOfInterestEntranceRef | .//netex:groups/netex:VehiclePoolingMeetingPlace/netex:PointOfInterestEntranceRef | .//netex:groupsOfEntities/netex:VehicleMeetingPlace/netex:PointOfInterestEntranceRef | .//netex:groupsOfEntities/netex:VehiclePoolingMeetingPlace/netex:PointOfInterestEntranceRef | .//netex:logicalDisplays/netex:PassengerInformationEquipment/netex:PointOfInterestEntranceRef | .//netex:meetingPointAssignments/netex:VehicleMeetingPointAssignment/netex:PointOfInterestEntranceRef | .//netex:members/netex:DefaultConnection/netex:PointOfInterestEntranceRef | .//netex:members/netex:DynamicVehicleMeetingPointAssignment/netex:PointOfInterestEntranceRef | .//netex:members/netex:GeneralFrameMember/netex:PointOfInterestEntranceRef | .//netex:members/netex:PassengerInformationEquipment/netex:PointOfInterestEntranceRef | .//netex:members/netex:RechargingPointAssignment/netex:PointOfInterestEntranceRef | .//netex:members/netex:SchematicMapMember/netex:PointOfInterestEntranceRef | .//netex:members/netex:VehicleMeetingPlace/netex:PointOfInterestEntranceRef | .//netex:members/netex:VehicleMeetingPointAssignment/netex:PointOfInterestEntranceRef | .//netex:members/netex:VehiclePoolingMeetingPlace/netex:PointOfInterestEntranceRef | .//netex:passengerInformationEquipments/netex:PassengerInformationEquipment/netex:PointOfInterestEntranceRef | .//netex:placeEquipments/netex:PassengerInformationEquipment/netex:PointOfInterestEntranceRef | .//netex:places/netex:VehicleMeetingPlace/netex:PointOfInterestEntranceRef | .//netex:places/netex:VehiclePoolingMeetingPlace/netex:PointOfInterestEntranceRef | .//netex:rechargingPointAssignments/netex:RechargingPointAssignment/netex:PointOfInterestEntranceRef | .//netex:seatEquipments/netex:PassengerInformationEquipment/netex:PointOfInterestEntranceRef | .//netex:transfers/netex:DefaultConnection/netex:PointOfInterestEntranceRef | .//netex:unlocalisedEquipments/netex:PassengerInformationEquipment/netex:PointOfInterestEntranceRef | .//netex:vehicleMeetingPlaces/netex:VehiclePoolingMeetingPlace/netex:PointOfInterestEntranceRef | .//netex:vehicleMeetingPointAssignments/netex:VehicleMeetingPointAssignment/netex:PointOfInterestEntranceRef | .//netex:versions/netex:DefaultConnection/netex:PointOfInterestEntranceRef | .//netex:versions/netex:DynamicVehicleMeetingPointAssignment/netex:PointOfInterestEntranceRef | .//netex:versions/netex:PassengerInformationEquipment/netex:PointOfInterestEntranceRef | .//netex:versions/netex:RechargingPointAssignment/netex:PointOfInterestEntranceRef | .//netex:versions/netex:VehicleMeetingPlace/netex:PointOfInterestEntranceRef | .//netex:versions/netex:VehicleMeetingPointAssignment/netex:PointOfInterestEntranceRef | .//netex:versions/netex:VehiclePoolingMeetingPlace/netex:PointOfInterestEntranceRef | .//netex:zones/netex:VehicleMeetingPlace/netex:PointOfInterestEntranceRef | .//netex:zones/netex:VehiclePoolingMeetingPlace/netex:PointOfInterestEntranceRef"/>
       <xsd:field xpath="@ref"/>
       <xsd:field xpath="@version"/>
     </xsd:keyref>
@@ -3881,7 +4429,7 @@
     </xsd:key>
     <!--=== Entity "PointOfInterestSpace" ===-->
     <xsd:keyref name="PointOfInterestSpace_Ref" refer="PointOfInterestSpace_Key">
-      <xsd:selector xpath=".//netex:ComplexFeatureMember/netex:PointOfInterestSpaceRef | .//netex:DefaultConnection/netex:PointOfInterestSpaceRef | .//netex:DynamicVehicleMeetingPointAssignment/netex:PointOfInterestSpaceRef | .//netex:From/netex:PointOfInterestSpaceRef | .//netex:GeneralFrameMember/netex:PointOfInterestSpaceRef | .//netex:ParentPointOfInterestSpaceRef | .//netex:PassengerInformationEquipment/netex:PointOfInterestSpaceRef | .//netex:SchematicMapMember/netex:PointOfInterestSpaceRef | .//netex:To/netex:PointOfInterestSpaceRef | .//netex:VehicleMeetingPlace/netex:PointOfInterestSpaceRef | .//netex:VehicleMeetingPointAssignment/netex:PointOfInterestSpaceRef | .//netex:VehiclePoolingMeetingPlace/netex:PointOfInterestSpaceRef | .//netex:members/netex:PointOfInterestSpaceRef | .//netex:objectReferences/netex:PointOfInterestSpaceRef | .//netex:places/netex:PointOfInterestSpaceRef | .//netex:refs/netex:PointOfInterestSpaceRef | .//netex:representing/netex:PointOfInterestSpaceRef | .//netex:validityParameters/netex:PointOfInterestSpaceRef"/>
+      <xsd:selector xpath=".//netex:ComplexFeatureMember/netex:PointOfInterestSpaceRef | .//netex:DefaultConnection/netex:PointOfInterestSpaceRef | .//netex:DynamicVehicleMeetingPointAssignment/netex:PointOfInterestSpaceRef | .//netex:From/netex:PointOfInterestSpaceRef | .//netex:GeneralFrameMember/netex:PointOfInterestSpaceRef | .//netex:ParentPointOfInterestSpaceRef | .//netex:PassengerInformationEquipment/netex:PointOfInterestSpaceRef | .//netex:RechargingPointAssignment/netex:PointOfInterestSpaceRef | .//netex:SchematicMapMember/netex:PointOfInterestSpaceRef | .//netex:To/netex:PointOfInterestSpaceRef | .//netex:VehicleMeetingPlace/netex:PointOfInterestSpaceRef | .//netex:VehicleMeetingPointAssignment/netex:PointOfInterestSpaceRef | .//netex:VehiclePoolingMeetingPlace/netex:PointOfInterestSpaceRef | .//netex:members/netex:PointOfInterestSpaceRef | .//netex:objectReferences/netex:PointOfInterestSpaceRef | .//netex:places/netex:PointOfInterestSpaceRef | .//netex:refs/netex:PointOfInterestSpaceRef | .//netex:representing/netex:PointOfInterestSpaceRef | .//netex:validityParameters/netex:PointOfInterestSpaceRef"/>
       <xsd:field xpath="@ref"/>
       <xsd:field xpath="@version"/>
     </xsd:keyref>
@@ -3946,7 +4494,11 @@
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
-    <!-- Generation of deep key suppressed, key: PointOnSection_VcsKey -->
+    <xsd:key name="PointOnSection_VcsKey_Deep">
+      <xsd:selector xpath=".//netex:CommonSectionPointMember | .//netex:LineSectionPointMember | .//netex:PointOnLineSection | .//netex:PointOnSection"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
     <!--=== Entity "PointProjection" ===-->
     <xsd:keyref name="PointProjection_Ref" refer="PointProjection_Key">
       <xsd:selector xpath=".//netex:PointProjectionRef"/>
@@ -3960,7 +4512,7 @@
     </xsd:key>
     <!--=== Entity "Point" ===-->
     <xsd:keyref name="Point_Ref" refer="Point_Key_Deep">
-      <xsd:selector xpath=".//netex:AdjacentPointRef | .//netex:Block/netex:EndPointRef | .//netex:Block/netex:StartPointRef | .//netex:CommonSectionPointMember/netex:PointRef | .//netex:ComplexFeatureMember/netex:PointRef | .//netex:ComplexFeatureProjection/netex:PointRef | .//netex:ConnectionEnd/netex:VehicleMeetingPointRef | .//netex:DeadRunCall/netex:PointRef | .//netex:Destination/netex:PointRef | .//netex:EndMeetingPointRef | .//netex:FarePointInPattern/netex:PointRef | .//netex:FlexiblePointProperties/netex:PointRef | .//netex:From/netex:PointRef | .//netex:From/netex:VehicleMeetingPointRef | .//netex:FromPointRef | .//netex:GeneralFrameMember/netex:PointRef | .//netex:HailAndRideArea/netex:EndPointRef | .//netex:HailAndRideArea/netex:StartPointRef | .//netex:JourneyLayover/netex:PointRef | .//netex:JourneyPatternLayover/netex:PointRef | .//netex:LineSectionPointMember/netex:PointRef | .//netex:Origin/netex:PointRef | .//netex:OvertakingAtPointRef | .//netex:PointInJourneyPattern/netex:PointRef | .//netex:PointOnLineSection/netex:PointRef | .//netex:PointOnLink/netex:PointRef | .//netex:PointOnRoute/netex:PointRef | .//netex:PointOnSection/netex:PointRef | .//netex:ProjectToPointRef | .//netex:ProjectedPointRef | .//netex:ReferencePointRef | .//netex:SchematicMapMember/netex:PointRef | .//netex:SpecificParameterAssignment/netex:CollectionPointRef | .//netex:StartMeetingPointRef | .//netex:To/netex:PointRef | .//netex:To/netex:VehicleMeetingPointRef | .//netex:ToPointRef | .//netex:TrainBlock/netex:EndPointRef | .//netex:TrainBlock/netex:StartPointRef | .//netex:VehicleJourneyLayover/netex:PointRef | .//netex:VehicleMeetingPointInPath/netex:PointRef | .//netex:distributionPoints/netex:PointRef | .//netex:members/netex:PointRef | .//netex:objectReferences/netex:PointRef | .//netex:points/netex:PointRef | .//netex:refs/netex:PointRef | .//netex:representing/netex:PointRef"/>
+      <xsd:selector xpath=".//netex:AdjacentPointRef | .//netex:Block/netex:EndPointRef | .//netex:Block/netex:StartPointRef | .//netex:CommonSectionPointMember/netex:PointRef | .//netex:ComplexFeatureMember/netex:PointRef | .//netex:ComplexFeatureProjection/netex:PointRef | .//netex:ConnectionEnd/netex:VehicleMeetingPointRef | .//netex:DeadRunCall/netex:PointRef | .//netex:Destination/netex:PointRef | .//netex:EndMeetingPointRef | .//netex:FarePointInPattern/netex:PointRef | .//netex:FlexiblePointProperties/netex:PointRef | .//netex:From/netex:PointRef | .//netex:From/netex:VehicleMeetingPointRef | .//netex:FromPointRef | .//netex:GeneralFrameMember/netex:PointRef | .//netex:HailAndRideArea/netex:EndPointRef | .//netex:HailAndRideArea/netex:StartPointRef | .//netex:JourneyLayover/netex:PointRef | .//netex:JourneyPatternLayover/netex:PointRef | .//netex:LineSectionPointMember/netex:PointRef | .//netex:Origin/netex:PointRef | .//netex:OvertakingAtPointRef | .//netex:PointInJourneyPattern/netex:PointRef | .//netex:PointOnLineSection/netex:PointRef | .//netex:PointOnLink/netex:PointRef | .//netex:PointOnRoute/netex:PointRef | .//netex:PointOnSection/netex:PointRef | .//netex:ProjectToPointRef | .//netex:ProjectedPointRef | .//netex:RechargingPointAssignment/netex:PointRef | .//netex:ReferencePointRef | .//netex:SchematicMapMember/netex:PointRef | .//netex:SpecificParameterAssignment/netex:CollectionPointRef | .//netex:StartMeetingPointRef | .//netex:To/netex:PointRef | .//netex:To/netex:VehicleMeetingPointRef | .//netex:ToPointRef | .//netex:TrainBlock/netex:EndPointRef | .//netex:TrainBlock/netex:StartPointRef | .//netex:VehicleJourneyLayover/netex:PointRef | .//netex:VehicleMeetingPointInPath/netex:PointRef | .//netex:distributionPoints/netex:PointRef | .//netex:members/netex:PointRef | .//netex:objectReferences/netex:PointRef | .//netex:points/netex:PointRef | .//netex:refs/netex:PointRef | .//netex:representing/netex:PointRef"/>
       <xsd:field xpath="@ref"/>
       <xsd:field xpath="@version"/>
     </xsd:keyref>
@@ -3970,7 +4522,7 @@
       <xsd:field xpath="@version"/>
     </xsd:key>
     <xsd:key name="Point_Key_Deep">
-      <xsd:selector xpath=".//netex:ActivationPoint | .//netex:ActivationPoint_ | .//netex:BeaconPoint | .//netex:BorderPoint | .//netex:FareScheduledStopPoint | .//netex:GaragePoint | .//netex:InfrastructurePoint | .//netex:ParkingPoint | .//netex:ParkingPoint_ | .//netex:PathJunction | .//netex:Point | .//netex:RailwayJunction | .//netex:ReliefPoint | .//netex:ReliefPoint_ | .//netex:RoadJunction | .//netex:RoutePoint | .//netex:SalesTransaction/netex:CollectionPointRef | .//netex:ScheduledStopPoint | .//netex:TimingPoint | .//netex:TimingPoint_ | .//netex:TrafficControlPoint | .//netex:VehicleMeetingPoint | .//netex:WireJunction"/>
+      <xsd:selector xpath=".//netex:ActivationPoint | .//netex:ActivationPoint_ | .//netex:BeaconPoint | .//netex:BorderPoint | .//netex:DeckPathJunction | .//netex:FareScheduledStopPoint | .//netex:GaragePoint | .//netex:GenericPathJunction | .//netex:InfrastructurePoint | .//netex:ParkingPoint | .//netex:ParkingPoint_ | .//netex:PathJunction | .//netex:Point | .//netex:RailwayJunction | .//netex:ReliefPoint | .//netex:ReliefPoint_ | .//netex:RoadJunction | .//netex:RoutePoint | .//netex:SalesTransaction/netex:CollectionPointRef | .//netex:ScheduledStopPoint | .//netex:SitePathJunction | .//netex:TimingPoint | .//netex:TimingPoint_ | .//netex:TrafficControlPoint | .//netex:VehicleMeetingPoint | .//netex:WireJunction"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
@@ -3982,6 +4534,17 @@
     </xsd:keyref>
     <xsd:key name="PoolOfVehicles_Key">
       <xsd:selector xpath=".//netex:PoolOfVehicles"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "PoweredTrain" ===-->
+    <xsd:keyref name="PoweredTrain_Ref" refer="PoweredTrain_Key">
+      <xsd:selector xpath=".//netex:PoweredTrainRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="PoweredTrain_Key">
+      <xsd:selector xpath=".//netex:PoweredTrain"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
@@ -4036,7 +4599,7 @@
       <xsd:field xpath="@version"/>
     </xsd:keyref>
     <xsd:key name="PriceableObject_Key">
-      <xsd:selector xpath=".//netex:PriceableObject"/>
+      <xsd:selector xpath=".//netex:DistanceMatrixElement_ | .//netex:PriceableObject"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
@@ -4180,6 +4743,50 @@
     <!--=== Entity "RampEquipment" ===-->
     <xsd:key name="RampEquipment_Key">
       <xsd:selector xpath=".//netex:RampEquipment"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "RechargingEquipmentProfile" ===-->
+    <xsd:keyref name="RechargingEquipmentProfile_Ref" refer="RechargingEquipmentProfile_Key">
+      <xsd:selector xpath=".//netex:RechargingEquipmentProfileRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="RechargingEquipmentProfile_Key">
+      <xsd:selector xpath=".//netex:RechargingEquipmentProfile"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "RechargingPlan" ===-->
+    <xsd:keyref name="RechargingPlan_Ref" refer="RechargingPlan_Key">
+      <xsd:selector xpath=".//netex:RechargingPlanRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="RechargingPlan_Key">
+      <xsd:selector xpath=".//netex:RechargingPlan"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "RechargingPointAssignment" ===-->
+    <xsd:keyref name="RechargingPointAssignment_Ref" refer="RechargingPointAssignment_Key">
+      <xsd:selector xpath=".//netex:RechargingPointAssignmentRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="RechargingPointAssignment_Key">
+      <xsd:selector xpath=".//netex:RechargingPointAssignment"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "RechargingStep" ===-->
+    <xsd:keyref name="RechargingStep_Ref" refer="RechargingStep_Key">
+      <xsd:selector xpath=".//netex:RechargingStepRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="RechargingStep_Key">
+      <xsd:selector xpath=".//netex:RechargingStep"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
@@ -4387,6 +4994,17 @@
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
+    <!--=== Entity "RestrictedServiceFacilitySet" ===-->
+    <xsd:keyref name="RestrictedServiceFacilitySet_Ref" refer="RestrictedServiceFacilitySet_Key">
+      <xsd:selector xpath=".//netex:RestrictedServiceFacilitySetRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="RestrictedServiceFacilitySet_Key">
+      <xsd:selector xpath=".//netex:RestrictedServiceFacilitySet"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
     <!--=== Entity "RetailConsortium" ===-->
     <xsd:keyref name="RetailConsortium_Ref" refer="RetailConsortium_Key">
       <xsd:selector xpath=".//netex:RetailConsortiumRef"/>
@@ -4462,6 +5080,33 @@
     <!--=== Entity "RoadJunction" ===-->
     <xsd:key name="RoadJunction_Key">
       <xsd:selector xpath=".//netex:RoadJunction"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "RollingStockInventory" ===-->
+    <xsd:keyref name="RollingStockInventory_Ref" refer="RollingStockInventory_Key">
+      <xsd:selector xpath=".//netex:RollingStockInventoryRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="RollingStockInventory_Key">
+      <xsd:selector xpath=".//netex:RollingStockInventory"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "RollingStockItem" ===-->
+    <xsd:keyref name="RollingStockItem_Ref" refer="RollingStockItem_Key_Deep">
+      <xsd:selector xpath=".//netex:RollingStockItemRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="RollingStockItem_Key">
+      <xsd:selector xpath=".//netex:RollingStockItem"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <xsd:key name="RollingStockItem_Key_Deep">
+      <xsd:selector xpath=".//netex:RollingStockItem | .//netex:TractiveRollingStockItem | .//netex:TrailingRollingStockItem"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
@@ -4746,6 +5391,17 @@
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
+    <!--=== Entity "SeatEquipment" ===-->
+    <xsd:keyref name="SeatEquipment_Ref" refer="SeatEquipment_Key">
+      <xsd:selector xpath=".//netex:SeatEquipmentRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="SeatEquipment_Key">
+      <xsd:selector xpath=".//netex:SeatEquipment"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
     <!--=== Entity "SeatingEquipment" ===-->
     <xsd:keyref name="SeatingEquipment_Ref" refer="SeatingEquipment_Key">
       <xsd:selector xpath=".//netex:SeatingEquipmentRef"/>
@@ -4808,6 +5464,44 @@
     </xsd:key>
     <xsd:key name="SecurityListing_VcsKey_Deep">
       <xsd:selector xpath=".//netex:CustomerAccountSecurityListing | .//netex:CustomerSecurityListing | .//netex:FareContractSecurityListing | .//netex:MediumAccessDeviceSecurityListing | .//netex:RetailDeviceSecurityListing | .//netex:SecurityListing | .//netex:TravelDocumentSecurityListing"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "SensorEquipment" ===-->
+    <xsd:keyref name="SensorEquipment_Ref" refer="SensorEquipment_Key_Deep">
+      <xsd:selector xpath=".//netex:SensorEquipmentRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="SensorEquipment_Key">
+      <xsd:selector xpath=".//netex:SensorEquipment"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <xsd:key name="SensorEquipment_Key_Deep">
+      <xsd:selector xpath=".//netex:EntranceSensor | .//netex:SensorEquipment | .//netex:SpotSensor"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "SensorInEntrance" ===-->
+    <xsd:keyref name="SensorInEntrance_Ref" refer="SensorInEntrance_VcsKey">
+      <xsd:selector xpath=".//netex:SensorInEntranceRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="SensorInEntrance_VcsKey">
+      <xsd:selector xpath=".//netex:SensorInEntrance"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "SensorInSpot" ===-->
+    <xsd:keyref name="SensorInSpot_Ref" refer="SensorInSpot_VcsKey">
+      <xsd:selector xpath=".//netex:SensorInSpotRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="SensorInSpot_VcsKey">
+      <xsd:selector xpath=".//netex:SensorInSpot"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
@@ -4889,13 +5583,18 @@
       <xsd:field xpath="@version"/>
     </xsd:key>
     <!--=== Entity "ServiceFacilitySet" ===-->
-    <xsd:keyref name="ServiceFacilitySet_Ref" refer="ServiceFacilitySet_Key">
+    <xsd:keyref name="ServiceFacilitySet_Ref" refer="ServiceFacilitySet_Key_Deep">
       <xsd:selector xpath=".//netex:ServiceFacilitySetRef"/>
       <xsd:field xpath="@ref"/>
       <xsd:field xpath="@version"/>
     </xsd:keyref>
     <xsd:key name="ServiceFacilitySet_Key">
-      <xsd:selector xpath=".//netex:ServiceFacilitySet"/>
+      <xsd:selector xpath=".//netex:RollingStockItem/netex:facilities | .//netex:ServiceFacilitySet | .//netex:TractiveRollingStockItem/netex:facilities | .//netex:TrailingRollingStockItem/netex:facilities"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <xsd:key name="ServiceFacilitySet_Key_Deep">
+      <xsd:selector xpath=".//netex:RestrictedServiceFacilitySet | .//netex:RollingStockItem/netex:facilities | .//netex:ServiceFacilitySet | .//netex:TractiveRollingStockItem/netex:facilities | .//netex:TrailingRollingStockItem/netex:facilities"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
@@ -4948,6 +5647,12 @@
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
+    <!--=== Entity "ServiceLinkInJourneyPattern" ===-->
+    <xsd:key name="ServiceLinkInJourneyPattern_VcsKey">
+      <xsd:selector xpath=".//netex:ServiceLinkInJourneyPattern"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
     <!--=== Entity "ServiceLink" ===-->
     <xsd:keyref name="ServiceLink_Ref" refer="ServiceLink_Key">
       <xsd:selector xpath=".//netex:OnwardServiceLinkRef | .//netex:ServiceLinkRef"/>
@@ -4978,6 +5683,17 @@
     </xsd:keyref>
     <xsd:key name="ServiceSite_Key">
       <xsd:selector xpath=".//netex:ServiceSite"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "Service" ===-->
+    <xsd:keyref name="ServiceFrame_Ref" refer="Service_VfsKey">
+      <xsd:selector xpath=".//netex:ServiceFrameRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="Service_VfsKey">
+      <xsd:selector xpath=".//netex:ServiceFrame"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
@@ -5134,9 +5850,47 @@
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
+    <!--=== Entity "SiteNavigationPath" ===-->
+    <xsd:keyref name="SiteNavigationPath_Ref" refer="SiteNavigationPath_Key">
+      <xsd:selector xpath=".//netex:NavigationPathRef | .//netex:SiteNavigationPathRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="SiteNavigationPath_Key">
+      <xsd:selector xpath=".//netex:NavigationPath | .//netex:SiteNavigationPath"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "SitePathJunction" ===-->
+    <xsd:keyref name="SitePathJunction_Ref" refer="SitePathJunction_Key">
+      <xsd:selector xpath=".//netex:PathJunctionRef | .//netex:SitePathJunctionRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="SitePathJunction_Key">
+      <xsd:selector xpath=".//netex:PathJunction | .//netex:SitePathJunction"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
     <!--=== Entity "SitePathLink" ===-->
+    <xsd:keyref name="SitePathLink_Ref" refer="SitePathLink_Key">
+      <xsd:selector xpath=".//netex:PathLinkRef | .//netex:SitePathLinkRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
     <xsd:key name="SitePathLink_Key">
-      <xsd:selector xpath=".//netex:SitePathLink"/>
+      <xsd:selector xpath=".//netex:PathLink | .//netex:SitePathLink"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "SiteStructure" ===-->
+    <xsd:keyref name="SiteStructure_Ref" refer="SiteStructure_Key">
+      <xsd:selector xpath=".//netex:SiteStructureRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="SiteStructure_Key">
+      <xsd:selector xpath=".//netex:SiteStructure"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
@@ -5208,6 +5962,66 @@
     <!--=== Entity "SpecificParameterAssignment" ===-->
     <xsd:key name="SpecificParameterAssignment_Key">
       <xsd:selector xpath=".//netex:SpecificParameterAssignment"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "SpotAffinity" ===-->
+    <xsd:keyref name="SpotAffinity_Ref" refer="SpotAffinity_Key">
+      <xsd:selector xpath=".//netex:SpotAffinityRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="SpotAffinity_Key">
+      <xsd:selector xpath=".//netex:SpotAffinity"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "SpotColumn" ===-->
+    <xsd:keyref name="SpotColumn_Ref" refer="SpotColumn_Key">
+      <xsd:selector xpath=".//netex:SpotColumnRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="SpotColumn_Key">
+      <xsd:selector xpath=".//netex:SpotColumn"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "SpotEquipment" ===-->
+    <xsd:keyref name="SpotEquipment_Ref" refer="SpotEquipment_Key_Deep">
+      <xsd:selector xpath=".//netex:SpotEquipmentRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="SpotEquipment_Key">
+      <xsd:selector xpath=".//netex:SpotEquipment"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <xsd:key name="SpotEquipment_Key_Deep">
+      <xsd:selector xpath=".//netex:BedEquipment | .//netex:LuggageSpotEquipment | .//netex:SeatEquipment | .//netex:SpotEquipment"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "SpotRow" ===-->
+    <xsd:keyref name="SpotRow_Ref" refer="SpotRow_Key">
+      <xsd:selector xpath=".//netex:SpotRowRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="SpotRow_Key">
+      <xsd:selector xpath=".//netex:SpotRow"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "SpotSensor" ===-->
+    <xsd:keyref name="SpotSensor_Ref" refer="SpotSensor_Key">
+      <xsd:selector xpath=".//netex:SpotSensorRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="SpotSensor_Key">
+      <xsd:selector xpath=".//netex:SpotSensor"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
@@ -5290,7 +6104,7 @@
       <xsd:field xpath="@version"/>
     </xsd:key>
     <xsd:key name="StopAssignment_Key_Deep">
-      <xsd:selector xpath=".//netex:DynamicStopAssignment | .//netex:FlexibleStopAssignment | .//netex:NavigationPathAssignment | .//netex:PassengerStopAssignment | .//netex:StopAssignment | .//netex:TrainStopAssignment | .//netex:VehicleJourneyStopAssignment"/>
+      <xsd:selector xpath=".//netex:DeckEntranceAssignment | .//netex:DynamicStopAssignment | .//netex:FlexibleStopAssignment | .//netex:NavigationPathAssignment | .//netex:PassengerBoardingPositionAssignment | .//netex:PassengerBoardingPositionAssignment_ | .//netex:PassengerStopAssignment | .//netex:StopAssignment | .//netex:TrainComponentStopAssignment | .//netex:TrainStopAssignment | .//netex:VehicleJourneyStopAssignment | .//netex:VehicleTypeStopAssignment"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
@@ -5361,7 +6175,7 @@
     </xsd:key>
     <!--=== Entity "StopPointInJourneyPattern" ===-->
     <xsd:keyref name="StopPointInJourneyPattern_Ref" refer="StopPointInJourneyPattern_VcsKey">
-      <xsd:selector xpath=".//netex:StopPointInJourneyPatternRef"/>
+      <xsd:selector xpath=".//netex:FromStopPointInJourneyPattern | .//netex:StopPointInJourneyPatternRef | .//netex:ToStopPointInJourneyPattern"/>
       <xsd:field xpath="@ref"/>
       <xsd:field xpath="@version"/>
     </xsd:keyref>
@@ -5865,6 +6679,28 @@
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
+    <!--=== Entity "TractiveElementType" ===-->
+    <xsd:keyref name="TractiveElementType_Ref" refer="TractiveElementType_Key">
+      <xsd:selector xpath=".//netex:TractiveElementTypeRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="TractiveElementType_Key">
+      <xsd:selector xpath=".//netex:TractiveElementType"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "TractiveRollingStockItem" ===-->
+    <xsd:keyref name="TractiveRollingStockItem_Ref" refer="TractiveRollingStockItem_Key">
+      <xsd:selector xpath=".//netex:TractiveRollingStockItemRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="TractiveRollingStockItem_Key">
+      <xsd:selector xpath=".//netex:TractiveRollingStockItem"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
     <!--=== Entity "TrafficControlPoint" ===-->
     <xsd:keyref name="TrafficControlPoint_Ref" refer="TrafficControlPoint_Key">
       <xsd:selector xpath=".//netex:TrafficControlPointRef"/>
@@ -5873,6 +6709,28 @@
     </xsd:keyref>
     <xsd:key name="TrafficControlPoint_Key">
       <xsd:selector xpath=".//netex:TrafficControlPoint"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "TrailingElementType" ===-->
+    <xsd:keyref name="TrailingElementType_Ref" refer="TrailingElementType_Key">
+      <xsd:selector xpath=".//netex:TrailingElementTypeRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="TrailingElementType_Key">
+      <xsd:selector xpath=".//netex:TrailingElementType"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "TrailingRollingStockItem" ===-->
+    <xsd:keyref name="TrailingRollingStockItem_Ref" refer="TrailingRollingStockItem_Key">
+      <xsd:selector xpath=".//netex:TrailingRollingStockItemRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="TrailingRollingStockItem_Key">
+      <xsd:selector xpath=".//netex:TrailingRollingStockItem"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
@@ -5909,6 +6767,17 @@
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
+    <!--=== Entity "TrainComponentStopAssignment" ===-->
+    <xsd:keyref name="TrainComponentStopAssignment_Ref" refer="TrainComponentStopAssignment_Key">
+      <xsd:selector xpath=".//netex:TrainComponentStopAssignmentRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="TrainComponentStopAssignment_Key">
+      <xsd:selector xpath=".//netex:TrainComponentStopAssignment"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
     <!--=== Entity "TrainComponent" ===-->
     <xsd:keyref name="TrainComponent_Ref" refer="TrainComponent_Key">
       <xsd:selector xpath=".//netex:TrainComponentRef"/>
@@ -5920,14 +6789,19 @@
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
-    <!--=== Entity "TrainElement" ===-->
-    <xsd:keyref name="TrainElement_Ref" refer="TrainElement_Key">
-      <xsd:selector xpath=".//netex:TrainElementRef"/>
+    <!--=== Entity "TrainElementType" ===-->
+    <xsd:keyref name="TrainElementType_Ref" refer="TrainElementType_Key_Deep">
+      <xsd:selector xpath=".//netex:TrainElementRef | .//netex:TrainElementTypeRef"/>
       <xsd:field xpath="@ref"/>
       <xsd:field xpath="@version"/>
     </xsd:keyref>
-    <xsd:key name="TrainElement_Key">
+    <xsd:key name="TrainElementType_Key">
       <xsd:selector xpath=".//netex:TrainElement"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <xsd:key name="TrainElementType_Key_Deep">
+      <xsd:selector xpath=".//netex:TractiveElementType | .//netex:TrailingElementType | .//netex:TrainElement"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
@@ -5965,13 +6839,18 @@
       <xsd:field xpath="@version"/>
     </xsd:key>
     <!--=== Entity "Train" ===-->
-    <xsd:keyref name="Train_Ref" refer="Train_Key">
+    <xsd:keyref name="Train_Ref" refer="Train_Key_Deep">
       <xsd:selector xpath=".//netex:TrainRef"/>
       <xsd:field xpath="@ref"/>
       <xsd:field xpath="@version"/>
     </xsd:keyref>
     <xsd:key name="Train_Key">
       <xsd:selector xpath=".//netex:Train"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <xsd:key name="Train_Key_Deep">
+      <xsd:selector xpath=".//netex:PoweredTrain | .//netex:Train | .//netex:UnpoweredTrain"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
@@ -6052,7 +6931,7 @@
       <xsd:field xpath="@version"/>
     </xsd:key>
     <xsd:key name="TransportType_Key_Deep">
-      <xsd:selector xpath=".//netex:CompoundTrain | .//netex:SimpleVehicleType | .//netex:Train | .//netex:TransportType | .//netex:VehicleType"/>
+      <xsd:selector xpath=".//netex:CompoundTrain | .//netex:PoweredTrain | .//netex:SimpleVehicleType | .//netex:Train | .//netex:TransportType | .//netex:UnpoweredTrain | .//netex:VehicleType"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
@@ -6118,6 +6997,17 @@
     </xsd:keyref>
     <xsd:key name="TravelatorEquipment_Key">
       <xsd:selector xpath=".//netex:TravelatorEquipment"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "TripDebit" ===-->
+    <xsd:keyref name="TripDebit_Ref" refer="TripDebit_Key">
+      <xsd:selector xpath=".//netex:TripDebitRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="TripDebit_Key">
+      <xsd:selector xpath=".//netex:TripDebit"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
@@ -6220,6 +7110,34 @@
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
+    <!--=== Entity "TypeOfDeckEntranceUsage" ===-->
+    <xsd:keyref name="TypeOfDeckEntranceUsage_Ref" refer="TypeOfDeckEntranceUsage_VasKey">
+      <xsd:selector xpath=".//netex:TypeOfDeckEntranceUsageRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="TypeOfDeckEntranceUsage_VasKey">
+      <xsd:selector xpath=".//netex:TypeOfDeckEntranceUsage"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "TypeOfDeckEntrance" ===-->
+    <xsd:keyref name="TypeOfDeckEntrance_Ref" refer="TypeOfDeckEntrance_VasKey">
+      <xsd:selector xpath=".//netex:TypeOfDeckEntranceRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="TypeOfDeckEntrance_VasKey">
+      <xsd:selector xpath=".//netex:TypeOfDeckEntrance"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "TypeOfDeckSpace" ===-->
+    <xsd:key name="TypeOfDeckSpace_VasKey">
+      <xsd:selector xpath=".//netex:TypeOfDeckSpace"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
     <!--=== Entity "TypeOfDeliveryVariant" ===-->
     <xsd:keyref name="TypeOfDeliveryVariant_Ref" refer="TypeOfDeliveryVariant_VasKey">
       <xsd:selector xpath=".//netex:TypeOfDeliveryVariantRef"/>
@@ -6248,7 +7166,11 @@
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
-    <!-- Generation of deep key suppressed, key: TypeOfEntity_Key -->
+    <xsd:key name="TypeOfEntity_Key_Deep">
+      <xsd:selector xpath=".//netex:CustomerAccountStatus | .//netex:TypeOfAccessRightAssignment | .//netex:TypeOfActivation | .//netex:TypeOfBatteryChemistry | .//netex:TypeOfCongestion | .//netex:TypeOfCustomerAccount | .//netex:TypeOfDeliveryVariant | .//netex:TypeOfEntity | .//netex:TypeOfEquipment | .//netex:TypeOfFacility | .//netex:TypeOfFareContract | .//netex:TypeOfFareContractEntry | .//netex:TypeOfFareProduct | .//netex:TypeOfFareStructureElement | .//netex:TypeOfFareStructureFactor | .//netex:TypeOfFeature | .//netex:TypeOfFlexibleService | .//netex:TypeOfFrame | .//netex:TypeOfJourneyPattern | .//netex:TypeOfLine | .//netex:TypeOfLink | .//netex:TypeOfLinkSequence | .//netex:TypeOfMobilityService | .//netex:TypeOfModeOfOperation | .//netex:TypeOfNotice | .//netex:TypeOfOperation | .//netex:TypeOfOrganisation | .//netex:TypeOfOrganisationPart | .//netex:TypeOfPassengerInformationEquipment | .//netex:TypeOfPlace | .//netex:TypeOfPlug | .//netex:TypeOfPoint | .//netex:TypeOfProductCategory | .//netex:TypeOfProjection | .//netex:TypeOfResponsibilityRole | .//netex:TypeOfRetailDevice | .//netex:TypeOfRollingStock | .//netex:TypeOfSalesOfferPackage | .//netex:TypeOfSecurityList | .//netex:TypeOfService | .//netex:TypeOfServiceFeature | .//netex:TypeOfTariff | .//netex:TypeOfTimeDemandType | .//netex:TypeOfTransfer | .//netex:TypeOfTravelDocument | .//netex:TypeOfZone"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
     <!--=== Entity "TypeOfEquipment" ===-->
     <xsd:keyref name="TypeOfEquipment_Ref" refer="TypeOfEquipment_VasKey">
       <xsd:selector xpath=".//netex:TypeOfEquipmentRef"/>
@@ -6422,6 +7344,17 @@
     </xsd:keyref>
     <xsd:key name="TypeOfLink_VasKey">
       <xsd:selector xpath=".//netex:TypeOfLink"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "TypeOfLocatableSpot" ===-->
+    <xsd:keyref name="TypeOfLocatableSpot_Ref" refer="TypeOfLocatableSpot_VasKey">
+      <xsd:selector xpath=".//netex:TypeOfLocatableSpotRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="TypeOfLocatableSpot_VasKey">
+      <xsd:selector xpath=".//netex:TypeOfLocatableSpot"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
@@ -6640,6 +7573,17 @@
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
+    <!--=== Entity "TypeOfRollingStock" ===-->
+    <xsd:keyref name="TypeOfRollingStock_Ref" refer="TypeOfRollingStock_VasKey">
+      <xsd:selector xpath=".//netex:TypeOfRollingStockRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="TypeOfRollingStock_VasKey">
+      <xsd:selector xpath=".//netex:TypeOfRollingStock"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
     <!--=== Entity "TypeOfSalesOfferPackage" ===-->
     <xsd:keyref name="TypeOfSalesOfferPackage_Ref" refer="TypeOfSalesOfferPackage_Key">
       <xsd:selector xpath=".//netex:TypeOfSalesOfferPackageRef"/>
@@ -6774,6 +7718,17 @@
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
+    <!--=== Entity "TypeOfWheelchair" ===-->
+    <xsd:keyref name="TypeOfWheelchair_Ref" refer="TypeOfWheelchair_VasKey">
+      <xsd:selector xpath=".//netex:TypeOfWheelchairRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="TypeOfWheelchair_VasKey">
+      <xsd:selector xpath=".//netex:TypeOfWheelchair"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
     <!--=== Entity "TypeOfZone" ===-->
     <xsd:keyref name="TypeOfZone_Ref" refer="TypeOfZone_VasKey">
       <xsd:selector xpath=".//netex:TypeOfZoneRef"/>
@@ -6788,6 +7743,17 @@
     <!--=== Entity "UicOperatingPeriod" ===-->
     <xsd:key name="UicOperatingPeriod_Key">
       <xsd:selector xpath=".//netex:UicOperatingPeriod"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "UnpoweredTrain" ===-->
+    <xsd:keyref name="UnpoweredTrain_Ref" refer="UnpoweredTrain_Key">
+      <xsd:selector xpath=".//netex:UnpoweredTrainRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="UnpoweredTrain_Key">
+      <xsd:selector xpath=".//netex:UnpoweredTrain"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
@@ -6920,7 +7886,7 @@
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
-    <!-- Generation of deep key suppressed, key: ValidityParameterAssignment_Key -->
+    <!-- Generation of deep key suppressed as it contains skipped keys (GenericParameterAssignment_VersionStructure), key: ValidityParameterAssignment_Key -->
     <!--=== Entity "ValidityRuleParameter" ===-->
     <xsd:keyref name="ValidityRuleParameter_Ref" refer="ValidityRuleParameter_Key">
       <xsd:selector xpath=".//netex:ValidityRuleParameterRef"/>
@@ -7010,7 +7976,7 @@
       <xsd:field xpath="@version"/>
     </xsd:key>
     <xsd:key name="VehicleEquipmentProfile_Key_Deep">
-      <xsd:selector xpath=".//netex:ChargingEquipmentProfile | .//netex:VehicleEquipmentProfile"/>
+      <xsd:selector xpath=".//netex:RechargingEquipmentProfile | .//netex:VehicleEquipmentProfile"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
@@ -7026,14 +7992,30 @@
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
+    <!--=== Entity "VehicleJourneySpotAllocation" ===-->
+    <xsd:keyref name="VehicleJourneySpotAllocation_Ref" refer="VehicleJourneySpotAllocation_Key">
+      <xsd:selector xpath=".//netex:VehicleJourneySpotAllocationRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="VehicleJourneySpotAllocation_Key">
+      <xsd:selector xpath=".//netex:VehicleJourneySpotAllocation"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
     <!--=== Entity "VehicleJourneyStopAssignment" ===-->
-    <xsd:keyref name="VehicleJourneyStopAssignment_Ref" refer="VehicleJourneyStopAssignment_Key">
+    <xsd:keyref name="VehicleJourneyStopAssignment_Ref" refer="VehicleJourneyStopAssignment_Key_Deep">
       <xsd:selector xpath=".//netex:VehicleJourneyStopAssignmentRef"/>
       <xsd:field xpath="@ref"/>
       <xsd:field xpath="@version"/>
     </xsd:keyref>
     <xsd:key name="VehicleJourneyStopAssignment_Key">
       <xsd:selector xpath=".//netex:VehicleJourneyStopAssignment"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <xsd:key name="VehicleJourneyStopAssignment_Key_Deep">
+      <xsd:selector xpath=".//netex:DynamicStopAssignment | .//netex:VehicleJourneyStopAssignment"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
@@ -7045,7 +8027,7 @@
     </xsd:key>
     <!--=== Entity "VehicleJourney" ===-->
     <xsd:keyref name="VehicleJourney_Ref" refer="VehicleJourney_Key_Deep">
-      <xsd:selector xpath=".//netex:ConnectingJourneyRef | .//netex:DatedVehicleJourneyRef | .//netex:FromJourneyRef | .//netex:ParentJourneyRef | .//netex:ToJourneyRef | .//netex:VehicleJourneyRef"/>
+      <xsd:selector xpath=".//netex:ConnectingJourneyRef | .//netex:DatedVehicleJourneyRef | .//netex:FromJourneyRef | .//netex:NormalDatedVehicleJourneyRef | .//netex:ParentJourneyRef | .//netex:ToJourneyRef | .//netex:VehicleJourneyRef"/>
       <xsd:field xpath="@ref"/>
       <xsd:field xpath="@version"/>
     </xsd:keyref>
@@ -7121,7 +8103,7 @@
     </xsd:key>
     <!--=== Entity "VehicleMeetingPoint" ===-->
     <xsd:keyref name="VehicleMeetingPoint_Ref" refer="VehicleMeetingPoint_Key">
-      <xsd:selector xpath=".//netex:CommonSectionPointMember/netex:VehicleMeetingPointRef | .//netex:ComplexFeatureMember/netex:VehicleMeetingPointRef | .//netex:ComplexFeatureProjection/netex:VehicleMeetingPointRef | .//netex:DeadRunCall/netex:VehicleMeetingPointRef | .//netex:Destination/netex:VehicleMeetingPointRef | .//netex:DynamicVehicleMeetingPointAssignment/netex:VehicleMeetingPointRef | .//netex:FarePointInPattern/netex:VehicleMeetingPointRef | .//netex:FlexiblePointProperties/netex:VehicleMeetingPointRef | .//netex:GeneralFrameMember/netex:VehicleMeetingPointRef | .//netex:JourneyLayover/netex:VehicleMeetingPointRef | .//netex:JourneyPatternLayover/netex:VehicleMeetingPointRef | .//netex:LineSectionPointMember/netex:VehicleMeetingPointRef | .//netex:Origin/netex:VehicleMeetingPointRef | .//netex:PointInJourneyPattern/netex:VehicleMeetingPointRef | .//netex:PointOnLineSection/netex:VehicleMeetingPointRef | .//netex:PointOnLink/netex:VehicleMeetingPointRef | .//netex:PointOnRoute/netex:VehicleMeetingPointRef | .//netex:PointOnSection/netex:VehicleMeetingPointRef | .//netex:SchematicMapMember/netex:VehicleMeetingPointRef | .//netex:VehicleJourneyLayover/netex:VehicleMeetingPointRef | .//netex:VehicleMeetingLink/netex:FromPointRef | .//netex:VehicleMeetingLink/netex:ToPointRef | .//netex:VehicleMeetingPointAssignment/netex:VehicleMeetingPointRef | .//netex:VehicleMeetingPointInPath/netex:VehicleMeetingPointRef | .//netex:distributionPoints/netex:VehicleMeetingPointRef | .//netex:members/netex:VehicleMeetingPointRef | .//netex:objectReferences/netex:VehicleMeetingPointRef | .//netex:points/netex:VehicleMeetingPointRef | .//netex:refs/netex:VehicleMeetingPointRef | .//netex:representing/netex:VehicleMeetingPointRef | .//netex:validityParameters/netex:VehicleMeetingPointRef"/>
+      <xsd:selector xpath=".//netex:CommonSectionPointMember/netex:VehicleMeetingPointRef | .//netex:ComplexFeatureMember/netex:VehicleMeetingPointRef | .//netex:ComplexFeatureProjection/netex:VehicleMeetingPointRef | .//netex:DeadRunCall/netex:VehicleMeetingPointRef | .//netex:Destination/netex:VehicleMeetingPointRef | .//netex:DynamicVehicleMeetingPointAssignment/netex:VehicleMeetingPointRef | .//netex:FarePointInPattern/netex:VehicleMeetingPointRef | .//netex:FlexiblePointProperties/netex:VehicleMeetingPointRef | .//netex:GeneralFrameMember/netex:VehicleMeetingPointRef | .//netex:JourneyLayover/netex:VehicleMeetingPointRef | .//netex:JourneyPatternLayover/netex:VehicleMeetingPointRef | .//netex:LineSectionPointMember/netex:VehicleMeetingPointRef | .//netex:Origin/netex:VehicleMeetingPointRef | .//netex:PointInJourneyPattern/netex:VehicleMeetingPointRef | .//netex:PointOnLineSection/netex:VehicleMeetingPointRef | .//netex:PointOnLink/netex:VehicleMeetingPointRef | .//netex:PointOnRoute/netex:VehicleMeetingPointRef | .//netex:PointOnSection/netex:VehicleMeetingPointRef | .//netex:RechargingPointAssignment/netex:VehicleMeetingPointRef | .//netex:SchematicMapMember/netex:VehicleMeetingPointRef | .//netex:VehicleJourneyLayover/netex:VehicleMeetingPointRef | .//netex:VehicleMeetingLink/netex:FromPointRef | .//netex:VehicleMeetingLink/netex:ToPointRef | .//netex:VehicleMeetingPointAssignment/netex:VehicleMeetingPointRef | .//netex:VehicleMeetingPointInPath/netex:VehicleMeetingPointRef | .//netex:distributionPoints/netex:VehicleMeetingPointRef | .//netex:members/netex:VehicleMeetingPointRef | .//netex:objectReferences/netex:VehicleMeetingPointRef | .//netex:points/netex:VehicleMeetingPointRef | .//netex:refs/netex:VehicleMeetingPointRef | .//netex:representing/netex:VehicleMeetingPointRef | .//netex:validityParameters/netex:VehicleMeetingPointRef"/>
       <xsd:field xpath="@ref"/>
       <xsd:field xpath="@version"/>
     </xsd:keyref>
@@ -7493,18 +8475,23 @@
       <xsd:field xpath="@version"/>
     </xsd:key>
     <xsd:key name="VehicleType_Key_Deep">
-      <xsd:selector xpath=".//netex:CompoundTrain | .//netex:Train | .//netex:VehicleType"/>
+      <xsd:selector xpath=".//netex:CompoundTrain | .//netex:PoweredTrain | .//netex:Train | .//netex:UnpoweredTrain | .//netex:VehicleType"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
     <!--=== Entity "Vehicle" ===-->
-    <xsd:keyref name="Vehicle_Ref" refer="Vehicle_Key">
+    <xsd:keyref name="Vehicle_Ref" refer="Vehicle_Key_Deep">
       <xsd:selector xpath=".//netex:VehicleRef"/>
       <xsd:field xpath="@ref"/>
       <xsd:field xpath="@version"/>
     </xsd:keyref>
     <xsd:key name="Vehicle_Key">
       <xsd:selector xpath=".//netex:Vehicle"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <xsd:key name="Vehicle_Key_Deep">
+      <xsd:selector xpath=".//netex:RollingStockItem | .//netex:TractiveRollingStockItem | .//netex:TrailingRollingStockItem | .//netex:Vehicle"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
@@ -7591,6 +8578,17 @@
     <!--=== Entity "WireJunction" ===-->
     <xsd:key name="WireJunction_Key">
       <xsd:selector xpath=".//netex:WireJunction"/>
+      <xsd:field xpath="@id"/>
+      <xsd:field xpath="@version"/>
+    </xsd:key>
+    <!--=== Entity "ZoneInSeries" ===-->
+    <xsd:keyref name="ZoneInSeries_Ref" refer="ZoneInSeries_VcsKey">
+      <xsd:selector xpath=".//netex:ZoneInSeriesRef"/>
+      <xsd:field xpath="@ref"/>
+      <xsd:field xpath="@version"/>
+    </xsd:keyref>
+    <xsd:key name="ZoneInSeries_VcsKey">
+      <xsd:selector xpath=".//netex:ZoneInSeries"/>
       <xsd:field xpath="@id"/>
       <xsd:field xpath="@version"/>
     </xsd:key>
