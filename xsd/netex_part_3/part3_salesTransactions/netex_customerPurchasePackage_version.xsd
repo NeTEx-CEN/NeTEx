@@ -4,10 +4,11 @@
 	<xsd:include schemaLocation="../part3_fares/netex_geographicStructureFactor_support.xsd"/>
 	<xsd:include schemaLocation="../part3_PiQuery/netex_piRequest_support.xsd"/>
 	<xsd:include schemaLocation="../part3_fares/netex_fareStructureElement_support.xsd"/>
-	<xsd:include schemaLocation="netex_customerPurchasePackage_support.xsd"/>
-	<xsd:include schemaLocation="netex_salesTransaction_support.xsd"/>
 	<xsd:include schemaLocation="../part3_fares/netex_validableElement_support.xsd"/>
 	<xsd:include schemaLocation="../part3_fares/netex_salesOfferPackage_version.xsd"/>
+	<xsd:include schemaLocation="netex_customerPurchasePackage_support.xsd"/>
+	<xsd:include schemaLocation="netex_salesTransaction_support.xsd"/>
+	<xsd:include schemaLocation="netex_spotAllocation_support.xsd"/>
 	<xsd:include schemaLocation="netex_travelSpecificationSummary_version.xsd"/>
 	<xsd:include schemaLocation="netex_salesContract_version.xsd"/>
 	<xsd:include schemaLocation="netex_travelSpecificationSummary_version.xsd"/>
@@ -58,6 +59,8 @@
 				</Date>
 				<Date><Modified>2023-12-18</Modified>Factor out Paymount amount to FARE DEBIT PACKAGE
 				</Date>
+				<Date><Modified>2025-04-26</Modified>Add in  Passenger SPOT ALLOCATION
+				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the CUSTOMER PURCHASE PACKAGE types.</p>
@@ -74,7 +77,7 @@
 					<Requires>http://www.netex.org.uk/schemas/1.0/PATH/netex_prereqfile.xsd</Requires>
 				</Relation>
 				<Rights>Unclassified
-					 <Copyright>CEN, Crown Copyright 2009-2023</Copyright>
+					 <Copyright>CEN, Crown Copyright 2009-2025</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -726,6 +729,11 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>PRICEs of CUSTOMER PURCHASE PACKAGE ELEMENT.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="spotAllocations" type="passengerSpotAllocationRefs_RelStructure" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>SPOT ALLOCATIONs for CUSTOMER PURCHASE PACKAGE ELEMENT.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:group name="CustomerPurchasePackageElementSelectionGroup">
@@ -967,16 +975,7 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>+v1.2.2</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element ref="TripRef" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>+v1.2.2</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element ref="TripLegRef" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>+v1.2.2</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
+			<xsd:group ref="TripReferenceGroup"/>
 		</xsd:sequence>
 	</xsd:group>
 </xsd:schema>
