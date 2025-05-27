@@ -36,6 +36,10 @@
 				<Date>
 					<Modified>2020-06-21  Issue JourneyPart #78 -NJSK:  MainJourneyPartRef should be a JourneyPartRef, not a  JourneyPartCoupleRef  </Modified>
 				</Date>
+
+				<Date>
+					<Modified>2025-05-27  Issue #906 -Ulf9: JourneyPartCouple including vehicle journeys on different operating day dates</Modified>
+				</Date>
 				<Description>
 					<p>NeTEx is a European CEN standard for the exchange of Public Transport data including timetables.</p>
 					<p>This sub-schema describes the COUPLED JOURNEY types.</p>
@@ -181,6 +185,11 @@ Rail transport, Roads and Road transport
 			<xsd:element name="ParentJourneyRef" type="VehicleJourneyRefStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Reference to parent of which this is part. If given by context does not need to be stated.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+				<xsd:element name="DayOffsetRelativeToMainPart" type="DayOffsetType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>OPERATING DAY day offset of parent journey relative to OPERATING DAY date of main JOURNEY PART journey. Positive value indicates a later OPERATING DAY date for parent journey. Does not need to be stated if 0 or not relevant for context.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:group ref="JourneyPartReferencesGroup"/>
@@ -504,7 +513,7 @@ Rail transport, Roads and Road transport
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element ref="BlockRef" minOccurs="0"/>
-			<xsd:element name="journeyParts" type="journeyPartRefs_RelStructure" minOccurs="0">
+			<xsd:element name="journeyParts" type="journeyParts_RelStructure" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>JOURNEY PARTs in JOURNEY PART COUPLE.</xsd:documentation>
 				</xsd:annotation>
