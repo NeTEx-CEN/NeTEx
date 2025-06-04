@@ -159,26 +159,52 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>SCHEDULED STOP POINT at which JOURNEY MEETING takes place.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="FromJourneyRef" type="JourneyRefStructure">
-				<xsd:annotation>
-					<xsd:documentation>JOURNEY that feeds JOURNEY MEETING.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="ToJourneyRef" type="JourneyRefStructure">
-				<xsd:annotation>
-					<xsd:documentation>JOURNEY that distributes from JOURNEY MEETING.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="FromPointInJourneyPatternRef" type="PointInJourneyPatternRefStructure" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>POINT IN JOURNEY PATTERN ofr  feeder  journey JOURNEY PATTERN.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="ToPointInJourneyPatternRef" type="PointInJourneyPatternRefStructure" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>POINT IN JOURNEY PATTERN ofr  distributorjourney JOURNEY PATTERN.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
+			<xsd:choice>
+				<xsd:sequence>
+					<xsd:element name="FromJourneyRef" type="JourneyRefStructure">
+						<xsd:annotation>
+							<xsd:documentation>DEPRECATE: JOURNEY that feeds JOURNEY MEETING. -v2.0</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="ToJourneyRef" type="JourneyRefStructure">
+						<xsd:annotation>
+							<xsd:documentation>DEPRECATE: JOURNEY that distributes from JOURNEY MEETING. -v2.0</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="FromPointInJourneyPatternRef" type="PointInJourneyPatternRefStructure" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>DEPRECATE: POINT IN JOURNEY PATTERN of feeder journey JOURNEY PATTERN. -v2.0</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="ToPointInJourneyPatternRef" type="PointInJourneyPatternRefStructure" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>DEPRECATE: POINT IN JOURNEY PATTERN of distributor journey JOURNEY PATTERN. -v2.0</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+				<xsd:sequence>
+					<xsd:element name="FromServiceJourneyRef" type="ServiceJourneyRefStructure">
+						<xsd:annotation>
+							<xsd:documentation>SERVICE JOURNEY that feeds JOURNEY MEETING. +v2.0</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="ToServiceJourneyRef" type="ServiceJourneyRefStructure">
+						<xsd:annotation>
+							<xsd:documentation>SERVICE JOURNEY that distributes from JOURNEY MEETING. +v2.0</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="FromStopPointInJourneyPatternRef" type="StopPointInJourneyPatternRefStructure" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>STOP POINT IN JOURNEY PATTERN of feeder journey SERVICE JOURNEY PATTERN. +v2.0</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="ToStopPointInJourneyPatternRef" type="StopPointInJourneyPatternRefStructure" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>STOP POINT IN JOURNEY PATTERN of distributor journey SERVICE JOURNEY PATTERN. +v2.0</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:choice>
 			<xsd:group ref="JourneyMeetingPropertiesGroup"/>
 			<xsd:group ref="JourneyMeetingConnectionGroup"/>
 		</xsd:sequence>
@@ -607,16 +633,32 @@ Default is false.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:group ref="InterchangeEndpointGroup" minOccurs="0"/>
-			<xsd:element name="FromJourneyRef" type="JourneyRefStructure">
-				<xsd:annotation>
-					<xsd:documentation>JOURNEY that feeds the INTERCHANGE.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="ToJourneyRef" type="JourneyRefStructure">
-				<xsd:annotation>
-					<xsd:documentation>JOURNEY that distributes from the INTERCHANGE.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
+			<xsd:choice>
+				<xsd:sequence>
+					<xsd:element name="FromJourneyRef" type="JourneyRefStructure">
+						<xsd:annotation>
+							<xsd:documentation>DEPRECATE: JOURNEY that feeds the INTERCHANGE. -v2.0</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="ToJourneyRef" type="JourneyRefStructure">
+						<xsd:annotation>
+							<xsd:documentation>DEPRECATE: JOURNEY that distributes from the INTERCHANGE. -v2.0</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+				<xsd:sequence>
+					<xsd:element name="FromServiceJourneyRef" type="ServiceJourneyRefStructure">
+						<xsd:annotation>
+							<xsd:documentation>SERVICE JOURNEY that feeds the INTERCHANGE. +v2.0</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="ToServiceJourneyRef" type="ServiceJourneyRefStructure">
+						<xsd:annotation>
+							<xsd:documentation>SERVICE JOURNEY that distributes from the INTERCHANGE. +v2.0</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:choice>
 			<xsd:element ref="ServiceJourneyPatternInterchangeRef" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
@@ -661,16 +703,32 @@ Default is false.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:group ref="InterchangeEndpointGroup"/>
-			<xsd:element name="FromJourneyPatternRef" type="JourneyPatternRefStructure">
-				<xsd:annotation>
-					<xsd:documentation>JOURNEY PATTERN that feeds INTERCHANGE.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="ToJourneyPatternRef" type="JourneyPatternRefStructure">
-				<xsd:annotation>
-					<xsd:documentation>JOURNEY PATTERN that distributes from INTERCHANGE.</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
+			<xsd:choice>
+				<xsd:sequence>
+					<xsd:element name="FromJourneyPatternRef" type="JourneyPatternRefStructure">
+						<xsd:annotation>
+							<xsd:documentation>DEPRECATE: JOURNEY PATTERN that feeds INTERCHANGE. -v2.0</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="ToJourneyPatternRef" type="JourneyPatternRefStructure">
+						<xsd:annotation>
+							<xsd:documentation>DEPRECATE: JOURNEY PATTERN that distributes from INTERCHANGE. -v2.0</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+				<xsd:sequence>
+					<xsd:element name="FromServiceJourneyPatternRef" type="ServiceJourneyPatternRefStructure">
+						<xsd:annotation>
+							<xsd:documentation>SERVICE JOURNEY PATTERN that feeds INTERCHANGE. +v2.0</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="ToServiceJourneyPatternRef" type="ServiceJourneyPatternRefStructure">
+						<xsd:annotation>
+							<xsd:documentation>SERVICE JOURNEY PATTERN that distributes from INTERCHANGE. +v2.0</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:choice>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->
