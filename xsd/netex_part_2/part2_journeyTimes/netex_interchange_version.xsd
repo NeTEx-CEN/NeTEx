@@ -349,7 +349,7 @@ Rail transport, Roads and Road transport
 	<!-- ======================================================================= -->
 	<xsd:element name="DefaultInterchange" abstract="false" substitutionGroup="Interchange_">
 		<xsd:annotation>
-			<xsd:documentation>A quality parameter fixing the acceptable duration (standard and maximum) for an INTERCHANGE to be planned between two SCHEDULED STOP POINTs. This parameter will be used to control whether any two VEHICLE JOURNEYs serving those points may be in connection.</xsd:documentation>
+			<xsd:documentation>A quality parameter fixing the acceptable duration (standard and maximum) for an INTERCHANGE to be planned between two SCHEDULED STOP POINTs. This parameter will be used to control whether any two SERVICE JOURNEYs serving those points may be in connection.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -808,12 +808,22 @@ Default is false.</xsd:documentation>
 						</xsd:complexType>
 					</xsd:element>
 					<xsd:choice>
-						<xsd:element name="ConnectingJourneyRef" type="VehicleJourneyRefStructure">
-							<xsd:annotation>
-								<xsd:documentation>VEHICLE JOURNEY that feeds the INTERCHANGE.</xsd:documentation>
-							</xsd:annotation>
-						</xsd:element>
-						<xsd:element ref="ConnectingJourneyView"/>
+						<xsd:choice>
+							<xsd:element name="ConnectingJourneyRef" type="JourneyRefStructure">
+								<xsd:annotation>
+									<xsd:documentation>DEPRECATE: JOURNEY that feeds the INTERCHANGE. -v2.0</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element ref="ConnectingJourneyView"/>
+						</xsd:choice>
+						<xsd:choice>
+							<xsd:element name="ConnectingServiceJourneyRef" type="ServiceJourneyRefStructure">
+								<xsd:annotation>
+									<xsd:documentation>SERVICE JOURNEY that feeds the INTERCHANGE. +v2.0</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element ref="ConnectingServiceJourneyView"/>
+						</xsd:choice>
 					</xsd:choice>
 					<xsd:element name="ConnectingLineView" type="Line_DerivedViewStructure" minOccurs="0">
 						<xsd:annotation>
@@ -826,14 +836,19 @@ Default is false.</xsd:documentation>
 		</xsd:complexContent>
 	</xsd:complexType>
 	<!-- ======================================================================= -->
-	<xsd:element name="ConnectingJourneyView" type="ConnectingJourney_DerivedViewStructure" abstract="false" substitutionGroup="DerivedView">
+	<xsd:element name="ConnectingJourneyView" type="ConnectingServiceJourney_DerivedViewStructure" abstract="false" substitutionGroup="DerivedView">
 		<xsd:annotation>
-			<xsd:documentation>Simplified  view of CONNECTING JOURNEY.</xsd:documentation>
+			<xsd:documentation>Simplified view of CONNECTING JOURNEY.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:complexType name="ConnectingJourney_DerivedViewStructure">
+	<xsd:element name="ConnectingServiceJourneyView" type="ConnectingServiceJourney_DerivedViewStructure" abstract="false" substitutionGroup="DerivedView">
 		<xsd:annotation>
-			<xsd:documentation>Type for CONNECTING JOURNEY VIEW.</xsd:documentation>
+			<xsd:documentation>Simplified view of CONNECTING SERVICE JOURNEY.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ConnectingServiceJourney_DerivedViewStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for CONNECTING SERVICE JOURNEY VIEW.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="DerivedViewStructure">
