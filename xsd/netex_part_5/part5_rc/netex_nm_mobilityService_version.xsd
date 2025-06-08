@@ -80,17 +80,17 @@ Rail transport, Roads and Road transport
 		<xsd:complexContent>
 			<xsd:extension base="containmentAggregationStructure">
 				<xsd:sequence>
-					<xsd:element ref="MobilityService_" maxOccurs="unbounded"/>
+					<xsd:element ref="MobilityService_Abstract" maxOccurs="unbounded"/>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:element name="MobilityService_" type="Equipment_VersionStructure" abstract="true" substitutionGroup="Equipment">
+	<xsd:element name="MobilityService_Abstract" type="Equipment_VersionStructure" abstract="true" substitutionGroup="Equipment">
 		<xsd:annotation>
 			<xsd:documentation>Dummy type to work around SG limitation.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:element name="MobilityService" type="MobilityService_VersionStructure" abstract="true" substitutionGroup="MobilityService_">
+	<xsd:element name="MobilityService" type="MobilityService_VersionStructure" abstract="true" substitutionGroup="MobilityService_Abstract">
 		<xsd:annotation>
 			<xsd:documentation>A named service  available over  a widespread area, for example car pooling, rental, etc. The service may be accessible at designated SITES it for which it can be considered as a n additional form of immaterial EQUIPMENT.  +v1.2.2
 </xsd:documentation>
@@ -128,7 +128,7 @@ Rail transport, Roads and Road transport
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element ref="TypeOfMobilityServiceRef" minOccurs="0"/>
-			<xsd:element ref="OrganisationRef_" minOccurs="0"/>
+			<xsd:element ref="OrganisationRef_Abstract" minOccurs="0"/>
 			<xsd:element ref="TopographicPlaceRef" minOccurs="0"/>
 			<xsd:choice>
 				<xsd:element name="serviceBookingArrangements" type="serviceBookingArrangements_RelStructure" minOccurs="0">
@@ -145,12 +145,12 @@ Rail transport, Roads and Road transport
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ===== COMMON VEHICLE SERVICE ============================================= -->
-	<xsd:element name="CommonVehicleService_" type="Equipment_VersionStructure" abstract="true" substitutionGroup="MobilityService_">
+	<xsd:element name="CommonVehicleService_Abstract" type="Equipment_VersionStructure" abstract="true" substitutionGroup="MobilityService_Abstract">
 		<xsd:annotation>
 			<xsd:documentation>Dummy type to work around SG limitation.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:element name="CommonVehicleService" abstract="true" substitutionGroup="CommonVehicleService_">
+	<xsd:element name="CommonVehicleService" abstract="true" substitutionGroup="CommonVehicleService_Abstract">
 		<xsd:annotation>
 			<xsd:documentation>A transport service offer related to VEHICLEs. +v1.2.2</xsd:documentation>
 		</xsd:annotation>
@@ -214,12 +214,12 @@ Rail transport, Roads and Road transport
 		</xsd:sequence>
 	</xsd:group>
 	<!-- =====  VEHICLE POOLING SERVICE ============================================= -->
-	<xsd:element name="VehiclePoolingService_" type="MobilityService_VersionStructure" abstract="true" substitutionGroup="CommonVehicleService_">
+	<xsd:element name="VehiclePoolingService_Abstract" type="MobilityService_VersionStructure" abstract="true" substitutionGroup="CommonVehicleService_Abstract">
 		<xsd:annotation>
 			<xsd:documentation>Dummy type to work around SG limitation.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:element name="VehiclePoolingService" abstract="true" substitutionGroup="VehiclePoolingService_">
+	<xsd:element name="VehiclePoolingService" abstract="true" substitutionGroup="VehiclePoolingService_Abstract">
 		<xsd:annotation>
 			<xsd:documentation>A transport service that connects users (driver and passenger(s)) for carrying out trips.  +v1.2.2</xsd:documentation>
 		</xsd:annotation>
@@ -277,7 +277,7 @@ Rail transport, Roads and Road transport
 		</xsd:sequence>
 	</xsd:group>
 	<!-- =====  TAXI SERVICE ============================================= -->
-	<xsd:element name="TaxiService" substitutionGroup="VehiclePoolingService_">
+	<xsd:element name="TaxiService" substitutionGroup="VehiclePoolingService_Abstract">
 		<xsd:annotation>
 			<xsd:documentation>A type of VEHICLE POOLING SERVICE where the service may be regulated according to a particular taxi policy.
 .  +v1.2.2</xsd:documentation>
@@ -340,7 +340,7 @@ Rail transport, Roads and Road transport
 		<xsd:sequence/>
 	</xsd:group>
 	<!-- =====  GENERAL POOLING SERVICE ============================================= -->
-	<xsd:element name="CarPoolingService" substitutionGroup="VehiclePoolingService_">
+	<xsd:element name="CarPoolingService" substitutionGroup="VehiclePoolingService_Abstract">
 		<xsd:annotation>
 			<xsd:documentation>A transport service that connects users (driver and passenger(s)) for carrying out trips.  +v1.2.2</xsd:documentation>
 		</xsd:annotation>
@@ -402,7 +402,7 @@ Rail transport, Roads and Road transport
 		<xsd:sequence/>
 	</xsd:group>
 	<!-- =====  ChauffeuredVehicle SERVICE ============================================= -->
-	<xsd:element name="ChauffeuredVehicleService" substitutionGroup="VehiclePoolingService_">
+	<xsd:element name="ChauffeuredVehicleService" substitutionGroup="VehiclePoolingService_Abstract">
 		<xsd:annotation>
 			<xsd:documentation>A type of VEHICLE POOLING SERVICE which can only be used by prior arrangement and where the driver has a commercial agreement with the user. +v1.2.2</xsd:documentation>
 		</xsd:annotation>
@@ -464,7 +464,7 @@ Rail transport, Roads and Road transport
 		<xsd:sequence/>
 	</xsd:group>
 	<!-- =====  VEHICLE SHARING SERVICE ============================================= -->
-	<xsd:element name="VehicleSharingService" substitutionGroup="CommonVehicleService_">
+	<xsd:element name="VehicleSharingService" substitutionGroup="CommonVehicleService_Abstract">
 		<xsd:annotation>
 			<xsd:documentation>A transport service offer related to VEHICLE SHARING. +v1.2.2</xsd:documentation>
 		</xsd:annotation>
@@ -542,7 +542,7 @@ Rail transport, Roads and Road transport
 		</xsd:sequence>
 	</xsd:group>
 	<!-- =====  VEHICLE RENTAL SERVICE ============================================= -->
-	<xsd:element name="VehicleRentalService" substitutionGroup="CommonVehicleService_">
+	<xsd:element name="VehicleRentalService" substitutionGroup="CommonVehicleService_Abstract">
 		<xsd:annotation>
 			<xsd:documentation>A transport service offer related to VEHICLE RENTAL. +v1.2.2</xsd:documentation>
 		</xsd:annotation>
