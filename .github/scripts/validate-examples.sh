@@ -11,7 +11,7 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 echo "Validating NeTEx XML examples ..."
 
-if $SCRIPT_DIR/xmllint --noout --schema xsd/NeTEx_publication.xsd examples/standards/efp/*.xml examples/standards/norway/*/*.xml examples/standards/nta/*.xml examples/standards/tap_tsi/*/*.xml examples/standards/epiap/*xml examples/functions/deckPlans/*.xml examples/functions/calendar/*.xml examples/functions/fares/*xml examples/functions/grouping/*xml examples/functions/newModes/*xml examples/functions/patterns/*xml examples/functions/pointOfInterest/*xml examples/functions/simpleNetwork/*xml examples/functions/site/*xml examples/functions/stopPlace/*xml examples/functions/timetable/*xml examples/functions/validityCondition/*xml examples/functions/variant/*xml examples/functions/vehicleSchedule/*xml examples/functions/versioning/*xml examples/standards/epip/*xml examples/standards/era_uic/*xml examples/standards/fxc/*xml examples/standards/gbfs/*xml examples/standards/gtfs/*xml examples/standards/neptune/*xml  examples/standards/noptis/*xml examples/standards/tap_tsi/*xml examples/standards/txc/*xml examples/standards/vdv452/*/*xml examples/standards/vdv452/*/*/*xml; then
+if /usr/bin/find examples/functions examples/standards -type f -name "*.xml" -print0 | xargs -0 $SCRIPT_DIR/xmllint --noout --schema xsd/NeTEx_publication.xsd; then
   echo -e '\033[0;32mValidating NeTEx XML examples succeeded\033[0m'
 else
   echo -e '\033[0;31mValidating NeTEx XML examples failed\033[0m'
