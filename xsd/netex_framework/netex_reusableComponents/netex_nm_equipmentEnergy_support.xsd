@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.02" id="netex_nm_equipmentEnergy_support">
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_nm_equipmentEnergy_support">
 	<xsd:include schemaLocation="netex_equipment_support.xsd"/>
 	<!-- ======================================================================= -->
 	<xsd:annotation>
@@ -32,7 +32,7 @@
 				<Language>[ISO 639-2/B] ENG</Language>
 				<Publisher>CEN TC278 WG3 SG9</Publisher>
 				<Rights>Unclassified
- <Copyright>CEN, Crown Copyright 2009-2021</Copyright>
+				 <Copyright>CEN, Crown Copyright 2009-2024</Copyright>
 				</Rights>
 				<Source>
 					<ul>
@@ -57,6 +57,20 @@ Rail transport, Roads and Road transport
 		</xsd:appinfo>
 		<xsd:documentation>ENERGY EQUIPMENT identifier types for  NeTEx.</xsd:documentation>
 	</xsd:annotation>
+	<xsd:complexType name="compatibleEquipmentRefs_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>List of VEHICLE CHarging   or REFUELLING EQUIPMENT with which is compatible.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element ref="VehicleChargingEquipmentRef"/>
+					<xsd:element ref="RefuellingEquipmentRef"/>
+					<xsd:element ref="BatteryEquipmentRef"/>
+				</xsd:choice>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 	<!-- ==== VEHICLE CHARGING EQUIPMENT =========================================== -->
 	<xsd:simpleType name="VehicleChargingEquipmentIdType">
 		<xsd:annotation>
@@ -187,6 +201,38 @@ Rail transport, Roads and Road transport
 			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
+	<!-- ======================================================================= -->
+	<xsd:simpleType name="FuelTypeListOfEnumerations">
+		<xsd:annotation>
+			<xsd:documentation>List of allowed values for file type.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:list itemType="FuelTypeEnumeration"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="FuelTypeEnumeration">
+		<xsd:annotation>
+			<xsd:documentation>Allowed values for type of fuel.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="battery"/>
+			<xsd:enumeration value="biodiesel"/>
+			<xsd:enumeration value="diesel"/>
+			<xsd:enumeration value="dieselBatteryHybrid"/>
+			<xsd:enumeration value="electricContact"/>
+			<xsd:enumeration value="electricity"/>
+			<xsd:enumeration value="ethanol"/>
+			<xsd:enumeration value="hydrogen"/>
+			<xsd:enumeration value="liquidGas"/>
+			<xsd:enumeration value="tpg"/>
+			<xsd:enumeration value="methane"/>
+			<xsd:enumeration value="naturalGas"/>
+			<xsd:enumeration value="petrol"/>
+			<xsd:enumeration value="petrolBatteryHybrid"/>
+			<xsd:enumeration value="petrolLeaded"/>
+			<xsd:enumeration value="petrolUnleaded"/>
+			<xsd:enumeration value="none"/>
+			<xsd:enumeration value="other"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<!-- ======================================================================= -->
 	<xsd:simpleType name="PlugTypeEnumeration">
 		<xsd:annotation>
