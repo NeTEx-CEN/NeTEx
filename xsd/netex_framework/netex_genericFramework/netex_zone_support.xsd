@@ -65,12 +65,34 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Reference to a ZONE.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
+	<xsd:simpleType name="NameOfRefClassForZoneRefStructure">
+		<xsd:restriction base="NameOfRefClassForGroupOfPointsRefStructure">
+			<xsd:enumeration value="AccessZone"/>
+			<xsd:enumeration value="AdministrativeZone"/>
+			<xsd:enumeration value="FareZone"/>
+			<xsd:enumeration value="GroupOfEntities"/>
+			<xsd:enumeration value="MobilityServiceConstraintZone"/>
+			<xsd:enumeration value="RoutingConstraintZone"/>
+			<xsd:enumeration value="StopArea"/>
+			<xsd:enumeration value="TariffZone"/>
+			<xsd:enumeration value="TariffZoneRef_"/>
+			<xsd:enumeration value="TransportAdministrativeZone"/>
+			<xsd:enumeration value="VehicleTypeZoneRestriction"/>
+			<xsd:enumeration value="Zone"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<xsd:complexType name="ZoneRefStructure" abstract="false">
 		<xsd:annotation>
 			<xsd:documentation>Type for a reference to a ZONE.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:simpleContent>
-			<xsd:restriction base="GroupOfPointsRefStructure"/>
+			<xsd:restriction base="GroupOfPointsRefStructure">
+				<xsd:attribute name="nameOfRefClass" use="optional" type="NameOfRefClassForZoneRefStructure" default="Zone">
+					<xsd:annotation>
+						<xsd:documentation>The natural class for ZoneRefStructure and alternative options, automatically updated. Must be provided when referencing an other class.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
 	<xsd:complexType name="zoneRefs_RelStructure">
@@ -104,12 +126,25 @@ Rail transport, Roads and Road transport
 			</xsd:simpleContent>
 		</xsd:complexType>
 	</xsd:element>
+	<xsd:simpleType name="NameOfRefClassForTariffZoneRefStructure">
+		<xsd:restriction base="NameOfRefClassForZoneRefStructure">
+			<xsd:enumeration value="FareZone"/>
+			<xsd:enumeration value="GroupOfEntities"/>
+			<xsd:enumeration value="TariffZone"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<xsd:complexType name="TariffZoneRefStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for a reference to a TARIFF ZONE.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:simpleContent>
-			<xsd:restriction base="ZoneRefStructure"/>
+			<xsd:restriction base="ZoneRefStructure">
+				<xsd:attribute name="nameOfRefClass" use="optional" type="NameOfRefClassForTariffZoneRefStructure" default="TariffZone">
+					<xsd:annotation>
+						<xsd:documentation>The natural class for TariffZoneRefStructure and alternative options, automatically updated. Must be provided when referencing an other class.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
 		</xsd:simpleContent>
 	</xsd:complexType>
 	<xsd:complexType name="tariffZoneRefs_RelStructure">
@@ -136,6 +171,11 @@ Rail transport, Roads and Road transport
 			<xsd:documentation>Reference to a TYPE OF ZONE.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
+	<xsd:simpleType name="NameOfRefClassForTypeOfZoneRefStructure">
+		<xsd:restriction base="NameOfRefClassForTypeOfValueRefStructure">
+			<xsd:enumeration value="TypeOfZone"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<xsd:complexType name="TypeOfZoneRefStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for a reference to a TYPE OF ZONE.</xsd:documentation>
@@ -145,6 +185,11 @@ Rail transport, Roads and Road transport
 				<xsd:attribute name="ref" type="TypeOfZoneIdType" use="required">
 					<xsd:annotation>
 						<xsd:documentation>Reference to a TYPE OF ZONE.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="nameOfRefClass" use="optional" type="NameOfRefClassForTypeOfZoneRefStructure" fixed="TypeOfZone">
+					<xsd:annotation>
+						<xsd:documentation>The natural class for TypeOfZoneRefStructure, automatically updated.</xsd:documentation>
 					</xsd:annotation>
 				</xsd:attribute>
 			</xsd:restriction>
