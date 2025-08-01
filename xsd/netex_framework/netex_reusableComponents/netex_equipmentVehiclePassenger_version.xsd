@@ -73,6 +73,7 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="AccessVehicleEquipment"/>
 			<xsd:element ref="WheelchairVehicleEquipment"/>
 			<xsd:element ref="RetractableStepVehicleEquipment"/>
+			<xsd:element ref="RampVehicleEquipment"/>
 		</xsd:choice>
 	</xsd:group>
 	<xsd:complexType name="vehicleEquipments_RelStructure">
@@ -85,6 +86,7 @@ Rail transport, Roads and Road transport
 					<xsd:element ref="AccessVehicleEquipment"/>
 					<xsd:element ref="WheelchairVehicleEquipment"/>
 					<xsd:element ref="RetractableStepVehicleEquipment"/>
+					<xsd:element ref="RampVehicleEquipment"/>
 				</xsd:choice>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -420,6 +422,47 @@ Rail transport, Roads and Road transport
 					<xsd:documentation>The height difference of the individual steps or if only one step is described the height difference from the step BOARDING HEIGHT to the VEHICLE BOARDING HEIGHT.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ======================================================================= -->
+	<xsd:element name="RampVehicleEquipment" substitutionGroup="PassengerEquipment">
+		<xsd:annotation>
+			<xsd:documentation>A special VEHICLE EQUIPMENT to model ramps used to bridge the horizontal and vertical gap between vehicle and platform.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="RampVehicleEquipment_VersionStructure">
+					<xsd:sequence>
+						<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						<xsd:group ref="DataManagedObjectGroup"/>
+						<xsd:group ref="EquipmentGroup"/>
+						<xsd:group ref="PassengerEquipmentGroup"/>
+						<xsd:group ref="RampVehicleEquipmentGroup"/>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="RampVehicleEquipmentIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="RampVehicleEquipment_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a RAMP VEHICLE EQUIPMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="PassengerEquipment_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="RampVehicleEquipmentGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="RampVehicleEquipmentGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a RAMP VEHICLE EQUIPMENT type.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:group ref="BoardingEquipmentOperationGroup"/>
+			<xsd:group ref="BoardingEquipmentHorizontalGapReductionGroup"/>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->
