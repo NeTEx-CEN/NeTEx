@@ -74,6 +74,7 @@ Rail transport, Roads and Road transport
 			<xsd:element ref="WheelchairVehicleEquipment"/>
 			<xsd:element ref="RetractableStepVehicleEquipment"/>
 			<xsd:element ref="RampVehicleEquipment"/>
+			<xsd:element ref="HoistVehicleEquipment"/>
 		</xsd:choice>
 	</xsd:group>
 	<xsd:complexType name="vehicleEquipments_RelStructure">
@@ -87,6 +88,7 @@ Rail transport, Roads and Road transport
 					<xsd:element ref="WheelchairVehicleEquipment"/>
 					<xsd:element ref="RetractableStepVehicleEquipment"/>
 					<xsd:element ref="RampVehicleEquipment"/>
+					<xsd:element ref="HoistVehicleEquipment"/>
 				</xsd:choice>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -463,6 +465,61 @@ Rail transport, Roads and Road transport
 		<xsd:sequence>
 			<xsd:group ref="BoardingEquipmentOperationGroup"/>
 			<xsd:group ref="BoardingEquipmentHorizontalGapReductionGroup"/>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- ======================================================================= -->
+	<xsd:element name="HoistVehicleEquipment" substitutionGroup="PassengerEquipment">
+		<xsd:annotation>
+			<xsd:documentation>A special VEHICLE EQUIPMENT to model hoists and lifts used to bridge the vertical and partially horizontal gap between vehicle and platform.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:restriction base="HoistVehicleEquipment_VersionStructure">
+					<xsd:sequence>
+						<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+						<xsd:group ref="DataManagedObjectGroup"/>
+						<xsd:group ref="EquipmentGroup"/>
+						<xsd:group ref="HoistVehicleEquipmentGroup"/>
+					</xsd:sequence>
+					<xsd:attribute name="id" type="HoistVehicleEquipmentIdType"/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="HoistVehicleEquipment_VersionStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a HOIST VEHICLE EQUIPMENT.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="PassengerEquipment_VersionStructure">
+				<xsd:sequence>
+					<xsd:group ref="HoistVehicleEquipmentGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="HoistVehicleEquipmentGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for a HOIST VEHICLE EQUIPMENT type.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:group ref="BoardingEquipmentOperationGroup"/>
+			<xsd:group ref="BoardingEquipmentHorizontalGapReductionGroup"/>
+			<xsd:element name="InnerLength" type="LengthType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The clearance length of the lifting platform. Can be used to determine if a wheelchair fits on the lift.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="InnerWidth" type="LengthType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The clearance width of the lifting platform. Can be used to determine if a wheelchair fits on the lift.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="LiftingHeight" type="LengthType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The maximum height difference the lift can overcome. In other words the distance between the VEHICLE’s floor height and the lowest point the lift can reach.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
 	<!-- ======================================================================= -->
