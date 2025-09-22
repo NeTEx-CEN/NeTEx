@@ -2,7 +2,9 @@
 <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_serviceRestrictions_version">
 	<xsd:include schemaLocation="../netex_responsibility/netex_typeOfValue_version.xsd"/>
 	<xsd:include schemaLocation="../netex_genericFramework/netex_organisation_support.xsd"/>
-	<xsd:include schemaLocation="netex_serviceRestrictions_support.xsd"/>
+	<xsd:include schemaLocation="../../netex_part_1/part1_networkDescription/netex_line_support.xsd"/>
+	<xsd:include schemaLocation="netex_serviceRestrictions_support.xsd"/> <!--xxx verschieben -->
+	<xsd:include schemaLocation="../../netex_part_3/part3_fares/netex_usageParameterEligibility_version.xsd"/> <!--xxx verschieben -->
 	<!-- ======================================================================= -->
 	<xsd:annotation>
 		<xsd:appinfo>
@@ -232,6 +234,96 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
+	<xsd:complexType name="ServiceCompetitiveConditionStructure" abstract="false">
+		<xsd:annotation>
+			<xsd:documentation>Type for SERVICE COMPETITIVE CONDITION.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BookingArrangementsStructure">
+				<xsd:group ref="ServiceCompetitiveConditionGroup"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="ServiceCompetitiveConditionGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for SERVICE COMPETITIVE CONDITION.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:choice>
+				<xsd:sequence>
+					<xsd:element ref="LineRef">
+						<xsd:annotation>
+							<xsd:documentation>Line that is not to be competed with.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="TemporalDistance" type="xsd:duration" minOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>Temporal distance to the line.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="Distance" type="xsd:integer" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Distance in meters to the line.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+				<xsd:sequence>
+					<xsd:element name="InterchangeBetweenFlexibleServicesAllowed" type="xsd:boolean" default="false"  minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Interchange between different flexible services is allowed.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="InterchangeWithContentionalServicesAllowed" type="xsd:boolean" default="false" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Interchange between the flexible service and conventional services is allowed</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="ServiceEligibilityArrangementsStructure" abstract="false">
+		<xsd:annotation>
+			<xsd:documentation>Type for SERVICE ELIGIBILITY ARRANGEMENTs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BookingArrangementsStructure">
+				<xsd:group ref="ServiceEligibilityArrangementsGroup"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:group name="ServiceEligibilityArrangementsGroup">
+		<xsd:annotation>
+			<xsd:documentation>Elements for SERVICE ELIGIBILITY ARRANGEMENTs.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:choice>
+				<xsd:element ref="UserProfile"/>
+				<xsd:element ref="CommercialProfile"/>
+				<xsd:element ref="ResidentialQualification"/>
+				<xsd:element ref="CompanionProfile"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:element name="BookingArrangement" type="BookingArrangementsStructure" abstract="false" id="BookingArrangement"/>
+	<xsd:element name="ServiceBookingArrangement" type="ServiceBookingArrangementsStructure" substitutionGroup="BookingArrangement" abstract="false" id="ServiceBookingArrangement"/>
+	<xsd:element name="ServiceEligibilityArrangement" type="ServiceEligibilityArrangementsStructure" substitutionGroup="BookingArrangement" abstract="false" id="ServiceEligibilityArrangement"/>
+	<xsd:element name="ServiceCompetitiveCondition" type="ServiceCompetitiveConditionStructure" substitutionGroup="BookingArrangement" abstract="false" id="ServiceCompetitiveCondition"/>
+	<xsd:complexType name="bookingArrangementsInFrame_RelStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for containment in frame of BOOKING ARRANGEMENTs</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="containmentAggregationStructure">
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element ref="BookingArrangement"/>
+					<!-- xsd:element ref="ServiceBookingArrangement"/>
+					<xsd:element ref="ServiceEligibilityArrangement"/>
+					<xsd:element ref="ServiceCompetitiveCondition"/> -->
+				</xsd:choice>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 	<!-- ======================================================================= -->
 	<xsd:element name="TypeOfPaymentMethod" substitutionGroup="TypeOfValue">
 		<xsd:annotation>
