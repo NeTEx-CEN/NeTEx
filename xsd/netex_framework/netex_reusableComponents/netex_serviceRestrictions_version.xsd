@@ -181,7 +181,12 @@ Rail transport, Roads and Road transport
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:element name="BookingArrangement" substitutionGroup="DataManagedObject">
+	<xsd:element name="BookingArrangement_Dummy" type="DataManagedObjectStructure" abstract="true" substitutionGroup="DataManagedObject">
+		<xsd:annotation>
+			<xsd:documentation>Dummy Supertype for BookingArrangement elements.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BookingArrangement" substitutionGroup="BookingArrangement_Dummy" id="BookingArrangement">
 		<xsd:annotation>
 			<xsd:documentation>Details of the booking arrangements for a given LINE, STOP, SERVICE etc.</xsd:documentation>
 		</xsd:annotation>
@@ -347,7 +352,7 @@ Rail transport, Roads and Road transport
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:group>
-	<!-- ===== BOOKING ARRANGEMENT ===================================== -->
+	<!-- ===== SERVICE BOOKING ARRANGEMENT ===================================== -->
 	<xsd:complexType name="serviceBookingArrangementsInFrame_RelStructure">
 		<xsd:annotation>
 			<xsd:documentation>Type for containment in frame of SERVICE BOOKING ARRANGEMENTs</xsd:documentation>
@@ -355,7 +360,7 @@ Rail transport, Roads and Road transport
 		<xsd:complexContent>
 			<xsd:extension base="containmentAggregationStructure">
 				<xsd:sequence>
-					<xsd:element ref="ServiceBookingArrangement" maxOccurs="unbounded">
+					<xsd:element ref="BookingArrangement_Dummy" maxOccurs="unbounded">
 						<xsd:annotation>
 							<xsd:documentation>Information on booking rules and additional data allowing the user to take the decision to book a service and to undertake the booking of a LOCAL SERVICE.</xsd:documentation>
 						</xsd:annotation>
@@ -371,13 +376,13 @@ Rail transport, Roads and Road transport
 		<xsd:complexContent>
 			<xsd:extension base="containmentAggregationStructure">
 				<xsd:choice maxOccurs="unbounded">
-					<xsd:element ref="ServiceBookingArrangementRef"/>
-					<xsd:element ref="ServiceBookingArrangement"/>
+					<xsd:element ref="BookingArrangementRef"/>
+					<xsd:element ref="BookingArrangement_Dummy"/>
 				</xsd:choice>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<xsd:element name="ServiceBookingArrangement" substitutionGroup="DataManagedObject">
+	<xsd:element name="ServiceBookingArrangement" substitutionGroup="BookingArrangement_Dummy">
 		<xsd:annotation>
 			<xsd:documentation>Type for a SERVICE BOOKING ARRANGEMENT.</xsd:documentation>
 		</xsd:annotation>
@@ -401,12 +406,12 @@ Rail transport, Roads and Road transport
 						<xsd:sequence>
 							<xsd:group ref="ServiceBookingArrangementGroup">
 								<xsd:annotation>
-									<xsd:documentation>Details for BookingArrangement</xsd:documentation>
+									<xsd:documentation>Details for ServiceBookingArrangement</xsd:documentation>
 								</xsd:annotation>
 							</xsd:group>
 						</xsd:sequence>
 					</xsd:sequence>
-					<xsd:attribute name="id" type="BookingArrangementIdType" use="required"/>
+					<xsd:attribute name="id" type="ServiceBookingArrangementIdType" use="required"/>
 				</xsd:restriction>
 			</xsd:complexContent>
 		</xsd:complexType>
