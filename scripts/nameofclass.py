@@ -173,7 +173,9 @@ def update_nameofclass_ref_attributes(
                     type=simple_type_name,
                 )
                 if natural_class in abstract_classes:
-                    attrib.attrib["use"] = "required"
+                    # Sadly we cannot set required attributes, because then we cannot set defaults
+                    # attrib.attrib["use"] = "required"
+                    pass
                 else:
                     attrib.attrib["default"] = natural_class
 
