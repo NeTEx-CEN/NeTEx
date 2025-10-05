@@ -81,7 +81,7 @@ def update_nameofclass_ref_attributes(
 
     # --- Iterate over all schema files ---
     for schema_file in base_dir.rglob("*.xsd"):
-        if "/xsd/netex" not in str(schema_file):
+        if "xsd/netex" not in str(schema_file):
             continue
 
         tree = etree.parse(str(schema_file), parser)
