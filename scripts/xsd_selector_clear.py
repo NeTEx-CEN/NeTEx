@@ -100,16 +100,15 @@ for kr in root.findall(".//xsd:keyref", namespaces=NS):
         print(f"[DEBUG] Removing keyref '{kr.get('name')}' (no expressions or no refer)")
         kr.getparent().remove(kr)
 
-# --- 7. Tweede pass: verwijder keys die nergens meer door keyrefs gebruikt worden ---
-used_keys = set()
-for kr in root.findall(".//xsd:keyref", namespaces=NS):
-    refer = kr.get("refer")
-    if refer:
-        used_keys.add(refer.split(":")[-1])  # strip namespace prefix
-
+# Tweede pass: verwijder keys die nergens meer door keyrefs gebruikt worden
 for k in root.findall(".//xsd:key", namespaces=NS):
-    kname = k.get("name").split(":")[-1]  # strip prefix
-    if kname not in used_keys:
+    kname = k.get("name")  # gebruik exact dezelfde string als in refer
+    still_used = False
+    for kr in root.findall(".//xsd:keyref", namespaces=NS):
+        if kr.get("refer") == kname or kr.get("refer") == f"netex:{kname}":
+            still_used = True
+            break
+    if not still_used:
         remove_comments_above(k)
         report["removed_elements"].append({
             "type": "key",
@@ -118,6 +117,23 @@ for k in root.findall(".//xsd:key", namespaces=NS):
         })
         print(f"[DEBUG] Removing key '{kname}' (no keyrefs reference it)")
         k.getparent().remove(k)
+
+# --- 3e pass: verwijder keyrefs waarvan de refererende key is verwijderd ---
+existing_keys = {k.get("name") for k in root.findall(".//xsd:key", namespaces=NS)}
+
+for kr in root.findall(".//xsd:keyref", namespaces=NS):
+    refer = kr.get("refer")
+    if refer:
+        local_refer = refer.split(":")[-1]  # simpele prefix strip
+        if local_refer not in existing_keys:
+            remove_comments_above(kr)
+            report["removed_elements"].append({
+                "type": "keyref",
+                "name": kr.get("name"),
+                "reason": f"referenced key '{refer}' was removed"
+            })
+            print(f"[DEBUG] Removing keyref '{kr.get('name')}' (referenced key '{refer}' removed)")
+            kr.getparent().remove(kr)
 
 # --- 8. Schrijf het XSD-bestand opnieuw ---
 tree.write(str(OUTPUT_XSD), encoding="utf-8", xml_declaration=True, pretty_print=True)
