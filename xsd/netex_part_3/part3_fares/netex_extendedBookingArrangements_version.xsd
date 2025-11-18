@@ -114,21 +114,36 @@ Rail transport, Roads and Road transport
 		<xsd:sequence>
 			<xsd:choice>
 				<xsd:sequence>
-					<xsd:group ref="RoutingConstraintInFrameGroup">
+					<xsd:group ref="RoutingConstraintInFrameGroup" minOccurs="0">
 						<xsd:annotation>
-							<xsd:documentation>Restrictions in what the SERVICE is allowed to do in conncetion with other SERVICES.</xsd:documentation>
+							<xsd:documentation>Restrictions in what the SERVICE is allowed to do in conncetion with other SERVICES. If not set, then the rules apply in general </xsd:documentation>
 						</xsd:annotation>
 					</xsd:group>
-					<xsd:element name="TemporalDistance" type="xsd:duration" minOccurs="0">
+					<xsd:element name="DistanceFromClassical" type="xsd:integer" minOccurs="0">
 						<xsd:annotation>
-							<xsd:documentation>Temporal distance to the SERVICE / transfer in the RoutingConstraint.</xsd:documentation>
+							<xsd:documentation>Distance in metres to the line/service or classical public transport in general. Builds geometric exclusion zones.</xsd:documentation>
 						</xsd:annotation>
 					</xsd:element>
-					<xsd:element name="Distance" type="xsd:integer" minOccurs="0">
+					<xsd:element name="TemporalDistanceFromClassical" type="xsd:duration" minOccurs="0">
 						<xsd:annotation>
-							<xsd:documentation>Distance in metres to the line/service.</xsd:documentation>
+							<xsd:documentation>Temporal distance to the SERVICE / transfer in the RoutingConstraint or classical publical transport in general.</xsd:documentation>
 						</xsd:annotation>
 					</xsd:element>
+					<xsd:element name="PenaltyDrivingTimeFactor" type="xsd:decimal" default="1.0" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Factor to multiply the classical public drive time with for the calculation of the dominance of the demand responsive traffic.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>		
+					<xsd:element name="PenaltyTransferTimeFactor" type="xsd:decimal" default="1.0" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Factor to multiply the classical public transfer times with for the calculation of the dominance of the demand responsive traffic.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>		
+					<xsd:element name="WalkTimeFactor" type="xsd:decimal" default="1.0" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Factor to multiply walk time for the classical public transport to calculate if the classical public transport still should dominate the demand responsive traffic.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>				
 				</xsd:sequence>
 				<xsd:sequence>
 					<xsd:element name="InterchangeBetweenFlexibleServicesAllowed" type="xsd:boolean" default="false" minOccurs="0">
