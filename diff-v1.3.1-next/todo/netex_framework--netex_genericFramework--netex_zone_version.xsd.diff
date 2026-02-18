@@ -1,0 +1,127 @@
+2c2
+< <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:core="http://www.govtalk.gov.uk/core" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_zone_version">
+---
+> <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:core="http://www.govtalk.gov.uk/core" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_zone_version">
+14c14
+< 				<Creator>First drafted for version 1.0 CEN TC278 WG3 SG6 Editor Nicholas Knowles.  mailto:schemer@netex.org.uk</Creator>
+---
+> 				<Creator>First drafted for version 1.0 CEN TC278 WG3 SG6 Editor Nicholas Knowles.</Creator>
+90c90
+< 					<xsd:element ref="TariffZone_" maxOccurs="unbounded"/>
+---
+> 					<xsd:element ref="TariffZone_Dummy" maxOccurs="unbounded"/>
+95,96c95,96
+< 	<!-- ====Zone======================================================= -->
+< 	<xsd:element name="Zone" type="Zone_VersionStructure" abstract="false" substitutionGroup="GroupOfEntities">
+---
+> 	<!-- ==== ZONE ===================================================== -->
+> 	<xsd:element name="Zone" type="Zone_VersionStructure" substitutionGroup="GroupOfEntities">
+101c101
+< 	<xsd:complexType name="Zone_VersionStructure" abstract="false">
+---
+> 	<xsd:complexType name="Zone_VersionStructure">
+130c130
+< 					<xsd:documentation>Use gml:MultiSurface if the Zone contains multiple non-continuous areas, e.g. a coastline with islands.</xsd:documentation>
+---
+> 					<xsd:documentation>Use gml:MultiSurface if the Zone contains multiple non-continuous areas, e.g. a coastline with islands. +v2.0</xsd:documentation>
+147,148c147,148
+< 	<!-- ======================================================================= -->
+< 	<xsd:element name="GeneralZone" abstract="false" substitutionGroup="Zone">
+---
+> 	<!-- ===== GENERAL ZONE ====================================================== -->
+> 	<xsd:element name="GeneralZone" substitutionGroup="Zone">
+172c172
+< 					<xsd:attribute name="id" type="ZoneIdType"/>
+---
+> 					<xsd:attribute name="id" type="ZoneIdType" use="required"/>
+177c177
+< 	<xsd:complexType name="GeneralZone_VersionStructure" abstract="false">
+---
+> 	<xsd:complexType name="GeneralZone_VersionStructure">
+186c186
+< 	<xsd:element name="TariffZone_" type="Zone_VersionStructure" abstract="true" substitutionGroup="Zone">
+---
+> 	<xsd:element name="TariffZone_Dummy" type="Zone_VersionStructure" abstract="true" substitutionGroup="Zone">
+188c188
+< 			<xsd:documentation>Dummy TARIFF ZONE  to workaround xML spy Substitution Group limitations</xsd:documentation>
+---
+> 			<xsd:documentation>Dummy TARIFF ZONE to workaround xML spy Substitution Group limitations</xsd:documentation>
+191c191
+< 	<xsd:element name="TariffZone" abstract="false" substitutionGroup="TariffZone_">
+---
+> 	<xsd:element name="TariffZone" substitutionGroup="TariffZone_Dummy">
+218c218
+< 					<xsd:attribute name="id" type="TariffZoneIdType">
+---
+> 					<xsd:attribute name="id" type="TariffZoneIdType" use="required">
+220c220
+< 							<xsd:documentation>Reference to a TYPE OF  TARIFF ZONE.</xsd:documentation>
+---
+> 							<xsd:documentation>Reference to a TYPE OF TARIFF ZONE.</xsd:documentation>
+227c227
+< 	<xsd:complexType name="TariffZone_VersionStructure" abstract="false">
+---
+> 	<xsd:complexType name="TariffZone_VersionStructure">
+253a254,258
+> 			<xsd:element name="PublicCode" type="PublicCodeStructure" minOccurs="0">
+> 				<xsd:annotation>
+> 					<xsd:documentation>Public identifier code of TARIFF ZONE. +v2.0</xsd:documentation>
+> 				</xsd:annotation>
+> 			</xsd:element>
+257c262
+< 	<xsd:element name="GroupOfTariffZones" abstract="false" substitutionGroup="GroupOfEntities">
+---
+> 	<xsd:element name="GroupOfTariffZones" substitutionGroup="GroupOfEntities">
+278c283
+< 					<xsd:attribute name="id" type="GroupOfTariffZonesIdType"/>
+---
+> 					<xsd:attribute name="id" type="GroupOfTariffZonesIdType" use="required"/>
+307c312
+< 	<xsd:element name="GroupOfTariffZonesRef" type="GroupOfTariffZonesRefStructure" substitutionGroup="GroupOfEntitiesRef_">
+---
+> 	<xsd:element name="GroupOfTariffZonesRef" type="GroupOfTariffZonesRefStructure" substitutionGroup="GroupOfEntitiesRef_Dummy">
+322a328,348
+> 				<xsd:attribute name="nameOfRefClass" type="NameOfClassGroupOfTariffZonesRefStructureType" default="GroupOfTariffZones">
+> 					<xsd:annotation>
+> 						<xsd:documentation>Automatic reference class for GroupOfTariffZonesRefStructure</xsd:documentation>
+> 					</xsd:annotation>
+> 				</xsd:attribute>
+> 				<xsd:attribute name="modification" type="ModificationEnumeration" use="optional">
+> 					<xsd:annotation>
+> 						<xsd:documentation>Nature of last modification: new, revise, delete, unchanged.</xsd:documentation>
+> 					</xsd:annotation>
+> 				</xsd:attribute>
+> 				<xsd:attribute name="versionRef" type="VersionIdType" use="optional">
+> 					<xsd:annotation>
+> 						<xsd:documentation>Identifier of version of referenced entity. For use when reference is External and a specific version is required. Mutually exclusive with version</xsd:documentation>
+> 					</xsd:annotation>
+> 				</xsd:attribute>
+> 				<xsd:attribute name="uri" type="xsd:anyURI" use="optional">
+> 					<xsd:annotation>
+> 						<xsd:documentation>Location of the external entity. +v2.0</xsd:documentation>
+> 					</xsd:annotation>
+> 				</xsd:attribute>
+> 				<xsd:attributeGroup ref="ReferenceModificationDetailsGroup"/>
+326,331d351
+< 	<xsd:simpleType name="GroupOfTariffZonesIdType">
+< 		<xsd:annotation>
+< 			<xsd:documentation>Type for identifier of a GROUP OF TARIFF ZONEs.</xsd:documentation>
+< 		</xsd:annotation>
+< 		<xsd:restriction base="GroupOfEntitiesIdType"/>
+< 	</xsd:simpleType>
+333c353
+< 	<xsd:element name="TypeOfZone" abstract="false" substitutionGroup="TypeOfEntity">
+---
+> 	<xsd:element name="TypeOfZone" substitutionGroup="TypeOfEntity">
+351c371
+< 					<xsd:attribute name="id" type="TypeOfZoneIdType">
+---
+> 					<xsd:attribute name="id" type="TypeOfZoneIdType" use="required">
+369c389
+< 	<xsd:element name="ZoneView" type="Zone_DerivedViewStructure" abstract="false" substitutionGroup="DerivedView">
+---
+> 	<xsd:element name="ZoneView" type="Zone_DerivedViewStructure" substitutionGroup="DerivedView">
+374c394
+< 	<xsd:complexType name="Zone_DerivedViewStructure" abstract="false">
+---
+> 	<xsd:complexType name="Zone_DerivedViewStructure">

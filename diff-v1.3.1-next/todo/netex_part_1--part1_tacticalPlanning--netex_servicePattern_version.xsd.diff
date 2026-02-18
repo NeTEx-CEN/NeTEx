@@ -1,0 +1,316 @@
+2c2
+< <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_servicePattern_version">
+---
+> <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_servicePattern_version">
+9a10
+> 	<xsd:include schemaLocation="../../netex_part_2/part2_occupancy/netex_oc_occupancy_version.xsd"/>
+19c20
+< 				<Creator>First drafted for NeTEx version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.  mailto:schemer@netex.org.uk</Creator>
+---
+> 				<Creator>First drafted for NeTEx version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.</Creator>
+23c24
+< 				<Date><Modified>2011-02-05</Modified>Name Space changes 
+---
+> 				<Date><Modified>2011-02-05</Modified>Name Space changes
+34c35
+< 				<Date><Modified>2019-03-25</Modified>Merge in Corrections to comments as per SBB20 #55 Correct camel case on StopPoinInXXX groups. 
+---
+> 				<Date><Modified>2019-03-25</Modified>Merge in Corrections to comments as per SBB20 #55 Correct camel case on StopPoinInXXX groups.
+44a46,49
+> 				<Date><Modified>2023-11-07</Modified>CR0544 Deprecate PrivateCode.
+> 				</Date>
+> 				<Date><Modified>2023-12-18</Modified>FIX: revise the  #525 implementation of BOOKING ARRANGEMENT and SERVICE BOOKING ARRANGEMENT,
+> 				</Date>
+61c66
+< 						<Copyright>CEN, Crown Copyright 2009-2020</Copyright>
+---
+> 						<Copyright>CEN, Crown Copyright 2009-2023</Copyright>
+167,169c172,175
+< 				<xsd:sequence>
+< 					<xsd:element ref="ServicePattern" maxOccurs="unbounded"/>
+< 				</xsd:sequence>
+---
+> 				<xsd:choice maxOccurs="unbounded">
+> 					<xsd:element ref="ServicePattern"/>
+> 					<xsd:element ref="JourneyPatternView"/>
+> 				</xsd:choice>
+174c180
+< 	<xsd:element name="ScheduledStopPoint" abstract="false" substitutionGroup="Point">
+---
+> 	<xsd:element name="ScheduledStopPoint" substitutionGroup="Point">
+198c204
+< 					<xsd:attribute name="id" type="ScheduledStopPointIdType" use="optional"/>
+---
+> 					<xsd:attribute name="id" type="ScheduledStopPointIdType" use="required"/>
+203c209
+< 	<xsd:complexType name="ScheduledStopPoint_VersionStructure" abstract="false">
+---
+> 	<xsd:complexType name="ScheduledStopPoint_VersionStructure">
+246c252
+< 					<xsd:documentation>Whether STOP POINT can be considered as being at the centre of a TOPOGRAPHIC PLACE.  Default is false.</xsd:documentation>
+---
+> 					<xsd:documentation>Whether STOP POINT can be considered as being at the centre of a TOPOGRAPHIC PLACE. Default is false.</xsd:documentation>
+289c295
+< 					<xsd:documentation>Heading of STOP relative to street. Degrees  from North. This should be considered as a derived value that can be used for presentation purposes when information about the physical stop is not available. . The definitive value is the compass bearing found on the QUAY (i.e. physical stop) to which a SCHEDULED STOP POINT is assigned.</xsd:documentation>
+---
+> 					<xsd:documentation>Heading of STOP relative to street. Degrees from North. This should be considered as a derived value that can be used for presentation purposes when information about the physical stop is not available. . The definitive value is the compass bearing found on the QUAY (i.e. physical stop) to which a SCHEDULED STOP POINT is assigned.</xsd:documentation>
+309c315
+< 			<xsd:element name="PublicCode" type="PrivateCodeStructure" minOccurs="0">
+---
+> 			<xsd:element name="PublicCode" type="PublicCodeStructure" minOccurs="0">
+314c320,324
+< 			<xsd:element ref="PrivateCode" minOccurs="0"/>
+---
+> 			<xsd:element ref="PrivateCode" minOccurs="0">
+> 				<xsd:annotation>
+> 					<xsd:documentation>DEPRECATED - use privateCodes. -v2.0</xsd:documentation>
+> 				</xsd:annotation>
+> 			</xsd:element>
+317c327
+< 					<xsd:documentation>An alternative  code that uniquely identifies the STOP POINT. pecifically for use in AVMS systems that require an alias, if. For VDV compatibility.</xsd:documentation>
+---
+> 					<xsd:documentation>An alternative code that uniquely identifies the STOP POINT. pecifically for use in AVMS systems that require an alias, if. For VDV compatibility. DEPRECATED - use privateCodes. -v2.0</xsd:documentation>
+327c337
+< 			<xsd:element name="VehicleModes" type="VehicleModeListOfEnumerations" minOccurs="0">
+---
+> 			<xsd:element name="VehicleModes" type="AllPublicTransportModesListOfEnumerations" minOccurs="0">
+329c339
+< 					<xsd:documentation>TRANSPORT MODE or MODES of STOP POINT.</xsd:documentation>
+---
+> 					<xsd:documentation>PUBLIC TRANSPORT MODEs of STOP POINT.</xsd:documentation>
+349c359,364
+< 					<xsd:documentation>Method of request stop. Default is noneRequired. + v1.1</xsd:documentation>
+---
+> 					<xsd:documentation>Method of request stop. Default is noneRequired. DEPRECATED: USE BoardingRquestMethod OR AlightingRequestMethod INSTEAD. -v2.0</xsd:documentation>
+> 				</xsd:annotation>
+> 			</xsd:element>
+> 			<xsd:element name="BoardingRequestMethod" type="RequestMethodTypeListOfEnumerations" default="noneRequired" minOccurs="0">
+> 				<xsd:annotation>
+> 					<xsd:documentation>Methods to Request Stop for boarding in this particular service pattern; Default is noneRequired. +v2.0</xsd:documentation>
+351a367,371
+> 			<xsd:element name="AlightingRequestMethod" type="RequestMethodTypeListOfEnumerations" default="noneRequired" minOccurs="0">
+> 				<xsd:annotation>
+> 					<xsd:documentation>Methods to Request Stop for alighting in this particular service pattern; Default is noneRequired. +v2.0</xsd:documentation>
+> 				</xsd:annotation>
+> 			</xsd:element>
+372c392
+< 	<xsd:element name="ServiceLink" abstract="false" substitutionGroup="Link">
+---
+> 	<xsd:element name="ServiceLink" substitutionGroup="Link">
+374c394
+< 			<xsd:documentation>A LINK between an ordered pair of STOP POINTs.  Service links are directional - there will be separate links for each direction of a route.</xsd:documentation>
+---
+> 			<xsd:documentation>A LINK between an ordered pair of STOP POINTs. Service links are directional - there will be separate links for each direction of a route.</xsd:documentation>
+393c413
+< 					<xsd:attribute name="id" type="ServiceLinkIdType"/>
+---
+> 					<xsd:attribute name="id" type="ServiceLinkIdType" use="required"/>
+398c418
+< 	<xsd:complexType name="ServiceLink_VersionStructure" abstract="false">
+---
+> 	<xsd:complexType name="ServiceLink_VersionStructure">
+430c450
+< 	<xsd:element name="StopArea" abstract="false" substitutionGroup="Zone">
+---
+> 	<xsd:element name="StopArea" substitutionGroup="Zone">
+457c477
+< 					<xsd:attribute name="id" type="StopAreaIdType"/>
+---
+> 					<xsd:attribute name="id" type="StopAreaIdType" use="required"/>
+479c499
+< 			<xsd:element name="PublicCode" type="xsd:normalizedString" minOccurs="0">
+---
+> 			<xsd:element name="PublicCode" type="PublicCodeStructure" minOccurs="0">
+496c516
+< 	<xsd:element name="Connection" abstract="false" substitutionGroup="Transfer">
+---
+> 	<xsd:element name="Connection" substitutionGroup="Transfer">
+517c537
+< 					<xsd:attribute name="id" type="ConnectionIdType"/>
+---
+> 					<xsd:attribute name="id" type="ConnectionIdType" use="required"/>
+522c542
+< 	<xsd:complexType name="Connection_VersionStructure" abstract="false">
+---
+> 	<xsd:complexType name="Connection_VersionStructure">
+541c561
+< 					<xsd:documentation>An alternative  code that uniquely identifies the CONNECTION link Specifically for use in AVMS systems that require an alias, if. For VDV compatibility.</xsd:documentation>
+---
+> 					<xsd:documentation>An alternative code that uniquely identifies the CONNECTION link Specifically for use in AVMS systems that require an alias, if. For VDV compatibility. DEPRECATED - use privateCodes. -v2.0</xsd:documentation>
+551c571
+< 					<xsd:documentation>Destination end of  CONNECTION.</xsd:documentation>
+---
+> 					<xsd:documentation>Destination end of CONNECTION.</xsd:documentation>
+556c576
+< 					<xsd:documentation>Whether  connecting at this stop passengers may only transfer. If true, then they may not enter or exit at the station.</xsd:documentation>
+---
+> 					<xsd:documentation>Whether connecting at this stop passengers may only transfer. If true, then they may not enter or exit at the station.</xsd:documentation>
+561c581
+< 	<xsd:element name="ConnectionEnd" type="ConnectionEndStructure" abstract="false">
+---
+> 	<xsd:element name="ConnectionEnd" type="ConnectionEndStructure">
+566c586
+< 	<xsd:complexType name="ConnectionEndStructure" abstract="false">
+---
+> 	<xsd:complexType name="ConnectionEndStructure">
+578c598
+< 					<xsd:documentation>SUBMODE of end Point of CONNECTION. SUBMODE of SCHEDULED STOP POINT can be derived.</xsd:documentation>
+---
+> 					<xsd:documentation>SUBMODE of end Point of CONNECTION. SUBMODE of SCHEDULED STOP POINT can be derived. +v1.2.3</xsd:documentation>
+583c603
+< 					<xsd:documentation>TransportOrganisation to which the end of CONNECTION applies.</xsd:documentation>
+---
+> 					<xsd:documentation>TransportOrganisation to which the end of CONNECTION applies. +v1.2.3</xsd:documentation>
+594c614
+< 						<xsd:documentation>VEHICLE MEETING POINT at END OF CONENCTION.   +V1.2.2. NB This is typed only to POINT to avoid forward dependency</xsd:documentation>
+---
+> 						<xsd:documentation>VEHICLE MEETING POINT at END OF CONENCTION. +V1.2.2. NB This is typed only to POINT to avoid forward dependency</xsd:documentation>
+601c621
+< 	<xsd:element name="ServicePattern" abstract="false" substitutionGroup="LinkSequence">
+---
+> 	<xsd:element name="ServicePattern" substitutionGroup="LinkSequence">
+622c642
+< 					<xsd:attribute name="id" type="ServicePatternIdType"/>
+---
+> 					<xsd:attribute name="id" type="ServicePatternIdType" use="required"/>
+627c647
+< 	<xsd:complexType name="ServicePattern_VersionStructure" abstract="false">
+---
+> 	<xsd:complexType name="ServicePattern_VersionStructure">
+666c686
+< 					<xsd:documentation>Ordered collection of LINKS  making up the SERVICE PATTERN.</xsd:documentation>
+---
+> 					<xsd:documentation>Ordered collection of LINKS making up the SERVICE PATTERN.</xsd:documentation>
+672c692
+< 	<xsd:element name="ServiceJourneyPattern" abstract="false" substitutionGroup="JourneyPattern_">
+---
+> 	<xsd:element name="ServiceJourneyPattern" substitutionGroup="JourneyPattern_Dummy">
+696c716
+< 					<xsd:attribute name="id" type="ServiceJourneyPatternIdType" use="optional"/>
+---
+> 					<xsd:attribute name="id" type="ServiceJourneyPatternIdType" use="required"/>
+737c757
+< 					<xsd:documentation>Ordered collection of LINKS  making up the SERVICE PATTERN.</xsd:documentation>
+---
+> 					<xsd:documentation>Ordered collection of LINKS making up the SERVICE PATTERN.</xsd:documentation>
+755c775
+< 	<xsd:element name="StopPointInJourneyPattern" abstract="false" substitutionGroup="PointInLinkSequence">
+---
+> 	<xsd:element name="StopPointInJourneyPattern" substitutionGroup="PointInLinkSequence">
+788c808
+< 					<xsd:attribute name="id" type="StopPointInJourneyPatternIdType"/>
+---
+> 					<xsd:attribute name="id" type="StopPointInJourneyPatternIdType" use="required"/>
+793c813
+< 	<xsd:complexType name="StopPointInJourneyPattern_VersionedChildStructure" abstract="false">
+---
+> 	<xsd:complexType name="StopPointInJourneyPattern_VersionedChildStructure">
+828c848
+< 					<xsd:documentation>On which side the vehicle can be alighted on this stop in the direction of travel. This is often not relevant. And it is difficult to define this from the QUAY when the direction of travel is not known.</xsd:documentation>
+---
+> 					<xsd:documentation>On which side the vehicle can be alighted on this stop in the direction of travel. This is often not relevant. And it is difficult to define this from the QUAY when the direction of travel is not known. +v1.3.1</xsd:documentation>
+833c853
+< 					<xsd:documentation>On which side the vehicle can be boarded on this stop in the direction of travel.</xsd:documentation>
+---
+> 					<xsd:documentation>On which side the vehicle can be boarded on this stop in the direction of travel. +v1.3.1</xsd:documentation>
+866c886,891
+< 					<xsd:documentation>Method to Request Stop in this particular service pattern; if none specified, as as per stop.  +V1.1</xsd:documentation>
+---
+> 					<xsd:documentation>Method to Request Stop in this particular service pattern; if none specified, as as per stop. DEPRECATED: USE BoardingRquestMethod OR AlightingRequestMethod INSTEAD. -v2.0</xsd:documentation>
+> 				</xsd:annotation>
+> 			</xsd:element>
+> 			<xsd:element name="BoardingRequestMethod" type="RequestMethodTypeListOfEnumerations" default="noneRequired" minOccurs="0">
+> 				<xsd:annotation>
+> 					<xsd:documentation>Methods to Request Stop for boarding in this particular service pattern; Default is noneRequired. +v2.0</xsd:documentation>
+869c894
+< 			<xsd:element name="StopUse" type="StopUseEnumeration" minOccurs="0">
+---
+> 			<xsd:element name="AlightingRequestMethod" type="RequestMethodTypeListOfEnumerations" default="noneRequired" minOccurs="0">
+871c896
+< 					<xsd:documentation>Nature of use of stop, e.g. access, interchange only, or pass through. Default is Access.</xsd:documentation>
+---
+> 					<xsd:documentation>Methods to Request Stop for alighting in this particular service pattern; Default is noneRequired. +v2.0</xsd:documentation>
+874c899
+< 			<xsd:element name="BookingArrangements" type="BookingArrangementsStructure" minOccurs="0">
+---
+> 			<xsd:element name="StopUse" type="StopUseEnumeration" minOccurs="0">
+876c901
+< 					<xsd:documentation>Booking Arrangements for stop if different from those for SERVICE JOURNEY.</xsd:documentation>
+---
+> 					<xsd:documentation>Nature of use of stop, e.g. access, interchange only, or pass through. Default is Access.</xsd:documentation>
+878a904,915
+> 			<xsd:choice>
+> 				<xsd:element name="bookingArrangements" type="bookingArrangements_RelStructure" minOccurs="0">
+> 					<xsd:annotation>
+> 						<xsd:documentation>Set of possible Booking Arrangements for stop if different from those for SERVICE JOURNEY. +v2.0</xsd:documentation>
+> 					</xsd:annotation>
+> 				</xsd:element>
+> 				<xsd:element name="BookingArrangements" type="BookingArrangementsStructure" minOccurs="0">
+> 					<xsd:annotation>
+> 						<xsd:documentation>Booking Arrangements for stop if different from those for SERVICE JOURNEY. DEPRECATED: use bookingArrangements instead</xsd:documentation>
+> 					</xsd:annotation>
+> 				</xsd:element>
+> 			</xsd:choice>
+917c954
+< 	<xsd:element name="ServiceLinkInJourneyPattern" type="ServiceLinkInJourneyPattern_VersionedChildStructure" abstract="false" substitutionGroup="LinkInLinkSequence">
+---
+> 	<xsd:element name="ServiceLinkInJourneyPattern" substitutionGroup="LinkInLinkSequence">
+920a958,979
+> 		<xsd:complexType>
+> 			<xsd:complexContent>
+> 				<xsd:restriction base="ServiceLinkInJourneyPattern_VersionedChildStructure">
+> 					<xsd:sequence>
+> 						<xsd:sequence>
+> 							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+> 						</xsd:sequence>
+> 						<xsd:sequence>
+> 							<xsd:group ref="VersionedChildGroup"/>
+> 						</xsd:sequence>
+> 						<xsd:sequence>
+> 							<xsd:group ref="LinkInLinkSequenceGroup"/>
+> 						</xsd:sequence>
+> 						<xsd:sequence>
+> 							<xsd:group ref="TimingLinkInJourneyPatternGroup" minOccurs="0"/>
+> 							<xsd:group ref="ServiceLinkInJourneyPatternGroup"/>
+> 						</xsd:sequence>
+> 					</xsd:sequence>
+> 					<xsd:attribute name="id" type="ServiceLinkInJourneyPatternIdType" use="required"/>
+> 				</xsd:restriction>
+> 			</xsd:complexContent>
+> 		</xsd:complexType>
+922c981
+< 	<xsd:complexType name="ServiceLinkInJourneyPattern_VersionedChildStructure" abstract="false">
+---
+> 	<xsd:complexType name="ServiceLinkInJourneyPattern_VersionedChildStructure">
+944c1003
+< 	<xsd:element name="ScheduledStopPointView" type="ScheduledStopPoint_DerivedViewStructure" abstract="false" substitutionGroup="DerivedView">
+---
+> 	<xsd:element name="ScheduledStopPointView" type="ScheduledStopPoint_DerivedViewStructure" substitutionGroup="DerivedView">
+949c1008
+< 	<xsd:complexType name="ScheduledStopPoint_DerivedViewStructure" abstract="false">
+---
+> 	<xsd:complexType name="ScheduledStopPoint_DerivedViewStructure">
+969c1028
+< 	<xsd:element name="OnwardServiceLinkView" abstract="false" substitutionGroup="DerivedView">
+---
+> 	<xsd:element name="OnwardServiceLinkView" substitutionGroup="DerivedView">
+1008c1067
+< 	<xsd:element name="StopPointInJourneyPatternView" type="StopPointInJourneyPattern_DerivedViewStructure" abstract="false" substitutionGroup="DerivedView">
+---
+> 	<xsd:element name="StopPointInJourneyPatternView" type="StopPointInJourneyPattern_DerivedViewStructure" substitutionGroup="DerivedView">
+1013c1072
+< 	<xsd:complexType name="StopPointInJourneyPattern_DerivedViewStructure" abstract="false">
+---
+> 	<xsd:complexType name="StopPointInJourneyPattern_DerivedViewStructure">
+1028c1087
+< 				<xsd:attribute name="order" type="xsd:positiveInteger">
+---
+> 				<xsd:attribute name="order" type="xsd:positiveInteger" use="optional">
+1030c1089
+< 						<xsd:documentation>Order of CALL within Journey.</xsd:documentation>
+---
+> 						<xsd:documentation>Order of CALL within Journey. -v2.0</xsd:documentation>
+1051c1110
+< 				<xsd:element ref="ScheduledStopPointView" minOccurs="0"/>
+---
+> 				<xsd:element ref="ScheduledStopPointView"/>

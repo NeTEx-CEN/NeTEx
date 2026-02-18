@@ -1,0 +1,172 @@
+2c2
+< <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_nm_mobilityService_version">
+---
+> <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_nm_mobilityService_version">
+18c18
+< 				<Creator>First drafted for version 1.2.2 CEN TC278 WG3 SG6 Editor Nicholas Knowles.  mailto:schemer@netex.org.uk</Creator>
+---
+> 				<Creator>First drafted for version 1.2.2 CEN TC278 WG3 SG6 Editor Nicholas Knowles.</Creator>
+33a34,36
+> 				<Date><Modified>2023-12-18</Modified>FIX: Correct the  #525 implementation of BOOKING ARRANGEMENT and SERVICE BOOKING ARRANGEMENT,
+> 					   SERVICE BOOKING ARRANGEMENT should inherit from BOOKING ARRANGEMENT and should have its own structure.
+> 				</Date>
+46c49
+< 					 <Copyright>CEN, Crown Copyright 2019-2021</Copyright>
+---
+> 					 <Copyright>CEN, Crown Copyright 2019-2023</Copyright>
+80c83
+< 					<xsd:element ref="MobilityService_" maxOccurs="unbounded"/>
+---
+> 					<xsd:element ref="MobilityService_Dummy" maxOccurs="unbounded"/>
+85c88
+< 	<xsd:element name="MobilityService_" type="Equipment_VersionStructure" abstract="true" substitutionGroup="Equipment">
+---
+> 	<xsd:element name="MobilityService_Dummy" type="Equipment_VersionStructure" abstract="true" substitutionGroup="Equipment">
+90c93
+< 	<xsd:element name="MobilityService" type="MobilityService_VersionStructure" abstract="true" substitutionGroup="MobilityService_">
+---
+> 	<xsd:element name="MobilityService" type="MobilityService_VersionStructure" abstract="true" substitutionGroup="MobilityService_Dummy">
+92,93c95
+< 			<xsd:documentation>A named service  available over  a widespread area, for example car pooling, rental, etc. The service may be accessible at designated SITES it for which it can be considered as a n additional form of immaterial EQUIPMENT.  +v1.2.2
+< </xsd:documentation>
+---
+> 			<xsd:documentation>A named service available over a widespread area, for example car pooling, rental, etc. The service may be accessible at designated SITES it for which it can be considered as a n additional form of immaterial EQUIPMENT. +v1.2.2</xsd:documentation>
+128c130
+< 			<xsd:element ref="OrganisationRef_" minOccurs="0"/>
+---
+> 			<xsd:element ref="OrganisationRef_Dummy" minOccurs="0"/>
+130,134c132,143
+< 			<xsd:element name="ServiceBookingArrangements" type="ServiceBookingArrangementsStructure" minOccurs="0">
+< 				<xsd:annotation>
+< 					<xsd:documentation>Booking Arrangements for service.</xsd:documentation>
+< 				</xsd:annotation>
+< 			</xsd:element>
+---
+> 			<xsd:choice>
+> 				<xsd:element name="serviceBookingArrangements" type="serviceBookingArrangements_RelStructure" minOccurs="0">
+> 					<xsd:annotation>
+> 						<xsd:documentation>Service Booking Arrangements for service. +2.0</xsd:documentation>
+> 					</xsd:annotation>
+> 				</xsd:element>
+> 				<xsd:element name="ServiceBookingArrangements" type="ServiceBookingArrangement_VersionStructure" minOccurs="0">
+> 					<xsd:annotation>
+> 						<xsd:documentation>Booking Arrangements for service. DEPRECATED: use serviceBookingArrangements</xsd:documentation>
+> 					</xsd:annotation>
+> 				</xsd:element>
+> 			</xsd:choice>
+138c147
+< 	<xsd:element name="CommonVehicleService_" type="Equipment_VersionStructure" abstract="true" substitutionGroup="MobilityService_">
+---
+> 	<xsd:element name="CommonVehicleService_Dummy" type="Equipment_VersionStructure" abstract="true" substitutionGroup="MobilityService_Dummy">
+143c152
+< 	<xsd:element name="CommonVehicleService" abstract="true" substitutionGroup="CommonVehicleService_">
+---
+> 	<xsd:element name="CommonVehicleService" abstract="true" substitutionGroup="CommonVehicleService_Dummy">
+167c176
+< 					<xsd:attribute name="id" type="CommonVehicleServiceIdType" use="optional"/>
+---
+> 					<xsd:attribute name="id" type="CommonVehicleServiceIdType" use="required"/>
+172c181
+< 	<xsd:complexType name="CommonVehicleService_VersionStructure" abstract="false">
+---
+> 	<xsd:complexType name="CommonVehicleService_VersionStructure">
+207c216
+< 	<xsd:element name="VehiclePoolingService_" type="MobilityService_VersionStructure" abstract="true" substitutionGroup="CommonVehicleService_">
+---
+> 	<xsd:element name="VehiclePoolingService_Dummy" type="MobilityService_VersionStructure" abstract="true" substitutionGroup="CommonVehicleService_Dummy">
+212c221
+< 	<xsd:element name="VehiclePoolingService" abstract="true" substitutionGroup="VehiclePoolingService_">
+---
+> 	<xsd:element name="VehiclePoolingService" abstract="true" substitutionGroup="VehiclePoolingService_Dummy">
+214c223
+< 			<xsd:documentation>A transport service that connects users (driver and passenger(s)) for carrying out trips.  +v1.2.2</xsd:documentation>
+---
+> 			<xsd:documentation>A transport service that connects users (driver and passenger(s)) for carrying out trips. +v1.2.2</xsd:documentation>
+239c248
+< 					<xsd:attribute name="id" type="VehiclePoolingServiceIdType" use="optional"/>
+---
+> 					<xsd:attribute name="id" type="VehiclePoolingServiceIdType" use="required"/>
+244c253
+< 	<xsd:complexType name="VehiclePoolingService_VersionStructure" abstract="false">
+---
+> 	<xsd:complexType name="VehiclePoolingService_VersionStructure">
+270c279
+< 	<xsd:element name="TaxiService" substitutionGroup="VehiclePoolingService_">
+---
+> 	<xsd:element name="TaxiService" substitutionGroup="VehiclePoolingService_Dummy">
+305c314
+< 					<xsd:attribute name="id" type="TaxiServiceIdType" use="optional">
+---
+> 					<xsd:attribute name="id" type="TaxiServiceIdType" use="required">
+314c323
+< 	<xsd:complexType name="TaxiService_VersionStructure" abstract="false">
+---
+> 	<xsd:complexType name="TaxiService_VersionStructure">
+333c342
+< 	<xsd:element name="CarPoolingService" substitutionGroup="VehiclePoolingService_">
+---
+> 	<xsd:element name="CarPoolingService" substitutionGroup="VehiclePoolingService_Dummy">
+335c344
+< 			<xsd:documentation>A transport service that connects users (driver and passenger(s)) for carrying out trips.  +v1.2.2</xsd:documentation>
+---
+> 			<xsd:documentation>A transport service that connects users (driver and passenger(s)) for carrying out trips. +v1.2.2</xsd:documentation>
+367c376
+< 					<xsd:attribute name="id" type="CarPoolingServiceIdType" use="optional">
+---
+> 					<xsd:attribute name="id" type="CarPoolingServiceIdType" use="required">
+376c385
+< 	<xsd:complexType name="CarPoolingService_VersionStructure" abstract="false">
+---
+> 	<xsd:complexType name="CarPoolingService_VersionStructure">
+395c404
+< 	<xsd:element name="ChauffeuredVehicleService" substitutionGroup="VehiclePoolingService_">
+---
+> 	<xsd:element name="ChauffeuredVehicleService" substitutionGroup="VehiclePoolingService_Dummy">
+429c438
+< 					<xsd:attribute name="id" type="ChauffeuredVehicleServiceIdType" use="optional">
+---
+> 					<xsd:attribute name="id" type="ChauffeuredVehicleServiceIdType" use="required">
+438c447
+< 	<xsd:complexType name="ChauffeuredVehicleService_VersionStructure" abstract="false">
+---
+> 	<xsd:complexType name="ChauffeuredVehicleService_VersionStructure">
+457c466
+< 	<xsd:element name="VehicleSharingService" substitutionGroup="CommonVehicleService_">
+---
+> 	<xsd:element name="VehicleSharingService" substitutionGroup="CommonVehicleService_Dummy">
+484c493
+< 					<xsd:attribute name="id" type="VehicleSharingServiceIdType" use="optional"/>
+---
+> 					<xsd:attribute name="id" type="VehicleSharingServiceIdType" use="required"/>
+489c498
+< 	<xsd:complexType name="VehicleSharingService_VersionStructure" abstract="false">
+---
+> 	<xsd:complexType name="VehicleSharingService_VersionStructure">
+535c544
+< 	<xsd:element name="VehicleRentalService" substitutionGroup="CommonVehicleService_">
+---
+> 	<xsd:element name="VehicleRentalService" substitutionGroup="CommonVehicleService_Dummy">
+566c575
+< 					<xsd:attribute name="id" type="VehicleRentalServiceIdType" use="optional"/>
+---
+> 					<xsd:attribute name="id" type="VehicleRentalServiceIdType" use="required"/>
+571c580
+< 	<xsd:complexType name="VehicleRentalService_VersionStructure" abstract="false">
+---
+> 	<xsd:complexType name="VehicleRentalService_VersionStructure">
+612c621
+< 	<xsd:element name="TypeOfMobilityService" abstract="false" substitutionGroup="TypeOfEntity">
+---
+> 	<xsd:element name="TypeOfMobilityService" substitutionGroup="TypeOfEntity">
+614c623
+< 			<xsd:documentation>A classification of a MOBILITY SERVICE according to its functional purpose.  +v1.2.2</xsd:documentation>
+---
+> 			<xsd:documentation>A classification of a MOBILITY SERVICE according to its functional purpose. +v1.2.2</xsd:documentation>
+630c639
+< 					<xsd:attribute name="id" type="TypeOfMobilityServiceIdType"/>
+---
+> 					<xsd:attribute name="id" type="TypeOfMobilityServiceIdType" use="required"/>
+635c644
+< 	<xsd:complexType name="TypeOfMobilityService_ValueStructure" abstract="false">
+---
+> 	<xsd:complexType name="TypeOfMobilityService_ValueStructure">

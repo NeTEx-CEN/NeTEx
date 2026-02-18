@@ -1,0 +1,234 @@
+3a4
+> 	<xsd:include schemaLocation="../netex_genericFramework/netex_organisation_version.xsd"/>
+10c11
+< 				<Creator>First Drafted for version 1.0 CEN TC278 WG3 SG6 Editor Nicholas Knowles.  mailto:schemer@netex.org.uk</Creator>
+---
+> 				<Creator>First Drafted for version 1.0 CEN TC278 WG3 SG6 Editor Nicholas Knowles.</Creator>
+27a29,32
+> 				<Date><Modified>2023-11-06</Modified>CR0530 Add Contract, AssociatedContract in ResponsibilityRoleAssignment.
+> 				</Date>
+> 				<Date><Modified>2023-11-07</Modified>CR0544 Deprecate PrivateCode.
+> 				</Date>
+102c107
+< 	<!-- =====Responsibility============================================ -->
+---
+> 	<!-- ===== RESPONSIBILITY SET ======================================= -->
+132c137
+< 					<xsd:attribute name="id" type="ResponsibilitySetIdType" use="optional">
+---
+> 					<xsd:attribute name="id" type="ResponsibilitySetIdType" use="required">
+158c163,167
+< 			<xsd:element ref="PrivateCode" minOccurs="0"/>
+---
+> 			<xsd:element ref="PrivateCode" minOccurs="0">
+> 				<xsd:annotation>
+> 					<xsd:documentation>DEPRECATED - use privateCodes. -v2.0</xsd:documentation>
+> 				</xsd:annotation>
+> 			</xsd:element>
+166c175
+< 	<!-- =====Responsibility Role============================================ -->
+---
+> 	<!-- ===== RESPONSIBILITY ROLE ========================================== -->
+182c191
+< 			<xsd:documentation>A particular role an ORGANISATION or an ORGANISATION PART is playing.  +v1.1</xsd:documentation>
+---
+> 			<xsd:documentation>A particular role an ORGANISATION or an ORGANISATION PART is playing. +v1.1</xsd:documentation>
+196c205
+< 					<xsd:attribute name="id" type="ResponsibilityRoleIdType" use="optional">
+---
+> 					<xsd:attribute name="id" type="ResponsibilityRoleIdType" use="required">
+207c216
+< 			<xsd:documentation> Type for a  RESPONSIBILITY ROLE  that can be associated with a DATA MANAGED OBJECT. A Child ENTITY has the same responsibilities as its parent.</xsd:documentation>
+---
+> 			<xsd:documentation> Type for a RESPONSIBILITY ROLE that can be associated with a DATA MANAGED OBJECT. A Child ENTITY has the same responsibilities as its parent.</xsd:documentation>
+219c228
+< 					<xsd:documentation>Explanation of RESPONSIBILITY ROLE.</xsd:documentation>
+---
+> 					<xsd:documentation>Name of RESPONSIBILITY ROLE.</xsd:documentation>
+224c233
+< 					<xsd:documentation>Explanation of REsponsibility RoleSET.</xsd:documentation>
+---
+> 					<xsd:documentation>Description of RESPONSIBILITY ROLE.</xsd:documentation>
+230,231c239,240
+< 	<!-- =====Assignments of Roles============================================================= -->
+< 	<xsd:element name="ResponsibilityRoleAssignment" type="ResponsibilityRoleAssignment_VersionedChildStructure">
+---
+> 	<!-- ==== RESPONSIBILITY ROLE ASSIGNEMNT ============================================================ -->
+> 	<xsd:element name="ResponsibilityRoleAssignment">
+234a244,272
+> 		<xsd:complexType>
+> 			<xsd:complexContent>
+> 				<xsd:restriction base="ResponsibilityRoleAssignment_VersionedChildStructure">
+> 					<xsd:sequence>
+> 						<xsd:sequence>
+> 							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+> 						</xsd:sequence>
+> 						<xsd:sequence>
+> 							<xsd:group ref="VersionedChildGroup"/>
+> 						</xsd:sequence>
+> 						<xsd:sequence>
+> 							<xsd:element ref="ResponsibilitySetRef" minOccurs="0"/>
+> 							<xsd:element name="Description" type="MultilingualString" minOccurs="0">
+> 								<xsd:annotation>
+> 									<xsd:documentation>Description of RESPONSIBILITY ROLE ASSIGNMENT.</xsd:documentation>
+> 								</xsd:annotation>
+> 							</xsd:element>
+> 							<xsd:group ref="ResponsibilityRolesGroup"/>
+> 							<xsd:group ref="ResponsiblePartiesGroup">
+> 								<xsd:annotation>
+> 									<xsd:documentation>Identification of holder of responsibility. May be specified to different levels of specificity.</xsd:documentation>
+> 								</xsd:annotation>
+> 							</xsd:group>
+> 						</xsd:sequence>
+> 					</xsd:sequence>
+> 					<xsd:attribute name="id" type="ResponsibilityRoleAssignmentIdType" use="required"/>
+> 				</xsd:restriction>
+> 			</xsd:complexContent>
+> 		</xsd:complexType>
+295c333
+< 			<xsd:element name="ResponsibleAreaRef" type="VersionOfObjectRefStructure" minOccurs="0">
+---
+> 			<xsd:element name="ResponsibleAreaRef" type="AdministrativeZoneRefStructure" minOccurs="0">
+299a338,342
+> 			<xsd:element name="AssociatedContract" type="ContractRef_RelStructure" minOccurs="0">
+> 				<xsd:annotation>
+> 					<xsd:documentation>Associated CONTRACT. +v2.0</xsd:documentation>
+> 				</xsd:annotation>
+> 			</xsd:element>
+314,315c357,358
+< 	<!-- ======================================================================= -->
+< 	<xsd:element name="TypeOfResponsibilityRole" abstract="false" substitutionGroup="TypeOfEntity">
+---
+> 	<!-- ====== TYPE RESPONSIBILITY ROLE =================================================== -->
+> 	<xsd:element name="TypeOfResponsibilityRole" substitutionGroup="TypeOfEntity">
+333c376
+< 					<xsd:attribute name="id" type="ResponsibilityRoleIdType" use="optional">
+---
+> 					<xsd:attribute name="id" type="ResponsibilityRoleIdType" use="required">
+349a393,518
+> 	<!--==-  CONTRACT============================= -->
+> 	<xsd:complexType name="contractsInFrame_RelStructure">
+> 		<xsd:annotation>
+> 			<xsd:documentation>Type for containment of CONTRACTs in frame.</xsd:documentation>
+> 		</xsd:annotation>
+> 		<xsd:complexContent>
+> 			<xsd:extension base="containmentAggregationStructure">
+> 				<xsd:sequence>
+> 					<xsd:element ref="Contract" maxOccurs="unbounded"/>
+> 				</xsd:sequence>
+> 			</xsd:extension>
+> 		</xsd:complexContent>
+> 	</xsd:complexType>
+> 	<xsd:element name="Contract" substitutionGroup="DataManagedObject">
+> 		<xsd:annotation>
+> 			<xsd:documentation>A CONTRACT between ORGANISATIONs to supply services or goods.</xsd:documentation>
+> 		</xsd:annotation>
+> 		<xsd:complexType>
+> 			<xsd:complexContent>
+> 				<xsd:restriction base="Contract_VersionStructure">
+> 					<xsd:sequence>
+> 						<xsd:sequence>
+> 							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+> 						</xsd:sequence>
+> 						<xsd:sequence>
+> 							<xsd:group ref="DataManagedObjectGroup"/>
+> 						</xsd:sequence>
+> 						<xsd:sequence>
+> 							<xsd:group ref="ContractGroup">
+> 								<xsd:annotation>
+> 									<xsd:documentation>Details for a Contract.</xsd:documentation>
+> 								</xsd:annotation>
+> 							</xsd:group>
+> 						</xsd:sequence>
+> 					</xsd:sequence>
+> 					<xsd:attribute name="id" type="ContractIdType" use="required"/>
+> 				</xsd:restriction>
+> 			</xsd:complexContent>
+> 		</xsd:complexType>
+> 	</xsd:element>
+> 	<xsd:complexType name="Contract_VersionStructure" abstract="true">
+> 		<xsd:annotation>
+> 			<xsd:documentation>Type for an Contract.</xsd:documentation>
+> 		</xsd:annotation>
+> 		<xsd:complexContent>
+> 			<xsd:extension base="DataManagedObjectStructure">
+> 				<xsd:sequence>
+> 					<xsd:group ref="ContractGroup">
+> 						<xsd:annotation>
+> 							<xsd:documentation>Details for Contract</xsd:documentation>
+> 						</xsd:annotation>
+> 					</xsd:group>
+> 				</xsd:sequence>
+> 			</xsd:extension>
+> 		</xsd:complexContent>
+> 	</xsd:complexType>
+> 	<xsd:group name="ContractGroup">
+> 		<xsd:annotation>
+> 			<xsd:documentation>Elements for a Contract.</xsd:documentation>
+> 		</xsd:annotation>
+> 		<xsd:sequence>
+> 			<xsd:element name="Name" type="MultilingualString" minOccurs="0">
+> 				<xsd:annotation>
+> 					<xsd:documentation>The name of the ORGANISATION.</xsd:documentation>
+> 				</xsd:annotation>
+> 			</xsd:element>
+> 			<xsd:element name="Description" type="MultilingualString" minOccurs="0">
+> 				<xsd:annotation>
+> 					<xsd:documentation>Description of ORGANISATION.</xsd:documentation>
+> 				</xsd:annotation>
+> 			</xsd:element>
+> 			<xsd:element name="ContractType" type="ContractTypeEnumeration" minOccurs="0">
+> 				<xsd:annotation>
+> 					<xsd:documentation>formal informal written oral plainUnderstood</xsd:documentation>
+> 				</xsd:annotation>
+> 			</xsd:element>
+> 			<xsd:element name="LegalStatus" type="LegalStatusEnumeration" minOccurs="0">
+> 				<xsd:annotation>
+> 					<xsd:documentation>binding nonBinding</xsd:documentation>
+> 				</xsd:annotation>
+> 			</xsd:element>
+> 			<xsd:element name="ContractGoverningLaw" type="MultilingualString" minOccurs="0">
+> 				<xsd:annotation>
+> 					<xsd:documentation>Legal jurisdiction covering the CONTRACT.</xsd:documentation>
+> 				</xsd:annotation>
+> 			</xsd:element>
+> 			<xsd:element name="contractees" minOccurs="0">
+> 				<xsd:annotation>
+> 					<xsd:documentation>The contractee ORGANISATION is the party that is the recipient of agreed services or goods provided by the contractor according to the conditions in a CONTRACT.</xsd:documentation>
+> 				</xsd:annotation>
+> 				<xsd:complexType>
+> 					<xsd:complexContent>
+> 						<xsd:extension base="organisationRefs_RelStructure"/>
+> 					</xsd:complexContent>
+> 				</xsd:complexType>
+> 			</xsd:element>
+> 			<xsd:element name="contractors" type="organisationRefs_RelStructure">
+> 				<xsd:annotation>
+> 					<xsd:documentation>The contractor is the party that provides agreed services or goods to the contractee according to the conditions in a CONTRACT.</xsd:documentation>
+> 				</xsd:annotation>
+> 			</xsd:element>
+> 			<xsd:element name="contractDocuments" minOccurs="0">
+> 				<xsd:annotation>
+> 					<xsd:documentation>External documents (hyperlinks) can be referenced from external archives, such as PDF's.</xsd:documentation>
+> 				</xsd:annotation>
+> 				<xsd:complexType>
+> 					<xsd:complexContent>
+> 						<xsd:extension base="infoLinks_RelStructure"/>
+> 					</xsd:complexContent>
+> 				</xsd:complexType>
+> 			</xsd:element>
+> 		</xsd:sequence>
+> 	</xsd:group>
+> 	<xsd:complexType name="ContractRef_RelStructure">
+> 		<xsd:annotation>
+> 			<xsd:documentation>Type for a reference to a Contract.</xsd:documentation>
+> 		</xsd:annotation>
+> 		<xsd:complexContent>
+> 			<xsd:extension base="containmentAggregationStructure">
+> 				<xsd:choice>
+> 					<xsd:element ref="ContractRef"/>
+> 					<xsd:element ref="Contract"/>
+> 				</xsd:choice>
+> 			</xsd:extension>
+> 		</xsd:complexContent>
+> 	</xsd:complexType>

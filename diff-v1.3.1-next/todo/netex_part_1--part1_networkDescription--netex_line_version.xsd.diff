@@ -1,0 +1,356 @@
+2c2
+< <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_line_version">
+---
+> <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_line_version">
+9a10
+> 	<xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_facility_version.xsd"/>
+11a13
+> 	<xsd:include schemaLocation="../../netex_part_2/part2_journeyTimes/netex_vehicleJourneyStopAssignment_support.xsd"/>
+22c24
+< 				<Creator>First drafted for NeTEx version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.  mailto:schemer@netex.org.uk</Creator>
+---
+> 				<Creator>First drafted for NeTEx version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.</Creator>
+34c36
+< 					<Modified>2017-07-03</Modified>CR25 Add Secondary Name to Detsination Display.
+---
+> 					<Modified>2017-07-03</Modified>CR25 Add Secondary Name to Destination Display.
+44,45c46
+< 				<Date><Modified>2019-03-25</Modified>NL-27  CD Add additional  defaults to line for  TypeProductCategory, TypeOfService
+< 					 	
+---
+> 				<Date><Modified>2019-03-25</Modified>NL-27  CD Add additional  defaults to line for  TypeProductCategory, TypeOfService					 	
+55a57,65
+> 				<Date><Modified>2023-11-07</Modified>CR0544 Deprecate PrivateCode.
+> 				</Date>
+> 				<Date>
+> 					<Modified>2023-12-14 #391 Fix linesInDirection to also allow Allowed line diretcion ref. Remove commented out code</Modified>
+> 				</Date>
+> 				<Date><Modified>2023-12-18</Modified>FIX: revise the  #525 implementation of BOOKING ARRANGEMENT 
+> 					; move booking arrangements up up to LINE and deprecate use on FLEXIBLE LINE
+> 					Also delete commented out constraint code - now all in publication.xsd.
+> 				</Date>
+72c82
+< 					 <Copyright>CEN, Crown Copyright 2009-2020</Copyright>
+---
+> 					 <Copyright>CEN, Crown Copyright 2009-2023</Copyright>
+100c110
+< 			<xsd:documentation> NETWORK elements in frame. </xsd:documentation>
+---
+> 			<xsd:documentation> NETWORK elements in frame.</xsd:documentation>
+182c192
+< 	<xsd:element name="GroupOfLines" abstract="false" substitutionGroup="GroupOfEntities">
+---
+> 	<xsd:element name="GroupOfLines" substitutionGroup="GroupOfEntities">
+203c213
+< 					<xsd:attribute name="id" type="GroupOfLinesIdType"/>
+---
+> 					<xsd:attribute name="id" type="GroupOfLinesIdType" use="required"/>
+227c237
+< 					<xsd:documentation>Whether contents of Group should be used to exclude (true) from a large list . The default is include  (i.e.false) </xsd:documentation>
+---
+> 					<xsd:documentation>Whether contents of Group should be used to exclude (true) from a large list . The default is include (i.e.false)</xsd:documentation>
+240c250
+< 			<xsd:element name="TransportMode" type="AllVehicleModesOfTransportEnumeration" minOccurs="0">
+---
+> 			<xsd:element name="TransportMode" type="AllPublicTransportModesEnumeration" minOccurs="0">
+242c252
+< 					<xsd:documentation>Primary Transport MODE of NETWORK.</xsd:documentation>
+---
+> 					<xsd:documentation>Primary PUBLIC TRANSPORT MODE of NETWORK.</xsd:documentation>
+246c256,260
+< 			<xsd:element ref="ModeOfOperationRef" minOccurs="0"/>
+---
+> 			<xsd:element ref="ModeOfOperationRef" minOccurs="0">
+> 				<xsd:annotation>
+> 					<xsd:documentation>+v1.2.2</xsd:documentation>
+> 				</xsd:annotation>
+> 			</xsd:element>
+263c277
+< 					<xsd:element ref="Line_" maxOccurs="unbounded"/>
+---
+> 					<xsd:element ref="Line_Dummy" maxOccurs="unbounded"/>
+268c282
+< 	<xsd:element name="Line_" type="DataManagedObjectStructure" abstract="true" substitutionGroup="DataManagedObject">
+---
+> 	<xsd:element name="Line_Dummy" type="DataManagedObjectStructure" abstract="true" substitutionGroup="DataManagedObject">
+272,288d285
+< 		<!--
+< 		<xsd:unique name="AnyLine">
+< 			<xsd:selector xpath=".//netex:Line"/>
+< 			<xsd:field xpath="Id"/>
+< 		</xsd:unique>
+< 		<xsd:unique name="AnyLineDirection">
+< 			<xsd:selector xpath=".//netex:allowedDirections/DirectionRef"/>
+< 			<xsd:field xpath="@ref"/>
+< 		</xsd:unique>
+< 	<xsd:unique name="UniqueLineId">
+< 			<xsd:annotation>
+< 				<xsd:appinfo>Line identifiers must be unique for Type/Version</xsd:appinfo>
+< 			</xsd:annotation>
+< 			<xsd:selector xpath=".//netex:Line"/>
+< 			<xsd:field xpath="@version"/>
+< 			<xsd:field xpath="./netex:Id"/>
+< 		</xsd:unique> -->
+290c287
+< 	<xsd:element name="Line" abstract="false" substitutionGroup="Line_" id="Line">
+---
+> 	<xsd:element name="Line" substitutionGroup="Line_Dummy" id="Line">
+294,310d290
+< 		<!--
+< 		<xsd:unique name="AnyLine">
+< 			<xsd:selector xpath=".//netex:Line"/>
+< 			<xsd:field xpath="Id"/>
+< 		</xsd:unique>
+< 		<xsd:unique name="AnyLineDirection">
+< 			<xsd:selector xpath=".//netex:allowedDirections/DirectionRef"/>
+< 			<xsd:field xpath="@ref"/>
+< 		</xsd:unique>
+< 	<xsd:unique name="UniqueLineId">
+< 			<xsd:annotation>
+< 				<xsd:appinfo>Line identifiers must be unique for Type/Version</xsd:appinfo>
+< 			</xsd:annotation>
+< 			<xsd:selector xpath=".//netex:Line"/>
+< 			<xsd:field xpath="@version"/>
+< 			<xsd:field xpath="./netex:Id"/>
+< 		</xsd:unique> -->
+325c305
+< 					<xsd:attribute name="id" type="LineIdType"/>
+---
+> 					<xsd:attribute name="id" type="LineIdType" use="required"/>
+376c356
+< 			<xsd:element name="TransportMode" type="AllVehicleModesOfTransportEnumeration" minOccurs="0">
+---
+> 			<xsd:element name="TransportMode" type="AllPublicTransportModesEnumeration" minOccurs="0">
+378c358
+< 					<xsd:documentation>Transport MODE of LINE.</xsd:documentation>
+---
+> 					<xsd:documentation>PT MODE of LINE.</xsd:documentation>
+394c374
+< 			<xsd:element name="PublicCode" type="xsd:normalizedString" minOccurs="0">
+---
+> 			<xsd:element name="PublicCode" type="PublicCodeStructure" minOccurs="0">
+399c379,383
+< 			<xsd:element ref="PrivateCode" minOccurs="0"/>
+---
+> 			<xsd:element ref="PrivateCode" minOccurs="0">
+> 				<xsd:annotation>
+> 					<xsd:documentation>DEPRECATED - use privateCodes. -v2.0</xsd:documentation>
+> 				</xsd:annotation>
+> 			</xsd:element>
+402c386
+< 					<xsd:documentation>An alternative  code that uniquely identifies the LINE specifically for use in AVMS systems. For VDV compatibility.</xsd:documentation>
+---
+> 					<xsd:documentation>An alternative code that uniquely identifies the LINE specifically for use in AVMS systems. For VDV compatibility. DEPRECATED - use privateCodes -v2.0</xsd:documentation>
+419c403
+< 					<xsd:documentation>An OPERATOR should be set, even when the same as the AUTHORITY. In some cases OPERATOR or AUTHORITY are managed through a ResponsibilitySet. However, for compatibility OperatorRef and AuthorityRef still should be filled in.</xsd:documentation>
+---
+> 					<xsd:documentation>An OPERATOR should be set, even when the same as the AUTHORITY. In some cases OPERATOR or AUTHORITY are managed through a ResponsibilitySet. However, for compatibility OperatorRef and AuthorityRef still should be filled in. +v2.0</xsd:documentation>
+456c440
+< 					<xsd:documentation>Default  payment methods supported for LINE or NETWORK+v1.1</xsd:documentation>
+---
+> 					<xsd:documentation>Default payment methods supported for LINE or NETWORK+v1.1</xsd:documentation>
+469a454,458
+> 			<xsd:element name="facilities" type="serviceFacilitySets_RelStructure" minOccurs="0">
+> 				<xsd:annotation>
+> 					<xsd:documentation>FACILITies available associated with LINE. It is always recommended to also model accessibility relevant things as equipment on the VEHICLE and physical elements, if real-time information is needed.</xsd:documentation>
+> 				</xsd:annotation>
+> 			</xsd:element>
+479a469,473
+> 			<xsd:element name="bookingArrangements" type="bookingArrangements_RelStructure" minOccurs="0">
+> 				<xsd:annotation>
+> 					<xsd:documentation>Set of possible Booking Arrangements for this LINE. +v2.0</xsd:documentation>
+> 				</xsd:annotation>
+> 			</xsd:element>
+489c483
+< 					<xsd:documentation>Classification of LINE. +v1.1.</xsd:documentation>
+---
+> 					<xsd:documentation>Classification of LINE, including flexible options. +v2.0.</xsd:documentation>
+495c489
+< 					<xsd:documentation>An default product classification for all journeys of the lin e for use in AVMS systems. For VDV compatibility. +v1.1</xsd:documentation>
+---
+> 					<xsd:documentation>An default product classification for all journeys of the lin e for use in AVMS systems. For VDV compatibility. +v1.1. DEPRECATED - use privateCodes -v2.0</xsd:documentation>
+499a494,508
+> 			<xsd:element name="AccessModes" type="AccessModeListOfEnumerations" minOccurs="0">
+> 				<xsd:annotation>
+> 					<xsd:documentation>List of ACCESS MODEs that are allowed for this line. If not specified means all the usual ones for classic public transport. Can be used for example to indicate in vehicle only access. +v2.0</xsd:documentation>
+> 				</xsd:annotation>
+> 			</xsd:element>
+> 			<xsd:element name="RestrictedLine" type="xsd:boolean" default="false" minOccurs="0">
+> 				<xsd:annotation>
+> 					<xsd:documentation>Whether the LINE is restricted to special groups of passengers and not open to the general public, or restricted by the access modes supported. Default is false. +v2.0</xsd:documentation>
+> 				</xsd:annotation>
+> 			</xsd:element>
+> 			<xsd:element name="UserTypes" type="UserTypeListOfEnumerations" minOccurs="0">
+> 				<xsd:annotation>
+> 					<xsd:documentation>If only specific user types are allowed on the LINE, they can be indicated in this list. +v2.0</xsd:documentation>
+> 				</xsd:annotation>
+> 			</xsd:element>
+526c535
+< 			<xsd:documentation>Defauly Mayment methods supported for l LINE. +v1.1</xsd:documentation>
+---
+> 			<xsd:documentation>Default Payment methods supported for LINE. +v1.1</xsd:documentation>
+536c545
+< 					<xsd:documentation>TYPES OF PAYMENT yment Methods allowed on LINE. +v1.1</xsd:documentation>
+---
+> 					<xsd:documentation>TYPES OF PAYMENT METHOD allowed on LINE. +v1.1</xsd:documentation>
+547c556
+< 	<xsd:element name="Network" abstract="false" substitutionGroup="GroupOfEntities">
+---
+> 	<xsd:element name="Network" substitutionGroup="GroupOfEntities">
+571c580
+< 					<xsd:attribute name="id" type="NetworkIdType"/>
+---
+> 					<xsd:attribute name="id" type="NetworkIdType" use="required"/>
+576c585
+< 	<xsd:complexType name="Network_VersionStructure" abstract="false">
+---
+> 	<xsd:complexType name="Network_VersionStructure">
+600c609
+< 					<xsd:documentation>Groups of OPERATORs  AUTHORTies or OPERATORS) (in NETWORK.</xsd:documentation>
+---
+> 					<xsd:documentation>Groups of OPERATORs AUTHORTies or OPERATORS) (in NETWORK.</xsd:documentation>
+616c625
+< 	<xsd:element name="DestinationDisplay" abstract="false" substitutionGroup="DataManagedObject">
+---
+> 	<xsd:element name="DestinationDisplay" substitutionGroup="DataManagedObject">
+634c643
+< 					<xsd:attribute name="id" type="DestinationDisplayIdType"/>
+---
+> 					<xsd:attribute name="id" type="DestinationDisplayIdType" use="required"/>
+639c648
+< 	<xsd:complexType name="DestinationDisplay_VersionStructure" abstract="false">
+---
+> 	<xsd:complexType name="DestinationDisplay_VersionStructure">
+665c674
+< 					<xsd:documentation>Headings that distinguish the route by which the service runs to the Destination  Name .</xsd:documentation>
+---
+> 					<xsd:documentation>Headings that distinguish the route by which the service runs to the Destination Name .</xsd:documentation>
+670c679
+< 					<xsd:documentation>DEITINATION DISPLAY VARIANT for DESTINATION DISPLAY. Variants may  be for use in a specifc context or on a specifc media, or a combination of both. </xsd:documentation>
+---
+> 					<xsd:documentation>DESTINATION DISPLAY VARIANT for DESTINATION DISPLAY. Variants may be for use in a specifc context or on a specifc media, or a combination of both.</xsd:documentation>
+722c731
+< 			<xsd:element name="PublicCode" type="xsd:normalizedString" minOccurs="0">
+---
+> 			<xsd:element name="PublicCode" type="PublicCodeStructure" minOccurs="0">
+727c736,740
+< 			<xsd:element ref="PrivateCode" minOccurs="0"/>
+---
+> 			<xsd:element ref="PrivateCode" minOccurs="0">
+> 				<xsd:annotation>
+> 					<xsd:documentation>DEPRECATED - use privateCodes. -v2.0</xsd:documentation>
+> 				</xsd:annotation>
+> 			</xsd:element>
+743c756
+< 	<xsd:element name="DestinationDisplayVariant" abstract="false" substitutionGroup="DataManagedObject">
+---
+> 	<xsd:element name="DestinationDisplayVariant" substitutionGroup="DataManagedObject">
+761c774
+< 					<xsd:attribute name="id" type="DestinationDisplayVariantIdType"/>
+---
+> 					<xsd:attribute name="id" type="DestinationDisplayVariantIdType" use="required"/>
+786c799
+< 					<xsd:documentation>Context in which to use the secondary name.  Default is 'any'+v1.1</xsd:documentation>
+---
+> 					<xsd:documentation>Context in which to use the secondary name. Default is 'any'+v1.1</xsd:documentation>
+823c836
+< 								<xsd:documentation>A secondary heading  (e.g. ROUTE POINT or other place) showing intermediate places on the way to a destination.</xsd:documentation>
+---
+> 								<xsd:documentation>A secondary heading (e.g. ROUTE POINT or other place) showing intermediate places on the way to a destination.</xsd:documentation>
+849c862
+< 			<xsd:documentation>A secondary heading  (e.g. ROUTE POINT or other place) showing intermediate places on the way to a destination.</xsd:documentation>
+---
+> 			<xsd:documentation>A secondary heading (e.g. ROUTE POINT or other place) showing intermediate places on the way to a destination.</xsd:documentation>
+853a867,871
+> 				<xsd:attribute name="order" type="xsd:integer" use="optional">
+> 					<xsd:annotation>
+> 						<xsd:documentation>Relative order of ASSIGNMENT. -v2.0</xsd:documentation>
+> 					</xsd:annotation>
+> 				</xsd:attribute>
+893c911
+< 	<xsd:element name="AllowedLineDirection" abstract="false" substitutionGroup="DataManagedObject">
+---
+> 	<xsd:element name="AllowedLineDirection" substitutionGroup="DataManagedObject">
+911c929
+< 					<xsd:attribute name="id" type="AllowedLineDirectionIdType"/>
+---
+> 					<xsd:attribute name="id" type="AllowedLineDirectionIdType" use="required"/>
+945c963
+< 			<xsd:documentation>Type for a list of LINE in a specific DIRECTION</xsd:documentation>
+---
+> 			<xsd:documentation>Type for a list of LINEs in a specific DIRECTION</xsd:documentation>
+949,951c967,974
+< 				<xsd:sequence>
+< 					<xsd:element ref="LineInDirectionRef" maxOccurs="unbounded"/>
+< 				</xsd:sequence>
+---
+> 				<xsd:choice maxOccurs="unbounded">
+> 					<xsd:element ref="LineInDirectionRef">
+> 						<xsd:annotation>
+> 							<xsd:documentation>Reference to a LINE in a specific DIRECTION</xsd:documentation>
+> 						</xsd:annotation>
+> 					</xsd:element>
+> 					<xsd:element ref="AllowedLineDirectionRef"/>
+> 				</xsd:choice>
+955c978
+< 	<xsd:element name="LineInDirectionRef" type="LineInDirectionRef_Structure" abstract="false">
+---
+> 	<xsd:element name="LineInDirectionRef" type="LineInDirectionRef_Structure">
+957c980
+< 			<xsd:documentation> Refrence to LINE in a specific DIRECTION</xsd:documentation>
+---
+> 			<xsd:documentation>Reference to LINEs in a specific DIRECTION</xsd:documentation>
+969c992
+< 					<xsd:documentation>Alternative  LINE Reference  for AVMS system.</xsd:documentation>
+---
+> 					<xsd:documentation>Alternative LINE Reference for AVMS system. DEPRECATED - v2.0</xsd:documentation>
+974c997
+< 					<xsd:documentation>Alternative DIRECTION Reference  for AVMS system.</xsd:documentation>
+---
+> 					<xsd:documentation>Alternative DIRECTION Reference for AVMS system. DEPRECATED -v2.0</xsd:documentation>
+980c1003
+< 	<xsd:element name="NetworkView" abstract="false" substitutionGroup="DerivedView">
+---
+> 	<xsd:element name="NetworkView" substitutionGroup="DerivedView">
+1003c1026
+< 					<xsd:element name="TransportMode" type="AllVehicleModesOfTransportEnumeration" minOccurs="0">
+---
+> 					<xsd:element name="TransportMode" type="AllPublicTransportModesEnumeration" minOccurs="0">
+1005c1028
+< 							<xsd:documentation>TRANSPORT MODE of NETWORK.</xsd:documentation>
+---
+> 							<xsd:documentation>PUBLIC TRANSPORT MODE of NETWORK.</xsd:documentation>
+1013c1036
+< 	<xsd:element name="LineView" abstract="false" substitutionGroup="DerivedView">
+---
+> 	<xsd:element name="LineView" substitutionGroup="DerivedView">
+1031c1054
+< 					<xsd:element name="PublicCode" type="xsd:normalizedString" minOccurs="0">
+---
+> 					<xsd:element name="PublicCode" type="PublicCodeStructure" minOccurs="0">
+1046c1069
+< 					<xsd:element name="TransportMode" type="AllVehicleModesOfTransportEnumeration" minOccurs="0">
+---
+> 					<xsd:element name="TransportMode" type="AllPublicTransportModesEnumeration" minOccurs="0">
+1048c1071
+< 							<xsd:documentation>TRANSPORT MODE of LINE.</xsd:documentation>
+---
+> 							<xsd:documentation>PUBLIC TRANSPORT MODE of LINE.</xsd:documentation>
+1072c1095
+< 	<xsd:element name="DestinationDisplayView" abstract="false" substitutionGroup="DerivedView">
+---
+> 	<xsd:element name="DestinationDisplayView" substitutionGroup="DerivedView">
+1102c1125
+< 	<xsd:element name="TypeOfLine" abstract="false" substitutionGroup="TypeOfEntity">
+---
+> 	<xsd:element name="TypeOfLine" substitutionGroup="TypeOfEntity">
+1120,1121c1143,1144
+< 					<xsd:attribute name="id" type="TypeOfLineIdType"/>
+< 					<xsd:attribute name="nameOfClassifiedEntityClass" type="NameOfClass" use="optional" fixed="Line">
+---
+> 					<xsd:attribute name="id" type="TypeOfLineIdType" use="required"/>
+> 					<xsd:attribute name="nameOfClassifiedEntityClass" type="NameOfClass" use="optional">
+1130c1153
+< 	<xsd:complexType name="TypeOfLine_ValueStructure" abstract="false">
+---
+> 	<xsd:complexType name="TypeOfLine_ValueStructure">

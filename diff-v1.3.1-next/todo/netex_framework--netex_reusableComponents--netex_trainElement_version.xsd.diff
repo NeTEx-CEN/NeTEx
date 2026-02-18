@@ -1,0 +1,475 @@
+2c2
+< <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2.2" id="netex_trainElement_version">
+---
+> <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_trainElement_version">
+4a5
+> 	<xsd:include schemaLocation="netex_deckPlan_support.xsd"/>
+7,26d7
+< 	<xsd:group name="ServiceRequirementTypeGroup">
+< 		<xsd:annotation>
+< 			<xsd:documentation>SERVICE REQUIEMENTS for  SERVICE JOURNEY. These are the normal planned values, not necessarily the ACTUAL VEHICLE EQUIPMENT.</xsd:documentation>
+< 		</xsd:annotation>
+< 		<xsd:sequence>
+< 			<xsd:choice minOccurs="0">
+< 				<xsd:annotation>
+< 					<xsd:documentation>Required Minimum  capacity for service. Note actual Capacity is given by vehicle type.</xsd:documentation>
+< 				</xsd:annotation>
+< 				<xsd:element ref="PassengerCarryingRequirementRef"/>
+< 				<xsd:element ref="PassengerCarryingRequirementsView"/>
+< 			</xsd:choice>
+< 			<xsd:element ref="TrainSize" minOccurs="0"/>
+< 			<xsd:element name="equipments" type="vehicleEquipments_RelStructure" minOccurs="0">
+< 				<xsd:annotation>
+< 					<xsd:documentation>VEHICLE EQUIPMENT available on service.</xsd:documentation>
+< 				</xsd:annotation>
+< 			</xsd:element>
+< 		</xsd:sequence>
+< 	</xsd:group>
+36c17
+< 				<Creator>First drafted for NeTEx version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.  mailto:schemer@netex.org.uk</Creator>
+---
+> 				<Creator>First drafted for NeTEx version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.</Creator>
+48,49c29
+< 				<Date><Modified>2019-04-18</Modified>Fix add missing orientation to  TrainComponent				</Date>
+< 				<Date><Modified>2021-09-018</Modified>NewModes: revise to allow chargingEquipmentProfile
+---
+> 				<Date><Modified>2019-04-18</Modified>Fix add missing orientation to  TrainComponent
+50a31,38
+> 				<Date><Modified>2021-09-01</Modified>NewModes: revise to allow chargingEquipmentProfile
+> 				</Date>
+> 				<Date><Modified>2024-01-17</Modified>DECK PLANS add a defualt DECK PLAN
+> 				</Date>
+> 				<Date><Modified>2024-02-05</Modified>DECK PLANS add a default DECK PLAN and TRAIN COMPONENT COUPLING
+> 				</Date>
+> 				<Date><Modified>2024-02-09</Modified>Rename TRAIN ELEMENT to TRAIN ELEMNT TYPE. DEerecate old element
+> 				</Date>
+53c41
+< 					<p>This sub-schema describes the TRAIN ELEMENT types </p>
+---
+> 					<p>This sub-schema describes the TRAIN ELEMENT types</p>
+67c55
+< 					 <Copyright>CEN, Crown Copyright 2009-2021</Copyright>
+---
+> 					 <Copyright>CEN, Crown Copyright 2009-2024</Copyright>
+90c78
+< 		<xsd:documentation>NeTEx Train specifcation</xsd:documentation>
+---
+> 		<xsd:documentation>NeTEx TRAIN ELEMENT specification</xsd:documentation>
+91a80,100
+> 	<!-- ======================================================================= -->
+> 	<xsd:group name="ServiceRequirementTypeGroup">
+> 		<xsd:annotation>
+> 			<xsd:documentation>SERVICE REQUIREMENTS for SERVICE JOURNEY. These are the normal planned values, not necessarily the ACTUAL VEHICLE EQUIPMENT.</xsd:documentation>
+> 		</xsd:annotation>
+> 		<xsd:sequence>
+> 			<xsd:choice minOccurs="0">
+> 				<xsd:annotation>
+> 					<xsd:documentation>Required minimum capacity for service. Note actual capacity is given by vehicle type.</xsd:documentation>
+> 				</xsd:annotation>
+> 				<xsd:element ref="PassengerCarryingRequirementRef"/>
+> 				<xsd:element ref="PassengerCarryingRequirementsView"/>
+> 			</xsd:choice>
+> 			<xsd:element ref="TrainSize" minOccurs="0"/>
+> 			<xsd:element name="equipments" type="vehicleEquipments_RelStructure" minOccurs="0">
+> 				<xsd:annotation>
+> 					<xsd:documentation>VEHICLE EQUIPMENT available on service.</xsd:documentation>
+> 				</xsd:annotation>
+> 			</xsd:element>
+> 		</xsd:sequence>
+> 	</xsd:group>
+105c114
+< 	<xsd:group name="VehicleInFrameGroup">
+---
+> 	<xsd:complexType name="vehicleTypesInFrame_RelStructure">
+107c116
+< 			<xsd:documentation>Elements for a VEHICLEs in frame.</xsd:documentation>
+---
+> 			<xsd:documentation>Type for containment in frame of VEHICLE TYPEs.</xsd:documentation>
+108a118,129
+> 		<xsd:complexContent>
+> 			<xsd:extension base="containmentAggregationStructure">
+> 				<xsd:choice minOccurs="0">
+> 					<xsd:element ref="TransportType_Dummy" maxOccurs="unbounded"/>
+> 				</xsd:choice>
+> 			</xsd:extension>
+> 		</xsd:complexContent>
+> 	</xsd:complexType>
+> 	<xsd:group name="VehicleTypeProfileInFrameGroup">
+> 		<xsd:annotation>
+> 			<xsd:documentation>Elements for VEHICLE TYPEs, VEHICLE MODELS, etc. in frame.</xsd:documentation>
+> 		</xsd:annotation>
+120c141
+< 			<xsd:element name="vehicleEquipmentProfiles" type="vehicleEquipmenProfilesInFrame_RelStructure" minOccurs="0">
+---
+> 			<xsd:element name="vehicleEquipmentProfiles" type="vehicleEquipmentProfilesInFrame_RelStructure" minOccurs="0">
+130,134d150
+< 			<xsd:element name="vehicles" type="vehiclesInFrame_RelStructure" minOccurs="0">
+< 				<xsd:annotation>
+< 					<xsd:documentation>VEHICLEs in frame.</xsd:documentation>
+< 				</xsd:annotation>
+< 			</xsd:element>
+137c153
+< 	<xsd:complexType name="vehicleEquipmenProfilesInFrame_RelStructure">
+---
+> 	<xsd:complexType name="vehicleEquipmentProfilesInFrame_RelStructure">
+145,158c161,165
+< 					<xsd:element ref="ChargingEquipmentProfile"/>
+< 				</xsd:choice>
+< 			</xsd:extension>
+< 		</xsd:complexContent>
+< 	</xsd:complexType>
+< 	<xsd:complexType name="vehiclesInFrame_RelStructure">
+< 		<xsd:annotation>
+< 			<xsd:documentation>Type for containment in frame of VEHICLE TYPEs.</xsd:documentation>
+< 		</xsd:annotation>
+< 		<xsd:complexContent>
+< 			<xsd:extension base="containmentAggregationStructure">
+< 				<xsd:choice maxOccurs="unbounded">
+< 					<xsd:element ref="TrainElement"/>
+< 					<xsd:element ref="Vehicle"/>
+---
+> 					<xsd:element ref="RechargingEquipmentProfile">
+> 						<xsd:annotation>
+> 							<xsd:documentation>+v1.2.2</xsd:documentation>
+> 						</xsd:annotation>
+> 					</xsd:element>
+163c170,171
+< 	<xsd:complexType name="vehicleTypesInFrame_RelStructure">
+---
+> 	<!-- =======TRAIN ======================================================= -->
+> 	<xsd:element name="Train_Dummy" type="DataManagedObjectStructure" abstract="true" substitutionGroup="TransportType_Dummy">
+165c173
+< 			<xsd:documentation>Type for containment in frame of VEHICLE TYPEs.</xsd:documentation>
+---
+> 			<xsd:documentation>Dummy type to work around SG limitations</xsd:documentation>
+167,179c175,176
+< 		<xsd:complexContent>
+< 			<xsd:extension base="containmentAggregationStructure">
+< 				<xsd:choice maxOccurs="unbounded">
+< 					<xsd:element ref="CompoundTrain"/>
+< 					<xsd:element ref="Train"/>
+< 					<xsd:element ref="VehicleType"/>
+< 					<xsd:element ref="SimpleVehicleType"/>
+< 				</xsd:choice>
+< 			</xsd:extension>
+< 		</xsd:complexContent>
+< 	</xsd:complexType>
+< 	<!-- ======================================================================= -->
+< 	<xsd:element name="Train" substitutionGroup="DataManagedObject">
+---
+> 	</xsd:element>
+> 	<xsd:element name="Train" substitutionGroup="Train_Dummy">
+201c198
+< 					<xsd:attribute name="id" type="TrainIdType"/>
+---
+> 					<xsd:attribute name="id" type="TrainIdType" use="required"/>
+206c203
+< 	<xsd:complexType name="Train_VersionStructure" abstract="false">
+---
+> 	<xsd:complexType name="Train_VersionStructure">
+229c226
+< 	<!-- ======================================================================= -->
+---
+> 	<!-- ====== TRAIN SIZE ====================================================== -->
+252,253c249,250
+< 	<!-- ======================================================================= -->
+< 	<xsd:element name="CompoundTrain" substitutionGroup="DataManagedObject">
+---
+> 	<!-- ====== COMPOUND TRAIN ==================================================== -->
+> 	<xsd:element name="CompoundTrain" substitutionGroup="TransportType_Dummy">
+275c272
+< 					<xsd:attribute name="id" type="CompoundTrainIdType"/>
+---
+> 					<xsd:attribute name="id" type="CompoundTrainIdType" use="required"/>
+280c277
+< 	<xsd:complexType name="CompoundTrain_VersionStructure" abstract="false">
+---
+> 	<xsd:complexType name="CompoundTrain_VersionStructure">
+302c299,323
+< 	<!-- ======================================================================= -->
+---
+> 	<!-- ====== TRAIN ELEMENT =================================================== -->
+> 	<xsd:element name="TrainElementType_Dummy" substitutionGroup="DataManagedObject">
+> 		<xsd:annotation>
+> 			<xsd:documentation> Dummy Tpe for Train Element substitution</xsd:documentation>
+> 		</xsd:annotation>
+> 		<xsd:complexType>
+> 			<xsd:complexContent>
+> 				<xsd:restriction base="DataManagedObjectStructure">
+> 					<xsd:sequence>
+> 						<xsd:sequence>
+> 							<xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+> 						</xsd:sequence>
+> 						<xsd:sequence>
+> 							<xsd:group ref="DataManagedObjectGroup"/>
+> 						</xsd:sequence>
+> 					</xsd:sequence>
+> 					<xsd:attribute name="id" type="TrainElementTypeIdType" use="required">
+> 						<xsd:annotation>
+> 							<xsd:documentation>Identifier of ENTITY.</xsd:documentation>
+> 						</xsd:annotation>
+> 					</xsd:attribute>
+> 				</xsd:restriction>
+> 			</xsd:complexContent>
+> 		</xsd:complexType>
+> 	</xsd:element>
+305c326
+< 			<xsd:documentation>An elementary component of a TRAIN (e.g. wagon, locomotive).</xsd:documentation>
+---
+> 			<xsd:documentation> According to Transmodel 6.2 This shoud really be called TRAIN ELEMENT TYPE and be abstract . Use as concrete element DEPRECATED - use more specific TRAILING ELEMENT TYPE or TRACTIVE ELEMENT TYPE subtypes, Shoul dbe renmaed and removed in V3.0</xsd:documentation>
+309c330
+< 				<xsd:restriction base="TrainElement_VersionStructure">
+---
+> 				<xsd:restriction base="TrainElementType_VersionStructure">
+318,322c339
+< 							<xsd:group ref="TrainElementGroup">
+< 								<xsd:annotation>
+< 									<xsd:documentation>Elements for a VEHICLE TYPE.</xsd:documentation>
+< 								</xsd:annotation>
+< 							</xsd:group>
+---
+> 							<xsd:group ref="TrainElementTypeGroup"/>
+325c342
+< 					<xsd:attribute name="id" type="TrainElementIdType"/>
+---
+> 					<xsd:attribute name="id" type="TrainElementTypeIdType" use="required"/>
+330c347
+< 	<xsd:complexType name="TrainElement_VersionStructure">
+---
+> 	<xsd:complexType name="TrainElementType_VersionStructure">
+332c349
+< 			<xsd:documentation>Type for a TRAIN ELEMENT.</xsd:documentation>
+---
+> 			<xsd:documentation>Type for a TRAIN ELEMENT TYPE.</xsd:documentation>
+337c354
+< 					<xsd:group ref="TrainElementGroup"/>
+---
+> 					<xsd:group ref="TrainElementTypeGroup"/>
+342c359
+< 	<xsd:group name="TrainElementGroup">
+---
+> 	<xsd:group name="TrainElementTypeGroup">
+344c361
+< 			<xsd:documentation>Elements for a TRAIN ELEMENT.</xsd:documentation>
+---
+> 			<xsd:documentation>Elements for a TRAIN ELEMENT TYPE.</xsd:documentation>
+349c366
+< 					<xsd:documentation>Name of TRAIN ELEMENT.</xsd:documentation>
+---
+> 					<xsd:documentation>Name of TRAIN ELEMENT TYPE.</xsd:documentation>
+354c371
+< 					<xsd:documentation>Description of TRAIN ELEMENT.</xsd:documentation>
+---
+> 					<xsd:documentation>Description of TRAIN ELEMENT TYPE.</xsd:documentation>
+357c374
+< 			<xsd:element name="TrainElementType" type="TrainElementTypeEnumeration" minOccurs="0">
+---
+> 			<xsd:element name="TrainElementType" type="TrainElementTypeTypeEnumeration" minOccurs="0">
+359c376
+< 					<xsd:documentation>Type of TRAIN ELEMENT.</xsd:documentation>
+---
+> 					<xsd:documentation>Type of TRAIN ELEMENT TYPE. NB There is a name class with the supertype. Fix in v2.0</xsd:documentation>
+365c382
+< 					<xsd:documentation>Total Number of passengers that TRAIN ELEMENT. can carry.</xsd:documentation>
+---
+> 					<xsd:documentation>Total Number of passengers that TRAIN ELEMENT TYPE. can carry.</xsd:documentation>
+368c385,403
+< 			<xsd:element name="capacities" type="passengerCapacities_RelStructure" minOccurs="0"/>
+---
+> 			<xsd:group ref="VehicleTypePropertiesGroup"/>
+> 			<xsd:element name="facilities" type="serviceFacilitySets_RelStructure" minOccurs="0">
+> 				<xsd:annotation>
+> 					<xsd:documentation>Facilities in TRAIN ELEMENT TYPE.</xsd:documentation>
+> 				</xsd:annotation>
+> 			</xsd:element>
+> 			<xsd:element name="equipments" type="equipments_RelStructure" minOccurs="0">
+> 				<xsd:annotation>
+> 					<xsd:documentation>Actual EQUIPMENT on element.</xsd:documentation>
+> 				</xsd:annotation>
+> 			</xsd:element>
+> 			<xsd:element ref="DeckPlanRef" minOccurs="0"/>
+> 		</xsd:sequence>
+> 	</xsd:group>
+> 	<xsd:group name="TrainDimensionsGroup">
+> 		<xsd:annotation>
+> 			<xsd:documentation>Dimension Elements for a TRAIN ELEMENT TYPE.</xsd:documentation>
+> 		</xsd:annotation>
+> 		<xsd:sequence>
+371c406
+< 					<xsd:documentation>The length of a TRAIN ELEMENT.</xsd:documentation>
+---
+> 					<xsd:documentation>The length of an ELEMENT.</xsd:documentation>
+376c411
+< 					<xsd:documentation>The width of a TRAIN ELEMENT.</xsd:documentation>
+---
+> 					<xsd:documentation>The width of an ELEMENT.</xsd:documentation>
+379,381c414
+< 			<xsd:element ref="TrainSize" minOccurs="0"/>
+< 			<xsd:element name="facilities" type="serviceFacilitySets_RelStructure" minOccurs="0"/>
+< 			<xsd:element name="equipments" type="equipments_RelStructure" minOccurs="0">
+---
+> 			<xsd:element name="Height" type="LengthType" minOccurs="0">
+383c416
+< 					<xsd:documentation>Actual EQUIPMENT on element.</xsd:documentation>
+---
+> 					<xsd:documentation>The width of an ELEMENT. +V2.0</xsd:documentation>
+388a422,456
+> 	<xsd:group name="TrainElementTypeViewGroup">
+> 		<xsd:annotation>
+> 			<xsd:documentation>Elements for a TRAIN ELEMENT TYPE VIEW.</xsd:documentation>
+> 		</xsd:annotation>
+> 		<xsd:sequence>
+> 			<xsd:choice>
+> 				<xsd:annotation>
+> 					<xsd:documentation>Open values to classify TRAIN ELEMENT TYPE</xsd:documentation>
+> 				</xsd:annotation>
+> 				<xsd:element ref="TrainElementTypeRef"/>
+> 				<xsd:element ref="TrainElementRef" minOccurs="0">
+> 					<xsd:annotation>
+> 						<xsd:documentation>Reference to a TRAIN ELEMENT.</xsd:documentation>
+> 					</xsd:annotation>
+> 				</xsd:element>
+> 			</xsd:choice>
+> 			<xsd:element ref="FareClasses" minOccurs="0"/>
+> 			<xsd:choice>
+> 				<xsd:annotation>
+> 					<xsd:documentation>Enumerated values to classify TRAIN ELEMENT TYPE</xsd:documentation>
+> 				</xsd:annotation>
+> 				<xsd:element name="TrainElementTypeType" type="TrainElementTypeTypeEnumeration" minOccurs="0">
+> 					<xsd:annotation>
+> 						<xsd:documentation>Type of TRAIN ELEMENT TYPE. V2.0.</xsd:documentation>
+> 					</xsd:annotation>
+> 				</xsd:element>
+> 				<xsd:element name="TrainElementType" type="TrainElementTypeTypeEnumeration" minOccurs="0">
+> 					<xsd:annotation>
+> 						<xsd:documentation>Type of TRAIN ELEMENT. DEPRECATED 2.0 Renamed to TYPE OF TRAIN ELEMENG TYPE</xsd:documentation>
+> 					</xsd:annotation>
+> 				</xsd:element>
+> 			</xsd:choice>
+> 		</xsd:sequence>
+> 	</xsd:group>
+> 	<!-- ====== TRAIN COMPONENTs================================================= -->
+422c490
+< 					<xsd:attribute name="id" type="TrainComponentIdType"/>
+---
+> 					<xsd:attribute name="id" type="TrainComponentIdType" use="required"/>
+427c495
+< 	<xsd:complexType name="TrainComponent_VersionStructure" abstract="false">
+---
+> 	<xsd:complexType name="TrainComponent_VersionStructure">
+434c502
+< 				<xsd:attribute name="order" type="xsd:positiveInteger">
+---
+> 				<xsd:attribute name="order" type="xsd:positiveInteger" use="optional">
+436c504
+< 						<xsd:documentation>Order of TRAIN COMPONENT within TRAIN.</xsd:documentation>
+---
+> 						<xsd:documentation>Order of TRAIN COMPONENT within TRAIN. -v2.0</xsd:documentation>
+463,467c531,532
+< 				<xsd:element ref="TrainElementRef">
+< 					<xsd:annotation>
+< 						<xsd:documentation>Reference to a TRAIN ELEMENT.</xsd:documentation>
+< 					</xsd:annotation>
+< 				</xsd:element>
+---
+> 				<xsd:element ref="TrainElementTypeRef"/>
+> 				<xsd:element ref="TrainElementRef"/>
+472c537
+< 					<xsd:documentation>Orientation of the  TRAIN ELEMENT within the TRAIN. +v1.1. </xsd:documentation>
+---
+> 					<xsd:documentation>Orientation of the TRAIN ELEMENT within the TRAIN. +v1.1.</xsd:documentation>
+474a540,544
+> 			<xsd:element name="ForwardCoupling" type="TrainComponentCouplingStructure" minOccurs="0">
+> 				<xsd:annotation>
+> 					<xsd:documentation>The nature of the coupling between the TRAIN COMPONENT and the TRAIN COMPONENT ahead of it within the TRAIN. +v2.0</xsd:documentation>
+> 				</xsd:annotation>
+> 			</xsd:element>
+477c547,564
+< 	<!-- ======================================================================= -->
+---
+> 	<xsd:complexType name="TrainComponentCouplingStructure">
+> 		<xsd:annotation>
+> 			<xsd:documentation>Type for a TRAIN COMPONENT COUPLING.</xsd:documentation>
+> 		</xsd:annotation>
+> 		<xsd:sequence>
+> 			<xsd:element name="Splittable" type="xsd:boolean" minOccurs="0">
+> 				<xsd:annotation>
+> 					<xsd:documentation>Whether the component can be split in normal usage.</xsd:documentation>
+> 				</xsd:annotation>
+> 			</xsd:element>
+> 			<xsd:element name="ThroughAccess" type="ThroughAccessEnumeration">
+> 				<xsd:annotation>
+> 					<xsd:documentation>Whether passenger can walk through coupling to next carriage.</xsd:documentation>
+> 				</xsd:annotation>
+> 			</xsd:element>
+> 		</xsd:sequence>
+> 	</xsd:complexType>
+> 	<!-- ======= TRAIN IN COMPOUND TRAIN ========================================== -->
+494c581
+< 	<xsd:complexType name="TrainInCompoundTrain_VersionedChildStructure" abstract="false">
+---
+> 	<xsd:complexType name="TrainInCompoundTrain_VersionedChildStructure">
+505c592
+< 				<xsd:attribute name="order" type="xsd:positiveInteger">
+---
+> 				<xsd:attribute name="order" type="xsd:positiveInteger" use="optional">
+507,509c594
+< 						<xsd:documentation>
+< 					 Order of TRAIN IN COMPOUND TRAIN within TRAIN.
+< 				</xsd:documentation>
+---
+> 						<xsd:documentation>Order of TRAIN IN COMPOUND TRAIN within TRAIN. -v2.0</xsd:documentation>
+536c621,622
+< 				<xsd:element ref="Train"/>
+---
+> 				<xsd:element ref="Train_Dummy"/>
+> 				<xsd:element ref="TrainElementType_Dummy"/>
+545c631
+< 					<xsd:documentation>Orientation of the  TRAIN IN COMPOUND TRAIN</xsd:documentation>
+---
+> 					<xsd:documentation>Orientation of the TRAIN IN COMPOUND TRAIN</xsd:documentation>
+556,557c642
+< 	<!-- ======================================================================= -->
+< 	<xsd:element name="TrainComponentView" abstract="false" substitutionGroup="DerivedView">
+---
+> 	<xsd:element name="TrainComponentView" substitutionGroup="DerivedView">
+559c644
+< 			<xsd:documentation>Simplified view of TRAIN COMPONENT.</xsd:documentation>
+---
+> 			<xsd:documentation>Simplified view of TRAIN COMPONENT +2.0.</xsd:documentation>
+567c652
+< 	<xsd:complexType name="TrainComponent_DerivedViewStructure" abstract="false">
+---
+> 	<xsd:complexType name="TrainComponent_DerivedViewStructure">
+576c661
+< 				<xsd:attribute name="order" type="xsd:positiveInteger">
+---
+> 				<xsd:attribute name="order" type="xsd:positiveInteger" use="optional">
+578c663
+< 						<xsd:documentation>Order of TRAIN COMPONENT within TRAIN.</xsd:documentation>
+---
+> 						<xsd:documentation>Order of TRAIN COMPONENT within TRAIN. -v2.0</xsd:documentation>
+600c685
+< 			<xsd:group ref="TrainElementViewGroup">
+---
+> 			<xsd:group ref="TrainElementTypeViewGroup">
+608,626d692
+< 	<xsd:group name="TrainElementViewGroup">
+< 		<xsd:annotation>
+< 			<xsd:documentation>Elements for a TRAIN ELEMENT VIEW.</xsd:documentation>
+< 		</xsd:annotation>
+< 		<xsd:sequence>
+< 			<xsd:element ref="TrainElementRef" minOccurs="0">
+< 				<xsd:annotation>
+< 					<xsd:documentation>Reference to a TRAIN ELEMENT.</xsd:documentation>
+< 				</xsd:annotation>
+< 			</xsd:element>
+< 			<xsd:element ref="FareClasses" minOccurs="0"/>
+< 			<xsd:element name="TrainElementType" type="TrainElementTypeEnumeration" minOccurs="0">
+< 				<xsd:annotation>
+< 					<xsd:documentation>Type of TRAIN ELEMENT.</xsd:documentation>
+< 				</xsd:annotation>
+< 			</xsd:element>
+< 		</xsd:sequence>
+< 	</xsd:group>
+< 	<!-- ======================================================================= -->

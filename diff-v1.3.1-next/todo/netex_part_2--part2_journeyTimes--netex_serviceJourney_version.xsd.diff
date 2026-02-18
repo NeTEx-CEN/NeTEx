@@ -1,0 +1,166 @@
+2c2
+< <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_serviceJourney_Version">
+---
+> <xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="netex_serviceJourney_Version">
+18c18
+< 				<Creator>First drafted for NeTEx version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.  mailto:schemer@netex.org.uk</Creator>
+---
+> 				<Creator>First drafted for NeTEx version 1.0 CEN TC278 WG3 SG9 Editor Nicholas Knowles.</Creator>
+48c48
+< 					 <Copyright>CEN, Crown Copyright 2009-2019</Copyright>
+---
+> 					 <Copyright>CEN, Crown Copyright 2009-2023</Copyright>
+71c71
+< 		<xsd:documentation>NeTEx: SERVICE JOURNEY  types.</xsd:documentation>
+---
+> 		<xsd:documentation>NeTEx: SERVICE JOURNEY types.</xsd:documentation>
+89c89
+< 	<xsd:element name="ServiceJourney_" type="Journey_VersionStructure" abstract="true" substitutionGroup="VehicleJourney_">
+---
+> 	<xsd:element name="ServiceJourney_Dummy" type="Journey_VersionStructure" abstract="true" substitutionGroup="VehicleJourney_Dummy">
+94c94
+< 	<xsd:element name="ServiceJourney" abstract="false" substitutionGroup="VehicleJourney_">
+---
+> 	<xsd:element name="ServiceJourney" substitutionGroup="VehicleJourney_Dummy">
+116c116
+< 					<xsd:attribute name="id" type="ServiceJourneyIdType"/>
+---
+> 					<xsd:attribute name="id" type="ServiceJourneyIdType" use="required"/>
+156c156
+< 			<xsd:documentation>Elements for parts of  a SERVICE JOURNEY, i.</xsd:documentation>
+---
+> 			<xsd:documentation>Elements for parts of a SERVICE JOURNEY, i.</xsd:documentation>
+176c176
+< 					<xsd:documentation>CHECK CONSTRAINTs  which apply to SERVICE JOURNEY, e.g. check in time, security time. These are advisory only and not for use in  journey planning.</xsd:documentation>
+---
+> 					<xsd:documentation>CHECK CONSTRAINTs which apply to SERVICE JOURNEY, e.g. check in time, security time. These are advisory only and not for use in journey planning.</xsd:documentation>
+192c192
+< 					<xsd:documentation>LINE followed by SERVICE JOURNEY Use view to get derived values.</xsd:documentation>
+---
+> 					<xsd:documentation>LINE followed by SERVICE JOURNEY Use view to get derived values. NOTE: Use LineView over FlexibleLineView as FLEXIBLE LINE is marked deprecated in v2.0.</xsd:documentation>
+202c202
+< 					<xsd:documentation>Grouping of services  of a journey - for a multi-part journey only.</xsd:documentation>
+---
+> 					<xsd:documentation>Grouping of services of a journey - for a multi-part journey only.</xsd:documentation>
+212c212
+< 					<xsd:documentation>TRAIN NUMBERs -= derived through JOURNEY PARTs  of a journey - for a multi-part journey only.</xsd:documentation>
+---
+> 					<xsd:documentation>TRAIN NUMBERs -= derived through JOURNEY PARTs of a journey - for a multi-part journey only.</xsd:documentation>
+251c251
+< 					<xsd:documentation>Total length of Journey. Can be computed from individual times.  Add to Departure time to obtain JOURNEY arrival time.</xsd:documentation>
+---
+> 					<xsd:documentation>Total length of Journey. Can be computed from individual times. Add to Departure time to obtain JOURNEY arrival time.</xsd:documentation>
+263c263
+< 					<xsd:documentation>Whether journey is as planned, a cancellation or an extra journey.  Default is as Planned.</xsd:documentation>
+---
+> 					<xsd:documentation>Whether journey is as planned, a cancellation or an extra journey. Default is as Planned.</xsd:documentation>
+270c270
+< 			<xsd:documentation>Elements for  origin and destination of  JOURNEY. Can be derived from the Pattern. Must not  contradict the calls.</xsd:documentation>
+---
+> 			<xsd:documentation>Elements for origin and destination of JOURNEY. Can be derived from the Pattern. Must not contradict the calls.</xsd:documentation>
+275c275
+< 					<xsd:documentation>Origin  for JOURNEY.</xsd:documentation>
+---
+> 					<xsd:documentation>Origin for JOURNEY.</xsd:documentation>
+280c280
+< 					<xsd:documentation>Destination  for JOURNEY.</xsd:documentation>
+---
+> 					<xsd:documentation>Destination for JOURNEY.</xsd:documentation>
+297c297
+< 	<xsd:element name="TemplateServiceJourney" abstract="false" substitutionGroup="ServiceJourney_">
+---
+> 	<xsd:element name="TemplateServiceJourney" substitutionGroup="ServiceJourney_Dummy">
+320c320
+< 					<xsd:attribute name="id" type="TemplateServiceJourneyIdType"/>
+---
+> 					<xsd:attribute name="id" type="TemplateServiceJourneyIdType" use="required"/>
+351c351
+< 	<xsd:element name="SpecialService" abstract="false" substitutionGroup="Journey_">
+---
+> 	<xsd:element name="SpecialService" substitutionGroup="Journey_Dummy">
+373c373
+< 					<xsd:attribute name="id" type="SpecialServiceIdType"/>
+---
+> 					<xsd:attribute name="id" type="SpecialServiceIdType" use="required"/>
+419c419,429
+< 			<xsd:group ref="BookingArrangementsGroup"/>
+---
+> 			<xsd:choice>
+> 				<xsd:annotation>
+> 					<xsd:documentation>Usage of BookingArrangementGroup is DEPRECATED: use bookingArrangements</xsd:documentation>
+> 				</xsd:annotation>
+> 				<xsd:element name="bookingArrangements" type="bookingArrangements_RelStructure" minOccurs="0">
+> 					<xsd:annotation>
+> 						<xsd:documentation>Set of possible Booking Arrangements for stop if different from those for SERVICE JOURNEY. +v2.0</xsd:documentation>
+> 					</xsd:annotation>
+> 				</xsd:element>
+> 				<xsd:group ref="DeprecatedBookingArrangementGroup"/>
+> 			</xsd:choice>
+423c433
+< 	<xsd:element name="GroupOfServices" abstract="false" substitutionGroup="GroupOfEntities">
+---
+> 	<xsd:element name="GroupOfServices" substitutionGroup="GroupOfEntities">
+444c454
+< 					<xsd:attribute name="id" type="GroupOfServicesIdType"/>
+---
+> 					<xsd:attribute name="id" type="GroupOfServicesIdType" use="required"/>
+474c484
+< 					<xsd:documentation>NOTICEs  relevant for the whole GROUP OF SERVICEs.</xsd:documentation>
+---
+> 					<xsd:documentation>NOTICEs relevant for the whole GROUP OF SERVICEs.</xsd:documentation>
+481c491
+< 			<xsd:documentation>Elements for common properties  a GROUP OF SERVICEs.</xsd:documentation>
+---
+> 			<xsd:documentation>Elements for common properties a GROUP OF SERVICEs.</xsd:documentation>
+521c531
+< 	<xsd:complexType name="GroupOfServicesEndPoint_DerivedViewStructure" abstract="false">
+---
+> 	<xsd:complexType name="GroupOfServicesEndPoint_DerivedViewStructure">
+550c560
+< 							<xsd:documentation> Member of GROUP OF SERVICE Garage Member.</xsd:documentation>
+---
+> 							<xsd:documentation> Member of GROUP OF SERVICE.</xsd:documentation>
+566c576
+< 							<xsd:documentation>Parent  GROUP OF SERVICEs to which this  GROUP OF SERVICEs MEMBER assigns a JOURNEY.</xsd:documentation>
+---
+> 							<xsd:documentation>Parent GROUP OF SERVICEs to which this GROUP OF SERVICEs MEMBER assigns a JOURNEY.</xsd:documentation>
+577c587
+< 							<xsd:documentation>NOTICEs  Relevant for this grouping.</xsd:documentation>
+---
+> 							<xsd:documentation>NOTICEs Relevant for this grouping.</xsd:documentation>
+617c627
+< 			<xsd:documentation>Elements for  origin and destination of  DEAD RUN Can be derived from the Pattern. Must not  contradict the JOURNEY PATTERN.</xsd:documentation>
+---
+> 			<xsd:documentation>Elements for origin and destination of DEAD RUN Can be derived from the Pattern. Must not contradict the JOURNEY PATTERN.</xsd:documentation>
+622c632
+< 					<xsd:documentation>Origin  for DEAD RUN. Can be Derived from JORUNEY PATTERN.</xsd:documentation>
+---
+> 					<xsd:documentation>Origin for DEAD RUN. Can be Derived from JORUNEY PATTERN.</xsd:documentation>
+627c637
+< 					<xsd:documentation>Destination  for DEAD RUN. Can be derived from JORUNEY PATTERN.</xsd:documentation>
+---
+> 					<xsd:documentation>Destination for DEAD RUN. Can be derived from JORUNEY PATTERN.</xsd:documentation>
+634c644
+< 			<xsd:documentation>Type for  DEAD RUN ENDPOINT (Production Timetable Service). Should not Contradict EDEAD RUN JOURNEY PATTERN.</xsd:documentation>
+---
+> 			<xsd:documentation>Type for DEAD RUN ENDPOINT (Production Timetable Service). Should not Contradict EDEAD RUN JOURNEY PATTERN.</xsd:documentation>
+656c666
+< 					<xsd:documentation>TRAIN NUMBERs -= derived through JOURNEY PARTs  of a JOURNEY - for a multi-part JOURNEY only.</xsd:documentation>
+---
+> 					<xsd:documentation>TRAIN NUMBERs -= derived through JOURNEY PARTs of a JOURNEY - for a multi-part JOURNEY only.</xsd:documentation>
+661c671
+< 	<xsd:element name="DeadRun" abstract="false" substitutionGroup="VehicleJourney_">
+---
+> 	<xsd:element name="DeadRun" substitutionGroup="VehicleJourney_Dummy">
+689c699
+< 					<xsd:attribute name="id" type="DeadRunIdType" use="optional"/>
+---
+> 					<xsd:attribute name="id" type="DeadRunIdType" use="required"/>
+696c706
+< 			<xsd:documentation>Type for  DEAD RUN.</xsd:documentation>
+---
+> 			<xsd:documentation>Type for DEAD RUN.</xsd:documentation>
+708c718
+< 			<xsd:documentation>Elements for  DEAD RUN.</xsd:documentation>
+---
+> 			<xsd:documentation>Elements for DEAD RUN.</xsd:documentation>
