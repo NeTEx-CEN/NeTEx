@@ -1,87 +1,123 @@
 # NeTEx (Network Timetable EXchange) XML schema
-**(C) 2009-2024 NeTEx, CEN, Crown Copyright**
+**(C) 2009-2026 NeTEx, CEN, Crown Copyright**
 
-## Schemas for:
 
-- Core
-- Part 1 (Network)
-- Part 2 (Timetables)
-- Part 3 (Fares)
-- Part 5 (New Modes)
+## Overview 🔍
 
-### Overview
+NeTEx is CEN Technical Specification (CEN/TS); it is published as a series referenced as CEN/TS 16614. It is dedicated to the exchange of scheduled data (network, timetable and fare information). It is based on Transmodel V6.2 (EN 12896 series) and SIRI (CEN/TS 15531-4/-5 and EN 15531-1/-2/-3) and supports the exchange of information of relevance for passenger information about public transport services and also for running Automated Vehicle Monitoring Systems (AVMS).
 
-- NeTEx (Network Timetable EXchange) XML schema is a standardized format for exchanging network timetable data.
+Although the data exchanges targeted by NeTEx are predominantly oriented towards provisioning passenger information systems and AVMS with data from public transport scheduling systems, it is not restricted to this purpose. NeTEx can also provide an effective solution to many other use cases for transport data exchange.
 
-### Folder structure 📁
+_Note : Many NeTEx concepts are taken directly from Transmodel. The definitions and explanation of these concepts are extracted directly from the respective standard and reused in NeTEx, sometimes with adaptions in order to fit the NeTEx context._
 
-The individual XML files are organized hierarchically in folders, following the same structure as the UML model and documentation. The architecture is: 
+### Repository content 📚
 
-- **Main Folder for Each Part**: There is a main folder for each part of the schema (e.g., Core, Part 1, Part 2, etc.).
-- **Subfolders for Functional Areas**: Within each main folder, there are subfolders for each NeTEx functional area, keeping the schema well-structured.
+This repository contains the XML Schemas (XSD) for:
+- The core part of NeTEx
+- NeTEx Part 1 (Network topology)
+- NeTEx Part 2 (Scheduled Timetables)
+- NeTEx Part 3 (Fare information)
+- NeTEx Part 5 (Alternative modes )
 
-You can find more information about the directory's structure on the [wiki](https://github.com/ITxPT/NeTEx/wiki/Structure-And-Compatibility#netex-directory-structure)
-### UML models
+### Respository structure 📁
 
-- You can refer to the NeTEx UML Physical and Conceptual models (note that NeTEx Conceptual model is Transmodel) for a detailed UML view of the schema packages.
-- These models are available in electronic format.
-  
-## Getting started 🚀
+In each branch, we have:
+- The folder `xsd` in which all the XML schemas can be found,
+- The folder `examples` in which all examples can be found,
+- At the root folder, `Siri.spp` which is the project for XMLSpy and `Siri.xpr` for Oxygen.
 
-### Main root schemas
+The `xsd` folder is sub-divided as follow:
+-  `gml` for all geometry-related elements,
+- `netex_framlework` for all shared components and frames,
+- one sub-folder per NeTEx Part (from 1 to 5),
+- other complementary sub-folders.
+At the root of the `xsd` folder, the file `NeTEx_publication.xsd` should be used as the main one for production and validation purposes. It includes references to all the other XSD.
 
-1. **netex_publication**
+### Branches 🌿
+
+| Branch Name | Description                                             | Link                                            |
+| ----------- | ------------------------------------------------------- | ----------------------------------------------- |
+| v2.0        | The latest version of the XML Schema that matches the CEN documentation | [Direct link](https://github.com/NeTEx-CEN/NeTEx)    |
+| v1.3        | The previous version of the XML Schema that was published prior to the 2026 revision of NeTEx, it matches the state of the XSD at the date of the publication of Part 6 (CEN/TS 16614-6:2024) with the correction of bugs and typos -- **Important note**: this branch is not longer maintained | [Direct link](https://github.com/NeTEx-CEN/NeTEx/tree/v1.3) |
+| v2.1-wip    | All the upcoming work to ammend and improve v2.0        | [GitHub](https://github.com/NeTEx-CEN/NeTEx/tree/v2.1-wip) |
+| v3.0-wip    | All the upcoming work preparing the migration from CEN/TS to CEN/EN for the entire NeTEx series        | [GitHub](https://github.com/NeTEx-CEN/NeTEx/tree/v3.0-wip) |
+
+All other branches are considered as feature branches, meaning that they are used for development only and are to be deleted once a Pull Request is merged. See below for more details on contributions.
+
+----
+
+## Getting started 🛠️
+
+### Main root schemas 
+
+1. **netex_publication.xsd**
    - Embeds NeTEx XML model elements in a bulk output file format for use in asynchronous publication.
    - The intended content scope can be indicated by a filter object.
-   -  **netex_publication_noConstraint**: same as **netex_publication** but without all the XSD constraint that is convenient to speed up the work in development phases (but at the price of a much weaker validation).
+   - It should be used as the main XSD for production and validation purposes.
+
+Note : `netex_publication_noConstraint.xsd` is the same as `netex_publication.xsd` but without all the XSD constraints (e.g., unicity of attributes). It is convenient to speed up the work in development phases, but at the price of a much weaker validation.
 
 2. **netex_siri.xsd**
    - Embeds NeTEx XML model elements in the SIRI protocol for dynamic exchange of elements between servers.
    - Supports both request/response and publish/subscribe.
 
-### Additional information
-
-- **nx.xsd**
+3. **nx.xsd**
    - Embeds NeTeX XML model elements within a simple thematic organisation to facilitate browsing and inspection of NeTEx.
    - The NX schema is not intended for actual use.
 
+### How to navigate the schemas
+
+The schema is systematically divided into small modular files. Generally, for each functional package in the design model there are two XML schema files:
+
+- **netex_xxxx_version.xsd**: Contains the definitions of each element or group,
+- **netex_xxxx_suppport.xsd**: Contains the data type, reference structures and values for enumerations.
+
 ### XML examples
 
-- Explore XML examples of the use of both protocols in the */examples* subdirectory.
+1. **Functions**
 
-Further information on the examples is available on the [wiki](https://github.com/ITxPT/NeTEx/wiki/Using-NeTEx#how-to-use-example-files)
-### Support for XML editors
+The folder contains snipsets of XML files focused on a specific function or element of Public transport services (e.g., timetable, stop places, fares, etc.). They are meant to illustrate how to use NeTEx to model part of the public transport service.
 
-- **Altova XMLSpy Project**: Find an organized view of the schema and examples in the root directory.
-   - Project file: NeTEx.spp
+2. **Standards**
 
-- **Oxygen Project File**: 
-   - Project file: NeTEx.xpr
+The folder contains more comprehensive NeTEx files that aim to represent either an entire dataset as commonly found in other specifications, domains or Member States. They are meant to illustrate several parts of one public transport service. They should be used as an ensemble rather than single files.
 
 ----
 
-### Note on the schema
+## How to contribute 🖊️
 
-The schema is systematically divided into small modular files. Generally, for each functional package in the design model (See UML Model), there are two XML schema files:
+### Starting a discussion 💬
 
-- **netex_xxxx_suppport.xsd**: Contains data type and ref structure definitions.
-- **netex_xxxx_version.xsd**: Contains the element definitions.
+Either for a modelling question or a request for change, please start a discussion using the [GitHub issues](https://github.com/NeTEx-CEN/NeTEx/issues). 
+In your issue, make sure that:
+- The title is a clear summary of your question / requst for change,
+- The content sufficiently details:
+   - The context,
+   - The elements / features you want to discuss,
+- If relevant, include extracts of your NeTEx file.
+
+### Making a change 🚀
+
+1. Identify which branch you need to target:
+   - v2.1-wip for all changes that will apply to NeTEx v2.0 (e.g., bug fixes, typos, improvement of certain features without breaking changes, etc.)
+   - v3.0-wip for all changes that will apply when NeTEx migrates to EN (e.g., deprecation of features, refactor of certain elements, breaking changes, etc.)
+2. Create a feature branch with a clear name (e.g., bugfix_vehicletype)
+3. Work on the changes and do the Pull Request
+
+_Upcoming: templates for Pull Request_
 
 ----
-## Branches  🌿
 
-| Branch Name | Description                                             | Link                                            |
-| ----------- | ------------------------------------------------------- | ----------------------------------------------- |
-| `master`    | Current head of the project                            | [GitHub](https://github.com/NeTEx-CEN/NeTEx)    |
-| `next`      | Work for the next release                              | [GitHub](https://github.com/NeTEx-CEN/NeTEx/tree/next) |
+## Change log 📰
 
-# Change Log
-## Releases
-| Release Number | Release Date  | Description                                    | Link | Release Notes                                                                                   |
-| -------------- | ------------- | ---------------------------------------------- | ------------- | ----------------------------------------------------------------------------------------------- |
-| 1.2            | March 2022    | Latest productive version before new modes merge | [Code](https://github.com/NeTEx-CEN/NeTEx/releases/tag/v1.2) | [Release Notes](https://github.com/NeTEx-CEN/NeTEx/blob/v1.2/README.md) |
-| 1.2.2          | August 2023   | First version of new modes                     | [Code](https://github.com/NeTEx-CEN/NeTEx/releases/tag/v1.2.2)  | [Release Notes](https://github.com/NeTEx-CEN/NeTEx/blob/v1.2.2/README.md)       |
-| 1.3.1          | May 2024      | European Passenger Information Accessibility Profile (EPIAP) | [Code](https://github.com/NeTEx-CEN/NeTEx/releases/tag/v1.3.1) | [Release Notes](https://github.com/NeTEx-CEN/NeTEx/blob/v1.3.1/README.md) |
-| 2.0          | 2024     | Upcoming release   ⏳                            | N/A  | N/A                                                                                             |
-## Full Version History 📚
-The comprehensive versions history is available in [change_log.md](https://github.com/ITxPT/NeTEx/blob/NeTEx/change_log.md)
+### Releases
+| Release Number | Release Date  | Description                                    | Link          |
+| -------------- | ------------- | ---------------------------------------------- | ------------- |
+| 1.2            | March 2022    | Before the extension to alternative modes of operation | [Code](https://github.com/NeTEx-CEN/NeTEx/releases/tag/v1.2)    |
+| 1.2.2          | August 2023   | With the inclusion of NeTEx Part 5 (Alternative modes) | [Code](https://github.com/NeTEx-CEN/NeTEx/releases/tag/v1.2.2)  |
+| 1.2.3          | May 2024      | Improvement on the v1.2.2 before the release of NeTEx Part 6 (EPIAP) | [Code](https://github.com/NeTEx-CEN/NeTEx/releases/tag/v1.2.3)  |
+| 1.3.1          | May 2024      | Release of NeTex Part 6, the European Passenger Information Accessibility Profile (EPIAP) | [Code](https://github.com/NeTEx-CEN/NeTEx/releases/tag/v1.3.1) |
+| 2.0            | February 2026 | Matches the CEN documentation published in February 2026 for NeTEx Parts 1, 2, 3 and 5. Considered as the latest version of NeTEx to be used for production. | [Code](https://github.com/NeTEx-CEN/NeTEx/releases/tag/v2.0.0) |
+
+### Comprehensive version history
+The comprehensive versions history is available in [change_log.md](https://github.com/NeTEx-CEN/NeTEx/blob/v2.0/change_log.md)
