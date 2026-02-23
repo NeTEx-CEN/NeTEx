@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.3.1 (EPIAP)
+
+* EPIAP to Master by @skinkie in https://github.com/NeTEx-CEN/NeTEx/pull/705
+* Add properties to describe the height of a Lift by @juliustens-db in https://github.com/NeTEx-CEN/NeTEx/pull/696
+* Fix typo by @skinkie in https://github.com/NeTEx-CEN/NeTEx/pull/722
+* Update neTactileActuators attribute on Escalators and Travelators #665tex_ifopt_equipmentAccess_version.xsd by @ue71603 in https://github.com/NeTEx-CEN/NeTEx/pull/720
+* Update netex_facility_support.xsd by @ue71603 in https://github.com/NeTEx-CEN/NeTEx/pull/724
+* TypeOfEntity is abstract by @skinkie in https://github.com/NeTEx-CEN/NeTEx/pull/723
+* Fixes from #721 by @skinkie in https://github.com/NeTEx-CEN/NeTEx/pull/725
+
 ## Version 1.2.2 - Revised to add New Modes
 The Part 1, Part 2, & Part 3 Schemas include   corrections and enhancements since the issue of the Version 1.2 CEN Specification documents for NeTEx.
 A new Part5 is added for new modes, with examples
