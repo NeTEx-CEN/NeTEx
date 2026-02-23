@@ -12,10 +12,10 @@ If you think you found a bug, or have a question, [please provide feedback here]
 
 ### Structural changes:
 
-* BREAKING: many version schemas now enforce stricter validation semantics: mandatory id/ref/version attributes were introduced or tightened in numerous object/ref structures.
-* BREAKING: Several constraints were reshaped (including removal of @order from some keys and selective cardinality/type adjustments), which can change pass/fail outcomes for existing XML instances.
+* BREAKING: many version schemas now enforce stricter validation semantics: mandatory `id`/`ref`/`version` attributes were introduced or tightened in numerous object/ref structures.
+* BREAKING: Several constraints were reshaped (including removal of `@order` from some keys and selective cardinality/type adjustments), which can change pass/fail outcomes for existing XML instances.
 * Key/unique/keyref definitions were expanded or renamed across frames and domain modules; reference integrity checks are broader and stricter in v2.0 validation contexts.
-* Publication-level schemas add or adjust integrity scopes (for example around Contract and FarePriceFrame) and align naming of site/path navigation key sets.
+* Publication-level schemas add or adjust integrity scopes and align naming of site/path navigation key sets.
 
 ### Functional changes (technically non-BREAKING) include:
 
