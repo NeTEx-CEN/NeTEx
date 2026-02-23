@@ -55,7 +55,7 @@ All other branches are considered as feature branches, meaning that they are use
    - The intended content scope can be indicated by a filter object.
    - It should be used as the main XSD for production and validation purposes.
 
-Note : `netex_publication_noConstraint.xsd` is the same as `netex_publication.xsd` but without all the XSD constraints (e.g., unicity of attributes). It is convenient to speed up the work in development phases, but at the price of a much weaker validation.
+Note: `netex_publication_noConstraint.xsd` is the same as `netex_publication.xsd` but without all the XSD constraints (e.g., unicity of attributes). It is convenient to speed up the work in development phases, but at the price of a much weaker validation.
 
 2. **netex_siri.xsd**
    - Embeds NeTEx XML model elements in the SIRI protocol for dynamic exchange of elements between servers.
@@ -76,7 +76,7 @@ The schema is systematically divided into small modular files. Generally, for ea
 
 1. **Functions**
 
-The folder contains snipsets of XML files focused on a specific function or element of Public transport services (e.g., timetable, stop places, fares, etc.). They are meant to illustrate how to use NeTEx to model part of the public transport service.
+The folder contains snippets of XML files focused on a specific function or element of Public transport services (e.g., timetable, stop places, fares, etc.). They are meant to illustrate how to use NeTEx to model part of the public transport service.
 
 2. **Standards**
 
