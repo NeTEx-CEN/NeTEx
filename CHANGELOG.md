@@ -6,7 +6,7 @@ This is a major release, with work going back to as far as late 2020.
 
 ### How to test your feeds & upgrade them
 
-Data producers are encouraged to use XSD validation tooling in order to detect & upgrade their data feeds.
+Data producers are encouraged to use XSD validation tooling in order to detect & upgrade their data feeds. To do so, clone the repository locally & validate against `xsd/NeTEx_publication.xsd` (the entry point).
 
 If you think you found a bug, or have a question, [please provide feedback here](https://github.com/NeTEx-CEN/NeTEx/issues).
 
