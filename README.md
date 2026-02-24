@@ -119,11 +119,16 @@ _Upcoming: templates for Pull Request_
 ### Releases
 | Release Number | Release Date  | Description                                    | Link          |
 | -------------- | ------------- | ---------------------------------------------- | ------------- |
-| 1.2            | March 2022    | Before the extension to alternative modes of operation | [Code](https://github.com/NeTEx-CEN/NeTEx/releases/tag/v1.2)    |
-| 1.2.2          | August 2023   | With the inclusion of NeTEx Part 5 (Alternative modes) | [Code](https://github.com/NeTEx-CEN/NeTEx/releases/tag/v1.2.2)  |
-| 1.2.3          | May 2024      | Improvement on the v1.2.2 before the release of NeTEx Part 6 (EPIAP) | [Code](https://github.com/NeTEx-CEN/NeTEx/releases/tag/v1.2.3)  |
-| 1.3.1          | May 2024      | Release of NeTex Part 6, the European Passenger Information Accessibility Profile (EPIAP) | [Code](https://github.com/NeTEx-CEN/NeTEx/releases/tag/v1.3.1) |
-| 2.0.0            | February 2026 | Matches the CEN documentation published in February 2026 for NeTEx Parts 1, 2, 3 and 5. Considered as the latest version of NeTEx to be used for production. | [Code](https://github.com/NeTEx-CEN/NeTEx/releases/tag/v2.0.0) |
+| v1.2            | March 2022    | Before the extension to alternative modes of operation | [Code](https://github.com/NeTEx-CEN/NeTEx/releases/tag/v1.2)    |
+| v1.2.2          | August 2023   | With the inclusion of NeTEx Part 5 (Alternative modes) | [Code](https://github.com/NeTEx-CEN/NeTEx/releases/tag/v1.2.2)  |
+| v1.2.3          | May 2024      | Improvement on the v1.2.2 before the release of NeTEx Part 6 (EPIAP) | [Code](https://github.com/NeTEx-CEN/NeTEx/releases/tag/v1.2.3)  |
+| v1.3.1          | May 2024      | Release of NeTex Part 6, the European Passenger Information Accessibility Profile (EPIAP) | [Code](https://github.com/NeTEx-CEN/NeTEx/releases/tag/v1.3.1) |
+| v2.0.0          | February 2026 | Matches the CEN documentation published in February 2026 for NeTEx Parts 1, 2, 3 and 5. Considered as the latest version of NeTEx to be used for production. | [Code](https://github.com/NeTEx-CEN/NeTEx/releases/tag/v2.0.0) |
+
+**Important notes:** 
+- Releases (and their tags) are a snapshot of the corresponding working branch in time.
+- For any official reference to a NeTEx version, it is recommended to point to a 2-digit version (e.g., v1.3, v2.0).
+- For any development work, it is recommended to use the latest 3-digit version of NeTEx XML Schema.
 
 ### Comprehensive version history
 The comprehensive versions history is available in [change_log.md](https://github.com/NeTEx-CEN/NeTEx/blob/v2.0/change_log.md)
