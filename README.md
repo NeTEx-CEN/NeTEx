@@ -35,14 +35,18 @@ At the root of the `xsd` folder, the file `NeTEx_publication.xsd` should be used
 
 ### Branches 🌿
 
-| Branch Name | Description                                             | Link                                            |
-| ----------- | ------------------------------------------------------- | ----------------------------------------------- |
-| v2.0        | The latest version of the XML Schema that matches the CEN documentation | [Direct link](https://github.com/NeTEx-CEN/NeTEx)    |
-| v1.3        | The previous version of the XML Schema that was published prior to the 2026 revision of NeTEx, it matches the state of the XSD at the date of the publication of Part 6 (CEN/TS 16614-6:2024) with the correction of bugs and typos -- **Important note**: this branch is not longer maintained | [Direct link](https://github.com/NeTEx-CEN/NeTEx/tree/v1.3) |
-| v2.1-wip    | All the upcoming work to ammend and improve v2.0        | [GitHub](https://github.com/NeTEx-CEN/NeTEx/tree/v2.1-wip) |
-| v3.0-wip    | All the upcoming work preparing the migration from CEN/TS to CEN/EN for the entire NeTEx series        | [GitHub](https://github.com/NeTEx-CEN/NeTEx/tree/v3.0-wip) |
+| Branch Name | Description                                             | Maintenance status                                    | Link                                            |
+| ----------- | ------------------------------------------------------- | ----------------------------------------------- |----------------------------------------------- 
+| v2.0        | The last stable branch of the XML Schema, result of the NeTEx revision made during 2022-2026 | Bug fixes only | [Direct link](https://github.com/NeTEx-CEN/NeTEx)    |
+| v1.3        | The previous branch of the XML Schema that was published prior to the 2026 revision of NeTEx, it matches the state of the XSD at the date of the publication of Part 6 (CEN/TS 16614-6:2024) with the correction of bugs and typos -- **Important note**: this branch is not longer maintained | Not maintained | [Direct link](https://github.com/NeTEx-CEN/NeTEx/tree/v1.3) |
+| v2.1-wip    | All the upcoming work to improve v2.0     | In development   | [GitHub](https://github.com/NeTEx-CEN/NeTEx/tree/v2.1-wip) |
+| v3.0-wip    | All the upcoming work preparing the migration from CEN/TS to CEN/EN for the entire NeTEx series        | In development | [GitHub](https://github.com/NeTEx-CEN/NeTEx/tree/v3.0-wip) |
 
 All other branches are considered as feature branches, meaning that they are used for development only and are to be deleted once a Pull Request is merged. See below for more details on contributions.
+
+**Important notes:** 
+- Any branch marked `wip` is a non-stable branch.
+- For a specific XML Schema matching a published CEN document, use `releases`.
 
 ----
 
@@ -119,7 +123,7 @@ _Upcoming: templates for Pull Request_
 | 1.2.2          | August 2023   | With the inclusion of NeTEx Part 5 (Alternative modes) | [Code](https://github.com/NeTEx-CEN/NeTEx/releases/tag/v1.2.2)  |
 | 1.2.3          | May 2024      | Improvement on the v1.2.2 before the release of NeTEx Part 6 (EPIAP) | [Code](https://github.com/NeTEx-CEN/NeTEx/releases/tag/v1.2.3)  |
 | 1.3.1          | May 2024      | Release of NeTex Part 6, the European Passenger Information Accessibility Profile (EPIAP) | [Code](https://github.com/NeTEx-CEN/NeTEx/releases/tag/v1.3.1) |
-| 2.0            | February 2026 | Matches the CEN documentation published in February 2026 for NeTEx Parts 1, 2, 3 and 5. Considered as the latest version of NeTEx to be used for production. | [Code](https://github.com/NeTEx-CEN/NeTEx/releases/tag/v2.0.0) |
+| 2.0.0            | February 2026 | Matches the CEN documentation published in February 2026 for NeTEx Parts 1, 2, 3 and 5. Considered as the latest version of NeTEx to be used for production. | [Code](https://github.com/NeTEx-CEN/NeTEx/releases/tag/v2.0.0) |
 
 ### Comprehensive version history
 The comprehensive versions history is available in [change_log.md](https://github.com/NeTEx-CEN/NeTEx/blob/v2.0/change_log.md)
