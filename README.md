@@ -100,9 +100,11 @@ In your issue, make sure that:
 
 1. Identify which branch you need to target:
    - v2.1-wip for all changes that will apply to NeTEx v2.0 (e.g., bug fixes, typos, improvement of certain features without breaking changes, etc.)
-   - v3.0-wip for all changes that will apply when NeTEx migrates to EN (e.g., deprecation of features, refactor of certain elements, breaking changes, etc.)
+   - v3.0-wip for all changes that will apply when NeTEx migrates to EN (e.g., deprecation of features, refactor of certain elements, breaking changes including new features, etc.)
 2. Create a feature branch with a clear name (e.g., bugfix_vehicletype)
 3. Work on the changes and do the Pull Request
+
+For new features, the decision between targetting v2.1-wip or v3.0-wip will be made by the group.
 
 _Upcoming: templates for Pull Request_
 
