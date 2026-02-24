@@ -114,7 +114,7 @@ _Upcoming: templates for Pull Request_
 
 ----
 
-## Change log 📰
+## Changelog 📰
 
 ### Releases
 | Release Number | Release Date  | Description                                    | Link          |
