@@ -4,6 +4,7 @@
 
 - Fix faulty descriptions: documentation changes in the XSD for `FreeRecharging`, `Cage`, `RemoteControl`, `LocalControl` and `LockingMechanism` (181c92a, [#999](https://github.com/NeTEx-CEN/NeTEx/issues/999), [#1000](https://github.com/NeTEx-CEN/NeTEx/pull/1000))
 - Fix buggy SIRI import in occupancy (impacting OpRA) ([#1001](https://github.com/NeTEx-CEN/NeTEx/pull/1001))
+- Improve readme & changelog ([#997](https://github.com/NeTEx-CEN/NeTEx/pull/997))
 
 ## v2.0.0
 
