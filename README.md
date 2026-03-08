@@ -114,7 +114,7 @@ _Upcoming: templates for Pull Request_
 
 ----
 
-## Change log 📰
+## Changelog 📰
 
 ### Releases
 | Release Number | Release Date  | Description                                    | Link          |
@@ -131,4 +131,4 @@ _Upcoming: templates for Pull Request_
 - For any development work, it is recommended to use the latest 3-digit version of NeTEx XML Schema.
 
 ### Comprehensive version history
-The comprehensive versions history is available in [change_log.md](https://github.com/NeTEx-CEN/NeTEx/blob/v2.0/change_log.md)
+The comprehensive versions history is available in [CHANGELOG.md](https://github.com/NeTEx-CEN/NeTEx/blob/v2.0/CHANGELOG.md)
