@@ -296,6 +296,28 @@ Provides a general purose wrapper for NeTEx data content.</xsd:documentation>
 			<xsd:field xpath="@ref"/>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
+		<!-- =====AlternativeText============================== -->
+		<!-- =====AlternativeText unique========================== -->
+		<xsd:unique name="AlternativeText_UniqueBy_Id_AttributeName_UseForLanguage_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [AlternativeText Id + attributeName + useForLanguage + version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:AlternativeText"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@attributeName"/>
+			<xsd:field xpath="@useForLanguage"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====AlternativeName============================== -->
+		<!-- =====AlternativeName unique========================== -->
+		<xsd:unique name="AlternativeName_UniqueBy_Id_Version_useForLanguage_Order">
+			<xsd:annotation>
+				<xsd:documentation>Every [AlternativeName Id + version + order] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:AlternativeName"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
 		<!-- =====TypeOfValidity Key ========================== -->
 		<xsd:key name="TypeOfValidity_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:TypeOfValidity"/>
@@ -558,7 +580,7 @@ Provides a general purose wrapper for NeTEx data content.</xsd:documentation>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
 		<xsd:key name="PointOnLink_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:PointOnLink"/>
+			<xsd:selector xpath=".//netex:PointOnLink | .//netex:StartPointOnLink| .//netex:EndPointOnLink"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
@@ -1695,13 +1717,14 @@ Provides a general purose wrapper for NeTEx data content.</xsd:documentation>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
+		<!-- =====UicOperatingPeriod============================== -->
+		<!-- =====UicOperatingPeriod Key ========================== -->
 		<xsd:keyref name="UicOperatingPeriod_KeyRef" refer="netex:UicOperatingPeriod_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:UicOperatingPeriodRef"/>
 			<xsd:field xpath="@ref"/>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
-		<!-- =====UicOperatingPeriod Key ========================== -->
-		<xsd:key name="UicOperatingPeriod_AnyVersionedKey">
+				<xsd:key name="UicOperatingPeriod_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:OperatingPeriod | .//netex:UicOperatingPeriod"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
@@ -1756,6 +1779,15 @@ Provides a general purose wrapper for NeTEx data content.</xsd:documentation>
 		</xsd:key>  -->
 		<!-- =====VEHICLE Constraints========================= -->
 		<!-- =====Vehicle============================== -->
+		<!-- =====Vehicle unique========================== -->
+		<xsd:unique name="Vehicle_UniqueRegistrationNumber">
+			<xsd:annotation>
+				<xsd:documentation>Every [RegistrationNumber Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:Vehicle"/>
+			<xsd:field xpath="netex:RegistrationNumber"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
 		<!-- =====Vehicle Key ========================== -->
 		<xsd:keyref name="Vehicle_KeyRef" refer="netex:Vehicle_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:VehicleRef"/>
@@ -2601,6 +2633,16 @@ Provides a general purose wrapper for NeTEx data content.</xsd:documentation>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
+		<!-- =====FlexibleLine unique========================== -->
+		<!-- DEPRECATED in v2.0 -->
+		<xsd:unique name="FlexibleLine_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [FlexibleLine Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:FlexibleLine"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
 		<!-- =====GroupOfLines============================== -->
 		<!-- =====GroupOfLines Key ========================== -->
 		<xsd:keyref name="GroupOfLines_KeyRef" refer="netex:GroupOfLines_AnyVersionedKey">
@@ -3228,18 +3270,6 @@ Provides a general purose wrapper for NeTEx data content.</xsd:documentation>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====PointInJourneyPatternLink============================== -->
-		<!-- =====PointInJourneyPattern Key ========================== -->
-		<!--		<xsd:keyref name="PointInJourneyPattern_KeyRef" refer="netex:PointInJourneyPatternChild_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:PointInJourneyPatternRef"/>
-			<xsd:field xpath="@ref"/>
-			<xsd:field xpath="@version"/>
-		</xsd:keyref>
-		<xsd:key name="PointInJourneyPatternChild_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:PointInJourneyPattern | .//netex:TimingPointInJourneyPattern | .//netex:StopPointInJourneyPattern"/>
-			<xsd:field xpath="@id"/>
-			<xsd:field xpath="@version"/>
-		</xsd:key>-->
 		<!-- =====TimeDemandType============================== -->
 		<!-- =====TimeDemandType Key ========================== -->
 		<xsd:keyref name="TimeDemandType_KeyRef" refer="netex:TimeDemandType_AnyVersionedKey">
