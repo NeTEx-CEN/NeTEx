@@ -460,6 +460,28 @@
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
+		<!-- =====AlternativeText============================== -->
+		<!-- =====AlternativeText unique========================== -->
+		<xsd:unique name="AlternativeText_UniqueBy_Id_AttributeName_UseForLanguage_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [AlternativeText Id + attributeName + useForLanguage + version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:AlternativeText"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@attributeName"/>
+			<xsd:field xpath="@useForLanguage"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
+		<!-- =====AlternativeName============================== -->
+		<!-- =====AlternativeName unique========================== -->
+		<xsd:unique name="AlternativeName_UniqueBy_Id_Version_useForLanguage_ordered">
+			<xsd:annotation>
+				<xsd:documentation>Every [AlternativeName Id + version + order] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:AlternativeName"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
 		<!-- =====TypeOfValidity============================== -->
 		<xsd:keyref name="TypeOfValidity_AnyKeyRef" refer="netex:TypeOfValidity_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:TypeOfValidityRef"/>
@@ -697,7 +719,6 @@
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====TypeOfPoint============================== -->
 		<!-- =====Point============================== -->
 		<xsd:keyref name="Point_AnyKeyRef" refer="netex:Point_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:PointRef | .//netex:ProjectedObjectRef"/>
@@ -709,6 +730,7 @@
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
+		<!-- =====TypeOfPoint============================== -->
 		<!-- =====TypeOfPoint Key ========================== -->
 		<xsd:keyref name="TypeOfPoint_KeyRef" refer="netex:TypeOfPoint_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:TypeOfPointRef"/>
@@ -777,7 +799,6 @@
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====PointOnSection============================== -->
 		<!-- =====GeneralSection============================== -->
 		<!-- =====GeneralSection Key ========================== -->
 		<xsd:keyref name="GeneralSection_AnyKeyRef" refer="netex:GeneralSection_AnyVersionedKey">
@@ -838,6 +859,7 @@
 			<xsd:field xpath="@version"/>
 		</xsd:key>
 		<!-- =====Zone============================== -->
+		<!-- =====Zone Key ========================== -->
 		<xsd:keyref name="Zone_AnyKeyRef" refer="netex:Zone_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:ZoneRef | .//netex:ParentZoneRef | .//netex:ProjectedZoneRef | .//netex:ProjectToZoneRef | .//netex:ProjectedObjectRef"/>
 			<xsd:field xpath="@ref"/>
@@ -1019,6 +1041,7 @@
 			<xsd:field xpath="@version"/>
 		</xsd:key>
 		<!-- =====Organisation============================== -->
+		<!-- =====Organisation Key ========================== -->
 		<xsd:keyref name="Organisation_AnyKeyRef" refer="netex:Organisation_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:OrganisationRef | .//netex:ResponsibleOrganisationRef | .//netex:ProvidedByRef"/>
 			<xsd:field xpath="@ref"/>
@@ -2191,12 +2214,13 @@
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
+		<!-- =====UicOperatingPeriod============================== -->
+		<!-- =====UicOperatingPeriod Key ========================== -->
 		<xsd:keyref name="UicOperatingPeriod_KeyRef" refer="netex:UicOperatingPeriod_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:UicOperatingPeriodRef"/>
 			<xsd:field xpath="@ref"/>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
-		<!-- =====UicOperatingPeriod Key ========================== -->
 		<xsd:key name="UicOperatingPeriod_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:OperatingPeriod | .//netex:UicOperatingPeriod"/>
 			<xsd:field xpath="@id"/>
@@ -2227,6 +2251,7 @@
 			<xsd:field xpath="@version"/>
 		</xsd:key>
 		<!-- =====AvailabilityCondition============================== -->
+		<!-- =====AvailabilityCondition Key ========================== -->
 		<xsd:keyref name="AvailabilityCondition_AnyKeyRef" refer="netex:AvailabilityCondition_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:AvailabilityConditionRef"/>
 			<xsd:field xpath="@ref"/>
@@ -2239,6 +2264,15 @@
 		</xsd:key>
 		<!-- =====VEHICLE Constraints========================= -->
 		<!-- =====Vehicle============================== -->
+		<!-- =====Vehicle unique registration number========================== -->
+		<xsd:unique name="Vehicle_UniqueRegistrationNumber">
+			<xsd:annotation>
+				<xsd:documentation>Every [RegistrationNumber Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:Vehicle"/>
+			<xsd:field xpath="netex:RegistrationNumber"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
 		<!-- =====Vehicle Key ========================== -->
 		<xsd:keyref name="Vehicle_KeyRef" refer="netex:Vehicle_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:VehicleRef"/>
@@ -2827,6 +2861,15 @@
 			<xsd:field xpath="@version"/>
 		</xsd:key>
 		<!-- =====ChargingEquipmentProfile============================== -->
+		<!-- =====ChargingEquipmentProfile unique========================== -->
+		<xsd:unique name="ChargingEquipmentProfile_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [VehicleEquipmentProfileMember Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:VehicleEquipmentProfileMember"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
 		<!-- =====RechargingEquipmentProfile============================== -->
 		<!-- =====RechargingEquipmentProfile Key ========================== -->
 		<xsd:keyref name="RechargingEquipmentProfile_KeyRef" refer="netex:RechargingEquipmentProfile_AnyVersionedKey">
@@ -3526,9 +3569,8 @@
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====ParkingBayConditio============================== -->
-		<!-- =====ParkingBayConditio============================== -->
-		<!-- =====ParkingBay Key ========================== -->
+		<!-- =====ParkingBayCondition============================== -->
+		<!-- =====ParkingBayCondition Key ========================== -->
 		<xsd:keyref name="ParkingBayCondition_KeyRef" refer="netex:ParkingBayCondition_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:ParkingBayConditionRef"/>
 			<xsd:field xpath="@ref"/>
@@ -3674,7 +3716,7 @@
 		</xsd:key>
 		<!-- =====PATH Constraints============== -->
 		<!-- =====SitePathLink============================== -->
-		<!-- =====PathLink Key ========================== -->
+		<!-- =====SitePathLink Key ========================== -->
 		<xsd:keyref name="SitePathLink_KeyRef" refer="netex:SitePathLink_AnyVersionedKey">
 			<xsd:selector xpath=".//netex:PathLinkRef | .//netex:SitePathLinkRef | .//netex:OffSitePathLinkRef"/>
 			<xsd:field xpath="@ref"/>
@@ -4024,6 +4066,17 @@
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
+		<!-- =====FlexibleLine========================== -->
+		<!-- =====FlexibleLine unique========================== -->
+		<!-- DEPRECATED v2.0 -->
+		<xsd:unique name="FlexibleLine_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [FlexibleLine Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:FlexibleLine"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
 		<!-- =====GroupOfLines============================== -->
 		<!-- =====GroupOfLines Key ========================== -->
 		<xsd:keyref name="GroupOfLines_KeyRef" refer="netex:GroupOfLines_AnyVersionedKey">
@@ -6098,6 +6151,15 @@
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
+		<!-- =====DynamicDistanceMatrixElement unique========================== -->
+		<xsd:unique name="DynamicDistanceMatrixElement_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [DynamicDistanceMatrixElement Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:DynamicDistanceMatrixElement"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
 		<!-- =====GroupOfDistanceMatrixElements============================== -->
 		<!-- =====GroupOfDistanceMatrixElements Key ========================== -->
 		<xsd:keyref name="GroupOfDistanceMatrixElements_KeyRef" refer="netex:GroupOfDistanceMatrixElements_AnyVersionedKey">
@@ -6688,7 +6750,7 @@
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
-		<!-- =====Smartcard====)=================== -->
+		<!-- =====Smartcard======================= -->
 		<!-- =====Smartcard Key ========================== -->
 		<xsd:keyref name="Smartcard_KeyRef" refer="netex:Smartcard_AnyVersionedKey_ordered">
 			<xsd:selector xpath=".//netex:SmartcardRef"/>
