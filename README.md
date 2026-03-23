@@ -28,7 +28,7 @@ In each branch, we have:
 
 The `xsd` folder is sub-divided as follow:
 -  `gml` for all geometry-related elements,
-- `netex_framlework` for all shared components and frames,
+- `netex_framework` for all shared components and frames,
 - one sub-folder per NeTEx Part (from 1 to 5),
 - other complementary sub-folders.
 At the root of the `xsd` folder, the file `NeTEx_publication.xsd` should be used as the main one for production and validation purposes. It includes references to all the other XSD.
