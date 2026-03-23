@@ -24,7 +24,7 @@ This repository contains the XML Schemas (XSD) for:
 In each branch, we have:
 - The folder `xsd` in which all the XML schemas can be found,
 - The folder `examples` in which all examples can be found,
-- At the root folder, `Siri.spp` which is the project for XMLSpy and `Siri.xpr` for Oxygen.
+- At the root folder, `NeTEx.spp` which is the project for XMLSpy and `NeTEx.xpr` for Oxygen.
 
 The `xsd` folder is sub-divided as follow:
 -  `gml` for all geometry-related elements,
