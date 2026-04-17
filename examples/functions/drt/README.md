@@ -14,6 +14,14 @@ We expanded for NeTEx 2.1 DRT in serious manner.
 
 ## Examples 
 
+## Regular line that runs and stops only when there are reservations.
+
+- [XML](./CH_DRT_Line_Based_Reservation.xml)
 ### Switzerland
 
 ### ENTUR
+
+**TODO**
+- [ ] I am not happy with some parts in the examples. I don't want split files.
+
+
