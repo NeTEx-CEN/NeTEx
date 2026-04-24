@@ -136,6 +136,82 @@ The description of the area-type ODV offer is provided as an offer plan with the
 ### Special case: Pooling
 In Transmodel POOLING is something different. For the time being we will NOT model it here.
 
+## Diagram of relevant elements
+
+```mermaid
+
+classDiagram
+    %% Base classes
+    class BookingArrangement {
+        <<abstract>>
+    }
+
+    class ServiceBookingArrangement {
+        <<abstract>>
+    }
+
+    class MobilityService
+
+    class ChauffeuredMobilityService {
+        serviceBookingArrangements: ServiceBookingArrangement[]
+    }
+
+    ChauffeuredMobilityService --> BookingArrangement
+    ChauffeuredMobilityService --|> MobilityService
+
+    %% Inheritance
+    ServiceBookingArrangement --|> BookingArrangement
+
+    %% Line has multiple BookingArrangement through a container
+    class Line {
+        bookingArrangements: BookingArrangement[]
+    }
+    Line --> "0..*" ServiceBookingArrangement : bookingArrangements
+
+    %% ServiceBookingArrangement specializations
+    class ServiceCompetitiveCondition {
+        RoutingConstraintInFrameGroup : group
+        DistanceFromClassical : xsd:integer
+        TemporalDistanceFromClasical : xsd:duration
+        PenaltyDrivingTimeFactor : xsd:decimal
+        PenaltyTransferTimeFactor : xsd:decimal
+        WalkTimeFactor : xsd:decimal
+        InterchangeBetweenFlexibleServicesAllowed: xsd:boolean
+        InterchangeWithConventionalServicesallowed: xsd:boolean
+
+    }
+    class ServiceEligibilityCondition {
+        UserProfile
+        CommercialProfile
+        ResidentialQualification
+        CompanionProfile
+
+    }
+
+    ServiceCompetitiveCondition --|> ServiceBookingArrangement
+    ServiceEligibilityCondition --|> ServiceBookingArrangement
+
+    %% Inside ServiceEligibilityCondition: subelements serviceExclusions to different ServiceExclusion
+    class ServiceExclusion
+
+    ServiceEligibilityCondition --> "0..*" ServiceExclusion : serviceExclusions
+
+    %% Examples of specific eligibility items
+    class ResidentialQualification
+    class CompanionProfile
+    class CommercialProfile
+    class UserProfile
+
+    ServiceEligibilityCondition --> ResidentialQualification
+    ServiceEligibilityCondition -->CompanionProfile 
+    ServiceEligibilityCondition -->CommercialProfile 
+    ServiceEligibilityCondition --> UserProfile 
+    ServiceCompetitiveCondition --> RoutingConstraintInFrameGroup
+
+    %% Connect MobilityService to ServiceBookingArrangement
+    MobilityService --> "0..*" ServiceBookingArrangement : offers
+```
+
 ## The new LineType
 As mentioned FlexibleLine is gone. It is all in Line now. So the FlexibleLineType and the LineType are now in one.
 
