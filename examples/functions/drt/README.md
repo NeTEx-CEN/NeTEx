@@ -10,6 +10,7 @@ We expanded for NeTEx 2.1 DRT in serious manner.
   - `ServiceBookingArrangement`: How to book
   - `ServiceCompetitiveCondition`: What to do and what not
   - `ServiceEligibilityCondition`: Who can use the service.
+- We allow parametrised deep links and we also support service discovery for the booking and price information.
 - The interaction of such serviceBookingArrangements is additive. Eg. all elements are within their group connected by OR. E.g. you are a senior or a child you can use the service. Be aware that this MAY result in the need to split a service to do it.
 
 ## Types of demand responsive traffic (DRT)
@@ -231,35 +232,16 @@ We omit the classical part of LineType and focus on the relevant values.
 | other                     | Do not use this.                                                                                                  |
 
 ## TypeOfFlexibleService
-**TODO** Will we do something here?
+Is no longer to be used
 
-```
-                TypeOfFlexibleService id="ch:1:TypeOfFlexibleService:L" version="any">
-                  <Name lang="de">Bedarfslinie</Name>
-                  <ShortName lang="de">L</ShortName>
-                  <PrivateCode>1</PrivateCode>
-                </TypeOfFlexibleService>
-                <TypeOfFlexibleService id="ch:1:TypeOfFlexibleService:A" version="any">
-                  <Name lang="de">Anrufsammelverkehr</Name>
-                  <ShortName lang="de">A</ShortName>
-                  <PrivateCode>2</PrivateCode>
-                </TypeOfFlexibleService>
-                <TypeOfFlexibleService id="ch:1:TypeOfFlexibleService:Ö" version="any">
-                  <Name lang="de">Richtungsband, örtlich disponierter Bus</Name>
-                  <ShortName lang="de">Ö</ShortName>
-                  <PrivateCode>3</PrivateCode>
-                </TypeOfFlexibleService>
-                <TypeOfFlexibleService id="ch:1:TypeOfFlexibleService:Z" version="any">
-                  <Name lang="de">Zeitbezogener Flächenverkehr</Name>
-                  <ShortName lang="de">Z</ShortName>
-                  <PrivateCode>4</PrivateCode>
-                </TypeOfFlexibleService>
-                <TypeOfFlexibleService id="ch:1:TypeOfFlexibleService:F" version="any">
-                  <Name lang="de">Freier Flächenverkehr</Name>
-                  <ShortName lang="de">F</ShortName>
-                  <PrivateCode>5</PrivateCode>
-                </TypeOfFlexibleService>
-```
+| TypeOfFlexibleService         | LineType to use instead |
+|-------------------------------|-------------------------|
+| ch:1:TypeOfFlexibleService:L  | fixed                   |
+| ch:1:TypeOfFlexibleService:A  | freeAreaAreaWide        |
+| ch:1:TypeOfFlexibleService:Ö  | corridorService         |
+|ch:1:TypeOfFlexibleService:Z| mixedFlexibleAndFixed   |
+| ch:1:TypeOfFlexibleService:F | freeAreaAreaWide  |
+
 ## CollectionPoints
 
 ```
