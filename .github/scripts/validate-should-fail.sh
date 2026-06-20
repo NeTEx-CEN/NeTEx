@@ -35,5 +35,6 @@ echo "Checking NeTEx 'should-fail' negative examples ..."
 assert_rejected examples/should-fail/duplicate-GroupOfLinkSequences.xml xsd/NeTEx_publication.xsd "Duplicate key-sequence"
 assert_rejected examples/should-fail/duplicate-CalendarDate.xml         xsd/NeTEx_publication.xsd "Duplicate key-sequence"
 assert_rejected examples/should-fail/duplicate-ValidBetween.xml         xsd/NeTEx_publication.xsd "Duplicate key-sequence"
+assert_rejected examples/should-fail/duplicate-ValidityPeriod.xml       xsd/NeTEx_publication.xsd "Duplicate key-sequence"
 
 exit "${fail}"
