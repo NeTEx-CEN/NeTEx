@@ -1,40 +1,49 @@
 #!/bin/bash
 # Negative examples: documents that MUST be rejected by the schema.
-# Each case greps the EXACT expected constraint name, so dropping that constraint
-# (document wrongly accepted) fails the build and can't be masked by another error.
+#
+# Each case is "<file>|<expected error substring>". We assert BEHAVIOUR (the
+# document is rejected, and its output contains the declared substring) - not a
+# specific constraint name, and each case carries its own clause.
+#
+# All cases share ONE schema and are validated in a SINGLE xmllint call (one
+# compile for many files) to stay fast. Fails closed: accepted, wrong reason, or
+# xmllint not running all count as failures.
+#
+# CI uses the vendored 2025 Linux x86-64 xmllint ("Temporary xmllint master",
+# https://github.com/TransmodelEcosystem/NeTEx/pull/915); set XMLLINT_BIN to a local
+# xmllint to run this on any other OS or CPU architecture (macOS, Windows, ARM, ...).
 
 set -u
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 ROOT_DIR=$( cd -- "${SCRIPT_DIR}/../.." &> /dev/null && pwd )
-# CI uses the vendored 2025 Linux x86-64 xmllint ("Temporary xmllint master",
-# https://github.com/TransmodelEcosystem/NeTEx/pull/915); set XMLLINT_BIN to a local
-# xmllint to run this on any other OS or CPU architecture (macOS, Windows, ARM, ...).
 XMLLINT="${XMLLINT_BIN:-${SCRIPT_DIR}/xmllint}"
 cd "${ROOT_DIR}"
 
-fail=0
-# Behaviour assertion, parameterised by the caller: the document must be REJECTED, and
-# the rejection output must contain <expected>. We test the outcome, not how it is
-# enforced - passing "Duplicate key-sequence" accepts a unique, a key or a rename alike,
-# as long as the duplicate is caught. Each future test declares its own <expected>.
-# Fails closed: accepted, wrong reason, or xmllint not running all count as failures.
-assert_rejected() { # <file> <schema> <expected error substring>
-  out=$("${XMLLINT}" --noout --schema "$2" "$1" 2>&1); st=$?
-  if [ "${st}" -eq 0 ]; then
-    echo "SHOULD HAVE FAILED  $1 — accepted (must be rejected)"
-    fail=1
-  elif printf '%s\n' "${out}" | grep -q "$3"; then
-    echo "OK                  $1"
-  else
-    echo "ERROR               $1 — rejected, but not matching '$3' (unrelated error / xmllint failure?)"
-    fail=1
-  fi
-}
+SCHEMA="xsd/NeTEx_publication.xsd"
 
+# "<file>|<expected error substring>"
+CASES=(
+  "examples/should-fail/duplicate-GroupOfLinkSequences.xml|Duplicate key-sequence"
+  "examples/should-fail/duplicate-CalendarDate.xml|Duplicate key-sequence"
+  "examples/should-fail/duplicate-ValidBetween.xml|Duplicate key-sequence"
+  "examples/should-fail/duplicate-ValidityPeriod.xml|Duplicate key-sequence"
+)
+
+files=()
+for c in "${CASES[@]}"; do files+=("${c%%|*}"); done
+out=$("${XMLLINT}" --noout --schema "${SCHEMA}" "${files[@]}" 2>&1)
+
+fail=0
 echo "Checking NeTEx 'should-fail' negative examples ..."
-assert_rejected examples/should-fail/duplicate-GroupOfLinkSequences.xml xsd/NeTEx_publication.xsd "Duplicate key-sequence"
-assert_rejected examples/should-fail/duplicate-CalendarDate.xml         xsd/NeTEx_publication.xsd "Duplicate key-sequence"
-assert_rejected examples/should-fail/duplicate-ValidBetween.xml         xsd/NeTEx_publication.xsd "Duplicate key-sequence"
-assert_rejected examples/should-fail/duplicate-ValidityPeriod.xml       xsd/NeTEx_publication.xsd "Duplicate key-sequence"
+for c in "${CASES[@]}"; do
+  f="${c%%|*}"; expected="${c#*|}"
+  if printf '%s\n' "${out}" | grep -Fqx "${f} validates"; then
+    echo "SHOULD HAVE FAILED  ${f} — accepted (must be rejected)"; fail=1
+  elif printf '%s\n' "${out}" | grep -F "${f}:" | grep -q "${expected}"; then
+    echo "OK                  ${f}"
+  else
+    echo "ERROR               ${f} — rejected, but not matching '${expected}'"; fail=1
+  fi
+done
 
 exit "${fail}"
