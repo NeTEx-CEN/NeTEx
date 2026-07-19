@@ -112,6 +112,22 @@ For new features, the decision between targetting v2.1-wip or v3.0-wip will be m
 
 _Upcoming: templates for Pull Request_
 
+### The use of AI in this repo 🤖
+
+In this repository, the use of AI should follow these guidelines. The guiding principle is that any contributor is the ultimate reponsible for their work on NeTEx and they should be the last reviewer of any AI work before submitting it for peer-review.
+
+AI **can** be used for:
+- Generation of code for contributors to work on the XSD by themselves,
+- Analysis of any change proposed to the XSD before it is edited / commented / approved,
+- Improve the general language in the documentation (i.e, anyting in `<xsd:annotation>` and `<xsd:documentation>`) or to check for typos in any work.
+
+AI **cannot** be used for:
+- Committing a change in a Pull Request, i.e. the AI agent is seen as the author of the commit and not the contributor,
+- Automated code review as a stand alone, i.e. without the result being proof-read by the contributor,
+- Produce documentation from scratch (i.e, anyting in `<xsd:annotation>` and `<xsd:documentation>` should be proof-read by the contributor if it was suggested by AI).
+
+In case you have a GitHub Pro account, please disable the feature `Automated Copilot code review`before contributing here.
+
 ----
 
 ## Changelog 📰
