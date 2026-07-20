@@ -114,7 +114,7 @@ _Upcoming: templates for Pull Request_
 
 ### The use of AI in this repo 🤖
 
-In this repository, the use of AI should follow these guidelines. The guiding principle is that any contributor is ultimatly reponsible for their work on NeTEx and they should be the last reviewer of any AI work before submitting it for peer-review; in other words, only contributors can be authors or co-authors of any change made to NeTEx.
+In this repository, the use of AI should follow these guidelines. The guiding principle is that any contributor is ultimately reponsible for their work on NeTEx and they should be the last reviewer of any AI-guided work before submitting it for peer-review; in other words, only contributors can be authors or co-authors of any change made to NeTEx.
 
 AI **can** be used for:
 - Generation of code for contributors to work on the XSD by themselves,
