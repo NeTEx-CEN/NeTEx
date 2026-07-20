@@ -127,7 +127,7 @@ AI **cannot** be used for:
 - Automated code review as a stand alone action, i.e. the result of a review must be proof-read by a contributor,
 - Produce documentation from scratch (i.e, anything in `<xsd:annotation>` and `<xsd:documentation>` should be proof-read by a contributor if it was suggested by AI).
 
-In case you have a GitHub Pro account, please disable the feature `Automated Copilot code review`before contributing here.
+In case you have a GitHub Pro account, please disable the feature `Automated Copilot code review` before contributing here.
 
 ----
 
