@@ -119,7 +119,7 @@ In this repository, the use of AI should follow these guidelines. The guiding pr
 AI **can** be used for:
 - Generation of code for contributors to work on the XSD by themselves,
 - Analysis of any change proposed to the XSD before it is edited / commented / approved,
-- Improve the general language in the documentation (i.e, anything in `<xsd:annotation>` and `<xsd:documentation>`) or to check for typos in any work.
+- Improvements to the general language in the documentation (i.e, anything in `<xsd:annotation>` and `<xsd:documentation>`) or to check for typos in any work.
 
 AI **cannot** be used for:
 - Committing a change in a Pull Request, i.e. the AI agent cannot be an author or co-author of any commit,
