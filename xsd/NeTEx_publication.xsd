@@ -251,7 +251,7 @@
 	<!-- ======================================================================= -->
 	<xsd:element name="ParticipantRef" type="siri:ParticipantCodeType">
 		<xsd:annotation>
-			<xsd:documentation>Identifier of system requesting Data.</xsd:documentation>
+			<xsd:documentation>External code identifying the source of the data being exchanged.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:element name="PublicationRequest" type="PublicationRequestStructure">
@@ -3472,7 +3472,7 @@
 				<xsd:documentation>Each date is only allowed once per calendar.</xsd:documentation>
 			</xsd:annotation>
 			<xsd:selector xpath=".//netex:ServiceCalendarFrame/netex:operatingDays/netex:OperatingDay"/>
-			<xsd:field xpath="CalendarDate"/>
+			<xsd:field xpath="netex:CalendarDate"/>
 			<xsd:field xpath="@version"/>
 		</xsd:unique>
 		<!-- =====OperatingDay Key ========================== -->
@@ -3606,7 +3606,7 @@
 				<xsd:documentation>Every [RegistrationNumber Id + Version] must be unique within document.</xsd:documentation>
 			</xsd:annotation>
 			<xsd:selector xpath=".//netex:Vehicle"/>
-			<xsd:field xpath="RegistrationNumber"/>
+			<xsd:field xpath="netex:RegistrationNumber"/>
 			<xsd:field xpath="@version"/>
 		</xsd:unique>
 		<!-- =====Vehicle Key ========================== -->
@@ -4619,6 +4619,16 @@
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
+		<!-- =====ChargingEquipmentProfile============================== -->
+		<!-- =====ChargingEquipmentProfile unique========================== -->
+		<xsd:unique name="ChargingEquipmentProfile_UniqueBy_Id_Version">
+			<xsd:annotation>
+				<xsd:documentation>Every [VehicleEquipmentProfileMember Id + Version] must be unique within document.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:VehicleEquipmentProfileMember"/>
+			<xsd:field xpath="@id"/>
+			<xsd:field xpath="@version"/>
+		</xsd:unique>
 		<!-- =====RechargingEquipmentProfile============================== -->
 		<!-- =====RechargingEquipmentProfile unique========================== -->
 		<xsd:unique name="RechargingEquipmentProfile_UniqueBy_Id_Version">
@@ -6735,7 +6745,7 @@
 		</xsd:unique>
 		<!-- =====Direction Key ========================== -->
 		<xsd:keyref name="Direction_KeyRef" refer="netex:Direction_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:DirectionRef | .//netex:ReverseDirectionRef"/>
+			<xsd:selector xpath=".//netex:DirectionRef | .//netex:OppositeDirectionRef"/>
 			<xsd:field xpath="@ref"/>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
@@ -8217,12 +8227,12 @@
 		</xsd:unique>
 		<!-- =====Journey Key ========================== -->
 		<xsd:keyref name="Journey_KeyRef" refer="netex:Journey_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:ServiceJourneyRef | .//netex:VehicleJourneyRef |  .//netex:DatedVehicleJourneyRef |  .//netex:NormalDatedVehicleJourneyRef  |.//netex:TemplateServiceJourneyRef | .//netex:DeadRunRef | .//netex:FromJourneyRef | .//netex:ToJourneyRef"/>
+			<xsd:selector xpath=".//netex:ServiceJourneyRef | .//netex:VehicleJourneyRef | .//netex:DatedVehicleJourneyRef | .//netex:NormalDatedVehicleJourneyRef | .//netex:TemplateServiceJourneyRef | .//netex:DeadRunRef | .//netex:FromJourneyRef | .//netex:ToJourneyRef"/>
 			<xsd:field xpath="@ref"/>
 			<xsd:field xpath="@version"/>
 		</xsd:keyref>
 		<xsd:key name="Journey_AnyVersionedKey">
-			<xsd:selector xpath=".//netex:ServiceJourney | .//netex:VehicleJourney | .//netex:DeadRun | .//netex:SpecialService | .//netex:TemplateServiceJourney |   .//netex:DatedServiceJourney |   .//netex:DatedVehicleJourney | .//netex:NormalDatedVehicleJourney"/>
+			<xsd:selector xpath=".//netex:ServiceJourney | .//netex:VehicleJourney | .//netex:DeadRun | .//netex:SpecialService | .//netex:TemplateServiceJourney | .//netex:DatedServiceJourney | .//netex:DatedVehicleJourney | .//netex:NormalDatedVehicleJourney"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:key>
@@ -10890,7 +10900,7 @@
 			<xsd:annotation>
 				<xsd:documentation>Every [UsageValidityPeriod Id + Version] must be unique within document.</xsd:documentation>
 			</xsd:annotation>
-			<xsd:selector xpath=".//netex:UsageValidityPeriod"/>
+			<xsd:selector xpath=".//netex:UsageValidityPeriod | .//netex:ValidityPeriod"/>
 			<xsd:field xpath="@id"/>
 			<xsd:field xpath="@version"/>
 		</xsd:unique>
